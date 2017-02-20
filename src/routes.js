@@ -15,8 +15,8 @@ import Tokens from './components/Tokens';
 import Profile from './components/Profile';
 import Billing from './components/Profile/Billing';
 import Referrals from './components/Profile/Referrals';
-import Signup from './components/Signup';
-import Logout from './components/Login';
+import Signup from './components/auth/register';
+import Logout from './components/auth/login';
 import Forgot from './components/Forgot';
 import Deployments_1 from './components/Deployments/investedDeployments';
 import ReplicaSets_1 from './components/ReplicaSets/investedReplicaSets';
@@ -25,10 +25,11 @@ import Services_1 from './components/Services/investedServices';
 import Volume_1 from './components/Volume/volume_1';
 import Secrets_1 from './components/Secrets/investedSecrets';
 import Tokens_1 from './components/Tokens/tokens_1';
+import RequireAuth from './components/auth/require-auth';
 
 export const routes = (
   <div>
-    <Route path='/' component={App}>
+    <Route path='/' component={RequireAuth(App)}>
       <IndexRoute component={Workloads} />
       <Route path='/Deployments/deployments_1' component={Deployments_1} />
       <Route path='/ReplicaSets/replicasets_1' component={ReplicaSets_1} />
