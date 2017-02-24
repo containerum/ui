@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 export default class Account extends Component {
   render() {
@@ -23,7 +24,7 @@ export default class Account extends Component {
         </ul>
       </div>
       <div className='col-md-2 editprofile'>
-        <button className='btn btn-default' type='submit'>Edit Profile</button>
+        <Link to='/Profile/EditProfile'><button className='btn btn-default' type='submit'>Edit Profile</button></Link>
       </div>
     </div>
     );
