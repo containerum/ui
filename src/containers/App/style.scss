@@ -13,10 +13,23 @@ body {
 .list-group {
   width: 500px;
 }
+.pager li {
+  margin-left: 10px;
+
+}
+.currentPage {
+  color: #2196F3;
+  font-size: 20px;
+}
+.pager {
+  position: absolute;
+  margin-top: -40px;
+  margin-left: 920px;
+}
 .row .list-group-item {
   width: 500px;
   padding: 30px;
-  
+
   font-size: 20px;
 }
 .rowinput {
