@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import TR from './TR';
 
+var table_data = [
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'}
+];
+
 export default class PanelServices extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageSize: 2
+    }
+  }
   render() {
     return (
       <div className='panel panel-default'>
@@ -21,13 +38,7 @@ export default class PanelServices extends Component {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              <TR />
-              <TR />
-              <TR />
-              <TR />
-              <TR />
-            </tbody>
+            <TR data={table_data} pageSize={this.state.pageSize}/>
           </table>
         </div>
       </div>

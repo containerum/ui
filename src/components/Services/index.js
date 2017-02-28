@@ -3,7 +3,24 @@ import TR from './TR';
 import Post from './Post';
 import Documents from './Documents';
 
+var table_data = [
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'},
+  {name: 'kubernetes', cluster: '10.96.01', provider: 'provider: kubernetes', lastupdate: '29.01.2017', labels: 'component: apiserver'}
+];
+
 export default class Services extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageSize: 4
+    }
+  }
   render() {
     return (
       <div className='row'>
@@ -24,18 +41,7 @@ export default class Services extends Component {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
-                <TR />
-                <TR />
-                <TR />
-                <TR />
-                <TR />
-                <TR />
-                <TR />
-                <TR />
-                <TR />
-                <TR />
-              </tbody>
+              <TR data={table_data} pageSize={this.state.pageSize}/>
             </table>
           </div>
         </div>

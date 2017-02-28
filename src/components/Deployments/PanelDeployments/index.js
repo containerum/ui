@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import TR from './TR';
 
+var table_data = [
+  {name: 'Test 1', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {name: 'Test 2', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {name: 'Test 3', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {name: 'Test 4', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {name: 'Test 5', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {name: 'Test 6', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {name: 'Test 7', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {name: 'Test 8', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'}
+];
+
 export default class PanelDeployments extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageSize: 4
+    }
+  }
   render() {
     return (
       <div className='panel panel-default'>
@@ -21,18 +38,7 @@ export default class PanelDeployments extends Component {
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-          </tbody>
+          <TR data={table_data} pageSize={this.state.pageSize}/>
         </table>
       </div>
     </div>

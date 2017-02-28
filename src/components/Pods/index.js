@@ -3,7 +3,24 @@ import TR from './TR';
 import Post from './Post';
 import Documents from './Documents';
 
+var table_data = [
+  {name: 'redis-django-123456781-7fns', age: '11h'},
+  {name: 'redis-django-123456782-7fns', age: '11h'},
+  {name: 'redis-django-123456783-7fns', age: '11h'},
+  {name: 'redis-django-123456784-7fns', age: '11h'},
+  {name: 'redis-django-123456785-7fns', age: '11h'},
+  {name: 'redis-django-123456786-7fns', age: '11h'},
+  {name: 'redis-django-123456787-7fns', age: '11h'},
+  {name: 'redis-django-123456788-7fns', age: '11h'}
+];
+
 export default class Pods extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageSize: 4
+    }
+  }
   render() {
     return (
       <div className='row'>
@@ -24,18 +41,7 @@ export default class Pods extends Component {
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-          </tbody>
+          <TR data={table_data} pageSize={this.state.pageSize}/>
         </table>
       </div>
       </div>

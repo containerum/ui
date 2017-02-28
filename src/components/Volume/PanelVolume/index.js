@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import TR from './TR';
 
+var table_data = [
+  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
+  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
+  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
+  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
+  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
+  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
+  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
+  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'}
+];
+
 export default class PanelVolume extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageSize: 4
+    }
+  }
   render() {
     return (
       <div className='panel panel-default'>
@@ -21,18 +38,7 @@ export default class PanelVolume extends Component {
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-          </tbody>
+          <TR data={table_data} pageSize={this.state.pageSize}/>
         </table>
       </div>
     </div>

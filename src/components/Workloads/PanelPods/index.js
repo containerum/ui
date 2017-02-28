@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import TR from './TR';
 
+var table_data = [
+  {name: 'redis-django-123456789-7fns', age: '11h'},
+  {name: 'redis-django-123456789-7fns', age: '11h'},
+  {name: 'redis-django-123456789-7fns', age: '11h'},
+  {name: 'redis-django-123456789-7fns', age: '11h'},
+  {name: 'redis-django-123456789-7fns', age: '11h'},
+  {name: 'redis-django-123456789-7fns', age: '11h'},
+  {name: 'redis-django-123456789-7fns', age: '11h'},
+  {name: 'redis-django-123456789-7fns', age: '11h'}
+];
+
 export default class PanelPods extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageSize: 2
+    }
+  }
   render() {
     return (
       <div className='panel panel-default'>
@@ -21,13 +38,7 @@ export default class PanelPods extends Component {
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-          </tbody>
+          <TR data={table_data} pageSize={this.state.pageSize}/>
         </table>
       </div>
     </div>

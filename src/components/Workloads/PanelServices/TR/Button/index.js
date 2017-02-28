@@ -8,15 +8,8 @@ export default class Button extends Component {
           Action
           <span className='caret'></span>
         </button>
-        <ul className='dropdown-menu dropServWork' aria-labelledby='dropdownMenu1'>
-          <li><a href='#'><span className='glyphicon glyphicon-play' aria-hidden='true'></span> Play</a></li>
-          <li><a href='#'><span className='glyphicon glyphicon-pause' aria-hidden='true'></span> Stop</a></li>
-          <li><a href='#'><span className='glyphicon glyphicon-repeat' aria-hidden='true'></span> Redeploy</a></li>
-          <li role='separator' className='divider'></li>
-          <li><a href='#'>Edit</a></li>
-          <li><a href='#'>Logs</a></li>
-          <li role='separator' className='divider'></li>
-          <li><a href='#'>Delete</a></li>
+        <ul className='dropdown-menu' aria-labelledby='dropdownMenu1'>
+          <li><a><p className='text-danger'>Delete</p></a></li>
         </ul>
       </div>
     );

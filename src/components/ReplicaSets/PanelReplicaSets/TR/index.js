@@ -3,7 +3,38 @@ import { Link } from 'react-router';
 import Button from './Button';
 
 export default class TR extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: 1
+    }
+  }
+  getPage() {
+    var start = this.props.pageSize * (this.state.currentPage - 1);
+    var end = start + this.props.pageSize;
+    return {
+      currentPage: this.state.currentPage,
+      data: this.props.data.slice(start, end),
+      numPages: this.getNumPages(),
+     handleClick: function(pageNum) {
+        return function() { this.handlePageChange(pageNum) }.bind(this)
+      }.bind(this)
+    }
+  }
+  getNumPages() {
+    var numPages = Math.floor(this.props.data.length / this.props.pageSize)
+    if (this.props.data.length % this.props.pageSize > 0) {
+      numPages++
+    }
+    return numPages
+  }
+  handlePageChange(pageNum) {
+    this.setState({currentPage: pageNum})
+  }
+
   render() {
+    var page = this.getPage();
+    var topics = page.data.map(function(item) {
     return (
       <tr>
         <td className='width_td'>
@@ -13,16 +44,36 @@ export default class TR extends Component {
            </label>
           </div>
           <img src='http://placehold.it/50x50' alt='...' className='img-rounded'/>
-        </td>
-        <th scope='row'><Link to='/ReplicaSets/replicasets_1/'>redis-django<td>1 GB / 10 GB</td></Link></th>
-        <td>1 / 1</td>
-        <td>redis<td>ngnix</td></td>
-        <td>11 h.</td>
-        <td>app: ngnix</td>
-        <td className='menu_dropdown'>
-          <Button />
-        </td>
-      </tr>
-    );
+          </td>
+          <th scope='row'><Link to='/ReplicaSets/replicasets_1'>{item.name}</Link></th>
+          <td>{item.pods}</td>
+          <td>{item.images}</td>
+          <td>{item.age}</td>
+          <td>{item.labels}</td>
+          <td className='menu_dropdown'>
+            <Button />
+          </td>
+        </tr>
+      );
+    })
+  return (
+    <tbody>
+      {pager(page)}
+        {topics}
+    </tbody>
+    )
   }
+}
+function pager(page) {
+  var pageLinks = []
+  if (page.currentPage > 1) {
+    pageLinks.push(<li className='previous' onClick={page.handleClick(page.currentPage - 1)}><a href='#'><span className='pageLink'>&larr;</span></a></li>)
+    pageLinks.push(' ')
+  }
+  pageLinks.push(<span className='currentPage'>{page.currentPage} - {page.numPages}</span>)
+  if (page.currentPage < page.numPages) {
+    pageLinks.push(' ')
+    pageLinks.push(<li className='next' onClick={page.handleClick(page.currentPage + 1)}><a href='#'><span className='pageLink'>&rarr;</span></a></li>)
+  }
+  return <div className='pager'>{pageLinks}</div>
 }

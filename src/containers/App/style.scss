@@ -1,14 +1,20 @@
 body {
   background: #EEEEEE;
+  
 }
 .nav-pills{
   width: 200px;
   margin-top: 100px;
   position: fixed;
 }
-.dropServWork {
-  margin-top: -242px;
-
+.text-danger {
+  height: 10px;
+  margin-left: 0px;
+  margin-top: 0px;
+  color: #F44336;
+}
+a {
+  cursor: pointer;
 }
 .list-group {
   width: 500px;
