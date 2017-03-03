@@ -4,14 +4,14 @@ import Post from './Post';
 import Documents from './Documents';
 
 var table_data = [
-  {name: 'redis-django-123456781-7fns', age: '11h'},
-  {name: 'redis-django-123456782-7fns', age: '11h'},
-  {name: 'redis-django-123456783-7fns', age: '11h'},
-  {name: 'redis-django-123456784-7fns', age: '11h'},
-  {name: 'redis-django-123456785-7fns', age: '11h'},
-  {name: 'redis-django-123456786-7fns', age: '11h'},
-  {name: 'redis-django-123456787-7fns', age: '11h'},
-  {name: 'redis-django-123456788-7fns', age: '11h'}
+  {id: '1', name: 'redis-django-123456781-7fns', age: '11h'},
+  {id: '2', name: 'redis-django-123456782-7fns', age: '11h'},
+  {id: '3', name: 'redis-django-123456783-7fns', age: '11h'},
+  {id: '4', name: 'redis-django-123456784-7fns', age: '11h'},
+  {id: '5', name: 'redis-django-123456785-7fns', age: '11h'},
+  {id: '6', name: 'redis-django-123456786-7fns', age: '11h'},
+  {id: '7', name: 'redis-django-123456787-7fns', age: '11h'},
+  {id: '8', name: 'redis-django-123456788-7fns', age: '11h'}
 ];
 
 export default class Pods extends Component {

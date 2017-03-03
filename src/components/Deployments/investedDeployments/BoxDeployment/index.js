@@ -7,7 +7,7 @@ export default class Box extends Component {
       <div className='col-md-13'>
         <div className='box1-deploy'>
           <div className='col-md-2'>
-            <h3>redis-django</h3>
+            <h3>{this.props.item.name}</h3>
             <img src='http://placehold.it/150x150' alt='...' className='img-rounded'/>
           </div>
           <div className='col-md-2'>

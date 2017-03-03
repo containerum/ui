@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import TR from './TR';
 
 var table_data = [
-  {name: 'Test 1', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {name: 'Test 2', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {name: 'Test 3', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {name: 'Test 4', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {name: 'Test 5', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {name: 'Test 6', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {name: 'Test 7', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {name: 'Test 8', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'}
+  {id: '1', name: 'Test 1', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {id: '2', name: 'Test 2', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {id: '3', name: 'Test 3', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {id: '4', name: 'Test 4', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {id: '5', name: 'Test 5', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {id: '6', name: 'Test 6', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {id: '7', name: 'Test 7', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
+  {id: '8', name: 'Test 8', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'}
 ];
 
 export default class PanelDeployments extends Component {
