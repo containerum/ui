@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Button from './Button';
+import setDeploymentId from '../../../../index';
 
 export default class TR extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class TR extends Component {
   handlePageChange(pageNum) {
     this.setState({currentPage: pageNum})
   }
-  
+
   render() {
     var page = this.getPage();
     var topics = page.data.map(function(item) {
@@ -45,7 +46,7 @@ export default class TR extends Component {
           </div>
           <img src='http://placehold.it/50x50' alt='...' className='img-rounded'/>
           </td>
-          <th scope='row'><Link to='/ReplicaSets/replicasets_1'>{item.name}</Link></th>
+          <th scope='row' onClick={setDeploymentId}><Link data-id={item.id} to='/ReplicaSets/replicasets_1'>{item.name}</Link></th>
           <td>{item.pods}</td>
           <td>{item.images}</td>
           <td>{item.age}</td>

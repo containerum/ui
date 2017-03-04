@@ -7,7 +7,7 @@ export default class Box extends Component {
       <div className='col-md-13'>
         <div className='box1-deploy'>
             <div className='col-md-5'>
-              <h3>kubernetes</h3>
+              <h3>{this.props.item.name}</h3>
               <ul className='servul'>
               <li>Namespace: default</li>
               <li>Labels: components: apiserver provider: kubernetes</li>

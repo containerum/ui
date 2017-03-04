@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import TR from './TR';
-
+var table_data = [
+  {id: '1', name: 'default-token-1kst', time: '29.01.2017'},
+  {id: '2', name: 'default-token-2kst', time: '29.01.2017'},
+  {id: '3', name: 'default-token-3kst', time: '29.01.2017'},
+  {id: '4', name: 'default-token-4kst', time: '29.01.2017'},
+  {id: '5', name: 'default-token-5kst', time: '29.01.2017'},
+  {id: '6', name: 'default-token-6kst', time: '29.01.2017'}
+];
 export default class PanelSecret extends Component {
   render() {
     return (
@@ -21,13 +28,7 @@ export default class PanelSecret extends Component {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
-                <TR />
-                <TR />
-                <TR />
-                <TR />
-                <TR />
-              </tbody>
+              <TR data={table_data}/>
             </table>
           </div>
         </div>
