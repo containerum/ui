@@ -1,11 +1,45 @@
 body {
   background: #EEEEEE;
-  
+
 }
 .nav-pills{
   width: 200px;
   margin-top: 100px;
   position: fixed;
+}
+.modalbutton {
+  margin-top: 40px;
+  margin-left: 70px;
+}
+tr .ramGb {
+  position: absolute;
+}
+.replicatd {
+  height: 50px;
+}
+#alert {
+  visibility: hidden;
+  background: #81C784;
+  position: absolute;
+  color: #fff;
+  width: 600px;
+  height: 70px;
+  margin-top: -167px;
+  margin-left: -560px;
+  z-index: 100;
+}
+#alert h4 {
+  margin-top: 15px;
+  margin-left: 200px;
+
+}
+.remove {
+  position: relative;
+  margin-top: 5px;
+  margin-left: 580px;
+  width: 5px;
+  height: 5px;
+  cursor: pointer;
 }
 .text-danger {
   height: 10px;

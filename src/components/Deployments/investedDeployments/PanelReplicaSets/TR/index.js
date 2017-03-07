@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
-import Button from './Button';
 import { Link } from 'react-router';
+import setDeploymentId from '../../../../../index';
 
 export default class TR extends Component {
   render() {
+    var dep = this.props.item.replicasets.map(function(item){
     return (
       <tr>
-        <td className='width_td'>
-          <img src='http://placehold.it/50x50' alt='...' className='img-rounded'/>
-        </td>
-        <th scope='row'><Link to='/ReplicaSets/replicasets_1/'>redis-django<td>1 GB / 10 GB</td></Link></th>
-        <td>1 / 1</td>
-        <td>redis<td>ngnix</td></td>
-        <td>11 h.</td>
-        <td>app: ngnix</td>
-        <td>Active</td>
-        <td className='menu_dropdown'>
-          <Button />
-        </td>
+        <td className='width_td'></td>
+        <th scope='row' onClick={setDeploymentId}><Link data-id={item.uid} to='/ReplicaSets/replicasets_1/'>{item.name}</Link></th>
+        <td>{item.pods}</td>
+        <td>{item.images}</td>
+        <td>{item.created}</td>
+        <td>app: {item.labels}</td>
+        <td></td>
+        <td className='menu_dropdown'></td>
       </tr>
     );
+    })
+    return (
+      <tbody>
+        {dep}
+      </tbody>
+    )
   }
 }

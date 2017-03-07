@@ -1,15 +1,65 @@
 import React, { Component } from 'react';
 
 export default class TR extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: 1
+    }
+  }
+  getPage() {
+    var start = this.props.pageSize * (this.state.currentPage - 1);
+    var end = start + this.props.pageSize;
+    return {
+      currentPage: this.state.currentPage,
+      data: this.props.data.events.slice(start, end),
+      numPages: this.getNumPages(),
+     handleClick: function(pageNum) {
+        return function() { this.handlePageChange(pageNum) }.bind(this)
+      }.bind(this)
+    }
+  }
+  getNumPages() {
+    var numPages = Math.floor(this.props.data.events.length / this.props.pageSize)
+    if (this.props.data.events.length % this.props.pageSize > 0) {
+      numPages++
+    }
+    return numPages
+  }
+  handlePageChange(pageNum) {
+    this.setState({currentPage: pageNum})
+  }
   render() {
+    var page = this.getPage();
+    var topics = page.data.events.map(function(item) {
     return (
       <tr>
-        <th scope='row'>Created pod redis-django-123456789-7tph</th>
-        <td>replicaset-controller</td>
-        <td>-</td>
-        <td>1</td>
-        <td>01.12.2017 T 18:36 UTC</td>
+        <th scope='row'>{item.message}</th>
+        <td>{item.source}</td>
+        <td>{item.sub_object}</td>
+        <td>{item.count}</td>
+        <td>{item.first_seen} {item.last_seen}</td>
       </tr>
     );
+  })
+return (
+  <tbody>
+    {pager(page)}
+      {topics}
+  </tbody>
+  )
   }
+}
+function pager(page) {
+  var pageLinks = []
+  if (page.currentPage > 1) {
+    pageLinks.push(<li className='previous' onClick={page.handleClick(page.currentPage - 1)}><a href='#'><span className='pageLink'>&larr;</span></a></li>)
+    pageLinks.push(' ')
+  }
+  pageLinks.push(<span className='currentPage'>{page.currentPage} - {page.numPages}</span>)
+  if (page.currentPage < page.numPages) {
+    pageLinks.push(' ')
+    pageLinks.push(<li className='next' onClick={page.handleClick(page.currentPage + 1)}><a href='#'><span className='pageLink'>&rarr;</span></a></li>)
+  }
+  return <div className='pager'>{pageLinks}</div>
 }

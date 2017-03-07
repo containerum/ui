@@ -13,30 +13,27 @@ export default class Box extends Component {
           <div className='col-md-2'>
             <ul>
               <li>Status:</li>
-              <li>1 updated</li>
-              <li>1 total</li>
-              <li>1 available</li>
-              <li>0 unavailable</li>
+              <li>{this.props.item.status.updated} updated</li>
+              <li>{this.props.item.status.total} total</li>
+              <li>{this.props.item.status.available} available</li>
+              <li>{this.props.item.status.unavailable} unavailable</li>
             </ul>
           </div>
           <div className='col-md-3'>
             <ul>
-              <li>Namespace: default</li>
-              <li>Labels: app: ngnix</li>
-              <li>app: ngnix</li>
-              <li>Creation time: 2017-01-27 T 16:34</li>
+              <li>Namespace: {this.props.item.namespace}</li>
+              <li>Labels: app: {this.props.item.labels}</li>
             </ul>
           </div>
           <div className='col-md-3'>
            <ul>
-              <li>Strategy:</li>
-              <li>Min ready seconds: 0</li>
-              <li>Revision history limit: Not set</li>
-              <li>Rolling update strategy: Max surge: 1, Max unavailable: 1</li>
+              <li>Strategy: {this.props.item.strategy}</li>
+              <li>Min ready seconds: {this.props.item.min_ready_seconds}</li>
+              <li>Rolling update strategy: Max surge: {this.props.item.rolling_update_stategy.max_surge}, Max unavailable: {this.props.item.rolling_update_stategy.max_unavailable}</li>
             </ul>
           </div>
           <div className='col-md-2'>
-            <Button />
+            <Button data_id={this.props.item.uid}/>
           </div>
         </div>
       </div>

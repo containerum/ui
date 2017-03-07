@@ -36,19 +36,12 @@ export default class TR extends Component {
     var topics = page.data.map(function(item) {
     return (
       <tr>
-        <td className='width_td'>
-          <div className='checkbox'>
-           <label>
-             <input type='checkbox'/>
-           </label>
-          </div>
-          <img src='http://placehold.it/50x50' alt='...' className='img-rounded'/>
-          </td>
+        <td className='width_td'></td>
           <th scope='row'><Link to='/Volume/volume_1'>{item.name}</Link></th>
           <td></td>
           <td>{item.replicasets}</td>
           <td>{item.age}</td>
-          <td>{item.labels}</td>
+          <td>app: {item.labels}</td>
           <td className='menu_dropdown'>
             <Button />
           </td>

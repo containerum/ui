@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import TR from './TR';
+import axios from 'axios';
 
 export default class PanelTokens extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data_token: []
+    }
+  }
+  componentDidMount() {
+    axios.get('/api/tokens')
+    .then(response => {
+      this.setState({data_token: response.data});
+      console.log(this.state.data_token)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
   render() {
     return (
       <div className='panel panel-default'>
@@ -21,13 +38,7 @@ export default class PanelTokens extends Component {
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-            <TR />
-          </tbody>
+          <TR data={this.state.data_token}/>
         </table>
       </div>
     </div>

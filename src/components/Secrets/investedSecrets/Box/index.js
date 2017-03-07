@@ -7,7 +7,7 @@ export default class Box extends Component {
       <div className='col-md-13'>
         <div className='box1-deploy'>
           <div className='col-md-8'>
-            <h3>{this.props.item.name}</h3>
+            <h3></h3>
             <ul className='secretvul'>
               <li>Namespace: default</li>
               <li>Annotations: kubernetes.io/service-accountname: default kubernetes.io/service-account.uid: 8af4f6b2-e22d-11e6-9cb8-fae19e571731</li>
@@ -15,7 +15,7 @@ export default class Box extends Component {
             </ul>
             </div>
             <div className='col-md-3'>
-              <Button />
+              <Button data_id={this.props.item.id}/>
           </div>
         </div>
       </div>

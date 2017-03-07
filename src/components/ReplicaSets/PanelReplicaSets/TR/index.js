@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import Button from './Button';
 import setDeploymentId from '../../../../index';
 
 export default class TR extends Component {
@@ -38,22 +37,13 @@ export default class TR extends Component {
     var topics = page.data.map(function(item) {
     return (
       <tr>
-        <td className='width_td'>
-          <div className='checkbox'>
-           <label>
-             <input type='checkbox'/>
-           </label>
-          </div>
-          <img src='http://placehold.it/50x50' alt='...' className='img-rounded'/>
-          </td>
-          <th scope='row' onClick={setDeploymentId}><Link data-id={item.id} to='/ReplicaSets/replicasets_1'>{item.name}</Link></th>
+        <td className='width_td'></td>
+          <th scope='row' onClick={setDeploymentId}><Link data-id={item.uid} to='/ReplicaSets/replicasets_1'>{item.name}</Link></th>
           <td>{item.pods}</td>
           <td>{item.images}</td>
-          <td>{item.age}</td>
-          <td>{item.labels}</td>
-          <td className='menu_dropdown'>
-            <Button />
-          </td>
+          <td>{item.created}</td>
+          <td>app: {item.labels}</td>
+          <td className='menu_dropdown'></td>
         </tr>
       );
     })

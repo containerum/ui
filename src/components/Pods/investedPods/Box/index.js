@@ -12,20 +12,16 @@ export default class Box extends Component {
           </div>
           <div className='col-md-3'>
             <ul>
-              <li>Namespace: default</li>
-              <li>Labels: app: ngnix</li>
-              <li>Annotations: Created by: ReplicaSet redis-django-2920923595</li>
-              <li>Creation time: 2017-01-27 T 16:34</li>
+              <li>Namespace: {this.props.item.namespace}</li>
+              <li>Labels: app: {this.props.item.labels}</li>
+              <li>Annotations: Created by: {this.props.item.annotations}</li>
+              <li>Creation time: {this.props.item.creationTimestamp}</li>
             </ul>
           </div>
           <div className='col-md-3'>
-            <ul>
-              <li>Selector: app: ngnix pod-template-hash: 2920923595</li>
-              <li>Images: redis, ngnix</li>
-            </ul>
           </div>
           <div className='col-md-2'>
-            <Button />
+            <Button data_id={this.props.item.uid}/>
           </div>
         </div>
       </div>

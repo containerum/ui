@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import TR from './TR';
-
-var table_data = [
-  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
-  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
-  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
-  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
-  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
-  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
-  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'},
-  {name: 'Test 1', replicasets: '6', age: '1h', labels: 'app: ngnix'}
-];
+import axios from 'axios';
 
 export default class PanelVolume extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageSize: 4
+      pageSize: 4,
+      data_volume: []
     }
+  }
+  componentDidMount() {
+    axios.get('/api/volume')
+    .then(response => {
+      this.setState({data_volume: response.data});
+      console.log(this.state.data_volume)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
   render() {
     return (
@@ -38,7 +39,7 @@ export default class PanelVolume extends Component {
               <th></th>
             </tr>
           </thead>
-          <TR data={table_data} pageSize={this.state.pageSize}/>
+          <TR data={this.state.data_volume} pageSize={this.state.pageSize}/>
         </table>
       </div>
     </div>

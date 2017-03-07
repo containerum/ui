@@ -4,24 +4,25 @@ import Button from './Button';
 
 export default class TR extends Component {
   render() {
+    var dep = this.props.data.map(function(item){
     return (
       <tr>
-        <td className='width_td'>
-          <div className='checkbox'>
-           <label>
-             <input type='checkbox'/>
-           </label>
-          </div>
-        </td>
-        <th scope='row'><Link to='/Tokens/tokens_1/'>default-token-1sss</Link></th>
+        <td className='width_td'></td>
+        <th scope='row'><Link to='/Tokens/tokens_1/'>{item.name}</Link></th>
         <td></td>
         <td></td>
         <td></td>
-        <td>29.01.2017</td>
+        <td>{item.created}</td>
         <td className='menu_dropdown'>
-          <Button />
+          <Button data_id={item.uid}/>
         </td>
       </tr>
     );
+  })
+  return(
+    <tbody>
+      {dep}
+    </tbody>
+  );
   }
 }

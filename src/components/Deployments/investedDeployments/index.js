@@ -1,36 +1,36 @@
 import React, { Component } from 'react';
 import Box from './BoxDeployment';
 import PanelReplicaSets from './PanelReplicaSets';
-import Events from './Events';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
-var table_data = [
-  {id: '1', name: 'Test 1', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '2', name: 'Test 2', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '3', name: 'Test 3', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '4', name: 'Test 4', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '5', name: 'Test 5', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '6', name: 'Test 6', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '7', name: 'Test 7', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '8', name: 'Test 8', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'}
-];
 class Deployments_1 extends Component {
-  render() {
-    var { data } = this.props;
-    var renderDep = table_data.map(function(item){
-      if (item.id == data.id) {
-        return (
-          <div className='row rowpanel'>
-            <Box item={item}/>
-            <PanelReplicaSets />
-            <Events />
-          </div>
-        );
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageSize: 4,
+      data_dep: []
+    }
+  }
+  componentDidMount() {
+        axios.get('/api/deployments/', {
+            params: {
+              uid: this.props.data.id
+            }
+          })
+        .then(response => {
+          this.setState({data_dep: response.data})
+          console.log(this.state.data_dep);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       }
-    })
+  render() {
     return (
-      <div>
-        {renderDep}
+      <div className='row rowpanel'>
+        <Box item={this.state.data_dep}/>
+        <PanelReplicaSets item={this.state.data_dep}/>
       </div>
     );
   }

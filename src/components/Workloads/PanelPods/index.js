@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import TR from './TR';
-
-var table_data = [
-  {id: '1', name: 'redis-django-123456781-7fns', age: '11h'},
-  {id: '2', name: 'redis-django-123456782-7fns', age: '11h'},
-  {id: '3', name: 'redis-django-123456783-7fns', age: '11h'},
-  {id: '4', name: 'redis-django-123456784-7fns', age: '11h'},
-  {id: '5', name: 'redis-django-123456785-7fns', age: '11h'},
-  {id: '6', name: 'redis-django-123456786-7fns', age: '11h'},
-  {id: '7', name: 'redis-django-123456787-7fns', age: '11h'},
-  {id: '8', name: 'redis-django-123456788-7fns', age: '11h'}
-];
+import axios from 'axios';
 
 export default class PanelPods extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageSize: 2
+      pageSize: 2,
+      data_pods: []
     }
+  }
+  componentDidMount() {
+    axios.get('/api/pods')
+    .then(response => {
+      this.setState({data_pods: response.data});
+      console.log(this.state.data_pods)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
   render() {
     return (
@@ -31,14 +32,17 @@ export default class PanelPods extends Component {
             <tr>
               <th></th>
               <th>Name</th>
-              <th></th>
-              <th></th>
+              <th>Status</th>
+              <th>Restarts</th>
               <th>Age</th>
+              <th></th>
+              <th></th>
+              <th></th>
               <th></th>
               <th></th>
             </tr>
           </thead>
-          <TR data={table_data} pageSize={this.state.pageSize}/>
+          <TR data={this.state.data_pods} pageSize={this.state.pageSize}/>
         </table>
       </div>
     </div>

@@ -18,14 +18,11 @@ export default class PanelReplicaSets extends Component {
             <th>Images</th>
             <th>Age</th>
             <th>Labels</th>
-            <th>Status</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          <TR />
-          <TR />
-        </tbody>
+        <TR item={this.props.item}/>
       </table>
     </div>
   </div>

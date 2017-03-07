@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import TR from './TR';
 
 export default class PanelEvents extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageSize: 2
+    }
+  }
   render() {
     return (
       <div className='panel panel-default'>
@@ -19,18 +25,7 @@ export default class PanelEvents extends Component {
                 <th>Last update</th>
               </tr>
             </thead>
-            <tbody>
-              <TR />
-              <TR />
-              <TR />
-              <TR />
-              <TR />
-              <TR />
-              <TR />
-              <TR />
-              <TR />
-              <TR />
-            </tbody>
+            <TR data={this.props.item} pageSize={this.state.pageSize}/>
           </table>
         </div>
       </div>

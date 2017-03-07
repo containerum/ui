@@ -7,22 +7,15 @@ export default class BoxContainers extends Component {
         <div className='col-md-2'>
           <h3>Containers</h3>
           <ul>
-            <li>key-value-store</li>
-            <li>Image: redis</li>
-            <li>Enviroment variables:</li>
-            <li>Commands:</li>
-            <li>Args: -</li>
+            <li>{this.props.item.containers.name}</li>
+            <li>Image: {this.props.item.containers.image}</li>
+            <li>Enviroment variables: {this.props.item.containers.environments}</li>
+            <li>Commands: {this.props.item.containers.commands}</li>
+            <li>Args: {this.props.item.containers.args}</li>
           </ul>
         </div>
         <div className='col-md-2'>
           <h3>Containers</h3>
-          <ul>
-            <li>key-value-store</li>
-            <li>Image: redis</li>
-            <li>Enviroment variables:</li>
-            <li>Commands:</li>
-            <li>Args: -</li>
-          </ul>
         </div>
       </div>
     );

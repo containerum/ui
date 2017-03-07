@@ -2,15 +2,25 @@ import React, { Component } from 'react'
 import TR from './TR';
 import Post from './Post';
 import Documents from './Documents';
-var table_data = [
-  {id: '1', name: 'default-token-1kst', time: '29.01.2017'},
-  {id: '2', name: 'default-token-2kst', time: '29.01.2017'},
-  {id: '3', name: 'default-token-3kst', time: '29.01.2017'},
-  {id: '4', name: 'default-token-4kst', time: '29.01.2017'},
-  {id: '5', name: 'default-token-5kst', time: '29.01.2017'},
-  {id: '6', name: 'default-token-6kst', time: '29.01.2017'}
-];
+import axios from 'axios';
+
 export default class Secrets extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data_secret: []
+    }
+  }
+  componentDidMount() {
+    axios.get('/api/secrets')
+    .then(response => {
+      this.setState({data_secret: response.data});
+      console.log(this.state.data_secret)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
   render() {
     return (
       <div className='row'>
@@ -31,7 +41,7 @@ export default class Secrets extends Component {
                   <th></th>
                 </tr>
               </thead>
-              <TR data={table_data}/>
+              <TR data={this.state.data_secret}/>
             </table>
           </div>
         </div>

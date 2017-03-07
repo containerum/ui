@@ -1,41 +1,40 @@
 import React, { Component } from 'react';
 import Box from './Box';
 import PanelPods from './PanelPods';
-import PanelServices from './PanelServices';
 import PanelEvents from './PanelEvents';
 import { connect } from 'react-redux';
-
-var table_data = [
-  {id: '1', name: 'Test 1', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '2', name: 'Test 2', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '3', name: 'Test 3', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '4', name: 'Test 4', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '5', name: 'Test 5', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '6', name: 'Test 6', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '7', name: 'Test 7', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'},
-  {id: '8', name: 'Test 8', pods: '1 / 1', images: 'redis', age: '1h', labels: 'ngnix'}
-];
+import axios from 'axios';
 
 class ReplicaSet extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageSize: 4,
+      data_replica: []
+    }
+  }
+  componentDidMount() {
+        axios.get('/api/replicasets/', {
+            params: {
+              uid: this.props.data.id
+            }
+          })
+        .then(response => {
+          this.setState({data_replica: response.data})
+          console.log(this.state.data_replica);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
   render() {
-    var { data } = this.props;
-    var renderReplicaSet = table_data.map(function(item){
-      if (item.id == data.id) {
         return (
           <div className='row rowpanel'>
-            <Box item={item}/>
-            <PanelPods />
-            <PanelServices />
-            <PanelEvents />
+            <Box item={this.state.data_replica}/>
+            <PanelPods item={this.state.data_replica}/>
+            <PanelEvents item={this.state.data_replica}/>
           </div>
         );
-      }
-    })
-    return (
-      <div>
-        {renderReplicaSet}
-      </div>
-    );
   }
 }
 function mapStateToProps(state) {

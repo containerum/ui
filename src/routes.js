@@ -13,7 +13,6 @@ import Config from './components/Config';
 import Secrets from './components/Secrets';
 import Tokens from './components/Tokens';
 import Profile from './components/Profile';
-import editProfile from './components/editProfile';
 import Billing from './components/Profile/Billing';
 import Referrals from './components/Profile/Referrals';
 import Signup from './components/auth/register';
@@ -26,11 +25,11 @@ import Services_1 from './components/Services/investedServices';
 import Volume_1 from './components/Volume/volume_1';
 import Secrets_1 from './components/Secrets/investedSecrets';
 import Tokens_1 from './components/Tokens/tokens_1';
-
+import RequireAuth from './components/auth/require-auth';
 
 export const routes = (
   <div>
-    <Route path='/' component={App}>
+    <Route path='/' component={RequireAuth(App)}>
       <IndexRoute component={Workloads} />
       <Route path='/Deployments/deployments_1' component={Deployments_1} />
       <Route path='/ReplicaSets/replicasets_1' component={ReplicaSets_1} />
@@ -49,7 +48,6 @@ export const routes = (
       <Route path='/Secrets' component={Secrets} />
       <Route path='/Tokens' component={Tokens} />
       <Route path='/Profile' component={Profile} />
-      <Route path='/Profile/EditProfile' component={editProfile} />
       <Route path='/Billing' component={Billing} />
       <Route path='/Referrals' component={Referrals} />
     </Route>

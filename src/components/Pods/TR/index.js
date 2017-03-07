@@ -37,21 +37,17 @@ export default class TR extends Component {
     var topics = page.data.map(function(item) {
     return (
       <tr>
-        <td className='width_td'>
-          <div className='checkbox'>
-           <label>
-             <input type='checkbox'/>
-           </label>
-          </div>
-          <img src='http://placehold.it/50x50' alt='...' className='img-rounded'/>
-          </td>
-          <th scope='row' onClick={setDeploymentId}><Link data-id={item.id} to='/Pods/pods_1'>{item.name}</Link></th>
+        <td className='width_td'></td>
+          <th scope='row' onClick={setDeploymentId}><Link data-id={item.uid} to='/Pods/pods_1'>{item.name}<td className='ramGb'>{item.ram}</td></Link></th>
+          <td>{item.status}</td>
+          <td>{item.restarts}</td>
+          <td>{item.created}</td>
           <td></td>
           <td></td>
-          <td>{item.age}</td>
+          <td></td>
           <td></td>
           <td className='menu_dropdown'>
-            <Button />
+            <Button data_id={item.uid}/>
           </td>
         </tr>
       );

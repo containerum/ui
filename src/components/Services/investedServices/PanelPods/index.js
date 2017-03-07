@@ -14,18 +14,15 @@ export default class PanelPods extends Component {
               <tr>
                 <th></th>
                 <th>Name</th>
-                <th></th>
-                <th></th>
+                <th>Status</th>
+                <th>Restarts</th>
                 <th>Age</th>
                 <th></th>
                 <th></th>
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              <TR />
-              <TR />
-            </tbody>
+            <TR item={this.props.item}/>  
           </table>
         </div>
       </div>
