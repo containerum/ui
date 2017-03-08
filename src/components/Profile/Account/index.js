@@ -20,26 +20,27 @@ const customStyles = {
     height                : '550px'
   }
 };
-var data_user = [
-  {
-    _id: '1',
-    fullname: 'Богдан Иванов',
-    email: 'example@gmail.com',
-    password: '2342324',
-    phonenumber: '7904304430',
-    yourcompany: 'HelloWorld',
-    youradress: 'street'
-  }
 
-];
 export default class Account extends Component {
   constructor(props) {
     super(props);
-    this.state = {  modalIsOpen: false,
-      name: '1', edit: null, data: data_user};
+    this.state = {
+      modalIsOpen: false,
+      edit: null,
+      data: []};
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+  componentDidMount() {
+    axios.get('/api/users/"int:id"')
+    .then(response => {
+      this.setState({data: response.data});
+      console.log(this.state.data)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
   openModal() {
     this.setState({modalIsOpen: true});
@@ -55,13 +56,7 @@ export default class Account extends Component {
     this.setState( { edit: itemId } );
   }
   stateEdit(update) {
-   for(var i = 0; i < data_user.length; i++) {
-     if(data_user[i]._id == update._id) {
-       var d = data_user.indexOf(data_user[i]);
-       data_user.splice(d, 1, update);
-  }
-  }
-   this.setState({data : data_user });
+    axios({method: 'put', url: '/api/users/"int:id"', data: {update}});
   }
   handleUserDataUpdate( update ) {
    this.stateEdit(update);
@@ -71,7 +66,7 @@ export default class Account extends Component {
   handleEditField( event ) {
     if ( event.keyCode === 13 ) {
       let target = event.target, update = {};
-      update._id = this.state.edit;
+      update.id = this.state.edit;
       update[ target.name ] = target.value;
       this.handleUserDataUpdate( update );
     }
@@ -79,7 +74,7 @@ export default class Account extends Component {
   handleEditItem() {
     let itemId = this.state.edit;
     this.handleUserDataUpdate({
-      _id: itemId,
+      id: itemId,
       fullname: this.refs[ `fullname_${ itemId }` ].value,
       email: this.refs[ `email_${ itemId }` ].value,
       password: this.refs[ `password_${ itemId }` ].value,
@@ -89,13 +84,13 @@ export default class Account extends Component {
     });
   }
   renderField( item ) {
-       return (<ul onClick={ this.toggleEdit.bind( this, item._id ) } key={ `editing-${ item._id }` }>
+       return (<ul onClick={ this.toggleEdit.bind( this, item.id ) } key={ `editing-${ item.id }` }>
              <li className='rowinput'>
                <input
                  onKeyDown={ this.handleEditField }
                  type='text'
                  className='form-control'
-                 ref={ `fullname_${ item._id }` }
+                 ref={ `fullname_${ item.id }` }
                  name='fullname'
                  defaultValue={ item.fullname }
                  aria-describedby='sizing-addon1'/>
@@ -105,7 +100,7 @@ export default class Account extends Component {
                    onKeyDown={ this.handleEditField }
                    type='text'
                    className='form-control'
-                   ref={ `email_${ item._id }` }
+                   ref={ `email_${ item.id }` }
                    name='email'
                    defaultValue={ item.email }
                    aria-describedby='sizing-addon1'/>
@@ -115,9 +110,8 @@ export default class Account extends Component {
                    onKeyDown={ this.handleEditField }
                    type='text'
                    className='form-control'
-                   ref={ `password_${ item._id }` }
+                   ref={ `password_${ item.id }` }
                    name='password'
-                   defaultValue={ item.password }
                    aria-describedby='sizing-addon1'/>
                </li>
                <li className='rowinput'>
@@ -125,7 +119,7 @@ export default class Account extends Component {
                    onKeyDown={ this.handleEditField }
                    type='text'
                    className='form-control'
-                   ref={ `phonenumber_${ item._id }` }
+                   ref={ `phonenumber_${ item.id }` }
                    name='phonenumber'
                    defaultValue={ item.phonenumber }
                    aria-describedby='sizing-addon1'/>
@@ -135,7 +129,7 @@ export default class Account extends Component {
                    onKeyDown={ this.handleEditField }
                    type='text'
                    className='form-control'
-                   ref={ `yourcompany_${ item._id }` }
+                   ref={ `yourcompany_${ item.id }` }
                    name='yourcompany'
                    defaultValue={ item.yourcompany }
                    aria-describedby='sizing-addon1'/>
@@ -145,7 +139,7 @@ export default class Account extends Component {
                    onKeyDown={ this.handleEditField }
                    type='text'
                    className='form-control'
-                   ref={ `youradress_${ item._id }` }
+                   ref={ `youradress_${ item.id }` }
                    name='youradress'
                    defaultValue={ item.youradress }
                    aria-describedby='sizing-addon1'/>

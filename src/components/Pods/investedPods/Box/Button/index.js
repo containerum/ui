@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import setDeploymentId from '../../../../../index';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 const customStyles = {
   overlay : {
@@ -47,6 +48,7 @@ class Button extends Component {
     axios({method: 'delete', url: '/api/pods/', data: {uid: this.props.data.id}})
     this.closeModal();
     get.style.visibility = 'visible';
+    setTimeout(function() { browserHistory.push('/Pods') }, 2000);
   }
   alertClose() {
     var get = document.getElementById('alert');
