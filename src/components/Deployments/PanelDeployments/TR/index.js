@@ -38,13 +38,13 @@ export default class TR extends Component {
     return (
       <tr>
         <td className='width_td'></td>
-          <th scope='row' onClick={setDeploymentId}><Link data-id={item.uid} to='/Deployments/deployments_1/'>{item.name}<td className='ramGb'>{item.ram}</td></Link></th>
+          <th scope='row' onClick={setDeploymentId}><Link data-id={item.id} to='/Deployments/deployments_1/'>{item.name}<td className='ramGb'>{item.ram}</td></Link></th>
           <td>{item.pods}</td>
           <td>{item.images}</td>
           <td>{item.created}</td>
           <td>app: {item.labels}</td>
           <td className='menu_dropdown'>
-            <Button data_id={item.uid}/>
+            <Button data_id={item.id}/>
           </td>
         </tr>
       );

@@ -11,7 +11,7 @@ export default class PanelVolume extends Component {
     }
   }
   componentDidMount() {
-    axios.get('/api/volume')
+    axios.get('http://139.59.146.89/api/volume')
     .then(response => {
       this.setState({data_volume: response.data});
       console.log(this.state.data_volume)

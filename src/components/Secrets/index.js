@@ -12,7 +12,7 @@ export default class Secrets extends Component {
     }
   }
   componentDidMount() {
-    axios.get('/api/secrets')
+    axios.get('http://139.59.146.89/api/secrets')
     .then(response => {
       this.setState({data_secret: response.data});
       console.log(this.state.data_secret)

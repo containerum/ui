@@ -11,7 +11,7 @@ export default class PanelReplicaSets extends Component {
     }
   }
   componentDidMount() {
-    axios.get('/api/replicasets')
+    axios.get('http://139.59.146.89/api/replicasets')
     .then(response => {
       this.setState({data_replica: response.data});
       console.log(this.state.data_replica)

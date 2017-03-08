@@ -11,7 +11,7 @@ export default class PanelServices extends Component {
     }
   }
   componentDidMount() {
-    axios.get('/api/services')
+    axios.get('http://139.59.146.89/api/services')
     .then(response => {
       this.setState({data_services: response.data});
       console.log(this.state.data_services)

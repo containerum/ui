@@ -10,7 +10,7 @@ export default class PanelToken extends Component {
     }
   }
   componentDidMount() {
-    axios.get('/api/tokens')
+    axios.get('http://139.59.146.89/api/tokens')
     .then(response => {
       this.setState({data_token: response.data});
       console.log(this.state.data_token)

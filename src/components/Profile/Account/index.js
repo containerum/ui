@@ -34,7 +34,7 @@ export default class Account extends Component {
     this.closeModal = this.closeModal.bind(this);
   }
   componentDidMount() {
-    axios.get('/api/users/"int:id"')
+    axios.get('http://139.59.146.89/api/users')
     .then(response => {
       this.setState({data: response.data});
       console.log(this.state.data)
@@ -57,7 +57,7 @@ export default class Account extends Component {
     this.setState( { edit: itemId } );
   }
   stateEdit(update) {
-    axios({method: 'put', url: '/api/users/"int:id"', data: {update}});
+    axios({method: 'put', url: 'http://139.59.146.89/api/users', data: {update}});
   }
   handleUserDataUpdate( update ) {
    this.stateEdit(update);

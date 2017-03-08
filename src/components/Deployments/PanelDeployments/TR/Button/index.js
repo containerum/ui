@@ -26,8 +26,7 @@ const customStyles = {
 class Button extends Component {
   constructor(props) {
     super(props);
-    this.state = {  modalIsOpen: false,
-      name: '1'};
+    this.state = {  modalIsOpen: false};
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -47,7 +46,7 @@ class Button extends Component {
   }
   alertDelete() {
     var get = document.getElementById('alert');
-    axios({method: 'delete', url: '/api/deployments/', data: {uid: this.props.data.id}});
+    axios({method: 'delete', url: 'http://139.59.146.89/api/deployments/', data: {id: this.props.data.id}});
     this.closeModal();
     get.style.visibility = 'visible';
   }

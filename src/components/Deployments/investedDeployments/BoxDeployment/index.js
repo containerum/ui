@@ -33,7 +33,7 @@ export default class Box extends Component {
             </ul>
           </div>
           <div className='col-md-2'>
-            <Button data_id={this.props.item.uid}/>
+            <Button data_id={this.props.item.id}/>
           </div>
         </div>
       </div>

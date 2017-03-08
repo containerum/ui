@@ -47,7 +47,7 @@ class Button extends Component {
   }
   alertDelete() {
     var get = document.getElementById('alert');
-    axios({method: 'delete', url: '/api/replicasets/', data: {uid: this.props.data.id}});
+    axios({method: 'delete', url: 'http://139.59.146.89/api/replicasets/', data: {id: this.props.data.id}});
     this.closeModal();
     get.style.visibility = 'visible';
     setTimeout(function() { browserHistory.push('/ReplicaSets') }, 2000);

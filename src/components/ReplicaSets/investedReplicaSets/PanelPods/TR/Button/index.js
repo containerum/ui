@@ -44,7 +44,7 @@ class Button extends Component {
   }
   alertDelete() {
     var get = document.getElementById('alert');
-    axios({method: 'delete', url: '/api/replicasets/', data: {uid: this.props.data.id}})
+    axios({method: 'delete', url: 'http://139.59.146.89/api/replicasets/', data: {id: this.props.data.id}})
     this.closeModal();
     get.style.visibility = 'visible';
   }
@@ -53,7 +53,6 @@ class Button extends Component {
     get.style.visibility = 'hidden';
   }
   render() {
-
         return (
           <div className='dropdown'>
             <button onClick={setDeploymentId} data-id={this.props.data_id} className='btn btn-default dropdown-toggle' type='button' id='dropdownMenu1' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>

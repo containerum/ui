@@ -38,7 +38,7 @@ export default class TR extends Component {
     return (
       <tr>
         <td className='width_td'></td>
-          <th scope='row' onClick={setDeploymentId}><Link data-id={item.uid} to='/Pods/pods_1'>{item.name}<td className='ramGb'>{item.ram}</td></Link></th>
+          <th scope='row' onClick={setDeploymentId}><Link data-id={item.id} to='/Pods/pods_1'>{item.name}<td className='ramGb'>{item.ram}</td></Link></th>
           <td>{item.status}</td>
           <td>{item.restarts}</td>
           <td>{item.created}</td>
@@ -47,7 +47,7 @@ export default class TR extends Component {
           <td></td>
           <td></td>
           <td className='menu_dropdown'>
-            <Button data_id={item.uid}/>
+            <Button data_id={item.id}/>
           </td>
         </tr>
       );

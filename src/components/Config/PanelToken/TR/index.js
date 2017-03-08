@@ -14,7 +14,7 @@ export default class TR extends Component {
         <td></td>
         <td>{item.created}</td>
         <td className='menu_dropdown'>
-          <Button data_id={item.uid}/>
+          <Button data_id={item.id}/>
         </td>
       </tr>
     );
