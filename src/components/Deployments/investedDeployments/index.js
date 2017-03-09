@@ -14,13 +14,13 @@ class Deployments_1 extends Component {
   }
   componentDidMount() {
         axios.get('http://139.59.146.89/api/deployments/', {
-            params: {
-              id: this.props.data.id
-            }
-          })
+          data: {
+            id: this.props.data.id
+          }
+        })
         .then(response => {
           this.setState({data_dep: response.data})
-          console.log(this.state.data_dep);
+          console.log(this.props.data.id);
         })
         .catch(function (error) {
           console.log(error);
@@ -40,5 +40,4 @@ function mapStateToProps(state) {
     data: state.dataDeployment
   }
 }
-
 export default connect(mapStateToProps)(Deployments_1);
