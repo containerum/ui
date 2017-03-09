@@ -20,6 +20,9 @@ export default class PanelTokens extends Component {
     });
   }
   render() {
+    const loader = (
+      <p>Loading..</p>
+    )
     return (
       <div className='panel panel-default'>
         <div className='panel-heading'>
@@ -38,7 +41,7 @@ export default class PanelTokens extends Component {
               <th></th>
             </tr>
           </thead>
-          <TR data={this.state.data_token}/>
+          {this.state.data_token == '' ? loader : <TR data={this.state.data_token} pageSize={this.state.pageSize}/>}
         </table>
       </div>
     </div>

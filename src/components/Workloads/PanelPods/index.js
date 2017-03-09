@@ -21,6 +21,9 @@ export default class PanelPods extends Component {
     });
   }
   render() {
+    const loader = (
+      <p>Loading..</p>
+    )
     return (
       <div className='panel panel-default'>
         <div className='panel-heading'>
@@ -42,7 +45,7 @@ export default class PanelPods extends Component {
               <th></th>
             </tr>
           </thead>
-          <TR data={this.state.data_pods} pageSize={this.state.pageSize}/>
+          {this.state.data_pods == '' ? loader : <TR data={this.state.data_pods} pageSize={this.state.pageSize}/>}
         </table>
       </div>
     </div>
