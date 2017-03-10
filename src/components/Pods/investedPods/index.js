@@ -14,29 +14,33 @@ class Pods_1 extends Component {
     }
   }
   componentDidMount() {
-        axios.get('http://139.59.146.89/api/pods/', {
-            data: {
-              id: this.props.data.id
-            }
-          })
+        axios.get('http://139.59.146.89/api/pods/x1')
         .then(response => {
           this.setState({data_pods: response.data})
-          console.log(this.state.data_pods);
+          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);
         });
       }
   render() {
+    const content = (
+      <div>
+        <Box item={this.state.data_pods}/>
+        <div className='row rowcopod'>
+          <div className='col-md-13'>
+            <BoxContainers item={this.state.data_pods.containers}/>
+            <BoxConditions item={this.state.data_pods.conditions} />
+          </div>
+        </div>
+      </div>
+    )
+    const loader = (
+      <p>Loading..</p>
+    )
         return (
             <div className='row rowpanel'>
-              <Box item={this.state.data_pods}/>
-              <div className='row rowcopod'>
-                <div className='col-md-13'>
-                  <BoxContainers item={this.state.data_pods}/>
-                  <BoxConditions item={this.state.data_pods} />
-                </div>
-              </div>
+              {this.state.data_pods == '' ? loader : content}
             </div>
         );
 

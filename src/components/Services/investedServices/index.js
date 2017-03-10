@@ -13,11 +13,7 @@ class Services_1 extends Component {
     }
   }
   componentDidMount() {
-        axios.get('http://139.59.146.89/api/services/', {
-            data: {
-              id: this.props.data.id
-            }
-          })
+        axios.get('http://139.59.146.89/api/services/x1')
         .then(response => {
           this.setState({data_services: response.data})
           console.log(this.state.data_services);
@@ -27,10 +23,18 @@ class Services_1 extends Component {
         });
       }
   render() {
+    const content = (
+      <div>
+        <Box item={this.state.data_services}/>
+        <PanelPods item={this.state.data_services.pods}/>
+      </div>
+    )
+    const loader = (
+      <p>Loading..</p>
+    )
         return (
           <div className='row'>
-            <Box item={this.state.data_services}/>
-            <PanelPods item={this.state.data_services}/>
+            {this.state.data_services == '' ? loader : content}
           </div>
         );
   }

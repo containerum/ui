@@ -13,24 +13,28 @@ class Deployments_1 extends Component {
     }
   }
   componentDidMount() {
-        axios.get('http://139.59.146.89/api/deployments/', {
-          data: {
-            id: this.props.data.id
-          }
-        })
+        axios.get('http://139.59.146.89/api/deployments/x2')
         .then(response => {
           this.setState({data_dep: response.data})
-          console.log(this.props.data.id);
+          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);
         });
       }
   render() {
-    return (
-      <div className='row rowpanel'>
+    const content = (
+      <div>
         <Box item={this.state.data_dep}/>
         <PanelReplicaSets item={this.state.data_dep}/>
+      </div>
+    )
+    const loader = (
+      <p>Loading..</p>
+    )
+    return (
+      <div className='row rowpanel'>
+        {this.state.data_dep == '' ? loader : content}
       </div>
     );
   }

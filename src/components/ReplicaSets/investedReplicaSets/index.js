@@ -14,11 +14,7 @@ class ReplicaSet extends Component {
     }
   }
   componentDidMount() {
-        axios.get('http://139.59.146.89/api/replicasets/', {
-            data: {
-              id: this.props.data.id
-            }
-          })
+        axios.get('http://139.59.146.89/api/replicasets/x2')
         .then(response => {
           this.setState({data_replica: response.data})
           console.log(this.state.data_replica);
@@ -28,11 +24,19 @@ class ReplicaSet extends Component {
         });
       }
   render() {
+    const content = (
+      <div>
+        <Box item={this.state.data_replica}/>
+        <PanelPods item={this.state.data_replica.pods}/>
+        <PanelEvents item={this.state.data_replica.events}/>
+      </div>
+    )
+    const loader = (
+      <p>Loading..</p>
+    )
         return (
           <div className='row rowpanel'>
-            <Box item={this.state.data_replica}/>
-            <PanelPods item={this.state.data_replica}/>
-            <PanelEvents item={this.state.data_replica}/>
+            {this.state.data_replica == '' ? loader : content}
           </div>
         );
   }

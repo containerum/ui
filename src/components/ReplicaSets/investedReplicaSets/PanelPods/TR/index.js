@@ -5,7 +5,7 @@ import setDeploymentId from '../../../../../index';
 
 export default class TR extends Component {
   render() {
-    var dep = this.props.item.pods.map(function(item){
+    var dep = this.props.item.map(function(item){
     return (
       <tr>
         <td className='width_td'>

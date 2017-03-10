@@ -7,17 +7,17 @@ export default class BoxConditions extends Component {
       <div className='col-md-6'>
         <h3>Conditions</h3>
         <ul>
-          <li>{item.conditions.type}</li>
-          <li>{item.conditions.status}</li>
-          <li>{item.conditions.lastTransitionTime}</li>
-          <li>{item.conditions.lastHeartbeatTime}</li>
+          <li>{item.type}</li>
+          <li>{item.status}</li>
+          <li>{item.lastTransitionTime}</li>
+          <li>{item.lastHeartbeatTime}</li>
         </ul>
       </div>
     );
     })
     return (
       <div>
-        {dep}
+          {dep}
       </div>
     )
   }

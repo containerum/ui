@@ -8,11 +8,11 @@ export default class BoxContainers extends Component {
         <div className='col-md-2'>
           <h3>Containers</h3>
           <ul>
-            <li>{item.containers.name}</li>
-            <li>Image: {item.containers.image}</li>
-            <li>Enviroment variables: {item.containers.environments}</li>
-            <li>Commands: {item.containers.commands}</li>
-            <li>Args: {item.containers.args}</li>
+            <li>{item.name}</li>
+            <li>Image: {item.image}</li>
+            <li>Enviroment variables: {item.environments}</li>
+            <li>Commands: {item.commands}</li>
+            <li>Args: {item.args}</li>
           </ul>
         </div>
         <div className='col-md-2'>
