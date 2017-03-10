@@ -23,6 +23,9 @@ export default class Services extends Component {
     });
   }
   render() {
+    const loader = (
+      <p>Loading..</p>
+    )
     return (
       <div className='row'>
         <div className='panel panel-default'>
@@ -42,7 +45,7 @@ export default class Services extends Component {
                   <th></th>
                 </tr>
               </thead>
-              <TR data={this.state.data_services} pageSize={this.state.pageSize}/>
+              {this.state.data_services == '' ? loader : <TR data={this.state.data_services} pageSize={this.state.pageSize}/>}
             </table>
           </div>
         </div>

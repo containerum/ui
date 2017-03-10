@@ -3,6 +3,7 @@ import Button from './Button';
 
 export default class Box extends Component {
   render() {
+
     return (
       <div className='col-md-13'>
         <div className='box1-deploy'>
@@ -12,9 +13,17 @@ export default class Box extends Component {
           </div>
           <div className='col-md-3'>
             <ul>
-              <li>Namespace: {this.props.item.namespace}</li>
-              <li>Labels: app: {this.props.item.labels}</li>
-              <li>Annotations: Created by: {this.props.item.annotations}</li>
+            <li>Namespace: {this.props.item.namespace}</li>
+            {this.props.item.annotations.map(function(item){
+              return (
+                <li>Labels: app: {item.x2}</li>
+              )
+            })}
+              {this.props.item.labels.map(function(item){
+                return (
+                  <li>Annotations: Created by: {item.x1}</li>
+                )
+              })}
               <li>Creation time: {this.props.item.creationTimestamp}</li>
             </ul>
           </div>
@@ -26,5 +35,6 @@ export default class Box extends Component {
         </div>
       </div>
     );
+
   }
 }

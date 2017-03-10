@@ -21,6 +21,9 @@ export default class PanelDeployments extends Component {
     });
   }
   render() {
+    const loader = (
+      <p>Loading..</p>
+    )
     return (
       <div className='panel panel-default'>
         <div className='panel-heading'>
@@ -39,7 +42,7 @@ export default class PanelDeployments extends Component {
               <th></th>
             </tr>
           </thead>
-          <TR data={this.state.data_dep} pageSize={this.state.pageSize}/>
+          {this.state.data_dep == '' ? loader : <TR data={this.state.data_dep} pageSize={this.state.pageSize}/>}
         </table>
       </div>
     </div>

@@ -13,14 +13,26 @@ export default class Box extends Component {
           <div className='col-md-3'>
             <ul>
               <li>Namespace: {this.props.item.namespace}</li>
-              <li>Labels: app: {this.props.item.labels}</li>
+              {this.props.item.labels.map(function(item){
+                return (
+                  <li>Labels: app: {item.x1}</li>
+                )
+              })}
               <li>Creation time: {this.props.item.creation_time}</li>
             </ul>
           </div>
           <div className='col-md-3'>
             <ul>
-              <li>Selector: app: ngnix pod-template-hash: {this.props.item.selectors}</li>
-              <li>Images: {this.props.item.images}</li>
+            {this.props.item.images.map(function(item){
+              return (
+                <li>Images: {item}</li>
+              )
+            })}
+            {this.props.item.selectors.map(function(item){
+              return (
+                <li>Selectors: {item.x1}</li>
+              )
+            })}
             </ul>
           </div>
           <div className='col-md-2'>

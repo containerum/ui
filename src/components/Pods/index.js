@@ -23,6 +23,9 @@ export default class Pods extends Component {
     });
   }
   render() {
+    const loader = (
+      <p>Loading..</p>
+    )
     return (
       <div className='row'>
       <div className='panel panel-default'>
@@ -45,7 +48,7 @@ export default class Pods extends Component {
               <th></th>
             </tr>
           </thead>
-          <TR data={this.state.data_pods} pageSize={this.state.pageSize}/>
+          {this.state.data_pods == '' ? loader : <TR data={this.state.data_pods} pageSize={this.state.pageSize}/>}
         </table>
       </div>
       </div>

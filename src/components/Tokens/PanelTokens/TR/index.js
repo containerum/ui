@@ -4,7 +4,7 @@ import Button from './Button';
 
 export default class TR extends Component {
   render() {
-    var dep = this.props.data.map(function(item){
+    var dep = this.props.data.tokens.map(function(item){
     return (
       <tr>
         <td className='width_td'></td>
