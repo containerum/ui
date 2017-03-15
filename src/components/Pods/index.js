@@ -24,7 +24,7 @@ export default class Pods extends Component {
   }
   render() {
     const loader = (
-      <p>Loading..</p>
+      <p>Error 403</p>
     )
     return (
       <div className='row'>

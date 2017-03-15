@@ -13,6 +13,14 @@ body {
 }
 tr .ramGb {
   position: absolute;
+  font-size: 11px;
+}
+.open span.caret {
+  -webkit-transform: rotate( 180deg );
+  -moz-transform: rotate( 180deg );
+  -ms-transform: rotate( 180deg );
+  -o-transform: rotate( 180deg );
+  transform: rotate( 180deg );
 }
 .replicatd {
   height: 50px;
@@ -23,17 +31,17 @@ tr .ramGb {
 #alert {
   visibility: hidden;
   background: #81C784;
-  position: absolute;
+  position: fixed;
   color: #fff;
   width: 600px;
   height: 70px;
   margin-top: -167px;
-  margin-left: -560px;
+  margin-left: -1060px;
   z-index: 100;
 }
 #alert h4 {
   margin-top: 15px;
-  margin-left: 200px;
+  margin-left: 120px;
 
 }
 .remove {
@@ -60,15 +68,23 @@ a {
   margin-left: 10px;
 
 }
-.currentPage {
-  color: #2196F3;
-  font-size: 20px;
-}
 .pager {
   position: absolute;
   margin-top: -40px;
   margin-left: 920px;
+  text-align: center;
 }
+.pager .next {
+  margin-left: 60px;
+}
+.pager .currentPage{
+  color: #2196F3;
+  font-size: 17px;
+  margin-top: 5px;
+  width: 50px;
+  position: absolute;
+}
+
 .row .list-group-item {
   width: 500px;
   padding: 30px;
