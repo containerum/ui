@@ -43,13 +43,14 @@ class Button extends Component {
     this.setState({modalIsOpen: false});
   }
   alertDelete() {
-    var get = document.getElementById('alert');
+    var get = document.getElementById('investedalertpods');
     axios.delete('http://139.59.146.89/api/pods/', {id: this.props.data.id});
     this.closeModal();
     get.style.visibility = 'visible';
+    setTimeout(function() { get.style.visibility = 'hidden'; }, 5000);
   }
   alertClose() {
-    var get = document.getElementById('alert');
+    var get = document.getElementById('investedalertpods');
     get.style.visibility = 'hidden';
   }
   render() {
@@ -73,7 +74,7 @@ class Button extends Component {
               <button className='btn btn-danger modalbutton' onClick={this.alertDelete}>Delete</button>
               <button className='btn btn-default modalbutton' onClick={this.closeModal}>Close</button>
             </Modal>
-            <div id='alert'><div className='remove' onClick={this.alertClose}><span className='glyphicon glyphicon-remove' aria-hidden='true'></span></div><h4>[Object_name] has been successfully deleted</h4></div>
+            <div id='investedalertpods'><div className='remove' onClick={this.alertClose}><span className='glyphicon glyphicon-remove' aria-hidden='true'></span></div><h4>[Object_name] has been successfully deleted</h4></div>
           </div>
 
         );

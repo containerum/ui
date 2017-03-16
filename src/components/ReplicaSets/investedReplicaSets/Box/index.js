@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from './Button';
 
 export default class Box extends Component {
   render() {
@@ -36,7 +35,7 @@ export default class Box extends Component {
             </ul>
           </div>
           <div className='col-md-2'>
-            <Button data_id={this.props.item.id}/>
+            
           </div>
         </div>
       </div>
