@@ -42,7 +42,13 @@ export default class TR extends Component {
           <td></td>
           <td></td>
           <td>{item.created}</td>
-          <td>component: {item.labels}<td>provider: {item.provider}</td></td>
+          <td>{item.labels.map(function(item){
+            return (
+              <div>
+               app: {item}
+              </div>
+          )
+        })}</td>
           <td className='menu_dropdown'>
             <Button data_id={item.id}/>
           </td>

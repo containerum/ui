@@ -48,6 +48,7 @@ class Button extends Component {
     axios({method: 'delete', url: 'http://139.59.146.89/api/tokens/', data: {id: this.props.data.id}});
     this.closeModal();
     get.style.visibility = 'visible';
+    setTimeout(function() { get.style.visibility = 'hidden'; }, 5000);
   }
   alertClose() {
     var get = document.getElementById('alert');

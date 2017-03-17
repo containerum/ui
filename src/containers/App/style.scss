@@ -11,8 +11,20 @@ body {
   margin-top: 40px;
   margin-left: 70px;
 }
+.box1-deploy .dropdown .dropdown-menu {
+  width: 50px;
+  margin-left: -85px;
+}
 tr .ramGb {
   position: absolute;
+  font-size: 11px;
+}
+.open span.caret {
+  -webkit-transform: rotate( 180deg );
+  -moz-transform: rotate( 180deg );
+  -ms-transform: rotate( 180deg );
+  -o-transform: rotate( 180deg );
+  transform: rotate( 180deg );
 }
 .replicatd {
   height: 50px;
@@ -23,18 +35,48 @@ tr .ramGb {
 #alert {
   visibility: hidden;
   background: #81C784;
-  position: absolute;
+  position: fixed;
   color: #fff;
   width: 600px;
   height: 70px;
   margin-top: -167px;
-  margin-left: -560px;
+  margin-left: -1060px;
   z-index: 100;
 }
 #alert h4 {
   margin-top: 15px;
-  margin-left: 200px;
+  margin-left: 120px;
 
+}
+#investedalert {
+  visibility: hidden;
+  background: #81C784;
+  position: fixed;
+  color: #fff;
+  width: 600px;
+  height: 70px;
+  margin-top: -85px;
+  margin-left: -1060px;
+  z-index: 100;
+}
+#investedalert h4{
+  margin-top: 15px;
+  margin-left: 120px;
+}
+#investedalertpods {
+  visibility: hidden;
+  background: #81C784;
+  position: fixed;
+  color: #fff;
+  width: 600px;
+  height: 70px;
+  margin-top: -425px;
+  margin-left: -1060px;
+  z-index: 100;
+}
+#investedalertpods h4{
+  margin-top: 15px;
+  margin-left: 120px;
 }
 .remove {
   position: relative;
@@ -60,15 +102,23 @@ a {
   margin-left: 10px;
 
 }
-.currentPage {
-  color: #2196F3;
-  font-size: 20px;
-}
 .pager {
   position: absolute;
   margin-top: -40px;
   margin-left: 920px;
+  text-align: center;
 }
+.pager .next {
+  margin-left: 60px;
+}
+.pager .currentPage{
+  color: #2196F3;
+  font-size: 17px;
+  margin-top: 5px;
+  width: 50px;
+  position: absolute;
+}
+
 .row .list-group-item {
   width: 500px;
   padding: 30px;
@@ -260,7 +310,6 @@ li {
 .navbar .col-md-2 {
   width: 150px;
 
-
 }
 .navbar .info {
   position: absolute;
@@ -378,6 +427,9 @@ li {
 }
 .box1-deploy .col-md-2 .dropdown .dropdown-menu {
   margin-top: 2px;
+}
+.col-md-13 .box1-deploy .dropdown .dropdown-menu li:hover{
+  width: 158px;
 }
 .rowpanel .panel{
   margin-top: 20px;
@@ -532,4 +584,128 @@ li {
 }
 .rowform .formcontainer .resh2 {
   margin-left: 180px;
+}
+@media screen and (max-device-width: 1340px) {
+  .navbar .info {
+    position: absolute;
+    width: 100px;
+    margin-left: 680px;
+    margin-top: 10px;
+  }
+  .navbar .dataram {
+    position: absolute;
+    margin-left: 820px;
+  }
+  .navbar .dataimg {
+    margin-left: 990px;
+    position: absolute;
+    margin-top: 5px;
+  }
+  .navbar .datamail {
+    position: absolute;
+    width: 120px;
+    margin-left: 1050px;
+  }
+  .navbar .datadrop {
+    width: 70px;
+    margin-left: 1000px;
+    margin-top: 15px;
+  }
+  .row .panel {
+    width: 1020px;
+    margin: 10px, auto;
+  }
+  .pager {
+    position: absolute;
+    margin-top: -40px;
+    margin-left: 835px;
+    text-align: center;
+  }
+  .row {
+    width: 1050px;
+  }
+  .col-md-3 {
+    background: #fff;
+    height: 355px;
+    width: 25%;
+    box-shadow: 0 0 5px #BDBDBD;
+    margin-left: -30px;
+  }
+  .box1-deploy {
+    width: 97%;
+    background: #fff;
+    height: 240px;
+    box-shadow: 0 0 5px #BDBDBD;
+  }
+  .rowcopod .col-md-13 .col-md-6 {
+    width: 560px;
+    height: 225px;
+    background: #fff;
+    margin-left: 20px;
+    box-shadow: 0 0 5px #BDBDBD;
+  }
+}
+@media screen and (min-device-width: 1600px) {
+  .navbar .info {
+    position: absolute;
+    width: 100px;
+    margin-left: 980px;
+    margin-top: 10px;
+  }
+  .navbar .dataram {
+    position: absolute;
+    margin-left: 1120px;
+  }
+  .navbar .dataimg {
+    margin-left: 1290px;
+    position: absolute;
+    margin-top: 5px;
+  }
+  .navbar .datamail {
+    position: absolute;
+    width: 120px;
+    margin-left: 1350px;
+  }
+  .navbar .datadrop {
+    width: 70px;
+    margin-left: 1300px;
+    margin-top: 15px;
+  }
+  .row .panel {
+    width: 1320px;
+    margin: 10px, auto;
+  }
+  .pager {
+    position: absolute;
+    margin-top: -40px;
+    margin-left: 1135px;
+    text-align: center;
+  }
+  .row {
+    width: 1350px;
+  }
+  .col-md-3 {
+    background: #fff;
+    height: 375px;
+    width: 25%;
+    box-shadow: 0 0 5px #BDBDBD;
+    margin-left: -30px;
+  }
+  .box1-deploy {
+    width: 98%;
+    background: #fff;
+    height: 240px;
+    box-shadow: 0 0 5px #BDBDBD;
+  }
+  .rowcopod .col-md-13 .col-md-6 {
+    width: 740px;
+    height: 225px;
+    background: #fff;
+    margin-left: 20px;
+    box-shadow: 0 0 5px #BDBDBD;
+  }
+  .col-md-13 .box1-deploy .dropdown{
+    margin-left: 155px;
+  }
+
 }
