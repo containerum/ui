@@ -46,14 +46,14 @@ class Button extends Component {
     this.setState({modalIsOpen: false});
   }
   alertDelete() {
-    var get = document.getElementById('alert');
-    axios({method: 'delete', url: 'http://139.59.146.89/api/replicasets/', data: {id: this.props.data.id}});
+    var get = document.getElementById('investedalert');
+    axios.delete('http://139.59.146.89/api/replicasets/', {id: this.props.data.id});
     this.closeModal();
     get.style.visibility = 'visible';
     setTimeout(function() { browserHistory.push('/ReplicaSets') }, 2000);
   }
   alertClose() {
-    var get = document.getElementById('alert');
+    var get = document.getElementById('investedalert');
     get.style.visibility = 'hidden';
   }
   render() {
@@ -78,7 +78,7 @@ class Button extends Component {
               <button className='btn btn-danger modalbutton' onClick={this.alertDelete}>Delete</button>
               <button className='btn btn-default modalbutton' onClick={this.closeModal}>Close</button>
             </Modal>
-            <div id='alert'><div className='remove' onClick={this.alertClose}><span className='glyphicon glyphicon-remove' aria-hidden='true'></span></div><h4>[Object_name] has been successfully deleted</h4></div>
+            <div id='investedalert'><div className='remove' onClick={this.alertClose}><span className='glyphicon glyphicon-remove' aria-hidden='true'></span></div><h4>[Object_name] has been successfully deleted</h4></div>
           </div>
 
         );

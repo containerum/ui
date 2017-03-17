@@ -7,7 +7,8 @@ export default class TR extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 1
+      currentPage: 1,
+      ramState: ''
     }
   }
   getPage() {
@@ -32,17 +33,45 @@ export default class TR extends Component {
   handlePageChange(pageNum) {
     this.setState({currentPage: pageNum})
   }
+  componentDidMount() {
+    var that = this;
+    this.props.data.deployments.map(function(item){
+      if (item.ram < 500) {
+        console.log(item.ram);
+        that.setState({
+          ramState: 'GB'
+        })
+    } else {
+      that.setState({
+        ramState: 'MB'
+      })
+    }
+  })
+}
   render() {
+    var that = this;
     var page = this.getPage();
     var topics = page.data.map(function(item) {
     return (
       <tr>
         <td className='width_td'></td>
-          <th scope='row' onClick={setDeploymentId}><Link data-id={item.id} to='/Deployments/deployments_1/'>{item.name}<td className='ramGb'>{item.ram}</td></Link></th>
-          <td>{item.pods}</td>
-          <td>{item.images}</td>
+          <th scope='row' onClick={setDeploymentId}><Link data-id={item.id} to='/Deployments/deployments_1/'>{item.name}<td className='ramGb'>{item.ram} {that.state.ramState}</td></Link></th>
+          <td>{item.pods_active}</td>
+          <td>{item.images.map(function(item){
+            return (
+              <div>
+              {item}
+              </div>
+          )
+        })}</td>
           <td>{item.created}</td>
-          <td>app: {item.labels}</td>
+          <td>{item.labels.map(function(item){
+            return (
+              <div>
+               app: {item}
+              </div>
+          )
+        })}</td>
           <td className='menu_dropdown'>
             <Button data_id={item.id}/>
           </td>
