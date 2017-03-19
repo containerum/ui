@@ -56,7 +56,7 @@ export default class TR extends Component {
       <tr>
         <td className='width_td'></td>
           <th scope='row' onClick={setDeploymentId}><Link data-id={item.id} to='/Deployments/deployments_1/'>{item.name}<td className='ramGb'>{item.ram} {that.state.ramState}</td></Link></th>
-          <td>{item.pods_active}</td>
+          <td>{item.pods_active} / {item.pods_limit}</td>
           <td>{item.images.map(function(item){
             return (
               <div>
