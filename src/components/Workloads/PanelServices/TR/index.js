@@ -42,7 +42,7 @@ export default class TR extends Component {
           <td></td>
           <td></td>
           <td>{item.created}</td>
-          <td>{item.labels.map(function(item){
+          <td className='editServicesTablelabel'>{item.labels.map(function(item){
             return (
               <div>
                app: {item}

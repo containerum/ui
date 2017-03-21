@@ -2,6 +2,18 @@ body {
   background: #EEEEEE;
 
 }
+.dropdownserv {
+  margin-left: 120px;
+  margin-top: 20px;
+}
+ .dropdownserv .dropserv {
+  margin-top: -170px;
+  width: 70px;
+  margin-left: 45px;
+}
+.dropdownserv .dropserv li:hover {
+ width: 158px;
+}
 .nav-pills{
   width: 200px;
   margin-top: 100px;
@@ -603,30 +615,30 @@ li {
 .rowform .formcontainer .resh2 {
   margin-left: 180px;
 }
-@media screen and (max-device-width: 1340px) {
+@media screen and (max-device-width: 1300px) {
   .navbar .info {
     position: absolute;
     width: 100px;
-    margin-left: 680px;
+    margin-left: 650px;
     margin-top: 10px;
   }
   .navbar .dataram {
     position: absolute;
-    margin-left: 820px;
+    margin-left: 790px;
   }
   .navbar .dataimg {
-    margin-left: 990px;
+    margin-left: 960px;
     position: absolute;
     margin-top: 5px;
   }
   .navbar .datamail {
     position: absolute;
     width: 120px;
-    margin-left: 1050px;
+    margin-left: 1020px;
   }
   .navbar .datadrop {
     width: 70px;
-    margin-left: 1000px;
+    margin-left: 970px;
     margin-top: 15px;
   }
   .row .panel {
@@ -742,5 +754,179 @@ li {
   }
   .panel .editServicesTable {
     width: 360px;
+  }
+}
+@media screen and (min-device-width: 1900px) {
+  .navbar .info {
+    position: absolute;
+    width: 100px;
+    margin-left: 1280px;
+    margin-top: 10px;
+  }
+  .navbar .dataram {
+    position: absolute;
+    margin-left: 1420px;
+  }
+  .navbar .dataimg {
+    margin-left: 1590px;
+    position: absolute;
+    margin-top: 5px;
+  }
+  .navbar .datamail {
+    position: absolute;
+    width: 120px;
+    margin-left: 1650px;
+  }
+  .navbar .datadrop {
+    width: 70px;
+    margin-left: 1600px;
+    margin-top: 15px;
+  }
+  .row .panel {
+    width: 1620px;
+    margin: 10px, auto;
+  }
+  .pager {
+    position: absolute;
+    margin-top: -40px;
+    margin-left: 1435px;
+    text-align: center;
+  }
+  .row {
+    width: 1650px;
+  }
+  .col-md-3 {
+    background: #fff;
+    height: 375px;
+    width: 25%;
+    box-shadow: 0 0 5px #BDBDBD;
+    margin-left: -30px;
+  }
+  .box1-deploy {
+    width: 98%;
+    background: #fff;
+    height: 240px;
+    box-shadow: 0 0 5px #BDBDBD;
+  }
+  .rowcopod .col-md-13 .col-md-6 {
+    width: 910px;
+    height: 225px;
+    background: #fff;
+    margin-left: 20px;
+    box-shadow: 0 0 5px #BDBDBD;
+  }
+  .col-md-13 .box1-deploy .dropdown{
+    margin-left: 155px;
+  }
+  .panel .editDepTable {
+    width: 310px;
+  }
+  .panel .editDepTablelabel {
+    width: 300px;
+  }
+  .panel .editPodsTable {
+    width: 310px;
+  }
+  .panel .editPodsTableRestarts {
+    width: 320px;
+  }
+  .panel .editPodsTableage {
+    width: 340px;
+  }
+  .panel .editServicesTable {
+    width: 170px;
+  }
+  .editServicesTablelabel {
+    width: 800px;
+  }
+}
+@media screen and (max-device-width: 1024px) {
+  .navbar .info {
+    position: absolute;
+    width: 100px;
+    margin-left: 400px;
+    margin-top: 10px;
+  }
+  .navbar .dataram {
+    position: absolute;
+    margin-left: 590px;
+  }
+  .navbar .dataimg {
+    margin-left: 740px;
+    position: absolute;
+    margin-top: 5px;
+  }
+  .navbar .datamail {
+    position: absolute;
+    width: 120px;
+    margin-left: 800px;
+  }
+  .navbar .datadrop {
+    width: 50px;
+    margin-left: 750px;
+    margin-top: 15px;
+  }
+  .row .panel {
+    width: 780px;
+    margin: 10px, auto;
+  }
+  .pager {
+    position: absolute;
+    margin-top: -40px;
+    margin-left: 605px;
+    text-align: center;
+  }
+  .row {
+    width: 780px;
+  }
+  .col-md-3 {
+    background: #fff;
+    height: 355px;
+    width: 28%;
+    box-shadow: 0 0 5px #BDBDBD;
+    margin-left: -30px;
+    font-size: 11px;
+  }
+  .box1-deploy {
+    width: 98%;
+    background: #fff;
+    height: 240px;
+    box-shadow: 0 0 5px #BDBDBD;
+  }
+  .rowcopod .col-md-13 .col-md-6 {
+    width: 420px;
+    height: 225px;
+    background: #fff;
+    margin-left: 20px;
+    box-shadow: 0 0 5px #BDBDBD;
+  }
+  .col-md-13 .box1-deploy .dropdown{
+    margin-left: 40px;
+  }
+  .col-md-13 .box1-deploy .text{
+    margin-left: 30px;
+    font-size: 10px;
+
+  }
+  .col-md-13 .box1-deploy .col-md-3{
+    margin-left: -60px;
+  }
+  .panel .editDepTable {
+      width: 120px;
+  }
+  .width_td {
+    width: 50px;
+  }
+  .panel .editDepTablelabel{
+    width: 100px;
+  }
+  .panel .editPodsTable {
+    width: 250px;
+  }
+  .panel .editPodsTableRestarts {
+    width: 120px;
+  }
+  .panel .editServicesTable {
+    width: 100px;
   }
 }

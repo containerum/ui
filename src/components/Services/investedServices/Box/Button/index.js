@@ -44,25 +44,25 @@ class Button extends Component {
     this.setState({modalIsOpen: false});
   }
   alertDelete() {
-    var get = document.getElementById('alert');
+    var get = document.getElementById('investedalert');
     axios.delete('http://139.59.146.89/api/services');
     this.closeModal();
     get.style.visibility = 'visible';
     setTimeout(function() { browserHistory.push('/Services') }, 2000);
   }
   alertClose() {
-    var get = document.getElementById('alert');
+    var get = document.getElementById('investedalert');
     get.style.visibility = 'hidden';
   }
   render() {
 
         return (
-          <div className='dropdown'>
+          <div className='dropdownserv'>
             <button onClick={setDeploymentId} data-id={this.props.data_id} className='btn btn-default dropdown-toggle' type='button' id='dropdownMenu1' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>
               Action
               <span className='caret'></span>
             </button>
-            <ul className='dropdown-menu' aria-labelledby='dropdownMenu1'>
+            <ul className='dropdown-menu dropserv' aria-labelledby='dropdownMenu1'>
               <li onClick={this.openModal}><a><p className='text-danger'>Delete</p></a></li>
             </ul>
             <Modal
@@ -76,7 +76,7 @@ class Button extends Component {
               <button className='btn btn-danger modalbutton' onClick={this.alertDelete}>Delete</button>
               <button className='btn btn-default modalbutton' onClick={this.closeModal}>Close</button>
             </Modal>
-            <div id='alert'><div className='remove' onClick={this.alertClose}><span className='glyphicon glyphicon-remove' aria-hidden='true'></span></div><h4>[Object_name] has been successfully deleted</h4></div>
+            <div id='investedalert'><div className='remove' onClick={this.alertClose}><span className='glyphicon glyphicon-remove' aria-hidden='true'></span></div><h4>[Object_name] has been successfully deleted</h4></div>
           </div>
 
         );

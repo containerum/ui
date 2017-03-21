@@ -10,7 +10,7 @@ export default class Box extends Component {
             <h3>{this.props.item.namespace}</h3>
             <img src='http://placehold.it/150x150' alt='...' className='img-rounded'/>
           </div>
-          <div className='col-md-2'>
+          <div className='col-md-2 text'>
             <ul>
               <li>Status:</li>
               <li>{this.props.item.status.available} updated</li>

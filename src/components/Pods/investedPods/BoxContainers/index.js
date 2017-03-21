@@ -15,9 +15,6 @@ export default class BoxContainers extends Component {
             <li>Args: {item.args}</li>
           </ul>
         </div>
-        <div className='col-md-2'>
-          <h3>Containers</h3>
-        </div>
       </div>
     );
     })
