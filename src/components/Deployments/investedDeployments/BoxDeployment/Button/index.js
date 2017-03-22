@@ -47,7 +47,7 @@ class Button extends Component {
   }
   alertDelete() {
     var get = document.getElementById('investedalert');
-    axios.delete('http://139.59.146.89/api/deployments')
+    axios.delete('http://139.59.146.89/api/deployments/x1x2')
     this.closeModal();
     get.style.visibility = 'visible';
     setTimeout(function() { browserHistory.push('/Deployments') }, 2000);

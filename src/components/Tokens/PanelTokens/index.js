@@ -21,7 +21,7 @@ export default class PanelTokens extends Component {
   }
   render() {
     const loader = (
-      <p>Error 403</p>
+      <p>Error with data receiving</p>
     )
     return (
       <div className='panel panel-default'>

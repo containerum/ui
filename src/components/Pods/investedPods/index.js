@@ -36,7 +36,7 @@ class Pods_1 extends Component {
       </div>
     )
     const loader = (
-      <p>Error 403</p>
+      <p>Error with data receiving</p>
     )
         return (
             <div className='row rowpanel'>

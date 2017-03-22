@@ -45,7 +45,7 @@ class Button extends Component {
   }
   alertDelete() {
     var get = document.getElementById('investedalert');
-    axios.delete('http://139.59.146.89/api/pods');
+    axios.delete('http://139.59.146.89/api/pods/x1x2');
     this.closeModal();
     get.style.visibility = 'visible';
     setTimeout(function() { browserHistory.push('/Pods') }, 2000);
