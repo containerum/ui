@@ -8,7 +8,7 @@ export default class TR extends Component {
     return (
       <tr>
         <td className='width_td'></td>
-        <th scope='row'><Link to='/Tokens/tokens_1/'>{item.name}</Link></th>
+        <th scope='row'><Link to={`/Tokens/${item.name}`}>{item.name}</Link></th>
         <td></td>
         <td></td>
         <td></td>

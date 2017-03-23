@@ -38,7 +38,7 @@ export default class TR extends Component {
     return (
       <tr>
         <td className='width_td'></td>
-          <th className='editDepTable' scope='row' onClick={setDeploymentId}><Link data-id={item.id} to='/ReplicaSets/replicasets_1'>{item.name}</Link></th>
+          <th className='editDepTable' scope='row' onClick={setDeploymentId}><Link data-id={item.id} to={`/ReplicaSets/${item.name}`}>{item.name}</Link></th>
           <td className='editDepTable'>{item.pods_active} / {item.pods_limit}</td>
           <td className='editDepTable'>{item.images.map(function(item){
             return (
