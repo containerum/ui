@@ -14,7 +14,7 @@ class Pods_1 extends Component {
     }
   }
   componentDidMount() {
-        axios.get('http://139.59.146.89/api/pods/x1')
+        axios.get(`http://139.59.146.89/api/pods/${this.props.data.id}`)
         .then(response => {
           this.setState({data_pods: response.data})
           console.log(response.data);

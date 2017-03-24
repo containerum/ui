@@ -13,14 +13,14 @@ class Deployments_1 extends Component {
     }
   }
   componentDidMount() {
-        axios.get('http://139.59.146.89/api/deployments/x2')
-        .then(response => {
-          this.setState({data_dep: response.data})
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      axios.get(`http://139.59.146.89/api/deployments/${this.props.data.id}`)
+      .then(response => {
+        this.setState({data_dep: response.data})
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
       }
   render() {
     const content = (

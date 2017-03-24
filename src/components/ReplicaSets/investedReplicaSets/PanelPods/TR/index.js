@@ -10,7 +10,7 @@ export default class TR extends Component {
       <tr>
         <td className='width_td'>
         </td>
-        <th scope='row' onClick={setDeploymentId}><Link data-id={item.id} to={`/Pods/${item.name}`}>{item.name}<td>{item.ram}</td></Link></th>
+        <th scope='row' onClick={setDeploymentId}><Link data-id={item.name} to={`/Pods/${item.name}`}>{item.name}<td>{item.ram}</td></Link></th>
         <td>{item.status}</td>
         <td>{item.restarts}</td>
         <td>{item.created}</td>

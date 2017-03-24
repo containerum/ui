@@ -13,7 +13,7 @@ class Services_1 extends Component {
     }
   }
   componentDidMount() {
-        axios.get('http://139.59.146.89/api/services/x1')
+        axios.get(`http://139.59.146.89/api/services/${this.props.data.id}`)
         .then(response => {
           this.setState({data_services: response.data})
           console.log(this.state.data_services);
