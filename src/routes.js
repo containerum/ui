@@ -25,10 +25,11 @@ import Services_1 from './components/Services/investedServices';
 import Volume_1 from './components/Volume/volume_1';
 import Secrets_1 from './components/Secrets/investedSecrets';
 import Tokens_1 from './components/Tokens/tokens_1';
+import RequireAuth from './components/auth/require-auth';
 
 export const routes = (
   <div>
-    <Route path='/' component={App}>
+    <Route path='/' component={RequireAuth(App)}>
       <IndexRoute component={Workloads} />
       <Route path='/Deployments/:deployments_1' component={Deployments_1} />
       <Route path='/ReplicaSets/:replicasets_1' component={ReplicaSets_1} />
@@ -51,10 +52,9 @@ export const routes = (
       <Route path='/Referrals' component={Referrals} />
     </Route>
     <Route path='/Login' component={Logout}>
-      <Route path='/' path={browserHistory.push('/')} component={Workloads} >
-    </Route>
-      </Route>
-      <Route path='/Signup' component={Signup}></Route>
-      <Route path='/Forgot' component={Forgot}></Route>
-    </div>
+      <Route path='/' path={browserHistory.push('/')} component={Workloads} />
+     </Route>
+     <Route path='/Signup' component={Signup}/>
+     <Route path='/Forgot' component={Forgot}/>
+  </div>
 );
