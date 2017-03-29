@@ -16,7 +16,7 @@ export default class TR extends Component {
     var end = start + this.props.pageSize;
     return {
       currentPage: this.state.currentPage,
-      data: this.props.data.pods.slice(start, end),
+      data: this.props.data.slice(start, end),
       numPages: this.getNumPages(),
      handleClick: function(pageNum) {
         return function() { this.handlePageChange(pageNum) }.bind(this)
@@ -24,8 +24,8 @@ export default class TR extends Component {
     }
   }
   getNumPages() {
-    var numPages = Math.floor(this.props.data.pods.length / this.props.pageSize)
-    if (this.props.data.pods.length % this.props.pageSize > 0) {
+    var numPages = Math.floor(this.props.data.length / this.props.pageSize)
+    if (this.props.data.length % this.props.pageSize > 0) {
       numPages++
     }
     return numPages
@@ -35,7 +35,7 @@ export default class TR extends Component {
   }
   componentDidMount() {
     var that = this;
-    this.props.data.pods.map(function(item){
+    this.props.data.map(function(item){
       if (item.ram < 500) {
         console.log(item.ram);
         that.setState({

@@ -6,15 +6,14 @@ export default function(ComposedComponent) {
     static contextTypes = {
       router: React.PropTypes.object
     }
-
     componentWillMount() {
-      if(!this.props.authenticated) {
+      if(this.props.isAuthenticated == false) {
         this.context.router.push('/Login');
       }
     }
 
     componentWillUpdate(nextProps) {
-      if(!nextProps.authenticated) {
+      if(nextProps.this.props.isAuthenticated == false) {
         this.context.router.push('/Login');
       }
     }
@@ -25,8 +24,14 @@ export default function(ComposedComponent) {
   }
 
   function mapStateToProps(state) {
-    return { authenticated: state.auth.authenticated };
+
+    const { auth } = state
+    const { isAuthenticated } = auth
+
+    return {
+      isAuthenticated
+    }
   }
 
-  return connect(mapStateToProps)(Authentication);
+  connect(mapStateToProps)(Authentication)
 }

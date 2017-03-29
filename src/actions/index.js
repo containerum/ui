@@ -1,43 +1,122 @@
-import axios from 'axios';
-import cookie from 'react-cookie';
-import { AUTH_USER,
-         UNAUTH_USER } from './types';
-import { browserHistory } from 'react-router';
+import axios from 'axios'
+import { browserHistory } from 'react-router'
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
+export const LOGIN_REQUEST = 'LOGIN_REQUEST'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
-export function loginUser({email, password}) {
-  return function(dispatch) {
-    axios.post('http://139.59.146.89/api/login', { email, password })
-    .then(response => {
-      cookie.save('token', response.data.token, { path: '/' });
-      dispatch({ type: AUTH_USER });
-      window.location.href = '/';
-      browserHistory.push('/');
-    })
-     .catch(error=>{
-	console.log(error)
-  });
-    }
-  }
-
-export function registerUser({email, password}) {
-  return function(dispatch) {
-    axios.post('http://139.59.146.89/api/users', { email, password })
-    .then(response => {
-      cookie.save('token', response.data.token, { path: '/' });
-      dispatch({ type: AUTH_USER });
-      window.location.href = '/';
-    })
-   .catch(error=>{
-	console.log(error)
-  });
+export function logoutUser() {
+  return dispatch => {
+    dispatch(requestLogout())
+    localStorage.removeItem('id_token')
+    dispatch(receiveLogout())
   }
 }
 
-export function logoutUser() {
-  return function (dispatch) {
-    dispatch({ type: UNAUTH_USER });
-    cookie.remove('token', { path: '/' });
+function requestSignUp(creds) {
+  return {
+    type: SIGNUP_REQUEST,
+    isFetching: true,
+    isAuthenticated: false,
+    creds
+  }
+}
 
-    window.location.href = '/Login';
+function receiveSignUp() {
+  return {
+    type: SIGNUP_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true
+  }
+}
+
+function SignUpError(message) {
+  return {
+    type: SIGNUP_FAILURE,
+    isFetching: false,
+    isAuthenticated: false,
+    message
+  }
+}
+
+export function SignUpUser(creds) {
+
+  return dispatch => {
+    dispatch(requestSignUp(creds))
+    return axios.post('http://139.59.146.89/api/users', {username: creds.username, password: creds.password, first_name: creds.username})
+      .then(response => {
+        if (!response.ok) {
+          dispatch(receiveSignUp())
+          browserHistory.push('/Login')
+        } else {
+          dispatch(SignUpError(response.status))
+        }
+      }).catch(err => console.log(err))
+}
+}
+function requestLogout() {
+  return {
+    type: LOGOUT_REQUEST,
+    isFetching: true,
+    isAuthenticated: true
+  }
+}
+
+function receiveLogout() {
+  return {
+    type: LOGOUT_SUCCESS,
+    isFetching: false,
+    isAuthenticated: false
+  }
+}
+
+
+export function LOGINUser(creds) {
+
+  return dispatch => {
+    dispatch(requestLOGIN(creds))
+    return axios.post('http://139.59.146.89/api/login', {username: creds.username, password: creds.password})
+      .then(response => {
+        if (!response.ok) {
+          dispatch(receiveLOGIN(response))
+          localStorage.setItem('id_token', response.token)
+          browserHistory.push('/')
+        } else {
+          dispatch(LOGINError(response.status))
+        }
+      }).catch(err => console.log(err))
+   }
+}
+
+
+function requestLOGIN(creds) {
+  return {
+    type: SIGNUP_REQUEST,
+    isFetching: true,
+    isAuthenticated: false,
+    creds
+  }
+}
+
+function receiveLOGIN(response) {
+  return {
+    type: SIGNUP_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true,
+    id_token: response.token
+  }
+}
+
+function LOGINError(message) {
+  return {
+    type: SIGNUP_FAILURE,
+    isFetching: false,
+    isAuthenticated: false,
+    message
   }
 }
