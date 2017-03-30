@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { logoutUser } from '../../../actions'
+import { connect } from 'react-redux'
 
-export default class ButtonDropRight extends Component {
+class ButtonDropRight extends Component {
   render() {
+    const { dispatch } = this.props
     return (
       <div className = 'dropdown'>
         <button className = 'btn btn-default dropdown-toggle' type = 'button' id = 'dropdownMenu1' data-toggle = 'dropdown' aria-haspopup = 'true' aria-expanded = 'true'>
@@ -29,10 +32,21 @@ export default class ButtonDropRight extends Component {
             <Link to = '/Referrals'>Referrals</Link>
           </li>
           <li>
-            <Link to = '/Login'>Log Out</Link>
+            <Link onClick={dispatch(logoutUser())} to = '/Login'>Log Out</Link>
           </li>
         </ul>
       </div>
     );
   }
 }
+function mapStateToProps(state) {
+
+  const { auth } = state
+  const { errorMessage } = auth
+
+  return {
+    errorMessage
+  }
+}
+
+export default connect(mapStateToProps)(ButtonDropRight)

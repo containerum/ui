@@ -7,16 +7,9 @@ import { routes } from './routes';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 import reducers from './reducers/index';
-import { AUTH_USER } from './actions/types';
-import cookie from 'react-cookie';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
-const token = cookie.load('token');
-
-if (token) {
-  store.dispatch({ type: AUTH_USER });
-}
 
 function setDeploymentId(e){return store.dispatch({ type: 'SET_DATA_ID', payload: e.target.dataset.id })}
 
