@@ -108,6 +108,30 @@ tr .ramGb {
   margin-top: 15px;
   margin-left: 120px;
 }
+#loginPassAlert {
+  min-width: 100%;
+  visibility: hidden;
+  background-color: #F44336;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  margin-top: -100px;
+
+}
+#loginEmailAlert {
+  min-width: 100%;
+  visibility: hidden;
+  background-color: #F44336;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  margin-top: -100px;
+
+}
 .remove {
   position: relative;
   margin-top: 5px;

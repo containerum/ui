@@ -58,7 +58,7 @@ export default class TR extends Component {
           <th className='editPodsTable' scope='row' onClick={setDeploymentId}><Link data-id={item.name} to={`/Pods/${item.name}`}>{item.name}<td className='ramGb'>{item.ram} {that.state.ramState}</td></Link></th>
           <td className='editPodsTableRestarts'>{item.status}</td>
           <td className='editDepTablelabel'>{item.restarts}</td>
-          <td className='editPodsTableage'>{item.created}</td>
+          <td className='editPodsTableage'>{item.created_at}</td>
           <td></td>
           <td></td>
           <td></td>

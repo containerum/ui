@@ -16,7 +16,7 @@ export default class TR extends Component {
     var end = start + this.props.pageSize;
     return {
       currentPage: this.state.currentPage,
-      data: this.props.data.deployments.slice(start, end),
+      data: this.props.data.slice(start, end),
       numPages: this.getNumPages(),
      handleClick: function(pageNum) {
         return function() { this.handlePageChange(pageNum) }.bind(this)
@@ -24,8 +24,8 @@ export default class TR extends Component {
     }
   }
   getNumPages() {
-    var numPages = Math.floor(this.props.data.deployments.length / this.props.pageSize)
-    if (this.props.data.deployments.length % this.props.pageSize > 0) {
+    var numPages = Math.floor(this.props.data.length / this.props.pageSize)
+    if (this.props.data.length % this.props.pageSize > 0) {
       numPages++
     }
     return numPages
@@ -35,7 +35,7 @@ export default class TR extends Component {
   }
   componentDidMount() {
     var that = this;
-    this.props.data.deployments.map(function(item){
+    this.props.data.map(function(item){
       if (item.ram < 500) {
         console.log(item.ram);
         that.setState({
@@ -64,14 +64,8 @@ export default class TR extends Component {
               </div>
           )
         })}</td>
-          <td className='editDepTablelabel'>{item.created}</td>
-          <td>{item.labels.map(function(item){
-            return (
-              <div>
-               app: {item}
-              </div>
-          )
-        })}</td>
+          <td className='editDepTablelabel'>{item.created_at}</td>
+          <td>{item.labels.run}</td>
           <td className='menu_dropdown'>
             <Button data_id={item.id}/>
           </td>

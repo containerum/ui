@@ -12,10 +12,7 @@ export default class InputSignUp extends Component {
         <div className='formcontainer'>
           <h2>Sign Up</h2>
           <div className='form-group'>
-            <input type='first_name' ref='first_name' className='form-control' placeholder='First name'/>
-          </div>
-          <div className='form-group'>
-            <input type='text' ref='username' className='form-control' placeholder='Username'/>
+            <input type='text' ref='username' className='form-control' placeholder='Email'/>
           </div>
           <div className='form-group'>
             <input type='password' ref='password' className='form-control' placeholder='Password'/>
@@ -39,8 +36,7 @@ export default class InputSignUp extends Component {
   handleClick() {
     const username = this.refs.username
     const password = this.refs.password
-    const first_name = this.refs.first_name
-    const creds = { username: username.value.trim(), password: password.value.trim(), first_name: first_name.value.trim() }
+    const creds = { username: username.value.trim(), password: password.value.trim() }
     this.props.onLoginClick(creds)
   }
 }

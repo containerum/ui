@@ -48,7 +48,7 @@ export function SignUpUser(creds) {
 
   return dispatch => {
     dispatch(requestSignUp(creds))
-    return axios.post('http://139.59.146.89/api/users', {username: creds.username, password: creds.password, first_name: creds.username})
+    return axios.post('http://139.59.146.89/api/users', {username: creds.username, password: creds.password})
       .then(response => {
         if (!response.ok) {
           dispatch(receiveSignUp())
@@ -84,7 +84,7 @@ export function LOGINUser(creds) {
       .then(response => {
         if (!response.ok) {
           dispatch(receiveLOGIN(response))
-          localStorage.setItem('id_token', response.token)
+          localStorage.setItem('id_token', response.data.token)
           browserHistory.push('/')
         } else {
           dispatch(LOGINError(response.status))
@@ -108,7 +108,7 @@ function receiveLOGIN(response) {
     type: SIGNUP_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    id_token: response.token
+    id_token: response.data.token
   }
 }
 
