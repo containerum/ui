@@ -1,30 +1,33 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { browserHistory } from 'react-router';
 
-export default function(ComposedComponent) {
-  class Authentication extends Component {
-    static contextTypes = {
-      router: React.PropTypes.object
-    }
+export default function requireAuthentication(Component) {
+
+  class AuthenticatedComponent extends Component {
     componentWillMount() {
-      if(this.props.isAuthenticated == false) {
-        this.context.router.push('/Login');
+      if (this.props.isAuthenticated === true) {
+        browserHistory.push('/')
       }
     }
-
     componentWillUpdate(nextProps) {
-      if(nextProps.this.props.isAuthenticated == false) {
-        this.context.router.push('/Login');
+      if (nextProps.this.props.isAuthenticated === true) {
+        browserHistory.push('/')
       }
     }
-
     render() {
-      return <ComposedComponent {...this.props} />
+      return (
+        <div>
+          {this.props.isAuthenticated === true
+            ? <Component {...this.props} />
+            : browserHistory.push('/Login')
+          }
+        </div>
+      )
     }
   }
 
   function mapStateToProps(state) {
-
     const { auth } = state
     const { isAuthenticated } = auth
 
@@ -33,5 +36,5 @@ export default function(ComposedComponent) {
     }
   }
 
-  connect(mapStateToProps)(Authentication)
+  return connect(mapStateToProps)(AuthenticatedComponent)
 }
