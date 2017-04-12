@@ -6,13 +6,13 @@ export default function requireAuthentication(Component) {
 
   class AuthenticatedComponent extends Component {
     componentWillMount() {
-      if (this.props.isAuthenticated === true) {
-        browserHistory.push('/')
+      if (this.props.isAuthenticated === false) {
+        browserHistory.push('/Login')
       }
     }
     componentWillUpdate(nextProps) {
-      if (nextProps.this.props.isAuthenticated === true) {
-        browserHistory.push('/')
+      if (nextProps.isAuthenticated === false) {
+        browserHistory.push('/Login')
       }
     }
     render() {
@@ -20,7 +20,7 @@ export default function requireAuthentication(Component) {
         <div>
           {this.props.isAuthenticated === true
             ? <Component {...this.props} />
-            : browserHistory.push('/Login')
+            : null
           }
         </div>
       )

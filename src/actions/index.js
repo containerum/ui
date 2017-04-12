@@ -22,7 +22,6 @@ function requestSignUp(creds) {
   return {
     type: SIGNUP_REQUEST,
     isFetching: true,
-    isAuthenticated: false,
     creds
   }
 }
@@ -30,8 +29,7 @@ function requestSignUp(creds) {
 function receiveSignUp() {
   return {
     type: SIGNUP_SUCCESS,
-    isFetching: false,
-    isAuthenticated: true
+    isFetching: false
   }
 }
 
@@ -39,7 +37,6 @@ function SignUpError(message) {
   return {
     type: SIGNUP_FAILURE,
     isFetching: false,
-    isAuthenticated: false,
     message
   }
 }
@@ -82,7 +79,7 @@ export function LOGINUser(creds) {
     dispatch(requestLOGIN(creds))
     return axios.post('http://139.59.146.89/api/login', {username: creds.username, password: creds.password})
       .then(response => {
-        if (!response.ok) {
+        if (response.status === 200) {
           dispatch(receiveLOGIN(response))
           localStorage.setItem('id_token', response.data.token)
           browserHistory.push('/')
@@ -96,7 +93,7 @@ export function LOGINUser(creds) {
 
 function requestLOGIN(creds) {
   return {
-    type: SIGNUP_REQUEST,
+    type: LOGIN_REQUEST,
     isFetching: true,
     isAuthenticated: false,
     creds
@@ -105,7 +102,7 @@ function requestLOGIN(creds) {
 
 function receiveLOGIN(response) {
   return {
-    type: SIGNUP_SUCCESS,
+    type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
     id_token: response.data.token
@@ -114,7 +111,7 @@ function receiveLOGIN(response) {
 
 function LOGINError(message) {
   return {
-    type: SIGNUP_FAILURE,
+    type: LOGIN_FAILURE,
     isFetching: false,
     isAuthenticated: false,
     message

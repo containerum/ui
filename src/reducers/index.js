@@ -12,19 +12,16 @@ function auth(state = {
     case SIGNUP_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
-        isAuthenticated: false,
         user: action.creds
       })
     case SIGNUP_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        isAuthenticated: true,
         errorMessage: ''
       })
     case SIGNUP_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
-        isAuthenticated: false,
         errorMessage: action.message
       })
     case LOGOUT_SUCCESS:
