@@ -77,14 +77,18 @@ export function LOGINUser(creds) {
 
   return dispatch => {
     dispatch(requestLOGIN(creds))
-    return axios.post('http://139.59.146.89/api/login', {username: creds.username, password: creds.password})
+    return axios.post(
+        'http://139.59.146.89/api/login',
+        {username: creds.username, password: creds.password},
+        {validateStatus: (status) => status >= 200 && status <= 300 || status == 404}
+      )
       .then(response => {
         if (response.status === 200) {
           dispatch(receiveLOGIN(response))
           localStorage.setItem('id_token', response.data.token)
           browserHistory.push('/')
         } else {
-          dispatch(LOGINError(response.status))
+          dispatch(LOGINError(response.data.message))
         }
       }).catch(err => console.log(err))
    }

@@ -42,6 +42,7 @@ function auth(state = {
           errorMessage: ''
         })
       case LOGIN_FAILURE:
+        console.log(action.message)
         return Object.assign({}, state, {
           isFetching: false,
           isAuthenticated: false,

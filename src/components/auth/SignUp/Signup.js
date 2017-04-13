@@ -12,7 +12,7 @@ export default class SignUp extends Component {
       <div>
           <InputSignUp
             errorMessage={errorMessage}
-            onLoginClick={ creds => dispatch(SignUpUser(creds)) }
+            SignUpUser={ creds => dispatch(SignUpUser(creds)) }
           />
       </div>
     )
