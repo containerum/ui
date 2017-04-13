@@ -25,6 +25,7 @@ module.exports = {
         NODE_ENV: '"development"',
       },
       __DEVELOPMENT__: true,
+      'process.env.NODE_ENV': JSON.stringify('development'),
     }),
     new ExtractTextPlugin('bundle.css'),
     new webpack.optimize.OccurenceOrderPlugin(),

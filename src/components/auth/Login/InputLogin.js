@@ -52,7 +52,7 @@ export default class InputLogin extends Component {
     const password = this.refs.password
     const creds = { username: username.value.trim(), password: password.value.trim() }
     const button = this.refs.button
-    const valid = validator.isEmail(username.value, 'foo@bar.com');
+    const valid = validator.isEmail(username.value);
     if(valid == true) {
       if (password.value.length >= 8) {
         this.props.onLoginClick(creds)

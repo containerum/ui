@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 class ButtonDropRight extends Component {
   render() {
-    const { dispatch } = this.props
     return (
       <div className = 'dropdown'>
         <button className = 'btn btn-default dropdown-toggle' type = 'button' id = 'dropdownMenu1' data-toggle = 'dropdown' aria-haspopup = 'true' aria-expanded = 'true'>
@@ -32,15 +31,15 @@ class ButtonDropRight extends Component {
             <Link to = '/Referrals'>Referrals</Link>
           </li>
           <li>
-            <Link onClick={dispatch(logoutUser())} to = '/Login'>Log Out</Link>
+            <Link onClick={() => this.props.onLogoutClick()} to = '/Login'>Log Out</Link>
           </li>
         </ul>
       </div>
     );
   }
 }
-function mapStateToProps(state) {
 
+const mapStateToProps = (state) => {
   const { auth } = state
   const { errorMessage } = auth
 
@@ -49,4 +48,12 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(ButtonDropRight)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogoutClick: () => {
+            dispatch(logoutUser())
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonDropRight)
