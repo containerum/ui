@@ -1,6 +1,5 @@
 body {
   background: #EEEEEE;
-
 }
 .dropdownserv {
   margin-left: 120px;
@@ -596,10 +595,9 @@ li {
 }
 .formcontainer {
   width: 600px;
-  height: 400px;
   border: 1px solid #9E9E9E;
-  margin-left: 180px;
-  margin-top: 30px;
+  margin: 30px 0 20px 180px;
+  padding-bottom: 50px;
   border-radius: 20px;
 }
 .rowform h1 {
@@ -631,7 +629,8 @@ li {
 .rowform .formcontainer .forminput {
   margin-top: 70px;
 }
-.rowform .formcontainer .btn-default {
+.rowform .formcontainer .btn-login_sign,
+.rowform .formcontainer .btn-reset {
   margin-left: 140px;
   width: 300px;
   height: 50px;
@@ -667,7 +666,7 @@ li {
   }
   .row .panel {
     width: 1020px;
-    margin: 10px, auto;
+    margin: 10px auto;
   }
   .pager {
     position: absolute;
@@ -727,7 +726,7 @@ li {
   }
   .row .panel {
     width: 1320px;
-    margin: 10px, auto;
+    margin: 10px auto;
   }
   .pager {
     position: absolute;
@@ -808,7 +807,7 @@ li {
   }
   .row .panel {
     width: 1620px;
-    margin: 10px, auto;
+    margin: 10px auto;
   }
   .pager {
     position: absolute;
@@ -892,7 +891,7 @@ li {
   }
   .row .panel {
     width: 780px;
-    margin: 10px, auto;
+    margin: 10px auto;
   }
   .pager {
     position: absolute;

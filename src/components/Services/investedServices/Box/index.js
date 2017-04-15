@@ -10,14 +10,14 @@ export default class Box extends Component {
               <h3>{this.props.item.name}</h3>
               <ul className='servul'>
               <li>Namespace:</li>
-              {this.props.item.endpoints.map(function(item){
+              {this.props.item.endpoints.map(function(item, index){
                 return (
-                  <li>Labels: components: apiserver provider: {item.host}</li>
+                  <li key={index}>Labels: components: apiserver provider: {item.host}</li>
               )
               })}
-              {this.props.item.labels.map(function(item){
+              {this.props.item.labels.map(function(item, index){
                 return (
-                  <li>Labels: {item.x1}</li>
+                  <li key={index}>Labels: {item.x1}</li>
               )
               })}
               <li>Creation time: {this.props.item.creation_time}</li>

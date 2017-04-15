@@ -12,9 +12,9 @@ export default class Box extends Component {
           <div className='col-md-3'>
             <ul>
               <li>Namespace: {this.props.item.namespace}</li>
-              {this.props.item.labels.map(function(item){
+              {this.props.item.labels.map(function(item, index){
                 return (
-                  <li>Labels: app: {item.x1}</li>
+                  <li key={index}>Labels: app: {item.x1}</li>
                 )
               })}
               <li>Creation time: {this.props.item.creation_time}</li>
@@ -22,14 +22,14 @@ export default class Box extends Component {
           </div>
           <div className='col-md-3'>
             <ul>
-            {this.props.item.images.map(function(item){
+            {this.props.item.images.map(function(item, index){
               return (
-                <li>Images: {item}</li>
+                <li key={index}>Images: {item}</li>
               )
             })}
-            {this.props.item.selectors.map(function(item){
+            {this.props.item.selectors.map(function(item, index){
               return (
-                <li>Selectors: {item.x1}</li>
+                <li key={index}>Selectors: {item.x1}</li>
               )
             })}
             </ul>

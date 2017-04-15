@@ -10,10 +10,10 @@ export default class NavBar extends Component {
             <nav className = 'navbar navbar-default'>
               <div className = 'container-fluid'>
                 <div className = 'navbar-header'>
-                  <a className = 'navbar-brand' href = '#'>
+                  <Link to = '/' className = 'navbar-brand'>
                     <img alt = '' src = '...' />
-                    <h3 ><Link to = '/'>Containerum</Link></h3>
-                  </a>
+                    <h3 >Containerum</h3>
+                  </Link>
                   <div className = 'col-md-2 info'>
                     <ButtonInfo />
                   </div>

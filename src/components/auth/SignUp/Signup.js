@@ -1,7 +1,7 @@
-
-import React, { Component, PropTypes } from 'react'
-import InputSignUp from './InputSignUp'
-import { SignUpUser } from '../../../actions'
+import React, { Component } from 'react';
+import InputSignUp from './InputSignUp';
+import { SignUpUser } from '../../../actions';
+import PropTypes from 'prop-types';
 
 export default class SignUp extends Component {
 
@@ -21,6 +21,6 @@ export default class SignUp extends Component {
 
 SignUp.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   errorMessage: PropTypes.string
 }

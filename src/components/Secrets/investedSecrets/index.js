@@ -13,10 +13,10 @@ var table_data = [
 class Secrets_1 extends Component {
   render() {
     var { data } = this.props;
-    var renderSecrets = table_data.map(function(item){
+    var renderSecrets = table_data.map(function(item, index){
       if (item.id == data.id) {
         return (
-          <div className='row'>
+          <div className='row' key={index}>
             <Box item={item}/>
             <Data />
           </div>

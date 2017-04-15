@@ -59,15 +59,15 @@ export default class TR extends Component {
   render() {
     var that = this;
     var page = this.getPage();
-    var topics = page.data.map(function(item) {
+    var topics = page.data.map(function(item, index) {
     return (
-      <tr>
+      <tr key={index}>
         <td className='width_td'></td>
           <th className='editDepTable' scope='row' onClick={setDeploymentId}><Link data-id={item.name} to={`/Deployments/${item.name}`}>{item.name}<td className='ramGb'>{item.ram} {that.state.ramState}</td></Link></th>
           <td className='editDepTable'>{item.pods_active} / {item.pods_limit}</td>
-          <td className='editDepTable'>{item.images.map(function(item){
+          <td className='editDepTable'>{item.images.map(function(item, index){
             return (
-              <div>
+              <div key={index}>
               {item}
               </div>
           )

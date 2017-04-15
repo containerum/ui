@@ -5,9 +5,9 @@ import setDeploymentId from '../../../../../index';
 
 export default class TR extends Component {
   render() {
-    var dep = this.props.item.map(function(item){
+    var dep = this.props.item.map(function(item, index){
     return (
-      <tr>
+      <tr key={index}>
         <td className='width_td'>
           <img src='http://placehold.it/50x50' alt='...' className='img-rounded'/>
         </td>

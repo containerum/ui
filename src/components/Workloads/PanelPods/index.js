@@ -22,8 +22,8 @@ export default class PanelPods extends Component {
   }
   render() {
     const loader = (
-      <p>Error with data receiving</p>
-    )
+        <tr><th>Error with data receiving</th></tr>
+    );
     return (
       <div className='panel panel-default'>
         <div className='panel-heading'>
@@ -45,7 +45,9 @@ export default class PanelPods extends Component {
               <th></th>
             </tr>
           </thead>
-          {this.state.data_pods == '' ? loader : <TR data={this.state.data_pods} pageSize={this.state.pageSize}/>}
+          <tbody>
+            {this.state.data_pods == '' ? loader : <TR data={this.state.data_pods} pageSize={this.state.pageSize}/>}
+          </tbody>
         </table>
       </div>
     </div>

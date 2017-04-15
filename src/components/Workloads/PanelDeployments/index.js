@@ -22,8 +22,8 @@ export default class PanelDeployments extends Component {
   }
   render() {
     const loader = (
-      <p>Error with data receiving</p>
-    )
+        <tr><th>Error with data receiving</th></tr>
+    );
     return (
       <div className='panel panel-default'>
         <div className='panel-heading'>
@@ -42,7 +42,9 @@ export default class PanelDeployments extends Component {
               <th></th>
             </tr>
           </thead>
-          {this.state.data_dep == '' ? loader : <TR data={this.state.data_dep} pageSize={this.state.pageSize}/>}
+          <tbody>
+            {this.state.data_dep == '' ? loader : <TR data={this.state.data_dep} pageSize={this.state.pageSize}/>}
+          </tbody>
         </table>
       </div>
     </div>

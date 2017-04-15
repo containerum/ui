@@ -31,9 +31,9 @@ export default class TR extends Component {
   }
   render() {
     var page = this.getPage();
-    var topics = page.data.map(function(item) {
+    var topics = page.data.map(function(item, index) {
     return (
-      <tr>
+      <tr key={index}>
         <th scope='row'>{item.message}</th>
         <td>{item.source}</td>
         <td>{item.sub_object}</td>

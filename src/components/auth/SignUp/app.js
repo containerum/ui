@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import SignUp from './Signup'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import SignUp from './Signup';
+import PropTypes from 'prop-types';
 
 class AppSignUp extends Component {
   render() {
@@ -19,9 +20,9 @@ class AppSignUp extends Component {
 AppSignUp.propTypes = {
   dispatch: PropTypes.func.isRequired,
   quote: PropTypes.string,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   errorMessage: PropTypes.string,
-  isSecretQuote: PropTypes.bool.isRequired
+  isSecretQuote: PropTypes.bool
 }
 
 function mapStateToProps(state) {

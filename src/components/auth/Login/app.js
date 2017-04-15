@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import Login from './Login'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Login from './Login';
+import PropTypes from 'prop-types';
 
 class App extends Component {
   render() {
@@ -19,9 +20,9 @@ class App extends Component {
 App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   quote: PropTypes.string,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   errorMessage: PropTypes.string,
-  isSecretQuote: PropTypes.bool.isRequired
+  isSecretQuote: PropTypes.bool
 }
 
 function mapStateToProps(state) {

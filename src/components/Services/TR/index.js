@@ -34,17 +34,17 @@ export default class TR extends Component {
   }
   render() {
     var page = this.getPage();
-    var topics = page.data.map(function(item) {
+    var topics = page.data.map(function(item, index) {
     return (
-      <tr>
+      <tr key={index}>
         <td className='width_td'></td>
           <th scope='row' onClick={setDeploymentId}><Link data-id={item.name} to={`/Services/${item.name}`}>{item.name}</Link></th>
           <td></td>
           <td></td>
           <td>{item.created}</td>
-          <td>{item.labels.map(function(item){
+          <td>{item.labels.map(function(item, index){
             return (
-              <div>
+              <div key={index}>
                app: {item}
               </div>
           )

@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router';
 import validator from 'validator';
+import PropTypes from 'prop-types';
 
 export default class InputLogin extends Component {
   render() {
@@ -16,12 +17,12 @@ export default class InputLogin extends Component {
         <div className='formcontainer'>
           <h2>Log In</h2>
           <div className='form-group'>
-            <input type='text' ref='username' className='form-control' placeholder='Email'/>
+            <input onBlur={(event) => this.ValidationGetValueMail(event)}  type='text' ref='username' className='form-control' placeholder='Email' required='required' pattern='[A-Za-z]{6,}' autoFocus />
           </div>
           <div className='form-group'>
-            <input onKeyDown={(event) => this.ValidationGetValuePass(event)} type='password' ref='password' className='form-control' placeholder='Password'/>
+            <input onKeyDown={(event) => this.ValidationGetValuePass(event)} type='password' ref='password' className='form-control' placeholder='Password'required='required' />
           </div>
-          <button ref='button' onClick={(event) => this.handleClick(event)} className='btn btn-default'>
+          <button ref='button' onClick={(event) => this.handleClick(event)} className='btn btn-default btn-login_sign'>
             Log In
           </button>
           <h5><Link to='/Forgot'>Forgot password</Link></h5>
@@ -45,6 +46,19 @@ export default class InputLogin extends Component {
     if (pass >= 64) {
       button.setAttribute('disabled', 'disabled');
     }
+  }
+    
+  ValidationGetValueMail() {
+      const username = this.refs.username;
+      const button = this.refs.button;
+      const isValidMail = validator.isEmail(username.value);
+      if (isValidMail) {
+          button.removeAttribute('disabled', 'disabled');
+      } else {
+          button.setAttribute('disabled', 'disabled');
+          username.setAttribute('data-toggle', 'tooltip');
+          username.setAttribute('title', 'Hooray Hooray');
+      }
   }
 
   handleClick() {
