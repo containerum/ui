@@ -13,13 +13,15 @@ const store = createStore(reducers, composeWithDevTools(
     applyMiddleware(reduxThunk)
 ));
 
-function setDeploymentId(e){return store.dispatch({ type: 'SET_DATA_ID', payload: e.target.dataset.id })}
+function setDeploymentId(e) {
+    return store.dispatch({ type: 'SET_DATA_ID', payload: e.target.dataset.id });
+}
 
 render(
-  <Provider store={store}>
-    <Router history={browserHistory} routes={routes} />
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <Router history={browserHistory} routes={routes} />
+    </Provider>,
+    document.getElementById('root')
 );
 
 export default setDeploymentId;

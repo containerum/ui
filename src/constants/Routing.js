@@ -1,1 +1,1 @@
-export const ROUTING = 'ROUTING'
+export const ROUTING = 'ROUTING';

@@ -28,33 +28,33 @@ import Tokens_1 from './components/Tokens/tokens_1';
 import requireAuthentication from './components/auth/require-auth'
 
 export const routes = (
-  <div>
-    <Route path='/' component={requireAuthentication(App)}>
-      <IndexRoute component={Workloads} />
-      <Route path='/Deployments/:deployments_1' component={Deployments_1} />
-      <Route path='/ReplicaSets/:replicasets_1' component={ReplicaSets_1} />
-      <Route path='/Pods/:pods_1' component={Pods_1} />
-      <Route path='/Services/:services_1' component={Services_1} />
-      <Route path='/Volume/:volume_1' component={Volume_1} />
-      <Route path='/Secrets/:secrets_1' component={Secrets_1} />
-      <Route path='/Tokens/:tokens_1' component={Tokens_1} />
-      <Route path='/Deployments' component={Deployments} />
-      <Route path='/ReplicaSets' component={ReplicaSets} />
-      <Route path='/Pods' component={Pods} />
-      <Route path='/Services' component={Services} />
-      <Route path='/Storage' component={Storage} />
-      <Route path='/Volume' component={Volume} />
-      <Route path='/Config' component={Config} />
-      <Route path='/Secrets' component={Secrets} />
-      <Route path='/Tokens' component={Tokens} />
-      <Route path='/Profile' component={Profile} />
-      <Route path='/Billing' component={Billing} />
-      <Route path='/Referrals' component={Referrals} />
-    </Route>
-    <Route path='/Login' component={Logout}>
-      <Route path='/' path={browserHistory.push('/')} component={Workloads} />
-    </Route>
-    <Route path='/Forgot' component={Forgot}/>
-    <Route path='/Signup' component={Signup}/>
-  </div>
+    <div>
+        <Route path='/' component={requireAuthentication(App)}>
+            <IndexRoute component={Workloads} />
+            <Route path='/Deployments/:deployments_1' component={Deployments_1} />
+            <Route path='/ReplicaSets/:replicasets_1' component={ReplicaSets_1} />
+            <Route path='/Pods/:pods_1' component={Pods_1} />
+            <Route path='/Services/:services_1' component={Services_1} />
+            <Route path='/Volume/:volume_1' component={Volume_1} />
+            <Route path='/Secrets/:secrets_1' component={Secrets_1} />
+            <Route path='/Tokens/:tokens_1' component={Tokens_1} />
+            <Route path='/Deployments' component={Deployments} />
+            <Route path='/ReplicaSets' component={ReplicaSets} />
+            <Route path='/Pods' component={Pods} />
+            <Route path='/Services' component={Services} />
+            <Route path='/Storage' component={Storage} />
+            <Route path='/Volume' component={Volume} />
+            <Route path='/Config' component={Config} />
+            <Route path='/Secrets' component={Secrets} />
+            <Route path='/Tokens' component={Tokens} />
+            <Route path='/Profile' component={Profile} />
+            <Route path='/Billing' component={Billing} />
+            <Route path='/Referrals' component={Referrals} />
+        </Route>
+        <Route path='/Login' component={Logout}>
+            <Route path='/' path={browserHistory.push('/')} component={Workloads} />
+        </Route>
+        <Route path='/Forgot' component={Forgot}/>
+        <Route path='/Signup' component={Signup}/>
+    </div>
 );
