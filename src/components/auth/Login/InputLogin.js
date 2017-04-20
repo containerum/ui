@@ -1,31 +1,24 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router';
-import validator from 'validator';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class InputLogin extends Component {
+import InputEmail from '../InputEmail/InputEmail';
+
+class InputLogin extends Component {
     render() {
         const { errorMessage } = this.props;
 
         return (
             <div>
-                <div id='loginEmailAlert'><center><p>Email is not valid</p></center></div>
-                <div id='loginPassAlert'><center><p>Password is not valid</p></center></div>
-                <div className='row rowform'>
+                <div id='loginAlert'><center><p>Email or Password is not valid</p></center></div>
+                <form className='row rowform' onSubmit={(event) => this.handleClick(event)}>
                     <img src='http://placehold.it/70x70' className='img-circle' alt='Responsive image'/>
                     <h1>Containerum</h1>
                     <div className='formcontainer'>
                         <h2>Log In</h2>
                         <div className='form-group'>
-                            <input
-                                onBlur={(event) => this.ValidationGetValueMail(event)}
-                                type='text'
-                                ref='username'
-                                className='form-control'
-                                placeholder='Email'
-                                required='required'
-                                autoFocus
-                            />
+                            <InputEmail />
                         </div>
                         <div className='form-group'>
                             <input
@@ -37,19 +30,14 @@ export default class InputLogin extends Component {
                                 required='required'
                             />
                         </div>
-                        <button
-                            ref='button'
-                            onClick={(event) => this.handleClick(event)}
-                            className='btn btn-default btn-login_sign'
-                        >Log In
-                        </button>
+                        <button ref='button' className='btn btn-default btn-login_sign'>Log In</button>
                         <h5><Link to='/Forgot'>Forgot password</Link></h5>
                         {
                             <p>{errorMessage}</p>
                         }
                     </div>
                     <h5>Dont have an account?<Link to='/Signup'>Sign Up</Link></h5>
-                </div>
+                </form>
             </div>
         )
     }
@@ -65,37 +53,17 @@ export default class InputLogin extends Component {
             button.setAttribute('disabled', 'disabled');
         }
     }
-    
-    ValidationGetValueMail() {
-        const username = this.refs.username;
-        const button = this.refs.button;
-        const isValidMail = validator.isEmail(username.value);
-        if (isValidMail) {
-            button.removeAttribute('disabled', 'disabled');
-        } else {
-            button.setAttribute('disabled', 'disabled');
-            username.setAttribute('data-toggle', 'tooltip');
-            username.setAttribute('title', 'Hooray Hooray');
-        }
-    }
 
-    handleClick() {
-        const username = this.refs.username;
-        const password = this.refs.password;
-        const creds = { username: username.value.trim(), password: password.value.trim() };
-        const button = this.refs.button;
-        const valid = validator.isEmail(username.value);
-        if(valid) {
-            if (password.value.length >= 8) {
-                this.props.onLoginClick(creds)
-            } else {
-                button.setAttribute('disabled', 'disabled');
-                let get = document.getElementById('loginPassAlert');
-                get.style.visibility = 'visible';
-                setTimeout(function() { get.style.visibility = 'hidden'; }, 5000);
-            }
+    handleClick(event) {
+        event.preventDefault();
+        const { isValidEmail, emailUser } = this.props.validate;
+
+        const password = this.refs.password.value;
+        const creds = { username: emailUser.trim(), password: password.trim() };
+        if(isValidEmail && (password.length >= 7 && password.length <= 64)) {
+            this.props.onLoginClick(creds)
         } else {
-            let getAlert = document.getElementById('loginEmailAlert');
+            let getAlert = document.getElementById('loginAlert');
             getAlert.style.visibility = 'visible';
             setTimeout(function() { getAlert.style.visibility = 'hidden'; }, 5000);
         }
@@ -106,3 +74,11 @@ InputLogin.propTypes = {
     onLoginClick: PropTypes.func.isRequired,
     errorMessage: PropTypes.string
 };
+
+function mapStateToProps (state) {
+    return {
+        validate: state.validate
+    }
+}
+
+export default connect(mapStateToProps)(InputLogin)

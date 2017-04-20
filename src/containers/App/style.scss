@@ -107,19 +107,7 @@ tr .ramGb {
   margin-top: 15px;
   margin-left: 120px;
 }
-#loginPassAlert {
-  min-width: 100%;
-  visibility: hidden;
-  background-color: #F44336;
-  padding-bottom: 5px;
-  padding-top: 5px;
-  color: #fff;
-  font-size: 17px;
-  position: absolute;
-  margin-top: -100px;
-
-}
-#loginEmailAlert {
+#loginAlert {
   min-width: 100%;
   visibility: hidden;
   background-color: #F44336;
@@ -630,7 +618,8 @@ li {
   margin-top: 70px;
 }
 .rowform .formcontainer .btn-login_sign,
-.rowform .formcontainer .btn-reset {
+.rowform .formcontainer .btn-reset,
+.rowform .formcontainer .btn-forgot {
   margin-left: 140px;
   width: 300px;
   height: 50px;

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import validator from 'validator';
 import PropTypes from 'prop-types';
 import Toggle from 'react-bootstrap-toggle';
+import { connect } from 'react-redux';
 
-export default class InputSignUp extends Component {
+import InputEmail from '../InputEmail/InputEmail';
+
+class InputSignUp extends Component {
     constructor() {
         super();
         this.state = { toggleActive: false };
@@ -44,8 +46,7 @@ export default class InputSignUp extends Component {
 
         return (
             <div>
-                <div id='loginEmailAlert'><center><p>Email is not valid</p></center></div>
-                <div id='loginPassAlert'><center><p>Password is not valid</p></center></div>
+                <div id='loginAlert'><center><p>Email or Password is not valid</p></center></div>
                 <form className='row rowform' onSubmit={(event) => this.handleClick(event)}>
                     <img src='http://placehold.it/70x70' className='img-circle' alt='Responsive image'/>
                     <h1>Containerum</h1>
@@ -64,15 +65,7 @@ export default class InputSignUp extends Component {
                             </div>
                         </div>
                         <div className='form-group'>
-                        <input
-                            onBlur={(event) => this.ValidationGetValueMail(event)}
-                            type='text'
-                            ref='username'
-                            className='form-control'
-                            placeholder='Email'
-                            required='required'
-                            autoFocus
-                        />
+                            <InputEmail />
                         </div>
                         <div className='form-group'>
                             <input
@@ -85,9 +78,7 @@ export default class InputSignUp extends Component {
                             />
                         </div>
                         {toggleCompanyComponent}
-                        <button ref='button' className='btn btn-default btn-login_sign'>
-                        SignUp
-                        </button>
+                        <button ref='button' className='btn btn-default btn-login_sign'>SignUp</button>
                         <div className='conh5'>
                             <h5>By signing up, you agree to the</h5>
                             <h5><a href='#'>Terms of Service</a> and <a href='#'>Privacy Policy</a></h5>
@@ -114,37 +105,16 @@ export default class InputSignUp extends Component {
         }
     }
 
-    ValidationGetValueMail() {
-        const username = this.refs.username;
-        const button = this.refs.button;
-        const isValidMail = validator.isEmail(username.value);
-        if (isValidMail) {
-            button.removeAttribute('disabled', 'disabled');
-        } else {
-            button.setAttribute('disabled', 'disabled');
-            username.setAttribute('data-toggle', 'tooltip');
-            username.setAttribute('title', 'Hooray Hooray');
-        }
-    }
-
     handleClick(event) {
         event.preventDefault();
-        const username = this.refs.username;
-        const password = this.refs.password;
-        const creds = { username: username.value.trim(), password: password.value.trim() };
-        const button = this.refs.button;
-        const valid = validator.isEmail(username.value);
-        if(valid) {
-            if (password.value.length >= 8) {
-                this.props.SignUpUser(creds)
-            } else {
-                button.setAttribute('disabled', 'disabled');
-                let get = document.getElementById('loginPassAlert');
-                get.style.visibility = 'visible';
-                setTimeout(function() { get.style.visibility = 'hidden'; }, 5000);
-            }
+        const { isValidEmail, emailUser } = this.props.validate;
+
+        const password = this.refs.password.value;
+        const creds = { username: emailUser.trim(), password: password.trim() };
+        if(isValidEmail && (password.length >= 7 && password.length <= 64)) {
+            this.props.SignUpUser(creds)
         } else {
-            let getAlert = document.getElementById('loginEmailAlert');
+            let getAlert = document.getElementById('loginAlert');
             getAlert.style.visibility = 'visible';
             setTimeout(function() { getAlert.style.visibility = 'hidden'; }, 5000);
         }
@@ -155,3 +125,11 @@ InputSignUp.propTypes = {
     SignUpUser: PropTypes.func.isRequired,
     errorMessage: PropTypes.string
 };
+
+function mapStateToProps (state) {
+    return {
+        validate: state.validate
+    }
+}
+
+export default connect(mapStateToProps)(InputSignUp)

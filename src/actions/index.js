@@ -9,6 +9,23 @@ export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const VALIDATE_EMAIL = 'VALIDATE_EMAIL';
+export const NOT_VALIDATE_EMAIL = 'NOT_VALIDATE_EMAIL';
+
+export function validateEmail(emailUser) {
+    return {
+        type: VALIDATE_EMAIL,
+        isValidEmail: true,
+        emailUser
+    }
+}
+
+export function notValidateEmail() {
+    return {
+        type: NOT_VALIDATE_EMAIL,
+        isValidEmail: false
+    }
+}
 
 export function logoutUser() {
     return dispatch => {
