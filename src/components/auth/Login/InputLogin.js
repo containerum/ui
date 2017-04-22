@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import InputEmail from '../InputEmail/InputEmail';
+import InputPassword from '../InputPassword/InputPassword';
 
 class InputLogin extends Component {
     render() {
@@ -21,14 +22,7 @@ class InputLogin extends Component {
                             <InputEmail />
                         </div>
                         <div className='form-group'>
-                            <input
-                                onKeyDown={(event) => this.ValidationGetValuePass(event)}
-                                type='password'
-                                ref='password'
-                                className='form-control'
-                                placeholder='Password'
-                                required='required'
-                            />
+                            <InputPassword />
                         </div>
                         <button ref='button' className='btn btn-default btn-login_sign'>Log In</button>
                         <h5><Link to='/Forgot'>Forgot password</Link></h5>
@@ -42,25 +36,17 @@ class InputLogin extends Component {
         )
     }
 
-    ValidationGetValuePass() {
-        const password = this.refs.password;
-        const pass = password.value.length;
-        const button = this.refs.button;
-        if (pass >= 7) {
-            button.removeAttribute('disabled', 'disabled');
-        }
-        if (pass >= 64) {
-            button.setAttribute('disabled', 'disabled');
-        }
-    }
-
     handleClick(event) {
         event.preventDefault();
-        const { isValidEmail, emailUser } = this.props.validate;
+        const {
+            isValidEmail,
+            emailUser,
+            isValidPassword,
+            passUser
+        } = this.props.validate;
 
-        const password = this.refs.password.value;
-        const creds = { username: emailUser.trim(), password: password.trim() };
-        if(isValidEmail && (password.length >= 7 && password.length <= 64)) {
+        const creds = { username: emailUser.trim(), password: passUser.trim() };
+        if(isValidEmail && isValidPassword) {
             this.props.onLoginClick(creds)
         } else {
             let getAlert = document.getElementById('loginAlert');

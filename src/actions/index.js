@@ -11,21 +11,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const VALIDATE_EMAIL = 'VALIDATE_EMAIL';
 export const NOT_VALIDATE_EMAIL = 'NOT_VALIDATE_EMAIL';
-
-export function validateEmail(emailUser) {
-    return {
-        type: VALIDATE_EMAIL,
-        isValidEmail: true,
-        emailUser
-    }
-}
-
-export function notValidateEmail() {
-    return {
-        type: NOT_VALIDATE_EMAIL,
-        isValidEmail: false
-    }
-}
+export const VALIDATE_PASSWORD = 'VALIDATE_PASSWORD';
+export const NOT_VALIDATE_PASSWORD = 'NOT_VALIDATE_PASSWORD';
 
 export function logoutUser() {
     return dispatch => {
@@ -135,5 +122,35 @@ function LOGINError(message) {
         isFetching: false,
         isAuthenticated: false,
         message
+    }
+}
+
+export function validateEmail(emailUser) {
+    return {
+        type: VALIDATE_EMAIL,
+        isValidEmail: true,
+        emailUser
+    }
+}
+
+export function notValidateEmail() {
+    return {
+        type: NOT_VALIDATE_EMAIL,
+        isValidEmail: false
+    }
+}
+
+export function validatePassword(passUser) {
+    return {
+        type: VALIDATE_PASSWORD,
+        isValidPassword: true,
+        passUser
+    }
+}
+
+export function notValidatePassword() {
+    return {
+        type: NOT_VALIDATE_PASSWORD,
+        isValidPassword: false
     }
 }

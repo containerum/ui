@@ -5,6 +5,7 @@ import Toggle from 'react-bootstrap-toggle';
 import { connect } from 'react-redux';
 
 import InputEmail from '../InputEmail/InputEmail';
+import InputPassword from '../InputPassword/InputPassword';
 
 class InputSignUp extends Component {
     constructor() {
@@ -68,14 +69,7 @@ class InputSignUp extends Component {
                             <InputEmail />
                         </div>
                         <div className='form-group'>
-                            <input
-                                onKeyDown={(event) => this.ValidationGetValuePass(event)}
-                                type='password'
-                                ref='password'
-                                className='form-control'
-                                placeholder='Password'
-                                required='required'
-                            />
+                            <InputPassword />
                         </div>
                         {toggleCompanyComponent}
                         <button ref='button' className='btn btn-default btn-login_sign'>SignUp</button>
@@ -83,8 +77,8 @@ class InputSignUp extends Component {
                             <h5>By signing up, you agree to the</h5>
                             <h5><a href='#'>Terms of Service</a> and <a href='#'>Privacy Policy</a></h5>
                         </div>
-                        {errorMessage &&
-                        <p>{errorMessage}</p>
+                        {
+                            <p>{errorMessage}</p>
                         }
                     </div>
                     <h5>Dont have an account?<Link to='/Login'>Log In</Link></h5>
@@ -93,25 +87,17 @@ class InputSignUp extends Component {
         )
     }
 
-    ValidationGetValuePass() {
-        const password = this.refs.password;
-        const pass = password.value.length;
-        const button = this.refs.button;
-        if (pass >= 7) {
-            button.removeAttribute('disabled', 'disabled');
-        }
-        if (pass >= 64) {
-            button.setAttribute('disabled', 'disabled');
-        }
-    }
-
     handleClick(event) {
         event.preventDefault();
-        const { isValidEmail, emailUser } = this.props.validate;
+        const {
+            isValidEmail,
+            emailUser,
+            isValidPassword,
+            passUser
+        } = this.props.validate;
 
-        const password = this.refs.password.value;
-        const creds = { username: emailUser.trim(), password: password.trim() };
-        if(isValidEmail && (password.length >= 7 && password.length <= 64)) {
+        const creds = { username: emailUser.trim(), password: passUser.trim() };
+        if(isValidEmail && isValidPassword) {
             this.props.SignUpUser(creds)
         } else {
             let getAlert = document.getElementById('loginAlert');
