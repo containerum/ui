@@ -3,23 +3,69 @@ import NavLink from '../../components/NavLink';
 import './style.scss';
 import './titatoggle-dist.scss';
 import NavBar from '../../components/NavBar';
+import '../../localization/en/app';
+import '../../localization/ru/app';
+
+import Translate   from 'react-translate-component';
+import LocaleSwitcher from '../../components/LocaleSwitcher/LocaleSwitcher';
 
 export default class App extends Component {
     render() {
         return (
             <div className='container'>
+                <LocaleSwitcher />
                 <NavBar />
                 <ul className='nav nav-pills nav-stacked'>
-                    <li><NavLink onlyActiveOnIndex={true} to='/'>Workloads</NavLink></li>
-                    <li><NavLink to='/Deployments'>Deployments</NavLink></li>
-                    <li><NavLink to='/ReplicaSets'>Replica Sets</NavLink></li>
-                    <li><NavLink to='/Pods'>Pods</NavLink></li>
-                    <li><NavLink to='/Services'>Services</NavLink></li>
-                    <li><NavLink to='/Storage'>Storage</NavLink></li>
-                    <li><NavLink to='/Volume'>Volume</NavLink></li>
-                    <li><NavLink to='/Config'>Config</NavLink></li>
-                    <li><NavLink to='/Secrets'>Secrets</NavLink></li>
-                    <li><NavLink to='/Tokens'>Tokens</NavLink></li>
+                    <li>
+                        <NavLink onlyActiveOnIndex={true} to='/'>
+                            <Translate content='app.workloads'>Workloads</Translate>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/Deployments'>
+                            <Translate content='app.deployments'>Deployments</Translate>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/ReplicaSets'>
+                            <Translate content='app.replicaSets'>Replica Sets</Translate>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/Pods'>
+                            <Translate content='app.pods'>Pods</Translate>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/Services'>
+                            <Translate content='app.services'>Services</Translate>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/Storage'>
+                            <Translate content='app.storage'>Storage</Translate>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/Volume'>
+                            <Translate content='app.volume'>Volume</Translate>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/Config'>
+                            <Translate content='app.config'>Config</Translate>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/Secrets'>
+                            <Translate content='app.secrets'>Secrets</Translate>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/Tokens'>
+                            <Translate content='app.tokens'>Tokens</Translate>
+                        </NavLink>
+                    </li>
                 </ul>
                 {this.props.children}
             </div>

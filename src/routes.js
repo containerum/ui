@@ -25,7 +25,7 @@ import Services_1 from './components/Services/investedServices';
 import Volume_1 from './components/Volume/volume_1';
 import Secrets_1 from './components/Secrets/investedSecrets';
 import Tokens_1 from './components/Tokens/tokens_1';
-import requireAuthentication from './components/auth/require-auth'
+import requireAuthentication from './components/auth/require-auth';
 
 export const routes = (
     <div>
