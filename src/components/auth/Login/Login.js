@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InputLogin from './InputLogin';
-import { LOGINUser } from '../../../actions';
+import { LOGINUser } from '../../../actions/LoginAction';
 import PropTypes from 'prop-types';
 
 export default class Login extends Component {

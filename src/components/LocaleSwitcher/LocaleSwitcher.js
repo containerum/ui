@@ -8,7 +8,7 @@ export default class LocaleSwitcher extends Component {
         let locateState = localStorage.getItem('locate_token');
         counterpart.setLocale(locateState);
         this.state = {
-            locate: locateState
+            locate: locateState ? locateState : 'en'
         };
     }
     componentDidMount() {

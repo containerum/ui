@@ -3,17 +3,21 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import InputEmail from '../auth/InputEmail/InputEmail';
+import { ConfirmEmail } from '../../actions/EmailConfirmAction';
 
 class Forgot extends Component {
     handleClick(event) {
         event.preventDefault();
-        const { isValidEmail, emailUser } = this.props.validate;
+        const {
+            isValidEmail,
+            emailUser
+        } = this.props.validate;
+        let { dispatch } = this.props;
 
-        const creds = { username: emailUser.trim() };
+        const creds = { email: emailUser.trim() };
         if(isValidEmail) {
-            // TODO: create dispatch method on backend
-            // this.props.SOMEMETHOD(creds)
-            console.log('Need dispatch method with data: ', creds);
+            console.log(creds);
+            dispatch(ConfirmEmail(creds));
         } else {
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.visibility = 'visible';
@@ -21,6 +25,7 @@ class Forgot extends Component {
         }
     }
     render() {
+        const errMsg = this.props.errorMessage;
         return (
             <div>
                 <div id='loginAlert'><center><p>Email or Password is not valid</p></center></div>
@@ -32,8 +37,11 @@ class Forgot extends Component {
                         <div className='form-group'>
                             <InputEmail />
                         </div>
-                        <button ref='button' type='submit' className='btn btn-default btn-forgot'>Reset</button>
+                        <button ref='button' type='submit' className='btn btn-default btn-long'>Reset</button>
                         <h5><Link to='/Login'>Go to Login</Link></h5>
+                        {
+                            <p>{ errMsg }</p>
+                        }
                     </div>
                 </form>
             </div>
@@ -43,7 +51,8 @@ class Forgot extends Component {
 
 function mapStateToProps (state) {
     return {
-        validate: state.validate
+        validate: state.validate,
+        auth: state.auth
     }
 }
 

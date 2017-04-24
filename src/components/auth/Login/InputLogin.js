@@ -24,7 +24,7 @@ class InputLogin extends Component {
                         <div className='form-group'>
                             <InputPassword />
                         </div>
-                        <button ref='button' className='btn btn-default btn-login_sign'>Log In</button>
+                        <button ref='button' className='btn btn-default btn-long'>Log In</button>
                         <h5><Link to='/Forgot'>Forgot password</Link></h5>
                         {
                             <p>{errorMessage}</p>

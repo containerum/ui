@@ -1,10 +1,29 @@
 import {
-    SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGOUT_SUCCESS, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE
+    LOGOUT_SUCCESS
 } from '../actions';
+
+import {
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE
+} from '../constants/LoginConstants';
+
+import {
+    SIGNUP_REQUEST,
+    SIGNUP_SUCCESS,
+    SIGNUP_FAILURE
+} from '../constants/SignUpConstants';
+
+import {
+    EMAIL_CONFIRM_REQUEST,
+    EMAIL_CONFIRM_SUCCESS,
+    EMAIL_CONFIRM_FAILURE
+} from '../constants/ConfirmEmail';
 
 export default function auth(state = {
     isFetching: false,
-    isAuthenticated: !!localStorage.getItem('id_token')
+    isAuthenticated: !!localStorage.getItem('id_token'),
+    isConfirmed: false
 }, action) {
     switch (action.type) {
     case SIGNUP_REQUEST:
@@ -40,10 +59,26 @@ export default function auth(state = {
             errorMessage: ''
         });
     case LOGIN_FAILURE:
-        console.log(action.message);
         return Object.assign({}, state, {
             isFetching: false,
             isAuthenticated: false,
+            errorMessage: action.message
+        });
+    case EMAIL_CONFIRM_REQUEST:
+        return Object.assign({}, state, {
+            isFetching: action.isFetching,
+            isConfirmed: action.isConfirmed
+        });
+    case EMAIL_CONFIRM_SUCCESS:
+        return Object.assign({}, state, {
+            isFetching: action.isFetching,
+            isConfirmed: action.isConfirmed,
+            email: action.creds
+        });
+    case EMAIL_CONFIRM_FAILURE:
+        return Object.assign({}, state, {
+            isFetching: action.isFetching,
+            isConfirmed: action.isConfirmed,
             errorMessage: action.message
         });
     default:

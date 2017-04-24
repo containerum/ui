@@ -608,6 +608,10 @@ li {
 .rowform .formcontainer h5 {
   margin-left: 240px;
 }
+.rowform .formcontainer h3,
+.rowform .formcontainer h4 {
+  text-align: center;
+}
 .rowform .formcontainer .conh5 {
   margin-left: -50px;
 }
@@ -617,12 +621,11 @@ li {
 .rowform .formcontainer .forminput {
   margin-top: 70px;
 }
-.rowform .formcontainer .btn-login_sign,
-.rowform .formcontainer .btn-reset,
-.rowform .formcontainer .btn-forgot {
+.rowform .formcontainer .btn-long {
   margin-left: 140px;
   width: 300px;
   height: 50px;
+  line-height: 34px;
 }
 .rowform .formcontainer .resh2 {
   margin-left: 180px;

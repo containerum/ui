@@ -72,7 +72,7 @@ class InputSignUp extends Component {
                             <InputPassword />
                         </div>
                         {toggleCompanyComponent}
-                        <button ref='button' className='btn btn-default btn-login_sign'>SignUp</button>
+                        <button ref='button' className='btn btn-default btn-long'>SignUp</button>
                         <div className='conh5'>
                             <h5>By signing up, you agree to the</h5>
                             <h5><a href='#'>Terms of Service</a> and <a href='#'>Privacy Policy</a></h5>
@@ -98,7 +98,7 @@ class InputSignUp extends Component {
 
         const creds = { username: emailUser.trim(), password: passUser.trim() };
         if(isValidEmail && isValidPassword) {
-            this.props.SignUpUser(creds)
+            this.props.SignUpUser(creds);
         } else {
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.visibility = 'visible';
