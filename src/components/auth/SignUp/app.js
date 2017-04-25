@@ -26,8 +26,8 @@ AppSignUp.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const { auth } = state;
-    const { errorMessage } = auth;
+    const { signUpReducer } = state;
+    const { errorMessage } = signUpReducer;
 
     return {
         errorMessage

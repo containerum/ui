@@ -26,8 +26,8 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const { auth } = state;
-    const { errorMessage } = auth;
+    const { loginReducer } = state;
+    const { errorMessage } = loginReducer;
 
     return {
         errorMessage

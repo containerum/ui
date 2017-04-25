@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import validator from 'validator';
 import { connect } from 'react-redux';
 
-import { validateEmail, notValidateEmail } from '../../../actions';
+import { validateEmail, notValidateEmail } from '../../../actions/ValidateEmailActions';
 
 class InputEmail extends Component {
     ValidationGetValueMail() {

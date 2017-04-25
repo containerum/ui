@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InputSignUp from './InputSignUp';
-import { SignUpUser } from '../../../actions/SignUpAction';
+import { SignUpUser } from '../../../actions/SignUpActions';
 import PropTypes from 'prop-types';
 
 export default class SignUp extends Component {

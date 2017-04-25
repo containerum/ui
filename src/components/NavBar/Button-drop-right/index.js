@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { logoutUser } from '../../../actions'
+import { logoutUser } from '../../../actions/LogoutActions'
 import { connect } from 'react-redux'
 
 class ButtonDropRight extends Component {
     render() {
+        const errorMessage = this.props.errorMessage;
         return (
             <div className='dropdown'>
                 <button
@@ -44,14 +45,17 @@ class ButtonDropRight extends Component {
                         <Link onClick={() => this.props.onLogoutClick()} to='/Login'>Log Out</Link>
                     </li>
                 </ul>
+                <p>
+                    {errorMessage}
+                </p>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    const { auth } = state;
-    const { errorMessage } = auth;
+    const { logoutReducer } = state;
+    const { errorMessage } = logoutReducer;
 
     return {
         errorMessage

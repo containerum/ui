@@ -27,8 +27,8 @@ export default function requireAuthentication(Component) {
     }
 
     function mapStateToProps(state) {
-        const { auth } = state;
-        const { isAuthenticated } = auth;
+        const { loginReducer } = state;
+        const { isAuthenticated } = loginReducer;
 
         return {
             isAuthenticated

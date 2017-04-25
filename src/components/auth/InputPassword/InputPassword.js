@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { validatePassword, notValidatePassword } from '../../../actions';
+import { validatePassword, notValidatePassword } from '../../../actions/ValidateEmailActions';
 
 class InputPassword extends Component {
     ValidationGetValuePass() {

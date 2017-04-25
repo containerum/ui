@@ -15,7 +15,7 @@ import Tokens from './components/Tokens';
 import Profile from './components/Profile';
 import Billing from './components/Profile/Billing';
 import Referrals from './components/Profile/Referrals';
-import Logout from './components/auth/Login/app';
+import Login from './components/auth/Login/app';
 import Signup from './components/auth/SignUp/app';
 import Forgot from './components/Forgot';
 import Deployments_1 from './components/Deployments/investedDeployments';
@@ -52,7 +52,7 @@ export const routes = (
             <Route path='/Billing' component={ Billing } />
             <Route path='/Referrals' component={ Referrals } />
         </Route>
-        <Route path='/Login' component={ Logout }>
+        <Route path='/Login' component={ Login }>
             <Route path='/' path={ browserHistory.push('/') } component={ Workloads } />
         </Route>
         <Route path='/Forgot' component={ Forgot } />

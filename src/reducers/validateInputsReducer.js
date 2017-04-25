@@ -1,6 +1,6 @@
 import {
     VALIDATE_EMAIL, NOT_VALIDATE_EMAIL, VALIDATE_PASSWORD, NOT_VALIDATE_PASSWORD
-} from '../actions';
+} from '../constants/ValudateEmailConstaints';
 
 const initialState = {
     isValidEmail: false,
@@ -9,7 +9,7 @@ const initialState = {
     passUser: ''
 };
 
-export default function validate(state = initialState, action) {
+export default function validateInputsReducer(state = initialState, action) {
     switch (action.type) {
     case VALIDATE_EMAIL:
         return {
