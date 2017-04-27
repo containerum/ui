@@ -16,14 +16,21 @@ class InputPassword extends Component {
     }
     render() {
         return (
-            <input
-                onChange={(event) => this.ValidationGetValuePass(event)}
-                type='password'
-                ref='password'
-                className='form-control'
-                placeholder='Password'
-                required='required'
-            />
+            <div>
+                <label className='sr-only' htmlFor='inlineFormInputGroup'>Password</label>
+                <div className='input-group mb-2'>
+                    <div className='input-group-addon c-input-group-addon'>@</div>
+                    <input
+                        onChange={(event) => this.ValidationGetValuePass(event)}
+                        type='password'
+                        ref='password'
+                        required='required'
+                        className='form-control c-form-control'
+                        id='inlineFormInputGroup'
+                        placeholder='Password'
+                    />
+                </div>
+            </div>
         );
     }
 }

@@ -7,12 +7,10 @@ class AppSignUp extends Component {
     render() {
         const { dispatch, errorMessage } = this.props;
         return (
-            <div>
-                <SignUp
-                    errorMessage={errorMessage}
-                    dispatch={dispatch}
-                />
-            </div>
+            <SignUp
+                errorMessage={errorMessage}
+                dispatch={dispatch}
+            />
         )
     }
 }

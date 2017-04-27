@@ -13,7 +13,9 @@ export function LOGINUser(creds) {
         return axios.post(
             'http://139.59.146.89/api/login',
             {username: creds.username, password: creds.password},
-            {validateStatus: (status) => status >= 200 && status <= 300 || status == 404}
+            {validateStatus: (status) =>
+                status >= 200 && status <= 500
+            }
         )
             .then(response => {
                 if (response.status === 200) {

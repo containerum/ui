@@ -19,30 +19,35 @@ class Forgot extends Component {
             dispatch(ConfirmEmail(creds));
         } else {
             let getAlert = document.getElementById('loginAlert');
-            getAlert.style.visibility = 'visible';
-            setTimeout(function() { getAlert.style.visibility = 'hidden'; }, 5000);
+            getAlert.style.display = 'block';
+            setTimeout(function() { getAlert.style.display = 'none'; }, 5000);
         }
     }
     render() {
-        const errMsg = this.props.errorMessage;
+        const { errorMessage } = this.props;
+        let currentMessage = 'Email is not valid';
+        if (errorMessage)
+            currentMessage = errorMessage;
+
         return (
-            <div>
-                <div id='loginAlert'><center><p>Email or Password is not valid</p></center></div>
-                <form className='row rowform' onSubmit={(event) => this.handleClick(event)}>
-                    <img src='http://placehold.it/70x70' className='img-circle' alt='Responsive image'/>
-                    <h1>Containerum</h1>
-                    <div className='formcontainer'>
-                        <h2 className='resh2'>Reset Password</h2>
-                        <div className='form-group'>
-                            <InputEmail />
-                        </div>
-                        <button ref='button' type='submit' className='btn btn-default btn-long'>Reset</button>
-                        <h5><Link to='/Login'>Go to Login</Link></h5>
-                        {
-                            <p>{ errMsg }</p>
-                        }
+            <div className='c-body-bg'>
+                <div className='container'>
+                    <div className='text-center p-4'>
+                        <img src='https://www.prodpad.com/wp-content/uploads/trello-logo-white.png' className='c-logo-login' alt='Responsive image'/>
                     </div>
-                </form>
+                    <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
+                        <div className='card c-card'>
+                            <div className='card-block p-5'>
+                                <div id='loginAlert' className='alert alert-danger mb-2'>{ currentMessage }</div>
+                                <h2 className='text-center'>Reset Password</h2>
+                                <InputEmail />
+                                <button ref='button' type='submit' className='btn btn-block c-btn-blue'>Reset</button>
+                            </div>
+                            <div className='card-footer text-center'>Don't have an account?<Link to='/Signup'>Sing up</Link></div>
+                        </div>
+                        <p className='text-center pt-2'><Link to='/Login' className='c-link-wt'>Go to Login</Link></p>
+                    </form>
+                </div>
             </div>
         );
     }

@@ -7,33 +7,42 @@ import InputEmail from '../InputEmail/InputEmail';
 import InputPassword from '../InputPassword/InputPassword';
 
 class InputLogin extends Component {
+    constructor() {
+        super();
+        this.state = {
+            errorMsg: ''
+        };
+    }
     render() {
-        const { errorMessage } = this.props;
-
         return (
-            <div>
-                <div id='loginAlert'><center><p>Email or Password is not valid</p></center></div>
-                <form className='row rowform' onSubmit={(event) => this.handleClick(event)}>
-                    <img src='http://placehold.it/70x70' className='img-circle' alt='Responsive image'/>
-                    <h1>Containerum</h1>
-                    <div className='formcontainer'>
-                        <h2>Log In</h2>
-                        <div className='form-group'>
+            <div className='container'>
+                <div className='text-center p-4'>
+                    <img src='https://www.prodpad.com/wp-content/uploads/trello-logo-white.png' className='c-logo-login' alt='Responsive image'/>
+                </div>
+                <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
+                    <div className='card c-card'>
+                        <div className='card-block p-5'>
+                            <div id='loginAlert' className='alert alert-danger mb-2'>{ this.state.errorMsg }</div>
                             <InputEmail />
-                        </div>
-                        <div className='form-group'>
                             <InputPassword />
+                            <button ref='button' type='submit' className='btn btn-block c-btn-blue'>Log In</button>
                         </div>
-                        <button ref='button' className='btn btn-default btn-long'>Log In</button>
-                        <h5><Link to='/Forgot'>Forgot password</Link></h5>
-                        {
-                            <p>{errorMessage}</p>
-                        }
+                        <div className='card-footer text-center'>Don't have an account?<Link to='/Signup'>Sing up</Link></div>
                     </div>
-                    <h5>Dont have an account?<Link to='/Signup'>Sign Up</Link></h5>
+                    <p className='text-center pt-2'><Link to='/Forgot' className='c-link-wt'>Forgot your password?</Link></p>
                 </form>
             </div>
         )
+    }
+
+    componentWillReceiveProps(nextProps, currProps) {
+        if(nextProps.errorMessage !== undefined && nextProps !== currProps) {
+            this.setState({
+                errorMsg: nextProps.errorMessage
+            });
+            let getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+        }
     }
 
     handleClick(event) {
@@ -47,11 +56,13 @@ class InputLogin extends Component {
 
         const creds = { username: emailUser.trim(), password: passUser.trim() };
         if(isValidEmail && isValidPassword) {
-            this.props.onLoginClick(creds)
+            this.props.onLoginClick(creds);
         } else {
+            this.setState({
+                errorMsg: 'Email or Password is not valid'
+            });
             let getAlert = document.getElementById('loginAlert');
-            getAlert.style.visibility = 'visible';
-            setTimeout(function() { getAlert.style.visibility = 'hidden'; }, 5000);
+            getAlert.style.display = 'block';
         }
     }
 }

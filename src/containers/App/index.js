@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import NavLink from '../../components/NavLink';
-import './style.scss';
-import './titatoggle-dist.scss';
 import NavBar from '../../components/NavBar';
-import '../../localization/en/app';
-import '../../localization/ru/app';
-
 import Translate   from 'react-translate-component';
 import LocaleSwitcher from '../../components/LocaleSwitcher/LocaleSwitcher';
+
+import '../../localization/en/app';
+import '../../localization/ru/app';
 
 export default class App extends Component {
     render() {

@@ -8,7 +8,7 @@ export default class Login extends Component {
         const { dispatch, errorMessage } = this.props;
 
         return (
-            <div>
+            <div className='c-body-bg'>
                 <InputLogin
                     errorMessage={errorMessage}
                     onLoginClick={ creds => dispatch(LOGINUser(creds)) }

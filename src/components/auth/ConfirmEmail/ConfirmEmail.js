@@ -6,22 +6,23 @@ class ConfirmEmail extends Component {
     render() {
         const emailUser = this.props.validate.emailUser;
         return (
-            <div>
-                <div className='row rowform'>
-                    <img src='http://placehold.it/70x70' className='img-circle' alt='Responsive image'/>
-                    <h1>Containerum</h1>
-                    <div className='formcontainer'>
-                        <h2>Confirm Email</h2>
-                        <div className='form-group'>
-                            {
-                                <h3>{ emailUser }</h3>
-                            }
-                        </div>
-                        <div className='form-group'>
-                            <h4>Confirm your email by clicking the verification link we just send to your inbox.</h4>
-                        </div>
-                        <Link to='/Login' className='btn btn-default btn-long'>Go to Login</Link>
+            <div className='c-body-bg'>
+                <div className='container'>
+                    <div className='text-center p-4'>
+                        <img src='https://www.prodpad.com/wp-content/uploads/trello-logo-white.png' className='c-logo-login' alt='Responsive image'/>
                     </div>
+                    <form className='form-signin'>
+                        <div className='card c-card'>
+                            <div className='card-block p-5'>
+                                {
+                                    <h3>{ emailUser }</h3>
+                                }
+                            </div>
+                            <div className='card-footer text-center'>Confirm your email by clicking the verification link we just send to your inbox.</div>
+                        </div>
+                        <p className='text-center pt-2'><Link to='/Login' className='c-link-wt'>Go to Login</Link></p>
+
+                    </form>
                 </div>
             </div>
         )
