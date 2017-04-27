@@ -17,18 +17,18 @@ class InputPassword extends Component {
     render() {
         return (
             <div>
-                <label className='sr-only' htmlFor='inlineFormInputGroup'>Password</label>
-                <div className='input-group mb-2'>
-                    <div className='input-group-addon c-input-group-addon'>@</div>
+                <label className='sr-only' htmlFor='Password'>Password</label>
+                <div className='form-group mb-4 c-has-feedback-left'>
                     <input
                         onChange={(event) => this.ValidationGetValuePass(event)}
                         type='password'
                         ref='password'
                         required='required'
-                        className='form-control c-form-control'
-                        id='inlineFormInputGroup'
+                        className='form-control'
+                        id='Password'
                         placeholder='Password'
                     />
+                    <i className='c-form-control-icon fa fa-lock'></i>
                 </div>
             </div>
         );

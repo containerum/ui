@@ -23,9 +23,8 @@ class InputEmail extends Component {
     render() {
         return (
             <div>
-                <label className='sr-only' htmlFor='inlineFormInputGroup'>Email</label>
-                <div className='input-group mb-2'>
-                    <div className='input-group-addon c-input-group-addon'>@</div>
+                <label className='sr-only' htmlFor='Username'>Email</label>
+                <div className='form-group mb-4 c-has-feedback-left'>
                     <input
                         onChange={(event) => this.ValidationGetValueMail(event)}
                         onFocus={(event) => this.onFocusHandler(event)}
@@ -33,10 +32,11 @@ class InputEmail extends Component {
                         required='required'
                         autoFocus
                         type='email'
-                        className='form-control c-form-control'
-                        id='inlineFormInputGroup'
+                        className='form-control'
+                        id='Username'
                         placeholder='Email'
                     />
+                    <i className='c-form-control-icon fa fa-user'></i>
                 </div>
             </div>
         );

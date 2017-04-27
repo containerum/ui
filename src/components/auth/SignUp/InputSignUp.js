@@ -24,6 +24,10 @@ class InputSignUp extends Component {
             });
         }
     }
+    componentDidMount() {
+        const element = document.getElementById('body');
+        element.classList.add('c-body-bg');
+    }
     render() {
         const { errorMessage } = this.props;
         let toggleCompanyComponent = '';
@@ -37,31 +41,31 @@ class InputSignUp extends Component {
                 <div>
 
                     <label className='sr-only' htmlFor='inlineFormInputCompanyName'>Company name</label>
-                    <div className='input-group mb-2'>
-                        <div className='input-group-addon c-input-group-addon'>@</div>
+                    <div className='form-group mb-4 c-has-feedback-left'>
                         <input
                             ref='company_name'
                             required='required'
                             autoFocus
                             type='text'
-                            className='form-control c-form-control'
+                            className='form-control'
                             id='inlineFormInputCompanyName'
                             placeholder='Company name'
                         />
+                        <i className='c-form-control-icon fa fa-address-book fa-1'></i>
                     </div>
 
                     <label className='sr-only' htmlFor='inlineFormInputTaxCode'>Tax Code</label>
-                    <div className='input-group mb-2'>
-                        <div className='input-group-addon c-input-group-addon'>@</div>
+                    <div className='form-group mb-4 c-has-feedback-left'>
                         <input
                             ref='tax_code'
                             required='required'
                             autoFocus
                             type='text'
-                            className='form-control c-form-control'
+                            className='form-control'
                             id='inlineFormInputTaxCode'
                             placeholder='Tax Code'
                         />
+                        <i className='c-form-control-icon fa fa-tag fa-1'></i>
                     </div>
                 </div>
             );
@@ -70,14 +74,17 @@ class InputSignUp extends Component {
         return (
             <div className='container'>
                 <div className='text-center p-4'>
-                    <img src='https://www.prodpad.com/wp-content/uploads/trello-logo-white.png' className='c-logo-login' alt='Responsive image'/>
+                    <img className='c-logo-login' src='src/images/Containerum_logo_new.png' alt='Responsive image'/>
                 </div>
                 <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
                     <div className='card c-card'>
                         <div className='card-block p-5'>
-                            <div id='loginAlert' className='alert alert-danger mb-2'>{ currentMessage }</div>
+                            <div className='card-label'>
+                                Sing up
+                            </div>
+                            <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>{ currentMessage }</div>
                             <div className='text-center'>
-                                <div className='btn-group mb-2'>
+                                <div className='btn-group mb-3'>
                                     <label
                                         className={this.state.idOfActiveToggle === 'option1'
                                             ? 'btn btn-success active' : 'btn btn-success'}>
@@ -105,9 +112,9 @@ class InputSignUp extends Component {
                             <InputEmail />
                             <InputPassword />
                             {toggleCompanyComponent}
-                            <button type='submit' ref='button' className='btn btn-block c-btn-blue'>SignUp</button>
+                            <button type='submit' ref='button' className='btn btn-block c-btn-green'>Sign Up</button>
                         </div>
-                        <div className='card-footer text-center'>
+                        <div className='card-footer p-3 text-center'>
                             By signing up, you agree to the <br />
                             <a href='#'>Terms of Service</a> and <a href='#'>Privacy Policy</a>
                         </div>

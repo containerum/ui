@@ -9,7 +9,7 @@ export default class SignUp extends Component {
         const { dispatch, errorMessage } = this.props;
 
         return (
-            <div className='c-body-bg'>
+            <div>
                 <InputSignUp
                     errorMessage={errorMessage}
                     SignUpUser={ creds => dispatch(SignUpUser(creds)) }

@@ -13,23 +13,32 @@ class InputLogin extends Component {
             errorMsg: ''
         };
     }
+    componentDidMount() {
+        const element = document.getElementById('body');
+        element.classList.add('c-body-bg');
+    }
     render() {
         return (
             <div className='container'>
                 <div className='text-center p-4'>
-                    <img src='https://www.prodpad.com/wp-content/uploads/trello-logo-white.png' className='c-logo-login' alt='Responsive image'/>
+                    <img className='c-logo-login' src='src/images/Containerum_logo_new.png' alt='Responsive image'/>
                 </div>
                 <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
                     <div className='card c-card'>
                         <div className='card-block p-5'>
-                            <div id='loginAlert' className='alert alert-danger mb-2'>{ this.state.errorMsg }</div>
+                            <div className='card-label'>
+                                Log in to your account
+                            </div>
+                            <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>{ this.state.errorMsg }</div>
                             <InputEmail />
                             <InputPassword />
-                            <button ref='button' type='submit' className='btn btn-block c-btn-blue'>Log In</button>
+                            <button ref='button' type='submit' className='btn btn-block c-btn-green'>Log In</button>
                         </div>
-                        <div className='card-footer text-center'>Don't have an account?<Link to='/Signup'>Sing up</Link></div>
+                        <div className='card-footer p-3 text-center'>
+                            Don't have an account? <Link to='/Signup'>Sing up</Link>
+                        </div>
                     </div>
-                    <p className='text-center pt-2'><Link to='/Forgot' className='c-link-wt'>Forgot your password?</Link></p>
+                    <p className='text-center pt-3'><Link to='/Forgot' className='c-link-wt'>Forgot your password?</Link></p>
                 </form>
             </div>
         )

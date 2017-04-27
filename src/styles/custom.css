@@ -1,0 +1,123 @@
+.c-body-bg {
+    background-color: #009CD1;
+    background-image: -webkit-linear-gradient(top, #0075A7, #009CD1);
+    height: 100vh;
+}
+
+.c-logo-login {
+    width: 265px;
+    padding: 30px 0 15px 0;
+}
+
+.c-card {
+    border: 0;
+}
+
+/*.c-card .card-block {*/
+    /*padding: 1.2rem 2.5rem 1.2rem 2.5rem!important*/
+/*}*/
+
+.c-card .card-label {
+    text-align: center;
+    font-size: 1.35rem;
+    padding-bottom: 15px;
+    color: #444
+}
+
+.c-card .card-footer {
+    color: #444;
+}
+
+.c-card .card-footer a {
+    color: #0069ff;
+    text-decoration: underline;
+}
+
+
+.form-signin {
+    max-width: 450px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.c-has-feedback-left {
+    position: relative;
+}
+
+.c-has-feedback-left .form-control {
+    padding-right: 12px;
+    padding-left: 44px;
+}
+
+.c-has-feedback-left .c-form-control-icon {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    right: 0;
+    z-index: 2;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    color: #009CD1;
+}
+
+.c-has-feedback-left .c-form-control-icon:after {
+    content: "";
+    position: absolute;
+    left: 34px;
+    top: 6px;
+    width: 1px;
+    height: 25px;
+    background: rgba(0,0,0,.15);
+}
+
+.c-input-group-addon {
+    background: #fff;
+    /*border-right: none 1px #fff;*/
+}
+
+.c-form-control {
+    border-left-color: #fff;
+}
+
+.c-wt {
+    color: #fff;
+}
+
+.c-link-wt {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.c-link-wt:hover {
+    color: #dddddd;
+}
+
+.c-btn-green {
+    padding: 12px;
+    color: #fff;
+    background-color: #15ce73;
+    border-color: #15ce73;
+}
+
+.c-btn-green:hover {
+    background-color: #13be6a;
+    border-color: #13be6a;
+}
+
+.c-alert-danger {
+    background-color: #D64242;
+    color: white;
+    border: 0;
+}
