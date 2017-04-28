@@ -1,6 +1,6 @@
 .c-body-bg {
     background-color: #009CD1;
-    background-image: -webkit-linear-gradient(top, #0075A7, #009CD1);
+    background-image: linear-gradient(to top, #0075A7, #009CD1);
     height: 100vh;
 }
 

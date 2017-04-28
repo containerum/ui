@@ -49,7 +49,7 @@ export default class Pods extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.data_pods == '' ? loader : <TR data={this.state.data_pods} pageSize={this.state.pageSize}/>}
+                                {this.state.data_pods === '' ? loader : <TR data={this.state.data_pods} pageSize={this.state.pageSize}/>}
                             </tbody>
                         </table>
                     </div>

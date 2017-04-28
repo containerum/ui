@@ -40,7 +40,7 @@ class Pods_1 extends Component {
         );
         return (
             <div className='row rowpanel'>
-                {this.state.data_pods == '' ? loader : content}
+                {this.state.data_pods === '' ? loader : content}
             </div>
         );
     }

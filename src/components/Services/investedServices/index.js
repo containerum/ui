@@ -34,7 +34,7 @@ class Services_1 extends Component {
         );
         return (
             <div className='row'>
-                {this.state.data_services == '' ? loader : content}
+                {this.state.data_services === '' ? loader : content}
             </div>
         );
     }

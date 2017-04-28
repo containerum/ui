@@ -43,7 +43,7 @@ export default class PanelReplicaSets extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.data_replica == '' ? loader : <TR data={this.state.data_replica} pageSize={this.state.pageSize}/>}
+                        {this.state.data_replica === '' ? loader : <TR data={this.state.data_replica} pageSize={this.state.pageSize}/>}
                     </tbody>
                 </table>
             </div>

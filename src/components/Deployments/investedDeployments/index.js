@@ -34,7 +34,7 @@ class Deployments_1 extends Component {
         );
         return (
             <div className='row rowpanel'>
-                {this.state.data_dep == '' ? loader : content}
+                {this.state.data_dep === '' ? loader : content}
             </div>
         );
     }

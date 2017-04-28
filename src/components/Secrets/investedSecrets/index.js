@@ -16,7 +16,7 @@ class Secrets_1 extends Component {
     render() {
         let { data } = this.props;
         let renderSecrets = table_data.map(function(item, index){
-            if (item.id == data.id) {
+            if (item.id === data.id) {
                 return (
                     <div className='row' key={index}>
                         <Box item={item}/>

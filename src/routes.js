@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { browserHistory } from 'react-router';
 import App from './containers/App';
 import Workloads from './components/Workloads';
 import Deployments from './components/Deployments';
@@ -53,7 +52,7 @@ export const routes = (
             <Route path='/Referrals' component={ Referrals } />
         </Route>
         <Route path='/Login' component={ Login }>
-            <Route path='/' path={ browserHistory.push('/') } component={ Workloads } />
+            <Route path='/' component={ Workloads } />
         </Route>
         <Route path='/Forgot' component={ Forgot } />
         <Route path='/Signup' component={ Signup } />

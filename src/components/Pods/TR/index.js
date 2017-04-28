@@ -35,7 +35,7 @@ export default class TR extends Component {
     }
     componentDidMount() {
         let that = this;
-        this.props.data.map(function(item){
+        this.props.data.map(function(item) {
             if (item.ram < 500) {
                 console.log(item.ram);
                 that.setState({

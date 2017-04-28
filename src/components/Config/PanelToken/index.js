@@ -42,7 +42,7 @@ export default class PanelToken extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.data_token == '' ? loader : <TR data={this.state.data_token} pageSize={this.state.pageSize}/>}
+                        {this.state.data_token === '' ? loader : <TR data={this.state.data_token} pageSize={this.state.pageSize}/>}
                     </tbody>
                 </table>
             </div>

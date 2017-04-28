@@ -36,7 +36,7 @@ class ReplicaSet extends Component {
         );
         return (
             <div className='row rowpanel'>
-                {this.state.data_replica == '' ? loader : content}
+                {this.state.data_replica === '' ? loader : content}
             </div>
         );
     }

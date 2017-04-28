@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import InputEmail from '../auth/InputEmail/InputEmail';
 import { ConfirmEmail } from '../../actions/EmailConfirmActions';
 
+import Logo from '../Logo';
+
 class Forgot extends Component {
     handleClick(event) {
         event.preventDefault();
@@ -32,16 +34,14 @@ class Forgot extends Component {
         return (
             <div className='c-body-bg'>
                 <div className='container'>
-                    <div className='text-center p-4'>
-                        <img src='https://www.prodpad.com/wp-content/uploads/trello-logo-white.png' className='c-logo-login' alt='Responsive image'/>
-                    </div>
+                    <Logo />
                     <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
                         <div className='card c-card'>
                             <div className='card-block p-5'>
                                 <div id='loginAlert' className='alert alert-danger mb-2'>{ currentMessage }</div>
-                                <h2 className='text-center'>Reset Password</h2>
+                                <div className='card-label'>Reset Password</div>
                                 <InputEmail />
-                                <button ref='button' type='submit' className='btn btn-block c-btn-blue'>Reset</button>
+                                <button ref='button' type='submit' className='btn btn-block c-btn-green'>Reset</button>
                             </div>
                             <div className='card-footer text-center'>Don't have an account?<Link to='/Signup'>Sing up</Link></div>
                         </div>

@@ -43,7 +43,7 @@ export default class PanelServices extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.data_services == '' ? loader : <TR data={this.state.data_services} pageSize={this.state.pageSize}/>}
+                            {this.state.data_services === '' ? loader : <TR data={this.state.data_services} pageSize={this.state.pageSize}/>}
                         </tbody>
                     </table>
                 </div>

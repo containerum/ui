@@ -7,6 +7,10 @@ import LocaleSwitcher from '../../components/LocaleSwitcher/LocaleSwitcher';
 import '../../localization/en/app';
 import '../../localization/ru/app';
 
+import '../../styles/bootstrap.min.css';
+import '../../styles/custom.css';
+import '../../styles/individual.css';
+
 export default class App extends Component {
     render() {
         return (

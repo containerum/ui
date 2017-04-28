@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import InputEmail from '../InputEmail/InputEmail';
 import InputPassword from '../InputPassword/InputPassword';
 
+import Logo from '../../Logo';
+
 class InputSignUp extends Component {
     constructor() {
         super();
@@ -24,10 +26,6 @@ class InputSignUp extends Component {
             });
         }
     }
-    componentDidMount() {
-        const element = document.getElementById('body');
-        element.classList.add('c-body-bg');
-    }
     render() {
         const { errorMessage } = this.props;
         let toggleCompanyComponent = '';
@@ -45,7 +43,6 @@ class InputSignUp extends Component {
                         <input
                             ref='company_name'
                             required='required'
-                            autoFocus
                             type='text'
                             className='form-control'
                             id='inlineFormInputCompanyName'
@@ -59,7 +56,6 @@ class InputSignUp extends Component {
                         <input
                             ref='tax_code'
                             required='required'
-                            autoFocus
                             type='text'
                             className='form-control'
                             id='inlineFormInputTaxCode'
@@ -73,9 +69,7 @@ class InputSignUp extends Component {
 
         return (
             <div className='container'>
-                <div className='text-center p-4'>
-                    <img className='c-logo-login' src='src/images/Containerum_logo_new.png' alt='Responsive image'/>
-                </div>
+                <Logo />
                 <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
                     <div className='card c-card'>
                         <div className='card-block p-5'>

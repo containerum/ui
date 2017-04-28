@@ -43,7 +43,7 @@ export default class PanelDeployments extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.data_dep == '' ? loader : <TR data={this.state.data_dep} pageSize={this.state.pageSize}/>}
+                            {this.state.data_dep === '' ? loader : <TR data={this.state.data_dep} pageSize={this.state.pageSize}/>}
                         </tbody>
                     </table>
                 </div>

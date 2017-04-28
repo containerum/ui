@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import InputEmail from '../InputEmail/InputEmail';
 import InputPassword from '../InputPassword/InputPassword';
 
+import Logo from '../../Logo';
+
 class InputLogin extends Component {
     constructor() {
         super();
@@ -13,16 +15,10 @@ class InputLogin extends Component {
             errorMsg: ''
         };
     }
-    componentDidMount() {
-        const element = document.getElementById('body');
-        element.classList.add('c-body-bg');
-    }
     render() {
         return (
             <div className='container'>
-                <div className='text-center p-4'>
-                    <img className='c-logo-login' src='src/images/Containerum_logo_new.png' alt='Responsive image'/>
-                </div>
+                <Logo />
                 <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
                     <div className='card c-card'>
                         <div className='card-block p-5'>
