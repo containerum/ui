@@ -9,6 +9,25 @@
     padding: 30px 0 15px 0;
 }
 
+.c-logo-main {
+    width: 255px;
+    background-color: #2aabd2;
+}
+
+.navbar-toggler-margin-top {
+    margin-top: 8px;
+}
+
+.show-dropdown-menu {
+    display: block;
+    right: 0;
+    left: initial;
+}
+
+.main-header {
+    background-color: #2aabd2;
+}
+
 .c-card {
     border: 0;
 }

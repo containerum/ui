@@ -28,7 +28,7 @@ import requireAuthentication from './components/auth/require-auth';
 import ConfirmEmail from './components/auth/ConfirmEmail/ConfirmEmail';
 
 export const routes = (
-    <div>
+    <Route>
         <Route path='/' component={ requireAuthentication(App) }>
             <IndexRoute component={ Workloads } />
             <Route path='/Deployments/:deployments_1' component={ Deployments_1 } />
@@ -57,5 +57,5 @@ export const routes = (
         <Route path='/Forgot' component={ Forgot } />
         <Route path='/Signup' component={ Signup } />
         <Route path='/ConfirmEmail' component={ ConfirmEmail } />
-    </div>
+    </Route>
 );

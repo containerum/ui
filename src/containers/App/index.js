@@ -3,6 +3,7 @@ import NavLink from '../../components/NavLink';
 import NavBar from '../../components/NavBar';
 import Translate   from 'react-translate-component';
 import LocaleSwitcher from '../../components/LocaleSwitcher/LocaleSwitcher';
+import Header from '../../components/Header';
 
 import '../../localization/en/app';
 import '../../localization/ru/app';
@@ -16,6 +17,7 @@ export default class App extends Component {
         return (
             <div className='container'>
                 <LocaleSwitcher />
+                <Header />
                 <NavBar />
                 <ul className='nav nav-pills nav-stacked'>
                     <li>
