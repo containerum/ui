@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
+import { logoutUser } from '../../actions/LogoutActions';
 import logo from '../../images/Containerum_logo_new.png';
+import NavLink from "../NavLink/index";
 
 class Header extends Component {
     constructor() {
@@ -26,50 +29,50 @@ class Header extends Component {
         return (
             <div className="navbar navbar-inverse main-header">
                 <div className="container d-flex justify-content-between">
-                    <a href="#" className="navbar-brand">
+                    <NavLink to="" className="navbar-brand">
                         <img className="c-logo-main" src={logo} alt="Logo"/>
-                    </a>
+                    </NavLink>
                     <div className="d-flex flex-row-reverse">
                         <div className="p-2">
-                            <nav className="navbar" onClick={this.onToggleProfileHandler.bind(this)}>
-                                <a className="navbar-brand" href="#">
+                            <nav className="navbar" style={{display: 'block'}} onClick={this.onToggleMainHandler.bind(this)}>
+                                <NavLink className="navbar-brand" to="" style={{display: 'inline-flex'}}>
                                     <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="" />
-                                </a>
-                                <div className="navbar-brand">
+                                </NavLink>
+                                <div style={{display: 'inline-block'}}>
                                     <span>Kfeofantov</span><br />
                                     <span>Balance: 35$</span>
                                 </div>
                             </nav>
                             <div className={this.state.toggleBtnProfile ? "dropdown-menu show-dropdown-menu" : "dropdown-menu"}>
-                                <a className="dropdown-item" href="#">Dashboard</a>
-                                <a className="dropdown-item" href="#">Volumes</a>
-                                <a className="dropdown-item" href="#">Images</a>
+                                <NavLink className="dropdown-item" to="/Dashboard">Dashboard</NavLink>
+                                <NavLink className="dropdown-item" to="/Volumes">Volumes</NavLink>
+                                <NavLink className="dropdown-item" to="/Images">Images</NavLink>
                                 <hr />
-                                <a className="dropdown-item" href="#">Blog</a>
-                                <a className="dropdown-item" href="#">Documentation</a>
-                                <a className="dropdown-item" href="#">Tutorials</a>
+                                <NavLink className="dropdown-item" to="/Blog">Blog</NavLink>
+                                <NavLink className="dropdown-item" to="/Documentation">Documentation</NavLink>
+                                <NavLink className="dropdown-item" to="/Tutorials">Tutorials</NavLink>
                                 <hr />
-                                <a className="dropdown-item" href="#">Support</a>
+                                <NavLink className="dropdown-item" to="/Support">Support</NavLink>
                             </div>
                         </div>
                         <div className="p-2">
                             <button
                                 className="navbar-toggler navbar-toggler-margin-top"
-                                onClick={this.onToggleMainHandler.bind(this)}
+                                onClick={this.onToggleProfileHandler.bind(this)}
                                 type="button"
                             >
                                 <span className="navbar-toggler-icon"></span>
                             </button>
-                            <div className={this.state.toggleBtnMain ? "dropdown-menu show-dropdown-menu" : "dropdown-menu"}>
-                                <a className="dropdown-item" href="#">Dashboard</a>
-                                <a className="dropdown-item" href="#">Volumes</a>
-                                <a className="dropdown-item" href="#">Images</a>
+                            <div className={this.state.toggleBtnMain ? "dropdown-menu show-dropdown-profile" : "dropdown-menu"}>
+                                <div>
+                                    <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="" />Kfeofantov
+                                    <div>kfeofantov@gmail.com</div>
+                                </div>
                                 <hr />
-                                <a className="dropdown-item" href="#">Blog</a>
-                                <a className="dropdown-item" href="#">Documentation</a>
-                                <a className="dropdown-item" href="#">Tutorials</a>
-                                <hr />
-                                <a className="dropdown-item" href="#">Support</a>
+                                <NavLink className="dropdown-item" to="/Profile">Profile</NavLink>
+                                <NavLink className="dropdown-item" to="/Billing">Billing</NavLink>
+                                <NavLink className="dropdown-item" to="/Referrals">Referrals</NavLink>
+                                <NavLink className="dropdown-item" to="/Login" onClick={() => this.props.onLogoutClick()}>Logout</NavLink>
                             </div>
                         </div>
                     </div>
@@ -79,4 +82,21 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+    const { logoutReducer } = state;
+    const { errorMessage } = logoutReducer;
+
+    return {
+        errorMessage
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogoutClick: () => {
+            dispatch(logoutUser())
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

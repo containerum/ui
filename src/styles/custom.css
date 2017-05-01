@@ -18,10 +18,15 @@
     margin-top: 8px;
 }
 
-.show-dropdown-menu {
+.show-dropdown-menu,
+.show-dropdown-profile {
     display: block;
-    right: 0;
+    right: 100px;
     left: initial;
+}
+
+.show-dropdown-profile {
+    right: 0;
 }
 
 .main-header {
