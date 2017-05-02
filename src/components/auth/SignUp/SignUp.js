@@ -1,39 +1,84 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 
-import InputEmail from '../InputEmail/InputEmail';
-import InputPassword from '../InputPassword/InputPassword';
-
+import { SignUpUser } from '../../../actions/SignUpActions';
+import InputEmail from '../InputEmail';
+import InputPassword from '../InputPassword';
 import Logo from '../../Logo';
 
-class InputSignUp extends Component {
+class SignUp extends Component {
     constructor() {
         super();
         this.state = {
             toggleActive: false,
-            idOfActiveToggle: 'option1'
+            idOfActiveToggle: 'option1',
+            errorMsg: '',
+            email: '',
+            isValidEmail: false,
+            password: '',
+            isValidPassword: false
         };
         this.onToggle = this.onToggle.bind(this);
+        this.checkValidateEmailInput = this.checkValidateEmailInput.bind(this);
+        this.checkValidatePasswordInput = this.checkValidatePasswordInput.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
     onToggle(e) {
         const targetId = e.target.id;
         if (this.state.idOfActiveToggle !== targetId) {
             this.setState({
+                ...this.state,
                 toggleActive: !this.state.toggleActive,
                 idOfActiveToggle: targetId
             });
         }
     }
+    checkValidateEmailInput(email, isValidEmail) {
+        this.setState({
+            ...this.state,
+            email: email,
+            isValidEmail: isValidEmail
+        });
+    }
+    checkValidatePasswordInput(password, isValidPassword) {
+        this.setState({
+            ...this.state,
+            password: password,
+            isValidPassword: isValidPassword
+        });
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errorMessage) {
+            this.setState({
+                ...this.state,
+                errorMsg: nextProps.errorMessage
+            });
+            let getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+            setTimeout(() => {getAlert.style.display = 'none'}, 5000);
+        }
+    }
+    handleClick(event) {
+        event.preventDefault();
+        const { dispatch } = this.props;
+
+        if (this.state.isValidEmail && this.state.isValidPassword) {
+            const creds = { username: this.state.email.trim(), password: this.state.password.trim() };
+            dispatch(SignUpUser(creds));
+        } else {
+            this.setState({
+                ...this.state,
+                errorMsg: 'Email or Password is not valid'
+            });
+            let getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+            setTimeout(() => {getAlert.style.display = 'none'}, 5000);
+        }
+    }
     render() {
-        const { errorMessage } = this.props;
         let toggleCompanyComponent = '';
-        let currentMessage = 'Email or Password is not valid';
-
-        if (errorMessage)
-            currentMessage = errorMessage;
-
         if(this.state.toggleActive === true) {
             toggleCompanyComponent = (
                 <div>
@@ -76,7 +121,9 @@ class InputSignUp extends Component {
                             <div className='card-label'>
                                 Sing up
                             </div>
-                            <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>{ currentMessage }</div>
+                            <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>
+                                { this.state.errorMsg }
+                            </div>
                             <div className='text-center'>
                                 <div className='btn-group mb-3'>
                                     <label
@@ -103,8 +150,18 @@ class InputSignUp extends Component {
                                     </label>
                                 </div>
                             </div>
-                            <InputEmail />
-                            <InputPassword />
+                            <InputEmail
+                                handleEmail={
+                                    (email, isValidEmail) =>
+                                        this.checkValidateEmailInput(email, isValidEmail)
+                                }
+                            />
+                            <InputPassword
+                                handlePassword={
+                                    (password, isValidPassword) =>
+                                        this.checkValidatePasswordInput(password, isValidPassword)
+                                }
+                            />
                             {toggleCompanyComponent}
                             <button type='submit' ref='button' className='btn btn-block c-btn-green'>Sign Up</button>
                         </div>
@@ -120,36 +177,24 @@ class InputSignUp extends Component {
             </div>
         )
     }
-
-    handleClick(event) {
-        event.preventDefault();
-        const {
-            isValidEmail,
-            emailUser,
-            isValidPassword,
-            passUser
-        } = this.props.validate;
-
-        const creds = { username: emailUser.trim(), password: passUser.trim() };
-        if(isValidEmail && isValidPassword) {
-            this.props.SignUpUser(creds);
-        } else {
-            let getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
-            setTimeout(function() { getAlert.style.display = 'none'; }, 5000);
-        }
-    }
 }
 
-InputSignUp.propTypes = {
-    SignUpUser: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string
+SignUp.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    quote: PropTypes.string,
+    isAuthenticated: PropTypes.bool,
+    errorMessage: PropTypes.string,
+    isSecretQuote: PropTypes.bool
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
+    const { signUpReducer } = state;
+    const { errorMessage } = signUpReducer;
+
     return {
-        validate: state.validate
+        errorMessage,
+        signUpReducer
     }
 }
 
-export default connect(mapStateToProps)(InputSignUp)
+export default connect(mapStateToProps)(SignUp)

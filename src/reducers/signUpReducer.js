@@ -4,9 +4,14 @@ import {
     SIGNUP_FAILURE
 } from '../constants/SignUpConstants';
 
+import {
+    VALIDATE_EMAIL
+} from '../constants/ValudateEmailConstaints';
+
 export default function signUpReducer(state = {
     isFetching: false,
-    isAuthenticated: !!localStorage.getItem('id_token')
+    isAuthenticated: !!localStorage.getItem('id_token'),
+    emailUser: ''
 }, action) {
     switch (action.type) {
     case SIGNUP_REQUEST:
@@ -23,6 +28,10 @@ export default function signUpReducer(state = {
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message
+        });
+    case VALIDATE_EMAIL:
+        return Object.assign({}, state, {
+            emailUser: action.emailUser
         });
     default:
         return state

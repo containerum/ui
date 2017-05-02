@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import { validatePassword, notValidatePassword } from '../../../actions/ValidateEmailActions';
+import PropTypes from 'prop-types';
 
 class InputPassword extends Component {
     ValidationGetValuePass() {
-        const { dispatch } = this.props;
-
         const password = this.refs.password.value;
         if (password.length >= 7 && password.length <= 64) {
-            dispatch(validatePassword(password));
+            this.props.handlePassword(password, true);
         } else {
-            dispatch(notValidatePassword());
+            this.props.handlePassword(password, false);
         }
     }
     render() {
@@ -35,10 +31,8 @@ class InputPassword extends Component {
     }
 }
 
-function mapStateToProps (state) {
-    return {
-        validate: state.validate
-    }
-}
+InputPassword.propTypes = {
+    handlePassword: PropTypes.func.isRequired
+};
 
-export default connect(mapStateToProps)(InputPassword)
+export default InputPassword;

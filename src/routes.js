@@ -14,8 +14,8 @@ import Workloads from './components/Workloads';
 // import Profile from './components/Profile';
 // import Billing from './components/Profile/Billing';
 // import Referrals from './components/Profile/Referrals';
-import Login from './components/auth/Login/app';
-import Signup from './components/auth/SignUp/app';
+import Login from './components/auth/Login';
+import SignUp from './components/auth/SignUp';
 import Forgot from './components/Forgot';
 // import Deployments_1 from './components/Deployments/investedDeployments';
 // import ReplicaSets_1 from './components/ReplicaSets/investedReplicaSets';
@@ -25,7 +25,7 @@ import Forgot from './components/Forgot';
 // import Secrets_1 from './components/Secrets/investedSecrets';
 // import Tokens_1 from './components/Tokens/tokens_1';
 import requireAuthentication from './components/auth/require-auth';
-import ConfirmEmail from './components/auth/ConfirmEmail/ConfirmEmail';
+import ConfirmEmail from './components/auth/ConfirmEmail';
 
 export const routes = (
     <Route>
@@ -55,7 +55,7 @@ export const routes = (
             <Route path='/' component={ Workloads } />
         </Route>
         <Route path='/Forgot' component={ Forgot } />
-        <Route path='/Signup' component={ Signup } />
+        <Route path='/SignUp' component={ SignUp } />
         <Route path='/ConfirmEmail' component={ ConfirmEmail } />
     </Route>
 );

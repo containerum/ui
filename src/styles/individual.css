@@ -7,3 +7,7 @@ button,
 .btn.btn-success {
     cursor: pointer;
 }
+
+#loginAlert {
+    display: none;
+}

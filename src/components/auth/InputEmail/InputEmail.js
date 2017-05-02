@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
 import validator from 'validator';
-import { connect } from 'react-redux';
-
-import { validateEmail, notValidateEmail } from '../../../actions/ValidateEmailActions';
+import PropTypes from 'prop-types';
 
 class InputEmail extends Component {
     ValidationGetValueMail() {
-        const { dispatch } = this.props;
-
         const inputEmail = this.refs.inputEmail.value;
         const isValidEmailState = validator.isEmail(inputEmail);
         if (isValidEmailState) {
-            dispatch(validateEmail(inputEmail));
+            this.props.handleEmail(inputEmail, true);
         } else {
-            dispatch(notValidateEmail());
+            this.props.handleEmail(inputEmail, false);
         }
-    }
-    onFocusHandler() {
-        let getAlert = document.getElementById('loginAlert');
-        getAlert.style.display = 'none';
     }
     render() {
         return (
@@ -27,7 +19,6 @@ class InputEmail extends Component {
                 <div className='form-group mb-4 c-has-feedback-left'>
                     <input
                         onChange={(event) => this.ValidationGetValueMail(event)}
-                        onFocus={(event) => this.onFocusHandler(event)}
                         ref='inputEmail'
                         required='required'
                         autoFocus
@@ -43,10 +34,8 @@ class InputEmail extends Component {
     }
 }
 
-function mapStateToProps (state) {
-    return {
-        validate: state.validate
-    }
-}
+InputEmail.propTypes = {
+    handleEmail: PropTypes.func.isRequired
+};
 
-export default connect(mapStateToProps)(InputEmail)
+export default InputEmail;
