@@ -1,0 +1,51 @@
+import axios from 'axios';
+axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
+
+import {
+    NAMESPACES_REQUEST,
+    NAMESPACES_SUCCESS,
+    NAMESPACES_FAILURE
+} from '../../constants/NamespacesConstants';
+
+export function getNamespaces() {
+    return dispatch => {
+        dispatch(requestGetNamespaces());
+
+        return axios.get(
+            'http://139.59.146.89/api/namespaces',
+            {
+                validateStatus: (status) => status >= 200 && status <= 500
+            }
+        )
+        .then(response => {
+            if (response.status === 200 || response.status === 201) {
+                dispatch(receiveGetNamespaces(response.data));
+            } else {
+                dispatch(failGetNamespaces(response.data.message))
+            }
+        }).catch(err => console.log(err))
+    }
+}
+
+function requestGetNamespaces() {
+    return {
+        type: NAMESPACES_REQUEST,
+        isFetching: true
+    }
+}
+
+function receiveGetNamespaces(data) {
+    return {
+        type: NAMESPACES_SUCCESS,
+        isFetching: false,
+        data
+    }
+}
+
+function failGetNamespaces(message) {
+    return {
+        type: NAMESPACES_FAILURE,
+        isFetching: false,
+        message
+    }
+}

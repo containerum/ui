@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { logoutUser } from '../../actions/LogoutActions';
 import logo from '../../images/Containerum_logo_new.png';
-import NavLink from "../NavLink/index";
+import NavLink from '../NavLink/index';
 
 class Header extends Component {
     constructor() {
@@ -55,7 +55,7 @@ class Header extends Component {
                                 <NavLink className="dropdown-item" to="/Support">Support</NavLink>
                             </div>
                         </div>
-                        <div className="p-2">
+                        <div className="p-2" onBlur={this.onToggleProfileHandler.bind(this)}>
                             <button
                                 className="navbar-toggler navbar-toggler-margin-top"
                                 onClick={this.onToggleProfileHandler.bind(this)}

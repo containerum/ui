@@ -11,3 +11,16 @@ button,
 #loginAlert {
     display: none;
 }
+
+.show-dropdown-namespaces,
+.show-dropdown-create {
+    display: block;
+    right: initial;
+    left: initial;
+    top: initial;
+}
+
+.show-dropdown-namespaces{
+    left: 30px;
+    top: 45px;
+}
