@@ -5,28 +5,21 @@ import PropTypes from 'prop-types';
 import NavLink from '../../components/NavLink';
 
 class CreateInstance extends Component {
-    constructor() {
-        super();
-        this.state = {
-            isToggleCreateInstance: false
-        };
-    }
-    onToggleCreateInstance() {
-        this.setState({
-            isToggleCreateInstance: !this.state.isToggleCreateInstance
-        });
-    }
     render() {
         return (
-            <div className="p-2" onBlur={this.onToggleCreateInstance.bind(this)}>
+            <div className="btn-group">
                 <button
-                    className="navbar-toggler navbar-toggler-margin-top"
-                    onClick={this.onToggleCreateInstance.bind(this)}
                     type="button"
-                >Create
+                    className="btn dropdown-toggle c-nav-menu-btn"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    Create
                 </button>
-                <div className={this.state.isToggleCreateInstance ? "dropdown-menu show-dropdown-create" : "dropdown-menu"}>
+                <div className="dropdown-menu dropdown-menu-right">
                     <NavLink className="dropdown-item" to='/Deployment'>Deployment</NavLink>
+                    <div className="dropdown-divider"></div>
                     <NavLink className="dropdown-item" to='/Secrets'>Secrets</NavLink>
                 </div>
             </div>

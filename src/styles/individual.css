@@ -32,3 +32,8 @@ button,
 .i-height-btn-group {
     height: 38px;
 }
+
+.i-sizes-img-logo {
+    width: 160px;
+    height: 30px;
+}

@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import Logo from '../../Logo';
 
 class ConfirmEmail extends Component {
+    componentWillMount() {
+        document.body.classList.add('c-body-bg');
+    }
     render() {
         return (
             <div className='container'>

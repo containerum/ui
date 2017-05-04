@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 // import NavLink from '../../components/NavLink';
 // import Translate   from 'react-translate-component';
 // import LocaleSwitcher from '../../components/LocaleSwitcher/LocaleSwitcher';
+import axios from 'axios';
+axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
+
 import Header from '../../components/Header';
 
 import '../../localization/en/app';

@@ -49,6 +49,9 @@ class SignUp extends Component {
             isValidPassword: isValidPassword
         });
     }
+    componentWillMount() {
+        document.body.classList.add('c-body-bg');
+    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.errorMessage) {
             this.setState({

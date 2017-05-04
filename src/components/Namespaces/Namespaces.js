@@ -6,43 +6,29 @@ import { getNamespaces } from '../../actions/NamespacesActions';
 import NamespacesContainer from '../../containers/NamespacesContainer';
 
 class Namespaces extends Component {
-    constructor() {
-        super();
-        this.state = {
-            toggleBtnNamespaces: false
-        };
-    }
     componentWillMount() {
         const { dispatch } = this.props;
         dispatch(getNamespaces());
     }
-    onToggleGetNamespaces() {
-        this.setState({
-            toggleBtnNamespaces: !this.state.toggleBtnNamespaces
-        });
-    }
-    onBlurGetNamespaces() {
-        this.setState({
-            toggleBtnNamespaces: false
-        });
-    }
     render() {
-        let isFetchingComponent = <div>Loading</div>;
+        let isFetchingComponent = "";
         if (this.props.NamespacesReducer.isFetching === false) {
             isFetchingComponent =
                 <NamespacesContainer
-                    stateBtnToggle={this.state.toggleBtnNamespaces}
                     namespacesDataReducer={this.props.NamespacesReducer.data}
                 />
         }
 
         return (
-            <div className="p-2" onBlur={this.onBlurGetNamespaces.bind(this)}>
+            <div className="btn-group mr-auto">
                 <button
-                    className="navbar-toggler navbar-toggler-margin-top"
-                    onClick={this.onToggleGetNamespaces.bind(this)}
                     type="button"
-                >Personal Space
+                    className="btn dropdown-toggle c-nav-menu-btn"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    Personal space
                 </button>
                 { isFetchingComponent }
             </div>

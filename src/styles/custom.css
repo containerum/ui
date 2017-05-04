@@ -148,3 +148,74 @@
     color: white;
     border: 0;
 }
+
+
+
+/* Navbar */
+.c-navbar {
+    background-color: #009CD1;
+}
+
+.c-nav-user-btn {
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.c-nav-user-btn:focus {
+    box-shadow: none;
+}
+
+.c-nav-user-img {
+    position: absolute;
+    top: 13px;
+    right: 125px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.c-nav-user-name {
+    padding-left: 40px;
+    display: block;
+}
+
+.c-nav-menu-btn {
+    background: transparent;
+    /*color: #000;*/
+    cursor: pointer;
+}
+
+.c-nav-menu-btn:focus {
+    box-shadow: none;
+}
+
+/* Card */
+.c-table-card-block {
+    padding: 0;
+}
+
+.c-table-card {
+    margin-bottom: 0;
+}
+
+.c-table-card tr:first-child td {
+    border-top-color: #fff;
+}
+
+.c-table-card-btn {
+    background: transparent;
+    cursor: pointer;
+}
+
+.c-table-card-btn:focus {
+    box-shadow: none;
+}
+
+.c-table-card-img {
+    /*position: absolute;*/
+    /*top: 12px;*/
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}

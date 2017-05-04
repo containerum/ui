@@ -19,6 +19,9 @@ class Forgot extends Component {
         this.checkValidateEmailInput = this.checkValidateEmailInput.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
+    componentWillMount() {
+        document.body.classList.add('c-body-bg');
+    }
     handleClick(event) {
         event.preventDefault();
         const { dispatch } = this.props;
@@ -56,29 +59,27 @@ class Forgot extends Component {
     }
     render() {
         return (
-            <div className='c-body-bg'>
-                <div className='container'>
-                    <Logo />
-                    <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
-                        <div className='card c-card'>
-                            <div className='card-block p-5'>
-                                <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>
-                                    { this.state.errorMsg }
-                                </div>
-                                <div className='card-label'>Reset Password</div>
-                                <InputEmail
-                                    handleEmail={
-                                        (email, isValidEmail) =>
-                                            this.checkValidateEmailInput(email, isValidEmail)
-                                    }
-                                />
-                                <button ref='button' type='submit' className='btn btn-block c-btn-green'>Reset</button>
+            <div className='container'>
+                <Logo />
+                <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
+                    <div className='card c-card'>
+                        <div className='card-block p-5'>
+                            <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>
+                                { this.state.errorMsg }
                             </div>
-                            <div className='card-footer text-center'>Don't have an account? <Link to='/SignUp'>Sing up</Link></div>
+                            <div className='card-label'>Reset Password</div>
+                            <InputEmail
+                                handleEmail={
+                                    (email, isValidEmail) =>
+                                        this.checkValidateEmailInput(email, isValidEmail)
+                                }
+                            />
+                            <button ref='button' type='submit' className='btn btn-block c-btn-green'>Reset</button>
                         </div>
-                        <p className='text-center pt-3'><Link to='/Login' className='c-link-wt'>Go to Login</Link></p>
-                    </form>
-                </div>
+                        <div className='card-footer text-center'>Don't have an account? <Link to='/SignUp'>Sing up</Link></div>
+                    </div>
+                    <p className='text-center pt-3'><Link to='/Login' className='c-link-wt'>Go to Login</Link></p>
+                </form>
             </div>
         );
     }
