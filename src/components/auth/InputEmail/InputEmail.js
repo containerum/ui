@@ -16,7 +16,7 @@ class InputEmail extends Component {
         return (
             <div>
                 <label className='sr-only' htmlFor='Username'>Email</label>
-                <div className='form-group mb-4 c-has-feedback-left'>
+                <div className='form-group i-mb-20 c-has-feedback-left'>
                     <input
                         onChange={(event) => this.ValidationGetValueMail(event)}
                         ref='inputEmail'

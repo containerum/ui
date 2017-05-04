@@ -14,7 +14,7 @@ class InputPassword extends Component {
         return (
             <div>
                 <label className='sr-only' htmlFor='Password'>Password</label>
-                <div className='form-group mb-4 c-has-feedback-left'>
+                <div className='form-group i-mb-20 c-has-feedback-left'>
                     <input
                         onChange={(event) => this.ValidationGetValuePass(event)}
                         type='password'

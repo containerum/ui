@@ -24,3 +24,11 @@ button,
     left: 30px;
     top: 45px;
 }
+
+.i-mb-20 {
+    margin-bottom: 20px;
+}
+
+.i-height-btn-group {
+    height: 38px;
+}

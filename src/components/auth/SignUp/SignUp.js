@@ -84,7 +84,7 @@ class SignUp extends Component {
                 <div>
 
                     <label className='sr-only' htmlFor='inlineFormInputCompanyName'>Company name</label>
-                    <div className='form-group mb-4 c-has-feedback-left'>
+                    <div className='form-group i-mb-20 c-has-feedback-left'>
                         <input
                             ref='company_name'
                             required='required'
@@ -97,7 +97,7 @@ class SignUp extends Component {
                     </div>
 
                     <label className='sr-only' htmlFor='inlineFormInputTaxCode'>Tax Code</label>
-                    <div className='form-group mb-4 c-has-feedback-left'>
+                    <div className='form-group i-mb-20 c-has-feedback-left'>
                         <input
                             ref='tax_code'
                             required='required'
@@ -124,8 +124,8 @@ class SignUp extends Component {
                             <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>
                                 { this.state.errorMsg }
                             </div>
-                            <div className='text-center'>
-                                <div className='btn-group mb-3'>
+                            <div className='text-center i-height-btn-group i-mb-20'>
+                                <div className='btn-group'>
                                     <label
                                         className={this.state.idOfActiveToggle === 'option1'
                                             ? 'btn btn-success active' : 'btn btn-success'}>
@@ -170,7 +170,7 @@ class SignUp extends Component {
                             <a href='#'>Terms of Service</a> and <a href='#'>Privacy Policy</a>
                         </div>
                     </div>
-                    <p className='text-center pt-2 c-wt'>
+                    <p className='text-center pt-3 c-wt'>
                         Dont have an account? <Link to='/Login' className='c-link-wt'>Log In</Link>
                     </p>
                 </form>
