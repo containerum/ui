@@ -26,11 +26,15 @@ import Forgot from './components/Forgot';
 // import Tokens_1 from './components/Tokens/tokens_1';
 import requireAuthentication from './components/auth/require-auth';
 import ConfirmEmail from './components/auth/ConfirmEmail';
+import CreateDeployment from './components/CreateDeployment';
+import CreateService from './components/CreateService';
 
 export const routes = (
     <Route>
         <Route path='/' component={ requireAuthentication(App) }>
             <IndexRoute component={ Workloads } />
+            <Route path='/CreateNewDeployment' component={ CreateDeployment } />
+            <Route path='/CreateNewService' component={ CreateService } />
             {/*<Route path='/Deployments/:deployments_1' component={ Deployments_1 } />*/}
             {/*<Route path='/ReplicaSets/:replicasets_1' component={ ReplicaSets_1 } />*/}
             {/*<Route path='/Pods/:pods_1' component={ Pods_1 } />*/}

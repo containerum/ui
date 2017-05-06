@@ -18,9 +18,9 @@ class CreateInstance extends Component {
                     Create
                 </button>
                 <div className="dropdown-menu dropdown-menu-right">
-                    <NavLink className="dropdown-item" to='/Deployment'>Deployment</NavLink>
+                    <NavLink className="dropdown-item" to='/CreateNewDeployment'>Deployment</NavLink>
                     <div className="dropdown-divider"></div>
-                    <NavLink className="dropdown-item" to='/Secrets'>Secrets</NavLink>
+                    <NavLink className="dropdown-item" to='/CreateNewSecret'>Secret</NavLink>
                 </div>
             </div>
         );

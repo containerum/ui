@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 // import NavLink from '../../components/NavLink';
 // import Translate   from 'react-translate-component';
 // import LocaleSwitcher from '../../components/LocaleSwitcher/LocaleSwitcher';
+import Namespaces from '../../components/Namespaces';
+import CreateInstance from '../../components/CreateInstance';
 import axios from 'axios';
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
 
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 import '../../localization/en/app';
 import '../../localization/ru/app';
@@ -17,9 +20,13 @@ import '../../styles/individual.css';
 export default class App extends Component {
     render() {
         return (
-            <div>
+            <div className="wrapper">
                 {/*<LocaleSwitcher />*/}
                 <Header />
+                <div className="navbar navbar-toggleable-md navbar-light bg-faded">
+                    <Namespaces />
+                    <CreateInstance />
+                </div>
                 {/*<ul className='nav nav-pills nav-stacked'>*/}
                     {/*<li>*/}
                         {/*<NavLink onlyActiveOnIndex={true} to='/'>*/}
@@ -73,6 +80,7 @@ export default class App extends Component {
                     {/*</li>*/}
                 {/*</ul>*/}
                 {this.props.children}
+                <Footer />
             </div>
         );
     }

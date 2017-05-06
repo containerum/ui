@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/LogoutActions';
 import logo from '../../images/Containerum_logo_new.png';
 import NavLink from '../NavLink/index';
+import ProfileInfoEmail from '../ProfileInfoEmail';
 
 class Header extends Component {
     render() {
@@ -44,8 +45,10 @@ class Header extends Component {
                             aria-expanded="false"
                         >
                             <img className="c-nav-user-img" src="https://avatars2.githubusercontent.com/u/6412038?v=3&amp;s=200" alt="Avatar" />
-                                <span className="c-nav-user-name">kfeofantov</span>
-                                <span className="c-nav-user-name">balance: 35$</span>
+                                <div className="c-nav-user-data">
+                                    <ProfileInfoEmail />
+                                    <span className="c-nav-user-name">balance: 35$</span>
+                                </div>
                         </button>
                         <div className="dropdown-menu dropdown-menu-right">
                             <NavLink className="dropdown-item" to="/Profile">Profile</NavLink>

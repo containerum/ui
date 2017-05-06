@@ -167,17 +167,20 @@
 }
 
 .c-nav-user-img {
-    position: absolute;
-    top: 13px;
-    right: 125px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    margin-right: 30px;
+    float: left;
+    margin-top: 5px;
 }
 
 .c-nav-user-name {
-    padding-left: 40px;
     display: block;
+}
+
+.c-nav-user-data {
+    float: right;
 }
 
 .c-nav-menu-btn {

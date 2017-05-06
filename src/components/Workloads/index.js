@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Namespaces from '../Namespaces';
-import CreateInstance from '../CreateInstance';
+import Deployments from '../Deployments';
+import Services from '../Services';
 
 export default class Workloads extends Component {
     componentWillMount() {
@@ -8,9 +8,9 @@ export default class Workloads extends Component {
     }
     render() {
         return (
-            <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                <Namespaces />
-                <CreateInstance />
+            <div>
+                <Deployments />
+                <Services />
             </div>
         )
     }
