@@ -1,15 +1,3 @@
-html, body {
-    min-height: 100%;
-}
-.wrapper {
-    padding-bottom: 50px;
-}
-.footer {
-    height: 50px;
-    position: absolute;
-    bottom: 0;
-}
-
 .btn.btn-success > input {
     position: absolute;
     clip: rect(0,0,0,0);
@@ -48,4 +36,17 @@ button,
 .i-sizes-img-logo {
     width: 160px;
     height: 30px;
+}
+
+.c-nav-user-wrap .c-nav-user-img {
+    position: absolute;
+    margin-right: 30px;
+    float: none;
+    top: 3px;
+    margin-top: 0;
+}
+
+.c-nav-user-wrap .c-nav-user-name {
+    padding-left: 40px;
+    display: inline-block;
 }

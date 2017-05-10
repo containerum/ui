@@ -15,7 +15,6 @@ export function getDeployments(namespaceName) {
         return axios.get(
             api,
             {
-                headers: { Authorization: localStorage.getItem('token') },
                 validateStatus: (status) => status >= 200 && status <= 500
             }
         )

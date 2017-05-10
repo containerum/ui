@@ -15,22 +15,23 @@ class PostsServicesContainer extends Component {
                                         <tbody>
                                         {
                                             this.props.PostsServicesDataReducer.map(function(item, index) {
+                                                const labelsList = item.labels.join();
                                                 return (
                                                     <NavLink key={index} to={`/Services/${item.name}`}>
                                                         <tr>
                                                             <td>
-                                                                <img className="c-table-card-img mr-1" src="https://avatars2.githubusercontent.com/u/6412038?v=3&amp;s=200" alt="" />
+                                                                <img className="c-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&d=identicon&r=PG&f=1" alt="" />
                                                                 {item.name}
                                                             </td>
+                                                            <td>Internal IP: {item['service-ip']}</td>
+                                                            <td>{labelsList}</td>
                                                             <td className="text-right">
                                                                 <div className="btn-group">
                                                                     <button className="btn btn-sm dropdown-toggle c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                         Action
                                                                     </button>
                                                                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-                                                                        <button className="dropdown-item" type="button">Action</button>
-                                                                        <button className="dropdown-item" type="button">Action</button>
-                                                                        <button className="dropdown-item" type="button">Action</button>
+                                                                        <button className="dropdown-item text-danger" type="button">Delete</button>
                                                                     </div>
                                                                 </div>
                                                             </td>

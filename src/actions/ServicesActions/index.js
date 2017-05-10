@@ -15,14 +15,13 @@ export function getServices(namespaceName) {
         return axios.get(
             api,
             {
-                headers: { Authorization: localStorage.getItem('token') },
                 validateStatus: (status) => status >= 200 && status <= 500
             }
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
                 console.log(response);
-                dispatch(receiveGetServices(response.data.services));
+                dispatch(receiveGetServices(response.data));
             } else {
                 dispatch(failGetServices(response.data.message))
             }

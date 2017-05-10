@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Translate   from 'react-translate-component';
+import Translate from 'react-translate-component';
 
 import NavLink from '../NavLink/index';
 
