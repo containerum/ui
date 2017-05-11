@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 import { LOGINUser } from '../../../actions/LoginActions';
+import { checkHashParamActions } from '../../../actions/checkHashParamActions';
 import InputEmail from '../InputEmail';
 import InputPassword from '../InputPassword';
 import Logo from '../../Logo';
@@ -38,6 +39,10 @@ class Login extends Component {
     }
     componentWillMount() {
         document.body.classList.add('c-body-bg');
+        if (this.props.params.hashParam) {
+            const { dispatch } = this.props;
+            dispatch(checkHashParamActions(this.props.params.hashParam));
+        }
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.errorMessage) {
@@ -112,16 +117,15 @@ Login.propTypes = {
     quote: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
-    isSecretQuote: PropTypes.bool
+    isSecretQuote: PropTypes.bool,
+    hashParam: PropTypes.string
 };
 
 function mapStateToProps(state) {
-    const { loginReducer } = state;
-    const { errorMessage } = loginReducer;
-
     return {
-        errorMessage,
-        loginReducer
+        loginReducer: state.loginReducer,
+        checkHashParamReducer: state.checkHashParamReducer,
+        errorMessage: state.errorMessage
     }
 }
 

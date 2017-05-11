@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import LocaleSwitcher from '../../components/LocaleSwitcher/LocaleSwitcher';
 import Namespaces from '../../components/Namespaces';
 import CreateInstance from '../../components/CreateInstance';
+import Spinner from '../../components/Spinner';
 import axios from 'axios';
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
 
@@ -15,15 +16,18 @@ import '../../styles/individual.css';
 export default class App extends Component {
     render() {
         return (
-            <div className="wrapper">
-                {/*<LocaleSwitcher />*/}
-                <Header />
-                <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                    <Namespaces />
-                    <CreateInstance />
+            <div>
+                <Spinner />
+                <div className="wrapper">
+                    {/*<LocaleSwitcher />*/}
+                    <Header />
+                    <div className="navbar navbar-toggleable-md navbar-light bg-faded">
+                        <Namespaces />
+                        <CreateInstance />
+                    </div>
+                    {this.props.children}
+                    <Footer />
                 </div>
-                {this.props.children}
-                <Footer />
             </div>
         );
     }

@@ -57,7 +57,8 @@ class ProfileInfoDropdown extends Component {
 }
 
 ProfileInfoDropdown.propTypes = {
-    userEmail: PropTypes.string
+    userEmail: PropTypes.string,
+    onLogoutClick: PropTypes.func
 };
 
 export default ProfileInfoDropdown;

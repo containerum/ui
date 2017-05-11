@@ -50,3 +50,7 @@ button,
     padding-left: 40px;
     display: inline-block;
 }
+
+.c-nav-user-name {
+    font-size: 15px;
+}

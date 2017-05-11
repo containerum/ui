@@ -24,14 +24,14 @@ class Header extends Component {
                 </NavLink>
                 <div className="collapse navbar-collapse justify-content-end">
                     <CommonInfoDropdown />
-                    <ProfileInfoDropdown userEmail={userEmail} />
+                    <ProfileInfoDropdown onLogoutClick={this.props.onLogoutClick} userEmail={userEmail} />
                 </div>
             </div>
         );
     }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         logoutReducer: state.logoutReducer,
         ProfileReducer: state.ProfileReducer,
