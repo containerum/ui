@@ -1,5 +1,4 @@
 import axios from 'axios';
-axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
 
 import {
     SERVICES_REQUEST,
@@ -10,11 +9,15 @@ import {
 export function getServices(namespaceName) {
     return dispatch => {
         dispatch(requestGetServices());
-        const api = 'http://139.59.146.89/api/namespaces/' + namespaceName + '/services';
+        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/services';
 
         return axios.get(
             api,
             {
+                headers: {
+                    'Authorization': localStorage.getItem('id_token'),
+                    'Content-Type': 'application/x-www-form-urlencode'
+                },
                 validateStatus: (status) => status >= 200 && status <= 500
             }
         )

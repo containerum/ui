@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 // import LocaleSwitcher from '../../components/LocaleSwitcher/LocaleSwitcher';
-import Namespaces from '../../components/Namespaces';
-import CreateInstance from '../../components/CreateInstance';
 import Spinner from '../../components/Spinner';
 import axios from 'axios';
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
@@ -21,10 +19,6 @@ export default class App extends Component {
                 <div className="wrapper">
                     {/*<LocaleSwitcher />*/}
                     <Header />
-                    <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                        <Namespaces />
-                        <CreateInstance />
-                    </div>
                     {this.props.children}
                     <Footer />
                 </div>

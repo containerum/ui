@@ -15,7 +15,7 @@ export function SignUpUser(creds) {
     return dispatch => {
         dispatch(requestSignUp(creds));
         return axios.post(
-            'http://139.59.146.89/api/users',
+            'http://207.154.197.7:5000/api/users',
             {username: creds.username, password: creds.password},
             {validateStatus: (status) =>
                 status >= 200 && status <= 500

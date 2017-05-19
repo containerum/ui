@@ -11,7 +11,7 @@ export default class PanelDeployments extends Component {
         };
     }
     componentDidMount() {
-        axios.get('http://139.59.146.89/api/deployments')
+        axios.get('http://207.154.197.7:5000/api/deployments')
         .then(response => {
             this.setState({data_dep: response.data});
             console.log(this.state.data_dep)

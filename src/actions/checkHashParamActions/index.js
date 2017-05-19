@@ -10,7 +10,7 @@ export function checkHashParamActions(hashParam) {
     return dispatch => {
         dispatch(requestCheckHash());
         return axios.post(
-            'http://139.59.146.89/api/login/check_hash',
+            'http://207.154.197.7:5000/api/login/check_hash',
             {hashParam: hashParam},
             {validateStatus: (status) =>
                 status >= 200 && status <= 500

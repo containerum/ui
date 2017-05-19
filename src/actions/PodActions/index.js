@@ -1,17 +1,18 @@
 import axios from 'axios';
 
 import {
-    NAMESPACES_REQUEST,
-    NAMESPACES_SUCCESS,
-    NAMESPACES_FAILURE
-} from '../../constants/NamespacesConstants';
+    POD_REQUEST,
+    POD_SUCCESS,
+    POD_FAILURE
+} from '../../constants/PodConstants';
 
-export function getNamespaces() {
+export function getPod(namespaceName, deploymentName) {
     return dispatch => {
-        dispatch(requestGetNamespaces());
+        dispatch(requestGetPod());
+        const api = '/namespaces/' + namespaceName + '/deployments/' + deploymentName;
 
         return axios.get(
-            'http://207.154.197.7:5000/api/namespaces',
+            api,
             {
                 headers: {
                     'Authorization': localStorage.getItem('id_token'),
@@ -22,32 +23,33 @@ export function getNamespaces() {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                dispatch(receiveGetNamespaces(response.data));
+                console.log(response);
+                dispatch(receiveGetPod(response.data));
             } else {
-                dispatch(failGetNamespaces(response.data.message))
+                dispatch(failGetPod(response.data.message))
             }
         }).catch(err => console.log(err))
     }
 }
 
-function requestGetNamespaces() {
+function requestGetPod() {
     return {
-        type: NAMESPACES_REQUEST,
+        type: POD_REQUEST,
         isFetching: true
     }
 }
 
-function receiveGetNamespaces(data) {
+function receiveGetPod(data) {
     return {
-        type: NAMESPACES_SUCCESS,
+        type: POD_SUCCESS,
         isFetching: false,
         data
     }
 }
 
-function failGetNamespaces(message) {
+function failGetPod(message) {
     return {
-        type: NAMESPACES_FAILURE,
+        type: POD_FAILURE,
         isFetching: false,
         message
     }

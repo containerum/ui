@@ -27,19 +27,49 @@ class Namespaces extends Component {
                     </NavLink>
                 </div>;
         }
+        let isIdDep = null;
+        if (this.props.idDep) {
+            isIdDep =
+                <div className="btn-group">
+                    <i className="arrow-right"></i>
+                    <button
+                        type="button"
+                        className="btn c-nav-menu-btn"
+                    >
+                        { this.props.idDep }
+                    </button>
+                </div>
+        }
+        let isIdPod = null;
+        if (this.props.idPod) {
+            isIdPod =
+                <div className="btn-group">
+                    <i className="arrow-right"></i>
+                    <button
+                        type="button"
+                        className="btn c-nav-menu-btn"
+                    >
+                        { this.props.idPod }
+                    </button>
+                </div>
+        }
 
         return (
-            <div className="btn-group mr-auto">
-                <button
-                    type="button"
-                    className="btn dropdown-toggle c-nav-menu-btn"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                >
-                    Personal space
-                </button>
-                { isFetchingComponent }
+            <div className="mr-auto">
+                <div className="btn-group mr-auto">
+                    <button
+                        type="button"
+                        className="btn dropdown-toggle c-nav-menu-btn"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >
+                        Personal space
+                    </button>
+                    { isFetchingComponent }
+                </div>
+                { isIdDep }
+                { isIdPod }
             </div>
         );
     }
@@ -47,7 +77,9 @@ class Namespaces extends Component {
 
 Namespaces.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string
+    errorMessage: PropTypes.string,
+    idDep: PropTypes.string,
+    idPod: PropTypes.string,
 };
 
 function mapStateToProps (state) {

@@ -1,5 +1,4 @@
 import axios from 'axios';
-axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
 
 import {
     PROFILE_REQUEST,
@@ -10,17 +9,20 @@ import {
 export function getProfile() {
     return dispatch => {
         dispatch(requestGetProfile());
-        const api = 'http://139.59.146.89/api/profile';
+        const api = 'http://207.154.197.7:5000/api/profile';
 
         return axios.get(
             api,
             {
+                headers: {
+                    'Authorization': localStorage.getItem('id_token'),
+                    'Content-Type': 'application/x-www-form-urlencode'
+                },
                 validateStatus: (status) => status >= 200 && status <= 500
             }
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                console.log(response);
                 dispatch(receiveGetProfile(response.data));
             } else {
                 dispatch(failGetProfile(response.data.message))

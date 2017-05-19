@@ -1,5 +1,4 @@
 import axios from 'axios';
-axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
 
 import {
     DEPLOYMENTS_REQUEST,
@@ -10,11 +9,15 @@ import {
 export function getDeployments(namespaceName) {
     return dispatch => {
         dispatch(requestGetDeployments());
-        const api = 'http://139.59.146.89/api/namespaces/' + namespaceName + '/deployments';
+        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/deployments';
 
         return axios.get(
             api,
             {
+                headers: {
+                    'Authorization': localStorage.getItem('id_token'),
+                    'Content-Type': 'application/x-www-form-urlencode'
+                },
                 validateStatus: (status) => status >= 200 && status <= 500
             }
         )

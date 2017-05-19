@@ -14,7 +14,7 @@ class ReplicaSet extends Component {
         }
     }
     componentDidMount() {
-        axios.get(`http://139.59.146.89/api/replicasets/${this.props.data.id}`)
+        axios.get(`http://207.154.197.7:5000/api/replicasets/${this.props.data.id}`)
         .then(response => {
             this.setState({data_replica: response.data});
             console.log(this.state.data_replica);

@@ -11,7 +11,7 @@ export function ConfirmEmail(creds) {
     return dispatch => {
         dispatch(requestEmailConfirm(creds));
         return axios.post(
-            'http://139.59.146.89/api/password_reset',
+            'http://207.154.197.7:5000/api/password_reset',
             {email: creds.email},
             {validateStatus: (status) =>
                 status >= 200 && status <= 500

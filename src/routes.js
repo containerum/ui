@@ -9,6 +9,8 @@ import requireAuthentication from './components/auth/require-auth';
 import ConfirmEmail from './components/auth/ConfirmEmail';
 import CreateDeployment from './components/CreateDeployment';
 import CreateService from './components/CreateService';
+import Deployment from './components/Deployment';
+import Pod from './components/Pod';
 import NotFound from './components/NotFound';
 
 export const routes = (
@@ -17,6 +19,8 @@ export const routes = (
             <IndexRoute component={ Workloads } />
             <Route path='/CreateNewDeployment' component={ CreateDeployment } />
             <Route path='/CreateNewService' component={ CreateService } />
+            <Route path='/Deployments/:idDep' component={ Deployment } />
+            <Route path={'/Deployments/:idDep/Pods/:idPod'}  component={ Pod }/>
         </Route>
         <Route path='/Login(/:hashParam)' component={ Login }>
             <Route path='/' component={ Workloads } />

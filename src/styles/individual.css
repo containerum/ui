@@ -54,3 +54,35 @@ button,
 .c-nav-user-name {
     font-size: 15px;
 }
+
+.i-table-card td {
+    border: 0;
+}
+
+.i-table-card-img {
+    width: 80px;
+    height: 80px;
+}
+
+.i-table-wight-all {
+    width: 100%;
+}
+
+.i-table-inline {
+    display: inline-block;
+    padding: .75rem;
+    vertical-align: top;
+}
+
+.i-table-td {
+    cursor: pointer;
+}
+
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 7px solid black;
+    margin-top: 11px;
+}

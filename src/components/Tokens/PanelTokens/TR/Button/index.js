@@ -45,7 +45,7 @@ class Button extends Component {
     }
     alertDelete() {
         let get = document.getElementById('alert');
-        axios.delete('http://139.59.146.89/api/tokens/x1x2');
+        axios.delete('http://207.154.197.7:5000/api/tokens/x1x2');
         this.closeModal();
         get.style.visibility = 'visible';
         setTimeout(function() { get.style.visibility = 'hidden'; }, 5000);

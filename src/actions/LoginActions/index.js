@@ -11,7 +11,7 @@ export function LOGINUser(creds) {
     return dispatch => {
         dispatch(requestLOGIN(creds));
         return axios.post(
-            'http://139.59.146.89/api/login',
+            'http://207.154.197.7:5000/api/login',
             {username: creds.username, password: creds.password},
             {validateStatus: (status) =>
                 status >= 200 && status <= 500
