@@ -17,7 +17,7 @@ class PostsDeploymentsContainer extends Component {
                                             this.props.PostsDeploymentsDataReducer.map(function(item, index) {
                                                 const imagesList = item.images.join();
                                                 return (
-                                                    <NavLink key={index} to={`/Deployments/${item.name}`}>
+                                                    <NavLink key={index} to={`/Namespaces/default/Deployments/${item.name}`}>
                                                         <tr>
                                                             <td>
                                                                 <img className="c-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&d=identicon&r=PG&f=1" alt="" />

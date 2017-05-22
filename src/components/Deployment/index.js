@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 
 import Info from './Info';
 import PodsList from './PodsList';
-import TabOfObject from '../../components/TabOfObject';
 import Namespaces from '../../components/Namespaces';
 import CreateInstance from '../../components/CreateInstance';
 
@@ -16,9 +16,22 @@ class Deployment extends Component {
                     <Namespaces idDep={this.props.params.idDep} />
                     <CreateInstance />
                 </div>
-                <TabOfObject />
-                <Info />
-                <PodsList />
+                <Tabs>
+                    <TabList className="btn-group">
+                        <Tab className="btn c-nav-menu-btn">Objects</Tab>
+                        <Tab className="btn c-nav-menu-btn">Settings</Tab>
+                    </TabList>
+
+                    <TabPanel>
+                        <Info />
+                        <PodsList idDep={this.props.params.idDep}  />
+                    </TabPanel>
+                    <TabPanel>
+                        <div className="container-fluid pt-3">
+                            Settings
+                        </div>
+                    </TabPanel>
+                </Tabs>
             </div>
         );
     }

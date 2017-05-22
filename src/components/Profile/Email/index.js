@@ -3,16 +3,35 @@ import React, { Component } from 'react';
 export default class Email extends Component {
     render() {
         return (
-            <div className='col-md-13 colmail'>
-                <div className='col-md-8'>
-                    <h4>E-mail subscriptions</h4>
-                    <h5>By subscribing to our email newsletter, you will be opting to receive updates about new
-                        feature releases, discounts and prornotional codes, security updates, and more.</h5>
-                    <h5>If you not interested in receiving this content, please uncheck the box below to unsubscribe.</h5>
-                    <div className='... checkbox-slider--b-flat'>
-                        <label>
-                            <input type='checkbox'/><span>Subscribe to newsletters</span>
-                        </label>
+            <div>
+                <div className='container-fluid pt-3'>
+                    <div className='row'>
+                        <div className="col-12">
+                            <div className="card mt-3">
+                                <div className="card-block c-table-card-block">
+                                    <table className="table i-table-card">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                E-mail subscriptions
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                By subscribing to our email newsletter, you will be opting to
+                                                receive updates about new feature releases....
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                bla bla bla...
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

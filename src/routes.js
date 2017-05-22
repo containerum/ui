@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route } from 'react-router';
 import App from './containers/App';
 import Workloads from './components/Workloads';
 import Login from './components/auth/Login';
@@ -12,18 +12,20 @@ import CreateService from './components/CreateService';
 import Deployment from './components/Deployment';
 import Pod from './components/Pod';
 import NotFound from './components/NotFound';
+import Profile from './components/Profile';
 
 export const routes = (
     <Route>
         <Route path='/' component={ requireAuthentication(App) }>
-            <IndexRoute component={ Workloads } />
+            <Route path='/Namespaces/:idName' component={ Workloads } />
+            <Route path='/Namespaces/:idName/Deployments/:idDep' component={ Deployment } />
+            <Route path='/Namespaces/:idName/Deployments/:idDep/Pods/:idPod'  component={ Pod }/>
             <Route path='/CreateNewDeployment' component={ CreateDeployment } />
             <Route path='/CreateNewService' component={ CreateService } />
-            <Route path='/Deployments/:idDep' component={ Deployment } />
-            <Route path={'/Deployments/:idDep/Pods/:idPod'}  component={ Pod }/>
+            <Route path='/Profile' component={ Profile } />
         </Route>
         <Route path='/Login(/:hashParam)' component={ Login }>
-            <Route path='/' component={ Workloads } />
+            <Route path='/Namespaces/:idName' component={ Workloads } />
         </Route>
         <Route path='/Forgot' component={ Forgot } />
         <Route path='/SignUp' component={ SignUp } />

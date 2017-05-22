@@ -63,7 +63,7 @@ export default class TR extends Component {
                 <tr key={index}>
                     <td className='width_td'></td>
                     <th className='editDepTable' scope='row' onClick={setDeploymentId}>
-                        <Link data-id={item.name} to={`/Deployments/${item.name}`}>{item.name}
+                        <Link data-id={item.name} to={`/Namespaces/default/Deployments/${item.name}`}>{item.name}
                             <td className='ramGb'>{item.ram} {that.state.ramState}</td>
                         </Link>
                     </th>

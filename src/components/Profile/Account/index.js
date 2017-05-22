@@ -108,49 +108,6 @@ export default class Account extends Component {
                         aria-describedby='sizing-addon1'
                     />
                 </li>
-                <li className='rowinput'>
-                    <input
-                        onKeyDown={ this.handleEditField }
-                        type='text'
-                        className='form-control'
-                        ref={ `password_${ item.id }` }
-                        name='password'
-                        aria-describedby='sizing-addon1'
-                    />
-                </li>
-                <li className='rowinput'>
-                    <input
-                        onKeyDown={ this.handleEditField }
-                        type='text'
-                        className='form-control'
-                        ref={ `phonenumber_${ item.id }` }
-                        name='phonenumber'
-                        defaultValue={ item.phonenumber }
-                        aria-describedby='sizing-addon1'
-                    />
-                </li>
-                <li className='rowinput'>
-                    <input
-                        onKeyDown={ this.handleEditField }
-                        type='text'
-                        className='form-control'
-                        ref={ `yourcompany_${ item.id }` }
-                        name='yourcompany'
-                        defaultValue={ item.yourcompany }
-                        aria-describedby='sizing-addon1'
-                    />
-                </li>
-                <li className='rowinput'>
-                    <input
-                        onKeyDown={ this.handleEditField }
-                        type='text'
-                        className='form-control'
-                        ref={ `youradress_${ item.id }` }
-                        name='youradress'
-                        defaultValue={ item.youradress }
-                        aria-describedby='sizing-addon1'
-                    />
-                </li>
                 <li>
                     <button
                         type='button'
@@ -164,39 +121,57 @@ export default class Account extends Component {
     }
     render() {
         return (
-            <div className='col-md-13'>
-                <div className='col-md-2'>
-                <h4>Account</h4>
-                <img src='http://placehold.it/150x150' alt='...' className='img-rounded'/>
-                </div>
-                <div className='col-md-2'>
-                <ul>
-                <li><h4>kfeofanov</h4></li>
-                <li>kfeofanov@gmail.com</li>
-                </ul>
-                </div>
-                <div className='col-md-2'>
-                <ul>
-                <li>Plan: ULTRA</li>
-                <li>Limits</li>
-                <li>RAM: 8 GB</li>
-                <li>STORAGE: 40 GB</li>
-                </ul>
-                </div>
-                <div className='col-md-2 editprofile'>
-                    <button onClick={this.openModal} className='btn btn-default' type='submit'>Edit Profile</button>
-                    <Modal
-                        isOpen={this.state.modalIsOpen}
-                        onAfterOpen={this.afterOpenModal}
-                        onRequestClose={this.closeModal}
-                        style={customStyles}
-                        contentLabel='Example Modal'
-                    >
-                        <h4 ref='subtitle'>Edit your profile</h4>
-                        {this.state.data.map(( item ) => {
-                            return this.renderField( item );
-                        })}
-                    </Modal>
+            <div className='container-fluid pt-3'>
+                <div className='row'>
+                    <div className="col-12">
+                        <div className="card mt-3">
+                            <div className="card-block c-table-card-block">
+                                <table className="table i-table-card">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            Account
+                                        </td>
+                                        <td>
+                                            kfeofanov
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src='http://placehold.it/150x150' alt='...' className='img-rounded'/>
+                                        </td>
+                                        <td>
+                                            kfeofanov@gmail.com
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <li>Plan: ULTRA</li>
+                                                <li>Limits</li>
+                                                <li>RAM: 8 GB</li>
+                                                <li>STORAGE: 40 GB</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <button onClick={this.openModal} className='btn btn-default' type='submit'>Edit Profile</button>
+                                            <Modal
+                                                isOpen={this.state.modalIsOpen}
+                                                onAfterOpen={this.afterOpenModal}
+                                                onRequestClose={this.closeModal}
+                                                style={customStyles}
+                                                contentLabel='Example Modal'
+                                            >
+                                                <h4 ref='subtitle'>Edit your profile</h4>
+                                                {this.state.data.map(( item ) => {
+                                                    return this.renderField( item );
+                                                })}
+                                            </Modal>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

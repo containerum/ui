@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 class PodsList extends Component {
     constructor() {
@@ -7,7 +8,7 @@ class PodsList extends Component {
         this.handleClickTR = this.handleClickTR.bind(this);
     }
     handleClickTR(href) {
-        browserHistory.push('/Deployments/demo/Pods/' + href);
+        browserHistory.push('/Namespaces/default/Deployments/' + this.props.idDep + '/Pods/' + href);
     }
     render() {
         return (
@@ -100,5 +101,9 @@ class PodsList extends Component {
         );
     }
 }
+
+PodsList.propTypes = {
+    idDep: PropTypes.string
+};
 
 export default PodsList;

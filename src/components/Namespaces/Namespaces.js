@@ -9,6 +9,7 @@ import NamespacesContainer from '../../containers/NamespacesContainer';
 class Namespaces extends Component {
     componentWillMount() {
         const { dispatch } = this.props;
+        // console.log(window.location.pathname);
         dispatch(getNamespaces());
     }
     render() {
@@ -36,7 +37,9 @@ class Namespaces extends Component {
                         type="button"
                         className="btn c-nav-menu-btn"
                     >
-                        { this.props.idDep }
+                        <NavLink to={window.location.pathname.substring(0, window.location.pathname.indexOf(this.props.idDep) + this.props.idDep.length)}>
+                            { this.props.idDep }
+                        </NavLink>
                     </button>
                 </div>
         }
@@ -49,7 +52,9 @@ class Namespaces extends Component {
                         type="button"
                         className="btn c-nav-menu-btn"
                     >
-                        { this.props.idPod }
+                        <NavLink to={window.location.pathname}>
+                            { this.props.idPod }
+                        </NavLink>
                     </button>
                 </div>
         }

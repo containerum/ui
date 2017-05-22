@@ -12,7 +12,7 @@ class Deployments extends Component {
         dispatch(getDeployments('default'));
     }
     handleClickTR(href) {
-        browserHistory.push('/Deployments/' + href);
+        browserHistory.push('/Namespaces/default/Deployments/' + href);
     }
     render() {
         let isFetchingComponent = "";
