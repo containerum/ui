@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 export default class CliToken extends Component {
     render() {

@@ -85,6 +85,11 @@
 .c-nav-menu-btn {
     background: transparent;
     cursor: pointer;
+    margin-top: 3px;
+}
+
+.c-nav-menu-btn-top {
+    top: 2px;
 }
 
 /* Card */
@@ -124,6 +129,7 @@ html {
 }
 body {
     margin-bottom: 60px;
+    font-size: 0.8rem;
 }
 .footer {
     position: absolute;
@@ -247,7 +253,7 @@ body {
 /* Dropdown */
 .c-dropdown-item-img {
     position: absolute;
-    top: 7px;
+    top: 3px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -259,5 +265,5 @@ body {
 
 .c-dropdown-item-wrap {
     position: relative;
-    padding: 10px 1.5rem;
+    padding: 6px 1.5rem;
 }

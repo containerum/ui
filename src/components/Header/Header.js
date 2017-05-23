@@ -19,7 +19,7 @@ class Header extends Component {
         let userEmail = this.props.ProfileReducer.data.login ? this.props.ProfileReducer.data.login : 'kfeofantov@wqe.qwe';
         return (
             <div className="navbar navbar-inverse navbar-toggleable-md c-navbar">
-                <NavLink to="/" className="navbar-brand">
+                <NavLink to="/" className="navbar-brand i-navbar-brand-pd-l">
                     <img className="d-inline-block align-top i-sizes-img-logo" src={logo} alt="Logo"/>
                 </NavLink>
                 <div className="collapse navbar-collapse justify-content-end">

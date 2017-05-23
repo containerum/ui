@@ -12,12 +12,12 @@ class CommonInfoDropdown extends Component {
             <div className="btn-group">
                 <button
                     type="button"
-                    className="btn c-nav-menu-btn text-white"
+                    className="btn c-nav-menu-btn c-nav-menu-btn-top text-white"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                 >
-                    <i className="fa fa-bars" aria-hidden="true"></i>
+                    <i className="md-icon">apps</i>
                 </button>
                 <div className="dropdown-menu dropdown-menu-right">
                     <NavLink className="dropdown-item" to="/Dashboard">

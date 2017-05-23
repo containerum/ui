@@ -18,14 +18,10 @@ class ProfileInfoDropdown extends Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                 >
-                    <img className="c-nav-user-img" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&d=identicon&r=PG&f=1" alt="Avatar" />
                     <div className="c-nav-user-data">
-                                    <span className="c-nav-user-name">
-                                        { this.props.userEmail }
-                                    </span>
                         <span className="c-nav-user-name">
-                                        <Translate content='header.balance'>balance</Translate>: 35$
-                                    </span>
+                            { this.props.userEmail }
+                        </span>
                     </div>
                 </button>
                 <div className="dropdown-menu dropdown-menu-right">
