@@ -9,7 +9,6 @@ import NamespacesContainer from '../../containers/NamespacesContainer';
 class Namespaces extends Component {
     componentWillMount() {
         const { dispatch } = this.props;
-        // console.log(window.location.pathname);
         dispatch(getNamespaces());
     }
     render() {

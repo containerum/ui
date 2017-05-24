@@ -23,7 +23,6 @@ export function getServices(namespaceName) {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                console.log(response);
                 dispatch(receiveGetServices(response.data));
             } else {
                 dispatch(failGetServices(response.data.message))

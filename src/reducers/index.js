@@ -7,6 +7,7 @@ import signUpReducer from './signUpReducer';
 import confirmEmailReducer from './confirmEmailReducer';
 import NamespacesReducer from './NamespacesReducer';
 import DeploymentsReducer from './DeploymentsReducer';
+import DeploymentReducer from './DeploymentReducer';
 import PodReducer from './PodReducer';
 import ServicesReducer from './ServicesReducer';
 import ProfileReducer from './ProfileReducer';
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     CreateServiceReducer,
     CreateDeploymentReducer,
     checkHashParamReducer,
-    PodReducer
+    PodReducer,
+    DeploymentReducer
 });
 
 export default rootReducer;

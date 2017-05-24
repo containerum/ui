@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ButtonCreateDeployment from '../../CreateDeployment/ButtonCreateDeployment';
 import PostsDeploymentsContainer from '../../../containers/PostsDeploymentsContainer';
+import ErrorDeployments from '../ErrorDeployments';
 
 class Posts extends Component {
     render() {
-        console.log(this.props.deploymentsDataReducer);
-        let isErrorContainer = <div>Loading...</div>;
+        let isErrorContainer = "";
         if (this.props.deploymentsErrorMessageReducer) {
+            isErrorContainer = <ErrorDeployments errorMessage={this.props.deploymentsErrorMessageReducer} />;
+        } else if (this.props.deploymentsDataReducer.length === 0) {
             isErrorContainer = <ButtonCreateDeployment />;
         } else {
             isErrorContainer = <PostsDeploymentsContainer PostsDeploymentsDataReducer={this.props.deploymentsDataReducer}/>;

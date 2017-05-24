@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { getServices } from '../../actions/ServicesActions';
 import Posts from './Posts';
+import Spinner from '../Spinner';
 
 class Services extends Component {
     componentWillMount() {
@@ -18,6 +19,8 @@ class Services extends Component {
                     servicesDataReducer={this.props.ServicesReducer.data}
                     servicesErrorMessageReducer={this.props.ServicesReducer.errorMessage}
                 />
+        } else {
+            isFetchingComponent = <Spinner />
         }
 
         return (

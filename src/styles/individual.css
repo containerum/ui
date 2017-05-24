@@ -110,3 +110,55 @@ button,
 .i-navbar-brand-pd-l {
     padding-left: 1rem;
 }
+
+.table-hover tbody tr:hover {
+    background-color: #f7f7f7;
+}
+
+.table td {
+    border-top: none;
+    vertical-align: middle;
+}
+
+.i-table-inline-z-index {
+    z-index: 1000;
+}
+
+.i-row-table {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.i-td-table {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #eceeef;
+    display: table-cell;
+}
+
+.i-table-tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+    box-sizing: inherit;
+}
+
+.i-table-card {
+    display: table;
+    border-spacing: 2px;
+    border-color: grey;
+    border-collapse: collapse;
+    background-color: transparent;
+}
+
+.i-container-btn-gr {
+    width: 97%;
+    margin: 0 auto;
+    border-bottom: 2px solid rgba(0,0,0,.125);
+}
+
+.i-selected-tab{
+    border-bottom: 2px solid #009CD1;
+    border-radius: 0
+}

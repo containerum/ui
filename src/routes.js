@@ -19,13 +19,13 @@ export const routes = (
         <Route path='/' component={ requireAuthentication(App) }>
             <Route path='/Namespaces/:idName' component={ Workloads } />
             <Route path='/Namespaces/:idName/Deployments/:idDep' component={ Deployment } />
-            <Route path='/Namespaces/:idName/Deployments/:idDep/Pods/:idPod'  component={ Pod }/>
+            <Route path='/Namespaces/:idName/Deployments/:idDep/Pods/:idPod'  component={ Pod } />
             <Route path='/CreateNewDeployment' component={ CreateDeployment } />
             <Route path='/CreateNewService' component={ CreateService } />
             <Route path='/Profile' component={ Profile } />
         </Route>
         <Route path='/Login(/:hashParam)' component={ Login }>
-            <Route path='/Namespaces/:idName' component={ Workloads } />
+            <Route path='/' component={ Workloads } />
         </Route>
         <Route path='/Forgot' component={ Forgot } />
         <Route path='/SignUp' component={ SignUp } />

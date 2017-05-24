@@ -33,8 +33,8 @@ class PodsList extends Component {
                                         <td className="text-right">
                                             <div className="i-table-inline">
                                                 <div className="btn-group">
-                                                    <button className="btn btn-sm dropdown-toggle c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Action
+                                                    <button className="btn btn-sm c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i className="md-icon">more_horiz</i>
                                                     </button>
                                                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
                                                         <button className="dropdown-item text-danger" type="button">Delete</button>
@@ -57,8 +57,8 @@ class PodsList extends Component {
                                         <td className="text-right">
                                             <div className="i-table-inline">
                                                 <div className="btn-group">
-                                                    <button className="btn btn-sm dropdown-toggle c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Action
+                                                    <button className="btn btn-sm c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i className="md-icon">more_horiz</i>
                                                     </button>
                                                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
                                                         <button className="dropdown-item text-danger" type="button">Delete</button>
@@ -81,8 +81,8 @@ class PodsList extends Component {
                                         <td className="text-right">
                                             <div className="i-table-inline">
                                                 <div className="btn-group">
-                                                    <button className="btn btn-sm dropdown-toggle c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Action
+                                                    <button className="btn btn-sm c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i className="md-icon">more_horiz</i>
                                                     </button>
                                                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
                                                         <button className="dropdown-item text-danger" type="button">Delete</button>
@@ -103,6 +103,7 @@ class PodsList extends Component {
 }
 
 PodsList.propTypes = {
+    deploymentReducer: PropTypes.object,
     idDep: PropTypes.string
 };
 

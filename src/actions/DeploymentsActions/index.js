@@ -23,12 +23,11 @@ export function getDeployments(namespaceName) {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                console.log(response);
                 dispatch(receiveGetDeployments(response.data));
             } else {
                 dispatch(failGetDeployments(response.data.message))
             }
-        }).catch(err => console.log(err))
+        }).catch(err => {console.log(err); failGetDeployments(err)})
     }
 }
 

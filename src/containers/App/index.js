@@ -12,10 +12,14 @@ import '../../styles/individual.css';
 
 export default class App extends Component {
     componentWillMount() {
-        if (this.props.params.idName !== 'default' || Object.keys(this.props.params).length === 1) {
+        if (this.props.params.idName &&
+            this.props.params.idName === 'default' &&
+            Object.keys(this.props.params).length <= 1) {
             browserHistory.push('/Namespaces/default');
-        } else {
+        } else if (Object.keys(this.props.params).length <= 1 && this.props.params.idName) {
             browserHistory.push('/Namespaces/' + this.props.params.idName);
+        } else if (Object.keys(this.props.params).length === 0) {
+            browserHistory.push('/Namespaces/default');
         }
     }
     render() {

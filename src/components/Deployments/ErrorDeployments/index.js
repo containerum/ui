@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import NavLink from '../../../components/NavLink';
+import PropTypes from 'prop-types';
 
-class ButtonCreateDeployment extends Component {
+class ErrorDeployments extends Component {
     render() {
         return (
             <div className="container-fluid pt-3">
@@ -9,12 +9,7 @@ class ButtonCreateDeployment extends Component {
                     <div className="col-12">
                         <div className="card">
                             <div className="card-block c-table-card-block">
-                                <NavLink
-                                    className="btn btn-block"
-                                    to="/CreateNewDeployment"
-                                >
-                                    CREATE BUTTON NEW DEPLOYMENT
-                                </NavLink>
+                                ERROR {this.props.errorMessage}
                             </div>
                         </div>
                     </div>
@@ -24,4 +19,8 @@ class ButtonCreateDeployment extends Component {
     }
 }
 
-export default ButtonCreateDeployment;
+ErrorDeployments.propTypes = {
+    errorMessage: PropTypes.string
+};
+
+export default ErrorDeployments;

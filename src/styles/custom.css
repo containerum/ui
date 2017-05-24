@@ -108,6 +108,7 @@
 .c-table-card-btn {
     background: transparent;
     cursor: pointer;
+    padding: 0;
 }
 
 .c-table-card-btn:focus {
@@ -138,6 +139,7 @@ body {
     height: 60px;
     line-height: 60px;
     background-color: #f5f5f5;
+    font-size: 0.7rem;
 }
 
 .c-body-bg {

@@ -9,16 +9,13 @@ export default class Workloads extends Component {
         document.body.classList.remove('c-body-bg');
     }
     render() {
-        if (this.props.params.hasOwnProperty('nameSpace')) {
-            console.log(this.props.params.nameSpace);
-        }
         return (
             <div>
                 <div className="navbar navbar-toggleable-md navbar-light bg-faded">
                     <Namespaces />
                     <CreateInstance />
                 </div>
-                <Deployments />
+                <Deployments idName={this.props.params.idName} />
                 <Services />
             </div>
         )

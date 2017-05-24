@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router';
 
-import Spinner from '../Spinner';
-
 export default function requireAuthentication(Component) {
     class AuthenticatedComponent extends Component {
         componentWillMount() {
@@ -19,7 +17,6 @@ export default function requireAuthentication(Component) {
         render() {
             return (
                 <div>
-                    <Spinner />
                     {this.props.isAuthenticated === true
                         ? <Component {...this.props} />
                         : null
