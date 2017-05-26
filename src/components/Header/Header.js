@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 import { logoutUser } from '../../actions/LogoutActions';
 import { getProfile } from '../../actions/ProfileActions';
 import logo from '../../images/Containerum_logo_new.png';
-import NavLink from '../NavLink/index';
 import CommonInfoDropdown from './CommonInfoDropdown';
 import ProfileInfoDropdown from './ProfileInfoDropdown';
 
@@ -15,13 +15,16 @@ class Header extends Component {
     componentWillMount() {
         this.props.onLoadProfileData();
     }
+    handleClickLogo() {
+        browserHistory.push('/Namespaces/default');
+    }
     render() {
         let userEmail = this.props.ProfileReducer.data.login ? this.props.ProfileReducer.data.login : 'kfeofantov@wqe.qwe';
         return (
-            <div className="navbar navbar-inverse navbar-toggleable-md c-navbar">
-                <NavLink to="/" className="navbar-brand i-navbar-brand-pd-l">
+            <div className="navbar navbar-inverse navbar-toggleable-md c-navbar i-hover-pointer" onClick={this.handleClickLogo.bind(this)}  >
+                <div className="navbar-brand i-navbar-brand-pd-l">
                     <img className="d-inline-block align-top i-sizes-img-logo" src={logo} alt="Logo"/>
-                </NavLink>
+                </div>
                 <div className="collapse navbar-collapse justify-content-end">
                     <CommonInfoDropdown />
                     <ProfileInfoDropdown onLogoutClick={this.props.onLogoutClick} userEmail={userEmail} />

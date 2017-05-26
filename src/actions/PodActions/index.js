@@ -6,10 +6,10 @@ import {
     POD_FAILURE
 } from '../../constants/PodConstants';
 
-export function getPod(namespaceName, deploymentName) {
+export function getPod(namespaceName, podName) {
     return dispatch => {
         dispatch(requestGetPod());
-        const api = '/namespaces/' + namespaceName + '/deployments/' + deploymentName;
+        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/pods/' + podName;
 
         return axios.get(
             api,

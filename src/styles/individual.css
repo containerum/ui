@@ -111,8 +111,9 @@ button,
     padding-left: 1rem;
 }
 
-.table-hover tbody tr:hover {
+.tr-hover:hover {
     background-color: #f7f7f7;
+    cursor: pointer;
 }
 
 .table td {
@@ -161,4 +162,8 @@ button,
 .i-selected-tab{
     border-bottom: 2px solid #009CD1;
     border-radius: 0
+}
+
+.i-hover-pointer:hover {
+    cursor: pointer;
 }

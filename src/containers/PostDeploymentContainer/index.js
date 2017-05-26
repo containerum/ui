@@ -12,9 +12,6 @@ class PostDeploymentContainer extends Component {
             isSelectedTab: true
         };
     }
-    componentDidMount() {
-        console.log(this.props.deploymentReducer);
-    }
     render() {
         return (
             <div>
@@ -24,8 +21,8 @@ class PostDeploymentContainer extends Component {
                         <Tab className="btn c-nav-menu-btn">Settings</Tab>
                     </TabList>
                     <TabPanel>
-                        <Info />
-                        <PodsList deploymentReducer={this.props.deploymentReducer} idDep={this.props.idDep} />
+                        <Info deploymentReducer={this.props.deploymentReducer} />
+                        <PodsList idDep={this.props.idDep} />
                     </TabPanel>
                     <TabPanel>
                         <div className="container-fluid pt-3">

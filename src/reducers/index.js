@@ -14,6 +14,7 @@ import ProfileReducer from './ProfileReducer';
 import CreateServiceReducer from './CreateServiceReducer';
 import CreateDeploymentReducer from './CreateDeploymentReducer';
 import checkHashParamReducer from './checkHashParamReducer';
+import PodsReducer from './PodsReducer';
 
 const rootReducer = combineReducers({
     dataDeployment,
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
     CreateDeploymentReducer,
     checkHashParamReducer,
     PodReducer,
-    DeploymentReducer
+    DeploymentReducer,
+    PodsReducer
 });
 
 export default rootReducer;

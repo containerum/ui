@@ -11,7 +11,7 @@ import '../../styles/custom.css';
 import '../../styles/individual.css';
 
 export default class App extends Component {
-    componentWillMount() {
+    componentDidMount() {
         if (this.props.params.idName &&
             this.props.params.idName === 'default' &&
             Object.keys(this.props.params).length <= 1) {
