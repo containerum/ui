@@ -112,7 +112,7 @@ button,
 }
 
 .tr-hover:hover {
-    background-color: #f7f7f7;
+    background-color: #f9f9f9;
     cursor: pointer;
 }
 
@@ -166,4 +166,17 @@ button,
 
 .i-hover-pointer:hover {
     cursor: pointer;
+}
+
+.i-hover-pointer {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.i-btn-login-strong {
+    font-weight: bold;
+}
+
+.i-dropdown-box-shadow {
+    box-shadow: 0 0 14px 4px #e6e6e6;
 }

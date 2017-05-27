@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-// import { getPod } from '../../actions/PodActions';
+import { getPod } from '../../actions/PodActions';
 
 import Info from './Info';
 import Conditions from './Conditions';
@@ -12,10 +12,10 @@ import Namespaces from '../../components/Namespaces';
 import CreateInstance from '../../components/CreateInstance';
 
 class Pod extends Component {
-    // componentWillMount() {
-    //     const { dispatch } = this.props;
-    //     dispatch(getPod());
-    // }
+    componentWillMount() {
+        const { dispatch } = this.props;
+        dispatch(getPod('default', this.props.params.idPod));
+    }
     render() {
         return (
             <div>
@@ -23,8 +23,8 @@ class Pod extends Component {
                     <Namespaces idDep={this.props.params.idDep} idPod={this.props.params.idPod} />
                     <CreateInstance />
                 </div>
-                <Tabs>
-                    <TabList className="btn-group">
+                <Tabs selectedTabClassName="i-selected-tab">
+                    <TabList className="btn-group i-container-btn-gr">
                         <Tab className="btn c-nav-menu-btn">Objects</Tab>
                         <Tab className="btn c-nav-menu-btn">Settings</Tab>
                     </TabList>

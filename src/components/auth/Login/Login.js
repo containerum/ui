@@ -80,7 +80,7 @@ class Login extends Component {
                     <div className='card c-card'>
                         <div className='card-block p-5'>
                             <div className='card-label'>
-                                Log in
+                                Log In
                             </div>
                             <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>
                                 { this.state.errorMsg }
@@ -97,7 +97,7 @@ class Login extends Component {
                                         this.checkValidatePasswordInput(password, isValidPassword)
                                 }
                             />
-                            <button ref='button' type='submit' className='btn btn-block c-btn-green'>Log In</button>
+                            <button ref='button' type='submit' className='btn btn-block c-btn-green i-btn-login-strong'>Log In</button>
                         </div>
                         <div className='card-footer p-3 text-center'>
                             Don't have an account? <Link to='/SignUp'>Sing up</Link>

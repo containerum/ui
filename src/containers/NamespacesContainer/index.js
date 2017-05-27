@@ -9,7 +9,7 @@ class NamespacesContainer extends Component {
             dropdownDivider = <div className="dropdown-divider"></div>;
         }
         return (
-            <div className="dropdown-menu">
+            <div className="dropdown-menu i-dropdown-box-shadow">
                 {
                     this.props.namespacesDataReducer.map(function(item, index) {
                         return (

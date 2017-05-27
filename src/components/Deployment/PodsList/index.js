@@ -18,7 +18,7 @@ class PodsList extends Component {
         browserHistory.push('/Namespaces/default/Deployments/' + this.props.idDep + '/Pods/' + href);
     }
     render() {
-        console.log('PodsList: ', this.props.PodsReducer);
+        // console.log('PodsList: ', this.props.PodsReducer);
         return (
             <div className="container-fluid pt-3">
                 <div className="row">
@@ -29,7 +29,6 @@ class PodsList extends Component {
                                     <div className="i-table-tbody">
                                         {
                                             this.props.PodsReducer.data.map((item, index) => {
-                                                const imagesList = item.images.join();
                                                 const name = item.name;
                                                 return (
                                                     <div className="i-row-table tr-hover" key={index}>
@@ -46,7 +45,7 @@ class PodsList extends Component {
                                                                 <button className="btn btn-sm c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                     <i className="md-icon">more_horiz</i>
                                                                 </button>
-                                                                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                                                                <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow" aria-labelledby="dropdownMenu2">
                                                                     <button className="dropdown-item text-danger" type="button">Delete</button>
                                                                 </div>
                                                             </div>

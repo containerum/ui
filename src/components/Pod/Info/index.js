@@ -22,7 +22,7 @@ class Info extends Component {
                                                 <button className="btn btn-sm c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i className="md-icon">more_horiz</i>
                                                 </button>
-                                                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                                                <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow" aria-labelledby="dropdownMenu2">
                                                     <button className="dropdown-item text-danger" type="button">
                                                         Delete
                                                     </button>

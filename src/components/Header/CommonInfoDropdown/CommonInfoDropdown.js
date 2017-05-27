@@ -19,7 +19,7 @@ class CommonInfoDropdown extends Component {
                 >
                     <i className="md-icon">apps</i>
                 </button>
-                <div className="dropdown-menu dropdown-menu-right">
+                <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow">
                     <NavLink className="dropdown-item" to="/Dashboard">
                         <Translate content='header.dashboard'>Dashboard</Translate>
                     </NavLink>

@@ -24,7 +24,7 @@ class ProfileInfoDropdown extends Component {
                         </span>
                     </div>
                 </button>
-                <div className="dropdown-menu dropdown-menu-right">
+                <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow">
                     <div className="c-nav-user-wrap">
                         <img className="c-nav-user-img" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
                         <span className="c-nav-user-name">

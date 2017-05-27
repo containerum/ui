@@ -17,7 +17,7 @@ class CreateInstance extends Component {
                 >
                     Create
                 </button>
-                <div className="dropdown-menu dropdown-menu-right">
+                <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow">
                     <NavLink className="dropdown-item c-dropdown-item-wrap" to='/CreateNewDeployment'>
                         <img className="c-dropdown-item-img" src="https://avatars0.githubusercontent.com/u/107673?v=3&amp;s=400" alt="" />
                         <span className="c-dropdown-item-name">Deployment</span>

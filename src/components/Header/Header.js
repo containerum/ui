@@ -21,8 +21,8 @@ class Header extends Component {
     render() {
         let userEmail = this.props.ProfileReducer.data.login ? this.props.ProfileReducer.data.login : 'kfeofantov@wqe.qwe';
         return (
-            <div className="navbar navbar-inverse navbar-toggleable-md c-navbar i-hover-pointer" onClick={this.handleClickLogo.bind(this)}  >
-                <div className="navbar-brand i-navbar-brand-pd-l">
+            <div className="navbar navbar-inverse navbar-toggleable-md c-navbar i-hover-pointer">
+                <div className="navbar-brand i-navbar-brand-pd-l" onClick={this.handleClickLogo.bind(this)}>
                     <img className="d-inline-block align-top i-sizes-img-logo" src={logo} alt="Logo"/>
                 </div>
                 <div className="collapse navbar-collapse justify-content-end">

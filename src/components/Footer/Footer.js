@@ -20,6 +20,9 @@ class Footer extends Component {
                     <NavLink to="/Tutorials" className="text-muted">
                         <Translate content='footer.tutorials'>Tutorials</Translate>
                     </NavLink>
+                    <span className="text-muted float-right">
+                        Copyright EXON LAB Company © {new Date().getFullYear()}
+                    </span>
                 </div>
             </footer>
         );
