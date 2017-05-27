@@ -20,6 +20,7 @@
     "react-translate-component": "^0.14.0",
     "redux": "^3.6.0",
     "serve": "^5.1.4",
+    "sha256": "^0.2.0",
     "validator": "^7.0.0"
   },
   "devDependencies": {

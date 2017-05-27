@@ -122,10 +122,12 @@ Login.propTypes = {
 };
 
 function mapStateToProps(state) {
+    const { loginReducer } = state;
+    const { errorMessage } = loginReducer;
+
     return {
-        loginReducer: state.loginReducer,
-        checkHashParamReducer: state.checkHashParamReducer,
-        errorMessage: state.errorMessage
+        errorMessage,
+        loginReducer
     }
 }
 

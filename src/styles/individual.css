@@ -133,6 +133,7 @@ button,
 
 .i-td-table {
     padding: .75rem;
+    padding-left: 1rem;
     vertical-align: top;
     border-top: 1px solid #eceeef;
     display: table-cell;
@@ -151,6 +152,10 @@ button,
     border-color: grey;
     border-collapse: collapse;
     background-color: transparent;
+}
+
+.i-td-table-pd-top {
+    padding-top: 16px;
 }
 
 .i-container-btn-gr {
@@ -179,4 +184,8 @@ button,
 
 .i-dropdown-box-shadow {
     box-shadow: 0 0 14px 4px #e6e6e6;
+}
+
+.i-td-card-font-name {
+    font-size: 1rem;
 }

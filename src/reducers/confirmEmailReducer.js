@@ -7,13 +7,15 @@ import {
 export default function confirmEmailReducer(state = {
     isFetching: false,
     isAuthenticated: !!localStorage.getItem('id_token'),
-    isConfirmed: false
+    isConfirmed: false,
+    errorMessage: ''
 }, action) {
     switch (action.type) {
     case EMAIL_CONFIRM_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            isConfirmed: action.isConfirmed
+            isConfirmed: action.isConfirmed,
+            errorMessage: ''
         });
     case EMAIL_CONFIRM_SUCCESS:
         return Object.assign({}, state, {

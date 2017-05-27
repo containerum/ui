@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Info extends Component {
     render() {
+        const labelsArray = this.props.PodReducer.data.labels ? Object.keys(this.props.PodReducer.data.labels) : [];
         return (
             <div className="container-fluid pt-3">
                 <div className="row">
@@ -11,8 +13,8 @@ class Info extends Component {
                                 <table className="table i-table-card">
                                     <tbody>
                                     <tr>
-                                        <td>
-                                            redis-django-123456789-7fns
+                                        <td className="i-td-card-font-name">
+                                            {this.props.PodReducer.data.name}
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -35,28 +37,25 @@ class Info extends Component {
                                             <img className="c-table-card-img i-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
                                         </td>
                                         <td>
-                                            RAM: 8439 MB <br/>
-                                            CPU: 1982
+                                            RAM: {this.props.PodReducer.data.ram} MB <br/>
+                                            CPU: {this.props.PodReducer.data.cpu / 1000}
                                         </td>
                                         <td>
-                                            IP: 172.30.99.33
+                                            IP: {this.props.PodReducer.data.ip}
                                         </td>
                                         <td>
                                             Labels <br/>
-
-                                            app: nginx<br/>
-                                            run: nvrinirv<br/>
-                                            server-master: cat-dog-fish <br/>
-                                            master-server: fish-dog-cat <br/>
+                                            {labelsArray.map((item, index) =>  {
+                                                return (
+                                                    <span key={index}>{item}: {this.props.PodReducer.data.labels[item]}<br/></span>
+                                                );
+                                            })}
                                         </td>
                                         <td>
-                                            Strategy: RollingUpdate <br/>
-
-                                            Min ready seconds: 0<br/>
-                                            Revision history limit: No set<br/>
-                                            Rolling update strategy: Max surge: 1, Max unavailable: 1 <br/>
-                                            Creation time: 2017-01-27T16:34 <br/>
-                                            Start time: 2017-01-27T16:34 <br/>
+                                            Strategy: no data!!! no "strategy: type: ..."<br/>
+                                            Rolling update strategy: no data!!! <br/>
+                                            Creation time:  {this.props.PodReducer.data.created_at} <br/>
+                                            Start time: {this.props.PodReducer.data.start_time} <br/>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -69,5 +68,9 @@ class Info extends Component {
         );
     }
 }
+
+Info.propTypes = {
+    PodReducer: PropTypes.object
+};
 
 export default Info;

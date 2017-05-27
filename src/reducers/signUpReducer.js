@@ -17,7 +17,8 @@ export default function signUpReducer(state = {
     case SIGNUP_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            user: action.creds
+            user: action.creds,
+            errorMessage: ''
         });
     case SIGNUP_SUCCESS:
         return Object.assign({}, state, {

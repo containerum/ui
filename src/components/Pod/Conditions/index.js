@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Conditions extends Component {
     render() {
+        const arrConditionsPodReducer = this.props.PodReducer.data.conditions ? this.props.PodReducer.data.conditions : [];
         return (
             <div className="container-fluid pt-3 pb-5">
                 <h5>Conditions</h5>
@@ -9,163 +11,21 @@ class Conditions extends Component {
                     <div className="col-12">
                         <div className="card mt-3">
                             <div className="card-block c-table-card-block">
-                                <table className="table table-hover c-table-card">
-                                    <tbody>
-                                        <tr>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline">
-                                                    2017-05-04T16.52.54Z
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    True
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    Initialized
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline">
-                                                    2017-05-04T16.52.54Z
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    True
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    Initialized
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline">
-                                                    2017-05-04T16.52.54Z
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    True
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    Initialized
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline">
-                                                    2017-05-04T16.52.54Z
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    True
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    Initialized
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline">
-                                                    2017-05-04T16.52.54Z
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    True
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    Initialized
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline">
-                                                    2017-05-04T16.52.54Z
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    True
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    Initialized
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline">
-                                                    2017-05-04T16.52.54Z
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    True
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    Initialized
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline">
-                                                    2017-05-04T16.52.54Z
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    True
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    Initialized
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline">
-                                                    2017-05-04T16.52.54Z
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    True
-                                                </div>
-                                            </td>
-                                            <td className="i-table-td">
-                                                <div className="i-table-inline col-4">
-                                                    Initialized
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div className="table table-hover c-table-card i-table-card">
+                                    <div className="i-table-tbody">
+                                        {
+                                            arrConditionsPodReducer.map((item, index) => {
+                                                return (
+                                                    <div className="i-row-table tr-hover" key={index}>
+                                                        <div className="i-td-table i-td-table-pd-top">{item.lastTransitionTime}</div>
+                                                        <div className="i-td-table i-td-table-pd-top">{item.status}</div>
+                                                        <div className="i-td-table i-td-table-pd-top">{item.type}</div>
+                                                    </div>
+                                                );
+                                            })
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -174,5 +34,9 @@ class Conditions extends Component {
         );
     }
 }
+
+Conditions.propTypes = {
+    PodReducer: PropTypes.object
+};
 
 export default Conditions;

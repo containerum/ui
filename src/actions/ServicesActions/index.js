@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 import {
     SERVICES_REQUEST,
@@ -24,6 +25,9 @@ export function getServices(namespaceName) {
         .then(response => {
             if (response.status === 200 || response.status === 201) {
                 dispatch(receiveGetServices(response.data));
+            } else if (response.status === 401) {
+                localStorage.removeItem('id_token');
+                browserHistory.push('/Login');
             } else {
                 dispatch(failGetServices(response.data.message))
             }

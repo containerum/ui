@@ -10,7 +10,14 @@ class Deployments extends Component {
     componentDidMount() {
         const { dispatch } = this.props;
         dispatch(getDeployments(this.props.idName));
+        // console.log('this.props.DeploymentsReducer', this.props.DeploymentsReducer);
     }
+    // componentWillReceiveProps(nextProps) {
+    //     console.log('componentWillReceiveProps', nextProps);
+    // }
+    // componentWillUpdate(nextProps, nextState) {
+    //     console.log(nextProps, nextState);
+    // }
     render() {
         let isFetchingComponent = "";
         if (this.props.DeploymentsReducer.isFetching === false) {

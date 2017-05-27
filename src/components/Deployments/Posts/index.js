@@ -5,15 +5,6 @@ import PostsDeploymentsContainer from '../../../containers/PostsDeploymentsConta
 import ErrorDeployments from '../ErrorDeployments';
 
 class Posts extends Component {
-    componentDidMount() {
-        console.log(this.props.deploymentsDataReducer);
-    }
-    componentWillReceiveProps(nextProps, nextState) {
-        console.log(nextProps, nextState);
-    }
-    componentWillUpdate(nextProps, nextState) {
-        console.log(nextProps, nextState);
-    }
     render() {
         let isErrorContainer = "";
         if (this.props.deploymentsErrorMessageReducer) {

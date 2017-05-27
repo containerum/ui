@@ -12,7 +12,8 @@ export default function ProfileReducer(state = {
     switch (action.type) {
     case PROFILE_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            errorMessage: ''
         });
     case PROFILE_SUCCESS:
         return Object.assign({}, state, {

@@ -12,7 +12,8 @@ export default function DeploymentsReducer(state = {
     switch (action.type) {
     case DEPLOYMENTS_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            errorMessage: ''
         });
     case DEPLOYMENTS_SUCCESS:
         return Object.assign({}, state, {

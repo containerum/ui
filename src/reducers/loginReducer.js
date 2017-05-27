@@ -6,14 +6,16 @@ import {
 
 export default function loginReducer(state = {
     isFetching: false,
-    isAuthenticated: !!localStorage.getItem('id_token')
+    isAuthenticated: !!localStorage.getItem('id_token'),
+    errorMessage: ''
 }, action) {
     switch (action.type) {
     case LOGIN_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             isAuthenticated: action.isAuthenticated,
-            user: action.creds
+            user: action.creds,
+            errorMessage: ''
         });
     case LOGIN_SUCCESS:
         return Object.assign({}, state, {

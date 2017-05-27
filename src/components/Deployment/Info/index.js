@@ -23,7 +23,7 @@ class Info extends Component {
                                 <table className="table i-table-card">
                                     <tbody>
                                         <tr>
-                                            <td>
+                                            <td className="i-td-card-font-name">
                                                 {this.props.deploymentReducer.name}
                                             </td>
                                             <td></td>

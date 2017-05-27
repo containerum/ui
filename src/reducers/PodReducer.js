@@ -12,7 +12,8 @@ export default function PodReducer(state = {
     switch (action.type) {
     case POD_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            errorMessage: ''
         });
     case POD_SUCCESS:
         return Object.assign({}, state, {

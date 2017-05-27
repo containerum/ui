@@ -12,7 +12,8 @@ export default function logoutReducer(state = {
     case LOGOUT_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            isAuthenticated: action.isAuthenticated
+            isAuthenticated: action.isAuthenticated,
+            errorMessage: ''
         });
     case LOGOUT_SUCCESS:
         return Object.assign({}, state, {

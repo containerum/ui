@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { getPod } from '../../actions/PodActions';
+import Spinner from '../Spinner';
 
-import Info from './Info';
-import Conditions from './Conditions';
-import Containers from './Containers';
+import PostPodContainer from '../../containers/PostPodContainer';
 import Namespaces from '../../components/Namespaces';
 import CreateInstance from '../../components/CreateInstance';
 
@@ -17,29 +15,22 @@ class Pod extends Component {
         dispatch(getPod('default', this.props.params.idPod));
     }
     render() {
+        let isFetchingComponent = "";
+        if (this.props.PodReducer.isFetching === false) {
+            isFetchingComponent =
+                <div>
+                    <div className="navbar navbar-toggleable-md navbar-light bg-faded">
+                        <Namespaces idDep={this.props.params.idDep} idPod={this.props.params.idPod} />
+                        <CreateInstance />
+                    </div>
+                    <PostPodContainer PodReducer={this.props.PodReducer} />
+                </div>
+        } else {
+            isFetchingComponent = <Spinner />
+        }
         return (
             <div>
-                <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                    <Namespaces idDep={this.props.params.idDep} idPod={this.props.params.idPod} />
-                    <CreateInstance />
-                </div>
-                <Tabs selectedTabClassName="i-selected-tab">
-                    <TabList className="btn-group i-container-btn-gr">
-                        <Tab className="btn c-nav-menu-btn">Objects</Tab>
-                        <Tab className="btn c-nav-menu-btn">Settings</Tab>
-                    </TabList>
-
-                    <TabPanel>
-                        <Info />
-                        <Containers />
-                        <Conditions />
-                    </TabPanel>
-                    <TabPanel>
-                        <div className="container-fluid pt-3">
-                            Settings
-                        </div>
-                    </TabPanel>
-                </Tabs>
+                { isFetchingComponent }
             </div>
         );
     }

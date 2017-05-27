@@ -11,9 +11,6 @@ class Deployment extends Component {
         const { dispatch } = this.props;
         dispatch(getDeployment(this.props.params.idName, this.props.params.idDep));
     }
-    // componentWillUpdate(nextProps) {
-    //     console.log('nextProps: ', nextProps, 'this.props: ', this.props);
-    // }
     render() {
         let isFetchingComponent = "";
         if (this.props.DeploymentReducer.isFetching === false) {

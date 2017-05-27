@@ -12,7 +12,8 @@ export default function PodsReducer(state = {
     switch (action.type) {
     case PODS_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            errorMessage: ''
         });
     case PODS_SUCCESS:
         return Object.assign({}, state, {

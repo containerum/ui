@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { browserHistory } from 'react-router';
+// import sha256 from 'sha256';
 
 import {
     PODS_REQUEST,
@@ -10,6 +12,8 @@ export function getPods(namespaceName, idDeployment) {
     return dispatch => {
         dispatch(requestGetPods());
         const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/pods';
+        // const shaDeployment256 = sha256(idDeployment).substring(0, 32);
+        // console.log(shaDeployment256);
 
         return axios.get(
             api,
@@ -24,10 +28,13 @@ export function getPods(namespaceName, idDeployment) {
         .then(response => {
             if (response.status === 200 || response.status === 201) {
                 // TODO: filterDepData
-                // var filterDepData = response.data.filter(function(item){
-                //     return item.namespace === idDeployment;
-                // })
+                // const filterDepData = response.data.filter(function(item){
+                //     return item.namespace === shaDeployment256;
+                // });
                 dispatch(receiveGetPods(response.data));
+            } else if (response.status === 401) {
+                localStorage.removeItem('id_token');
+                browserHistory.push('/Login');
             } else {
                 dispatch(failGetPods(response.data.message))
             }

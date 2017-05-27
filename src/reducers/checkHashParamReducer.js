@@ -5,12 +5,14 @@ import {
 } from '../constants/checkHashParamConstants';
 
 export default function checkHashParamReducer(state = {
-    isFetching: false
+    isFetching: false,
+    errorMessage: ''
 }, action) {
     switch (action.type) {
     case CHECK_HASH_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            errorMessage: ''
         });
     case CHECK_HASH_SUCCESS:
         return Object.assign({}, state, {
