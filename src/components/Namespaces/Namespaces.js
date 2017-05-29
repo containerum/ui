@@ -7,7 +7,7 @@ import { getNamespaces } from '../../actions/NamespacesActions';
 import NamespacesContainer from '../../containers/NamespacesContainer';
 
 class Namespaces extends Component {
-    componentWillMount() {
+    componentDidMount() {
         const { dispatch } = this.props;
         dispatch(getNamespaces());
     }

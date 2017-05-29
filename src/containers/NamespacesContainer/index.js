@@ -13,9 +13,9 @@ class NamespacesContainer extends Component {
                 {
                     this.props.namespacesDataReducer.map(function(item, index) {
                         return (
-                            <NavLink key={index} className="dropdown-item c-dropdown-item-wrap" to={`/Namespaces/${item.label}`}>
+                            <NavLink key={index} className="dropdown-item c-dropdown-item-wrap" to={`/Namespaces/${item.name}`}>
                                 <img className="c-dropdown-item-img" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
-                                <span className="c-dropdown-item-name">{item.label}</span>
+                                <span className="c-dropdown-item-name">{item.name}</span>
                             </NavLink>
                         );
                     })

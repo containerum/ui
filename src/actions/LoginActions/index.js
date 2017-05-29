@@ -13,7 +13,8 @@ export function LOGINUser(creds) {
         return axios.post(
             'http://207.154.197.7:5000/api/login',
             {username: creds.username, password: creds.password},
-            {validateStatus: (status) =>
+            {
+                validateStatus: (status) =>
                 status >= 200 && status <= 500
             }
         )
@@ -23,7 +24,11 @@ export function LOGINUser(creds) {
                     localStorage.setItem('id_token', response.data.token);
                     browserHistory.push('/');
                 } else {
-                    dispatch(LOGINError(response.data.message))
+                    if(typeof response.data.message === 'string') {
+                        dispatch(LOGINError(response.data.message))
+                    } else {
+                        dispatch(LOGINError(response.data.message.password))
+                    }
                 }
             }).catch(err => console.log(err))
     }

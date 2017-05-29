@@ -17,9 +17,9 @@ class Conditions extends Component {
                                             arrConditionsPodReducer.map((item, index) => {
                                                 return (
                                                     <div className="i-row-table tr-hover" key={index}>
-                                                        <div className="i-td-table i-td-table-pd-top">{item.lastTransitionTime}</div>
-                                                        <div className="i-td-table i-td-table-pd-top">{item.status}</div>
-                                                        <div className="i-td-table i-td-table-pd-top">{item.type}</div>
+                                                        <div className="i-td-table i-td-table-pd-top i-td-table-pd-bottom">{item.lastTransitionTime}</div>
+                                                        <div className="i-td-table i-td-table-pd-top i-td-table-pd-bottom">{item.status}</div>
+                                                        <div className="i-td-table i-td-table-pd-top i-td-table-pd-bottom">{item.type}</div>
                                                     </div>
                                                 );
                                             })

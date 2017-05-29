@@ -3,13 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getDeployment } from '../../actions/DeploymentActions';
+import { getPods } from '../../actions/PodsActions';
+
 import Post from './Post';
 import Spinner from '../Spinner';
 
 class Deployment extends Component {
-    componentWillMount() {
+    componentDidMount() {
         const { dispatch } = this.props;
         dispatch(getDeployment(this.props.params.idName, this.props.params.idDep));
+        dispatch(getPods(this.props.params.idName, this.props.params.idDep));
     }
     render() {
         let isFetchingComponent = "";

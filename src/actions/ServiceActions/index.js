@@ -1,19 +1,17 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import sha256 from 'sha256';
 
 import {
-    PODS_REQUEST,
-    PODS_SUCCESS,
-    PODS_FAILURE
-} from '../../constants/PodsConstants';
+    SERVICE_REQUEST,
+    SERVICE_SUCCESS,
+    SERVICE_FAILURE
+} from '../../constants/ServiceConstants';
 
-export function getPods(namespaceName, idDeployment) {
+export function getService(namespaceName, serviceName) {
     return dispatch => {
-        dispatch(requestGetPods());
+        dispatch(requestGetService());
         const token = localStorage.getItem('id_token');
-        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/pods';
-        const shaDeployment256 = sha256(namespaceName).substring(0, 32);
+        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/services/' + serviceName;
 
         return axios.get(
             api,
@@ -29,43 +27,35 @@ export function getPods(namespaceName, idDeployment) {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                const filterDepData = [];
-                response.data.map(item => {
-                    Object.keys(item.labels).map(label => {
-                        if(label == shaDeployment256 && item.labels[label] == idDeployment) {
-                            filterDepData.push(item);
-                        }
-                    });
-                });
-                dispatch(receiveGetPods(filterDepData));
+                dispatch(receiveGetService(response.data));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetPods(response.data.message))
+                dispatch(failGetService(response.data.message))
             }
         }).catch(err => console.log(err))
     }
 }
 
-function requestGetPods() {
+function requestGetService() {
     return {
-        type: PODS_REQUEST,
+        type: SERVICE_REQUEST,
         isFetching: true
     }
 }
 
-function receiveGetPods(data) {
+function receiveGetService(data) {
     return {
-        type: PODS_SUCCESS,
+        type: SERVICE_SUCCESS,
         isFetching: false,
         data
     }
 }
 
-function failGetPods(message) {
+function failGetService(message) {
     return {
-        type: PODS_FAILURE,
+        type: SERVICE_FAILURE,
         isFetching: false,
         message
     }

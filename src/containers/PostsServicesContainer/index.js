@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 
 class PostsServicesContainer extends Component {
     handleClickTR(href) {
-        browserHistory.push('/Namespaces/default/Services/' + href);
+        browserHistory.push('/Namespaces/' + this.props.idName + '/Services/' + href);
     }
     render() {
         return (
@@ -54,7 +54,8 @@ class PostsServicesContainer extends Component {
 }
 
 PostsServicesContainer.propTypes = {
-    PostsServicesDataReducer: PropTypes.array
+    PostsServicesDataReducer: PropTypes.array,
+    idName: PropTypes.string
 };
 
 export default PostsServicesContainer;

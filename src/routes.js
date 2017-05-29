@@ -10,6 +10,7 @@ import ConfirmEmail from './components/auth/ConfirmEmail';
 import CreateDeployment from './components/CreateDeployment';
 import CreateService from './components/CreateService';
 import Deployment from './components/Deployment';
+import Service from './components/Service';
 import Pod from './components/Pod';
 import NotFound from './components/NotFound';
 import Profile from './components/Profile';
@@ -19,6 +20,7 @@ export const routes = (
         <Route path='/' component={ requireAuthentication(App) }>
             <Route path='/Namespaces/:idName' component={ Workloads } />
             <Route path='/Namespaces/:idName/Deployments/:idDep' component={ Deployment } />
+            <Route path='/Namespaces/:idName/Services/:idService' component={ Service } />
             <Route path='/Namespaces/:idName/Deployments/:idDep/Pods/:idPod'  component={ Pod } />
             <Route path='/CreateNewDeployment' component={ CreateDeployment } />
             <Route path='/CreateNewService' component={ CreateService } />

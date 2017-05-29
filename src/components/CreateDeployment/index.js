@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { getCreateDeployment } from '../../actions/CreateDeploymentActions';
 
 class CreateDeployment extends Component {
-    componentWillMount() {
+    componentDidMount() {
         const { dispatch } = this.props;
         dispatch(getCreateDeployment());
     }

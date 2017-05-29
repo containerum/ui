@@ -1,26 +1,26 @@
 import {
-    SERVICES_REQUEST,
-    SERVICES_SUCCESS,
-    SERVICES_FAILURE
-} from '../constants/ServicesConstants';
+    SERVICE_REQUEST,
+    SERVICE_SUCCESS,
+    SERVICE_FAILURE
+} from '../constants/ServiceConstants';
 
-export default function ServicesReducer(state = {
+export default function ServiceReducer(state = {
     isFetching: false,
-    data: [],
+    data: {},
     errorMessage: ''
 }, action) {
     switch (action.type) {
-    case SERVICES_REQUEST:
+    case SERVICE_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: ''
         });
-    case SERVICES_SUCCESS:
+    case SERVICE_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data
         });
-    case SERVICES_FAILURE:
+    case SERVICE_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message

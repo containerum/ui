@@ -12,7 +12,7 @@ import '../../localization/en/header';
 import '../../localization/ru/header';
 
 class Header extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.onLoadProfileData();
     }
     handleClickLogo() {

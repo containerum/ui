@@ -12,7 +12,10 @@ class Posts extends Component {
         } else if (this.props.servicesDataReducer.length === 0) {
             isErrorContainer = <ButtonCreateService />;
         } else {
-            isErrorContainer = <PostsServicesContainer PostsServicesDataReducer={this.props.servicesDataReducer}/>;
+            isErrorContainer = <PostsServicesContainer
+                PostsServicesDataReducer={this.props.servicesDataReducer}
+                idName={this.props.idName}
+            />;
         }
 
         return (
@@ -25,7 +28,8 @@ class Posts extends Component {
 
 Posts.propTypes = {
     servicesDataReducer: PropTypes.array,
-    servicesErrorMessageReducer: PropTypes.string
+    servicesErrorMessageReducer: PropTypes.string,
+    idName: PropTypes.string
 };
 
 export default Posts;

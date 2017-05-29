@@ -7,12 +7,6 @@ import Conditions from '../../components/Pod/Conditions';
 import Containers from '../../components/Pod/Containers';
 
 class PostPodContainer extends Component {
-    constructor() {
-        super();
-        this.state = {
-            isSelectedTab: true
-        };
-    }
     render() {
         return (
             <div>

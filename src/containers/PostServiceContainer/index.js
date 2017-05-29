@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import Info from '../../components/Deployment/Info';
-import PodsList from '../../components/Deployment/PodsList';
+import Info from '../../components/Service/Info';
+// import PodsList from '../../components/Service/PodsList';
 
-class PostDeploymentContainer extends Component {
+class PostServiceContainer extends Component {
     render() {
         return (
             <div>
@@ -15,8 +15,8 @@ class PostDeploymentContainer extends Component {
                         <Tab className="btn c-nav-menu-btn">Settings</Tab>
                     </TabList>
                     <TabPanel>
-                        <Info deploymentReducer={this.props.deploymentReducer} />
-                        <PodsList idDep={this.props.idDep} idName={this.props.idName} />
+                        <Info serviceReducer={this.props.serviceReducer} />
+                        {/*<PodsList serviceReducer={this.props.serviceReducer} />*/}
                     </TabPanel>
                     <TabPanel>
                         <div className="container-fluid pt-3">
@@ -29,11 +29,9 @@ class PostDeploymentContainer extends Component {
     }
 }
 
-PostDeploymentContainer.propTypes = {
-    deploymentReducer: PropTypes.object,
-    errorMessage: PropTypes.string,
-    idName: PropTypes.string,
-    idDep: PropTypes.string
+PostServiceContainer.propTypes = {
+    serviceReducer: PropTypes.object,
+    errorMessage: PropTypes.string
 };
 
-export default PostDeploymentContainer;
+export default PostServiceContainer;

@@ -12,7 +12,10 @@ class Posts extends Component {
         } else if (this.props.deploymentsDataReducer.length === 0) {
             isErrorContainer = <ButtonCreateDeployment />;
         } else {
-            isErrorContainer = <PostsDeploymentsContainer PostsDeploymentsDataReducer={this.props.deploymentsDataReducer}/>;
+            isErrorContainer = <PostsDeploymentsContainer
+                PostsDeploymentsDataReducer={this.props.deploymentsDataReducer}
+                idName={this.props.idName}
+            />;
         }
         return (
             <div>
@@ -24,7 +27,8 @@ class Posts extends Component {
 
 Posts.propTypes = {
     deploymentsDataReducer: PropTypes.array,
-    deploymentsErrorMessageReducer: PropTypes.string
+    deploymentsErrorMessageReducer: PropTypes.string,
+    idName: PropTypes.string
 };
 
 export default Posts;

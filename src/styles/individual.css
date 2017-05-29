@@ -92,6 +92,7 @@ button,
 }
 
 .md-icon {
+    padding-top: 2px;
     font-family: 'Material Icons';
     text-rendering: optimizeLegibility;
     font-feature-settings: "liga" 1;
@@ -132,7 +133,7 @@ button,
 }
 
 .i-td-table {
-    padding: .75rem;
+    padding: .5rem;
     padding-left: 1rem;
     vertical-align: top;
     border-top: 1px solid #eceeef;
@@ -155,7 +156,11 @@ button,
 }
 
 .i-td-table-pd-top {
-    padding-top: 16px;
+    padding-top: 12px;
+}
+
+.i-td-table-pd-bottom {
+    padding-bottom: 12px;
 }
 
 .i-container-btn-gr {

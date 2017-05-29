@@ -3,22 +3,15 @@ import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getPods } from '../../../actions/PodsActions';
-
 class PodsList extends Component {
     constructor() {
         super();
         this.handleClickTR = this.handleClickTR.bind(this);
     }
-    componentWillMount() {
-        const { dispatch } = this.props;
-        dispatch(getPods('default', this.props.idDep));
-    }
     handleClickTR(href) {
-        browserHistory.push('/Namespaces/default/Deployments/' + this.props.idDep + '/Pods/' + href);
+        browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + this.props.idDep + '/Pods/' + href);
     }
     render() {
-        // console.log('PodsList: ', this.props.PodsReducer);
         return (
             <div className="container-fluid pt-3 pb-5">
                 <h5>Pods</h5>
@@ -67,6 +60,7 @@ class PodsList extends Component {
 }
 
 PodsList.propTypes = {
+    idName: PropTypes.string,
     idDep: PropTypes.string
 };
 

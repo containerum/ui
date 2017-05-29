@@ -10,13 +10,16 @@ import {
 export function getNamespaces() {
     return dispatch => {
         dispatch(requestGetNamespaces());
+        const token = localStorage.getItem('id_token');
 
         return axios.get(
             'http://207.154.197.7:5000/api/namespaces',
             {
                 headers: {
-                    'Authorization': localStorage.getItem('id_token'),
-                    'Content-Type': 'application/x-www-form-urlencode'
+                    'Authorization': token,
+                    'Content-Type': 'application/x-www-form-urlencode',
+                    'Access-Control-Allow-Origin': '*',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
                 validateStatus: (status) => status >= 200 && status <= 500
             }

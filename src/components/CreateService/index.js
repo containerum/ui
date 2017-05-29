@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { getCreateService } from '../../actions/CreateServiceActions';
 
 class CreateService extends Component {
-    componentWillMount() {
+    componentDidMount() {
         const { dispatch } = this.props;
         dispatch(getCreateService());
     }

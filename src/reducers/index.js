@@ -10,6 +10,7 @@ import DeploymentsReducer from './DeploymentsReducer';
 import DeploymentReducer from './DeploymentReducer';
 import PodReducer from './PodReducer';
 import ServicesReducer from './ServicesReducer';
+import ServiceReducer from './ServiceReducer';
 import ProfileReducer from './ProfileReducer';
 import CreateServiceReducer from './CreateServiceReducer';
 import CreateDeploymentReducer from './CreateDeploymentReducer';
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
     NamespacesReducer,
     DeploymentsReducer,
     ServicesReducer,
+    ServiceReducer,
     ProfileReducer,
     CreateServiceReducer,
     CreateDeploymentReducer,

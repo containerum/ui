@@ -37,7 +37,7 @@ class Login extends Component {
             isValidPassword: isValidPassword
         });
     }
-    componentWillMount() {
+    componentDidMount() {
         document.body.classList.add('c-body-bg');
         if (this.props.params.hashParam) {
             const { dispatch } = this.props;

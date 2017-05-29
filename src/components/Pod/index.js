@@ -10,9 +10,9 @@ import Namespaces from '../../components/Namespaces';
 import CreateInstance from '../../components/CreateInstance';
 
 class Pod extends Component {
-    componentWillMount() {
+    componentDidMount() {
         const { dispatch } = this.props;
-        dispatch(getPod('default', this.props.params.idPod));
+        dispatch(getPod(this.props.params.idName, this.props.params.idPod));
     }
     render() {
         let isFetchingComponent = "";

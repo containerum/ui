@@ -10,14 +10,17 @@ import {
 export function getServices(namespaceName) {
     return dispatch => {
         dispatch(requestGetServices());
+        const token = localStorage.getItem('id_token');
         const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/services';
 
         return axios.get(
             api,
             {
                 headers: {
-                    'Authorization': localStorage.getItem('id_token'),
-                    'Content-Type': 'application/x-www-form-urlencode'
+                    'Authorization': token,
+                    'Content-Type': 'application/x-www-form-urlencode',
+                    'Access-Control-Allow-Origin': '*',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
                 validateStatus: (status) => status >= 200 && status <= 500
             }

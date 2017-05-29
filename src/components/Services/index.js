@@ -7,9 +7,9 @@ import Posts from './Posts';
 import Spinner from '../Spinner';
 
 class Services extends Component {
-    componentWillMount() {
+    componentDidMount() {
         const { dispatch } = this.props;
-        dispatch(getServices('default'));
+        dispatch(getServices(this.props.idName));
     }
     render() {
         let isFetchingComponent = "";
@@ -18,6 +18,7 @@ class Services extends Component {
                 <Posts
                     servicesDataReducer={this.props.ServicesReducer.data}
                     servicesErrorMessageReducer={this.props.ServicesReducer.errorMessage}
+                    idName={this.props.idName}
                 />
         } else {
             isFetchingComponent = <Spinner />
@@ -33,7 +34,8 @@ class Services extends Component {
 
 Services.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string
+    errorMessage: PropTypes.string,
+    idName: PropTypes.string
 };
 
 function mapStateToProps (state) {

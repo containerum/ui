@@ -16,7 +16,7 @@ export default class Workloads extends Component {
                     <CreateInstance />
                 </div>
                 <Deployments idName={this.props.params.idName} />
-                <Services />
+                <Services idName={this.props.params.idName} />
             </div>
         )
     }
