@@ -20,9 +20,10 @@ class Services extends Component {
                     servicesErrorMessageReducer={this.props.ServicesReducer.errorMessage}
                     idName={this.props.idName}
                 />
-        } else {
-            isFetchingComponent = <Spinner />
         }
+        // else {
+        //     isFetchingComponent = <Spinner />
+        // }
 
         return (
             <div>

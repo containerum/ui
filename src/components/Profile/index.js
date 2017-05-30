@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Account from './Account';
-// import PanelSSH from './PanelSSH';
-import CliToken from './CliToken';
+import PanelSSH from './PanelSSH';
 import Email from './Email';
 
 export default class Profile extends Component {
@@ -9,8 +8,7 @@ export default class Profile extends Component {
         return (
             <div>
                 <Account />
-                {/*<PanelSSH />*/}
-                <CliToken />
+                <PanelSSH />
                 <Email />
             </div>
         );

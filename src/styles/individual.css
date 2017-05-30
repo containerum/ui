@@ -112,6 +112,11 @@ button,
     padding-left: 1rem;
 }
 
+.tr-hover,
+.i-table-card {
+    border: 1px solid #f9f9f9!important;
+}
+
 .tr-hover:hover {
     background-color: #f9f9f9;
     cursor: pointer;
@@ -136,7 +141,7 @@ button,
     padding: .5rem;
     padding-left: 1rem;
     vertical-align: top;
-    border-top: 1px solid #eceeef;
+    /*border-top: 1px solid #eceeef;*/
     display: table-cell;
 }
 
@@ -193,4 +198,9 @@ button,
 
 .i-td-card-font-name {
     font-size: 1rem;
+}
+
+.i-card-border {
+    border: 1px solid #f9f9f9;
+    /*border-top: 0;*/
 }

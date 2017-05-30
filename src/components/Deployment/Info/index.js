@@ -5,13 +5,14 @@ class Info extends Component {
     render() {
         const statusArray = this.props.deploymentReducer.status ? Object.keys(this.props.deploymentReducer.status) : [];
         const labelsArray = this.props.deploymentReducer.labels ? Object.keys(this.props.deploymentReducer.labels) : [];
-        const rollingUpdateArray = this.props.deploymentReducer.rolling_update ? Object.keys(this.props.deploymentReducer.rolling_update) : [];
+        const rollingUpdateArray = this.props.deploymentReducer.strategy ? Object.keys(this.props.deploymentReducer.strategy.rollingUpdate) : [];
+        const type = this.props.deploymentReducer.strategy ? this.props.deploymentReducer.strategy.type : ''
         let rollingUpdate = '';
         rollingUpdateArray.forEach(item => {
             if (rollingUpdateArray[rollingUpdateArray.length - 1] === item) {
-                rollingUpdate += item + ': ' + this.props.deploymentReducer.rolling_update[item];
+                rollingUpdate += item + ': ' + this.props.deploymentReducer.strategy.rollingUpdate[item];
             } else {
-                rollingUpdate += item + ': ' + this.props.deploymentReducer.rolling_update[item] + ', ';
+                rollingUpdate += item + ': ' + this.props.deploymentReducer.strategy.rollingUpdate[item] + ', ';
             }
         });
         return (
@@ -20,7 +21,7 @@ class Info extends Component {
                     <div className="col-12">
                         <div className="card mt-3">
                             <div className="card-block c-table-card-block">
-                                <table className="table i-table-card">
+                                <table className="table">
                                     <tbody>
                                         <tr>
                                             <td className="i-td-card-font-name">
@@ -44,7 +45,7 @@ class Info extends Component {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <img className="c-table-card-img i-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
+                                                <img className="c-table-card-img-old i-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
                                             </td>
                                             <td>
                                                 CPU: {this.props.deploymentReducer.cpu / 1000} <br/>
@@ -67,8 +68,8 @@ class Info extends Component {
                                                 })}
                                             </td>
                                             <td>
-                                                Strategy: no data!!! no "strategy: type: ..."<br/>
-                                                Rolling update strategy: {rollingUpdate} <br/>
+                                                Strategy: {type}<br/>
+                                                Rolling update strategy: {rollingUpdate}<br/>
                                                 Creation time: {this.props.deploymentReducer.created_at} <br/>
                                             </td>
                                         </tr>

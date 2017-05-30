@@ -10,7 +10,7 @@ class Info extends Component {
                     <div className="col-12">
                         <div className="card mt-3">
                             <div className="card-block c-table-card-block">
-                                <table className="table i-table-card">
+                                <table className="table">
                                     <tbody>
                                     <tr>
                                         <td className="i-td-card-font-name">
@@ -34,7 +34,7 @@ class Info extends Component {
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img className="c-table-card-img i-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
+                                            <img className="c-table-card-img-old i-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
                                         </td>
                                         <td>
                                             RAM: {this.props.PodReducer.data.ram} MB <br/>

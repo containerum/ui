@@ -9,7 +9,7 @@ class Conditions extends Component {
                 <h5>Conditions</h5>
                 <div className="row">
                     <div className="col-12">
-                        <div className="card mt-3">
+                        <div className="card i-card-border mt-3">
                             <div className="card-block c-table-card-block">
                                 <div className="table table-hover c-table-card i-table-card">
                                     <div className="i-table-tbody">

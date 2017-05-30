@@ -97,25 +97,6 @@ export default class Account extends Component {
                         aria-describedby='sizing-addon1'
                     />
                 </li>
-                <li className='rowinput'>
-                    <input
-                        onKeyDown={ this.handleEditField }
-                        type='text'
-                        className='form-control'
-                        ref={ `email_${ item.id }` }
-                        name='email'
-                        defaultValue={ item.email }
-                        aria-describedby='sizing-addon1'
-                    />
-                </li>
-                <li>
-                    <button
-                        type='button'
-                        className='btn btn-primary'
-                        onClick={ this.handleEditItem.bind( this) }
-                    >Update profile
-                    </button>
-                </li>
             </ul>
         );
     }

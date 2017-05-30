@@ -6,7 +6,7 @@ class Info extends Component {
         const labelsArray = this.props.serviceReducer.labels ? Object.keys(this.props.serviceReducer.labels) : [];
         const ips = this.props.serviceReducer.ips ? this.props.serviceReducer.ips : [];
         const ports = this.props.serviceReducer.ports ? this.props.serviceReducer.ports : [];
-        console.log('Info: ', this.props.serviceReducer);
+
         return (
             <div className="container-fluid pt-3 pb-5">
                 <div className="row">
@@ -37,7 +37,7 @@ class Info extends Component {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <img className="c-table-card-img i-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
+                                                <img className="c-table-card-img-old i-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
                                             </td>
                                             <td>
                                                 {this.props.serviceReducer.created_at}

@@ -23,6 +23,8 @@ export function LOGINUser(creds) {
                     dispatch(receiveLOGIN(response));
                     localStorage.setItem('id_token', response.data.token);
                     browserHistory.push('/');
+                } else if (response.status === 401) {
+                    dispatch(LOGINError('Email or Password is not valid'))
                 } else {
                     if(typeof response.data.message === 'string') {
                         dispatch(LOGINError(response.data.message))
