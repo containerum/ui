@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getUser } from '../../../actions/UserActions';
-import InputEmail from '../../../components/auth/InputEmail';
+import { changePassword } from '../../../actions/ChangePasswordActions';
 
 const customStyles = {
     overlay: {
@@ -13,7 +13,7 @@ const customStyles = {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.75)'
+        backgroundColor: 'rgba(127, 127, 127, .8)'
     },
     content: {
         top: '50%',
@@ -26,36 +26,40 @@ const customStyles = {
     }
 };
 
+const customStylesPassword = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(127, 127, 127, .8)'
+    },
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        height: '480px'
+    }
+};
+
 class Account extends Component {
     constructor(props) {
         super(props);
         this.state = {
             modalIsOpen: false,
+            modalPasswordIsOpen: false,
             data: [],
             errorMsg: '',
-            email: '',
-            isValidEmail: false
         };
         this.openModal = this.openModal.bind(this);
-        // this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.checkValidateEmailInput = this.checkValidateEmailInput.bind(this);
+        this.openPasswordModal = this.openPasswordModal.bind(this);
+        this.closePasswordModal = this.closePasswordModal.bind(this);
         this.submitUpdatedData = this.submitUpdatedData.bind(this);
-    }
-    checkValidateEmailInput(email, isValidEmail) {
-        this.setState({
-            ...this.state,
-            email: email,
-            isValidEmail: isValidEmail
-        });
-    }
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.ProfileReducer.data.login && nextProps.ProfileReducer.data.login !== this.props.ProfileReducer.data.login) {
-            this.setState({
-                ...this.state,
-                email: nextProps.ProfileReducer.data.login
-            });
-        }
     }
     openModal() {
         this.setState({modalIsOpen: true});
@@ -63,18 +67,33 @@ class Account extends Component {
     closeModal() {
         this.setState({modalIsOpen: false});
     }
+    openPasswordModal() {
+        this.setState({modalPasswordIsOpen: true});
+    }
+    closePasswordModal() {
+        this.setState({modalPasswordIsOpen: false});
+    }
     submitUpdatedData(e) {
         e.preventDefault();
         const { dispatch } = this.props;
         const updateData = {
             first_name: this.refs.first_name.value,
             last_name: this.refs.last_name.value,
-            email: this.state.email,
             phone: this.refs.phone.value,
             address: this.refs.address.value,
         };
         // console.log(updateData);
         dispatch(getUser(updateData));
+    }
+    submitUpdatedPasswordData(e) {
+        e.preventDefault();
+        const { dispatch } = this.props;
+        const updatePasswordData = {
+            current_password: this.refs.current_password,
+            new_password: this.refs.new_password
+        };
+        console.log(updatePasswordData);
+        // dispatch(changePassword(updatePasswordData));
     }
     render() {
         const userEmail = this.props.ProfileReducer.data.login ? this.props.ProfileReducer.data.login : '';
@@ -116,7 +135,7 @@ class Account extends Component {
                                                 // onAfterOpen={this.afterOpenModal}
                                                 onRequestClose={this.closeModal}
                                                 style={customStyles}
-                                                contentLabel='Example Modal'
+                                                contentLabel='Edit Profile'
                                             >
                                                 <h3 className="text-center">Edit your profile</h3>
                                                 <div onClick={this.closeModal} className="i-close"></div>
@@ -148,13 +167,12 @@ class Account extends Component {
                                                             <i className='c-form-control-icon fa fa-tag fa-1'></i>
                                                         </div>
 
-                                                        <InputEmail
-                                                            handleEmail={
-                                                                (email, isValidEmail) =>
-                                                                    this.checkValidateEmailInput(email, isValidEmail)
-                                                            }
-                                                            defaultUserEmail={userEmail}
-                                                        />
+                                                        <div className='form-group i-mb-20 c-has-feedback-left'>
+                                                            <div className='form-control'>
+                                                                {userEmail}
+                                                            </div>
+                                                            <i className='c-form-control-icon fa fa-user'></i>
+                                                        </div>
 
                                                         <div className='form-group i-mb-20 c-has-feedback-left'>
                                                             <input
@@ -182,6 +200,62 @@ class Account extends Component {
                                                             <i className='c-form-control-icon fa fa-tag fa-1'></i>
                                                         </div>
                                                         <button ref='button' type='submit' className='btn btn-block c-btn-green i-btn-login-strong'>Update profile</button>
+                                                    </div>
+                                                </form>
+                                            </Modal>
+                                            <br />
+                                            <br />
+                                            <button onClick={this.openPasswordModal} className='btn btn-default' type='submit'>Change Password</button>
+                                            <Modal
+                                                isOpen={this.state.modalPasswordIsOpen}
+                                                onRequestClose={this.closePasswordModal}
+                                                style={customStylesPassword}
+                                                contentLabel='Change Password'
+                                            >
+                                                <h3 className="text-center">Change Password</h3>
+                                                <div onClick={this.closePasswordModal} className="i-close"></div>
+                                                <form onSubmit={this.submitUpdatedPasswordData}>
+                                                    <div className='card-block p-5'>
+
+                                                        <label className="i-label-size" htmlFor="current_password">Current Password</label>
+                                                        <div className='form-group i-mb-20 c-has-feedback-left'>
+                                                            <input
+                                                                ref='current_password'
+                                                                id='current_password'
+                                                                required='required'
+                                                                type='password'
+                                                                className='form-control'
+                                                                placeholder='Current Password'
+                                                            />
+                                                            <i className='c-form-control-icon fa fa-tag fa-1'></i>
+                                                        </div>
+
+                                                        <label className="i-label-size" htmlFor="new_password">New Password</label>
+                                                        <div className='form-group i-mb-20 c-has-feedback-left'>
+                                                            <input
+                                                                ref='new_password'
+                                                                id='new_password'
+                                                                required='required'
+                                                                type='password'
+                                                                className='form-control'
+                                                                placeholder='New Password'
+                                                            />
+                                                            <i className='c-form-control-icon fa fa-tag fa-1'></i>
+                                                        </div>
+
+                                                        <label className="i-label-size" htmlFor="confirm_password">Confirm new Password</label>
+                                                        <div className='form-group i-mb-20 c-has-feedback-left'>
+                                                            <input
+                                                                ref='confirm_password'
+                                                                id='confirm_password'
+                                                                required='required'
+                                                                type='password'
+                                                                className='form-control'
+                                                                placeholder='Confirm new Password'
+                                                            />
+                                                            <i className='c-form-control-icon fa fa-tag fa-1'></i>
+                                                        </div>
+                                                        <button ref='button' type='submit' className='btn btn-block c-btn-green i-btn-login-strong'>Update password</button>
                                                     </div>
                                                 </form>
                                             </Modal>

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class CliToken extends Component {
     render() {
         return (
-            <div className='container-fluid pt-3'>
+            <div className='container-fluid pt-3 pb-5'>
                 <div className='row'>
                     <div className="col-12">
                         <div className="card mt-3">
@@ -28,13 +28,21 @@ export default class CliToken extends Component {
                                     </tr>
                                     <tr>
                                         <td>
-                                            <button className='btn btn-default clitool'>Download CLI</button>
+                                            <a target="_blank" className="i-cli-tool" href="http://p13000.x1.containerum.io/download/packages/">
+                                                <button className='btn btn-default'>
+                                                    Download CLI
+                                                </button>
+                                            </a>
                                         </td>
                                         <td>
-                                            bla bla bla
+                                            TOKEN
                                         </td>
                                         <td>
-                                            <button className='btn btn-default clitool'>CLI Help</button>
+                                            <a target="_blank" className="i-cli-tool" href="https://bitbucket.org/exonch/ch-sdk">
+                                                <button className='btn btn-default'>
+                                                    CLI Help
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                     </tbody>

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 
-import { encode } from '../../functions/encode';
-import { getColor } from '../../functions/getColor';
+// import { encode } from '../../functions/encode';
+// import { getColor } from '../../functions/getColor';
 
 class PostsServicesContainer extends Component {
     handleClickTR(href) {
@@ -24,13 +24,15 @@ class PostsServicesContainer extends Component {
                                             const labelsList = item.labels ? Object.keys(item.labels).join() : null;
                                             const name = item.name;
                                             const nameFirstChar = name.substring(0, 1).toUpperCase();
-                                            const currentColor = getColor(encode(item.uid));
+                                            // const currentColor = getColor(encode(item.uid));
                                             return (
                                                 <div className="i-row-table tr-hover" key={index}>
                                                     <div className="i-td-table" onClick={href => this.handleClickTR(item.name)}>
-                                                        <svg className="c-table-card-img mr-2" fill={currentColor} stroke="#000" width="30" height="30">
-                                                            <polygon className="hex" points="30,15 22,27 8,27 0,15 8,2 22,2"></polygon>
-                                                            <text x="36%" y="63%">{nameFirstChar}</text>
+                                                        <svg className="c-table-card-img mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
+                                                            <g>
+                                                                <path className="cls-services" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
+                                                            </g>
+                                                            <text className="cls-2" x="33%" y="70%">{nameFirstChar}</text>
                                                         </svg>
                                                         {name}
                                                     </div>

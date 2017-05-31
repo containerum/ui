@@ -52,7 +52,6 @@ class Login extends Component {
             });
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
-            setTimeout(() => {getAlert.style.display = 'none'}, 5000);
         }
     }
     handleClick(event) {
@@ -69,7 +68,6 @@ class Login extends Component {
             });
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
-            setTimeout(() => {getAlert.style.display = 'none'}, 5000);
         }
     }
     render() {

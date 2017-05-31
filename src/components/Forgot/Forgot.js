@@ -32,11 +32,10 @@ class Forgot extends Component {
         } else {
             this.setState({
                 ...this.state,
-                errorMsg: 'Email or Password is not valid'
+                errorMsg: 'Email is not valid'
             });
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
-            setTimeout(() => {getAlert.style.display = 'none'}, 5000);
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -47,7 +46,6 @@ class Forgot extends Component {
             });
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
-            setTimeout(() => {getAlert.style.display = 'none'}, 5000);
         }
     }
     checkValidateEmailInput(email, isValidEmail) {
@@ -64,10 +62,10 @@ class Forgot extends Component {
                 <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
                     <div className='card c-card'>
                         <div className='card-block p-5'>
+                            <div className='card-label'>Reset Password</div>
                             <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>
                                 { this.state.errorMsg }
                             </div>
-                            <div className='card-label'>Reset Password</div>
                             <InputEmail
                                 handleEmail={
                                     (email, isValidEmail) =>

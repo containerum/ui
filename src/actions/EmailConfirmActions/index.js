@@ -21,6 +21,8 @@ export function ConfirmEmail(creds) {
             if (response.status === 200) {
                 dispatch(receiveEmailComfirm());
                 browserHistory.push('/ConfirmEmail');
+            } else if (response.status === 400) {
+                dispatch(errorEmailComfirm('Email is not valid'))
             } else {
                 dispatch(errorEmailComfirm(response.data.message))
             }

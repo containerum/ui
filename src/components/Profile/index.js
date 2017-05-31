@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import Account from './Account';
-import PanelSSH from './PanelSSH';
-import Email from './Email';
+import CliToken from './CliToken';
 
 export default class Profile extends Component {
     render() {
         return (
             <div>
                 <Account />
-                <PanelSSH />
-                <Email />
+                <CliToken />
             </div>
         );
     }

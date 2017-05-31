@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 
 import { logoutUser } from '../../actions/LogoutActions';
 import { getProfile } from '../../actions/ProfileActions';
-import logo from '../../images/Containerum_logo_new.png';
+import logo from '../../images/Containerum_logo_new.svg';
 import CommonInfoDropdown from './CommonInfoDropdown';
 import ProfileInfoDropdown from './ProfileInfoDropdown';
 

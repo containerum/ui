@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 class Info extends Component {
     render() {
         const labelsArray = this.props.PodReducer.data.labels ? Object.keys(this.props.PodReducer.data.labels) : [];
+        const name = this.props.PodReducer.data.name ? this.props.PodReducer.data.name : '';
+        const nameFirstChar = name.substring(0, 1).toUpperCase();
         return (
             <div className="container-fluid pt-3">
                 <div className="row">
@@ -14,7 +16,7 @@ class Info extends Component {
                                     <tbody>
                                     <tr>
                                         <td className="i-td-card-font-name">
-                                            {this.props.PodReducer.data.name}
+                                            {name}
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -34,7 +36,12 @@ class Info extends Component {
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img className="c-table-card-img-old i-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
+                                            <svg className="c-table-card-img-old i-table-card-img mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
+                                                <g>
+                                                    <path className="cls-pod" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
+                                                </g>
+                                                <text className="cls-2" x="33%" y="70%">{nameFirstChar}</text>
+                                            </svg>
                                         </td>
                                         <td>
                                             RAM: {this.props.PodReducer.data.ram} MB <br/>
@@ -52,8 +59,6 @@ class Info extends Component {
                                             })}
                                         </td>
                                         <td>
-                                            Strategy: no data!!! no "strategy: type: ..."<br/>
-                                            Rolling update strategy: no data!!! <br/>
                                             Creation time:  {this.props.PodReducer.data.created_at} <br/>
                                             Start time: {this.props.PodReducer.data.start_time} <br/>
                                         </td>

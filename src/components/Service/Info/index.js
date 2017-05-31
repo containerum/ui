@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 class Info extends Component {
     render() {
         const labelsArray = this.props.serviceReducer.labels ? Object.keys(this.props.serviceReducer.labels) : [];
-        const ips = this.props.serviceReducer.ips ? this.props.serviceReducer.ips : [];
+        const domain_hosts = this.props.serviceReducer.domain_hosts ? this.props.serviceReducer.domain_hosts : [];
         const ports = this.props.serviceReducer.ports ? this.props.serviceReducer.ports : [];
+        const name = this.props.serviceReducer.name ? this.props.serviceReducer.name : '';
+        const nameFirstChar = name.substring(0, 1).toUpperCase();
 
         return (
             <div className="container-fluid pt-3 pb-5">
@@ -13,11 +15,11 @@ class Info extends Component {
                     <div className="col-12">
                         <div className="card mt-3">
                             <div className="card-block c-table-card-block">
-                                <table className="table i-table-card">
+                                <table className="table">
                                     <tbody>
                                         <tr>
                                             <td className="i-td-card-font-name">
-                                                {this.props.serviceReducer.name}
+                                                {name}
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -37,18 +39,25 @@ class Info extends Component {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <img className="c-table-card-img-old i-table-card-img mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
+                                                <svg className="c-table-card-img-old i-table-card-img mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
+                                                    <g>
+                                                        <path className="cls-services" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
+                                                    </g>
+                                                    <text className="cls-2" x="33%" y="70%">{nameFirstChar}</text>
+                                                </svg>
                                             </td>
                                             <td>
-                                                {this.props.serviceReducer.created_at}
+                                                Cluster ip: {this.props.serviceReducer.cluster_ip} <br />
+                                                Created at: {this.props.serviceReducer.created_at} <br />
+                                                Domain hosts <br/>
+                                                {domain_hosts[0]}
                                             </td>
                                             <td>
                                                 Ports <br/>
                                                 {ports.map((item, index) =>  {
                                                     return (
                                                         <span key={index}>
-                                                            {item.protocol} <br/>
-                                                            {item.targetport} <br/>
+                                                            {item.name}: {item.targetPort} -> {item.port}:{item.protocol} <br/>
                                                         </span>
                                                     );
                                                 })}
@@ -60,15 +69,6 @@ class Info extends Component {
                                                         <span key={index}>{item}: {this.props.serviceReducer.labels[item]}<br/></span>
                                                     );
                                                 })}
-                                            </td>
-                                            <td>
-                                                IPS <br/>
-                                                {ips.map((item, index) =>  {
-                                                    return (
-                                                        <span key={index}>{item}<br/></span>
-                                                    );
-                                                })}
-
                                             </td>
                                         </tr>
                                     </tbody>

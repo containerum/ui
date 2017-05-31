@@ -16,10 +16,16 @@ class Containers extends Component {
                                         {
                                             arrContainersPodReducer.map((item, index) => {
                                                 const name = item.name;
+                                                const nameFirstChar = name.substring(0, 1).toUpperCase();
                                                 return (
                                                     <div className="i-row-table tr-hover" key={index}>
                                                         <div className="i-td-table">
-                                                            <img className="c-table-card-img-old mr-1" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&d=identicon&r=PG&f=1" alt="" />
+                                                            <svg className="c-table-card-img mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
+                                                                <g>
+                                                                    <path className="cls-container" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
+                                                                </g>
+                                                                <text className="cls-2" x="33%" y="70%">{nameFirstChar}</text>
+                                                            </svg>
                                                             {name}
                                                         </div>
                                                         <div className="i-td-table i-td-table-pd-top">{item.status}</div>
@@ -27,16 +33,6 @@ class Containers extends Component {
                                                         <div className="i-td-table i-td-table-pd-top">{item.cpu}</div>
                                                         <div className="i-td-table i-td-table-pd-top">{item.created_at}</div>
                                                         <div className="i-td-table i-td-table-pd-top">{item.restarts} restarts</div>
-                                                        <div className="i-td-table text-right">
-                                                            <div className="btn-group">
-                                                                <button className="btn btn-sm c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    <i className="md-icon">more_horiz</i>
-                                                                </button>
-                                                                <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow" aria-labelledby="dropdownMenu2">
-                                                                    <button className="dropdown-item text-danger" type="button">Delete</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 );
                                             })

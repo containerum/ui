@@ -28,7 +28,7 @@ export function getDeployments(namespaceName) {
             if (response.status === 200 || response.status === 201) {
                 dispatch(receiveGetDeployments(response.data));
             } else {
-                dispatch(failGetDeployments(response.data.message))
+                dispatch(failGetDeployments(response.data.message, response.status))
             }
         }).catch(err => console.log(err))
     }
@@ -49,10 +49,11 @@ function receiveGetDeployments(data) {
     }
 }
 
-function failGetDeployments(message) {
+function failGetDeployments(message, status) {
     return {
         type: DEPLOYMENTS_FAILURE,
         isFetching: false,
-        message
+        message,
+        status
     }
 }

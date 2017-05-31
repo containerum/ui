@@ -60,7 +60,6 @@ class SignUp extends Component {
             });
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
-            setTimeout(() => {getAlert.style.display = 'none'}, 5000);
         }
     }
     handleClick(event) {
@@ -77,7 +76,6 @@ class SignUp extends Component {
             });
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
-            setTimeout(() => {getAlert.style.display = 'none'}, 5000);
         }
     }
     render() {
@@ -141,10 +139,12 @@ class SignUp extends Component {
                                         />Individual
                                     </label>
                                     <label
-                                        className={this.state.idOfActiveToggle === 'option2'
-                                            ? 'btn btn-success active' : 'btn btn-success'}>
+                                        className="btn btn-success disabled"
+                                        // className={this.state.idOfActiveToggle === 'option2'
+                                        //     ? 'btn btn-success active' : 'btn btn-success'}
+                                    >
                                         <input
-                                            onChange={this.onToggle}
+                                            // onChange={this.onToggle}
                                             type='radio'
                                             name='options'
                                             id='option2'

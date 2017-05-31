@@ -227,3 +227,33 @@ button,
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.i-cli-tool {
+    color: #000;
+    text-decoration: none;
+}
+
+.i-label-size {
+    font-size: 1rem;
+}
+
+.cls-deployments {
+    fill: #009bd3;
+}
+
+.cls-services {
+    fill: #556970;
+}
+
+.cls-pod {
+    fill: #009688;
+}
+
+.cls-container {
+    fill: #3f51b5;
+}
+
+.cls-2 {
+    fill: #fff;
+    font-size: 19px;
+}

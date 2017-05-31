@@ -24,6 +24,7 @@ class Deployments extends Component {
                 <Posts
                     deploymentsDataReducer={this.props.DeploymentsReducer.data}
                     deploymentsErrorMessageReducer={this.props.DeploymentsReducer.errorMessage}
+                    deploymentsStatusErrorReducer={this.props.DeploymentsReducer.statusError}
                     idName={this.props.idName}
                 />
         } else {
@@ -41,16 +42,19 @@ class Deployments extends Component {
 Deployments.propTypes = {
     dispatch: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
+    statusError: PropTypes.number,
     idName: PropTypes.string
 };
 
 function mapStateToProps (state) {
     const { DeploymentsReducer } = state;
     const { errorMessage } = DeploymentsReducer;
+    const { statusError } = DeploymentsReducer;
 
     return {
+        DeploymentsReducer,
         errorMessage,
-        DeploymentsReducer
+        statusError
     }
 }
 

@@ -1,31 +1,29 @@
 import {
-    DEPLOYMENTS_REQUEST,
-    DEPLOYMENTS_SUCCESS,
-    DEPLOYMENTS_FAILURE
-} from '../constants/DeploymentsConstants';
+    CHANGE_PASSWORD_REQUEST,
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_FAILURE
+} from '../constants/ChangePasswordConstaints';
 
-export default function DeploymentsReducer(state = {
+export default function ChangePasswordReducer(state = {
     isFetching: false,
-    data: [],
-    errorMessage: '',
-    statusError: 200
+    data: {},
+    errorMessage: ''
 }, action) {
     switch (action.type) {
-    case DEPLOYMENTS_REQUEST:
+    case CHANGE_PASSWORD_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: ''
         });
-    case DEPLOYMENTS_SUCCESS:
+    case CHANGE_PASSWORD_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data
         });
-    case DEPLOYMENTS_FAILURE:
+    case CHANGE_PASSWORD_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            errorMessage: action.message,
-            statusError: action.status
+            errorMessage: action.message
         });
     default:
         return state

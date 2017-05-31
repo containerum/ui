@@ -18,6 +18,7 @@ import checkHashParamReducer from './checkHashParamReducer';
 import PodsReducer from './PodsReducer';
 import UsersReducer from './UsersReducer';
 import UserReducer from './UserReducer';
+import ChangePasswordReducer from './ChangePasswordReducer';
 
 const rootReducer = combineReducers({
     dataDeployment,
@@ -37,7 +38,8 @@ const rootReducer = combineReducers({
     DeploymentReducer,
     PodsReducer,
     UsersReducer,
-    UserReducer
+    UserReducer,
+    ChangePasswordReducer
 });
 
 export default rootReducer;
