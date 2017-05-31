@@ -228,7 +228,8 @@ button,
     background-position: center;
 }
 
-.i-cli-tool {
+.i-cli-tool,
+.i-cli-tool:hover {
     color: #000;
     text-decoration: none;
 }

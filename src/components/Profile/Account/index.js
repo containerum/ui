@@ -60,6 +60,7 @@ class Account extends Component {
         this.openPasswordModal = this.openPasswordModal.bind(this);
         this.closePasswordModal = this.closePasswordModal.bind(this);
         this.submitUpdatedData = this.submitUpdatedData.bind(this);
+        this.submitUpdatedPasswordData = this.submitUpdatedPasswordData.bind(this);
     }
     openModal() {
         this.setState({modalIsOpen: true});
@@ -89,11 +90,11 @@ class Account extends Component {
         e.preventDefault();
         const { dispatch } = this.props;
         const updatePasswordData = {
-            current_password: this.refs.current_password,
-            new_password: this.refs.new_password
+            password: this.refs.current_password.value,
+            new_password: this.refs.new_password.value
         };
         console.log(updatePasswordData);
-        // dispatch(changePassword(updatePasswordData));
+        dispatch(changePassword(updatePasswordData));
     }
     render() {
         const userEmail = this.props.ProfileReducer.data.login ? this.props.ProfileReducer.data.login : '';
@@ -107,10 +108,9 @@ class Account extends Component {
                                     <tbody>
                                     <tr>
                                         <td>
-                                            Account
+                                            <h4>Account</h4>
                                         </td>
                                         <td>
-                                            {userEmail}
                                         </td>
                                     </tr>
                                     <tr>
@@ -118,18 +118,11 @@ class Account extends Component {
                                             <img src='http://placehold.it/150x150' alt='...' className='img-rounded'/>
                                         </td>
                                         <td>
-                                            {userEmail}
+                                            {userEmail} <br />
+                                            {this.props.ProfileReducer.data.created_at}
                                         </td>
                                         <td>
-                                            <ul>
-                                                <li>Plan: ULTRA</li>
-                                                <li>Limits</li>
-                                                <li>RAM: 8 GB</li>
-                                                <li>STORAGE: 40 GB</li>
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <button onClick={this.openModal} className='btn btn-default' type='submit'>Edit Profile</button>
+                                            <button onClick={this.openModal} className='btn btn-block c-btn-green' type='submit'>Edit Profile</button>
                                             <Modal
                                                 isOpen={this.state.modalIsOpen}
                                                 // onAfterOpen={this.afterOpenModal}
@@ -205,7 +198,7 @@ class Account extends Component {
                                             </Modal>
                                             <br />
                                             <br />
-                                            <button onClick={this.openPasswordModal} className='btn btn-default' type='submit'>Change Password</button>
+                                            <button onClick={this.openPasswordModal} className='btn btn-block c-btn-green' type='submit'>Change Password</button>
                                             <Modal
                                                 isOpen={this.state.modalPasswordIsOpen}
                                                 onRequestClose={this.closePasswordModal}

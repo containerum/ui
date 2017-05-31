@@ -13,7 +13,7 @@ export function changePassword(data) {
         const token = localStorage.getItem('id_token');
         const api = 'http://207.154.197.7:5000/api/password_change';
 
-        return axios.put(
+        return axios.post(
             api,
             { data },
             {

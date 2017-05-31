@@ -12,7 +12,7 @@ export default class CliToken extends Component {
                                     <tbody>
                                     <tr>
                                         <td>
-                                            CLI
+                                            <h4>CLI</h4>
                                         </td>
                                     </tr>
                                     <tr>
@@ -29,7 +29,7 @@ export default class CliToken extends Component {
                                     <tr>
                                         <td>
                                             <a target="_blank" className="i-cli-tool" href="http://p13000.x1.containerum.io/download/packages/">
-                                                <button className='btn btn-default'>
+                                                <button className='btn btn-block c-btn-green'>
                                                     Download CLI
                                                 </button>
                                             </a>
@@ -39,7 +39,7 @@ export default class CliToken extends Component {
                                         </td>
                                         <td>
                                             <a target="_blank" className="i-cli-tool" href="https://bitbucket.org/exonch/ch-sdk">
-                                                <button className='btn btn-default'>
+                                                <button className='btn btn-block c-btn-green'>
                                                     CLI Help
                                                 </button>
                                             </a>
