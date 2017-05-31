@@ -13,6 +13,7 @@ class InputEmail extends Component {
         }
     }
     render() {
+        const defaultUserEmail = this.props.defaultUserEmail ? this.props.defaultUserEmail : '';
         return (
             <div>
                 <label className='sr-only' htmlFor='Username'>Email</label>
@@ -26,6 +27,7 @@ class InputEmail extends Component {
                         className='form-control'
                         id='Username'
                         placeholder='Email'
+                        defaultValue={defaultUserEmail}
                     />
                     <i className='c-form-control-icon fa fa-user'></i>
                 </div>
@@ -35,7 +37,8 @@ class InputEmail extends Component {
 }
 
 InputEmail.propTypes = {
-    handleEmail: PropTypes.func.isRequired
+    handleEmail: PropTypes.func.isRequired,
+    defaultUserEmail: PropTypes.string
 };
 
 export default InputEmail;

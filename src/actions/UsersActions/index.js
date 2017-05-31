@@ -1,19 +1,17 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import sha256 from 'sha256';
 
 import {
-    PODS_REQUEST,
-    PODS_SUCCESS,
-    PODS_FAILURE
-} from '../../constants/PodsConstants';
+    USERS_REQUEST,
+    USERS_SUCCESS,
+    USERS_FAILURE
+} from '../../constants/UsersConstants';
 
-export function getPods(namespaceName, idDeployment) {
+export function getUsers() {
     return dispatch => {
-        dispatch(requestGetPods());
+        dispatch(requestGetUsers());
         const token = localStorage.getItem('id_token');
-        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/pods';
-        const shaDeployment256 = sha256(namespaceName).substring(0, 32);
+        const api = 'http://207.154.197.7:5000/api/users';
 
         return axios.get(
             api,
@@ -29,44 +27,35 @@ export function getPods(namespaceName, idDeployment) {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                const filterDepData = [];
-                response.data.map(item => {
-                    return Object.keys(item.labels).map(label => {
-                        if(label === shaDeployment256 && item.labels[label] === idDeployment) {
-                            filterDepData.push(item);
-                        }
-                        return item;
-                    });
-                });
-                dispatch(receiveGetPods(filterDepData));
+                dispatch(receiveGetUsers(response.data));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetPods(response.data.message))
+                dispatch(failGetUsers(response.data.message))
             }
         }).catch(err => console.log(err))
     }
 }
 
-function requestGetPods() {
+function requestGetUsers() {
     return {
-        type: PODS_REQUEST,
+        type: USERS_REQUEST,
         isFetching: true
     }
 }
 
-function receiveGetPods(data) {
+function receiveGetUsers(data) {
     return {
-        type: PODS_SUCCESS,
+        type: USERS_SUCCESS,
         isFetching: false,
         data
     }
 }
 
-function failGetPods(message) {
+function failGetUsers(message) {
     return {
-        type: PODS_FAILURE,
+        type: USERS_FAILURE,
         isFetching: false,
         message
     }

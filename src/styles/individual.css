@@ -204,3 +204,26 @@ button,
     border: 1px solid #f9f9f9;
     /*border-top: 0;*/
 }
+
+.i-profile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.i-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url(../images/close.svg);
+    height: 12px;
+    width: 12px;
+    padding: 20px 16px;
+    opacity: .4;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+}

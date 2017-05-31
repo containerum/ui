@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { getServices } from '../../actions/ServicesActions';
 import Posts from './Posts';
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 
 class Services extends Component {
     componentDidMount() {

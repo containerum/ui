@@ -16,7 +16,7 @@ export default class App extends Component {
             browserHistory.push('/Namespaces/default');
         } else if (Object.keys(this.props.params).length <= 1 && this.props.params.idName) {
             browserHistory.push('/Namespaces/' + this.props.params.idName);
-        } else if (Object.keys(this.props.params).length === 0) {
+        } else if (Object.keys(this.props.params).length === 0 && this.props.location.pathname === '/') {
             browserHistory.push('/Namespaces/default');
         }
     }
