@@ -15,7 +15,7 @@ class PostDeploymentContainer extends Component {
                         <Tab className="btn c-nav-menu-btn">Settings</Tab>
                     </TabList>
                     <TabPanel>
-                        <Info deploymentReducer={this.props.deploymentReducer} />
+                        <Info deploymentReducer={this.props.deploymentReducer} idName={this.props.idName} />
                         <PodsList idDep={this.props.idDep} idName={this.props.idName} />
                     </TabPanel>
                     <TabPanel>

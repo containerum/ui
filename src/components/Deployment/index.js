@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getDeployment } from '../../actions/DeploymentActions';
+import { getDeployment } from '../../actions/DeploymentActions/getDeploymentAction';
 import { getPods } from '../../actions/PodsActions';
 
 import Post from './Post';
@@ -16,11 +16,11 @@ class Deployment extends Component {
     }
     render() {
         let isFetchingComponent = "";
-        if (this.props.DeploymentReducer.isFetching === false) {
+        if (this.props.GetDeploymentReducer.isFetching === false) {
             isFetchingComponent =
                 <Post
-                    deploymentReducer={this.props.DeploymentReducer.data}
-                    errorMessage={this.props.DeploymentReducer.errorMessage}
+                    deploymentReducer={this.props.GetDeploymentReducer.data}
+                    errorMessage={this.props.GetDeploymentReducer.errorMessage}
                     idName={this.props.params.idName}
                     idDep={this.props.params.idDep}
                 />
@@ -41,12 +41,12 @@ Deployment.propTypes = {
 };
 
 function mapStateToProps (state) {
-    const { DeploymentReducer } = state;
-    const { errorMessage } = DeploymentReducer;
+    const { GetDeploymentReducer } = state;
+    const { errorMessage } = GetDeploymentReducer;
 
     return {
         errorMessage,
-        DeploymentReducer
+        GetDeploymentReducer
     }
 }
 

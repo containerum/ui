@@ -21,9 +21,10 @@ class PostsServicesContainer extends Component {
                                 <div className="i-table-tbody">
                                     {
                                         this.props.PostsServicesDataReducer.map((item, index) => {
-                                            const labelsList = item.labels ? Object.keys(item.labels).join() : null;
+                                            const labelsList = item.labels ? Object.keys(item.labels) : null;
                                             const name = item.name;
                                             const nameFirstChar = name.substring(0, 1).toUpperCase();
+                                            const currentLabel = item.labels;
                                             // const currentColor = getColor(encode(item.uid));
                                             return (
                                                 <div className="i-row-table tr-hover" key={index}>
@@ -32,12 +33,24 @@ class PostsServicesContainer extends Component {
                                                             <g>
                                                                 <path className="cls-services" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
                                                             </g>
-                                                            <text className="cls-2" x="33%" y="70%">{nameFirstChar}</text>
+                                                            <text className="cls-2" textAnchor="middle" x="50%" y="70%">{nameFirstChar}</text>
                                                         </svg>
                                                         {name}
                                                     </div>
-                                                    <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>Internal IP: {item['service-ip']}</div>
-                                                    <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>{labelsList}</div>
+                                                    <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>Internal IP: {item.cluster_ip}</div>
+                                                    <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>
+                                                        {labelsList.map((item, index) =>  {
+                                                            let currentLabels = '';
+                                                            if (labelsList[labelsList.length - 1] === item) {
+                                                                currentLabels += item + ': "' + currentLabel[item] + '"';
+                                                            } else {
+                                                                currentLabels += item + ': "' + currentLabel[item] + '", ';
+                                                            }
+                                                            return (
+                                                                <span key={index}>{currentLabels}</span>
+                                                            );
+                                                        })}
+                                                    </div>
                                                     <div className="i-td-table text-right">
                                                         <div className="btn-group">
                                                             <button className="btn btn-sm c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

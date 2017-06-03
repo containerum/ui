@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import {
     DEPLOYMENT_REQUEST,
     DEPLOYMENT_SUCCESS,
-    DEPLOYMENT_FAILURE
+    DEPLOYMENT_FAILURE,
 } from '../../constants/DeploymentConstants';
 
 export function getDeployment(namespaceName, deploymentName) {
@@ -25,16 +25,16 @@ export function getDeployment(namespaceName, deploymentName) {
                 validateStatus: (status) => status >= 200 && status <= 500
             }
         )
-        .then(response => {
-            if (response.status === 200 || response.status === 201) {
-                dispatch(receiveGetDeployment(response.data));
-            } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
-            } else {
-                dispatch(failGetDeployment(response.data.message))
-            }
-        }).catch(err => console.log(err))
+            .then(response => {
+                if (response.status === 200 || response.status === 201) {
+                    dispatch(receiveGetDeployment(response.data));
+                } else if (response.status === 401) {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                } else {
+                    dispatch(failGetDeployment(response.data.message))
+                }
+            }).catch(err => console.log(err))
     }
 }
 

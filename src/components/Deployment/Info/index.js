@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+
+import { deleteDeployment } from '../../../actions/DeploymentActions/deleteDeploymentAction';
 
 class Info extends Component {
+    handleClickDeletingDeployment(name) {
+        const { dispatch } = this.props;
+        dispatch(deleteDeployment(this.props.idName, name));
+        browserHistory.push('/Namespaces/' + this.props.idName);
+    }
     render() {
         const statusArray = this.props.deploymentReducer.status ? Object.keys(this.props.deploymentReducer.status) : [];
         const labelsArray = this.props.deploymentReducer.labels ? Object.keys(this.props.deploymentReducer.labels) : [];
@@ -38,7 +47,7 @@ class Info extends Component {
                                                     <i className="md-icon">more_horiz</i>
                                                 </button>
                                                 <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow" aria-labelledby="dropdownMenu2">
-                                                    <button className="dropdown-item text-danger" type="button">
+                                                    <button className="dropdown-item text-danger" type="button" onClick={name => this.handleClickDeletingDeployment(this.props.deploymentReducer.name)}>
                                                         Delete
                                                     </button>
                                                 </div>
@@ -51,7 +60,7 @@ class Info extends Component {
                                                 <g>
                                                     <path className="cls-deployments" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
                                                 </g>
-                                                <text className="cls-2" x="33%" y="70%">{nameFirstChar}</text>
+                                                <text className="cls-2" textAnchor="middle" x="50%" y="70%">{nameFirstChar}</text>
                                             </svg>
                                         </td>
                                         <td>
@@ -92,7 +101,18 @@ class Info extends Component {
 }
 
 Info.propTypes = {
+    idName: PropTypes.string,
     deploymentReducer: PropTypes.object
 };
 
-export default Info;
+function mapStateToProps (state) {
+    const { DeleteDeploymentReducer } = state;
+    const { errorMessage } = DeleteDeploymentReducer;
+
+    return {
+        DeleteDeploymentReducer,
+        errorMessage
+    }
+}
+
+export default connect(mapStateToProps)(Info)

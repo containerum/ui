@@ -1,10 +1,10 @@
 import {
     DEPLOYMENT_REQUEST,
     DEPLOYMENT_SUCCESS,
-    DEPLOYMENT_FAILURE
-} from '../constants/DeploymentConstants';
+    DEPLOYMENT_FAILURE,
+} from '../../constants/DeploymentConstants';
 
-export default function DeploymentReducer(state = {
+export default function GetDeploymentReducer(state = {
     isFetching: false,
     data: {},
     errorMessage: ''

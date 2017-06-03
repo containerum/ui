@@ -24,7 +24,7 @@ class Containers extends Component {
                                                                 <g>
                                                                     <path className="cls-container" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
                                                                 </g>
-                                                                <text className="cls-2" x="33%" y="70%">{nameFirstChar}</text>
+                                                                <text className="cls-2" textAnchor="middle" x="50%" y="70%">{nameFirstChar}</text>
                                                             </svg>
                                                             {name}
                                                         </div>

@@ -21,28 +21,7 @@ const customStyles = {
         right: 'auto',
         bottom: 'auto',
         marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        height: '500px'
-    }
-};
-
-const customStylesPassword = {
-    overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(127, 127, 127, .8)'
-    },
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        height: '480px'
+        transform: 'translate(-50%, -50%)'
     }
 };
 
@@ -54,6 +33,7 @@ class Account extends Component {
             modalPasswordIsOpen: false,
             data: [],
             errorMsg: '',
+            errorPasswordMsg: ''
         };
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -61,6 +41,16 @@ class Account extends Component {
         this.closePasswordModal = this.closePasswordModal.bind(this);
         this.submitUpdatedData = this.submitUpdatedData.bind(this);
         this.submitUpdatedPasswordData = this.submitUpdatedPasswordData.bind(this);
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errorMessage) {
+            this.setState({
+                ...this.state,
+                errorPasswordMsg: nextProps.errorMessage
+            });
+            let getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+        }
     }
     openModal() {
         this.setState({modalIsOpen: true});
@@ -88,13 +78,32 @@ class Account extends Component {
     }
     submitUpdatedPasswordData(e) {
         e.preventDefault();
-        const { dispatch } = this.props;
-        const updatePasswordData = {
-            password: this.refs.current_password.value,
-            new_password: this.refs.new_password.value
-        };
-        console.log(updatePasswordData);
-        dispatch(changePassword(updatePasswordData));
+
+        const current_password = this.refs.current_password.value;
+        const new_password = this.refs.new_password.value;
+        const confirm_password = this.refs.confirm_password.value;
+        if (
+            (current_password.length >= 7 && current_password.length <= 64) &&
+            (new_password.length >= 7 && new_password.length <= 64) &&
+            (confirm_password.length >= 7 && confirm_password.length <= 64) &&
+            new_password === confirm_password
+        ) {
+            const { dispatch } = this.props;
+            const updatePasswordData = {
+                password: current_password,
+                new_password: new_password
+            };
+            console.log(updatePasswordData);
+            dispatch(changePassword(updatePasswordData));
+        } else {
+            this.setState({
+                ...this.state,
+                errorPasswordMsg: 'Password is not valid'
+            });
+            let getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+        }
+
     }
     render() {
         const userEmail = this.props.ProfileReducer.data.login ? this.props.ProfileReducer.data.login : '';
@@ -202,13 +211,16 @@ class Account extends Component {
                                             <Modal
                                                 isOpen={this.state.modalPasswordIsOpen}
                                                 onRequestClose={this.closePasswordModal}
-                                                style={customStylesPassword}
+                                                style={customStyles}
                                                 contentLabel='Change Password'
                                             >
                                                 <h3 className="text-center">Change Password</h3>
+                                                <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger i-alert-danger-mb-non'>
+                                                    { this.state.errorPasswordMsg }
+                                                </div>
                                                 <div onClick={this.closePasswordModal} className="i-close"></div>
                                                 <form onSubmit={this.submitUpdatedPasswordData}>
-                                                    <div className='card-block p-5'>
+                                                    <div className='card-block p-5 i-card-block-padding-2'>
 
                                                         <label className="i-label-size" htmlFor="current_password">Current Password</label>
                                                         <div className='form-group i-mb-20 c-has-feedback-left'>
@@ -273,10 +285,12 @@ Account.propTypes = {
 function mapStateToProps (state) {
     const { UserReducer } = state;
     const { ProfileReducer } = state;
+    const { ChangePasswordReducer } = state;
     const { userErrorMessage } = UserReducer;
 
     return {
         userErrorMessage,
+        ChangePasswordReducer,
         ProfileReducer,
         UserReducer
     }
