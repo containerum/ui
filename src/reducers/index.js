@@ -9,7 +9,8 @@ import NamespacesReducer from './NamespacesReducer';
 import DeploymentsReducer from './DeploymentsReducer';
 import GetDeploymentReducer from './DeploymentReducers/GetDeploymentReducer';
 import DeleteDeploymentReducer from './DeploymentReducers/DeleteDeploymentReducer';
-import PodReducer from './PodReducer';
+import GetPodReducer from './PodReducers/GetPodReducer';
+import DeletePodReducer from './PodReducers/DeletePodReducer';
 import ServicesReducer from './ServicesReducer';
 import ServiceReducer from './ServiceReducer';
 import ProfileReducer from './ProfileReducer';
@@ -35,13 +36,14 @@ const rootReducer = combineReducers({
     CreateServiceReducer,
     CreateDeploymentReducer,
     checkHashParamReducer,
-    PodReducer,
+    GetPodReducer,
     GetDeploymentReducer,
     PodsReducer,
     UsersReducer,
     UserReducer,
     ChangePasswordReducer,
-    DeleteDeploymentReducer
+    DeleteDeploymentReducer,
+    DeletePodReducer
 });
 
 export default rootReducer;

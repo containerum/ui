@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+
+import { deletePod } from '../../../actions/PodActions/deletePodAction';
 
 class Info extends Component {
+    handleClickDeletingPod(name) {
+        const { dispatch } = this.props;
+        dispatch(deletePod(this.props.idName, name));
+        browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + this.props.idDep);
+    }
     render() {
-        const labelsArray = this.props.PodReducer.data.labels ? Object.keys(this.props.PodReducer.data.labels) : [];
-        const name = this.props.PodReducer.data.name ? this.props.PodReducer.data.name : '';
+        const labelsArray = this.props.GetPodReducer.data.labels ? Object.keys(this.props.GetPodReducer.data.labels) : [];
+        const name = this.props.GetPodReducer.data.name ? this.props.GetPodReducer.data.name : '';
         const nameFirstChar = name.substring(0, 1).toUpperCase();
         return (
             <div className="container-fluid pt-3">
@@ -27,7 +36,7 @@ class Info extends Component {
                                                     <i className="md-icon">more_horiz</i>
                                                 </button>
                                                 <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow" aria-labelledby="dropdownMenu2">
-                                                    <button className="dropdown-item text-danger" type="button">
+                                                    <button className="dropdown-item text-danger" type="button" onClick={name => this.handleClickDeletingPod(this.props.GetPodReducer.data.name)}>
                                                         Delete
                                                     </button>
                                                 </div>
@@ -44,23 +53,23 @@ class Info extends Component {
                                             </svg>
                                         </td>
                                         <td>
-                                            RAM: {this.props.PodReducer.data.ram} MB <br/>
-                                            CPU: {this.props.PodReducer.data.cpu / 1000}
+                                            RAM: {this.props.GetPodReducer.data.ram} MB <br/>
+                                            CPU: {this.props.GetPodReducer.data.cpu / 1000}
                                         </td>
                                         <td>
-                                            IP: {this.props.PodReducer.data.ip}
+                                            IP: {this.props.GetPodReducer.data.ip}
                                         </td>
                                         <td>
                                             Labels <br/>
                                             {labelsArray.map((item, index) =>  {
                                                 return (
-                                                    <span key={index}>{item}: {this.props.PodReducer.data.labels[item]}<br/></span>
+                                                    <span key={index}>{item}: {this.props.GetPodReducer.data.labels[item]}<br/></span>
                                                 );
                                             })}
                                         </td>
                                         <td>
-                                            Creation time:  {this.props.PodReducer.data.created_at} <br/>
-                                            Start time: {this.props.PodReducer.data.start_time} <br/>
+                                            Creation time:  {this.props.GetPodReducer.data.created_at} <br/>
+                                            Start time: {this.props.GetPodReducer.data.start_time} <br/>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -75,7 +84,21 @@ class Info extends Component {
 }
 
 Info.propTypes = {
-    PodReducer: PropTypes.object
+    dispatch: PropTypes.func.isRequired,
+    GetPodReducer: PropTypes.object,
+    idName: PropTypes.string,
+    idDep: PropTypes.string,
+    idPod: PropTypes.string
 };
 
-export default Info;
+function mapStateToProps (state) {
+    const { DeletePodReducer } = state;
+    const { errorMessage } = DeletePodReducer;
+
+    return {
+        errorMessage,
+        DeletePodReducer
+    }
+}
+
+export default connect(mapStateToProps)(Info)

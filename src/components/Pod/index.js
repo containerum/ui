@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getPod } from '../../actions/PodActions';
+import { getPod } from '../../actions/PodActions/getPodAction';
 import Spinner from '../Spinner';
 
 import PostPodContainer from '../../containers/PostPodContainer';
@@ -16,14 +16,19 @@ class Pod extends Component {
     }
     render() {
         let isFetchingComponent = "";
-        if (this.props.PodReducer.isFetching === false) {
+        if (this.props.GetPodReducer.isFetching === false) {
             isFetchingComponent =
                 <div>
                     <div className="navbar navbar-toggleable-md navbar-light bg-faded">
                         <Namespaces idDep={this.props.params.idDep} idPod={this.props.params.idPod} />
                         <CreateInstance />
                     </div>
-                    <PostPodContainer PodReducer={this.props.PodReducer} />
+                    <PostPodContainer
+                        GetPodReducer={this.props.GetPodReducer}
+                        idName={this.props.params.idName}
+                        idPod={this.props.params.idPod}
+                        idDep={this.props.params.idDep}
+                    />
                 </div>
         } else {
             isFetchingComponent = <Spinner />
@@ -42,12 +47,12 @@ Pod.propTypes = {
 };
 
 function mapStateToProps (state) {
-    const { PodReducer } = state;
-    const { errorMessage } = PodReducer;
+    const { GetPodReducer } = state;
+    const { errorMessage } = GetPodReducer;
 
     return {
         errorMessage,
-        PodReducer
+        GetPodReducer
     }
 }
 

@@ -25,16 +25,16 @@ export function getPod(namespaceName, podName) {
                 validateStatus: (status) => status >= 200 && status <= 500
             }
         )
-        .then(response => {
-            if (response.status === 200 || response.status === 201) {
-                dispatch(receiveGetPod(response.data));
-            } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
-            } else {
-                dispatch(failGetPod(response.data.message))
-            }
-        }).catch(err => console.log(err))
+            .then(response => {
+                if (response.status === 200 || response.status === 201) {
+                    dispatch(receiveGetPod(response.data));
+                } else if (response.status === 401) {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                } else {
+                    dispatch(failGetPod(response.data.message))
+                }
+            }).catch(err => console.log(err))
     }
 }
 

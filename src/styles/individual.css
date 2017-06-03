@@ -145,6 +145,10 @@ button,
     display: table-cell;
 }
 
+.i-td-table-pb {
+    padding-bottom: 1rem;
+}
+
 .i-table-tbody {
     display: table-row-group;
     vertical-align: middle;

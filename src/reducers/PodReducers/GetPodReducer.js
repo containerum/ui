@@ -2,9 +2,9 @@ import {
     POD_REQUEST,
     POD_SUCCESS,
     POD_FAILURE
-} from '../constants/PodConstants';
+} from '../../constants/PodConstants';
 
-export default function PodReducer(state = {
+export default function GetPodReducer(state = {
     isFetching: false,
     data: {},
     errorMessage: ''

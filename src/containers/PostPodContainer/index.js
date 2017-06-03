@@ -17,9 +17,14 @@ class PostPodContainer extends Component {
                     </TabList>
 
                     <TabPanel>
-                        <Info PodReducer={this.props.PodReducer} />
-                        <Containers PodReducer={this.props.PodReducer} />
-                        <Conditions PodReducer={this.props.PodReducer} />
+                        <Info
+                            GetPodReducer={this.props.GetPodReducer}
+                            idName={this.props.idName}
+                            idPod={this.props.idPod}
+                            idDep={this.props.idDep}
+                        />
+                        <Containers GetPodReducer={this.props.GetPodReducer} />
+                        <Conditions GetPodReducer={this.props.GetPodReducer} />
                     </TabPanel>
                     <TabPanel>
                         <div className="container-fluid pt-3">
@@ -33,7 +38,10 @@ class PostPodContainer extends Component {
 }
 
 PostPodContainer.propTypes = {
-    PodReducer: PropTypes.object
+    GetPodReducer: PropTypes.object,
+    idName: PropTypes.string,
+    idPod: PropTypes.string,
+    idDep: PropTypes.string
 };
 
 export default PostPodContainer;
