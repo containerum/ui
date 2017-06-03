@@ -17,7 +17,10 @@ class Post extends Component {
                         <Namespaces idService={this.props.idService} />
                         <CreateInstance />
                     </div>
-                    <PostServiceContainer serviceReducer={this.props.serviceReducer} />
+                    <PostServiceContainer
+                        serviceReducer={this.props.serviceReducer}
+                        idName={this.props.idName}
+                    />
                 </div>;
         }
         return (
@@ -30,7 +33,8 @@ class Post extends Component {
 
 Post.propTypes = {
     serviceReducer: PropTypes.object,
-    errorMessage: PropTypes.string
+    errorMessage: PropTypes.string,
+    idName: PropTypes.string
 };
 
 export default Post;

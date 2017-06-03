@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+
+import { deleteService } from '../../../actions/ServiceActions/deleteServiceAction';
 
 class Info extends Component {
+    handleClickDeletingService(name) {
+        const { dispatch } = this.props;
+        dispatch(deleteService(this.props.idName, name));
+        browserHistory.push('/Namespaces/' + this.props.idName);
+    }
     render() {
         const labelsArray = this.props.serviceReducer.labels ? Object.keys(this.props.serviceReducer.labels) : [];
         const domain_hosts = this.props.serviceReducer.domain_hosts ? this.props.serviceReducer.domain_hosts : [];
@@ -30,7 +39,7 @@ class Info extends Component {
                                                         <i className="md-icon">more_horiz</i>
                                                     </button>
                                                     <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow" aria-labelledby="dropdownMenu2">
-                                                        <button className="dropdown-item text-danger" type="button">
+                                                        <button className="dropdown-item text-danger" type="button" onClick={name => this.handleClickDeletingService(this.props.serviceReducer.name)}>
                                                             Delete
                                                         </button>
                                                     </div>
@@ -83,7 +92,18 @@ class Info extends Component {
 }
 
 Info.propTypes = {
-    serviceReducer: PropTypes.object
+    serviceReducer: PropTypes.object,
+    idName: PropTypes.string
 };
 
-export default Info;
+function mapStateToProps (state) {
+    const { DeletePodReducer } = state;
+    const { errorMessage } = DeletePodReducer;
+
+    return {
+        errorMessage,
+        DeletePodReducer
+    }
+}
+
+export default connect(mapStateToProps)(Info)

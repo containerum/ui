@@ -15,7 +15,10 @@ class PostServiceContainer extends Component {
                         <Tab className="btn c-nav-menu-btn">Settings</Tab>
                     </TabList>
                     <TabPanel>
-                        <Info serviceReducer={this.props.serviceReducer} />
+                        <Info
+                            serviceReducer={this.props.serviceReducer}
+                            idName={this.props.idName}
+                        />
                         {/*<PodsList serviceReducer={this.props.serviceReducer} />*/}
                     </TabPanel>
                     <TabPanel>
@@ -31,7 +34,8 @@ class PostServiceContainer extends Component {
 
 PostServiceContainer.propTypes = {
     serviceReducer: PropTypes.object,
-    errorMessage: PropTypes.string
+    errorMessage: PropTypes.string,
+    idName: PropTypes.string
 };
 
 export default PostServiceContainer;

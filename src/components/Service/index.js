@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getService } from '../../actions/ServiceActions';
+import { getService } from '../../actions/ServiceActions/getServiceAction';
 import Post from './Post';
 import Spinner from '../Spinner';
 
@@ -13,11 +13,12 @@ class Service extends Component {
     }
     render() {
         let isFetchingComponent = "";
-        if (this.props.ServiceReducer.isFetching === false) {
+        if (this.props.getServiceReducer.isFetching === false) {
             isFetchingComponent =
                 <Post
-                    serviceReducer={this.props.ServiceReducer.data}
-                    errorMessage={this.props.ServiceReducer.errorMessage}
+                    serviceReducer={this.props.getServiceReducer.data}
+                    errorMessage={this.props.getServiceReducer.errorMessage}
+                    idName={this.props.params.idName}
                 />
         } else {
             isFetchingComponent = <Spinner />
@@ -36,12 +37,12 @@ Service.propTypes = {
 };
 
 function mapStateToProps (state) {
-    const { ServiceReducer } = state;
-    const { errorMessage } = ServiceReducer;
+    const { getServiceReducer } = state;
+    const { errorMessage } = getServiceReducer;
 
     return {
         errorMessage,
-        ServiceReducer
+        getServiceReducer
     }
 }
 

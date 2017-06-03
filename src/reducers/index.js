@@ -12,7 +12,8 @@ import DeleteDeploymentReducer from './DeploymentReducers/DeleteDeploymentReduce
 import GetPodReducer from './PodReducers/GetPodReducer';
 import DeletePodReducer from './PodReducers/DeletePodReducer';
 import ServicesReducer from './ServicesReducer';
-import ServiceReducer from './ServiceReducer';
+import getServiceReducer from './ServiceReducers/getServiceReducer';
+import DeleteServiceReducer from './ServiceReducers/DeleteServiceReducer';
 import ProfileReducer from './ProfileReducer';
 import CreateServiceReducer from './CreateServiceReducer';
 import CreateDeploymentReducer from './CreateDeploymentReducer';
@@ -31,7 +32,7 @@ const rootReducer = combineReducers({
     NamespacesReducer,
     DeploymentsReducer,
     ServicesReducer,
-    ServiceReducer,
+    getServiceReducer,
     ProfileReducer,
     CreateServiceReducer,
     CreateDeploymentReducer,
@@ -43,7 +44,8 @@ const rootReducer = combineReducers({
     UserReducer,
     ChangePasswordReducer,
     DeleteDeploymentReducer,
-    DeletePodReducer
+    DeletePodReducer,
+    DeleteServiceReducer
 });
 
 export default rootReducer;
