@@ -11,13 +11,13 @@ class Footer extends Component {
         return (
             <footer className="footer">
                 <div className="container-fluid">
-                    <NavLink to="/Blog" className="text-muted mr-3">
+                    <NavLink to={window.location.pathname} className="text-muted mr-3">
                         <Translate content='footer.blog'>Blog</Translate>
                     </NavLink>
-                    <NavLink to="/Documentations" className="text-muted mr-3">
+                    <NavLink to={window.location.pathname} className="text-muted mr-3">
                         <Translate content='footer.documentations'>Documentations</Translate>
                     </NavLink>
-                    <NavLink to="/Tutorials" className="text-muted">
+                    <NavLink to={window.location.pathname} className="text-muted">
                         <Translate content='footer.tutorials'>Tutorials</Translate>
                     </NavLink>
                     <span className="text-muted float-right">

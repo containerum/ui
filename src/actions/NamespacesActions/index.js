@@ -13,7 +13,7 @@ export function getNamespaces() {
         const token = localStorage.getItem('id_token');
 
         return axios.get(
-            'http://207.154.197.7:5000/api/namespaces',
+            'http://web.api.containerum.io:5000/api/namespaces',
             {
                 headers: {
                     'Authorization': token,

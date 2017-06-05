@@ -93,7 +93,7 @@ class Account extends Component {
                 password: current_password,
                 new_password: new_password
             };
-            console.log(updatePasswordData);
+            // console.log(updatePasswordData);
             dispatch(changePassword(updatePasswordData));
         } else {
             this.setState({

@@ -46,7 +46,7 @@ class Button extends Component {
     alertDelete() {
         let get = document.getElementById('alert');
         get.style.visibility = 'visible';
-        axios.delete('http://207.154.197.7:5000/api/pods/x1x2');
+        axios.delete('http://web.api.containerum.io:5000/api/pods/x1x2');
         this.closeModal();
         setTimeout(function() { get.style.visibility = 'hidden'; }, 5000);
     }

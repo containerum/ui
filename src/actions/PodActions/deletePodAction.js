@@ -11,7 +11,7 @@ export function deletePod(namespaceName, podName) {
     return dispatch => {
         dispatch(requestDeletePod());
         const token = localStorage.getItem('id_token');
-        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/pods/' + podName;
+        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/pods/' + podName;
 
         return axios.delete(
             api,

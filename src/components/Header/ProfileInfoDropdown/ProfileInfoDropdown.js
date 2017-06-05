@@ -33,13 +33,13 @@ class ProfileInfoDropdown extends Component {
                     </div>
                     <span className="c-nav-user-email text-muted">{ this.props.userEmail }</span>
                     <div className="dropdown-divider"></div>
-                    <NavLink className="dropdown-item" to="/Profile">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.profile'>Profile</Translate>
                     </NavLink>
-                    <NavLink className="dropdown-item" to="/Billing">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.billing'>Billing</Translate>
                     </NavLink>
-                    <NavLink className="dropdown-item" to="/Referrals">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.referrals'>Referrals</Translate>
                     </NavLink>
                     <div className="dropdown-divider"></div>

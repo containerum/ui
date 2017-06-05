@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 class Containers extends Component {
     render() {
         const arrContainersGetPodReducer = this.props.GetPodReducer.data.containers ? this.props.GetPodReducer.data.containers : [];
+        // console.log(this.props.GetPodReducer.data);
         return (
             <div className="container-fluid pt-3 pb-5">
                 <h5>Containers</h5>
@@ -28,9 +29,8 @@ class Containers extends Component {
                                                             </svg>
                                                             {name}
                                                         </div>
-                                                        <div className="i-td-table i-td-table-pd-top">{item.status}</div>
-                                                        <div className="i-td-table i-td-table-pd-top">{item.ram}</div>
-                                                        <div className="i-td-table i-td-table-pd-top">{item.cpu}</div>
+                                                        <div className="i-td-table i-td-table-pd-top">{item.ram} MB RAM</div>
+                                                        <div className="i-td-table i-td-table-pd-top">{item.cpu} CPU</div>
                                                         <div className="i-td-table i-td-table-pd-top">{item.created_at}</div>
                                                         <div className="i-td-table i-td-table-pd-top">{item.restarts} restarts</div>
                                                     </div>

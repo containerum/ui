@@ -10,7 +10,7 @@ export function getDeployments(namespaceName) {
     return dispatch => {
         dispatch(requestGetDeployments());
         const token = localStorage.getItem('id_token');
-        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/deployments';
+        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/deployments';
 
         return axios.get(
             api,

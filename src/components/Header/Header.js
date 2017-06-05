@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 import { logoutUser } from '../../actions/LogoutActions';
 import { getProfile } from '../../actions/ProfileActions';
@@ -16,10 +17,14 @@ class Header extends Component {
         this.props.onLoadProfileData();
     }
     handleClickLogo() {
-        browserHistory.push('/Namespaces/default');
+        if(this.props.idName) {
+            browserHistory.push('/Namespaces/' + this.props.idName);
+        } else {
+            browserHistory.push('/Namespaces/default');
+        }
     }
     render() {
-        let userEmail = this.props.ProfileReducer.data.login ? this.props.ProfileReducer.data.login : 'kfeofantov@wqe.qwe';
+        let userEmail = this.props.ProfileReducer.data.login ? this.props.ProfileReducer.data.login : '';
         return (
             <div className="navbar navbar-inverse navbar-toggleable-md c-navbar i-hover-pointer">
                 <div className="navbar-brand i-navbar-brand-pd-l" onClick={this.handleClickLogo.bind(this)}>
@@ -33,6 +38,10 @@ class Header extends Component {
         );
     }
 }
+
+Header.propTypes = {
+    idName: PropTypes.string
+};
 
 function mapStateToProps(state) {
     return {

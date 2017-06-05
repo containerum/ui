@@ -54,7 +54,7 @@ class Info extends Component {
                                         </td>
                                         <td>
                                             RAM: {this.props.GetPodReducer.data.ram} MB <br/>
-                                            CPU: {this.props.GetPodReducer.data.cpu / 1000}
+                                            CPU: {this.props.GetPodReducer.data.cpu}
                                         </td>
                                         <td>
                                             IP: {this.props.GetPodReducer.data.ip}

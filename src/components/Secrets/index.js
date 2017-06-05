@@ -12,7 +12,7 @@ export default class Secrets extends Component {
         };
     }
     componentDidMount() {
-        axios.get('http://207.154.197.7:5000/api/secrets')
+        axios.get('http://web.api.containerum.io:5000/api/secrets')
         .then(response => {
             this.setState({data_secret: response.data});
             console.log(this.state.data_secret)

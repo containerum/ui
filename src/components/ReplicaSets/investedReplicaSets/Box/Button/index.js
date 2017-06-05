@@ -46,7 +46,7 @@ class Button extends Component {
     }
     alertDelete() {
         let get = document.getElementById('investedalert');
-        axios.delete('http://207.154.197.7:5000/api/replicasets');
+        axios.delete('http://web.api.containerum.io:5000/api/replicasets');
         this.closeModal();
         get.style.visibility = 'visible';
         setTimeout(function() { browserHistory.push('/ReplicaSets') }, 2000);

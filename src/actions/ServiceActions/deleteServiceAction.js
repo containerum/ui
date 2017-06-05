@@ -11,7 +11,7 @@ export function deleteService(namespaceName, serviceName) {
     return dispatch => {
         dispatch(requestDeleteService());
         const token = localStorage.getItem('id_token');
-        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/services/' + serviceName;
+        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/services/' + serviceName;
 
         return axios.delete(
             api,

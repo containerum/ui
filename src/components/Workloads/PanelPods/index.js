@@ -11,7 +11,7 @@ export default class PanelPods extends Component {
         };
     }
     componentDidMount() {
-        axios.get('http://207.154.197.7:5000/api/pods')
+        axios.get('http://web.api.containerum.io:5000/api/pods')
         .then(response => {
             this.setState({data_pods: response.data});
             console.log(this.state.data_pods)

@@ -12,7 +12,7 @@ class PostServiceContainer extends Component {
                 <Tabs selectedTabClassName="i-selected-tab">
                     <TabList className="btn-group i-container-btn-gr">
                         <Tab className="btn c-nav-menu-btn">Objects</Tab>
-                        <Tab className="btn c-nav-menu-btn">Settings</Tab>
+                        {/*<Tab className="btn c-nav-menu-btn">Settings</Tab>*/}
                     </TabList>
                     <TabPanel>
                         <Info
@@ -21,11 +21,11 @@ class PostServiceContainer extends Component {
                         />
                         {/*<PodsList serviceReducer={this.props.serviceReducer} />*/}
                     </TabPanel>
-                    <TabPanel>
-                        <div className="container-fluid pt-3">
-                            Settings
-                        </div>
-                    </TabPanel>
+                    {/*<TabPanel>*/}
+                        {/*<div className="container-fluid pt-3">*/}
+                            {/*Settings*/}
+                        {/*</div>*/}
+                    {/*</TabPanel>*/}
                 </Tabs>
             </div>
         );

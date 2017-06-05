@@ -10,7 +10,7 @@ export function checkHashParamActions(hashParam) {
     return dispatch => {
         dispatch(requestCheckHash());
         return axios.post(
-            'http://207.154.197.7:5000/api/login/check_hash',
+            'http://web.api.containerum.io:5000/api/login/check_hash',
             {hashParam: hashParam},
             {validateStatus: (status) =>
                 status >= 200 && status <= 500
@@ -18,7 +18,7 @@ export function checkHashParamActions(hashParam) {
         )
         .then(response => {
             if (response.status === 200) {
-                console.log(hashParam);
+                // console.log(hashParam);
                 dispatch(receiveCheckHash(response.data));
             } else {
                 dispatch(failCheckHash(response.data.message))

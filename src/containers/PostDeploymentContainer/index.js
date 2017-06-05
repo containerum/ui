@@ -12,17 +12,17 @@ class PostDeploymentContainer extends Component {
                 <Tabs selectedTabClassName="i-selected-tab">
                     <TabList className="btn-group i-container-btn-gr">
                         <Tab className="btn c-nav-menu-btn">Objects</Tab>
-                        <Tab className="btn c-nav-menu-btn">Settings</Tab>
+                        {/*<Tab className="btn c-nav-menu-btn">Settings</Tab>*/}
                     </TabList>
                     <TabPanel>
                         <Info deploymentReducer={this.props.deploymentReducer} idName={this.props.idName} />
                         <PodsList idDep={this.props.idDep} idName={this.props.idName} />
                     </TabPanel>
-                    <TabPanel>
-                        <div className="container-fluid pt-3">
-                            Settings
-                        </div>
-                    </TabPanel>
+                    {/*<TabPanel>*/}
+                        {/*<div className="container-fluid pt-3">*/}
+                            {/*Settings*/}
+                        {/*</div>*/}
+                    {/*</TabPanel>*/}
                 </Tabs>
             </div>
         );

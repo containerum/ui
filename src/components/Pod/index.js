@@ -7,7 +7,7 @@ import Spinner from '../Spinner';
 
 import PostPodContainer from '../../containers/PostPodContainer';
 import Namespaces from '../../components/Namespaces';
-import CreateInstance from '../../components/CreateInstance';
+// import CreateInstance from '../../components/CreateInstance';
 
 class Pod extends Component {
     componentDidMount() {
@@ -21,7 +21,7 @@ class Pod extends Component {
                 <div>
                     <div className="navbar navbar-toggleable-md navbar-light bg-faded">
                         <Namespaces idDep={this.props.params.idDep} idPod={this.props.params.idPod} />
-                        <CreateInstance />
+                        {/*<CreateInstance />*/}
                     </div>
                     <PostPodContainer
                         GetPodReducer={this.props.GetPodReducer}

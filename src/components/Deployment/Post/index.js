@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PostDeploymentContainer from '../../../containers/PostDeploymentContainer';
 import ErrorDeployment from '../ErrorDeployment';
 import Namespaces from '../../Namespaces';
-import CreateInstance from '../../CreateInstance';
+// import CreateInstance from '../../CreateInstance';
 
 class Post extends Component {
     render() {
@@ -15,7 +15,7 @@ class Post extends Component {
                 <div>
                     <div className="navbar navbar-toggleable-md navbar-light bg-faded">
                         <Namespaces idDep={this.props.idDep} />
-                        <CreateInstance />
+                        {/*<CreateInstance />*/}
                     </div>
                     <PostDeploymentContainer
                         deploymentReducer={this.props.deploymentReducer}

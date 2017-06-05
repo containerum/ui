@@ -145,6 +145,10 @@ button,
     display: table-cell;
 }
 
+.i-td-table-first-width {
+    width: 250px;
+}
+
 .i-td-table-pb {
     padding-bottom: 1rem;
 }
@@ -175,7 +179,8 @@ button,
 .i-container-btn-gr {
     width: 97%;
     margin: 0 auto;
-    border-bottom: 2px solid rgba(0,0,0,.125);
+    border-bottom: 2px solid rgba(0, 0, 0, .125);
+    margin-left: 18px;
 }
 
 .i-selected-tab{

@@ -26,6 +26,9 @@ class Info extends Component {
         });
         const name = this.props.deploymentReducer.name ? this.props.deploymentReducer.name : '';
         const nameFirstChar = name.substring(0, 1).toUpperCase();
+        const statusAvailable = this.props.deploymentReducer.status ? this.props.deploymentReducer.status.available : 1;
+        const CPU = this.props.deploymentReducer.cpu * statusAvailable;
+        const RAM = this.props.deploymentReducer.ram * statusAvailable;
         return (
             <div className="container-fluid pt-3">
                 <div className="row">
@@ -64,8 +67,9 @@ class Info extends Component {
                                             </svg>
                                         </td>
                                         <td>
-                                            CPU: {this.props.deploymentReducer.cpu / 1000} <br/>
-                                            RAM: {this.props.deploymentReducer.ram} MB
+                                            CPU: {CPU} <br/>
+                                            RAM: {RAM} MB <br/>
+                                            Replicas: {this.props.deploymentReducer.replicas}
                                         </td>
                                         <td>
                                             Status <br/>

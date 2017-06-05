@@ -11,7 +11,7 @@ export function LOGINUser(creds) {
     return dispatch => {
         dispatch(requestLOGIN(creds));
         return axios.post(
-            'http://207.154.197.7:5000/api/login',
+            'http://web.api.containerum.io:5000/api/login',
             {username: creds.username, password: creds.password},
             {
                 validateStatus: (status) =>

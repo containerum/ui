@@ -37,6 +37,10 @@ class PodsList extends Component {
         }
     }
     render() {
+        // const sortPodsReducer = this.props.PodsReducer.data.filter(item => {
+        //     return item.status === 'Running';
+        // });
+        // console.log(sortPodsReducer, this.props.PodsReducer.data);
         return (
             <div>
                 <ReactNotify ref='notification' />
@@ -53,19 +57,21 @@ class PodsList extends Component {
                                                     const name = item.name;
                                                     const nameFirstChar = name.substring(0, 1).toUpperCase();
                                                     const id = `item_${name}`;
+                                                    const imageColor = item.status === 'Running' ? '#009688' : '#D64242';
                                                     return (
                                                         <div className="i-row-table tr-hover" key={index} id={id}>
-                                                            <div className="i-td-table" onClick={href => this.handleClickTR(item.name)}>
+                                                            <div className="i-td-table i-td-table-first-width" onClick={href => this.handleClickTR(item.name)}>
                                                                 <svg className="c-table-card-img mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
                                                                     <g>
-                                                                        <path className="cls-pod" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
+                                                                        <path fill={imageColor} d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
                                                                     </g>
                                                                     <text className="cls-2" textAnchor="middle" x="50%" y="70%">{nameFirstChar}</text>
                                                                 </svg>
                                                                 {name}
                                                             </div>
-                                                            <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>{item.ram}</div>
-                                                            <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>{item.cpu}</div>
+                                                            <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>{item.status}</div>
+                                                            <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>{item.ram} MB RAM</div>
+                                                            <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>{item.cpu} CPU</div>
                                                             <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>{item.created_at}</div>
                                                             <div className="i-td-table i-td-table-pd-top" onClick={href => this.handleClickTR(item.name)}>{item.restarts} restarts</div>
                                                             <div className="i-td-table text-right">

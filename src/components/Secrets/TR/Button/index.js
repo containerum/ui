@@ -45,7 +45,7 @@ class Button extends Component {
     }
     alertDelete() {
         let get = document.getElementById('alert');
-        axios({method: 'delete', url: 'http://207.154.197.7:5000/api/secrets/', data: {id: this.props.data.id}});
+        axios({method: 'delete', url: 'http://web.api.containerum.io:5000/api/secrets/', data: {id: this.props.data.id}});
         this.closeModal();
         get.style.visibility = 'visible';
     }

@@ -20,27 +20,27 @@ class CommonInfoDropdown extends Component {
                     <i className="md-icon">apps</i>
                 </button>
                 <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow">
-                    <NavLink className="dropdown-item" to="/Dashboard">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.dashboard'>Dashboard</Translate>
                     </NavLink>
-                    <NavLink className="dropdown-item" to="/Volumes">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.volumes'>Volumes</Translate>
                     </NavLink>
-                    <NavLink className="dropdown-item" to="/Images">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.images'>Images</Translate>
                     </NavLink>
                     <div className="dropdown-divider"></div>
-                    <NavLink className="dropdown-item" to="/Blog">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.blog'>Blog</Translate>
                     </NavLink>
-                    <NavLink className="dropdown-item" to="/Documentation">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.documentation'>Documentation</Translate>
                     </NavLink>
-                    <NavLink className="dropdown-item" to="/Tutorials">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.tutorials'>Tutorials</Translate>
                     </NavLink>
                     <div className="dropdown-divider"></div>
-                    <NavLink className="dropdown-item" to="/Support">
+                    <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.support'>Support</Translate>
                     </NavLink>
                 </div>

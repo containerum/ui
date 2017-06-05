@@ -12,7 +12,7 @@ export function getPods(namespaceName, idDeployment) {
     return dispatch => {
         dispatch(requestGetPods());
         const token = localStorage.getItem('id_token');
-        const api = 'http://207.154.197.7:5000/api/namespaces/' + namespaceName + '/pods';
+        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/pods';
         const shaDeployment256 = sha256(namespaceName).substring(0, 32);
 
         return axios.get(

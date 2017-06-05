@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PostServiceContainer from '../../../containers/PostServiceContainer';
 import ErrorService from '../ErrorService';
 import Namespaces from '../../Namespaces';
-import CreateInstance from '../../CreateInstance';
+// import CreateInstance from '../../CreateInstance';
 
 class Post extends Component {
     render() {
@@ -15,7 +15,7 @@ class Post extends Component {
                 <div>
                     <div className="navbar navbar-toggleable-md navbar-light bg-faded">
                         <Namespaces idService={this.props.idService} />
-                        <CreateInstance />
+                        {/*<CreateInstance />*/}
                     </div>
                     <PostServiceContainer
                         serviceReducer={this.props.serviceReducer}

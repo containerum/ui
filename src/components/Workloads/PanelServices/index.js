@@ -11,7 +11,7 @@ export default class PanelServices extends Component {
         };
     }
     componentDidMount() {
-        axios.get('http://207.154.197.7:5000/api/services')
+        axios.get('http://web.api.containerum.io:5000/api/services')
         .then(response => {
             this.setState({data_services: response.data});
             console.log(this.state.data_services)

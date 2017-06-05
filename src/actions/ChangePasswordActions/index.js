@@ -11,7 +11,7 @@ export function changePassword(data) {
     return dispatch => {
         dispatch(requestChangePassword());
         const token = localStorage.getItem('id_token');
-        const api = 'http://207.154.197.7:5000/api/password_change';
+        const api = 'http://web.api.containerum.io:5000/api/password_change';
 
         return axios.post(
             api,
@@ -28,7 +28,7 @@ export function changePassword(data) {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                console.log(response);
+                // console.log(response);
                 dispatch(receiveChangePassword(response.data));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');

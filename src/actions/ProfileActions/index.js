@@ -11,7 +11,7 @@ export function getProfile() {
     return dispatch => {
         dispatch(requestGetProfile());
         const token = localStorage.getItem('id_token');
-        const api = 'http://207.154.197.7:5000/api/profile';
+        const api = 'http://web.api.containerum.io:5000/api/profile';
 
         return axios.get(
             api,

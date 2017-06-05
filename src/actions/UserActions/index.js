@@ -11,7 +11,7 @@ export function getUser(data) {
     return dispatch => {
         dispatch(requestGetUser());
         const token = localStorage.getItem('id_token');
-        const api = 'http://207.154.197.7:5000/api/profile';
+        const api = 'http://web.api.containerum.io:5000/api/profile';
 
         return axios.put(
             api,
@@ -28,7 +28,7 @@ export function getUser(data) {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                console.log(response);
+                // console.log(response);
                 // dispatch(receiveGetUser(response.data));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');

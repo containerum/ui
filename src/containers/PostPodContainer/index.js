@@ -13,7 +13,7 @@ class PostPodContainer extends Component {
                 <Tabs selectedTabClassName="i-selected-tab">
                     <TabList className="btn-group i-container-btn-gr">
                         <Tab className="btn c-nav-menu-btn">Objects</Tab>
-                        <Tab className="btn c-nav-menu-btn">Settings</Tab>
+                        {/*<Tab className="btn c-nav-menu-btn">Settings</Tab>*/}
                     </TabList>
 
                     <TabPanel>
@@ -26,11 +26,11 @@ class PostPodContainer extends Component {
                         <Containers GetPodReducer={this.props.GetPodReducer} />
                         <Conditions GetPodReducer={this.props.GetPodReducer} />
                     </TabPanel>
-                    <TabPanel>
-                        <div className="container-fluid pt-3">
-                            Settings
-                        </div>
-                    </TabPanel>
+                    {/*<TabPanel>*/}
+                        {/*<div className="container-fluid pt-3">*/}
+                            {/*Settings*/}
+                        {/*</div>*/}
+                    {/*</TabPanel>*/}
                 </Tabs>
             </div>
         );
