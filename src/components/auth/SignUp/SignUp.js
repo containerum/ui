@@ -112,6 +112,7 @@ class SignUp extends Component {
                 </div>
             );
         }
+        const defaultEmail = this.props.location.query.email ? this.props.location.query.email : '';
 
         return (
             <div className='container'>
@@ -158,6 +159,7 @@ class SignUp extends Component {
                                     (email, isValidEmail) =>
                                         this.checkValidateEmailInput(email, isValidEmail)
                                 }
+                                defaultUserEmail={defaultEmail}
                             />
                             <InputPassword
                                 handlePassword={
@@ -174,7 +176,7 @@ class SignUp extends Component {
                         </div>
                     </div>
                     <p className='text-center pt-3 c-wt'>
-                        Dont have an account? <Link to='/Login' className='c-link-wt'>Log In</Link>
+                        Don't have an account? <Link to='/Login' className='c-link-wt'>Log In</Link>
                     </p>
                 </form>
             </div>
