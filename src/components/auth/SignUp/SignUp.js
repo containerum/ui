@@ -52,6 +52,16 @@ class SignUp extends Component {
     componentWillMount() {
         document.body.classList.add('c-body-bg');
     }
+    componentDidMount() {
+        if (this.props.location.query.error) {
+            this.setState({
+                ...this.state,
+                errorMsg: 'Email or Password is not valid'
+            });
+            let getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+        }
+    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.errorMessage) {
             this.setState({

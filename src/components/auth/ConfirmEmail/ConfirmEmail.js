@@ -9,14 +9,15 @@ class ConfirmEmail extends Component {
         document.body.classList.add('c-body-bg');
     }
     render() {
+        const defaultEmail = this.props.location.query.email ? this.props.location.query.email : this.props.signUpReducer.emailUser;
         return (
             <div className='container'>
                 <Logo />
                 <form className='form-signin'>
                     <div className='card c-card'>
                         <div className='card-block p-5'>
-                            <div className='card-label'>
-                                Confirm Email { this.props.signUpReducer.emailUser }
+                            <div className='card-label c-card-label'>
+                                Confirm Email: <br /> { defaultEmail }
                             </div>
                         </div>
                         <div className='card-footer p-3 text-center'>Confirm your email by clicking the verification
