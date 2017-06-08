@@ -123,6 +123,7 @@ class SignUp extends Component {
             );
         }
         const defaultEmail = this.props.location.query.email ? this.props.location.query.email : '';
+        const signInButtonText = this.props.signUpReducer.isFetching ? 'Sending...' : 'Sign Up';
 
         return (
             <div className='container'>
@@ -178,7 +179,7 @@ class SignUp extends Component {
                                 }
                             />
                             {toggleCompanyComponent}
-                            <button type='submit' ref='button' className='btn btn-block c-btn-green'>Sign Up</button>
+                            <button type='submit' ref='button' className='btn btn-block c-btn-green'>{ signInButtonText }</button>
                         </div>
                         <div className='card-footer p-3 text-center'>
                             By signing up, you agree to the <br />

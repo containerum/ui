@@ -18,7 +18,7 @@ export function SignUpUser(creds) {
             'http://web.api.containerum.io:5000/api/users',
             {username: creds.username, password: creds.password},
             {validateStatus: (status) =>
-                status >= 200 && status <= 500
+                status >= 200 && status <= 505
             }
         )
             .then(response => {

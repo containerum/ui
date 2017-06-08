@@ -71,6 +71,8 @@ class Login extends Component {
         }
     }
     render() {
+        const loginButtonText = this.props.loginReducer.isFetching ? 'Sending...' : 'Log In';
+        
         return (
             <div className='container'>
                 <Logo />
@@ -95,7 +97,7 @@ class Login extends Component {
                                         this.checkValidatePasswordInput(password, isValidPassword)
                                 }
                             />
-                            <button ref='button' type='submit' className='btn btn-block c-btn-green i-btn-login-strong'>Log In</button>
+                            <button ref='button' type='submit' className='btn btn-block c-btn-green i-btn-login-strong'>{ loginButtonText }</button>
                         </div>
                         <div className='card-footer p-3 text-center'>
                             Don't have an account? <Link to='/SignUp'>Sing up</Link>

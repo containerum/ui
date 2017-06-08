@@ -15,7 +15,7 @@ export function LOGINUser(creds) {
             {username: creds.username, password: creds.password},
             {
                 validateStatus: (status) =>
-                status >= 200 && status <= 500
+                status >= 200 && status <= 505
             }
         )
             .then(response => {
