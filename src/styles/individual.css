@@ -193,7 +193,12 @@ button,
 }
 
 .i-dropdown-box-shadow {
-    box-shadow: 0 0 14px 4px #e6e6e6;
+    box-shadow: 0 3px 14px 4px #e6e6e6;
+}
+
+.i-dropdown-box-max-height {
+    max-height: 520px;
+    overflow: hidden;
 }
 
 .i-td-card-font-name {
