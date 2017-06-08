@@ -20,7 +20,11 @@ class Pod extends Component {
             isFetchingComponent =
                 <div>
                     <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                        <Namespaces idDep={this.props.params.idDep} idPod={this.props.params.idPod} />
+                        <Namespaces
+                            idDep={this.props.params.idDep}
+                            idPod={this.props.params.idPod}
+                            idName={this.props.params.idName}
+                        />
                         {/*<CreateInstance />*/}
                     </div>
                     <PostPodContainer

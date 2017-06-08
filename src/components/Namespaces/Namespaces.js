@@ -31,49 +31,101 @@ class Namespaces extends Component {
         if (this.props.idDep) {
             isIdDep =
                 <div className="btn-group">
-                    <i className="arrow-right"></i>
-                    <button
-                        type="button"
-                        className="btn c-nav-menu-btn"
-                    >
-                        <NavLink to={window.location.pathname.substring(0, window.location.pathname.indexOf(this.props.idDep) + this.props.idDep.length)}>
+                    <div className="i-label-navigator">
+                        <svg
+                            x="0px" y="0px" width="20px"
+                            height="20px" viewBox="0 0 24 24"
+                            focusable="false" fill="#636c72">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+                        </svg>
+                    </div>
+                    <NavLink to={window.location.pathname.substring(0, window.location.pathname.indexOf(this.props.idDep) + this.props.idDep.length)}>
+                        <button
+                            type="button"
+                            className="btn c-nav-menu-btn"
+                        >
                             { this.props.idDep }
-                        </NavLink>
-                    </button>
+                        </button>
+                    </NavLink>
                 </div>
         }
         let isIdPod = null;
         if (this.props.idPod) {
             isIdPod =
                 <div className="btn-group">
-                    <i className="arrow-right"></i>
+                    <div className="i-label-navigator">
+                        <svg
+                            x="0px" y="0px" width="20px"
+                            height="20px" viewBox="0 0 24 24"
+                            focusable="false" fill="#636c72">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+                        </svg>
+                    </div>
+                    <NavLink to={window.location.pathname}>
+                        <button
+                            type="button"
+                            className="btn c-nav-menu-btn"
+                        >
+                            { this.props.idPod }
+                        </button>
+                    </NavLink>
+                </div>
+        }
+        let isIdService = null;
+        if (this.props.idService) {
+            isIdPod =
+                <div className="btn-group">
+                    <div className="i-label-navigator">
+                        <svg
+                            x="0px" y="0px" width="20px"
+                            height="20px" viewBox="0 0 24 24"
+                            focusable="false" fill="#636c72">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+                        </svg>
+                    </div>
+                    <NavLink to={window.location.pathname}>
+                        <button
+                            type="button"
+                            className="btn c-nav-menu-btn"
+                        >
+                            { this.props.idService }
+                        </button>
+                    </NavLink>
+                </div>
+        }
+        let mainContent = '';
+        if (this.props.idPod || this.props.idDep || this.props.idService) {
+            mainContent = <div className="btn-group mr-auto">
+                <NavLink to={`/Namespaces/${this.props.idName}`}>
                     <button
                         type="button"
                         className="btn c-nav-menu-btn"
                     >
-                        <NavLink to={window.location.pathname}>
-                            { this.props.idPod }
-                        </NavLink>
+                        Personal space
                     </button>
-                </div>
+                </NavLink>
+            </div>
+        } else {
+            mainContent = <div className="btn-group mr-auto">
+                <button
+                    type="button"
+                    className="btn dropdown-toggle c-nav-menu-btn"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    Personal space
+                </button>
+                { isFetchingComponent }
+            </div>
         }
 
         return (
             <div className="mr-auto">
-                <div className="btn-group mr-auto">
-                    <button
-                        type="button"
-                        className="btn dropdown-toggle c-nav-menu-btn"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                    >
-                        Personal space
-                    </button>
-                    { isFetchingComponent }
-                </div>
+                { mainContent }
                 { isIdDep }
                 { isIdPod }
+                { isIdService }
             </div>
         );
     }
@@ -82,8 +134,10 @@ class Namespaces extends Component {
 Namespaces.propTypes = {
     dispatch: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
+    idName: PropTypes.string,
     idDep: PropTypes.string,
     idPod: PropTypes.string,
+    idService: PropTypes.string
 };
 
 function mapStateToProps (state) {

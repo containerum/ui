@@ -14,7 +14,10 @@ class Post extends Component {
             isErrorContainer =
                 <div>
                     <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                        <Namespaces idService={this.props.idService} />
+                        <Namespaces
+                            idService={this.props.idService}
+                            idName={this.props.idName}
+                        />
                         {/*<CreateInstance />*/}
                     </div>
                     <PostServiceContainer
@@ -34,7 +37,8 @@ class Post extends Component {
 Post.propTypes = {
     serviceReducer: PropTypes.object,
     errorMessage: PropTypes.string,
-    idName: PropTypes.string
+    idName: PropTypes.string,
+    idService: PropTypes.string
 };
 
 export default Post;

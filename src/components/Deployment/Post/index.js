@@ -14,7 +14,10 @@ class Post extends Component {
             isErrorContainer =
                 <div>
                     <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                        <Namespaces idDep={this.props.idDep} />
+                        <Namespaces
+                            idDep={this.props.idDep}
+                            idName={this.props.idName}
+                        />
                         {/*<CreateInstance />*/}
                     </div>
                     <PostDeploymentContainer

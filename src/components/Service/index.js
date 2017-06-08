@@ -19,6 +19,7 @@ class Service extends Component {
                     serviceReducer={this.props.getServiceReducer.data}
                     errorMessage={this.props.getServiceReducer.errorMessage}
                     idName={this.props.params.idName}
+                    idService={this.props.params.idService}
                 />
         } else {
             isFetchingComponent = <Spinner />
