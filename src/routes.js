@@ -26,7 +26,7 @@ export const routes = (
             <Route path='/CreateNewService' component={ CreateService } />
             <Route path='/Profile' component={ Profile } />
         </Route>
-        <Route path='/Login(/:hashParam)' component={ Login }>
+        <Route path='/Login' component={ Login }>
             <Route path='/' component={ Workloads } />
         </Route>
         <Route path='/Forgot' component={ Forgot } />

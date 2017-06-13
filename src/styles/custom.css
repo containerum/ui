@@ -261,6 +261,13 @@ body {
     text-align: center;
 }
 
+.c-alert-success {
+    background-color: #13be6a;
+    color: white;
+    border: 0;
+    text-align: center;
+}
+
 /* Dropdown */
 .c-dropdown-item-img {
     position: absolute;

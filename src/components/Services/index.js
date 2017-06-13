@@ -18,6 +18,7 @@ class Services extends Component {
                 <Posts
                     servicesDataReducer={this.props.ServicesReducer.data}
                     servicesErrorMessageReducer={this.props.ServicesReducer.errorMessage}
+                    servicesStatusErrorReducer={this.props.ServicesReducer.statusError}
                     idName={this.props.idName}
                 />
         }

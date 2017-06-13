@@ -17,11 +17,11 @@ import DeleteServiceReducer from './ServiceReducers/DeleteServiceReducer';
 import ProfileReducer from './ProfileReducer';
 import CreateServiceReducer from './CreateServiceReducer';
 import CreateDeploymentReducer from './CreateDeploymentReducer';
-import checkHashParamReducer from './checkHashParamReducer';
 import PodsReducer from './PodsReducer';
 import UsersReducer from './UsersReducer';
 import UserReducer from './UserReducer';
 import ChangePasswordReducer from './ChangePasswordReducer';
+import UserHashConfirmReducer from './UserHashConfirmReducer';
 
 const rootReducer = combineReducers({
     dataDeployment,
@@ -36,7 +36,6 @@ const rootReducer = combineReducers({
     ProfileReducer,
     CreateServiceReducer,
     CreateDeploymentReducer,
-    checkHashParamReducer,
     GetPodReducer,
     GetDeploymentReducer,
     PodsReducer,
@@ -45,7 +44,8 @@ const rootReducer = combineReducers({
     ChangePasswordReducer,
     DeleteDeploymentReducer,
     DeletePodReducer,
-    DeleteServiceReducer
+    DeleteServiceReducer,
+    UserHashConfirmReducer
 });
 
 export default rootReducer;

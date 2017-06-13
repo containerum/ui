@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 import { LOGINUser } from '../../../actions/LoginActions';
-import { checkHashParamActions } from '../../../actions/checkHashParamActions';
+import { getUserHashConfirm } from '../../../actions/UserHashConfirmActions';
 import InputEmail from '../InputEmail';
 import InputPassword from '../InputPassword';
 import Logo from '../../Logo';
@@ -15,6 +15,7 @@ class Login extends Component {
         super();
         this.state = {
             errorMsg: '',
+            successMsg: '',
             email: '',
             isValidEmail: false,
             password: '',
@@ -38,11 +39,12 @@ class Login extends Component {
             isValidPassword: isValidPassword
         });
     }
-    componentDidMount() {
+    componentWillMount() {
         document.body.classList.add('c-body-bg');
-        if (this.props.params.hashParam) {
+        console.log(this.props.location.query.hashParam);
+        if (this.props.location.query.hashParam) {
             const { dispatch } = this.props;
-            dispatch(checkHashParamActions(this.props.params.hashParam));
+            dispatch(getUserHashConfirm(this.props.location.query.hashParam));
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -50,6 +52,22 @@ class Login extends Component {
             this.setState({
                 ...this.state,
                 errorMsg: nextProps.errorMessage
+            });
+            let getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+        }
+        if (nextProps.UserHashConfirmReducer.data === 200) {
+            console.log(nextProps.UserHashConfirmReducer.data);
+            this.setState({
+                ...this.state,
+                successMsg: 'Your email has been confirmed. Please Log In.'
+            });
+            let getSuccessAlert = document.getElementById('successfulAlert');
+            getSuccessAlert.style.display = 'block';
+        } else if (this.props.location.query.hashParam && nextProps.UserHashConfirmReducer.errorMessage) {
+            this.setState({
+                ...this.state,
+                errorMsg: 'Hash is not valid'
             });
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
@@ -89,6 +107,9 @@ class Login extends Component {
                             <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>
                                 { this.state.errorMsg }
                             </div>
+                            <div id='successfulAlert' className='alert alert-success mb-4 c-alert-success'>
+                                { this.state.successMsg }
+                            </div>
                             <InputEmail
                                 handleEmail={
                                     (email, isValidEmail) =>
@@ -121,18 +142,16 @@ Login.propTypes = {
     quote: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
-    isSecretQuote: PropTypes.bool,
-    hashParam: PropTypes.string
+    isSecretQuote: PropTypes.bool
 };
 
 function mapStateToProps(state) {
-    const { loginReducer } = state;
-    const { errorMessage } = loginReducer;
-
     return {
-        errorMessage,
-        loginReducer
+        loginReducer: state.loginReducer,
+        errorMessage: state.loginReducer.errorMessage,
+        UserHashConfirmReducer: state.UserHashConfirmReducer
     }
 }
+
 
 export default connect(mapStateToProps)(Login)

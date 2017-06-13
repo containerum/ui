@@ -7,7 +7,8 @@ import {
 export default function ServicesReducer(state = {
     isFetching: false,
     data: [],
-    errorMessage: ''
+    errorMessage: '',
+    statusError: 200
 }, action) {
     switch (action.type) {
     case SERVICES_REQUEST:
@@ -23,7 +24,8 @@ export default function ServicesReducer(state = {
     case SERVICES_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            errorMessage: action.message
+            errorMessage: action.message,
+            statusError: action.status
         });
     default:
         return state

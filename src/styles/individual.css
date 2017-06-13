@@ -8,7 +8,8 @@ button,
     cursor: pointer;
 }
 
-#loginAlert {
+#loginAlert,
+#successfulAlert {
     display: none;
 }
 

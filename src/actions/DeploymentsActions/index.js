@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 import {
     DEPLOYMENTS_REQUEST,
@@ -27,6 +28,9 @@ export function getDeployments(namespaceName) {
         .then(response => {
             if (response.status === 200 || response.status === 201) {
                 dispatch(receiveGetDeployments(response.data));
+            } else if (response.status === 401) {
+                localStorage.removeItem('id_token');
+                browserHistory.push('/Login');
             } else {
                 dispatch(failGetDeployments(response.data.message, response.status))
             }

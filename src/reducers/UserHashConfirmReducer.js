@@ -1,25 +1,26 @@
 import {
-    CHECK_HASH_REQUEST,
-    CHECK_HASH_SUCCESS,
-    CHECK_HASH_FAILURE
-} from '../constants/checkHashParamConstants';
+    USER_HASH_CONFIRM_REQUEST,
+    USER_HASH_CONFIRM_SUCCESS,
+    USER_HASH_CONFIRM_FAILURE
+} from '../constants/UserHashConfirmConstants';
 
-export default function checkHashParamReducer(state = {
+export default function UserHashConfirmReducer(state = {
     isFetching: false,
+    data: 0,
     errorMessage: ''
 }, action) {
     switch (action.type) {
-    case CHECK_HASH_REQUEST:
+    case USER_HASH_CONFIRM_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: ''
         });
-    case CHECK_HASH_SUCCESS:
+    case USER_HASH_CONFIRM_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            response_hash: action.response_hash
+            data: action.data
         });
-    case CHECK_HASH_FAILURE:
+    case USER_HASH_CONFIRM_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message

@@ -32,7 +32,7 @@ export function getServices(namespaceName) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetServices(response.data.message))
+                dispatch(failGetServices(response.data.message, response.status))
             }
         }).catch(err => console.log(err))
     }
@@ -53,10 +53,11 @@ function receiveGetServices(data) {
     }
 }
 
-function failGetServices(message) {
+function failGetServices(message, status) {
     return {
         type: SERVICES_FAILURE,
         isFetching: false,
-        message
+        message,
+        status
     }
 }
