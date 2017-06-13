@@ -26,7 +26,6 @@ export function getUserHashConfirm(userHash) {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                console.log(response);
                 dispatch(receiveGetUserHashConfirm(response.data));
             }
             // else if (response.status === 401) {
@@ -34,7 +33,6 @@ export function getUserHashConfirm(userHash) {
             //     browserHistory.push('/Login');
             // }
             else {
-                console.log(response);
                 dispatch(failGetUserHashConfirm(response.data.message))
             }
         }).catch(err => console.log(err))

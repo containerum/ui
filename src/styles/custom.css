@@ -64,6 +64,10 @@
     display: block;
 }
 
+.c-nav-user-icon {
+    width: 32px;
+}
+
 .c-nav-user-data {
     float: right;
 }

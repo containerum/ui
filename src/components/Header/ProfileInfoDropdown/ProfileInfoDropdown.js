@@ -3,6 +3,7 @@ import Translate from 'react-translate-component';
 import PropTypes from 'prop-types';
 
 import NavLink from '../../NavLink/index';
+import astronaut from '../../../images/astronaut.png';
 
 import '../../../localization/en/header';
 import '../../../localization/ru/header';
@@ -20,7 +21,7 @@ class ProfileInfoDropdown extends Component {
                 >
                     <div className="c-nav-user-data">
                         <span className="c-nav-user-name">
-                            { this.props.userEmail }
+                            <img className="c-nav-user-icon" src={astronaut} alt="Profile"/>
                         </span>
                     </div>
                 </button>
@@ -28,8 +29,8 @@ class ProfileInfoDropdown extends Component {
                     <div className="c-nav-user-wrap">
                         <img className="c-nav-user-img" src="https://www.gravatar.com/avatar/3e2e9bb0425bbbd60b03f2b62a4d821d?s=328&amp;d=identicon&amp;r=PG&amp;f=1" alt="" />
                         <span className="c-nav-user-name">
-                                    { this.props.userEmail }
-                                </span>
+                            { this.props.userEmail }
+                        </span>
                     </div>
                     <span className="c-nav-user-email text-muted">{ this.props.userEmail }</span>
                     <div className="dropdown-divider"></div>
