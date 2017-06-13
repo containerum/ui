@@ -7,6 +7,7 @@ import { SignUpUser } from '../../../actions/SignUpActions';
 import InputEmail from '../InputEmail';
 import InputPassword from '../InputPassword';
 import Logo from '../../Logo';
+import MiniSpinner from '../../MiniSpinner';
 
 class SignUp extends Component {
     constructor() {
@@ -123,7 +124,10 @@ class SignUp extends Component {
             );
         }
         const defaultEmail = this.props.location.query.email ? this.props.location.query.email : '';
-        const signInButtonText = this.props.signUpReducer.isFetching ? 'Sending...' : 'Sign Up';
+        const signUpButtonText = this.props.signUpReducer.isFetching ? <MiniSpinner /> : 'Sign Up';
+        const isActiveSignUpButton = this.props.signUpReducer.isFetching ?
+            'btn btn-block c-btn-green disabled' :
+            'btn btn-block c-btn-green';
 
         return (
             <div className='container'>
@@ -179,7 +183,7 @@ class SignUp extends Component {
                                 }
                             />
                             {toggleCompanyComponent}
-                            <button type='submit' ref='button' className='btn btn-block c-btn-green'>{ signInButtonText }</button>
+                            <button type='submit' ref='button' className={isActiveSignUpButton}>{ signUpButtonText }</button>
                         </div>
                         <div className='card-footer p-3 text-center'>
                             By signing up, you agree to the <br />

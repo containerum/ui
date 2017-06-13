@@ -8,6 +8,7 @@ import { checkHashParamActions } from '../../../actions/checkHashParamActions';
 import InputEmail from '../InputEmail';
 import InputPassword from '../InputPassword';
 import Logo from '../../Logo';
+import MiniSpinner from '../../MiniSpinner';
 
 class Login extends Component {
     constructor() {
@@ -71,7 +72,10 @@ class Login extends Component {
         }
     }
     render() {
-        const loginButtonText = this.props.loginReducer.isFetching ? 'Sending...' : 'Log In';
+        const loginButtonText = this.props.loginReducer.isFetching ? <MiniSpinner /> : 'Log In';
+        const isActiveLoginButton = this.props.loginReducer.isFetching ?
+            'btn btn-block c-btn-green i-btn-login-strong disabled' :
+            'btn btn-block c-btn-green i-btn-login-strong';
         
         return (
             <div className='container'>
@@ -97,7 +101,7 @@ class Login extends Component {
                                         this.checkValidatePasswordInput(password, isValidPassword)
                                 }
                             />
-                            <button ref='button' type='submit' className='btn btn-block c-btn-green i-btn-login-strong'>{ loginButtonText }</button>
+                            <button ref='button' type='submit' className={isActiveLoginButton}>{ loginButtonText }</button>
                         </div>
                         <div className='card-footer p-3 text-center'>
                             Don't have an account? <Link to='/SignUp'>Sing up</Link>
