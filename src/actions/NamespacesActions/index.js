@@ -7,13 +7,17 @@ import {
     NAMESPACES_FAILURE
 } from '../../constants/NamespacesConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function getNamespaces() {
     return dispatch => {
         dispatch(requestGetNamespaces());
         const token = localStorage.getItem('id_token');
 
         return axios.get(
-            'http://web.api.containerum.io:5000/api/namespaces',
+            WEB_API + '/api/namespaces',
             {
                 headers: {
                     'Authorization': token,

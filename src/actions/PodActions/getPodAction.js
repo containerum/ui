@@ -7,11 +7,15 @@ import {
     POD_FAILURE
 } from '../../constants/PodConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function getPod(namespaceName, podName) {
     return dispatch => {
         dispatch(requestGetPod());
         const token = localStorage.getItem('id_token');
-        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/pods/' + podName;
+        const api = WEB_API + '/api/namespaces/' + namespaceName + '/pods/' + podName;
 
         return axios.get(
             api,

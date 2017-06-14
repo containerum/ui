@@ -41,7 +41,6 @@ class Login extends Component {
     }
     componentWillMount() {
         document.body.classList.add('c-body-bg');
-        console.log(this.props.location.query.hashParam);
         if (this.props.location.query.hashParam) {
             const { dispatch } = this.props;
             dispatch(getUserHashConfirm(this.props.location.query.hashParam));

@@ -11,11 +11,15 @@ import {
     VALIDATE_EMAIL
 } from '../../constants/ValudateEmailConstaints';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function SignUpUser(creds) {
     return dispatch => {
         dispatch(requestSignUp(creds));
         return axios.post(
-            'http://web.api.containerum.io:5000/api/users',
+            WEB_API + '/api/users',
             {username: creds.username, password: creds.password},
             {validateStatus: (status) =>
                 status >= 200 && status <= 505

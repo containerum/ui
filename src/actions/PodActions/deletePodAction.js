@@ -7,11 +7,15 @@ import {
     DELETE_POD_FAILURE
 } from '../../constants/PodConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function deletePod(namespaceName, podName) {
     return dispatch => {
         dispatch(requestDeletePod());
         const token = localStorage.getItem('id_token');
-        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/pods/' + podName;
+        const api = WEB_API + '/api/namespaces/' + namespaceName + '/pods/' + podName;
 
         return axios.delete(
             api,

@@ -7,11 +7,15 @@ import {
     PROFILE_FAILURE
 } from '../../constants/ProfileConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function getProfile() {
     return dispatch => {
         dispatch(requestGetProfile());
         const token = localStorage.getItem('id_token');
-        const api = 'http://web.api.containerum.io:5000/api/profile';
+        const api = WEB_API + '/api/profile';
 
         return axios.get(
             api,

@@ -7,11 +7,15 @@ import {
     DELETE_SERVICE_FAILURE
 } from '../../constants/ServiceConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function deleteService(namespaceName, serviceName) {
     return dispatch => {
         dispatch(requestDeleteService());
         const token = localStorage.getItem('id_token');
-        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/services/' + serviceName;
+        const api = WEB_API + '/api/namespaces/' + namespaceName + '/services/' + serviceName;
 
         return axios.delete(
             api,

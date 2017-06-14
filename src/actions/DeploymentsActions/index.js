@@ -7,11 +7,15 @@ import {
     DEPLOYMENTS_FAILURE
 } from '../../constants/DeploymentsConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function getDeployments(namespaceName) {
     return dispatch => {
         dispatch(requestGetDeployments());
         const token = localStorage.getItem('id_token');
-        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/deployments';
+        const api = WEB_API + '/api/namespaces/' + namespaceName + '/deployments';
 
         return axios.get(
             api,

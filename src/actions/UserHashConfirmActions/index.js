@@ -7,10 +7,14 @@ import {
     USER_HASH_CONFIRM_FAILURE
 } from '../../constants/UserHashConfirmConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function getUserHashConfirm(userHash) {
     return dispatch => {
         dispatch(requestGetUserHashConfirm());
-        const api = 'http://web.api.containerum.io/api/confirm/' + userHash;
+        const api = WEB_API + '/api/confirm/' + userHash;
         console.log(api);
 
         return axios.get(

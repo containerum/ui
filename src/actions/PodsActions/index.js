@@ -8,11 +8,15 @@ import {
     PODS_FAILURE
 } from '../../constants/PodsConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function getPods(namespaceName, idDeployment) {
     return dispatch => {
         dispatch(requestGetPods());
         const token = localStorage.getItem('id_token');
-        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/pods';
+        const api = WEB_API + '/api/namespaces/' + namespaceName + '/pods';
         const shaDeployment256 = sha256(namespaceName).substring(0, 32);
 
         return axios.get(

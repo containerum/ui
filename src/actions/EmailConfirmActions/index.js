@@ -7,11 +7,15 @@ import {
     EMAIL_CONFIRM_FAILURE
 } from '../../constants/ConfirmEmail';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function ConfirmEmail(creds) {
     return dispatch => {
         dispatch(requestEmailConfirm(creds));
         return axios.post(
-            'http://web.api.containerum.io:5000/api/password_reset',
+            WEB_API + '/api/password_reset',
             {email: creds.email},
             {validateStatus: (status) =>
                 status >= 200 && status <= 500

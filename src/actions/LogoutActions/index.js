@@ -4,6 +4,10 @@ import {
     LOGOUT_FAILURE
 } from '../../constants/LogoutConstants';
 
+// import {
+//     WEB_API
+// } from '../../constants/WebApi';
+
 export function logoutUser() {
     return dispatch => {
         try {

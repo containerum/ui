@@ -7,11 +7,15 @@ import {
     LOGIN_FAILURE
 } from '../../constants/LoginConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function LOGINUser(creds) {
     return dispatch => {
         dispatch(requestLOGIN(creds));
         return axios.post(
-            'http://web.api.containerum.io:5000/api/login',
+            WEB_API + '/api/login',
             {username: creds.username, password: creds.password},
             {
                 validateStatus: (status) =>

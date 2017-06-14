@@ -95,7 +95,7 @@ walk('./src', regExcludes, function(err, results) {
             });
             requiredTextInsert += '\n\t}\n});\n';
 
-            fs.open(item, "w+", 0644, function(err, file_handle) {
+            fs.open(item, "w+", function(err, file_handle) {
                 if (!err) {
                     fs.write(file_handle, requiredTextInsert, function(err, written) {
                         if (!err) {

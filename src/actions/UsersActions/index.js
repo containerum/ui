@@ -7,11 +7,15 @@ import {
     USERS_FAILURE
 } from '../../constants/UsersConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function getUsers() {
     return dispatch => {
         dispatch(requestGetUsers());
         const token = localStorage.getItem('id_token');
-        const api = 'http://web.api.containerum.io:5000/api/users';
+        const api = WEB_API + '/api/users';
 
         return axios.get(
             api,

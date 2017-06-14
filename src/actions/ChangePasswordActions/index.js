@@ -7,11 +7,15 @@ import {
     CHANGE_PASSWORD_FAILURE
 } from '../../constants/ChangePasswordConstaints';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function changePassword(data) {
     return dispatch => {
         dispatch(requestChangePassword());
         const token = localStorage.getItem('id_token');
-        const api = 'http://web.api.containerum.io:5000/api/password_change';
+        const api = WEB_API + '/api/password_change';
 
         return axios.post(
             api,

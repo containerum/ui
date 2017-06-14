@@ -7,11 +7,15 @@ import {
     SERVICE_FAILURE
 } from '../../constants/ServiceConstants';
 
+import {
+    WEB_API
+} from '../../constants/WebApi';
+
 export function getService(namespaceName, serviceName) {
     return dispatch => {
         dispatch(requestGetService());
         const token = localStorage.getItem('id_token');
-        const api = 'http://web.api.containerum.io:5000/api/namespaces/' + namespaceName + '/services/' + serviceName;
+        const api = WEB_API + '/api/namespaces/' + namespaceName + '/services/' + serviceName;
 
         return axios.get(
             api,
