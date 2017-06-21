@@ -52,6 +52,7 @@ class SignUp extends Component {
     }
     componentWillMount() {
         document.body.classList.add('c-body-bg');
+        localStorage.removeItem('id_token');
     }
     componentDidMount() {
         if (this.props.location.query.error) {
@@ -186,8 +187,7 @@ class SignUp extends Component {
                             <button type='submit' ref='button' className={isActiveSignUpButton}>{ signUpButtonText }</button>
                         </div>
                         <div className='card-footer p-3 text-center'>
-                            By signing up, you agree to the <br />
-                            <a href='#'>Terms of Service</a> and <a href='#'>Privacy Policy</a>
+                            By signing up, you agree to the <a href='http://containerum.io/license-agreement.html'>Public Offer</a>
                         </div>
                     </div>
                     <p className='text-center pt-3 c-wt'>

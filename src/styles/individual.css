@@ -341,3 +341,9 @@ button,
 .i-label-navigator {
     margin-top: 12px;
 }
+
+
+.i-label-back {
+    display: inline-block;
+    vertical-align: text-top;
+}

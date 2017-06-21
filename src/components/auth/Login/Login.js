@@ -41,6 +41,7 @@ class Login extends Component {
     }
     componentWillMount() {
         document.body.classList.add('c-body-bg');
+        localStorage.removeItem('id_token');
         if (this.props.location.query.hashParam) {
             const { dispatch } = this.props;
             dispatch(getUserHashConfirm(this.props.location.query.hashParam));

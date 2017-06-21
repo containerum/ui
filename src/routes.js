@@ -14,6 +14,7 @@ import Service from './components/Service';
 import Pod from './components/Pod';
 import NotFound from './components/NotFound';
 import Profile from './components/Profile';
+import Support from './components/Support';
 
 export const routes = (
     <Route>
@@ -25,6 +26,7 @@ export const routes = (
             <Route path='/CreateNewDeployment' component={ CreateDeployment } />
             <Route path='/CreateNewService' component={ CreateService } />
             <Route path='/Profile' component={ Profile } />
+            <Route path='/Support' component={ Support } />
         </Route>
         <Route path='/Login' component={ Login }>
             <Route path='/' component={ Workloads } />

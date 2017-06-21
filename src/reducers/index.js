@@ -22,6 +22,7 @@ import UsersReducer from './UsersReducer';
 import UserReducer from './UserReducer';
 import ChangePasswordReducer from './ChangePasswordReducer';
 import UserHashConfirmReducer from './UserHashConfirmReducer';
+import SupportReducer from './SupportReducer';
 
 const rootReducer = combineReducers({
     dataDeployment,
@@ -45,7 +46,8 @@ const rootReducer = combineReducers({
     DeleteDeploymentReducer,
     DeletePodReducer,
     DeleteServiceReducer,
-    UserHashConfirmReducer
+    UserHashConfirmReducer,
+    SupportReducer
 });
 
 export default rootReducer;
