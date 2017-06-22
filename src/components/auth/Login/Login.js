@@ -48,26 +48,25 @@ class Login extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.errorMessage) {
-            this.setState({
-                ...this.state,
-                errorMsg: nextProps.errorMessage
-            });
-            let getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
-        }
         if (nextProps.UserHashConfirmReducer.data === 200) {
-            console.log(nextProps.UserHashConfirmReducer.data);
             this.setState({
                 ...this.state,
                 successMsg: 'Your email has been confirmed. Please Log In.'
             });
             let getSuccessAlert = document.getElementById('successfulAlert');
             getSuccessAlert.style.display = 'block';
-        } else if (this.props.location.query.hashParam && nextProps.UserHashConfirmReducer.errorMessage) {
+        } else if (this.props.location.query.hashParam && nextProps.UserHashConfirmReducer.errorMessage && !nextProps.errorMessage) {
             this.setState({
                 ...this.state,
                 errorMsg: 'Hash is not valid'
+            });
+            let getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+        }
+        if (nextProps.errorMessage) {
+            this.setState({
+                ...this.state,
+                errorMsg: nextProps.errorMessage
             });
             let getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';

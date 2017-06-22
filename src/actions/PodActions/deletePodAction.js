@@ -26,7 +26,7 @@ export function deletePod(namespaceName, podName) {
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
-                validateStatus: (status) => status >= 200 && status <= 500
+                validateStatus: (status) => status >= 200 && status <= 505
             }
         )
             .then(response => {
@@ -38,7 +38,7 @@ export function deletePod(namespaceName, podName) {
                 } else {
                     dispatch(failDeletePod(response.data.message))
                 }
-            }).catch(err => console.log(err))
+            }).catch(err => {console.log(err); dispatch(failDeletePod(err))})
     }
 }
 

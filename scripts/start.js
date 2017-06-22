@@ -33,23 +33,23 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
+// var server = require('http').createServer();
+// var io = require('socket.io')(server);
+// io.on('connection', function(socket){
+//     console.log('a user connected');
+//     socket.on('chat message', function(msg){
+//         io.emit('chat message', msg);
+//     });
+//     socket.on('disconnect', function(){
+//         console.log('user disconnected');
+//     });
+// });
+// server.listen(3001);
+
 // Tools like Cloud9 rely on this.
 var DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 var compiler;
 var handleCompile;
-
-// You can safely remove this after ejecting.
-// We only use this block for testing of Create React App itself:
-var isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
-if (isSmokeTest) {
-  handleCompile = function (err, stats) {
-    if (err || stats.hasErrors() || stats.hasWarnings()) {
-      process.exit(1);
-    } else {
-      process.exit(0);
-    }
-  };
-}
 
 function setupCompiler(host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.

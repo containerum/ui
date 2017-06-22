@@ -37,10 +37,9 @@ class PodsList extends Component {
         }
     }
     render() {
-        // const sortPodsReducer = this.props.PodsReducer.data.filter(item => {
-        //     return item.status === 'Running';
-        // });
-        // console.log(sortPodsReducer, this.props.PodsReducer.data);
+        const sortPodsReducer = this.props.PodsReducer.data.sort(function (a) {
+            return a.status === 'Running';
+        });
         return (
             <div>
                 <ReactNotify ref='notification' />
@@ -53,7 +52,7 @@ class PodsList extends Component {
                                     <div className="table table-hover c-table-card i-table-card">
                                         <div className="i-table-tbody">
                                             {
-                                                this.props.PodsReducer.data.map((item, index) => {
+                                                sortPodsReducer.map((item, index) => {
                                                     const name = item.name;
                                                     const nameFirstChar = name.substring(0, 1).toUpperCase();
                                                     const id = `item_${name}`;

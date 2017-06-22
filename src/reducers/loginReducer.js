@@ -14,8 +14,7 @@ export default function loginReducer(state = {
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             isAuthenticated: action.isAuthenticated,
-            user: action.creds,
-            errorMessage: ''
+            user: action.creds
         });
     case LOGIN_SUCCESS:
         return Object.assign({}, state, {

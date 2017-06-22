@@ -23,6 +23,7 @@
     "redux": "^3.6.0",
     "serve": "^5.1.4",
     "sha256": "^0.2.0",
+    "socket.io": "^2.0.3",
     "validator": "^7.0.0"
   },
   "devDependencies": {

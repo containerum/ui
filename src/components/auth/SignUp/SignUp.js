@@ -187,7 +187,7 @@ class SignUp extends Component {
                             <button type='submit' ref='button' className={isActiveSignUpButton}>{ signUpButtonText }</button>
                         </div>
                         <div className='card-footer p-3 text-center'>
-                            By signing up, you agree to the <a href='http://containerum.io/license-agreement.html'>Public Offer</a>
+                            By signing up, you agree to the <a href='http://containerum.io/license-agreement'>Public Offer</a>
                         </div>
                     </div>
                     <p className='text-center pt-3 c-wt'>

@@ -15,7 +15,6 @@ export function getUserHashConfirm(userHash) {
     return dispatch => {
         dispatch(requestGetUserHashConfirm());
         const api = WEB_API + '/api/confirm/' + userHash;
-        console.log(api);
 
         return axios.get(
             api,
