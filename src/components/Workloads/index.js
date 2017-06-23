@@ -11,9 +11,11 @@ export default class Workloads extends Component {
     render() {
         return (
             <div>
-                <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                    <Namespaces />
-                    {/*<CreateInstance />*/}
+                <div>
+                    <div className="navbar navbar-toggleable-md navbar-light bg-faded">
+                        <Namespaces />
+                        {/*<CreateInstance />*/}
+                    </div>
                 </div>
                 <Deployments idName={this.props.params.idName} />
                 <Services idName={this.props.params.idName} />

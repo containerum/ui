@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 class InputPassword extends Component {
     ValidationGetValuePass() {
-        const password = this.refs.password.value;
+        const refValue = this.props.refValue ? this.props.refValue : 'password';
+        const password = this.refs[refValue].value;
         if (password.length >= 7 && password.length <= 64) {
             this.props.handlePassword(password, true);
         } else {
@@ -11,6 +12,7 @@ class InputPassword extends Component {
         }
     }
     render() {
+        const refValue = this.props.refValue ? this.props.refValue : 'password';
         return (
             <div>
                 <label className='sr-only' htmlFor='Password'>Password</label>
@@ -18,7 +20,7 @@ class InputPassword extends Component {
                     <input
                         onChange={(event) => this.ValidationGetValuePass(event)}
                         type='password'
-                        ref='password'
+                        ref={refValue}
                         required='required'
                         className='form-control'
                         id='Password'
@@ -32,7 +34,8 @@ class InputPassword extends Component {
 }
 
 InputPassword.propTypes = {
-    handlePassword: PropTypes.func.isRequired
+    handlePassword: PropTypes.func,
+    refValue: PropTypes.string
 };
 
 export default InputPassword;

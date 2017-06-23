@@ -2,9 +2,9 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-    PROFILE_REQUEST,
-    PROFILE_SUCCESS,
-    PROFILE_FAILURE
+    PROFILE_GET_REQUEST,
+    PROFILE_GET_SUCCESS,
+    PROFILE_GET_FAILURE
 } from '../../constants/ProfileConstants';
 
 import {
@@ -44,14 +44,14 @@ export function getProfile() {
 
 function requestGetProfile() {
     return {
-        type: PROFILE_REQUEST,
+        type: PROFILE_GET_REQUEST,
         isFetching: true
     }
 }
 
 function receiveGetProfile(data) {
     return {
-        type: PROFILE_SUCCESS,
+        type: PROFILE_GET_SUCCESS,
         isFetching: false,
         data
     }
@@ -59,7 +59,7 @@ function receiveGetProfile(data) {
 
 function failGetProfile(message) {
     return {
-        type: PROFILE_FAILURE,
+        type: PROFILE_GET_FAILURE,
         isFetching: false,
         message
     }

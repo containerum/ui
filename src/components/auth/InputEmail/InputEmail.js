@@ -37,7 +37,7 @@ class InputEmail extends Component {
 }
 
 InputEmail.propTypes = {
-    handleEmail: PropTypes.func.isRequired,
+    handleEmail: PropTypes.func,
     defaultUserEmail: PropTypes.string
 };
 

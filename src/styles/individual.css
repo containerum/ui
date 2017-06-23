@@ -1,3 +1,9 @@
+.main_container {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 .btn.btn-success > input {
     position: absolute;
     clip: rect(0,0,0,0);
@@ -9,7 +15,9 @@ button,
 }
 
 #loginAlert,
-#successfulAlert {
+#successfulAlert,
+#failDeleteAlert,
+#successfulDeleteAlert {
     display: none;
 }
 

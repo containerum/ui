@@ -1,26 +1,26 @@
 import {
-    CHANGE_PASSWORD_REQUEST,
-    CHANGE_PASSWORD_SUCCESS,
-    CHANGE_PASSWORD_FAILURE
-} from '../constants/ChangePasswordConstaints';
+    PROFILE_GET_REQUEST,
+    PROFILE_GET_SUCCESS,
+    PROFILE_GET_FAILURE
+} from '../../constants/ProfileConstants';
 
-export default function ChangePasswordReducer(state = {
+export default function GetProfileReducer(state = {
     isFetching: false,
-    data: '',
+    data: {},
     errorMessage: ''
 }, action) {
     switch (action.type) {
-    case CHANGE_PASSWORD_REQUEST:
+    case PROFILE_GET_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: ''
         });
-    case CHANGE_PASSWORD_SUCCESS:
+    case PROFILE_GET_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data
         });
-    case CHANGE_PASSWORD_FAILURE:
+    case PROFILE_GET_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message

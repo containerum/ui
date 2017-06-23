@@ -1,26 +1,26 @@
 import {
-    PROFILE_REQUEST,
-    PROFILE_SUCCESS,
-    PROFILE_FAILURE
-} from '../constants/ProfileConstants';
+    PROFILE_DELETE_REQUEST,
+    PROFILE_DELETE_SUCCESS,
+    PROFILE_DELETE_FAILURE
+} from '../../constants/ProfileConstants';
 
-export default function ProfileReducer(state = {
+export default function DeleteProfileReducer(state = {
     isFetching: false,
-    data: {},
+    data: '',
     errorMessage: ''
 }, action) {
     switch (action.type) {
-    case PROFILE_REQUEST:
+    case PROFILE_DELETE_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: ''
         });
-    case PROFILE_SUCCESS:
+    case PROFILE_DELETE_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data
         });
-    case PROFILE_FAILURE:
+    case PROFILE_DELETE_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message
