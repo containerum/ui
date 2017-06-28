@@ -8,7 +8,7 @@ export default class CliToken extends Component {
                     <table className="table i-table-card">
                         <tbody>
                         <tr>
-                            <td>
+                            <td className="first-td-width">
                                 <h2 id="cli">
                                     <a name="cli" className="anchor" href="#cli">CLI</a>
                                 </h2>
@@ -37,7 +37,7 @@ export default class CliToken extends Component {
                                 TOKEN
                             </td>
                             <td>
-                                <a target="_blank" className="i-cli-tool" href="https://bitbucket.org/exonch/ch-sdk">
+                                <a target="_blank" className="i-cli-tool" href="http://containerum.io/documentation/start-guide">
                                     <button className='btn btn-block c-btn-green'>
                                         CLI Help
                                     </button>

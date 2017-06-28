@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
-import ReactNotify from 'react-notify';
 
 import { deleteDeployment } from '../../actions/DeploymentActions/deleteDeploymentAction';
+import Notification from '../../components/Notification';
 
 class PostsDeploymentsContainer extends Component {
     handleClickTR(href) {
@@ -19,23 +19,16 @@ class PostsDeploymentsContainer extends Component {
             const id = `item_${nextProps.DeleteDeploymentReducer.deploymentName}`;
             const el = document.getElementById(id);
             el.remove();
-            this.refs.notification.success(
-                "Success",
-                "Deployment: " + nextProps.DeleteDeploymentReducer.deploymentName + " was deleted",
-                10000
-            );
-        } else if (nextProps.DeleteDeploymentReducer.status !== 0) {
-            this.refs.notification.error(
-                "Error",
-                "Deployment: " + nextProps.DeleteDeploymentReducer.deploymentName + " was not deleted",
-                10000
-            );
         }
     }
     render() {
         return (
             <div>
-                <ReactNotify ref='notification' />
+                <Notification
+                    status={this.props.DeleteDeploymentReducer.status}
+                    name={this.props.DeleteDeploymentReducer.deploymentName}
+                    errorMessage={this.props.DeleteDeploymentReducer.errorMessage}
+                />
                 <div className="container-fluid pt-3 pb-5">
                     <h5>Deployments</h5>
                     <div className="row">

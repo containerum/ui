@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
-import ReactNotify from 'react-notify';
 
 import { deleteService } from '../../actions/ServiceActions/deleteServiceAction';
+import Notification from '../../components/Notification';
 
 class PostsServicesContainer extends Component {
     handleClickTR(href) {
@@ -15,29 +15,20 @@ class PostsServicesContainer extends Component {
         dispatch(deleteService(this.props.idName, name));
     }
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.DeleteServiceReducer);
         if(nextProps.DeleteServiceReducer.status === 202 && nextProps.DeleteServiceReducer.serviceName) {
             const id = `item_${nextProps.DeleteServiceReducer.serviceName}`;
             const el = document.getElementById(id);
             el.remove();
-            this.refs.notification.success(
-                "Success",
-                "Service: " + nextProps.DeleteServiceReducer.serviceName + " was deleted",
-                10000
-            );
-        } else if (nextProps.DeleteServiceReducer.status !== 0 &&
-            nextProps.DeleteServiceReducer.status !== this.props.DeleteServiceReducer.status) {
-            this.refs.notification.error(
-                "Error",
-                "Service: " + nextProps.DeleteServiceReducer.serviceName + " was not deleted",
-                10000
-            );
         }
     }
     render() {
         return (
             <div>
-                <ReactNotify ref='notification' />
+                <Notification
+                    status={this.props.DeleteServiceReducer.status}
+                    name={this.props.DeleteServiceReducer.serviceName}
+                    errorMessage={this.props.DeleteServiceReducer.errorMessage}
+                />
                 <div className="container-fluid pt-3 pb-5">
                     <h5>Services</h5>
                     <div className="row">

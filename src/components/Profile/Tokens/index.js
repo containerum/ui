@@ -8,7 +8,7 @@ export default class Tokens extends Component {
                     <table className="table i-table-card">
                         <tbody>
                         <tr>
-                            <td style={{width: '250px'}}>
+                            <td className="first-td-width">
                                 <h2 id="tokens">
                                     <a name="tokens" className="anchor" href="#tokens">Token`s</a>
                                 </h2> <br/>

@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import Switch from 'react-toggle-switch';
+import { connect } from 'react-redux';
 
 import '../../../../node_modules/react-toggle-switch/dist/css/switch.min.css';
 import './Subscription.css';
+import { subscriptionsEmail } from '../../../actions/EmailSubscriptionsActions';
 
-export default class Subscription extends Component {
+class Subscription extends Component {
     constructor() {
         super();
         this.state = {
-            on: true
+            on: false
         };
         this.toggleSwitch = this.toggleSwitch.bind(this);
     }
@@ -16,6 +18,9 @@ export default class Subscription extends Component {
         this.setState({
             on: !this.state.on
         });
+        const { dispatch } = this.props;
+        console.log(this.state.on);
+        dispatch(subscriptionsEmail(this.state.on));
     }
     render() {
         return (
@@ -24,7 +29,7 @@ export default class Subscription extends Component {
                     <table className="table i-table-card">
                         <tbody>
                         <tr>
-                            <td>
+                            <td className="first-td-width">
                                 <h2 id="email-subscriptions">
                                     <a name="email-subscriptions" className="anchor" href="#email-subscriptions">E-mail subscriptions</a>
                                 </h2>
@@ -55,3 +60,11 @@ export default class Subscription extends Component {
         );
     }
 }
+
+function mapStateToProps (state) {
+    return {
+        ConvertToCompanyReducer: state.ConvertToCompanyReducer
+    }
+}
+
+export default connect(mapStateToProps)(Subscription);

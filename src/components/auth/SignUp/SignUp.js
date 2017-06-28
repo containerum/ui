@@ -191,7 +191,7 @@ class SignUp extends Component {
                         </div>
                     </div>
                     <p className='text-center pt-3 c-wt'>
-                        Don't have an account? <Link to='/Login' className='c-link-wt'>Log In</Link>
+                        Already have an account? <Link to='/Login' className='c-link-wt'>Log In</Link>
                     </p>
                 </form>
             </div>

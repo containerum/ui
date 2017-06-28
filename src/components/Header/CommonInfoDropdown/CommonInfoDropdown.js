@@ -30,15 +30,15 @@ class CommonInfoDropdown extends Component {
                         <Translate content='header.images'>Images</Translate>
                     </NavLink>
                     <div className="dropdown-divider"></div>
-                    <NavLink className="dropdown-item" to={window.location.pathname}>
+                    <a className="dropdown-item" target="_blank" href="http://blog.containerum.io/">
                         <Translate content='header.blog'>Blog</Translate>
-                    </NavLink>
-                    <NavLink className="dropdown-item" to={window.location.pathname}>
+                    </a>
+                    <a className="dropdown-item" target="_blank" href="http://containerum.io/documentation/start-guide">
                         <Translate content='header.documentation'>Documentation</Translate>
-                    </NavLink>
-                    <NavLink className="dropdown-item" to={window.location.pathname}>
+                    </a>
+                    <a className="dropdown-item" target="_blank" href="http://blog.containerum.io/">
                         <Translate content='header.tutorials'>Tutorials</Translate>
-                    </NavLink>
+                    </a>
                     <div className="dropdown-divider"></div>
                     <NavLink className="dropdown-item" to={window.location.pathname}>
                         <Translate content='header.support'>Support</Translate>

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ReactNotify from 'react-notify';
 
 import { deletePod } from '../../../actions/PodActions/deletePodAction';
+import Notification from '../../Notification';
 
 class PodsList extends Component {
     constructor() {
@@ -23,26 +23,19 @@ class PodsList extends Component {
             const id = `item_${nextProps.DeletePodReducer.podName}`;
             const el = document.getElementById(id);
             el.remove();
-            this.refs.notification.success(
-                "Success",
-                "Pod: " + nextProps.DeletePodReducer.podName + " was deleted",
-                10000
-            );
-        } else if (nextProps.DeletePodReducer.errorMessage) {
-            this.refs.notification.error(
-                "Error",
-                "Pod: " + nextProps.DeletePodReducer.errorMessage,
-                10000
-            );
         }
     }
     render() {
         const sortPodsReducer = this.props.PodsReducer.data.sort(function (a) {
-            return a.status === 'Running';
+            return a.status.toUpperCase() === 'Running'.toUpperCase();
         });
         return (
             <div>
-                <ReactNotify ref='notification' />
+                <Notification
+                    status={this.props.DeletePodReducer.status}
+                    name={this.props.DeletePodReducer.podName}
+                    errorMessage={this.props.DeletePodReducer.errorMessage}
+                />
                 <div className="container-fluid pt-3 pb-5">
                     <h5>Pods</h5>
                     <div className="row">
@@ -56,10 +49,10 @@ class PodsList extends Component {
                                                     const name = item.name;
                                                     const nameFirstChar = name.substring(0, 1).toUpperCase();
                                                     const id = `item_${name}`;
-                                                    const imageColor = item.status === 'Running' ? '#009688' : '#D64242';
+                                                    const imageColor = item.status.toUpperCase() === 'Running'.toUpperCase() ? '#009688' : '#D64242';
                                                     return (
                                                         <div className="i-row-table tr-hover" key={index} id={id}>
-                                                            <div className="i-td-table i-td-table-first-width" onClick={href => this.handleClickTR(item.name)}>
+                                                            <div className="i-td-table i-td-table-first-width-pods" onClick={href => this.handleClickTR(item.name)}>
                                                                 <svg className="c-table-card-img mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
                                                                     <g>
                                                                         <path fill={imageColor} d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>

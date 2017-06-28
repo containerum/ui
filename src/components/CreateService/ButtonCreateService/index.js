@@ -15,7 +15,7 @@ class ButtonCreateService extends Component {
                                         <div className="i-row-table">
                                             <div className="i-td-table">
                                                 Let's Start <br />
-                                                Follow the <a href="https://bitbucket.org/exonch/ch-sdk" target="_blank">Documentation</a> to create your first Service
+                                                Follow the <a href="http://containerum.io/documentation/start-guide" target="_blank">Documentation</a> to create your 1st Service
                                             </div>
                                         </div>
                                     </div>

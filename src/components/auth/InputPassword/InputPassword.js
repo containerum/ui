@@ -13,6 +13,8 @@ class InputPassword extends Component {
     }
     render() {
         const refValue = this.props.refValue ? this.props.refValue : 'password';
+        const placeholder = this.props.placeholder ? this.props.placeholder : 'Password';
+        const small = this.props.small ?<small>Password must be 8 or more characters</small> : '';
         return (
             <div>
                 <label className='sr-only' htmlFor='Password'>Password</label>
@@ -24,9 +26,10 @@ class InputPassword extends Component {
                         required='required'
                         className='form-control'
                         id='Password'
-                        placeholder='Password'
+                        placeholder={placeholder}
                     />
                     <i className='c-form-control-icon fa fa-lock'></i>
+                    {small}
                 </div>
             </div>
         );
@@ -35,7 +38,9 @@ class InputPassword extends Component {
 
 InputPassword.propTypes = {
     handlePassword: PropTypes.func,
-    refValue: PropTypes.string
+    refValue: PropTypes.string,
+    placeholder: PropTypes.string,
+    small: PropTypes.string
 };
 
 export default InputPassword;

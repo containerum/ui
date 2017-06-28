@@ -15,7 +15,7 @@ class ButtonCreateDeployment extends Component {
                                         <div className="i-row-table">
                                             <div className="i-td-table">
                                                 Let's Start <br />
-                                                Follow the <a href="https://bitbucket.org/exonch/ch-sdk" target="_blank">Documentation</a> to create your first Deployment
+                                                Follow the <a href="http://containerum.io/documentation/start-guide" target="_blank">Documentation</a> to create your 1st Deployment
                                             </div>
                                         </div>
                                     </div>

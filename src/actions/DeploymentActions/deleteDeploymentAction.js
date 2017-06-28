@@ -38,7 +38,7 @@ export function deleteDeployment(namespaceName, deploymentName) {
                 } else {
                     dispatch(failDeleteDeployment(response.data.message))
                 }
-            }).catch(err => console.log(err))
+            }).catch(err => {console.log(err); dispatch(failDeleteDeployment(err.toString()))})
     }
 }
 

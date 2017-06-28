@@ -27,7 +27,7 @@ class Header extends Component {
         let userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : '';
         return (
             <div className="c-navbar">
-                <div className="navbar navbar-inverse navbar-toggleable-md i-hover-pointer main_container">
+                <div className="navbar navbar-inverse navbar-toggleable-md i-hover-pointer">
                     <div className="navbar-brand i-navbar-brand-pd-l" onClick={this.handleClickLogo.bind(this)}>
                         <img className="d-inline-block align-top i-sizes-img-logo" src={logo} alt="Logo"/>
                     </div>

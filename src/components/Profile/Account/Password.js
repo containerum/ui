@@ -105,7 +105,7 @@ class Password extends Component {
                 <table className="table i-table-card">
                     <tbody>
                     <tr>
-                        <td style={{width: '230px'}}>
+                        <td className="first-td-width">
                             <h2 id="password">
                                 <a name="password" className="anchor" href="#password">Password</a>
                             </h2> <br/>
@@ -127,6 +127,7 @@ class Password extends Component {
                                 </div>
                                 <div className="form-group i-mb-20 c-has-feedback-left">
                                     <InputPassword
+                                        placeholder="Current password"
                                         refValue="current_password"
                                         ref="current_password"
                                         handlePassword={
@@ -137,6 +138,8 @@ class Password extends Component {
                                 </div>
                                 <div className="form-group i-mb-20 c-has-feedback-left">
                                     <InputPassword
+                                        placeholder="New password"
+                                        small="Password must be 8 or more characters"
                                         refValue="new_password"
                                         ref="new_password"
                                         handlePassword={
@@ -147,6 +150,7 @@ class Password extends Component {
                                 </div>
                                 <div className="form-group i-mb-20 c-has-feedback-left">
                                     <InputPassword
+                                        placeholder="Confirm new password"
                                         refValue="repeat_password"
                                         ref="repeat_password"
                                         handlePassword={

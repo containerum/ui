@@ -38,7 +38,7 @@ export function deleteService(namespaceName, serviceName) {
             } else {
                 dispatch(failDeleteService(response.data.message))
             }
-        }).catch(err => console.log(err))
+        }).catch(err => {console.log(err); dispatch(failDeleteService(err.toString()))})
     }
 }
 

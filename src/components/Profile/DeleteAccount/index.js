@@ -72,7 +72,7 @@ class DeleteAccount extends Component {
                     <table className="table i-table-card">
                         <tbody>
                             <tr>
-                                <td style={{width: '230px'}}>
+                                <td className="first-td-width">
                                     <h2 id="delete-account">
                                         <a name="delete-account" className="anchor" href="#delete-account">Delete Account</a>
                                     </h2> <br/>

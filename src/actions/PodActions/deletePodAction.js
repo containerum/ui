@@ -38,7 +38,7 @@ export function deletePod(namespaceName, podName) {
                 } else {
                     dispatch(failDeletePod(response.data.message))
                 }
-            }).catch(err => {console.log(err); dispatch(failDeletePod(err))})
+            }).catch(err => {console.log(err); dispatch(failDeletePod(err.toString()))})
     }
 }
 

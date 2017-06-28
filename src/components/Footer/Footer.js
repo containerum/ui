@@ -10,7 +10,7 @@ class Footer extends Component {
     render() {
         return (
             <footer className="footer">
-                <div className="container-fluid main_container">
+                <div className="container-fluid">
                     <NavLink to={window.location.pathname} className="text-muted mr-3">
                         <Translate content='footer.blog'>Blog</Translate>
                     </NavLink>

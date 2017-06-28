@@ -14,7 +14,7 @@ class Profile extends Component {
                 <table className="table i-table-card">
                     <tbody>
                     <tr>
-                        <td>
+                        <td className="first-td-width">
                             <h2 id="profile">
                                 <a name="profile" className="anchor" href="#profile">Profile</a>
                             </h2>
