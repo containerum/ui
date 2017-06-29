@@ -6,7 +6,7 @@ import {
 
 export default function DeleteServiceReducer(state = {
     isFetching: false,
-    data: {},
+    status: 0,
     errorMessage: '',
     serviceName: ''
 }, action) {

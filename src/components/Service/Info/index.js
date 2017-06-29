@@ -4,12 +4,17 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import { deleteService } from '../../../actions/ServiceActions/deleteServiceAction';
+import Notification from '../../Notification';
 
 class Info extends Component {
     handleClickDeletingService(name) {
         const { dispatch } = this.props;
         dispatch(deleteService(this.props.idName, name));
-        browserHistory.push('/Namespaces/' + this.props.idName);
+    }
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.DeleteServiceReducer.status === 202 && nextProps.DeleteServiceReducer.serviceName) {
+            browserHistory.push('/Namespaces/' + this.props.idName);
+        }
     }
     render() {
         const labelsArray = this.props.serviceReducer.labels ? Object.keys(this.props.serviceReducer.labels) : [];
@@ -19,13 +24,19 @@ class Info extends Component {
         const nameFirstChar = name.substring(0, 1).toUpperCase();
 
         return (
-            <div className="container-fluid pt-3 pb-5">
-                <div className="row">
-                    <div className="col-12">
-                        <div className="card mt-3">
-                            <div className="card-block c-table-card-block">
-                                <table className="table">
-                                    <tbody>
+            <div>
+                <Notification
+                    status={this.props.DeleteServiceReducer.status}
+                    name={this.props.DeleteServiceReducer.serviceName}
+                    errorMessage={this.props.DeleteServiceReducer.errorMessage}
+                />
+                <div className="container-fluid pt-3 pb-5">
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="card mt-3">
+                                <div className="card-block c-table-card-block">
+                                    <table className="table">
+                                        <tbody>
                                         <tr>
                                             <td className="i-td-card-font-name">
                                                 {name}
@@ -80,8 +91,9 @@ class Info extends Component {
                                                 })}
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,12 +109,12 @@ Info.propTypes = {
 };
 
 function mapStateToProps (state) {
-    const { DeletePodReducer } = state;
-    const { errorMessage } = DeletePodReducer;
+    const { DeleteServiceReducer } = state;
+    const { errorMessage } = DeleteServiceReducer;
 
     return {
         errorMessage,
-        DeletePodReducer
+        DeleteServiceReducer
     }
 }
 

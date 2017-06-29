@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Translate from 'react-translate-component';
 
-import NavLink from '../NavLink/index';
-
 import '../../localization/en/footer';
 import '../../localization/ru/footer';
 
@@ -11,15 +9,15 @@ class Footer extends Component {
         return (
             <footer className="footer">
                 <div className="container-fluid">
-                    <NavLink to={window.location.pathname} className="text-muted mr-3">
+                    <a target="_blank" href="http://blog.containerum.io/" className="text-muted mr-3">
                         <Translate content='footer.blog'>Blog</Translate>
-                    </NavLink>
-                    <NavLink to={window.location.pathname} className="text-muted mr-3">
+                    </a>
+                    <a target="_blank" href="http://containerum.io/documentation/start-guide" className="text-muted mr-3">
                         <Translate content='footer.documentations'>Documentations</Translate>
-                    </NavLink>
-                    <NavLink to={window.location.pathname} className="text-muted">
+                    </a>
+                    <a target="_blank" href="http://blog.containerum.io/" className="text-muted">
                         <Translate content='footer.tutorials'>Tutorials</Translate>
-                    </NavLink>
+                    </a>
                     <span className="text-muted float-right">
                         Copyright EXON LAB Company © {new Date().getFullYear()}
                     </span>

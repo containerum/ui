@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import toastr from 'toastr';
 
 class Notification extends Component {
-    render() {
+    componentWillReceiveProps(nextProps) {
         toastr.options = {
             "closeButton": true,
             "debug": false,
@@ -20,12 +20,13 @@ class Notification extends Component {
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
-        if(this.props.status === 202 && this.props.name) {
-            toastr["success"](this.props.name + " was deleted", "Success");
-        } else if (this.props.errorMessage) {
-            toastr["error"](this.props.errorMessage, "Error");
+        if(nextProps.status === 202 && nextProps.name) {
+            toastr["success"](nextProps.name + " was deleted", "Success");
+        } else if (nextProps.errorMessage && nextProps.errorMessage !== this.props.errorMessage) {
+            toastr["error"](nextProps.errorMessage, "Error");
         }
-
+    }
+    render() {
         return (
             <div></div>
         );
