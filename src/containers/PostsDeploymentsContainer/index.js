@@ -18,7 +18,7 @@ class PostsDeploymentsContainer extends Component {
         if(nextProps.DeleteDeploymentReducer.status === 202 && nextProps.DeleteDeploymentReducer.deploymentName) {
             const id = `item_${nextProps.DeleteDeploymentReducer.deploymentName}`;
             const el = document.getElementById(id);
-            el.remove();
+            el ? el.remove() : el;
         }
     }
     render() {
@@ -38,7 +38,7 @@ class PostsDeploymentsContainer extends Component {
                                     <div className="table table-hover c-table-card i-table-card">
                                         <div className="i-table-tbody">
                                             {
-                                                this.props.PostsDeploymentsDataReducer.map((item, index) => {
+                                                this.props.PostsDeploymentsDataReducer.map((item) => {
                                                     const imagesList = item.images.join();
                                                     const name = item.name;
                                                     const nameFirstChar = name.substring(0, 1).toUpperCase();
@@ -46,7 +46,7 @@ class PostsDeploymentsContainer extends Component {
                                                     const ram = item.ram * item.pods_active;
                                                     const id = `item_${name}`;
                                                     return (
-                                                        <div className="i-row-table tr-hover" key={index} id={id}>
+                                                        <div className="i-row-table tr-hover" key={id} id={id}>
                                                             <div className="i-td-table" onClick={href => this.handleClickTR(item.name)}>
                                                                 <svg className="c-table-card-img mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
                                                                     <g>

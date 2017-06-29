@@ -30,7 +30,7 @@ export function deleteService(namespaceName, serviceName) {
             }
         )
         .then(response => {
-            if (response.status === 200 || response.status === 201) {
+            if (response.status === 202) {
                 dispatch(receiveDeleteService(response.status, serviceName));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');

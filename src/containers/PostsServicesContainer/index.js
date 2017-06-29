@@ -18,7 +18,7 @@ class PostsServicesContainer extends Component {
         if(nextProps.DeleteServiceReducer.status === 202 && nextProps.DeleteServiceReducer.serviceName) {
             const id = `item_${nextProps.DeleteServiceReducer.serviceName}`;
             const el = document.getElementById(id);
-            el.remove();
+            el ? el.remove() : el;
         }
     }
     render() {
@@ -38,14 +38,14 @@ class PostsServicesContainer extends Component {
                                     <div className="table table-hover c-table-card i-table-card">
                                         <div className="i-table-tbody">
                                             {
-                                                this.props.PostsServicesDataReducer.map((item, index) => {
+                                                this.props.PostsServicesDataReducer.map((item) => {
                                                     const labelsList = item.labels ? Object.keys(item.labels) : null;
                                                     const name = item.name;
                                                     const nameFirstChar = name.substring(0, 1).toUpperCase();
                                                     const currentLabel = item.labels;
                                                     const id = `item_${name}`;
                                                     return (
-                                                        <div className="i-row-table tr-hover" key={index} id={id}>
+                                                        <div className="i-row-table tr-hover" key={id} id={id}>
                                                             <div className="i-td-table" onClick={href => this.handleClickTR(item.name)}>
                                                                 <svg className="c-table-card-img mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
                                                                     <g>

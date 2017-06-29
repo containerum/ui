@@ -30,8 +30,8 @@ export function deletePod(namespaceName, podName) {
             }
         )
             .then(response => {
-                if (response.status === 200) {
-                    dispatch(receiveDeletePod(podName, response.data));
+                if (response.status === 202) {
+                    dispatch(receiveDeletePod(response.status, podName));
                 } else if (response.status === 401) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
@@ -49,7 +49,7 @@ function requestDeletePod() {
     }
 }
 
-function receiveDeletePod(podName, status) {
+function receiveDeletePod(status, podName) {
     return {
         type: DELETE_POD_SUCCESS,
         isFetching: false,

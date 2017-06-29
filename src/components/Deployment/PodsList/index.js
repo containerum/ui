@@ -22,7 +22,7 @@ class PodsList extends Component {
         if(nextProps.DeletePodReducer.status === 202 && nextProps.DeletePodReducer.podName) {
             const id = `item_${nextProps.DeletePodReducer.podName}`;
             const el = document.getElementById(id);
-            el.remove();
+            el ? el.remove() : el;
         }
     }
     render() {
@@ -45,13 +45,13 @@ class PodsList extends Component {
                                     <div className="table table-hover c-table-card i-table-card">
                                         <div className="i-table-tbody">
                                             {
-                                                sortPodsReducer.map((item, index) => {
+                                                sortPodsReducer.map((item) => {
                                                     const name = item.name;
                                                     const nameFirstChar = name.substring(0, 1).toUpperCase();
                                                     const id = `item_${name}`;
                                                     const imageColor = item.status.toUpperCase() === 'Running'.toUpperCase() ? '#009688' : '#D64242';
                                                     return (
-                                                        <div className="i-row-table tr-hover" key={index} id={id}>
+                                                        <div className="i-row-table tr-hover" key={id} id={id}>
                                                             <div className="i-td-table i-td-table-first-width-pods" onClick={href => this.handleClickTR(item.name)}>
                                                                 <svg className="c-table-card-img mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
                                                                     <g>

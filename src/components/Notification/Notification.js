@@ -20,7 +20,8 @@ class Notification extends Component {
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
-        if(nextProps.status === 202 && nextProps.name) {
+        if(nextProps.status === 202 && nextProps.name &&
+            nextProps.name !== this.props.name) {
             toastr["success"](nextProps.name + " was deleted", "Success");
         } else if (nextProps.errorMessage && nextProps.errorMessage !== this.props.errorMessage) {
             toastr["error"](nextProps.errorMessage, "Error");
