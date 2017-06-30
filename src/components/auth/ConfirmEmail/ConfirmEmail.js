@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import Logo from '../../Logo';
@@ -10,6 +11,9 @@ class ConfirmEmail extends Component {
     }
     render() {
         const defaultEmail = this.props.location.query.email ? this.props.location.query.email : this.props.signUpReducer.emailUser;
+        if(!defaultEmail) {
+            browserHistory.push('/SignUp');
+        }
         return (
             <div className='container'>
                 <Logo />

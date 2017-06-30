@@ -15,9 +15,10 @@ class Conditions extends Component {
                                     <div className="i-table-tbody">
                                         {
                                             arrConditionsGetPodReducer.map((item, index) => {
+                                                const lastProbeTime = <div className="i-td-table i-td-table-pd-top i-td-table-pd-bottom i-td-table-max-width">{item.lastTransitionTime}</div>;
                                                 return (
                                                     <div className="i-row-table tr-hover" key={index}>
-                                                        <div className="i-td-table i-td-table-pd-top i-td-table-pd-bottom">{item.lastTransitionTime}</div>
+                                                        { lastProbeTime }
                                                         <div className="i-td-table i-td-table-pd-top i-td-table-pd-bottom">{item.status}</div>
                                                         <div className="i-td-table i-td-table-pd-top i-td-table-pd-bottom">{item.type}</div>
                                                     </div>

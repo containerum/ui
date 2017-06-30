@@ -4,7 +4,8 @@ import { browserHistory } from 'react-router';
 import {
     EMAIL_CONFIRM_REQUEST,
     EMAIL_CONFIRM_SUCCESS,
-    EMAIL_CONFIRM_FAILURE
+    EMAIL_CONFIRM_FAILURE,
+    CONFIRM_REQUEST
 } from '../../constants/ConfirmEmail';
 
 import {
@@ -13,7 +14,7 @@ import {
 
 export function ConfirmEmail(creds) {
     return dispatch => {
-        dispatch(requestEmailConfirm(creds));
+        dispatch(requestEmailConfirm());
         return axios.post(
             WEB_API + '/api/password_reset',
             {email: creds.email},
@@ -23,8 +24,9 @@ export function ConfirmEmail(creds) {
         )
         .then(response => {
             if (response.status === 200) {
-                dispatch(receiveEmailComfirm());
-                browserHistory.push('/ConfirmEmail');
+                dispatch(receiveEmailConfirm(response.data));
+                dispatch(receiveConfirm(creds.email));
+                browserHistory.push('/ResetPassword');
             } else if (response.status === 400) {
                 dispatch(errorEmailComfirm('Email is not valid'))
             } else {
@@ -34,20 +36,29 @@ export function ConfirmEmail(creds) {
     }
 }
 
-function requestEmailConfirm(creds) {
+function receiveConfirm(emailUser) {
     return {
-        type: EMAIL_CONFIRM_REQUEST,
-        isFetching: true,
-        isConfirmed: false,
-        creds
+        type: CONFIRM_REQUEST,
+        isFetching: false,
+        isConfirmed: true,
+        emailUser
     }
 }
 
-function receiveEmailComfirm() {
+function requestEmailConfirm() {
+    return {
+        type: EMAIL_CONFIRM_REQUEST,
+        isFetching: true,
+        isConfirmed: false
+    }
+}
+
+function receiveEmailConfirm(data) {
     return {
         type: EMAIL_CONFIRM_SUCCESS,
         isFetching: false,
-        isConfirmed: true
+        isConfirmed: true,
+        data
     }
 }
 

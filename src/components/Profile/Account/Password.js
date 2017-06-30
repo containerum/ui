@@ -55,9 +55,9 @@ class Password extends Component {
         const repeat_password = this.refs.repeat_password.refs.repeat_password.value;
 
         if (
-            (current_password.length >= 7 && current_password.length <= 64) &&
-            (new_password.length >= 7 && new_password.length <= 64) &&
-            (repeat_password.length >= 7 && repeat_password.length <= 64) &&
+            (current_password.length >= 8 && current_password.length <= 64) &&
+            (new_password.length >= 8 && new_password.length <= 64) &&
+            (repeat_password.length >= 8 && repeat_password.length <= 64) &&
             new_password === repeat_password
         ) {
             const { dispatch } = this.props;

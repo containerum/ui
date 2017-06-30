@@ -7,6 +7,7 @@ import SignUp from './components/auth/SignUp';
 import Forgot from './components/Forgot';
 import requireAuthentication from './components/auth/require-auth';
 import ConfirmEmail from './components/auth/ConfirmEmail';
+import ResetPassword from './components/ResetPassword';
 import CreateDeployment from './components/CreateDeployment';
 import CreateService from './components/CreateService';
 import Deployment from './components/Deployment';
@@ -34,6 +35,7 @@ export const routes = (
         <Route path='/Forgot' component={ Forgot } />
         <Route path='/SignUp' component={ SignUp } />
         <Route path='/ConfirmEmail' component={ ConfirmEmail } />
+        <Route path='/ResetPassword' component={ ResetPassword } />
         <Route path='*' component={NotFound} />
     </Route>
 );

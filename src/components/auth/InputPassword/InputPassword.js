@@ -5,7 +5,7 @@ class InputPassword extends Component {
     ValidationGetValuePass() {
         const refValue = this.props.refValue ? this.props.refValue : 'password';
         const password = this.refs[refValue].value;
-        if (password.length >= 7 && password.length <= 64) {
+        if (password.length >= 8 && password.length <= 64) {
             this.props.handlePassword(password, true);
         } else {
             this.props.handlePassword(password, false);

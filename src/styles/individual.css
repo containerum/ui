@@ -155,6 +155,11 @@ button,
     width: 264px;
 }
 
+
+.i-td-table-max-width {
+    width: 300px;
+}
+
 .i-td-table-pb {
     padding-bottom: 1rem;
 }
