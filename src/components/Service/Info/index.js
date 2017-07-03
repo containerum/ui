@@ -7,14 +7,14 @@ import { deleteService } from '../../../actions/ServiceActions/deleteServiceActi
 import Notification from '../../Notification';
 
 class Info extends Component {
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.DeleteServiceReducer.status === 202 && nextProps.DeleteServiceReducer.serviceName) {
+            browserHistory.push('/Namespaces/' + this.props.idName);
+        }
+    }
     handleClickDeletingService(name) {
         const { dispatch } = this.props;
         dispatch(deleteService(this.props.idName, name));
-    }
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.DeleteServiceReducer.status === 202 && nextProps.DeleteServiceReducer.serviceName) {
-            browserHistory.push('/Namespaces/' + this.props.idName);
-        }
     }
     render() {
         const labelsArray = this.props.serviceReducer.labels ? Object.keys(this.props.serviceReducer.labels) : [];
@@ -37,60 +37,64 @@ class Info extends Component {
                                 <div className="card-block c-table-card-block">
                                     <table className="table">
                                         <tbody>
-                                        <tr>
-                                            <td className="i-td-card-font-name">
-                                                {name}
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td className="text-right">
-                                                <div className="btn-group">
-                                                    <button className="btn btn-sm c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i className="md-icon">more_horiz</i>
-                                                    </button>
-                                                    <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow" aria-labelledby="dropdownMenu2">
-                                                        <button className="dropdown-item text-danger" type="button" onClick={name => this.handleClickDeletingService(this.props.serviceReducer.name)}>
-                                                            Delete
+                                            <tr>
+                                                <td className="i-td-card-font-name">
+                                                    {name}
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td className="text-right">
+                                                    <div className="btn-group">
+                                                        <button className="btn btn-sm c-table-card-btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i className="md-icon">more_horiz</i>
                                                         </button>
+                                                        <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow" aria-labelledby="dropdownMenu2">
+                                                            <button
+                                                                className="dropdown-item text-danger"
+                                                                type="button"
+                                                                onClick={name => this.handleClickDeletingService(this.props.serviceReducer.name)}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg className="c-table-card-img-old i-table-card-img mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
-                                                    <g>
-                                                        <path className="cls-services" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
-                                                    </g>
-                                                    <text className="cls-2" textAnchor="middle" x="50%" y="70%">{nameFirstChar}</text>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                Cluster ip: {this.props.serviceReducer.cluster_ip} <br />
-                                                Created at: {this.props.serviceReducer.created_at} <br />
-                                                Domain hosts <br/>
-                                                {domain_hosts[0]}
-                                            </td>
-                                            <td>
-                                                Ports <br/>
-                                                {ports.map((item, index) =>  {
-                                                    return (
-                                                        <span key={index}>
-                                                            {item.name}: {item.targetPort} -> {item.port}:{item.protocol} <br/>
-                                                        </span>
-                                                    );
-                                                })}
-                                            </td>
-                                            <td>
-                                                Labels <br/>
-                                                {labelsArray.map((item, index) =>  {
-                                                    return (
-                                                        <span key={index}>{item}: {this.props.serviceReducer.labels[item]}<br/></span>
-                                                    );
-                                                })}
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <svg className="c-table-card-img-old i-table-card-img mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.78 33.25">
+                                                        <g>
+                                                            <path className="cls-services" d="M5383.94,530.28l8.57-14.84a2,2,0,0,0,0-1.78l-8.56-14.85a2,2,0,0,0-1.54-.89h-17.14a2,2,0,0,0-1.54.89l-8.57,14.84a2,2,0,0,0,0,1.78l8.56,14.84a2,2,0,0,0,1.54.89h17.14A2,2,0,0,0,5383.94,530.28Z" transform="translate(-5354.94 -497.92)"/>
+                                                        </g>
+                                                        <text className="cls-2" textAnchor="middle" x="50%" y="70%">{nameFirstChar}</text>
+                                                    </svg>
+                                                </td>
+                                                <td>
+                                                    Cluster ip: {this.props.serviceReducer.cluster_ip} <br />
+                                                    Created at: {this.props.serviceReducer.created_at} <br />
+                                                    Domain hosts <br/>
+                                                    {domain_hosts[0]}
+                                                </td>
+                                                <td>
+                                                    Ports <br/>
+                                                    {ports.map((item, index) =>  {
+                                                        return (
+                                                            <span key={index}>
+                                                                {item.name}: {item.targetPort} -> {item.port}:{item.protocol} <br/>
+                                                            </span>
+                                                        );
+                                                    })}
+                                                </td>
+                                                <td>
+                                                    Labels <br/>
+                                                    {labelsArray.map((item, index) =>  {
+                                                        return (
+                                                            <span key={index}>{item}: {this.props.serviceReducer.labels[item]}<br/></span>
+                                                        );
+                                                    })}
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -105,17 +109,19 @@ class Info extends Component {
 
 Info.propTypes = {
     serviceReducer: PropTypes.object,
+    dispatch: PropTypes.func.isRequired,
+    DeleteServiceReducer: PropTypes.object,
     idName: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { DeleteServiceReducer } = state;
     const { errorMessage } = DeleteServiceReducer;
 
     return {
         errorMessage,
         DeleteServiceReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Info)
+export default connect(mapStateToProps)(Info);

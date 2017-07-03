@@ -26,17 +26,17 @@ export function updateEmail(data) {
                 console.log(response);
                 dispatch(receiveEmailUpdate());
             } else {
-                dispatch(errorEmailUpdate(response.data.message))
+                dispatch(errorEmailUpdate(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestEmailUpdate() {
     return {
         type: EMAIL_UPDATE_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveEmailUpdate(data) {
@@ -44,7 +44,7 @@ function receiveEmailUpdate(data) {
         type: EMAIL_UPDATE_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function errorEmailUpdate(message) {
@@ -52,5 +52,5 @@ function errorEmailUpdate(message) {
         type: EMAIL_UPDATE_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

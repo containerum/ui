@@ -24,6 +24,6 @@ export default function EmailSubscriptionsReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

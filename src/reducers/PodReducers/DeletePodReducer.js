@@ -28,6 +28,6 @@ export default function DeletePodReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

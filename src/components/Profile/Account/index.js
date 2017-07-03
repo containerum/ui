@@ -29,4 +29,4 @@ class Account extends Component {
 //     errorMessage: PropTypes.string
 // };
 
-export default Account
+export default Account;

@@ -29,6 +29,6 @@ export default function loginReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

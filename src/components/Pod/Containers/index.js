@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Containers extends Component {
     render() {
-        const arrContainersGetPodReducer = this.props.GetPodReducer.data.containers ? this.props.GetPodReducer.data.containers.sort(function (a) {
+        const arrContainersGetPodReducer = this.props.GetPodReducer.data.containers ? this.props.GetPodReducer.data.containers.sort(a => {
             return a.status ? a.status.state.toUpperCase() === 'Running'.toUpperCase() : a.status;
         }) : [];
         return (

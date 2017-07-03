@@ -35,6 +35,6 @@ export default function signUpReducer(state = {
             emailUser: action.emailUser
         });
     default:
-        return state
+        return state;
     }
 }

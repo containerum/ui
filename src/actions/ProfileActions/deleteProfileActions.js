@@ -34,17 +34,17 @@ export function deleteProfile() {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failDeleteProfile(response.data.message))
+                dispatch(failDeleteProfile(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestDeleteProfile() {
     return {
         type: PROFILE_DELETE_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveDeleteProfile(data) {
@@ -52,7 +52,7 @@ function receiveDeleteProfile(data) {
         type: PROFILE_DELETE_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failDeleteProfile(message) {
@@ -60,5 +60,5 @@ function failDeleteProfile(message) {
         type: PROFILE_DELETE_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

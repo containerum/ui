@@ -27,17 +27,17 @@ export function convertToCompany(data) {
                 console.log(response);
                 dispatch(receiveConvertToCompany());
             } else {
-                dispatch(errorConvertToCompany(response.data.message))
+                dispatch(errorConvertToCompany(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestConvertToCompany() {
     return {
         type: CONVERT_TO_COMPANY_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveConvertToCompany(data) {
@@ -45,7 +45,7 @@ function receiveConvertToCompany(data) {
         type: CONVERT_TO_COMPANY_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function errorConvertToCompany(message) {
@@ -53,5 +53,5 @@ function errorConvertToCompany(message) {
         type: CONVERT_TO_COMPANY_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

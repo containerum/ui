@@ -28,6 +28,6 @@ export default function ServicesReducer(state = {
             statusError: action.status
         });
     default:
-        return state
+        return state;
     }
 }

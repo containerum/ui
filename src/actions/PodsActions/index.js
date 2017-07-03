@@ -36,7 +36,7 @@ export function getPods(namespaceName, idDeployment) {
                 const filterDepData = [];
                 response.data.map(item => {
                     return Object.keys(item.labels).map(label => {
-                        if(label === shaDeployment256 && item.labels[label] === idDeployment) {
+                        if (label === shaDeployment256 && item.labels[label] === idDeployment) {
                             filterDepData.push(item);
                         }
                         return item;
@@ -47,17 +47,17 @@ export function getPods(namespaceName, idDeployment) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetPods(response.data.message))
+                dispatch(failGetPods(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestGetPods() {
     return {
         type: PODS_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveGetPods(data) {
@@ -65,7 +65,7 @@ function receiveGetPods(data) {
         type: PODS_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failGetPods(message) {
@@ -73,5 +73,5 @@ function failGetPods(message) {
         type: PODS_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

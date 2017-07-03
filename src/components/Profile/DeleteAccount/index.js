@@ -31,23 +31,12 @@ class DeleteAccount extends Component {
             errorMsg: '',
             successMsg: ''
         };
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-    }
-    openModal() {
-        this.setState({modalIsOpen: true});
-    }
-    closeModal() {
-        this.setState({modalIsOpen: false});
-    }
-    handleOnClickDeleteProfile(e) {
-        e.preventDefault();
-        const { dispatch } = this.props;
-        dispatch(deleteProfile());
+        this.handleClickOpenModal = this.handleClickOpenModal.bind(this);
+        this.handleClickCloseModal = this.handleClickCloseModal.bind(this);
     }
     componentWillReceiveProps(nextProps) {
-        let getAlert = document.getElementById('failDeleteAlert');
-        let getSuccessfulAlert = document.getElementById('successfulDeleteAlert');
+        const getAlert = document.getElementById('failDeleteAlert');
+        const getSuccessfulAlert = document.getElementById('successfulDeleteAlert');
         if (nextProps.DeleteProfileReducer.data) {
             this.setState({
                 ...this.state,
@@ -64,6 +53,17 @@ class DeleteAccount extends Component {
             getAlert.style.display = 'none';
             getSuccessfulAlert.style.display = 'none';
         }
+    }
+    handleOnClickDeleteProfile(e) {
+        e.preventDefault();
+        const { dispatch } = this.props;
+        dispatch(deleteProfile());
+    }
+    handleClickCloseModal() {
+        this.setState({ modalIsOpen: false });
+    }
+    handleClickOpenModal() {
+        this.setState({ modalIsOpen: true });
     }
     render() {
         return (
@@ -84,42 +84,48 @@ class DeleteAccount extends Component {
                             <tr>
                                 <td>
                                 </td>
-                                <td style={{width: '200px'}}>
-                                    <button onClick={this.openModal} className='btn btn-block c-btn-green' type='submit'>Delete</button>
+                                <td style={{ width: '200px' }}>
+                                    <button
+                                        onClick={this.handleClickOpenModal}
+                                        className="btn btn-block c-btn-green"
+                                        type="submit"
+                                    >
+                                        Delete
+                                    </button>
                                     <Modal
                                         isOpen={this.state.modalIsOpen}
-                                        onRequestClose={this.closeModal}
+                                        onRequestClose={this.handleClickCloseModal}
                                         style={customStyles}
-                                        contentLabel='Delete'
+                                        contentLabel="Delete"
                                     >
                                         <h3 className="text-left">Delete Account</h3>
                                         <p className="text-left">
                                             Account Deleting is irreversible. Enter your Containerum password to confirm <br/>
                                             you want to permanently delete this account and all included data.
                                         </p>
-                                        <div id='failDeleteAlert' className='alert alert-danger mb-4 c-alert-danger'>
+                                        <div id="failDeleteAlert" className="alert alert-danger mb-4 c-alert-danger">
                                             { this.state.errorMsg }
                                         </div>
-                                        <div id='successfulDeleteAlert' className='alert alert-success mb-4 c-alert-success'>
+                                        <div id="successfulDeleteAlert" className="alert alert-success mb-4 c-alert-success">
                                             { this.state.successMsg }
                                         </div>
-                                        <div onClick={this.closeModal} className="i-close"></div>
+                                        <div onClick={this.handleClickCloseModal} className="i-close"></div>
                                         <form onSubmit={this.handleOnClickDeleteProfile.bind(this)}>
-                                            <div className='card-block p-5 i-card-block-padding-2'>
-                                                <div className='form-group i-mb-20 c-has-feedback-left'>
+                                            <div className="card-block p-5 i-card-block-padding-2">
+                                                <div className="form-group i-mb-20 c-has-feedback-left">
                                                     <input
-                                                        ref='password'
-                                                        id='password'
-                                                        required='required'
-                                                        type='password'
-                                                        className='form-control'
-                                                        placeholder='Password'
+                                                        ref="password"
+                                                        id="password"
+                                                        required="required"
+                                                        type="password"
+                                                        className="form-control"
+                                                        placeholder="Password"
                                                     />
-                                                    <i className='c-form-control-icon fa fa-tag fa-1'></i>
+                                                    <i className="c-form-control-icon fa fa-tag fa-1"></i>
                                                 </div>
                                                 <div>
-                                                    <button type='submit' className='btn pull-right c-btn-green'>Delete</button>
-                                                    <button className='btn pull-right c-btn-green' onClick={this.closeModal}>Cancel</button>
+                                                    <button type="submit" className="btn pull-right c-btn-green">Delete</button>
+                                                    <button className="btn pull-right c-btn-green" onClick={this.handleClickCloseModal}>Cancel</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -140,10 +146,10 @@ DeleteAccount.propTypes = {
     dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         DeleteProfileReducer: state.DeleteProfileReducer
-    }
+    };
 }
 
 export default connect(mapStateToProps)(DeleteAccount);

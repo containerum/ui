@@ -17,9 +17,9 @@ export function ConfirmEmail(creds) {
         dispatch(requestEmailConfirm());
         return axios.post(
             WEB_API + '/api/password_reset',
-            {email: creds.email},
-            {validateStatus: (status) =>
-                status >= 200 && status <= 500
+            { email: creds.email },
+            {
+                validateStatus: (status) => status >= 200 && status <= 500
             }
         )
         .then(response => {
@@ -28,12 +28,12 @@ export function ConfirmEmail(creds) {
                 dispatch(receiveConfirm(creds.email));
                 browserHistory.push('/ResetPassword');
             } else if (response.status === 400) {
-                dispatch(errorEmailComfirm('Email is not valid'))
+                dispatch(errorEmailComfirm('Email is not valid'));
             } else {
-                dispatch(errorEmailComfirm(response.data.message))
+                dispatch(errorEmailComfirm(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function receiveConfirm(emailUser) {
@@ -42,7 +42,7 @@ function receiveConfirm(emailUser) {
         isFetching: false,
         isConfirmed: true,
         emailUser
-    }
+    };
 }
 
 function requestEmailConfirm() {
@@ -50,7 +50,7 @@ function requestEmailConfirm() {
         type: EMAIL_CONFIRM_REQUEST,
         isFetching: true,
         isConfirmed: false
-    }
+    };
 }
 
 function receiveEmailConfirm(data) {
@@ -59,7 +59,7 @@ function receiveEmailConfirm(data) {
         isFetching: false,
         isConfirmed: true,
         data
-    }
+    };
 }
 
 function errorEmailComfirm(message) {
@@ -68,5 +68,5 @@ function errorEmailComfirm(message) {
         isFetching: false,
         isConfirmed: false,
         message
-    }
+    };
 }

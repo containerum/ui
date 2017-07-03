@@ -26,6 +26,6 @@ export default function DeleteProfileReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

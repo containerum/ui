@@ -19,20 +19,20 @@ class InputEmail extends Component {
         const refValue = this.props.refValue ? this.props.refValue : 'inputEmail';
         return (
             <div>
-                <label className='sr-only' htmlFor='Username'>Email</label>
-                <div className='form-group i-mb-20 c-has-feedback-left'>
+                <label className="sr-only" htmlFor="Username">Email</label>
+                <div className="form-group i-mb-20 c-has-feedback-left">
                     <input
                         onChange={(event) => this.ValidationGetValueMail(event)}
                         ref={refValue}
-                        required='required'
+                        required="required"
                         autoFocus
-                        type='email'
-                        className='form-control'
-                        id='Username'
+                        type="email"
+                        className="form-control"
+                        id="Username"
                         placeholder={placeholder}
                         defaultValue={defaultUserEmail}
                     />
-                    <i className='c-form-control-icon fa fa-user'></i>
+                    <i className="c-form-control-icon fa fa-user"></i>
                 </div>
             </div>
         );

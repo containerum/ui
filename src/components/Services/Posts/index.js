@@ -9,7 +9,7 @@ class Posts extends Component {
         let isErrorContainer = "";
         if (this.props.servicesDataReducer.length === 0 || this.props.servicesStatusErrorReducer === 404) {
             isErrorContainer = <ButtonCreateService />;
-        } else if (this.props.deploymentsErrorMessageReducer) {
+        } else if (this.props.servicesErrorMessageReducer) {
             isErrorContainer = <ErrorServices errorMessage={this.props.servicesErrorMessageReducer} />;
         } else {
             isErrorContainer = <PostsServicesContainer

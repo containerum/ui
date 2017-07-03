@@ -21,7 +21,7 @@ export function getUserHashConfirm(userHash) {
             {
                 headers: {
                     // 'Content-Type': 'application/x-www-form-urlencode',
-                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Origin': '*'
                     // 'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
                 validateStatus: (status) => status >= 200 && status <= 500
@@ -36,17 +36,17 @@ export function getUserHashConfirm(userHash) {
             //     browserHistory.push('/Login');
             // }
             else {
-                dispatch(failGetUserHashConfirm(response.data.message))
+                dispatch(failGetUserHashConfirm(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestGetUserHashConfirm() {
     return {
         type: USER_HASH_CONFIRM_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveGetUserHashConfirm(data) {
@@ -54,7 +54,7 @@ function receiveGetUserHashConfirm(data) {
         type: USER_HASH_CONFIRM_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failGetUserHashConfirm(message) {
@@ -62,5 +62,5 @@ function failGetUserHashConfirm(message) {
         type: USER_HASH_CONFIRM_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

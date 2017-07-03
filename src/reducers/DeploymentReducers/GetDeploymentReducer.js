@@ -1,7 +1,7 @@
 import {
     DEPLOYMENT_REQUEST,
     DEPLOYMENT_SUCCESS,
-    DEPLOYMENT_FAILURE,
+    DEPLOYMENT_FAILURE
 } from '../../constants/DeploymentConstants';
 
 export default function GetDeploymentReducer(state = {
@@ -26,6 +26,6 @@ export default function GetDeploymentReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

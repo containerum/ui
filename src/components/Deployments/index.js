@@ -12,13 +12,13 @@ class Deployments extends Component {
         dispatch(getDeployments(this.props.idName));
     }
     componentWillUpdate(nextProps) {
-        if(nextProps.idName !== this.props.idName) {
+        if (nextProps.idName !== this.props.idName) {
             const { dispatch } = this.props;
             dispatch(getDeployments(this.props.idName));
         }
     }
     render() {
-        let isFetchingComponent = "";
+        let isFetchingComponent = '';
         if (this.props.DeploymentsReducer.isFetching === false) {
             isFetchingComponent =
                 <Posts
@@ -26,9 +26,9 @@ class Deployments extends Component {
                     deploymentsErrorMessageReducer={this.props.DeploymentsReducer.errorMessage}
                     deploymentsStatusErrorReducer={this.props.DeploymentsReducer.statusError}
                     idName={this.props.idName}
-                />
+                />;
         } else {
-            isFetchingComponent = <Spinner />
+            isFetchingComponent = <Spinner />;
         }
 
         return (
@@ -43,10 +43,11 @@ Deployments.propTypes = {
     dispatch: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
     statusError: PropTypes.number,
+    DeploymentsReducer: PropTypes.object,
     idName: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { DeploymentsReducer } = state;
     const { errorMessage } = DeploymentsReducer;
     const { statusError } = DeploymentsReducer;
@@ -55,7 +56,7 @@ function mapStateToProps (state) {
         DeploymentsReducer,
         errorMessage,
         statusError
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Deployments)
+export default connect(mapStateToProps)(Deployments);

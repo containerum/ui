@@ -16,10 +16,9 @@ export function LOGINUser(creds) {
         dispatch(requestLOGIN(creds));
         return axios.post(
             WEB_API + '/api/login',
-            {username: creds.username, password: creds.password},
+            { username: creds.username, password: creds.password },
             {
-                validateStatus: (status) =>
-                status >= 200 && status <= 505
+                validateStatus: (status) => status >= 200 && status <= 505
             }
         )
             .then(response => {
@@ -28,16 +27,16 @@ export function LOGINUser(creds) {
                     localStorage.setItem('id_token', response.data.token);
                     browserHistory.push('/');
                 } else if (response.status === 401) {
-                    dispatch(LOGINError('Email or Password is not valid'))
+                    dispatch(LOGINError('Email or Password is not valid'));
                 } else {
-                    if(typeof response.data.message === 'string') {
-                        dispatch(LOGINError(response.data.message))
+                    if (typeof response.data.message === 'string') {
+                        dispatch(LOGINError(response.data.message));
                     } else {
-                        dispatch(LOGINError(response.data.message.password))
+                        dispatch(LOGINError(response.data.message.password));
                     }
                 }
-            }).catch(err => console.log(err))
-    }
+            }).catch(err => console.log(err));
+    };
 }
 
 function requestLOGIN(creds) {
@@ -46,7 +45,7 @@ function requestLOGIN(creds) {
         isFetching: true,
         isAuthenticated: false,
         creds
-    }
+    };
 }
 
 function receiveLOGIN(response) {
@@ -55,7 +54,7 @@ function receiveLOGIN(response) {
         isFetching: false,
         isAuthenticated: true,
         id_token: response.data.token
-    }
+    };
 }
 
 function LOGINError(message) {
@@ -64,5 +63,5 @@ function LOGINError(message) {
         isFetching: false,
         isAuthenticated: false,
         message
-    }
+    };
 }

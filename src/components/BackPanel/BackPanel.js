@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 class BackPanel extends Component {
     handleOnClickBack() {
         browserHistory.push('/Namespaces/default');
-    }Support
+    }
     render() {
         console.log(document.referrer);
         return (
@@ -13,7 +13,7 @@ class BackPanel extends Component {
                     <div onClick={this.handleOnClickBack.bind(this)}>
                         <div className="i-label-back">
                             <svg
-                                transform='rotate(180)'
+                                transform="rotate(180)"
                                 x="0px" y="0px" width="20px"
                                 height="20px" viewBox="0 0 24 24"
                                 focusable="false" fill="#636c72">
@@ -33,4 +33,4 @@ class BackPanel extends Component {
     }
 }
 
-export default BackPanel
+export default BackPanel;

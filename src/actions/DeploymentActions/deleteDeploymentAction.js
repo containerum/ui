@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import {
     DELETE_DEPLOYMENT_REQUEST,
     DELETE_DEPLOYMENT_SUCCESS,
-    DELETE_DEPLOYMENT_FAILURE,
+    DELETE_DEPLOYMENT_FAILURE
 } from '../../constants/DeploymentConstants';
 
 import {
@@ -36,17 +36,19 @@ export function deleteDeployment(namespaceName, deploymentName) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
                 } else {
-                    dispatch(failDeleteDeployment(response.data.message))
+                    dispatch(failDeleteDeployment(response.data.message));
                 }
-            }).catch(err => {console.log(err); dispatch(failDeleteDeployment(err.toString()))})
-    }
+            }).catch(err => {
+                console.log(err); dispatch(failDeleteDeployment(err.toString()));
+            });
+    };
 }
 
 function requestDeleteDeployment() {
     return {
         type: DELETE_DEPLOYMENT_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveDeleteDeployment(status, deploymentName) {
@@ -55,7 +57,7 @@ function receiveDeleteDeployment(status, deploymentName) {
         isFetching: false,
         deploymentName,
         status
-    }
+    };
 }
 
 function failDeleteDeployment(message) {
@@ -63,5 +65,5 @@ function failDeleteDeployment(message) {
         type: DELETE_DEPLOYMENT_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

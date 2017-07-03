@@ -36,17 +36,19 @@ export function deleteService(namespaceName, serviceName) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failDeleteService(response.data.message))
+                dispatch(failDeleteService(response.data.message));
             }
-        }).catch(err => {console.log(err); dispatch(failDeleteService(err.toString()))})
-    }
+        }).catch(err => {
+            console.log(err); dispatch(failDeleteService(err.toString()));
+        });
+    };
 }
 
 function requestDeleteService() {
     return {
         type: DELETE_SERVICE_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveDeleteService(status, serviceName) {
@@ -55,7 +57,7 @@ function receiveDeleteService(status, serviceName) {
         isFetching: false,
         serviceName,
         status
-    }
+    };
 }
 
 function failDeleteService(message) {
@@ -63,5 +65,5 @@ function failDeleteService(message) {
         type: DELETE_SERVICE_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

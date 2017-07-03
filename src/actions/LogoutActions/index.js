@@ -13,11 +13,11 @@ export function logoutUser() {
         try {
             dispatch(requestLogout());
             localStorage.removeItem('id_token');
-            dispatch(receiveLogout())
+            dispatch(receiveLogout());
         } catch (e) {
             dispatch(failureLogout(e));
         }
-    }
+    };
 }
 
 function requestLogout() {
@@ -25,7 +25,7 @@ function requestLogout() {
         type: LOGOUT_REQUEST,
         isFetching: true,
         isAuthenticated: true
-    }
+    };
 }
 
 function receiveLogout() {
@@ -33,7 +33,7 @@ function receiveLogout() {
         type: LOGOUT_SUCCESS,
         isFetching: false,
         isAuthenticated: false
-    }
+    };
 }
 
 function failureLogout(message) {
@@ -42,5 +42,5 @@ function failureLogout(message) {
         isFetching: false,
         isAuthenticated: false,
         message
-    }
+    };
 }

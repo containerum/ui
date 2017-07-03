@@ -12,7 +12,7 @@ class Services extends Component {
         dispatch(getServices(this.props.idName));
     }
     render() {
-        let isFetchingComponent = "";
+        let isFetchingComponent = '';
         if (this.props.ServicesReducer.isFetching === false) {
             isFetchingComponent =
                 <Posts
@@ -20,7 +20,7 @@ class Services extends Component {
                     servicesErrorMessageReducer={this.props.ServicesReducer.errorMessage}
                     servicesStatusErrorReducer={this.props.ServicesReducer.statusError}
                     idName={this.props.idName}
-                />
+                />;
         }
         // else {
         //     isFetchingComponent = <Spinner />
@@ -37,17 +37,18 @@ class Services extends Component {
 Services.propTypes = {
     dispatch: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
+    ServicesReducer: PropTypes.object,
     idName: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { ServicesReducer } = state;
     const { errorMessage } = ServicesReducer;
 
     return {
         errorMessage,
         ServicesReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Services)
+export default connect(mapStateToProps)(Services);

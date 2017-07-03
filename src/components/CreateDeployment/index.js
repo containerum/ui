@@ -32,12 +32,12 @@ CreateDeployment.propTypes = {
     dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { CreateDeploymentReducer } = state;
 
     return {
         CreateDeploymentReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(CreateDeployment)
+export default connect(mapStateToProps)(CreateDeployment);

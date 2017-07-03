@@ -21,6 +21,6 @@ export default function CreateServiceReducer(state = {
             isFetching: action.isFetching
         });
     default:
-        return state
+        return state;
     }
 }

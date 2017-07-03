@@ -6,6 +6,6 @@ export default class NavLink extends Component {
         return <Link
             {...this.props}
             // activeClassName='active'
-        />
+        />;
     }
 }

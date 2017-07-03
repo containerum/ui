@@ -24,7 +24,7 @@ class Email extends Component {
                 ...this.state,
                 errorMsg: nextProps.EmailUpdateReducer.errorMessage
             });
-            let emailUpdateAlert = document.getElementById('emailUpdateAlert');
+            const emailUpdateAlert = document.getElementById('emailUpdateAlert');
             emailUpdateAlert.style.display = 'block';
         }
         if (nextProps.EmailUpdateReducer.data) {
@@ -32,7 +32,7 @@ class Email extends Component {
                 ...this.state,
                 successMsg: nextProps.EmailUpdateReducer.data
             });
-            let successfulEmailUpdate = document.getElementById('successfulEmailUpdate');
+            const successfulEmailUpdate = document.getElementById('successfulEmailUpdate');
             successfulEmailUpdate.style.display = 'block';
         }
     }
@@ -52,7 +52,7 @@ class Email extends Component {
                 ...this.state,
                 errorMsg: 'Email is not valid'
             });
-            let emailUpdateAlert = document.getElementById('emailUpdateAlert');
+            const emailUpdateAlert = document.getElementById('emailUpdateAlert');
             emailUpdateAlert.style.display = 'block';
         }
     }
@@ -75,53 +75,53 @@ class Email extends Component {
             <div className="card-block c-table-card-block">
                 <table className="table i-table-card">
                     <tbody>
-                    <tr>
-                        <td className="first-td-width">
-                            <h2 id="email">
-                                <a name="email" className="anchor" href="#email">Email</a>
-                            </h2> <br/>
-                            <p>Email changing</p>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td style={{width: '400px'}}>
-                            <form onSubmit={this.handleOnSubmitUpdateEmail.bind(this)}>
-                                <div id='emailUpdateAlert' className='alert alert-danger mb-4 c-alert-danger'>
-                                    { this.state.errorMsg }
-                                </div>
-                                <div id='successfulEmailUpdate' className='alert alert-success mb-4 c-alert-success'>
-                                    { this.state.successMsg }
-                                </div>
-                                <div className="form-group i-mb-20 c-has-feedback-left">
-                                    <InputEmail
-                                        placeholder="New email"
-                                        refValue="new_email"
-                                        handleEmail={
-                                            (email, isValidEmail) =>
-                                                this.checkValidateNewEmailInput(email, isValidEmail)
-                                        }
-                                    />
-                                </div>
-                                <div className="form-group i-mb-20 c-has-feedback-left">
-                                    <InputEmail
-                                        placeholder="Confirm email"
-                                        refValue="confirm_email"
-                                        handleEmail={
-                                            (email, isValidEmail) =>
-                                                this.checkValidateConfirmEmailInput(email, isValidEmail)
-                                        }
-                                    />
-                                </div>
-                                <button type="submit" className="btn btn-block c-btn-green">Update Email</button>
-                            </form>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td className="first-td-width">
+                                <h2 id="email">
+                                    <a name="email" className="anchor" href="#email">Email</a>
+                                </h2> <br/>
+                                <p>Email changing</p>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td style={{ width: '400px' }}>
+                                <form onSubmit={this.handleOnSubmitUpdateEmail.bind(this)}>
+                                    <div id="emailUpdateAlert" className="alert alert-danger mb-4 c-alert-danger">
+                                        { this.state.errorMsg }
+                                    </div>
+                                    <div id="successfulEmailUpdate" className="alert alert-success mb-4 c-alert-success">
+                                        { this.state.successMsg }
+                                    </div>
+                                    <div className="form-group i-mb-20 c-has-feedback-left">
+                                        <InputEmail
+                                            placeholder="New email"
+                                            refValue="new_email"
+                                            handleEmail={
+                                                (email, isValidEmail) =>
+                                                    this.checkValidateNewEmailInput(email, isValidEmail)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group i-mb-20 c-has-feedback-left">
+                                        <InputEmail
+                                            placeholder="Confirm email"
+                                            refValue="confirm_email"
+                                            handleEmail={
+                                                (email, isValidEmail) =>
+                                                    this.checkValidateConfirmEmailInput(email, isValidEmail)
+                                            }
+                                        />
+                                    </div>
+                                    <button type="submit" className="btn btn-block c-btn-green">Update Email</button>
+                                </form>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -133,10 +133,10 @@ Email.propTypes = {
     dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         EmailUpdateReducer: state.EmailUpdateReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Email)
+export default connect(mapStateToProps)(Email);

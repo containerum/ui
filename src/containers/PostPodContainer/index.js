@@ -27,9 +27,9 @@ class PostPodContainer extends Component {
                         <Conditions GetPodReducer={this.props.GetPodReducer} />
                     </TabPanel>
                     {/*<TabPanel>*/}
-                        {/*<div className="container-fluid pt-3">*/}
-                            {/*Settings*/}
-                        {/*</div>*/}
+                    {/*<div className="container-fluid pt-3">*/}
+                    {/*Settings*/}
+                    {/*</div>*/}
                     {/*</TabPanel>*/}
                 </Tabs>
             </div>

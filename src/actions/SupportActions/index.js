@@ -1,5 +1,4 @@
-import axios from 'axios';
-axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token');
+// import axios from 'axios';
 
 import {
     SUPPORT_REQUEST,
@@ -15,8 +14,8 @@ export function sendSupport(sendObj) {
     return dispatch => {
         dispatch(requestGetCreateDeployment(sendObj));
         dispatch(receiveGetCreateDeployment());
-        dispatch(failGetCreateDeployment())
-    }
+        dispatch(failGetCreateDeployment());
+    };
 }
 
 function requestGetCreateDeployment(data) {
@@ -24,19 +23,19 @@ function requestGetCreateDeployment(data) {
         type: SUPPORT_REQUEST,
         isFetching: true,
         data
-    }
+    };
 }
 
 function receiveGetCreateDeployment() {
     return {
         type: SUPPORT_SUCCESS,
-        isFetching: false,
-    }
+        isFetching: false
+    };
 }
 
 function failGetCreateDeployment() {
     return {
         type: SUPPORT_FAILURE,
         isFetching: false
-    }
+    };
 }

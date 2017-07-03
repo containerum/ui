@@ -38,6 +38,6 @@ export default function confirmEmailReducer(state = {
             emailUser: action.emailUser
         });
     default:
-        return state
+        return state;
     }
 }

@@ -36,17 +36,19 @@ export function deletePod(namespaceName, podName) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
                 } else {
-                    dispatch(failDeletePod(response.data.message))
+                    dispatch(failDeletePod(response.data.message));
                 }
-            }).catch(err => {console.log(err); dispatch(failDeletePod(err.toString()))})
-    }
+            }).catch(err => {
+                console.log(err); dispatch(failDeletePod(err.toString()));
+            });
+    };
 }
 
 function requestDeletePod() {
     return {
         type: DELETE_POD_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveDeletePod(status, podName) {
@@ -55,7 +57,7 @@ function receiveDeletePod(status, podName) {
         isFetching: false,
         podName,
         status
-    }
+    };
 }
 
 function failDeletePod(message) {
@@ -63,5 +65,5 @@ function failDeletePod(message) {
         type: DELETE_POD_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

@@ -36,17 +36,17 @@ export function getService(namespaceName, serviceName) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetService(response.data.message))
+                dispatch(failGetService(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestGetService() {
     return {
         type: SERVICE_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveGetService(data) {
@@ -54,7 +54,7 @@ function receiveGetService(data) {
         type: SERVICE_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failGetService(message) {
@@ -62,5 +62,5 @@ function failGetService(message) {
         type: SERVICE_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

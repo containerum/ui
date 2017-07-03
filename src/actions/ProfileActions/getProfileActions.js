@@ -36,17 +36,17 @@ export function getProfile() {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetProfile(response.data.message))
+                dispatch(failGetProfile(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestGetProfile() {
     return {
         type: PROFILE_GET_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveGetProfile(data) {
@@ -54,7 +54,7 @@ function receiveGetProfile(data) {
         type: PROFILE_GET_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failGetProfile(message) {
@@ -62,5 +62,5 @@ function failGetProfile(message) {
         type: PROFILE_GET_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

@@ -1,17 +1,18 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 export default function requireAuthentication(Component) {
     class AuthenticatedComponent extends Component {
         componentWillMount() {
             if (this.props.isAuthenticated === false) {
-                browserHistory.push('/Login')
+                browserHistory.push('/Login');
             }
         }
         componentWillUpdate(nextProps) {
             if (nextProps.isAuthenticated === false) {
-                browserHistory.push('/Login')
+                browserHistory.push('/Login');
             }
         }
         render() {
@@ -22,9 +23,13 @@ export default function requireAuthentication(Component) {
                         : null
                     }
                 </div>
-            )
+            );
         }
     }
+
+    AuthenticatedComponent.propTypes = {
+        isAuthenticated: PropTypes.bool
+    };
 
     function mapStateToProps(state) {
         const { loginReducer } = state;
@@ -32,8 +37,8 @@ export default function requireAuthentication(Component) {
 
         return {
             isAuthenticated
-        }
+        };
     }
 
-    return connect(mapStateToProps)(AuthenticatedComponent)
+    return connect(mapStateToProps)(AuthenticatedComponent);
 }

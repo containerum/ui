@@ -15,7 +15,7 @@ class Deployment extends Component {
         dispatch(getPods(this.props.params.idName, this.props.params.idDep));
     }
     render() {
-        let isFetchingComponent = "";
+        let isFetchingComponent = '';
         if (this.props.GetDeploymentReducer.isFetching === false) {
             isFetchingComponent =
                 <Post
@@ -23,9 +23,9 @@ class Deployment extends Component {
                     errorMessage={this.props.GetDeploymentReducer.errorMessage}
                     idName={this.props.params.idName}
                     idDep={this.props.params.idDep}
-                />
+                />;
         } else {
-            isFetchingComponent = <Spinner />
+            isFetchingComponent = <Spinner />;
         }
         return (
             <div>
@@ -37,17 +37,19 @@ class Deployment extends Component {
 
 Deployment.propTypes = {
     dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object,
+    GetDeploymentReducer: PropTypes.object,
     errorMessage: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { GetDeploymentReducer } = state;
     const { errorMessage } = GetDeploymentReducer;
 
     return {
         errorMessage,
         GetDeploymentReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Deployment)
+export default connect(mapStateToProps)(Deployment);

@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import {
     DEPLOYMENT_REQUEST,
     DEPLOYMENT_SUCCESS,
-    DEPLOYMENT_FAILURE,
+    DEPLOYMENT_FAILURE
 } from '../../constants/DeploymentConstants';
 
 import {
@@ -36,17 +36,17 @@ export function getDeployment(namespaceName, deploymentName) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
                 } else {
-                    dispatch(failGetDeployment(response.data.message))
+                    dispatch(failGetDeployment(response.data.message));
                 }
-            }).catch(err => console.log(err))
-    }
+            }).catch(err => console.log(err));
+    };
 }
 
 function requestGetDeployment() {
     return {
         type: DEPLOYMENT_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveGetDeployment(data) {
@@ -54,7 +54,7 @@ function receiveGetDeployment(data) {
         type: DEPLOYMENT_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failGetDeployment(message) {
@@ -62,5 +62,5 @@ function failGetDeployment(message) {
         type: DEPLOYMENT_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

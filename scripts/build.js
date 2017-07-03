@@ -22,7 +22,7 @@ var measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild;
 var printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 
 const WEB_API = process.env.WEB_API || 'http://web.api.containerum.io:5000';
-const webApi = `export const WEB_API = '${WEB_API}';`;
+const webApi = `export const WEB_API = '${WEB_API}';\n`;
 fs.open('./src/constants/WebApi.js', "w+", function(err, file_handle) {
   fs.write(file_handle, webApi);
 });

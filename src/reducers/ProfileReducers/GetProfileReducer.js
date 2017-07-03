@@ -26,6 +26,6 @@ export default function GetProfileReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

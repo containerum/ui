@@ -22,9 +22,9 @@ class PostServiceContainer extends Component {
                         {/*<PodsList serviceReducer={this.props.serviceReducer} />*/}
                     </TabPanel>
                     {/*<TabPanel>*/}
-                        {/*<div className="container-fluid pt-3">*/}
-                            {/*Settings*/}
-                        {/*</div>*/}
+                    {/*<div className="container-fluid pt-3">*/}
+                    {/*Settings*/}
+                    {/*</div>*/}
                     {/*</TabPanel>*/}
                 </Tabs>
             </div>

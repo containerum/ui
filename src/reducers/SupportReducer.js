@@ -23,6 +23,6 @@ export default function SupportReducer(state = {
             isFetching: action.isFetching
         });
     default:
-        return state
+        return state;
     }
 }

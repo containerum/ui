@@ -15,7 +15,7 @@ class Pod extends Component {
         dispatch(getPod(this.props.params.idName, this.props.params.idPod));
     }
     render() {
-        let isFetchingComponent = "";
+        let isFetchingComponent = '';
         if (this.props.GetPodReducer.isFetching === false) {
             isFetchingComponent =
                 <div>
@@ -33,9 +33,9 @@ class Pod extends Component {
                         idPod={this.props.params.idPod}
                         idDep={this.props.params.idDep}
                     />
-                </div>
+                </div>;
         } else {
-            isFetchingComponent = <Spinner />
+            isFetchingComponent = <Spinner />;
         }
         return (
             <div>
@@ -47,17 +47,19 @@ class Pod extends Component {
 
 Pod.propTypes = {
     dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object,
+    GetPodReducer: PropTypes.object,
     errorMessage: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { GetPodReducer } = state;
     const { errorMessage } = GetPodReducer;
 
     return {
         errorMessage,
         GetPodReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Pod)
+export default connect(mapStateToProps)(Pod);

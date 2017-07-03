@@ -26,17 +26,17 @@ export function subscriptionsEmail(data) {
                 console.log(response);
                 dispatch(receiveEmailSubscriptions());
             } else {
-                dispatch(errorEmailSubscriptions(response.data.message))
+                dispatch(errorEmailSubscriptions(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestEmailSubscriptions() {
     return {
         type: EMAIL_SUBSCRIPTIONS_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveEmailSubscriptions(data) {
@@ -44,7 +44,7 @@ function receiveEmailSubscriptions(data) {
         type: EMAIL_SUBSCRIPTIONS_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function errorEmailSubscriptions(message) {
@@ -52,5 +52,5 @@ function errorEmailSubscriptions(message) {
         type: EMAIL_SUBSCRIPTIONS_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

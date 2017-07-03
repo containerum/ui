@@ -28,6 +28,6 @@ export default function DeleteServiceReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

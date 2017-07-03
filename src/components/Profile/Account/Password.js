@@ -29,7 +29,7 @@ class Password extends Component {
                 ...this.state,
                 errorMsg: nextProps.ChangePasswordReducer.errorMessage
             });
-            let getAlert = document.getElementById('loginAlert');
+            const getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
         }
         if (nextProps.ChangePasswordReducer.data) {
@@ -37,15 +37,15 @@ class Password extends Component {
                 ...this.state,
                 successMsg: nextProps.ChangePasswordReducer.data
             });
-            let getSuccessfulAlert = document.getElementById('successfulAlert');
+            const getSuccessfulAlert = document.getElementById('successfulAlert');
             getSuccessfulAlert.style.display = 'block';
         }
     }
     openModal() {
-        this.setState({modalIsOpen: true});
+        this.setState({ modalIsOpen: true });
     }
     closeModal() {
-        this.setState({modalIsOpen: false});
+        this.setState({ modalIsOpen: false });
     }
     submitUpdatedPasswordData(e) {
         e.preventDefault();
@@ -65,7 +65,7 @@ class Password extends Component {
                 password: current_password,
                 new_password: new_password
             };
-            let getAlert = document.getElementById('loginAlert');
+            const getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'none';
             // console.log(updatePasswordData);
             dispatch(changePassword(updatePasswordData));
@@ -74,7 +74,7 @@ class Password extends Component {
                 ...this.state,
                 errorMsg: 'Password is not valid'
             });
-            let getAlert = document.getElementById('loginAlert');
+            const getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
         }
     }
@@ -104,67 +104,67 @@ class Password extends Component {
             <div className="card-block c-table-card-block">
                 <table className="table i-table-card">
                     <tbody>
-                    <tr>
-                        <td className="first-td-width">
-                            <h2 id="password">
-                                <a name="password" className="anchor" href="#password">Password</a>
-                            </h2> <br/>
-                            <p>Password changing</p>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td style={{width: '400px'}}>
-                            <form onSubmit={this.submitUpdatedPasswordData.bind(this)}>
-                                <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>
-                                    { this.state.errorMsg }
-                                </div>
-                                <div id='successfulAlert' className='alert alert-success mb-4 c-alert-success'>
-                                    { this.state.successMsg }
-                                </div>
-                                <div className="form-group i-mb-20 c-has-feedback-left">
-                                    <InputPassword
-                                        placeholder="Current password"
-                                        refValue="current_password"
-                                        ref="current_password"
-                                        handlePassword={
-                                            (password, isValidPassword) =>
-                                                this.checkCurrentPassword(password, isValidPassword)
-                                        }
-                                    />
-                                </div>
-                                <div className="form-group i-mb-20 c-has-feedback-left">
-                                    <InputPassword
-                                        placeholder="New password"
-                                        small="Password must be 8 or more characters"
-                                        refValue="new_password"
-                                        ref="new_password"
-                                        handlePassword={
-                                            (password, isValidPassword) =>
-                                                this.checkNewPassword(password, isValidPassword)
-                                        }
-                                    />
-                                </div>
-                                <div className="form-group i-mb-20 c-has-feedback-left">
-                                    <InputPassword
-                                        placeholder="Confirm new password"
-                                        refValue="repeat_password"
-                                        ref="repeat_password"
-                                        handlePassword={
-                                            (password, isValidPassword) =>
-                                                this.checkRepeatPassword(password, isValidPassword)
-                                        }
-                                    />
-                                </div>
-                                <button type="submit" className="btn btn-block c-btn-green">Update Password</button>
-                            </form>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td className="first-td-width">
+                                <h2 id="password">
+                                    <a name="password" className="anchor" href="#password">Password</a>
+                                </h2> <br/>
+                                <p>Password changing</p>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td style={{ width: '400px' }}>
+                                <form onSubmit={this.submitUpdatedPasswordData.bind(this)}>
+                                    <div id="loginAlert" className="alert alert-danger mb-4 c-alert-danger">
+                                        { this.state.errorMsg }
+                                    </div>
+                                    <div id="successfulAlert" className="alert alert-success mb-4 c-alert-success">
+                                        { this.state.successMsg }
+                                    </div>
+                                    <div className="form-group i-mb-20 c-has-feedback-left">
+                                        <InputPassword
+                                            placeholder="Current password"
+                                            refValue="current_password"
+                                            ref="current_password"
+                                            handlePassword={
+                                                (password, isValidPassword) =>
+                                                    this.checkCurrentPassword(password, isValidPassword)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group i-mb-20 c-has-feedback-left">
+                                        <InputPassword
+                                            placeholder="New password"
+                                            small="Password must be 8 or more characters"
+                                            refValue="new_password"
+                                            ref="new_password"
+                                            handlePassword={
+                                                (password, isValidPassword) =>
+                                                    this.checkNewPassword(password, isValidPassword)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group i-mb-20 c-has-feedback-left">
+                                        <InputPassword
+                                            placeholder="Confirm new password"
+                                            refValue="repeat_password"
+                                            ref="repeat_password"
+                                            handlePassword={
+                                                (password, isValidPassword) =>
+                                                    this.checkRepeatPassword(password, isValidPassword)
+                                            }
+                                        />
+                                    </div>
+                                    <button type="submit" className="btn btn-block c-btn-green">Update Password</button>
+                                </form>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -177,10 +177,10 @@ Password.propTypes = {
     errorMessage: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     return {
         ChangePasswordReducer: state.ChangePasswordReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Password)
+export default connect(mapStateToProps)(Password);

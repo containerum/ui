@@ -21,27 +21,27 @@ class CommonInfoDropdown extends Component {
                 </button>
                 <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow">
                     <NavLink className="dropdown-item" to={window.location.pathname}>
-                        <Translate content='header.dashboard'>Dashboard</Translate>
+                        <Translate content="header.dashboard">Dashboard</Translate>
                     </NavLink>
                     <NavLink className="dropdown-item" to={window.location.pathname}>
-                        <Translate content='header.volumes'>Volumes</Translate>
+                        <Translate content="header.volumes">Volumes</Translate>
                     </NavLink>
                     <NavLink className="dropdown-item" to={window.location.pathname}>
-                        <Translate content='header.images'>Images</Translate>
+                        <Translate content="header.images">Images</Translate>
                     </NavLink>
                     <div className="dropdown-divider"></div>
                     <a className="dropdown-item" target="_blank" href="http://blog.containerum.io/">
-                        <Translate content='header.blog'>Blog</Translate>
+                        <Translate content="header.blog">Blog</Translate>
                     </a>
                     <a className="dropdown-item" target="_blank" href="http://containerum.io/documentation/start-guide">
-                        <Translate content='header.documentation'>Documentation</Translate>
+                        <Translate content="header.documentation">Documentation</Translate>
                     </a>
                     <a className="dropdown-item" target="_blank" href="http://blog.containerum.io/">
-                        <Translate content='header.tutorials'>Tutorials</Translate>
+                        <Translate content="header.tutorials">Tutorials</Translate>
                     </a>
                     <div className="dropdown-divider"></div>
                     <NavLink className="dropdown-item" to={window.location.pathname}>
-                        <Translate content='header.support'>Support</Translate>
+                        <Translate content="header.support">Support</Translate>
                     </NavLink>
                 </div>
             </div>

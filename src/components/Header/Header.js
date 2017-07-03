@@ -17,14 +17,14 @@ class Header extends Component {
         this.props.onLoadProfileData();
     }
     handleClickLogo() {
-        if(this.props.idName) {
+        if (this.props.idName) {
             browserHistory.push('/Namespaces/' + this.props.idName);
         } else {
             browserHistory.push('/Namespaces/default');
         }
     }
     render() {
-        let userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : '';
+        const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : '';
         return (
             <div className="c-navbar">
                 <div className="navbar navbar-inverse navbar-toggleable-md i-hover-pointer">
@@ -42,7 +42,10 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    idName: PropTypes.string
+    idName: PropTypes.string,
+    onLogoutClick: PropTypes.func,
+    onLoadProfileData: PropTypes.func,
+    GetProfileReducer: PropTypes.object
 };
 
 function mapStateToProps(state) {
@@ -50,18 +53,18 @@ function mapStateToProps(state) {
         logoutReducer: state.logoutReducer,
         GetProfileReducer: state.GetProfileReducer,
         errorMessage: state.errorMessage
-    }
+    };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onLogoutClick: () => {
-            dispatch(logoutUser())
+            dispatch(logoutUser());
         },
         onLoadProfileData: () => {
-            dispatch(getProfile())
+            dispatch(getProfile());
         }
-    }
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

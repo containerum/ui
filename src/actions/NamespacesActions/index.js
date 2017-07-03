@@ -35,17 +35,17 @@ export function getNamespaces() {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetNamespaces(response.data.message))
+                dispatch(failGetNamespaces(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestGetNamespaces() {
     return {
         type: NAMESPACES_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveGetNamespaces(data) {
@@ -53,7 +53,7 @@ function receiveGetNamespaces(data) {
         type: NAMESPACES_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failGetNamespaces(message) {
@@ -61,5 +61,5 @@ function failGetNamespaces(message) {
         type: NAMESPACES_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

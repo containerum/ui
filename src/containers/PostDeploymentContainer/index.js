@@ -19,9 +19,9 @@ class PostDeploymentContainer extends Component {
                         <PodsList idDep={this.props.idDep} idName={this.props.idName} />
                     </TabPanel>
                     {/*<TabPanel>*/}
-                        {/*<div className="container-fluid pt-3">*/}
-                            {/*Settings*/}
-                        {/*</div>*/}
+                    {/*<div className="container-fluid pt-3">*/}
+                    {/*Settings*/}
+                    {/*</div>*/}
                     {/*</TabPanel>*/}
                 </Tabs>
             </div>

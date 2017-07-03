@@ -11,6 +11,13 @@ class PodsList extends Component {
         super();
         this.handleClickTR = this.handleClickTR.bind(this);
     }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.DeletePodReducer.status === 202 && nextProps.DeletePodReducer.podName) {
+            const id = `item_${nextProps.DeletePodReducer.podName}`;
+            const el = document.getElementById(id);
+            el ? el.remove() : el;
+        }
+    }
     handleClickDeletingPod(name) {
         const { dispatch } = this.props;
         dispatch(deletePod(this.props.idName, name));
@@ -18,15 +25,8 @@ class PodsList extends Component {
     handleClickTR(href) {
         browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + this.props.idDep + '/Pods/' + href);
     }
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.DeletePodReducer.status === 202 && nextProps.DeletePodReducer.podName) {
-            const id = `item_${nextProps.DeletePodReducer.podName}`;
-            const el = document.getElementById(id);
-            el ? el.remove() : el;
-        }
-    }
     render() {
-        const sortPodsReducer = this.props.PodsReducer.data.sort(function (a) {
+        const sortPodsReducer = this.props.PodsReducer.data.sort(a => {
             return a.status.toUpperCase() === 'Running'.toUpperCase();
         });
         return (
@@ -94,10 +94,13 @@ class PodsList extends Component {
 
 PodsList.propTypes = {
     idName: PropTypes.string,
-    idDep: PropTypes.string
+    idDep: PropTypes.string,
+    dispatch: PropTypes.func,
+    PodsReducer: PropTypes.object,
+    DeletePodReducer: PropTypes.object
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { PodsReducer } = state;
     const { DeletePodReducer } = state;
     const { errorMessage } = PodsReducer;
@@ -106,7 +109,7 @@ function mapStateToProps (state) {
         errorMessage,
         DeletePodReducer,
         PodsReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(PodsList)
+export default connect(mapStateToProps)(PodsList);

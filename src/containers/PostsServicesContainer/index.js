@@ -7,19 +7,19 @@ import { deleteService } from '../../actions/ServiceActions/deleteServiceAction'
 import Notification from '../../components/Notification';
 
 class PostsServicesContainer extends Component {
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.DeleteServiceReducer.status === 202 && nextProps.DeleteServiceReducer.serviceName) {
+            const id = `item_${nextProps.DeleteServiceReducer.serviceName}`;
+            const el = document.getElementById(id);
+            el ? el.remove() : el;
+        }
+    }
     handleClickTR(href) {
         browserHistory.push('/Namespaces/' + this.props.idName + '/Services/' + href);
     }
     handleClickDeletingService(name) {
         const { dispatch } = this.props;
         dispatch(deleteService(this.props.idName, name));
-    }
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.DeleteServiceReducer.status === 202 && nextProps.DeleteServiceReducer.serviceName) {
-            const id = `item_${nextProps.DeleteServiceReducer.serviceName}`;
-            const el = document.getElementById(id);
-            el ? el.remove() : el;
-        }
     }
     render() {
         return (
@@ -97,17 +97,19 @@ class PostsServicesContainer extends Component {
 
 PostsServicesContainer.propTypes = {
     PostsServicesDataReducer: PropTypes.array,
+    dispatch: PropTypes.func,
+    DeleteServiceReducer: PropTypes.object,
     idName: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { DeleteServiceReducer } = state;
     const { errorMessage } = DeleteServiceReducer;
 
     return {
         DeleteServiceReducer,
         errorMessage
-    }
+    };
 }
 
-export default connect(mapStateToProps)(PostsServicesContainer)
+export default connect(mapStateToProps)(PostsServicesContainer);

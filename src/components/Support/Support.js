@@ -10,7 +10,7 @@ class Support extends Component {
     handleOnSubmit(e) {
         e.preventDefault();
         const form = e.target;
-        const textArea = form.elements['textArea'].value;
+        const textArea = form.elements.textArea.value;
         const reqObj = {
             subject: this.refs.subject.value,
             textArea: textArea
@@ -40,14 +40,14 @@ class Support extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                <textarea
-                                    className="form-control"
-                                    name="textArea"
-                                    ref="textArea"
-                                    rows="10"
-                                    placeholder="Problem description"
-                                    required
-                                ></textarea>
+                                    <textarea
+                                        className="form-control"
+                                        name="textArea"
+                                        ref="textArea"
+                                        rows="10"
+                                        placeholder="Problem description"
+                                        required
+                                    ></textarea>
                                 </div>
                                 <button type="submit" className="btn btn-primary pull-right">Submit Ticket</button>
                             </form>
@@ -63,12 +63,12 @@ Support.propTypes = {
     dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { SupportReducer } = state;
 
     return {
         SupportReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Support)
+export default connect(mapStateToProps)(Support);

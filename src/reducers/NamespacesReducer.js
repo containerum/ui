@@ -26,6 +26,6 @@ export default function NamespacesReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

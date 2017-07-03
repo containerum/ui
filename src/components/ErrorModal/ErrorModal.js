@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import PropTypes from 'prop-types';
 
 const customStyles = {
     overlay: {
@@ -31,17 +32,17 @@ class ErrorModal extends Component {
         this.openModal = this.openModal.bind(this);
         // this.closeModal = this.closeModal.bind(this);
     }
-    openModal() {
-        this.setState({modalIsOpen: true});
-    }
-    componentWillReceiveProps(nextProps) {
-        this.setState({modalIsOpen: nextProps.modalIsOpen});
-    }
     // closeModal() {
     //     this.setState({modalIsOpen: false});
     // }
+    componentWillReceiveProps(nextProps) {
+        this.setState({ modalIsOpen: nextProps.modalIsOpen });
+    }
     handleOnClickReload() {
         window.location.reload();
+    }
+    openModal() {
+        this.setState({ modalIsOpen: true });
     }
     render() {
         return (
@@ -49,7 +50,7 @@ class ErrorModal extends Component {
                 isOpen={this.state.modalIsOpen}
                 // onRequestClose={this.closeModal}
                 style={customStyles}
-                contentLabel='ErrorModal'
+                contentLabel="ErrorModal"
             >
                 <h3 className="text-center">An unexpected error has occurred&nbsp;</h3>
                 <p className="text-left">
@@ -60,9 +61,9 @@ class ErrorModal extends Component {
                 {/*<div onClick={this.closeModal} className="i-close"></div>*/}
                 {/*<button className='btn pull-right c-btn-green' onClick={this.closeModal}>Cancel</button>*/}
                 <button
-                    type='submit'
+                    type="submit"
                     onClick={this.handleOnClickReload.bind(this)}
-                    className='btn pull-right c-btn-green'
+                    className="btn pull-right c-btn-green"
                 >
                     Reload page
                 </button>
@@ -70,5 +71,9 @@ class ErrorModal extends Component {
         );
     }
 }
+
+ErrorModal.propTypes = {
+    modalIsOpen: PropTypes.bool.isRequired
+};
 
 export default ErrorModal;

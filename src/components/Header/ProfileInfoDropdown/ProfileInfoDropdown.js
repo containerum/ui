@@ -35,17 +35,17 @@ class ProfileInfoDropdown extends Component {
                     <span className="c-nav-user-email text-muted">{ this.props.userEmail }</span>
                     <div className="dropdown-divider"></div>
                     <NavLink className="dropdown-item" to={window.location.pathname}>
-                        <Translate content='header.profile'>Profile</Translate>
+                        <Translate content="header.profile">Profile</Translate>
                     </NavLink>
                     <NavLink className="dropdown-item" to={window.location.pathname}>
-                        <Translate content='header.billing'>Billing</Translate>
+                        <Translate content="header.billing">Billing</Translate>
                     </NavLink>
                     <NavLink className="dropdown-item" to={window.location.pathname}>
-                        <Translate content='header.referrals'>Referrals</Translate>
+                        <Translate content="header.referrals">Referrals</Translate>
                     </NavLink>
                     <div className="dropdown-divider"></div>
                     <NavLink className="dropdown-item text-danger" to="/Login" onClick={() => this.props.onLogoutClick()}>
-                        <Translate content='header.logOut'>Log out</Translate>
+                        <Translate content="header.logOut">Log out</Translate>
                     </NavLink>
                 </div>
             </div>

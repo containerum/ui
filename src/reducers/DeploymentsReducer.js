@@ -28,6 +28,6 @@ export default function DeploymentsReducer(state = {
             statusError: action.status
         });
     default:
-        return state
+        return state;
     }
 }

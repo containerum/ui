@@ -20,9 +20,9 @@ export function SignUpUser(creds) {
         dispatch(requestSignUp(creds));
         return axios.post(
             WEB_API + '/api/users',
-            {username: creds.username, password: creds.password},
-            {validateStatus: (status) =>
-                status >= 200 && status <= 505
+            { username: creds.username, password: creds.password },
+            {
+                validateStatus: (status) => status >= 200 && status <= 505
             }
         )
             .then(response => {
@@ -31,10 +31,10 @@ export function SignUpUser(creds) {
                     dispatch(confirmEmail(creds.username));
                     browserHistory.push('/ConfirmEmail');
                 } else {
-                    dispatch(SignUpError(response.data.message))
+                    dispatch(SignUpError(response.data.message));
                 }
-            }).catch(err => console.log(err))
-    }
+            }).catch(err => console.log(err));
+    };
 }
 
 export function confirmEmail(emailUser) {
@@ -42,7 +42,7 @@ export function confirmEmail(emailUser) {
         type: VALIDATE_EMAIL,
         isValidEmail: true,
         emailUser
-    }
+    };
 }
 
 function requestSignUp(creds) {
@@ -50,14 +50,14 @@ function requestSignUp(creds) {
         type: SIGNUP_REQUEST,
         isFetching: true,
         creds
-    }
+    };
 }
 
 function receiveSignUp() {
     return {
         type: SIGNUP_SUCCESS,
         isFetching: false
-    }
+    };
 }
 
 function SignUpError(message) {
@@ -65,6 +65,6 @@ function SignUpError(message) {
         type: SIGNUP_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }
 

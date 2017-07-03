@@ -10,13 +10,13 @@ class Footer extends Component {
             <footer className="footer">
                 <div className="container-fluid">
                     <a target="_blank" href="http://blog.containerum.io/" className="text-muted mr-3">
-                        <Translate content='footer.blog'>Blog</Translate>
+                        <Translate content="footer.blog">Blog</Translate>
                     </a>
                     <a target="_blank" href="http://containerum.io/documentation/start-guide" className="text-muted mr-3">
-                        <Translate content='footer.documentations'>Documentations</Translate>
+                        <Translate content="footer.documentations">Documentations</Translate>
                     </a>
                     <a target="_blank" href="http://blog.containerum.io/" className="text-muted">
-                        <Translate content='footer.tutorials'>Tutorials</Translate>
+                        <Translate content="footer.tutorials">Tutorials</Translate>
                     </a>
                     <span className="text-muted float-right">
                         Copyright EXON LAB Company © {new Date().getFullYear()}

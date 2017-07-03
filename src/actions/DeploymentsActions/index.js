@@ -36,17 +36,17 @@ export function getDeployments(namespaceName) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetDeployments(response.data.message, response.status))
+                dispatch(failGetDeployments(response.data.message, response.status));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestGetDeployments() {
     return {
         type: DEPLOYMENTS_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveGetDeployments(data) {
@@ -54,7 +54,7 @@ function receiveGetDeployments(data) {
         type: DEPLOYMENTS_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failGetDeployments(message, status) {
@@ -63,5 +63,5 @@ function failGetDeployments(message, status) {
         isFetching: false,
         message,
         status
-    }
+    };
 }

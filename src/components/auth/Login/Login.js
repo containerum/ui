@@ -21,23 +21,9 @@ class Login extends Component {
             password: '',
             isValidPassword: false
         };
-        this.checkValidateEmailInput = this.checkValidateEmailInput.bind(this);
-        this.checkValidatePasswordInput = this.checkValidatePasswordInput.bind(this);
+        this.handleCheckValidateEmailInput = this.handleCheckValidateEmailInput.bind(this);
+        this.handleCheckValidatePasswordInput = this.handleCheckValidatePasswordInput.bind(this);
         this.handleClick = this.handleClick.bind(this);
-    }
-    checkValidateEmailInput(email, isValidEmail) {
-        this.setState({
-            ...this.state,
-            email: email,
-            isValidEmail: isValidEmail
-        });
-    }
-    checkValidatePasswordInput(password, isValidPassword) {
-        this.setState({
-            ...this.state,
-            password: password,
-            isValidPassword: isValidPassword
-        });
     }
     componentWillMount() {
         document.body.classList.add('c-body-bg');
@@ -53,14 +39,14 @@ class Login extends Component {
                 ...this.state,
                 successMsg: 'Your email has been confirmed. Please Log In.'
             });
-            let getSuccessAlert = document.getElementById('successfulAlert');
+            const getSuccessAlert = document.getElementById('successfulAlert');
             getSuccessAlert.style.display = 'block';
         } else if (this.props.location.query.hashParam && nextProps.UserHashConfirmReducer.errorMessage && !nextProps.errorMessage) {
             this.setState({
                 ...this.state,
                 errorMsg: 'Hash is not valid'
             });
-            let getAlert = document.getElementById('loginAlert');
+            const getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
         }
         if (nextProps.errorMessage) {
@@ -68,15 +54,36 @@ class Login extends Component {
                 ...this.state,
                 errorMsg: nextProps.errorMessage
             });
-            let getAlert = document.getElementById('loginAlert');
+            const getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
         }
+    }
+    handleCheckValidateEmailInput(email, isValidEmail) {
+        this.setState({
+            ...this.state,
+            email: email,
+            isValidEmail: isValidEmail
+        });
+    }
+    handleCheckValidatePasswordInput(password, isValidPassword) {
+        this.setState({
+            ...this.state,
+            password: password,
+            isValidPassword: isValidPassword
+        });
     }
     handleClick(event) {
         event.preventDefault();
         const { dispatch } = this.props;
 
-        if (this.state.isValidEmail && this.state.isValidPassword) {
+        if (this.state.password.length <= 7) {
+            this.setState({
+                ...this.state,
+                errorMsg: 'Password must be at least 8 characters long'
+            });
+            const getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+        } else if (this.state.isValidEmail && this.state.isValidPassword) {
             const creds = { username: this.state.email.trim(), password: this.state.password.trim() };
             dispatch(LOGINUser(creds));
         } else {
@@ -84,7 +91,7 @@ class Login extends Component {
                 ...this.state,
                 errorMsg: 'Email or Password is not valid'
             });
-            let getAlert = document.getElementById('loginAlert');
+            const getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'block';
         }
     }
@@ -93,46 +100,45 @@ class Login extends Component {
         const isActiveLoginButton = this.props.loginReducer.isFetching ?
             'btn btn-block c-btn-green i-btn-login-strong disabled' :
             'btn btn-block c-btn-green i-btn-login-strong';
-        
         return (
-            <div className='container'>
+            <div className="container">
                 <Logo />
-                <form className='form-signin' onSubmit={(event) => this.handleClick(event)}>
-                    <div className='card c-card'>
-                        <div className='card-block p-5'>
-                            <div className='card-label'>
+                <form className="form-signin" onSubmit={(event) => this.handleClick(event)}>
+                    <div className="card c-card">
+                        <div className="card-block p-5">
+                            <div className="card-label">
                                 Log In
                             </div>
-                            <div id='loginAlert' className='alert alert-danger mb-4 c-alert-danger'>
+                            <div id="loginAlert" className="alert alert-danger mb-4 c-alert-danger">
                                 { this.state.errorMsg }
                             </div>
-                            <div id='successfulAlert' className='alert alert-success mb-4 c-alert-success'>
+                            <div id="successfulAlert" className="alert alert-success mb-4 c-alert-success">
                                 { this.state.successMsg }
                             </div>
                             <InputEmail
                                 handleEmail={
                                     (email, isValidEmail) =>
-                                        this.checkValidateEmailInput(email, isValidEmail)
+                                        this.handleCheckValidateEmailInput(email, isValidEmail)
                                 }
                             />
                             <InputPassword
                                 handlePassword={
                                     (password, isValidPassword) =>
-                                        this.checkValidatePasswordInput(password, isValidPassword)
+                                        this.handleCheckValidatePasswordInput(password, isValidPassword)
                                 }
                             />
-                            <button ref='button' type='submit' className={isActiveLoginButton}>{ loginButtonText }</button>
+                            <button ref="button" type="submit" className={isActiveLoginButton}>{ loginButtonText }</button>
                         </div>
-                        <div className='card-footer p-3 text-center'>
-                            Don't have an account? <Link to='/SignUp'>Sing up</Link>
+                        <div className="card-footer p-3 text-center">
+                            Don"t have an account? <Link to="/SignUp">Sing up</Link>
                         </div>
                     </div>
-                    <p className='text-center pt-3'>
-                        <Link to='/Forgot' className='c-link-wt'>Forgot your password?</Link>
+                    <p className="text-center pt-3">
+                        <Link to="/Forgot" className="c-link-wt">Forgot your password?</Link>
                     </p>
                 </form>
             </div>
-        )
+        );
     }
 }
 
@@ -141,6 +147,8 @@ Login.propTypes = {
     quote: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
+    loginReducer: PropTypes.object,
+    location: PropTypes.object,
     isSecretQuote: PropTypes.bool
 };
 
@@ -149,8 +157,8 @@ function mapStateToProps(state) {
         loginReducer: state.loginReducer,
         errorMessage: state.loginReducer.errorMessage,
         UserHashConfirmReducer: state.UserHashConfirmReducer
-    }
+    };
 }
 
 
-export default connect(mapStateToProps)(Login)
+export default connect(mapStateToProps)(Login);

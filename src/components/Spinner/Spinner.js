@@ -11,15 +11,15 @@ class Spinner extends Component {
             isTimeOver: false
         };
     }
-    componentWillUnmount() {
-        this.setState({isTimeOver: false});
-        clearTimeout(this.state.timer);
-    }
     componentWillMount() {
         const timer = setTimeout(() => {
-            this.setState({isTimeOver: true});
+            this.setState({ isTimeOver: true });
         }, 7000);
-        this.setState({timer});
+        this.setState({ timer });
+    }
+    componentWillUnmount() {
+        this.setState({ isTimeOver: false });
+        clearTimeout(this.state.timer);
     }
     render() {
         return (

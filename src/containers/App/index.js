@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -8,7 +9,7 @@ import '../../styles/bootstrap.min.css';
 import '../../styles/custom.css';
 import '../../styles/individual.css';
 
-export default class App extends Component {
+class App extends Component {
     componentDidMount() {
         if (this.props.params.idName === 'default' &&
             Object.keys(this.props.params).length === 1) {
@@ -31,3 +32,11 @@ export default class App extends Component {
         );
     }
 }
+
+App.propTypes = {
+    params: PropTypes.object,
+    location: PropTypes.object,
+    children: PropTypes.node
+};
+
+export default App;

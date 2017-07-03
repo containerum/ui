@@ -2,7 +2,7 @@ import {
     CONVERT_TO_COMPANY_REQUEST,
     CONVERT_TO_COMPANY_SUCCESS,
     CONVERT_TO_COMPANY_FAILURE
-} from '../constants/UpdateEmailConstains';
+} from '../constants/ConvertToCompanyConstains';
 
 export default function ConvertToCompanyReducer(state = {
     isFetching: false,
@@ -24,6 +24,6 @@ export default function ConvertToCompanyReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

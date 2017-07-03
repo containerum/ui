@@ -12,12 +12,12 @@ class Namespaces extends Component {
         dispatch(getNamespaces());
     }
     render() {
-        let isFetchingComponent = "";
+        let isFetchingComponent = '';
         if (this.props.NamespacesReducer.isFetching === false) {
             isFetchingComponent =
                 <NamespacesContainer
                     namespacesDataReducer={this.props.NamespacesReducer.data}
-                />
+                />;
         } else {
             // isFetchingComponent =
             //     <div className="dropdown-menu i-dropdown-box-shadow">
@@ -47,7 +47,7 @@ class Namespaces extends Component {
                             { this.props.idDep }
                         </button>
                     </NavLink>
-                </div>
+                </div>;
         }
         let isIdPod = null;
         if (this.props.idPod) {
@@ -69,11 +69,11 @@ class Namespaces extends Component {
                             { this.props.idPod }
                         </button>
                     </NavLink>
-                </div>
+                </div>;
         }
         let isIdService = null;
         if (this.props.idService) {
-            isIdPod =
+            isIdService =
                 <div className="btn-group">
                     <div className="i-label-navigator">
                         <svg
@@ -91,7 +91,7 @@ class Namespaces extends Component {
                             { this.props.idService }
                         </button>
                     </NavLink>
-                </div>
+                </div>;
         }
         let mainContent = '';
         if (this.props.idPod || this.props.idDep || this.props.idService) {
@@ -104,7 +104,7 @@ class Namespaces extends Component {
                         Personal space
                     </button>
                 </NavLink>
-            </div>
+            </div>;
         } else {
             mainContent = <div className="btn-group mr-auto">
                 <button
@@ -117,7 +117,7 @@ class Namespaces extends Component {
                     Personal space
                 </button>
                 { isFetchingComponent }
-            </div>
+            </div>;
         }
 
         return (
@@ -137,17 +137,18 @@ Namespaces.propTypes = {
     idName: PropTypes.string,
     idDep: PropTypes.string,
     idPod: PropTypes.string,
-    idService: PropTypes.string
+    idService: PropTypes.string,
+    NamespacesReducer: PropTypes.object
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { NamespacesReducer } = state;
     const { errorMessage } = NamespacesReducer;
 
     return {
         errorMessage,
         NamespacesReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Namespaces)
+export default connect(mapStateToProps)(Namespaces);

@@ -35,17 +35,17 @@ export function changePassword(data) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failChangePassword(response.data.message))
+                dispatch(failChangePassword(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestChangePassword() {
     return {
         type: CHANGE_PASSWORD_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveChangePassword(data) {
@@ -53,7 +53,7 @@ function receiveChangePassword(data) {
         type: CHANGE_PASSWORD_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failChangePassword(message) {
@@ -61,5 +61,5 @@ function failChangePassword(message) {
         type: CHANGE_PASSWORD_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

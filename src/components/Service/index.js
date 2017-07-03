@@ -12,7 +12,7 @@ class Service extends Component {
         dispatch(getService(this.props.params.idName, this.props.params.idService));
     }
     render() {
-        let isFetchingComponent = "";
+        let isFetchingComponent = '';
         if (this.props.getServiceReducer.isFetching === false) {
             isFetchingComponent =
                 <Post
@@ -20,9 +20,9 @@ class Service extends Component {
                     errorMessage={this.props.getServiceReducer.errorMessage}
                     idName={this.props.params.idName}
                     idService={this.props.params.idService}
-                />
+                />;
         } else {
-            isFetchingComponent = <Spinner />
+            isFetchingComponent = <Spinner />;
         }
         return (
             <div>
@@ -34,17 +34,19 @@ class Service extends Component {
 
 Service.propTypes = {
     dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object,
+    getServiceReducer: PropTypes.object,
     errorMessage: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { getServiceReducer } = state;
     const { errorMessage } = getServiceReducer;
 
     return {
         errorMessage,
         getServiceReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(Service)
+export default connect(mapStateToProps)(Service);

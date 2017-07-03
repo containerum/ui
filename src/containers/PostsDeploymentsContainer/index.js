@@ -7,19 +7,19 @@ import { deleteDeployment } from '../../actions/DeploymentActions/deleteDeployme
 import Notification from '../../components/Notification';
 
 class PostsDeploymentsContainer extends Component {
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.DeleteDeploymentReducer.status === 202 && nextProps.DeleteDeploymentReducer.deploymentName) {
+            const id = `item_${nextProps.DeleteDeploymentReducer.deploymentName}`;
+            const el = document.getElementById(id);
+            el ? el.remove() : el;
+        }
+    }
     handleClickTR(href) {
         browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + href);
     }
     handleClickDeletingDeployment(name) {
         const { dispatch } = this.props;
         dispatch(deleteDeployment(this.props.idName, name));
-    }
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.DeleteDeploymentReducer.status === 202 && nextProps.DeleteDeploymentReducer.deploymentName) {
-            const id = `item_${nextProps.DeleteDeploymentReducer.deploymentName}`;
-            const el = document.getElementById(id);
-            el ? el.remove() : el;
-        }
     }
     render() {
         return (
@@ -89,17 +89,18 @@ class PostsDeploymentsContainer extends Component {
 PostsDeploymentsContainer.propTypes = {
     dispatch: PropTypes.func.isRequired,
     PostsDeploymentsDataReducer: PropTypes.array,
+    DeleteDeploymentReducer: PropTypes.object,
     idName: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { DeleteDeploymentReducer } = state;
     const { errorMessage } = DeleteDeploymentReducer;
 
     return {
         DeleteDeploymentReducer,
         errorMessage
-    }
+    };
 }
 
-export default connect(mapStateToProps)(PostsDeploymentsContainer)
+export default connect(mapStateToProps)(PostsDeploymentsContainer);

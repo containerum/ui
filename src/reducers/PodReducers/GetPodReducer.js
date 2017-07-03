@@ -26,6 +26,6 @@ export default function GetPodReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

@@ -36,17 +36,17 @@ export function getPod(namespaceName, podName) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
                 } else {
-                    dispatch(failGetPod(response.data.message))
+                    dispatch(failGetPod(response.data.message));
                 }
-            }).catch(err => console.log(err))
-    }
+            }).catch(err => console.log(err));
+    };
 }
 
 function requestGetPod() {
     return {
         type: POD_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 function receiveGetPod(data) {
@@ -54,7 +54,7 @@ function receiveGetPod(data) {
         type: POD_SUCCESS,
         isFetching: false,
         data
-    }
+    };
 }
 
 function failGetPod(message) {
@@ -62,5 +62,5 @@ function failGetPod(message) {
         type: POD_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }

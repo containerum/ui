@@ -25,6 +25,6 @@ export default function UserHashConfirmReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }

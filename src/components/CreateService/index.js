@@ -32,12 +32,12 @@ CreateService.propTypes = {
     dispatch: PropTypes.func.isRequired
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { CreateServiceReducer } = state;
 
     return {
         CreateServiceReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(CreateService)
+export default connect(mapStateToProps)(CreateService);

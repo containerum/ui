@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Logo from '../Logo';
 
@@ -10,20 +11,20 @@ class ResetPassword extends Component {
         document.body.classList.add('c-body-bg');
     }
     render() {
-        if(!this.props.confirmEmailReducer.emailUser) {
+        if (!this.props.confirmEmailReducer.emailUser) {
             browserHistory.push('/Login');
         }
         return (
-            <div className='container'>
+            <div className="container">
                 <Logo />
-                <form className='form-signin'>
-                    <div className='card c-card'>
-                        <div className='card-block p-3'>
-                            <div className='card-label c-card-label'>
+                <form className="form-signin">
+                    <div className="card c-card">
+                        <div className="card-block p-3">
+                            <div className="card-label c-card-label">
                                 Reset Password
                             </div>
                         </div>
-                        <p className='card-block p-3 text-center'>
+                        <p className="card-block p-3 text-center">
                             Check your inbox. If you don`t receive an email, <br />
                             and it`s not in your spam folder this could mean <br />
                             you signed up with a different address.
@@ -34,14 +35,18 @@ class ResetPassword extends Component {
                     </div>
                 </form>
             </div>
-        )
+        );
     }
 }
 
-function mapStateToProps (state) {
+ResetPassword.propTypes = {
+    confirmEmailReducer: PropTypes.object
+};
+
+function mapStateToProps(state) {
     return {
         confirmEmailReducer: state.confirmEmailReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(ResetPassword)
+export default connect(mapStateToProps)(ResetPassword);

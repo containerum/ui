@@ -29,6 +29,6 @@ export default function DeleteDeploymentReducer(state = {
             errorMessage: action.message
         });
     default:
-        return state
+        return state;
     }
 }
