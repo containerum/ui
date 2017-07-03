@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
@@ -7,24 +6,21 @@ import { routes } from './routes';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 import reducers from './reducers/index';
-import { AUTH_USER } from './actions/types';
-import cookie from 'react-cookie';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
-const store = createStoreWithMiddleware(reducers);
-const token = cookie.load('token');
+const store = createStore(reducers, composeWithDevTools(
+    applyMiddleware(reduxThunk)
+));
 
-if (token) {
-  store.dispatch({ type: AUTH_USER });
+function setDeploymentId(e) {
+    return store.dispatch({ type: 'SET_DATA_ID', payload: e.target.dataset.id });
 }
 
-function setDeploymentId(e){return store.dispatch({ type: 'SET_DATA_ID', payload: e.target.dataset.id })}
-
 render(
-  <Provider store={store}>
-    <Router history={browserHistory} routes={routes} />
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory} routes={routes} />
+    </Provider>,
+    document.getElementById('root')
 );
 
 export default setDeploymentId;

@@ -1,0 +1,291 @@
+.c-logo-main {
+    width: 255px;
+    background-color: #2aabd2;
+}
+
+.navbar-toggler-margin-top {
+    margin-top: 8px;
+}
+
+.show-dropdown-menu,
+.show-dropdown-profile {
+    display: block;
+    right: 100px;
+    left: initial;
+}
+
+.show-dropdown-profile {
+    right: 0;
+}
+
+.main-header {
+    background-color: #2aabd2;
+}
+
+.p-5 {
+    padding: 40px 50px!important;
+}
+
+.c-card {
+    border: 0;
+    border-radius: 7px;
+}
+
+.c-card .card-footer {
+    color: #444;
+    border-radius: 0 0 7px 7px;
+}
+
+/* Navbar */
+.c-navbar {
+    background-color: #009CD1;
+}
+
+.c-nav-user-btn {
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.c-nav-user-btn:focus {
+    box-shadow: none;
+}
+
+.c-nav-user-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 30px;
+    float: left;
+    margin-top: 5px;
+}
+
+.c-nav-user-name {
+    display: block;
+}
+
+.c-nav-user-icon {
+    width: 32px;
+}
+
+.c-nav-user-data {
+    float: right;
+}
+
+.c-nav-menu-btn:focus {
+    box-shadow: none;
+}
+
+.c-nav-user-email {
+    font-size: 0.9rem;
+    padding: 5px 1.5rem;
+}
+
+.c-nav-user-wrap {
+    position: relative;
+    padding: 5px 1.5rem;
+}
+
+.c-nav-menu-btn {
+    background: transparent;
+    cursor: pointer;
+    margin-top: 3px;
+}
+
+.c-nav-menu-btn-top {
+    top: 1px;
+}
+
+/* Card */
+.c-table-card-block {
+    padding: 0;
+}
+
+.c-table-card {
+    margin-bottom: 0;
+}
+
+.c-table-card tr:first-child td {
+    border-top-color: #fff;
+}
+
+.c-table-card-btn {
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+.c-table-card-btn:focus {
+    box-shadow: none;
+}
+
+.c-table-card-img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: -11px;
+}
+
+.c-table-card-img-old {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+/* -------------  Sticky footer styles */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin-bottom: 60px;
+    font-size: 0.8rem;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+    font-size: 0.7rem;
+}
+
+.c-body-bg {
+    background-color: #009CD1;
+    background-image: -webkit-linear-gradient(top, #0075A7, #009CD1);
+    height: 100vh;
+}
+
+.c-logo-login {
+    width: 265px;
+    padding: 30px 0 15px 0;
+}
+
+.c-card .card-label {
+    text-align: center;
+    font-size: 1.35rem;
+    padding-bottom: 15px;
+    color: #444
+}
+
+.c-card-label {
+    padding-bottom: 0!important;
+}
+
+.c-card .card-footer a {
+    color: #0069ff;
+    text-decoration: underline;
+}
+
+.form-signin {
+    max-width: 450px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.c-has-feedback-left {
+    position: relative;
+}
+
+.c-has-feedback-left .form-control {
+    padding-right: 12px;
+    padding-left: 44px;
+}
+
+.c-has-feedback-left .c-form-control-icon {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    right: 0;
+    z-index: 2;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    color: #009CD1;
+}
+
+.c-has-feedback-left .c-form-control-icon:after {
+    content: "";
+    position: absolute;
+    left: 34px;
+    top: 6px;
+    width: 1px;
+    height: 25px;
+    background: rgba(0,0,0,.15);
+}
+
+.c-input-group-addon {
+    background: #fff;
+}
+
+.c-form-control {
+    border-left-color: #fff;
+}
+
+.c-wt {
+    color: #fff;
+}
+
+.c-link-wt {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.c-link-wt:hover {
+    color: #dddddd;
+}
+
+.c-btn-green {
+    padding: 12px;
+    color: #fff;
+    background-color: #15ce73;
+    border-color: #15ce73;
+}
+
+.c-btn-green:hover {
+    background-color: #13be6a;
+    border-color: #13be6a;
+}
+
+.c-alert-danger {
+    background-color: #D64242;
+    color: white;
+    border: 0;
+    text-align: center;
+}
+
+.c-alert-success {
+    background-color: #13be6a;
+    color: white;
+    border: 0;
+    text-align: center;
+}
+
+/* Dropdown */
+.c-dropdown-item-img {
+    position: absolute;
+    top: 3px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.c-dropdown-item-name {
+    padding-left: 40px;
+}
+
+.c-dropdown-item-wrap {
+    position: relative;
+    padding: 6px 1.5rem;
+}

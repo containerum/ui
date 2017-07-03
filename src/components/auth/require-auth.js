@@ -1,32 +1,44 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
-export default function(ComposedComponent) {
-  class Authentication extends Component {
-    static contextTypes = {
-      router: React.PropTypes.object
+export default function requireAuthentication(Component) {
+    class AuthenticatedComponent extends Component {
+        componentWillMount() {
+            if (this.props.isAuthenticated === false) {
+                browserHistory.push('/Login');
+            }
+        }
+        componentWillUpdate(nextProps) {
+            if (nextProps.isAuthenticated === false) {
+                browserHistory.push('/Login');
+            }
+        }
+        render() {
+            return (
+                <div>
+                    {this.props.isAuthenticated === true
+                        ? <Component {...this.props} />
+                        : null
+                    }
+                </div>
+            );
+        }
     }
 
-    componentWillMount() {
-      if(!this.props.authenticated) {
-        this.context.router.push('/Login');
-      }
+    AuthenticatedComponent.propTypes = {
+        isAuthenticated: PropTypes.bool
+    };
+
+    function mapStateToProps(state) {
+        const { loginReducer } = state;
+        const { isAuthenticated } = loginReducer;
+
+        return {
+            isAuthenticated
+        };
     }
 
-    componentWillUpdate(nextProps) {
-      if(!nextProps.authenticated) {
-        this.context.router.push('/Login');
-      }
-    }
-
-    render() {
-      return <ComposedComponent {...this.props} />
-    }
-  }
-
-  function mapStateToProps(state) {
-    return { authenticated: state.auth.authenticated };
-  }
-
-  return connect(mapStateToProps)(Authentication);
+    return connect(mapStateToProps)(AuthenticatedComponent);
 }

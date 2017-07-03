@@ -1,28 +1,42 @@
 import React, { Component } from 'react';
-import NavLink from '../../components/NavLink';
-import './style.scss';
-import './titatoggle-dist.scss';
-import NavBar from '../../components/NavBar';
+import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
-export default class App extends Component {
-  render() {
-    return (
-      <div className='container'>
-        <NavBar />
-        <ul className='nav nav-pills nav-stacked'>
-          <li><NavLink onlyActiveOnIndex={true} to='/'>Workloads</NavLink></li>
-          <li><NavLink to='/Deployments'>Deployments</NavLink></li>
-          <li><NavLink to='/ReplicaSets'>Replica Sets</NavLink></li>
-          <li><NavLink to='/Pods'>Pods</NavLink></li>
-          <li><NavLink to='/Services'>Services</NavLink></li>
-          <li><NavLink to='/Storage'>Storage</NavLink></li>
-          <li><NavLink to='/Volume'>Volume</NavLink></li>
-          <li><NavLink to='/Config'>Config</NavLink></li>
-          <li><NavLink to='/Secrets'>Secrets</NavLink></li>
-          <li><NavLink to='/Tokens'>Tokens</NavLink></li>
-        </ul>
-        {this.props.children}
-      </div>
-    );
-  }
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+
+import '../../styles/bootstrap.min.css';
+import '../../styles/custom.css';
+import '../../styles/individual.css';
+
+class App extends Component {
+    componentDidMount() {
+        if (this.props.params.idName === 'default' &&
+            Object.keys(this.props.params).length === 1) {
+            browserHistory.push('/Namespaces/default');
+        } else if (Object.keys(this.props.params).length === 1 && this.props.params.idName) {
+            browserHistory.push('/Namespaces/' + this.props.params.idName);
+        } else if (Object.keys(this.props.params).length === 0 && this.props.location.pathname === '/') {
+            browserHistory.push('/Namespaces/default');
+        }
+    }
+    render() {
+        return (
+            <div>
+                <div className="wrapper">
+                    <Header idName={this.props.params.idName} />
+                    {this.props.children}
+                    <Footer />
+                </div>
+            </div>
+        );
+    }
 }
+
+App.propTypes = {
+    params: PropTypes.object,
+    location: PropTypes.object,
+    children: PropTypes.node
+};
+
+export default App;

@@ -1,0 +1,21 @@
+.account {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+
+.account-info {
+    color: #555555;
+    position: sticky;
+    top: 55px;
+    overflow: visible;
+    max-height: calc(100vh - 55px);
+    margin-top: 50px;
+    margin-bottom: 55px;
+}
+
+.i-user-login {
+
+}

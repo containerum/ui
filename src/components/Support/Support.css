@@ -1,0 +1,36 @@
+.support {
+  padding-bottom: 20px;
+}
+
+.center-block {
+  margin: 0 auto;
+}
+
+.sup-sidebar {
+  margin-bottom: 50px;
+  margin-top: 40px;
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 760px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+
+}
