@@ -27,6 +27,7 @@ class InputPassword extends Component {
                         className="form-control"
                         id="Password"
                         placeholder={placeholder}
+                        disabled={this.props.isDisabled}
                     />
                     <i className="c-form-control-icon fa fa-lock"></i>
                     {small}
@@ -40,6 +41,7 @@ InputPassword.propTypes = {
     handlePassword: PropTypes.func,
     refValue: PropTypes.string,
     placeholder: PropTypes.string,
+    isDisabled: PropTypes.bool,
     small: PropTypes.string
 };
 

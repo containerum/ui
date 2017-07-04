@@ -33,6 +33,23 @@ class Login extends Component {
             dispatch(getUserHashConfirm(this.props.location.query.hashParam));
         }
     }
+    componentDidMount() {
+        if (this.props.location.query.hashConf && this.props.RecoveryPasswordReducer.status === 202) {
+            this.setState({
+                ...this.state,
+                successMsg: 'Your password has been changed successfully. Please Log In.'
+            });
+            const getSuccessAlert = document.getElementById('successfulAlert');
+            getSuccessAlert.style.display = 'block';
+        } else if (!!this.props.location.query.hashConf && this.props.RecoveryPasswordReducer.status !== 0) {
+            this.setState({
+                ...this.state,
+                errorMsg: 'Error! Your password was not changed.'
+            });
+            const getAlert = document.getElementById('loginAlert');
+            getAlert.style.display = 'block';
+        }
+    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.UserHashConfirmReducer.data === 200) {
             this.setState({
@@ -130,7 +147,7 @@ class Login extends Component {
                             <button ref="button" type="submit" className={isActiveLoginButton}>{ loginButtonText }</button>
                         </div>
                         <div className="card-footer p-3 text-center">
-                            Don"t have an account? <Link to="/SignUp">Sing up</Link>
+                            Don`t have an account? <Link to="/SignUp">Sing up</Link>
                         </div>
                     </div>
                     <p className="text-center pt-3">
@@ -148,6 +165,7 @@ Login.propTypes = {
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
     loginReducer: PropTypes.object,
+    RecoveryPasswordReducer: PropTypes.object,
     location: PropTypes.object,
     isSecretQuote: PropTypes.bool
 };
@@ -156,7 +174,8 @@ function mapStateToProps(state) {
     return {
         loginReducer: state.loginReducer,
         errorMessage: state.loginReducer.errorMessage,
-        UserHashConfirmReducer: state.UserHashConfirmReducer
+        UserHashConfirmReducer: state.UserHashConfirmReducer,
+        RecoveryPasswordReducer: state.RecoveryPasswordReducer
     };
 }
 

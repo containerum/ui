@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import { ConfirmEmail } from '../../actions/EmailConfirmActions';
 import InputEmail from '../auth/InputEmail';
+import MiniSpinner from '../MiniSpinner';
 
 import Logo from '../Logo';
 
@@ -56,6 +57,7 @@ class Forgot extends Component {
         });
     }
     render() {
+        const resetButtonText = this.props.confirmEmailReducer.isFetching ? <MiniSpinner /> : 'Reset';
         return (
             <div className="container">
                 <Logo />
@@ -72,9 +74,9 @@ class Forgot extends Component {
                                         this.checkValidateEmailInput(email, isValidEmail)
                                 }
                             />
-                            <button ref="button" type="submit" className="btn btn-block c-btn-green">Reset</button>
+                            <button ref="button" type="submit" className="btn btn-block c-btn-green">{ resetButtonText }</button>
                         </div>
-                        <div className="card-footer text-center">Don"t have an account? <Link to="/SignUp">Sing up</Link></div>
+                        <div className="card-footer text-center">Don`t have an account? <Link to="/SignUp">Sing up</Link></div>
                     </div>
                     <p className="text-center pt-3"><Link to="/Login" className="c-link-wt">Go to Login</Link></p>
                 </form>
@@ -85,6 +87,7 @@ class Forgot extends Component {
 
 Forgot.propTypes = {
     dispatch: PropTypes.func.isRequired,
+    confirmEmailReducer: PropTypes.object,
     errorMessage: PropTypes.string
 };
 
