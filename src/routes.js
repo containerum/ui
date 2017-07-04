@@ -5,6 +5,7 @@ import Workloads from './components/Workloads';
 import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
 import Forgot from './components/Forgot';
+import RecoveryPassword from './components/RecoveryPassword';
 import requireAuthentication from './components/auth/require-auth';
 import ConfirmEmail from './components/auth/ConfirmEmail';
 import ResetPassword from './components/ResetPassword';
@@ -33,6 +34,7 @@ export const routes = (
             <Route path="/" component={Workloads} />
         </Route>
         <Route path="/Forgot" component={Forgot} />
+        <Route path="/RecoveryPassword" component={RecoveryPassword} />
         <Route path="/SignUp" component={SignUp} />
         <Route path="/ConfirmEmail" component={ConfirmEmail} />
         <Route path="/ResetPassword" component={ResetPassword} />

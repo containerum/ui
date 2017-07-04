@@ -27,6 +27,8 @@ import SupportReducer from './SupportReducer';
 import EmailUpdateReducer from './EmailUpdateReducer';
 import ConvertToCompanyReducer from './ConvertToCompanyReducer';
 import EmailSubscriptionsReducer from './EmailSubscriptionsReducer';
+import CheckHashPasswordReducer from './CheckHashPasswordReducer';
+import RecoveryPasswordReducer from './RecoveryPasswordReducers';
 
 const rootReducer = combineReducers({
     dataDeployment,
@@ -55,7 +57,9 @@ const rootReducer = combineReducers({
     SupportReducer,
     EmailUpdateReducer,
     ConvertToCompanyReducer,
-    EmailSubscriptionsReducer
+    EmailSubscriptionsReducer,
+    CheckHashPasswordReducer,
+    RecoveryPasswordReducer
 });
 
 export default rootReducer;

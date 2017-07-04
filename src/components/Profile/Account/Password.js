@@ -10,7 +10,6 @@ class Password extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalIsOpen: false,
             errorMsg: '',
             successMsg: '',
             currentPassword: '',
@@ -20,8 +19,6 @@ class Password extends Component {
             repeatPassword: '',
             isValidRepeatPassword: false
         };
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.ChangePasswordReducer.errorMessage) {
@@ -40,12 +37,6 @@ class Password extends Component {
             const getSuccessfulAlert = document.getElementById('successfulAlert');
             getSuccessfulAlert.style.display = 'block';
         }
-    }
-    openModal() {
-        this.setState({ modalIsOpen: true });
-    }
-    closeModal() {
-        this.setState({ modalIsOpen: false });
     }
     submitUpdatedPasswordData(e) {
         e.preventDefault();
