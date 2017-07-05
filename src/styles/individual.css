@@ -366,6 +366,7 @@ button,
     vertical-align: text-top;
 }
 
+/* toast */
 .toast-title {
     font-weight: bold;
 }
@@ -591,3 +592,4 @@ button.toast-close-button {
         padding: 15px 50px 15px 15px;
     }
 }
+/* toast end */
