@@ -548,7 +548,6 @@ button.toast-close-button {
     -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
     filter: alpha(opacity=40);
 }
-/*Responsive Design*/
 @media all and (max-width: 240px) {
     #toast-container > div {
         padding: 8px 8px 8px 50px;
