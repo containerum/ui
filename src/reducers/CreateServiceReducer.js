@@ -5,7 +5,9 @@ import {
 } from '../constants/CreateServiceConstants';
 
 export default function CreateServiceReducer(state = {
-    isFetching: false
+    isFetching: false,
+    data: {},
+    errorMessage: ''
 }, action) {
     switch (action.type) {
     case CREATE_SERVICE_REQUEST:
@@ -14,11 +16,13 @@ export default function CreateServiceReducer(state = {
         });
     case CREATE_SERVICE_SUCCESS:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            data: action.data
         });
     case CREATE_SERVICE_FAILURE:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            errorMessage: action.message
         });
     default:
         return state;

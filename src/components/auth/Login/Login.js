@@ -29,8 +29,7 @@ class Login extends Component {
         document.body.classList.add('c-body-bg');
         localStorage.removeItem('id_token');
         if (this.props.location.query.hashParam) {
-            const { dispatch } = this.props;
-            dispatch(getUserHashConfirm(this.props.location.query.hashParam));
+            this.props.onGetUserHashConfirm(this.props.location.query.hashParam);
         }
     }
     componentDidMount() {
@@ -91,8 +90,6 @@ class Login extends Component {
     }
     handleClick(event) {
         event.preventDefault();
-        const { dispatch } = this.props;
-
         if (this.state.password.length <= 7) {
             this.setState({
                 ...this.state,
@@ -102,7 +99,7 @@ class Login extends Component {
             getAlert.style.display = 'block';
         } else if (this.state.isValidEmail && this.state.isValidPassword) {
             const creds = { username: this.state.email.trim(), password: this.state.password.trim() };
-            dispatch(LOGINUser(creds));
+            this.props.onLoginUser(creds);
         } else {
             this.setState({
                 ...this.state,
@@ -160,7 +157,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onGetUserHashConfirm: PropTypes.func.isRequired,
+    onLoginUser: PropTypes.func.isRequired,
     quote: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
@@ -179,5 +177,15 @@ function mapStateToProps(state) {
     };
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetUserHashConfirm: hashParam => {
+            dispatch(getUserHashConfirm(hashParam));
+        },
+        onLoginUser: creds => {
+            dispatch(LOGINUser(creds));
+        }
+    };
+};
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -37,7 +37,7 @@ class Notification extends Component {
 
 Notification.propTypes = {
     name: PropTypes.string.isRequired,
-    errorMessage: PropTypes.string.isRequired
+    errorMessage: PropTypes.string
 };
 
 export default Notification;

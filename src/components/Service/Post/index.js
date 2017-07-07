@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PostServiceContainer from '../../../containers/PostServiceContainer';
 import ErrorService from '../ErrorService';
-import Namespaces from '../../Namespaces';
+import NamespacesDropDown from '../../NamespacesDropDown';
 // import CreateInstance from '../../CreateInstance';
 
 class Post extends Component {
     render() {
-        let isErrorContainer = "";
+        let isErrorContainer = '';
         if (this.props.errorMessage) {
             isErrorContainer = <ErrorService errorMessage={this.props.errorMessage} />;
         } else {
             isErrorContainer =
                 <div>
                     <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                        <Namespaces
+                        <NamespacesDropDown
                             idService={this.props.idService}
                             idName={this.props.idName}
                         />
-                        {/*<CreateInstance />*/}
+                        {/*<CreateInstance idName={this.props.idName} />*/}
                     </div>
                     <PostServiceContainer
                         serviceReducer={this.props.serviceReducer}

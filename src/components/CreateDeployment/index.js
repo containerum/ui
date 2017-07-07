@@ -6,8 +6,7 @@ import { getCreateDeployment } from '../../actions/CreateDeploymentActions';
 
 class CreateDeployment extends Component {
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(getCreateDeployment());
+        this.props.onGetCreateDeployment();
     }
     render() {
         return (
@@ -29,7 +28,7 @@ class CreateDeployment extends Component {
 }
 
 CreateDeployment.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    onGetCreateDeployment: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -40,4 +39,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(CreateDeployment);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetCreateDeployment: () => {
+            dispatch(getCreateDeployment());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateDeployment);

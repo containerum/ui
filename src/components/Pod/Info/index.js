@@ -13,8 +13,7 @@ class Info extends Component {
         }
     }
     handleClickDeletingPod(name) {
-        const { dispatch } = this.props;
-        dispatch(deletePod(this.props.idName, name));
+        this.props.onDeletePod(this.props.idName, name);
     }
     render() {
         const labelsArray = this.props.GetPodReducer.data.labels ? Object.keys(this.props.GetPodReducer.data.labels) : [];
@@ -99,7 +98,7 @@ class Info extends Component {
 }
 
 Info.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onDeletePod: PropTypes.func.isRequired,
     DeletePodReducer: PropTypes.object,
     GetPodReducer: PropTypes.object,
     idName: PropTypes.string,
@@ -117,4 +116,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Info);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeletePod: (idName, name) => {
+            dispatch(deletePod(idName, name));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Info);

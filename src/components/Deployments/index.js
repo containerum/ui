@@ -7,16 +7,15 @@ import Posts from './Posts';
 import Spinner from '../Spinner';
 
 class Deployments extends Component {
-    componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(getDeployments(this.props.idName));
+    componentWillMount() {
+        this.props.onGetDeployments(this.props.idName);
     }
-    componentWillUpdate(nextProps) {
-        if (nextProps.idName !== this.props.idName) {
-            const { dispatch } = this.props;
-            dispatch(getDeployments(this.props.idName));
-        }
-    }
+    // componentWillUpdate(nextProps) {
+    //     if (nextProps.idName !== this.props.idName) {
+    //         const { dispatch } = this.props;
+    //         dispatch(getDeployments(this.props.idName));
+    //     }
+    // }
     render() {
         let isFetchingComponent = '';
         if (this.props.DeploymentsReducer.isFetching === false) {
@@ -26,6 +25,7 @@ class Deployments extends Component {
                     deploymentsErrorMessageReducer={this.props.DeploymentsReducer.errorMessage}
                     deploymentsStatusErrorReducer={this.props.DeploymentsReducer.statusError}
                     idName={this.props.idName}
+                    linkedDep={this.props.linkedDep}
                 />;
         } else {
             isFetchingComponent = <Spinner />;
@@ -40,11 +40,12 @@ class Deployments extends Component {
 }
 
 Deployments.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onGetDeployments: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
     statusError: PropTypes.number,
     DeploymentsReducer: PropTypes.object,
-    idName: PropTypes.string
+    idName: PropTypes.string,
+    linkedDep: PropTypes.string
 };
 
 function mapStateToProps(state) {
@@ -59,4 +60,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Deployments);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetDeployments: idName => {
+            dispatch(getDeployments(idName));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Deployments);

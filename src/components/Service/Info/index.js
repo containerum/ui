@@ -13,11 +13,10 @@ class Info extends Component {
         }
     }
     handleClickDeletingService(name) {
-        const { dispatch } = this.props;
-        dispatch(deleteService(this.props.idName, name));
+        this.props.onDeleteService(this.props.idName, name);
     }
     render() {
-        const labelsArray = this.props.serviceReducer.labels ? Object.keys(this.props.serviceReducer.labels) : [];
+        const external = this.props.serviceReducer.labels ? this.props.serviceReducer.labels.external : '';
         const domain_hosts = this.props.serviceReducer.domain_hosts ? this.props.serviceReducer.domain_hosts : [];
         const ports = this.props.serviceReducer.ports ? this.props.serviceReducer.ports : [];
         const name = this.props.serviceReducer.name ? this.props.serviceReducer.name : '';
@@ -30,7 +29,7 @@ class Info extends Component {
                     name={this.props.DeleteServiceReducer.serviceName}
                     errorMessage={this.props.DeleteServiceReducer.errorMessage}
                 />
-                <div className="container-fluid pt-3 pb-5">
+                <div className="container-fluid pt-3 pb-3">
                     <div className="row">
                         <div className="col-12">
                             <div className="card mt-3">
@@ -88,11 +87,8 @@ class Info extends Component {
                                                 </td>
                                                 <td>
                                                     Labels <br/>
-                                                    {labelsArray.map((item, index) =>  {
-                                                        return (
-                                                            <span key={index}>{item}: {this.props.serviceReducer.labels[item]}<br/></span>
-                                                        );
-                                                    })}
+                                                    external: {external} <br/>
+                                                    linked deployment: {this.props.serviceReducer.deployment} <br/>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -109,7 +105,7 @@ class Info extends Component {
 
 Info.propTypes = {
     serviceReducer: PropTypes.object,
-    dispatch: PropTypes.func.isRequired,
+    onDeleteService: PropTypes.func.isRequired,
     DeleteServiceReducer: PropTypes.object,
     idName: PropTypes.string
 };
@@ -124,4 +120,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Info);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeleteService: (idName, name) => {
+            dispatch(deleteService(idName, name));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Info);

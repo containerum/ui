@@ -86,10 +86,15 @@
     padding: 5px 1.5rem;
 }
 
-.c-nav-menu-btn {
+.c-nav-menu-btn,
+.c-nav-menu-btn-name {
     background: transparent;
     cursor: pointer;
     margin-top: 3px;
+}
+
+.c-nav-menu-btn-name {
+    border-bottom: 2px solid #f7f7f7;
 }
 
 .c-nav-menu-btn-top {
@@ -119,10 +124,15 @@
     box-shadow: none;
 }
 
-.c-table-card-img {
+.c-table-card-img,
+.c-table-card-img-namespaces {
     width: 30px;
     height: 30px;
     margin-bottom: -11px;
+}
+
+.c-table-card-img-namespaces {
+    margin-bottom: -19px;
 }
 
 .c-table-card-img-old {
@@ -214,7 +224,6 @@ body {
     text-align: center;
     color: #009CD1;
 }
-
 .c-has-feedback-left .c-form-control-icon:after {
     content: "";
     position: absolute;

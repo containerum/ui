@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
 import Header from '../../components/Header';
@@ -10,16 +9,6 @@ import '../../styles/custom.css';
 import '../../styles/individual.css';
 
 class App extends Component {
-    componentDidMount() {
-        if (this.props.params.idName === 'default' &&
-            Object.keys(this.props.params).length === 1) {
-            browserHistory.push('/Namespaces/default');
-        } else if (Object.keys(this.props.params).length === 1 && this.props.params.idName) {
-            browserHistory.push('/Namespaces/' + this.props.params.idName);
-        } else if (Object.keys(this.props.params).length === 0 && this.props.location.pathname === '/') {
-            browserHistory.push('/Namespaces/default');
-        }
-    }
     render() {
         return (
             <div>

@@ -51,7 +51,6 @@ class Password extends Component {
             (repeat_password.length >= 8 && repeat_password.length <= 64) &&
             new_password === repeat_password
         ) {
-            const { dispatch } = this.props;
             const updatePasswordData = {
                 password: current_password,
                 new_password: new_password
@@ -59,7 +58,7 @@ class Password extends Component {
             const getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'none';
             // console.log(updatePasswordData);
-            dispatch(changePassword(updatePasswordData));
+            this.props.onChangePassword(updatePasswordData);
         } else {
             this.setState({
                 ...this.state,
@@ -164,7 +163,7 @@ class Password extends Component {
 }
 
 Password.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onChangePassword: PropTypes.func.isRequired,
     errorMessage: PropTypes.string
 };
 
@@ -174,4 +173,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Password);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onChangePassword: updatePasswordData => {
+            dispatch(changePassword(updatePasswordData));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Password);

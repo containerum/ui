@@ -1,26 +1,23 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import sha256 from 'sha256';
 
 import {
-    PODS_REQUEST,
-    PODS_SUCCESS,
-    PODS_FAILURE
-} from '../../constants/PodsConstants';
+    NAMESPACES_REQUEST,
+    NAMESPACES_SUCCESS,
+    NAMESPACES_FAILURE
+} from '../../constants/NamespacesConstants';
 
 import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function getPods(namespaceName, idDeployment) {
+export function deleteNamespace(idName) {
     return dispatch => {
-        dispatch(requestGetPods());
+        dispatch(requestDeleteNamespace());
         const token = localStorage.getItem('id_token');
-        const api = WEB_API + '/api/namespaces/' + namespaceName + '/pods';
-        const shaDeployment256 = sha256(namespaceName).substring(0, 32);
 
         return axios.get(
-            api,
+            WEB_API + '/api/namespaces',
             {
                 headers: {
                     'Authorization': token,
@@ -33,41 +30,35 @@ export function getPods(namespaceName, idDeployment) {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
-                const filterDepData = [];
-                response.data.map(item => {
-                    if (item.deployment === idDeployment) {
-                        filterDepData.push(item);
-                    }
-                });
-                dispatch(receiveGetPods(filterDepData));
+                dispatch(receiveDeleteNamespace(response.data));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetPods(response.data.message));
+                dispatch(failDeleteNamespace(response.data.message));
             }
         }).catch(err => console.log(err));
     };
 }
 
-function requestGetPods() {
+function requestDeleteNamespace() {
     return {
-        type: PODS_REQUEST,
+        type: NAMESPACES_REQUEST,
         isFetching: true
     };
 }
 
-function receiveGetPods(data) {
+function receiveDeleteNamespace(data) {
     return {
-        type: PODS_SUCCESS,
+        type: NAMESPACES_SUCCESS,
         isFetching: false,
         data
     };
 }
 
-function failGetPods(message) {
+function failDeleteNamespace(message) {
     return {
-        type: PODS_FAILURE,
+        type: NAMESPACES_FAILURE,
         isFetching: false,
         message
     };
