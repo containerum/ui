@@ -38,7 +38,6 @@ class Email extends Component {
     }
     handleOnSubmitUpdateEmail(e) {
         e.preventDefault();
-        const { dispatch } = this.props;
         if (
             this.state.isValidNewEmail && this.state.isValidConfirmEmail &&
             this.state.newEmail === this.state.confirmEmail
@@ -46,7 +45,7 @@ class Email extends Component {
             const updateObj = {
                 new_email: this.state.confirmEmail
             };
-            dispatch(updateEmail(updateObj));
+            this.props.onUpdateEmail(updateObj);
         } else {
             this.setState({
                 ...this.state,
@@ -130,7 +129,7 @@ class Email extends Component {
 }
 
 Email.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    onUpdateEmail: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -139,4 +138,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Email);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onUpdateEmail: updateObj => {
+            dispatch(updateEmail(updateObj));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Email);

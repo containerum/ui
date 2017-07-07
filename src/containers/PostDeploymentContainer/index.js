@@ -16,7 +16,7 @@ class PostDeploymentContainer extends Component {
                     </TabList>
                     <TabPanel>
                         <Info deploymentReducer={this.props.deploymentReducer} idName={this.props.idName} />
-                        <PodsList idDep={this.props.idDep} idName={this.props.idName} />
+                        <PodsList PodsReducer={this.props.PodsReducer} idDep={this.props.idDep} idName={this.props.idName} />
                     </TabPanel>
                     {/*<TabPanel>*/}
                     {/*<div className="container-fluid pt-3">*/}
@@ -31,6 +31,7 @@ class PostDeploymentContainer extends Component {
 
 PostDeploymentContainer.propTypes = {
     deploymentReducer: PropTypes.object,
+    PodsReducer: PropTypes.object,
     errorMessage: PropTypes.string,
     idName: PropTypes.string,
     idDep: PropTypes.string

@@ -19,8 +19,7 @@ class PodsList extends Component {
         }
     }
     handleClickDeletingPod(name) {
-        const { dispatch } = this.props;
-        dispatch(deletePod(this.props.idName, name));
+        this.props.onDeletePod(this.props.idName, name);
     }
     handleClickTR(href) {
         browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + this.props.idDep + '/Pods/' + href);
@@ -95,21 +94,27 @@ class PodsList extends Component {
 PodsList.propTypes = {
     idName: PropTypes.string,
     idDep: PropTypes.string,
-    dispatch: PropTypes.func,
+    onDeletePod: PropTypes.func,
     PodsReducer: PropTypes.object,
     DeletePodReducer: PropTypes.object
 };
 
 function mapStateToProps(state) {
-    const { PodsReducer } = state;
     const { DeletePodReducer } = state;
-    const { errorMessage } = PodsReducer;
+    const { errorMessage } = DeletePodReducer;
 
     return {
         errorMessage,
-        DeletePodReducer,
-        PodsReducer
+        DeletePodReducer
     };
 }
 
-export default connect(mapStateToProps)(PodsList);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeletePod: (idName, name) => {
+            dispatch(deletePod(idName, name));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PodsList);

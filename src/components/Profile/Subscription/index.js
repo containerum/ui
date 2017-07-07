@@ -19,9 +19,8 @@ class Subscription extends Component {
         this.setState({
             on: !this.state.on
         });
-        const { dispatch } = this.props;
-        console.log(this.state.on);
-        dispatch(subscriptionsEmail(this.state.on));
+        // console.log(this.state.on);
+        this.props.onSubscriptionsEmail(this.state.on);
     }
     render() {
         return (
@@ -66,7 +65,7 @@ class Subscription extends Component {
 }
 
 Subscription.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    onSubscriptionsEmail: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -75,4 +74,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Subscription);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSubscriptionsEmail: stateOn => {
+            dispatch(subscriptionsEmail(stateOn));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Subscription);

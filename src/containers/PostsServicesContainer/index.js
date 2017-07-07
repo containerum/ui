@@ -18,8 +18,7 @@ class PostsServicesContainer extends Component {
         browserHistory.push('/Namespaces/' + this.props.idName + '/Services/' + href);
     }
     handleClickDeletingService(name) {
-        const { dispatch } = this.props;
-        dispatch(deleteService(this.props.idName, name));
+        this.props.onDeleteService(this.props.idName, name);
     }
     render() {
         return (
@@ -97,7 +96,7 @@ class PostsServicesContainer extends Component {
 
 PostsServicesContainer.propTypes = {
     PostsServicesDataReducer: PropTypes.array,
-    dispatch: PropTypes.func,
+    onDeleteService: PropTypes.func,
     DeleteServiceReducer: PropTypes.object,
     idName: PropTypes.string
 };
@@ -112,4 +111,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(PostsServicesContainer);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeleteService: (idName, name) => {
+            dispatch(deleteService(idName, name));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostsServicesContainer);

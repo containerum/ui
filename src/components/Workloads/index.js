@@ -1,33 +1,66 @@
 import React, { Component } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Deployments from '../Deployments';
-import Services from '../Services';
-import Namespaces from '../../components/Namespaces';
-// import CreateInstance from '../../components/CreateInstance';
+import Namespaces from '../Namespaces';
+import { getNamespaces } from '../../actions/NamespacesActions';
 
 class Workloads extends Component {
     componentWillMount() {
         document.body.classList.remove('c-body-bg');
     }
+    componentDidMount() {
+        this.props.onGetNamespaces();
+    }
+    // componentWillUpdate(nextProps) {
+    //     if (nextProps.idName !== this.props.idName) {
+    //         const { dispatch } = this.props;
+    //         dispatch(getDeployments(this.props.idName));
+    //     }
+    // }
     render() {
         return (
             <div>
-                <div>
-                    <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                        <Namespaces />
-                        {/* <CreateInstance /> */}
-                    </div>
-                </div>
-                <Deployments idName={this.props.params.idName} />
-                <Services idName={this.props.params.idName} />
+                <Tabs selectedTabClassName="i-selected-tab">
+                    <TabList className="navbar navbar-toggleable-md navbar-light bg-faded">
+                        <Tab className="btn c-nav-menu-btn-name">Namespaces</Tab>
+                        {/*<Tab className="btn c-nav-menu-btn-name">Volume</Tab>*/}
+                    </TabList>
+
+                    <TabPanel>
+                        <Namespaces NamespacesReducer={this.props.NamespacesReducer} />
+                    </TabPanel>
+                    {/*<TabPanel>*/}
+                    {/*<div className="container-fluid pt-3">*/}
+                    {/*Volume*/}
+                    {/*</div>*/}
+                    {/*</TabPanel>*/}
+                </Tabs>
             </div>
         );
     }
 }
 
 Workloads.propTypes = {
-    params: PropTypes.object
+    onGetNamespaces: PropTypes.func.isRequired,
+    NamespacesReducer: PropTypes.object
 };
 
-export default Workloads;
+function mapStateToProps(state) {
+    const { NamespacesReducer } = state;
+
+    return {
+        NamespacesReducer
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetNamespaces: () => {
+            dispatch(getNamespaces());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Workloads);

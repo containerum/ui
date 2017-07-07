@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 
 import {
     CREATE_SERVICE_REQUEST,
@@ -6,15 +6,34 @@ import {
     CREATE_SERVICE_FAILURE
 } from '../../constants/CreateServiceConstants';
 
-// import {
-//     WEB_API
-// } from '../../constants/WebApi';
+import {
+    WEB_API
+} from '../../constants/WebApi';
 
-export function getCreateService() {
+export function getCreateService(idName, data) {
     return dispatch => {
         dispatch(requestGetCreateService());
-        dispatch(receiveGetCreateService());
-        dispatch(failGetCreateService());
+        const token = localStorage.getItem('id_token');
+        return axios.post(
+            WEB_API + '/api/namespaces/' + idName + '/services',
+            { ports: data },
+            {
+                headers: {
+                    'Authorization': token,
+                    'Access-Control-Allow-Origin': '*'
+                },
+                validateStatus: (status) => status >= 200 && status <= 505
+            }
+        )
+        .then(response => {
+            if (response.status === 200) {
+                console.log(response);
+                dispatch(receiveGetCreateService(response.data));
+            } else {
+                console.log(response);
+                dispatch(failGetCreateService(response.data.message));
+            }
+        }).catch(err => console.log(err));
     };
 }
 
@@ -25,16 +44,18 @@ function requestGetCreateService() {
     };
 }
 
-function receiveGetCreateService() {
+function receiveGetCreateService(data) {
     return {
         type: CREATE_SERVICE_SUCCESS,
-        isFetching: false
+        isFetching: false,
+        data
     };
 }
 
-function failGetCreateService() {
+function failGetCreateService(message) {
     return {
         type: CREATE_SERVICE_FAILURE,
-        isFetching: false
+        isFetching: false,
+        message
     };
 }

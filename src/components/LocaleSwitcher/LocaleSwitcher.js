@@ -5,7 +5,7 @@ export default class LocaleSwitcher extends Component {
     constructor() {
         super();
         this.handleChangeLocate = this.handleChangeLocate.bind(this);
-        let locateState = localStorage.getItem('locate_token');
+        const locateState = localStorage.getItem('locate_token');
         counterpart.setLocale(locateState);
         this.state = {
             locate: locateState ? locateState : 'en'

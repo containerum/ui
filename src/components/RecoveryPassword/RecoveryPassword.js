@@ -26,8 +26,7 @@ class RecoveryPassword extends Component {
         document.body.classList.add('c-body-bg');
         localStorage.removeItem('id_token');
         if (this.props.location.query.hashParam) {
-            const { dispatch } = this.props;
-            dispatch(checkHashPassword(this.props.location.query.hashParam));
+            this.props.onCheckHashPassword(this.props.location.query.hashParam);
         } else {
             browserHistory.push('/Forgot');
         }
@@ -59,13 +58,12 @@ class RecoveryPassword extends Component {
             (repeat_password.length >= 8 && repeat_password.length <= 64) &&
             new_password === repeat_password
         ) {
-            const { dispatch } = this.props;
             const updatePasswordData = {
                 password: new_password
             };
             const getAlert = document.getElementById('loginAlert');
             getAlert.style.display = 'none';
-            dispatch(recoveryPassword(this.props.CheckHashPasswordReducer.hashParam, updatePasswordData.password));
+            this.props.onRecoveryPassword(this.props.CheckHashPasswordReducer.hashParam, updatePasswordData.password);
         } else {
             this.setState({
                 ...this.state,
@@ -144,7 +142,8 @@ class RecoveryPassword extends Component {
 }
 
 RecoveryPassword.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onCheckHashPassword: PropTypes.func.isRequired,
+    onRecoveryPassword: PropTypes.func.isRequired,
     location: PropTypes.object,
     CheckHashPasswordReducer: PropTypes.object,
     RecoveryPasswordReducer: PropTypes.object,
@@ -161,4 +160,15 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(RecoveryPassword);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onCheckHashPassword: hashParam => {
+            dispatch(checkHashPassword(hashParam));
+        },
+        onRecoveryPassword: (hashParam, password) => {
+            dispatch(recoveryPassword(hashParam, password));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecoveryPassword);

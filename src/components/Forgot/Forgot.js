@@ -35,11 +35,10 @@ class Forgot extends Component {
     }
     handleClick(event) {
         event.preventDefault();
-        const { dispatch } = this.props;
 
         if (this.state.isValidEmail) {
             const creds = { email: this.state.email.trim() };
-            dispatch(ConfirmEmail(creds));
+            this.props.onConfirmEmail(creds);
         } else {
             this.setState({
                 ...this.state,
@@ -86,7 +85,7 @@ class Forgot extends Component {
 }
 
 Forgot.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onConfirmEmail: PropTypes.func.isRequired,
     confirmEmailReducer: PropTypes.object,
     errorMessage: PropTypes.string
 };
@@ -101,4 +100,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Forgot);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onConfirmEmail: (creds) => {
+            dispatch(ConfirmEmail(creds));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Forgot);

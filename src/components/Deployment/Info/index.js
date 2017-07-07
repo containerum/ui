@@ -13,8 +13,7 @@ class Info extends Component {
         }
     }
     handleClickDeletingDeployment(name) {
-        const { dispatch } = this.props;
-        dispatch(deleteDeployment(this.props.idName, name));
+        this.props.onDeleteDeployment(this.props.idName, name);
     }
     render() {
         const statusArray = this.props.deploymentReducer.status ? Object.keys(this.props.deploymentReducer.status) : [];
@@ -118,7 +117,7 @@ class Info extends Component {
 
 Info.propTypes = {
     idName: PropTypes.string,
-    dispatch: PropTypes.func,
+    onDeleteDeployment: PropTypes.func,
     DeleteDeploymentReducer: PropTypes.object,
     deploymentReducer: PropTypes.object
 };
@@ -133,4 +132,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Info);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeleteDeployment: (idName, name) => {
+            dispatch(deleteDeployment(idName, name));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Info);

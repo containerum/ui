@@ -139,12 +139,17 @@ button,
     border-color: inherit;
 }
 
-.i-td-table {
+.i-td-table,
+.i-td-table-namespaces {
     padding: .5rem;
     padding-left: 1rem;
     vertical-align: top;
     /*border-top: 1px solid #eceeef;*/
     display: table-cell;
+}
+
+.i-td-table-namespaces {
+    vertical-align: middle;
 }
 
 .i-td-table-first-width-pods {
@@ -266,6 +271,10 @@ button,
     fill: #009bd3;
 }
 
+.cls-namespaces {
+    fill: orange;
+}
+
 .cls-services {
     fill: #556970;
 }
@@ -360,6 +369,16 @@ button,
     margin-top: 12px;
 }
 
+.i-label-service {
+    margin-top: 6px;
+    margin-right: -15px;
+    margin-left: 17px;
+}
+
+.i-label-namespace {
+    display: inline-block;
+}
+
 
 .i-label-back {
     display: inline-block;
@@ -411,6 +430,9 @@ button,
     float: left;
     right: 0.3em;
 }
+/*Additional properties for button version
+ iOS requires the button element instead of an anchor tag.
+ If you want the anchor version, it requires `href="#"`.*/
 button.toast-close-button {
     padding: 0;
     cursor: pointer;
@@ -548,6 +570,7 @@ button.toast-close-button {
     -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
     filter: alpha(opacity=40);
 }
+/*Responsive Design*/
 @media all and (max-width: 240px) {
     #toast-container > div {
         padding: 8px 8px 8px 50px;
@@ -591,4 +614,12 @@ button.toast-close-button {
         padding: 15px 50px 15px 15px;
     }
 }
-/* toast end */
+
+.i-active-name {
+    color: green;
+    margin-left: 38px;
+}
+
+.c-has-feedback-left .c-form-control-icon .i-form-control-icon {
+    top: 25px;
+}

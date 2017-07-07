@@ -6,7 +6,7 @@ import ErrorServices from '../ErrorServices';
 
 class Posts extends Component {
     render() {
-        let isErrorContainer = "";
+        let isErrorContainer = '';
         if (this.props.servicesDataReducer.length === 0 || this.props.servicesStatusErrorReducer === 404) {
             isErrorContainer = <ButtonCreateService />;
         } else if (this.props.servicesErrorMessageReducer) {

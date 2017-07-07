@@ -15,8 +15,7 @@ class Support extends Component {
             subject: this.refs.subject.value,
             textArea: textArea
         };
-        const { dispatch } = this.props;
-        dispatch(sendSupport(reqObj));
+        this.props.onSendSupport(reqObj);
     }
     render() {
         return (
@@ -60,7 +59,7 @@ class Support extends Component {
 }
 
 Support.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    onSendSupport: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -71,4 +70,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Support);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSendSupport: reqObj => {
+            dispatch(sendSupport(reqObj));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Support);

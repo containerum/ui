@@ -31,7 +31,7 @@ export function deleteDeployment(namespaceName, deploymentName) {
         )
             .then(response => {
                 if (response.status === 202) {
-                    dispatch(receiveDeleteDeployment(response.data, deploymentName));
+                    dispatch(receiveDeleteDeployment(response.status, deploymentName));
                 } else if (response.status === 401) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');

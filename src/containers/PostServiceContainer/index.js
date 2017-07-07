@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Deployments from '../../components/Deployments';
 
 import Info from '../../components/Service/Info';
-// import PodsList from '../../components/Service/PodsList';
+import ServiceSettings from '../../components/Service/ServiceSettings';
 
 class PostServiceContainer extends Component {
     render() {
@@ -19,12 +20,15 @@ class PostServiceContainer extends Component {
                             serviceReducer={this.props.serviceReducer}
                             idName={this.props.idName}
                         />
-                        {/*<PodsList serviceReducer={this.props.serviceReducer} />*/}
+                        <Deployments
+                            idName={this.props.idName}
+                            linkedDep={this.props.serviceReducer.deployment}
+                        />
                     </TabPanel>
                     {/*<TabPanel>*/}
-                    {/*<div className="container-fluid pt-3">*/}
-                    {/*Settings*/}
-                    {/*</div>*/}
+                    {/*<ServiceSettings*/}
+                    {/*serviceReducer={this.props.serviceReducer}*/}
+                    {/*/>*/}
                     {/*</TabPanel>*/}
                 </Tabs>
             </div>

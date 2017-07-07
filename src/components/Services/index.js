@@ -8,8 +8,7 @@ import Posts from './Posts';
 
 class Services extends Component {
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(getServices(this.props.idName));
+        this.props.onGetServices(this.props.idName);
     }
     render() {
         let isFetchingComponent = '';
@@ -35,7 +34,7 @@ class Services extends Component {
 }
 
 Services.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onGetServices: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
     ServicesReducer: PropTypes.object,
     idName: PropTypes.string
@@ -51,4 +50,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Services);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetServices: idName => {
+            dispatch(getServices(idName));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Services);

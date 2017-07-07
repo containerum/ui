@@ -76,7 +76,6 @@ class SignUp extends Component {
     }
     handleClick(event) {
         event.preventDefault();
-        const { dispatch } = this.props;
         if (this.state.password.length <= 7) {
             this.setState({
                 ...this.state,
@@ -86,7 +85,7 @@ class SignUp extends Component {
             getAlert.style.display = 'block';
         } else if (this.state.isValidEmail && this.state.isValidPassword) {
             const creds = { username: this.state.email.trim(), password: this.state.password.trim() };
-            dispatch(SignUpUser(creds));
+            this.props.onSignUpUser(creds);
         } else {
             this.setState({
                 ...this.state,
@@ -206,7 +205,7 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onSignUpUser: PropTypes.func.isRequired,
     quote: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
@@ -225,4 +224,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(SignUp);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSignUpUser: creds => {
+            dispatch(SignUpUser(creds));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
