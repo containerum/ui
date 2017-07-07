@@ -93,7 +93,7 @@
 }
 
 .c-nav-menu-btn-top {
-    top: 1px;
+    margin-top: 0;
 }
 
 /* Card */
@@ -289,3 +289,4 @@ body {
     position: relative;
     padding: 6px 1.5rem;
 }
+/* Dropdown end */
