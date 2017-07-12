@@ -6,16 +6,17 @@ import NavLink from '../../components/NavLink';
 
 class CreateInstance extends Component {
     render() {
+        const createService = '/Namespaces/' + this.props.idName + '/CreateNewService';
         return (
             <div>
-                <div className="btn-group">
-                    <button
-                        type="button"
-                        className="btn c-nav-menu-btn"
-                    >
-                        Settings
-                    </button>
-                </div>
+                {/*<div className="btn-group">*/}
+                {/*<button*/}
+                {/*type="button"*/}
+                {/*className="btn c-nav-menu-btn"*/}
+                {/*>*/}
+                {/*Settings*/}
+                {/*</button>*/}
+                {/*</div>*/}
                 <div className="btn-group">
                     <button
                         type="button"
@@ -27,12 +28,12 @@ class CreateInstance extends Component {
                         Create
                     </button>
                     <div className="dropdown-menu dropdown-menu-right i-dropdown-box-shadow">
-                        <NavLink className="dropdown-item c-dropdown-item-wrap" to='/CreateNewDeployment'>
-                            <img className="c-dropdown-item-img" src="https://avatars0.githubusercontent.com/u/107673?v=3&amp;s=400" alt="" />
-                            <span className="c-dropdown-item-name">Deployment</span>
-                        </NavLink>
-                        <div className="dropdown-divider"></div>
-                        <NavLink className="dropdown-item c-dropdown-item-wrap" to='/CreateNewService'>
+                        {/*<NavLink className="dropdown-item c-dropdown-item-wrap" to="/CreateNewDeployment">*/}
+                        {/*<img className="c-dropdown-item-img" src="https://avatars0.githubusercontent.com/u/107673?v=3&amp;s=400" alt="" />*/}
+                        {/*<span className="c-dropdown-item-name">Deployment</span>*/}
+                        {/*</NavLink>*/}
+                        {/*<div className="dropdown-divider"></div>*/}
+                        <NavLink className="dropdown-item c-dropdown-item-wrap" to={createService}>
                             <img className="c-dropdown-item-img" src="https://avatars0.githubusercontent.com/u/107673?v=3&amp;s=400" alt="" />
                             <span className="c-dropdown-item-name">Service</span>
                         </NavLink>
@@ -44,18 +45,27 @@ class CreateInstance extends Component {
 }
 
 CreateInstance.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string
+    // dispatch: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
+    idName: PropTypes.string
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     const { NamespacesReducer } = state;
     const { errorMessage } = NamespacesReducer;
 
     return {
         errorMessage,
         NamespacesReducer
-    }
+    };
 }
 
-export default connect(mapStateToProps)(CreateInstance)
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         onGetCreateDeployment: () => {
+//             dispatch(getCreateDeployment());
+//         }
+//     };
+// };
+
+export default connect(mapStateToProps)(CreateInstance);

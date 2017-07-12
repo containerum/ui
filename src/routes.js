@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
 import Workloads from './components/Workloads';
 import Login from './components/auth/Login';
@@ -14,6 +14,7 @@ import CreateService from './components/CreateService';
 import Deployment from './components/Deployment';
 import Service from './components/Service';
 import Pod from './components/Pod';
+import Panel from './components/Panel';
 import NotFound from './components/NotFound';
 import Profile from './components/Profile';
 import Support from './components/Support';
@@ -21,12 +22,14 @@ import Support from './components/Support';
 export const routes = (
     <Route>
         <Route path="/" component={requireAuthentication(App)}>
-            <Route path="/Namespaces/:idName" component={Workloads} />
+            <IndexRoute component={Workloads} />
+            <Route path="/Namespaces" component={Workloads} />
+            <Route path="/Namespaces/:idName" component={Panel} />
+            <Route path="/Namespaces/:idName/CreateNewDeployment" component={CreateDeployment} />
+            {/*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*/}
             <Route path="/Namespaces/:idName/Deployments/:idDep" component={Deployment} />
             <Route path="/Namespaces/:idName/Services/:idService" component={Service} />
             <Route path="/Namespaces/:idName/Deployments/:idDep/Pods/:idPod"  component={Pod} />
-            <Route path="/CreateNewDeployment" component={CreateDeployment} />
-            <Route path="/CreateNewService" component={CreateService} />
             <Route path="/Profile" component={Profile} />
             <Route path="/Support" component={Support} />
         </Route>

@@ -18,10 +18,20 @@ class PostsDeploymentsContainer extends Component {
         browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + href);
     }
     handleClickDeletingDeployment(name) {
-        const { dispatch } = this.props;
-        dispatch(deleteDeployment(this.props.idName, name));
+        this.props.onDeleteDeployment(this.props.idName, name);
     }
     render() {
+        const PostsDeploymentsDataReducer = this.props.PostsDeploymentsDataReducer ? this.props.PostsDeploymentsDataReducer : null;
+        const linkedDepName = this.props.linkedDep || null;
+        const linkedDepArray = [];
+        if (linkedDepName) {
+            PostsDeploymentsDataReducer.map(item => {
+                if (item.name === linkedDepName) {
+                    linkedDepArray.push(item);
+                }
+            });
+        }
+        const PostsDeploymentsArray = linkedDepName ? linkedDepArray : this.props.PostsDeploymentsDataReducer;
         return (
             <div>
                 <Notification
@@ -30,7 +40,7 @@ class PostsDeploymentsContainer extends Component {
                     errorMessage={this.props.DeleteDeploymentReducer.errorMessage}
                 />
                 <div className="container-fluid pt-3 pb-5">
-                    <h5>Deployments</h5>
+                    <h5>{linkedDepName ? 'Linked Deployments' : 'Deployments'}</h5>
                     <div className="row">
                         <div className="col-12">
                             <div className="card i-card-border mt-3">
@@ -38,7 +48,7 @@ class PostsDeploymentsContainer extends Component {
                                     <div className="table table-hover c-table-card i-table-card">
                                         <div className="i-table-tbody">
                                             {
-                                                this.props.PostsDeploymentsDataReducer.map((item) => {
+                                                PostsDeploymentsArray.map((item) => {
                                                     const imagesList = item.images.join();
                                                     const name = item.name;
                                                     const nameFirstChar = name.substring(0, 1).toUpperCase();
@@ -87,10 +97,11 @@ class PostsDeploymentsContainer extends Component {
 }
 
 PostsDeploymentsContainer.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onDeleteDeployment: PropTypes.func.isRequired,
     PostsDeploymentsDataReducer: PropTypes.array,
     DeleteDeploymentReducer: PropTypes.object,
-    idName: PropTypes.string
+    idName: PropTypes.string,
+    linkedDep: PropTypes.string
 };
 
 function mapStateToProps(state) {
@@ -103,4 +114,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(PostsDeploymentsContainer);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeleteDeployment: (idName, name) => {
+            dispatch(deleteDeployment(idName, name));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostsDeploymentsContainer);

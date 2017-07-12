@@ -56,8 +56,7 @@ class DeleteAccount extends Component {
     }
     handleOnClickDeleteProfile(e) {
         e.preventDefault();
-        const { dispatch } = this.props;
-        dispatch(deleteProfile());
+        this.props.onDeleteProfile();
     }
     handleClickCloseModal() {
         this.setState({ modalIsOpen: false });
@@ -143,7 +142,7 @@ class DeleteAccount extends Component {
 }
 
 DeleteAccount.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    onDeleteProfile: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -152,4 +151,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(DeleteAccount);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeleteProfile: () => {
+            dispatch(deleteProfile());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteAccount);

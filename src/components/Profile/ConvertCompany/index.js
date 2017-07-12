@@ -12,8 +12,7 @@ class ConvertCompany extends Component {
             code: this.refs.code.value,
             company: this.refs.company.value
         };
-        const { dispatch } = this.props;
-        dispatch(convertToCompany(convertCompany));
+        this.props.onConvertToCompany(convertCompany);
     }
     render() {
         return (
@@ -77,7 +76,7 @@ class ConvertCompany extends Component {
 }
 
 ConvertCompany.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    onConvertToCompany: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -86,4 +85,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(ConvertCompany);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onConvertToCompany: convertCompany => {
+            dispatch(convertToCompany(convertCompany));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConvertCompany);

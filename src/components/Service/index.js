@@ -8,19 +8,20 @@ import Spinner from '../Spinner';
 
 class Service extends Component {
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(getService(this.props.params.idName, this.props.params.idService));
+        this.props.onGetService(this.props.params.idName, this.props.params.idService);
     }
     render() {
         let isFetchingComponent = '';
         if (this.props.getServiceReducer.isFetching === false) {
             isFetchingComponent =
-                <Post
-                    serviceReducer={this.props.getServiceReducer.data}
-                    errorMessage={this.props.getServiceReducer.errorMessage}
-                    idName={this.props.params.idName}
-                    idService={this.props.params.idService}
-                />;
+                <div>
+                    <Post
+                        serviceReducer={this.props.getServiceReducer.data}
+                        errorMessage={this.props.getServiceReducer.errorMessage}
+                        idName={this.props.params.idName}
+                        idService={this.props.params.idService}
+                    />
+                </div>;
         } else {
             isFetchingComponent = <Spinner />;
         }
@@ -33,7 +34,7 @@ class Service extends Component {
 }
 
 Service.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onGetService: PropTypes.func.isRequired,
     params: PropTypes.object,
     getServiceReducer: PropTypes.object,
     errorMessage: PropTypes.string
@@ -49,4 +50,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Service);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetService: (idName, idService) => {
+            dispatch(getService(idName, idService));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Service);

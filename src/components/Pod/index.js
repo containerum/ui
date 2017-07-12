@@ -6,13 +6,12 @@ import { getPod } from '../../actions/PodActions/getPodAction';
 import Spinner from '../Spinner';
 
 import PostPodContainer from '../../containers/PostPodContainer';
-import Namespaces from '../../components/Namespaces';
+import NamespacesDropDown from '../../components/NamespacesDropDown';
 // import CreateInstance from '../../components/CreateInstance';
 
 class Pod extends Component {
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(getPod(this.props.params.idName, this.props.params.idPod));
+        this.props.onGetPod(this.props.params.idName, this.props.params.idPod);
     }
     render() {
         let isFetchingComponent = '';
@@ -20,12 +19,12 @@ class Pod extends Component {
             isFetchingComponent =
                 <div>
                     <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                        <Namespaces
+                        <NamespacesDropDown
                             idDep={this.props.params.idDep}
                             idPod={this.props.params.idPod}
                             idName={this.props.params.idName}
                         />
-                        {/*<CreateInstance />*/}
+                        {/*<CreateInstance idName={this.props.params.idName} />*/}
                     </div>
                     <PostPodContainer
                         GetPodReducer={this.props.GetPodReducer}
@@ -46,7 +45,7 @@ class Pod extends Component {
 }
 
 Pod.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    onGetPod: PropTypes.func.isRequired,
     params: PropTypes.object,
     GetPodReducer: PropTypes.object,
     errorMessage: PropTypes.string
@@ -62,4 +61,12 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Pod);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetPod: (idName, idPod) => {
+            dispatch(getPod(idName, idPod));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pod);

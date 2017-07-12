@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import PropTypes from 'prop-types';
 
 import { logoutUser } from '../../actions/LogoutActions';
@@ -16,21 +16,14 @@ class Header extends Component {
     componentDidMount() {
         this.props.onLoadProfileData();
     }
-    handleClickLogo() {
-        if (this.props.idName) {
-            browserHistory.push('/Namespaces/' + this.props.idName);
-        } else {
-            browserHistory.push('/Namespaces/default');
-        }
-    }
     render() {
         const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : '';
         return (
             <div className="c-navbar">
                 <div className="navbar navbar-inverse navbar-toggleable-md i-hover-pointer">
-                    <div className="navbar-brand i-navbar-brand-pd-l" onClick={this.handleClickLogo.bind(this)}>
+                    <Link to="/Namespaces" className="navbar-brand i-navbar-brand-pd-l">
                         <img className="d-inline-block align-top i-sizes-img-logo" src={logo} alt="Logo"/>
-                    </div>
+                    </Link>
                     <div className="collapse navbar-collapse justify-content-end">
                         <CommonInfoDropdown />
                         <ProfileInfoDropdown onLogoutClick={this.props.onLogoutClick} userEmail={userEmail} />
