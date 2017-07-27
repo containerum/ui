@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+// import md5 from 'md5';
 
 import {
     CHANGE_PASSWORD_REQUEST,
@@ -16,6 +17,8 @@ export function changePassword(data) {
         dispatch(requestChangePassword());
         const token = localStorage.getItem('id_token');
         const api = WEB_API + '/api/password_change';
+        // const password = md5(data.password).toString(16);
+        // const new_password = md5(data.new_password).toString(16);
 
         return axios.post(
             api,

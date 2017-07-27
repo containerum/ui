@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory, Link } from 'react-router';
+import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
 import { logoutUser } from '../../actions/LogoutActions';

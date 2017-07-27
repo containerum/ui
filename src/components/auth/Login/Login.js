@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+// import GoogleLogin from 'react-google-login';
+// import FacebookLogin from 'react-facebook-login';
+// import GitHubLogin from 'react-github-login';
 
 import { LOGINUser } from '../../../actions/LoginActions';
 import { getUserHashConfirm } from '../../../actions/UserHashConfirmActions';
+import { checkRelationWithGitHubAccount } from '../../../actions/CheckRelationWithGitHubAccountActions';
 import InputEmail from '../InputEmail';
 import InputPassword from '../InputPassword';
 import Logo from '../../Logo';
@@ -109,11 +113,26 @@ class Login extends Component {
             getAlert.style.display = 'block';
         }
     }
+    // responseGitHubSuccess(response) {
+    //     console.log(response.code);
+    //     this.props.onCheckRelationWithGitHubAccount(response.code);
+    // }
+    // responseGitHubFail(response) {
+    //     console.log(response);
+    // }
+    // responseFacebook(response) {
+    //     console.log(response);
+    // }
+    // responseGoogle(response) {
+    //     console.log(response);
+    // }
     render() {
+        // console.log(this.props.CheckRelationWithGitHubAccountReducer);
         const loginButtonText = this.props.loginReducer.isFetching ? <MiniSpinner /> : 'Log In';
         const isActiveLoginButton = this.props.loginReducer.isFetching ?
             'btn btn-block c-btn-green i-btn-login-strong disabled' :
             'btn btn-block c-btn-green i-btn-login-strong';
+        const isActiveLoginState = !!this.props.loginReducer.isFetching;
         return (
             <div className="container">
                 <Logo />
@@ -141,7 +160,42 @@ class Login extends Component {
                                         this.handleCheckValidatePasswordInput(password, isValidPassword)
                                 }
                             />
-                            <button ref="button" type="submit" className={isActiveLoginButton}>{ loginButtonText }</button>
+                            <button
+                                ref="button"
+                                type="submit"
+                                className={isActiveLoginButton}
+                                disabled={isActiveLoginState}
+                            >
+                                { loginButtonText }
+                            </button>
+
+                            {/*<div className="mt-4">*/}
+                            {/*<GoogleLogin*/}
+                            {/*clientId="294905409413-taejsg1tkosfdek82d7ir0jfdq5leaum.apps.googleusercontent.com"*/}
+                            {/*buttonText=""*/}
+                            {/*redirectUri="http://web.containerum.io/Login/callback"*/}
+                            {/*onSuccess={this.responseGoogle.bind(this)}*/}
+                            {/*onFailure={this.responseGoogle.bind(this)}*/}
+                            {/*className="fa fa-google-plus-official google-auth"*/}
+                            {/*/>*/}
+                            {/*<FacebookLogin*/}
+                            {/*appId="258990084596781"*/}
+                            {/*autoLoad={false}*/}
+                            {/*fields="name,email,picture"*/}
+                            {/*callback={this.responseFacebook.bind(this)}*/}
+                            {/*cssClass="facebook-auth"*/}
+                            {/*icon="fa fa-facebook-official"*/}
+                            {/*textButton=""*/}
+                            {/*/>*/}
+                            {/*<GitHubLogin*/}
+                            {/*clientId="862f80ac6b993a4561b2"*/}
+                            {/*redirectUri="http://localhost:3000/login/callback"*/}
+                            {/*onSuccess={this.responseGitHubSuccess.bind(this)}*/}
+                            {/*onFailure={this.responseGitHubFail.bind(this)}*/}
+                            {/*className="github-auth fa fa-github"*/}
+                            {/*buttonText=""*/}
+                            {/*/>*/}
+                            {/*</div>*/}
                         </div>
                         <div className="card-footer p-3 text-center">
                             Don`t have an account? <Link to="/SignUp">Sing up</Link>
@@ -158,12 +212,14 @@ class Login extends Component {
 
 Login.propTypes = {
     onGetUserHashConfirm: PropTypes.func.isRequired,
+    onCheckRelationWithGitHubAccount: PropTypes.func,
     onLoginUser: PropTypes.func.isRequired,
     quote: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
     loginReducer: PropTypes.object,
     RecoveryPasswordReducer: PropTypes.object,
+    CheckRelationWithGitHubAccountReducer: PropTypes.object,
     location: PropTypes.object,
     isSecretQuote: PropTypes.bool
 };
@@ -173,7 +229,8 @@ function mapStateToProps(state) {
         loginReducer: state.loginReducer,
         errorMessage: state.loginReducer.errorMessage,
         UserHashConfirmReducer: state.UserHashConfirmReducer,
-        RecoveryPasswordReducer: state.RecoveryPasswordReducer
+        RecoveryPasswordReducer: state.RecoveryPasswordReducer,
+        CheckRelationWithGitHubAccountReducer: state.CheckRelationWithGitHubAccountReducer
     };
 }
 
@@ -184,6 +241,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onLoginUser: creds => {
             dispatch(LOGINUser(creds));
+        },
+        onCheckRelationWithGitHubAccount: code => {
+            dispatch(checkRelationWithGitHubAccount(code));
         }
     };
 };

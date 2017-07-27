@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 
-import Email from './Email';
+// import Email from './Email';
 import Password from './Password';
 import Profile from './Profile';
 
@@ -15,7 +15,7 @@ class Account extends Component {
                 <div className="card mt-3">
                     <Profile />
 
-                    <Email />
+                    {/*<Email />*/}
 
                     <Password />
                 </div>

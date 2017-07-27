@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import validator from 'validator';
 
 import { deleteProfile } from '../../../actions/ProfileActions/deleteProfileActions';
+
 const customStyles = {
     overlay: {
         position: 'fixed',
@@ -40,23 +42,58 @@ class DeleteAccount extends Component {
         if (nextProps.DeleteProfileReducer.data) {
             this.setState({
                 ...this.state,
-                successMsg: nextProps.DeleteProfileReducer.data
+                successMsg: <div>{nextProps.DeleteProfileReducer.data}. Your profile has been deleted. <a href="/" className="c-link-wt">Click the link to exit the site</a></div>
             });
-            getSuccessfulAlert.style.display = 'block';
+            if (getSuccessfulAlert) {
+                getSuccessfulAlert.style.display = 'block';
+            }
         } else if (nextProps.DeleteProfileReducer.errorMessage) {
             this.setState({
                 ...this.state,
                 errorMsg: nextProps.DeleteProfileReducer.errorMessage
             });
-            getAlert.style.display = 'block';
+            if (getAlert) {
+                getAlert.style.display = 'block';
+            }
         } else {
-            getAlert.style.display = 'none';
-            getSuccessfulAlert.style.display = 'none';
+            if (getAlert && getSuccessfulAlert) {
+                getAlert.style.display = 'none';
+                getSuccessfulAlert.style.display = 'none';
+            }
         }
     }
     handleOnClickDeleteProfile(e) {
         e.preventDefault();
-        this.props.onDeleteProfile();
+        const currentEmail = this.refs.email.value.trim();
+        const getAlert = document.getElementById('failDeleteAlert');
+
+        const isValidEmailState = validator.isEmail(currentEmail);
+        if (isValidEmailState) {
+            const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : '';
+            if (currentEmail === userEmail) {
+                if (getAlert) {
+                    getAlert.style.display = 'none';
+                }
+                console.log(currentEmail, userEmail);
+                this.props.onDeleteProfile();
+            } else {
+                this.setState({
+                    ...this.state,
+                    errorMsg: 'Password is not valid'
+                });
+                if (getAlert) {
+                    getAlert.style.display = 'block';
+                }
+            }
+        } else {
+            this.setState({
+                ...this.state,
+                errorMsg: 'Password is not valid'
+            });
+            if (getAlert) {
+                getAlert.style.display = 'block';
+            }
+        }
     }
     handleClickCloseModal() {
         this.setState({ modalIsOpen: false });
@@ -98,33 +135,33 @@ class DeleteAccount extends Component {
                                         contentLabel="Delete"
                                     >
                                         <h3 className="text-left">Delete Account</h3>
-                                        <p className="text-left">
-                                            Account Deleting is irreversible. Enter your Containerum password to confirm <br/>
-                                            you want to permanently delete this account and all included data.
-                                        </p>
                                         <div id="failDeleteAlert" className="alert alert-danger mb-4 c-alert-danger">
                                             { this.state.errorMsg }
                                         </div>
                                         <div id="successfulDeleteAlert" className="alert alert-success mb-4 c-alert-success">
                                             { this.state.successMsg }
                                         </div>
+                                        <p className="text-left">
+                                            Account Deleting is irreversible. Enter your Containerum email to confirm <br/>
+                                            you want to permanently delete this account and all included data.
+                                        </p>
                                         <div onClick={this.handleClickCloseModal} className="i-close"></div>
                                         <form onSubmit={this.handleOnClickDeleteProfile.bind(this)}>
                                             <div className="card-block p-5 i-card-block-padding-2">
                                                 <div className="form-group i-mb-20 c-has-feedback-left">
                                                     <input
-                                                        ref="password"
-                                                        id="password"
+                                                        ref="email"
+                                                        id="email"
                                                         required="required"
-                                                        type="password"
+                                                        type="email"
                                                         className="form-control"
-                                                        placeholder="Password"
+                                                        placeholder="Email"
                                                     />
                                                     <i className="c-form-control-icon fa fa-tag fa-1"></i>
                                                 </div>
                                                 <div>
-                                                    <button type="submit" className="btn pull-right c-btn-green">Delete</button>
                                                     <button className="btn pull-right c-btn-green" onClick={this.handleClickCloseModal}>Cancel</button>
+                                                    <button type="submit" className="btn pull-right c-btn-green mr-2">Delete</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -142,11 +179,13 @@ class DeleteAccount extends Component {
 }
 
 DeleteAccount.propTypes = {
-    onDeleteProfile: PropTypes.func.isRequired
+    onDeleteProfile: PropTypes.func.isRequired,
+    GetProfileReducer: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
+        GetProfileReducer: state.GetProfileReducer,
         DeleteProfileReducer: state.DeleteProfileReducer
     };
 }

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import InputPassword from '../../auth/InputPassword';
 import { changePassword } from '../../../actions/ChangePasswordActions';
 import './Account.css';
+import MiniSpinner from '../../MiniSpinner';
 
 class Password extends Component {
     constructor(props) {
@@ -90,6 +91,11 @@ class Password extends Component {
         });
     }
     render() {
+        const resetPasswordButtonText = this.props.ChangePasswordReducer.isFetching ? <MiniSpinner /> : 'Update Password';
+        const isActiveResetPasswordButton = this.props.ChangePasswordReducer.isFetching ?
+            'btn btn-block c-btn-green disabled' :
+            'btn btn-block c-btn-green';
+        const isActiveResetPasswordState = !!this.props.ChangePasswordReducer.isFetching;
         return (
             <div className="card-block c-table-card-block">
                 <table className="table i-table-card">
@@ -149,7 +155,13 @@ class Password extends Component {
                                             }
                                         />
                                     </div>
-                                    <button type="submit" className="btn btn-block c-btn-green">Update Password</button>
+                                    <button
+                                        type="submit"
+                                        className={isActiveResetPasswordButton}
+                                        disabled={isActiveResetPasswordState}
+                                    >
+                                        {resetPasswordButtonText}
+                                    </button>
                                 </form>
                             </td>
                             <td>
@@ -164,6 +176,7 @@ class Password extends Component {
 
 Password.propTypes = {
     onChangePassword: PropTypes.func.isRequired,
+    ChangePasswordReducer: PropTypes.object,
     errorMessage: PropTypes.string
 };
 

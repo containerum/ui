@@ -30,6 +30,7 @@ export function deleteProfile() {
         .then(response => {
             if (response.status === 200) {
                 dispatch(receiveDeleteProfile(response.data));
+                localStorage.removeItem('id_token');
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');

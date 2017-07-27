@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+// import md5 from 'md5';
 
 import {
     LOGIN_REQUEST,
@@ -14,9 +15,11 @@ import {
 export function LOGINUser(creds) {
     return dispatch => {
         dispatch(requestLOGIN(creds));
+        // const password = md5(creds.username + creds.password).toString(16);
+        const password = creds.password;
         return axios.post(
             WEB_API + '/api/login',
-            { username: creds.username, password: creds.password },
+            { username: creds.username, password },
             {
                 validateStatus: (status) => status >= 200 && status <= 505
             }

@@ -623,3 +623,37 @@ button.toast-close-button {
 .c-has-feedback-left .c-form-control-icon .i-form-control-icon {
     top: 25px;
 }
+
+.google-auth,
+.facebook-auth,
+.github-auth {
+    width: 33.3%;
+    font-size: 60px!important;
+    border: none!important;
+    background-color: white!important;
+}
+
+.google-auth:focus,
+.facebook-auth:focus,
+.github-auth:focus {
+    border: none!important;
+    outline: none!important;
+}
+
+.google-auth:hover,
+.facebook-auth:hover,
+.github-auth:hover {
+    opacity: .7;
+}
+
+.google-auth {
+    color: #CD3E2D!important;
+}
+
+.facebook-auth {
+    color: #3B5998!important;
+}
+
+.github-auth {
+    color: black!important;
+}

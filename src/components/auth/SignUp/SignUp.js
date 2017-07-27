@@ -134,6 +134,7 @@ class SignUp extends Component {
         const isActiveSignUpButton = this.props.signUpReducer.isFetching ?
             'btn btn-block c-btn-green disabled' :
             'btn btn-block c-btn-green';
+        const isActiveSignUpState = !!this.props.signUpReducer.isFetching;
 
         return (
             <div className="container">
@@ -189,7 +190,14 @@ class SignUp extends Component {
                                 }
                             />
                             {toggleCompanyComponent}
-                            <button type="submit" ref="button" className={isActiveSignUpButton}>{ signUpButtonText }</button>
+                            <button
+                                type="submit"
+                                ref="button"
+                                className={isActiveSignUpButton}
+                                disabled={isActiveSignUpState}
+                            >
+                                { signUpButtonText }
+                            </button>
                         </div>
                         <div className="card-footer p-3 text-center">
                             By signing up, you agree to the <a href="http://containerum.io/license-agreement">Public Offer</a>

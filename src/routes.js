@@ -10,7 +10,7 @@ import requireAuthentication from './components/auth/require-auth';
 import ConfirmEmail from './components/auth/ConfirmEmail';
 import ResetPassword from './components/ResetPassword';
 import CreateDeployment from './components/CreateDeployment';
-import CreateService from './components/CreateService';
+// import CreateService from './components/CreateService';
 import Deployment from './components/Deployment';
 import Service from './components/Service';
 import Pod from './components/Pod';
@@ -36,6 +36,7 @@ export const routes = (
         <Route path="/Login" component={Login}>
             <Route path="/" component={Workloads} />
         </Route>
+        <Route path="/login/callback" component={Login} />
         <Route path="/Forgot" component={Forgot} />
         <Route path="/RecoveryPassword" component={RecoveryPassword} />
         <Route path="/SignUp" component={SignUp} />

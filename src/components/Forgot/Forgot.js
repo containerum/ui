@@ -57,6 +57,10 @@ class Forgot extends Component {
     }
     render() {
         const resetButtonText = this.props.confirmEmailReducer.isFetching ? <MiniSpinner /> : 'Reset';
+        const isActiveResetButton = this.props.confirmEmailReducer.isFetching ?
+            'btn btn-block c-btn-green disabled' :
+            'btn btn-block c-btn-green';
+        const isActiveResetState = !!this.props.confirmEmailReducer.isFetching;
         return (
             <div className="container">
                 <Logo />
@@ -73,7 +77,14 @@ class Forgot extends Component {
                                         this.checkValidateEmailInput(email, isValidEmail)
                                 }
                             />
-                            <button ref="button" type="submit" className="btn btn-block c-btn-green">{ resetButtonText }</button>
+                            <button
+                                ref="button"
+                                type="submit"
+                                className={isActiveResetButton}
+                                disabled={isActiveResetState}
+                            >
+                                { resetButtonText }
+                            </button>
                         </div>
                         <div className="card-footer text-center">Don`t have an account? <Link to="/SignUp">Sing up</Link></div>
                     </div>
