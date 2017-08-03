@@ -40,7 +40,7 @@ class CommonInfoDropdown extends Component {
                         <Translate content="header.tutorials">Tutorials</Translate>
                     </a>
                     <div className="dropdown-divider"></div>
-                    <NavLink className="dropdown-item" to={window.location.pathname}>
+                    <NavLink className="dropdown-item" to="/Support">
                         <Translate content="header.support">Support</Translate>
                     </NavLink>
                 </div>

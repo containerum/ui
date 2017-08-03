@@ -23,7 +23,7 @@ class Profile extends Component {
                     <Tabs selectedTabClassName="i-selected-tab">
                         <TabList className="btn-group i-container-btn-gr">
                             <Tab className="btn c-nav-menu-btn">Account</Tab>
-                            <Tab className="btn c-nav-menu-btn">Billing</Tab>
+                            {/*<Tab className="btn c-nav-menu-btn">Billing</Tab>*/}
                         </TabList>
                         <TabPanel>
                             <section className="account">
@@ -42,11 +42,11 @@ class Profile extends Component {
                                 </div>
                             </section>
                         </TabPanel>
-                        <TabPanel>
-                            <div className="container-fluid pt-3">
-                                Billing
-                            </div>
-                        </TabPanel>
+                        {/*<TabPanel>*/}
+                        {/*<div className="container-fluid pt-3">*/}
+                        {/*Billing*/}
+                        {/*</div>*/}
+                        {/*</TabPanel>*/}
                     </Tabs>
                 </div>;
         } else {

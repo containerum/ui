@@ -34,6 +34,7 @@ export function changePassword(data) {
         .then(response => {
             if (response.status === 202) {
                 dispatch(receiveChangePassword(response.data));
+                localStorage.setItem('id_token', response.data.token);
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');

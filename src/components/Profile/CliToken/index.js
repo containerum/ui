@@ -27,7 +27,7 @@ export default class CliToken extends Component {
                             </tr>
                             <tr>
                                 <td>
-                                    <a target="_blank" className="i-cli-tool" href="http://p13000.x1.containerum.io/download/packages/">
+                                    <a target="_blank" className="i-cli-tool" href="https://github.com/containerum/chkit.v2/releases">
                                         <button className="btn btn-block c-btn-green">
                                             Download CLI
                                         </button>

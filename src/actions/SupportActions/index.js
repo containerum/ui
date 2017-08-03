@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 
 import {
     SUPPORT_REQUEST,
@@ -6,15 +6,37 @@ import {
     SUPPORT_FAILURE
 } from '../../constants/SupportConstants';
 
-// import {
-//     WEB_API
-// } from '../../constants/WebApi';
-
 export function sendSupport(sendObj) {
     return dispatch => {
         dispatch(requestGetCreateDeployment(sendObj));
-        dispatch(receiveGetCreateDeployment());
-        dispatch(failGetCreateDeployment());
+        const api = 'https://exonlab.omnidesk.ru/api/cases.json';
+
+        return axios.post(
+            api,
+            {
+                case: sendObj
+            },
+            {
+                auth: {
+                    username: 'margo.tuleninova@gmail.com',
+                    password: '53fd6bfc30a7c6fdf235bf14e'
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                validateStatus: (status) => status >= 200 && status <= 505
+            }
+        )
+        .then(response => {
+            if (response.status === 200) {
+                console.log(response);
+                dispatch(receiveGetCreateDeployment(response));
+            } else {
+                console.log(response);
+                dispatch(failGetCreateDeployment(response));
+            }
+        }).catch(err => console.log(err));
     };
 }
 

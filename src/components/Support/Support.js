@@ -3,18 +3,27 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { sendSupport } from '../../actions/SupportActions';
+import { getProfile } from '../../actions/ProfileActions/getProfileActions';
 import BackPanel from '../BackPanel';
 import './Support.css';
 
 class Support extends Component {
+    componentWillMount() {
+        if (!!this.props.GetProfileReducer.data.login) {
+            this.props.onLoadProfileData();
+        }
+    }
     handleOnSubmit(e) {
         e.preventDefault();
         const form = e.target;
         const textArea = form.elements.textArea.value;
+        const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : '';
         const reqObj = {
-            subject: this.refs.subject.value,
-            textArea: textArea
+            user_email: userEmail.trim(),
+            subject: this.refs.subject.value.trim(),
+            content: textArea.trim()
         };
+        console.log(reqObj);
         this.props.onSendSupport(reqObj);
     }
     render() {
@@ -59,14 +68,15 @@ class Support extends Component {
 }
 
 Support.propTypes = {
-    onSendSupport: PropTypes.func.isRequired
+    onSendSupport: PropTypes.func.isRequired,
+    GetProfileReducer: PropTypes.object,
+    onLoadProfileData: PropTypes.func
 };
 
 function mapStateToProps(state) {
-    const { SupportReducer } = state;
-
     return {
-        SupportReducer
+        SupportReducer: state.SupportReducer,
+        GetProfileReducer: state.GetProfileReducer
     };
 }
 
@@ -74,6 +84,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onSendSupport: reqObj => {
             dispatch(sendSupport(reqObj));
+        },
+        onLoadProfileData: () => {
+            dispatch(getProfile());
         }
     };
 };

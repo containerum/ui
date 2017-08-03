@@ -35,6 +35,9 @@ class Tokens extends Component {
                                     <p>Token provide an another way to logging into a virtual private Namespace</p>
                                 </td>
                                 <td>
+                                    {this.props.TokensReducer.data.map((item, index) => {
+                                        return <div key={index}>{item.id}</div>;
+                                    })}
                                 </td>
                             </tr>
                             <tr>
@@ -43,10 +46,10 @@ class Tokens extends Component {
                                 <td style={{ width: '400px' }}>
                                     <form onSubmit={this.handleSubmitToken.bind(this)}>
                                         <div className="form-group i-mb-20 c-has-feedback-left">
-                                            {this.props.TokensReducer.data.map((item, index) => {
-                                                return <div key={index}>{item.id}</div>;
-                                            })}
-                                            <label className="sr-only" htmlFor="inlineFormInputCompanyName">Add new Token</label>
+                                            {/*{this.props.TokensReducer.data.map((item, index) => {*/}
+                                            {/*return <div key={index}>{item.id}</div>;*/}
+                                            {/*})}*/}
+                                            {/*<label className="sr-only" htmlFor="inlineFormInputCompanyName">Add new Token</label>*/}
                                             {/*<div className="form-group i-mb-20 c-has-feedback-left">*/}
                                             {/*<input*/}
                                             {/*ref="token"*/}

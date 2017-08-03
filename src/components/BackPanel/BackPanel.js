@@ -6,7 +6,6 @@ class BackPanel extends Component {
         browserHistory.push('/Namespaces/default');
     }
     render() {
-        console.log(document.referrer);
         return (
             <div className="mr-auto">
                 <div className="btn-group">

@@ -33,10 +33,13 @@ class Password extends Component {
         if (nextProps.ChangePasswordReducer.data) {
             this.setState({
                 ...this.state,
-                successMsg: nextProps.ChangePasswordReducer.data
+                successMsg: 'Your password has been changed successfully!'
             });
             const getSuccessfulAlert = document.getElementById('successfulAlert');
             getSuccessfulAlert.style.display = 'block';
+            this.refs.current_password.refs.current_password.value = '';
+            this.refs.new_password.refs.new_password.value = '';
+            this.refs.repeat_password.refs.repeat_password.value = '';
         }
     }
     submitUpdatedPasswordData(e) {

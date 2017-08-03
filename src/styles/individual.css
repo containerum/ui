@@ -1,3 +1,7 @@
+#root {
+    min-width: 1000px;
+}
+
 .main_container {
     max-width: 1360px;
     margin: 0 auto;

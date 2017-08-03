@@ -38,17 +38,17 @@ export function getUser(data) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failGetUser(response.data.message))
+                dispatch(failGetUser(response.data.message));
             }
-        }).catch(err => console.log(err))
-    }
+        }).catch(err => console.log(err));
+    };
 }
 
 function requestGetUser() {
     return {
         type: USER_REQUEST,
         isFetching: true
-    }
+    };
 }
 
 // function receiveGetUser(data) {
@@ -64,5 +64,5 @@ function failGetUser(message) {
         type: USER_FAILURE,
         isFetching: false,
         message
-    }
+    };
 }
