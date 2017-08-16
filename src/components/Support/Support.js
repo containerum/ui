@@ -6,6 +6,7 @@ import { sendSupport } from '../../actions/SupportActions';
 import { getProfile } from '../../actions/ProfileActions/getProfileActions';
 import BackPanel from '../BackPanel';
 import './Support.css';
+import MiniSpinner from '../MiniSpinner';
 
 class Support extends Component {
     componentWillMount() {
@@ -19,14 +20,21 @@ class Support extends Component {
         const textArea = form.elements.textArea.value;
         const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : '';
         const reqObj = {
-            user_email: userEmail.trim(),
-            subject: this.refs.subject.value.trim(),
-            content: textArea.trim()
+            case: {
+                user_email: userEmail.trim(),
+                subject: this.refs.subject.value.trim(),
+                content: textArea.trim()
+            }
         };
         console.log(reqObj);
         this.props.onSendSupport(reqObj);
     }
     render() {
+        const profileButtonText = this.props.SupportReducer.isFetching ? <MiniSpinner /> : 'Submit Ticket';
+        const isActiveProfileButton = this.props.SupportReducer.isFetching ?
+            'btn c-btn-green pull-right disabled' :
+            'btn c-btn-green pull-right';
+        const isActiveProfileState = !!this.props.SupportReducer.isFetching;
         return (
             <div>
                 <div className="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -57,7 +65,15 @@ class Support extends Component {
                                         required
                                     ></textarea>
                                 </div>
-                                <button type="submit" className="btn btn-primary pull-right">Submit Ticket</button>
+                                <button
+                                    ref="button"
+                                    type="submit"
+                                    className={isActiveProfileButton}
+                                    disabled={isActiveProfileState}
+                                    style={{ 'width': '125px' }}
+                                >
+                                    { profileButtonText }
+                                </button>
                             </form>
                         </div>
                     </section>
@@ -70,6 +86,7 @@ class Support extends Component {
 Support.propTypes = {
     onSendSupport: PropTypes.func.isRequired,
     GetProfileReducer: PropTypes.object,
+    SupportReducer: PropTypes.object,
     onLoadProfileData: PropTypes.func
 };
 

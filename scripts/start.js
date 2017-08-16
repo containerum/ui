@@ -1,5 +1,3 @@
-
-
 process.env.NODE_ENV = 'development';
 
 // Load environment variables from .env file. Suppress warnings using silent
@@ -45,6 +43,45 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 //     });
 // });
 // server.listen(3001);
+
+const express = require('express');
+const axios = require('axios');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const app = express();
+app.use(cors());
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.post('/omnidesk', (req, res) => {
+    axios.post(
+        'https://exonlab.omnidesk.ru/api/cases.json',
+        req.body,
+        // { "case": { "user_email":"", "user_full_name":"User\u0027s full name", "subject":"I need help", "content":"I need help", "language_id":2 } },
+        {
+            headers: {
+                'Accept': '*/*',
+                Authorization: 'Basic bWFyZ28udHVsZW5pbm92YUBnbWFpbC5jb206NTNmZDZiZmMzMGE3YzZmZGYyMzViZjE0ZQ==',
+                'Content-Type': 'application/json'
+            },
+            validateStatus: (status) => status >= 200 && status <= 505
+        }
+    )
+    .then(response => {
+        if (response.status === 201) {
+            return res.json(response.data);
+        } else {
+            return res.json({
+                data: {
+                    message: 'Error'
+                }
+            });
+        }
+    }).catch(err => console.log(err));
+});
+app.listen(3001, () => {
+    console.log('Example app listening on port 3001!');
+});
+
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;

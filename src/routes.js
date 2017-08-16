@@ -18,6 +18,7 @@ import Panel from './components/Panel';
 import NotFound from './components/NotFound';
 import Profile from './components/Profile';
 import Support from './components/Support';
+import SuccessTicket from './components/Support/SuccessTicket';
 
 export const routes = (
     <Route>
@@ -32,6 +33,7 @@ export const routes = (
             <Route path="/Namespaces/:idName/Deployments/:idDep/Pods/:idPod"  component={Pod} />
             <Route path="/Profile" component={Profile} />
             <Route path="/Support" component={Support} />
+            <Route path="/SuccessTicket" component={SuccessTicket} />
         </Route>
         <Route path="/Login" component={Login}>
             <Route path="/" component={Workloads} />
