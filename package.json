@@ -18,6 +18,7 @@
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.6.1",
     "react-facebook-login": "^3.6.2",
+    "react-ga": "^2.2.0",
     "react-github-login": "^1.0.1",
     "react-google-login": "^2.9.2",
     "react-interpolate-component": "^0.11.0",

@@ -12,14 +12,14 @@ class Footer extends Component {
                     <a target="_blank" href="http://blog.containerum.io/" className="text-muted mr-3">
                         <Translate content="footer.blog">Blog</Translate>
                     </a>
-                    <a target="_blank" href="http://containerum.io/documentation/start-guide" className="text-muted mr-3">
+                    <a target="_blank" href="https://containerum.com/documentation/start-guide" className="text-muted mr-3">
                         <Translate content="footer.documentations">Documentations</Translate>
                     </a>
-                    <a target="_blank" href="http://blog.containerum.io/" className="text-muted">
-                        <Translate content="footer.tutorials">Tutorials</Translate>
-                    </a>
+                    {/*<a target="_blank" href="http://blog.containerum.io/" className="text-muted">*/}
+                    {/*<Translate content="footer.tutorials">Tutorials</Translate>*/}
+                    {/*</a>*/}
                     <span className="text-muted float-right">
-                        Copyright EXON LAB Company © {new Date().getFullYear()}
+                        Copyright Exon Lab Company © {new Date().getFullYear()}
                     </span>
                 </div>
             </footer>
