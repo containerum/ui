@@ -42,13 +42,13 @@ class DeleteAccount extends Component {
         if (nextProps.DeleteProfileReducer.data) {
             this.setState({
                 ...this.state,
-                successMsg: <div>{nextProps.DeleteProfileReducer.data}. Your profile has been deleted. <a href="http://containerum.io/" className="c-link-wt">Click the link to exit the site</a></div>
+                successMsg: <div>{nextProps.DeleteProfileReducer.data}. Your profile has been deleted. <a href="https://containerum.com/" className="c-link-wt">Click the link to exit the site</a></div>
             });
             if (getSuccessfulAlert) {
                 getSuccessfulAlert.style.display = 'block';
             }
             setTimeout(() => {
-                window.location.replace('http://containerum.io/');
+                window.location.replace('https://containerum.com/');
             }, 3000);
         } else if (nextProps.DeleteProfileReducer.errorMessage) {
             this.setState({

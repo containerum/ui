@@ -37,7 +37,7 @@ export default class CliToken extends Component {
                                     TOKEN
                                 </td>
                                 <td>
-                                    <a target="_blank" className="i-cli-tool" href="http://containerum.io/documentation/start-guide">
+                                    <a target="_blank" className="i-cli-tool" href="https://containerum.com/documentation/start-guide">
                                         <button className="btn btn-block c-btn-green">
                                             CLI Help
                                         </button>
