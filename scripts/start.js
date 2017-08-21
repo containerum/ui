@@ -60,7 +60,7 @@ app.post('/omnidesk', (req, res) => {
         {
             headers: {
                 'Accept': '*/*',
-                Authorization: 'Basic bWFyZ28udHVsZW5pbm92YUBnbWFpbC5jb206NTNmZDZiZmMzMGE3YzZmZGYyMzViZjE0ZQ==',
+                Authorization: 'Basic ZW5naW5lZXJAZXhvbmxhYi5ydTo1M2ZkNmJmYzMwYTdjNmZkZjIzNWJmMTRl',
                 'Content-Type': 'application/json'
             },
             validateStatus: (status) => status >= 200 && status <= 505
