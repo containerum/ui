@@ -86,7 +86,7 @@ class Forgot extends Component {
                                 { resetButtonText }
                             </button>
                         </div>
-                        <div className="card-footer text-center">Don`t have an account? <Link to="/SignUp">Sing up</Link></div>
+                        <div className="card-footer text-center">Don`t have an account? <Link to="/SignUp">Sign up</Link></div>
                     </div>
                     <p className="text-center pt-3"><Link to="/Login" className="c-link-wt">Go to Login</Link></p>
                 </form>

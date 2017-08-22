@@ -143,7 +143,7 @@ class SignUp extends Component {
                     <div className="card c-card">
                         <div className="card-block p-5">
                             <div className="card-label">
-                                Sing up
+                                Sign up
                             </div>
                             <div id="loginAlert" className="alert alert-danger mb-4 c-alert-danger">
                                 { this.state.errorMsg }

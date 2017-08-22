@@ -198,7 +198,7 @@ class Login extends Component {
                             {/*</div>*/}
                         </div>
                         <div className="card-footer p-3 text-center">
-                            Don`t have an account? <Link to="/SignUp">Sing up</Link>
+                            Don`t have an account? <Link to="/SignUp">Sign up</Link>
                         </div>
                     </div>
                     <p className="text-center pt-3">
