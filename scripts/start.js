@@ -78,6 +78,30 @@ app.post('/omnidesk', (req, res) => {
         }
     }).catch(err => console.log(err));
 });
+app.get('/group_omnidesk', (req, res) => {
+    axios.get(
+        'https://exonlab.omnidesk.ru/api/groups.json?limit=50&page=2',
+        {
+            headers: {
+                'Accept': '*/*',
+                Authorization: 'Basic ZW5naW5lZXJAZXhvbmxhYi5ydTo1M2ZkNmJmYzMwYTdjNmZkZjIzNWJmMTRl',
+                'Content-Type': 'application/json'
+            },
+            validateStatus: (status) => status >= 200 && status <= 505
+        }
+    )
+    .then(response => {
+        if (response.status === 200) {
+            return res.json(response.data);
+        } else {
+            return res.json({
+                data: {
+                    message: 'Error'
+                }
+            });
+        }
+    }).catch(err => console.log(err));
+});
 app.listen(3001, () => {
     console.log('Example app listening on port 3001!');
 });

@@ -30,6 +30,7 @@ import EmailSubscriptionsReducer from './EmailSubscriptionsReducer';
 import CheckHashPasswordReducer from './CheckHashPasswordReducer';
 import RecoveryPasswordReducer from './RecoveryPasswordReducers';
 import CheckRelationWithGitHubAccountReducer from './CheckRelationWithGitHubAccountReducer';
+import GroupOmnideskReducer from './getGroupOmnideskReducer';
 import TokensReducer from './TokensReducer';
 
 const rootReducer = combineReducers({
@@ -63,7 +64,8 @@ const rootReducer = combineReducers({
     CheckHashPasswordReducer,
     RecoveryPasswordReducer,
     CheckRelationWithGitHubAccountReducer,
-    TokensReducer
+    TokensReducer,
+    GroupOmnideskReducer
 });
 
 export default rootReducer;

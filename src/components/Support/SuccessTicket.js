@@ -12,7 +12,6 @@ class SuccessTicket extends Component {
         }
     }
     render() {
-        console.log(this.props.SupportReducer);
         return (
             <div>
                 <div className="navbar navbar-toggleable-md navbar-light bg-faded">

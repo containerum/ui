@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { sendSupport } from '../../actions/SupportActions';
+import { getGroupOmnidesk } from '../../actions/getGroupOmnideskActions';
 import { getProfile } from '../../actions/ProfileActions/getProfileActions';
 import BackPanel from '../BackPanel';
 import './Support.css';
@@ -14,6 +15,9 @@ class Support extends Component {
             this.props.onLoadProfileData();
         }
     }
+    componentDidMount() {
+        this.props.onGetGroupOmnidesk();
+    }
     handleOnSubmit(e) {
         e.preventDefault();
         const form = e.target;
@@ -23,13 +27,14 @@ class Support extends Component {
             case: {
                 user_email: userEmail.trim(),
                 subject: this.refs.subject.value.trim(),
-                content: textArea.trim()
+                content: textArea.trim(),
+                group_id: this.refs.group.value.trim()
             }
         };
-        console.log(reqObj);
         this.props.onSendSupport(reqObj);
     }
     render() {
+        console.log(this.props.GroupOmnideskReducer.data);
         const profileButtonText = this.props.SupportReducer.isFetching ? <MiniSpinner /> : 'Submit Ticket';
         const isActiveProfileButton = this.props.SupportReducer.isFetching ?
             'btn c-btn-green pull-right disabled' :
@@ -45,6 +50,23 @@ class Support extends Component {
                         <div className="col-sm-10 col-md-8 col-xs-12 center-block">
                             <h2>New Support Ticket</h2><br/>
                             <form onSubmit={this.handleOnSubmit.bind(this)}>
+                                <div className="form-group">
+                                    <select
+                                        name="group"
+                                        className="form-control"
+                                        ref="group"
+                                        required
+                                    >
+                                        {this.props.GroupOmnideskReducer.data.map(item => {
+                                            return (
+                                                <option
+                                                    key={item.group.group_id}
+                                                    value={item.group.group_id}
+                                                >{item.group.group_title}</option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
                                 <div className="form-group">
                                     <input
                                         type="text"
@@ -87,18 +109,24 @@ Support.propTypes = {
     onSendSupport: PropTypes.func.isRequired,
     GetProfileReducer: PropTypes.object,
     SupportReducer: PropTypes.object,
-    onLoadProfileData: PropTypes.func
+    GroupOmnideskReducer: PropTypes.object,
+    onLoadProfileData: PropTypes.func,
+    onGetGroupOmnidesk: PropTypes.func
 };
 
 function mapStateToProps(state) {
     return {
         SupportReducer: state.SupportReducer,
-        GetProfileReducer: state.GetProfileReducer
+        GetProfileReducer: state.GetProfileReducer,
+        GroupOmnideskReducer: state.GroupOmnideskReducer
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onGetGroupOmnidesk: () => {
+            dispatch(getGroupOmnidesk());
+        },
         onSendSupport: reqObj => {
             dispatch(sendSupport(reqObj));
         },
