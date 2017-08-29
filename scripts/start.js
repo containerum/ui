@@ -52,7 +52,28 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 app.post('/omnidesk', (req, res) => {
+    // axios.post(
+    //     'https://exonlab.atlassian.net/rest/servicedeskapi/request',
+    //     {
+    //         'serviceDeskId': "1",
+    //         'requestParticipants': [ 'avlasov' ],
+    //         'requestTypeId': "1",
+    //         'requestFieldValues': {
+    //             'summary': 'user_email = ' + req.body.case.user_email + '; subject = ' + req.body.case.subject,
+    //             'description': 'content = ' + req.body.case.content + '; group_id = ' + req.body.case.group_id
+    //         }
+    //     },
+    //     {
+    //         headers: {
+    //             Authorization: 'Basic YmFzay01QHlhbmRleC5ydTpJbV9hX0xlY2g1cg==',
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         validateStatus: (status) => status >= 200 && status <= 505
+    //     }
+    // );
     axios.post(
         'https://exonlab.omnidesk.ru/api/cases.json',
         req.body,
