@@ -11,7 +11,8 @@ export function sendSupport(data) {
     return dispatch => {
         dispatch(requestGetCreateDeployment());
         return axios.post(
-            'https://web.containerum.io/omnidesk',
+            // 'https://web.containerum.io/omnidesk',
+            'http://localhost:3001/omnidesk',
             data,
             {
                 headers: {
