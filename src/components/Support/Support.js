@@ -34,7 +34,7 @@ class Support extends Component {
         this.props.onSendSupport(reqObj);
     }
     render() {
-        console.log(this.props.GroupOmnideskReducer.data);
+        const groupData = this.props.GroupOmnideskReducer.data ? this.props.GroupOmnideskReducer.data : [];
         const profileButtonText = this.props.SupportReducer.isFetching ? <MiniSpinner /> : 'Submit Ticket';
         const isActiveProfileButton = this.props.SupportReducer.isFetching ?
             'btn c-btn-green pull-right disabled' :
@@ -57,13 +57,15 @@ class Support extends Component {
                                         ref="group"
                                         required
                                     >
-                                        {this.props.GroupOmnideskReducer.data.map(item => {
-                                            return (
-                                                <option
-                                                    key={item.group.group_id}
-                                                    value={item.group.group_id}
-                                                >{item.group.group_title}</option>
-                                            );
+                                        {Object.keys(groupData).map((item) => {
+                                            if (!Number.isInteger(groupData[item])) {
+                                                return (
+                                                    <option
+                                                        key={groupData[item].group.group_id}
+                                                        value={groupData[item].group.group_id}
+                                                    >{groupData[item].group.group_title}</option>
+                                                );
+                                            }
                                         })}
                                     </select>
                                 </div>
