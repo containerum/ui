@@ -81,7 +81,7 @@ app.post('/omnidesk', (req, res) => {
         {
             headers: {
                 'Accept': '*/*',
-                Authorization: 'Basic ZW5naW5lZXJAZXhvbmxhYi5ydTo1M2ZkNmJmYzMwYTdjNmZkZjIzNWJmMTRl',
+                Authorization: 'Basic dGhvbXNvbjc3Nzc3QG1haWwucnU6NTNmZDZiZmMzMGE3YzZmZGYyMzViZjE0ZQ==',
                 'Content-Type': 'application/json'
             },
             validateStatus: (status) => status >= 200 && status <= 505
@@ -105,7 +105,7 @@ app.get('/group_omnidesk', (req, res) => {
         {
             headers: {
                 'Accept': '*/*',
-                Authorization: 'Basic ZW5naW5lZXJAZXhvbmxhYi5ydTo1M2ZkNmJmYzMwYTdjNmZkZjIzNWJmMTRl',
+                Authorization: 'Basic dGhvbXNvbjc3Nzc3QG1haWwucnU6NTNmZDZiZmMzMGE3YzZmZGYyMzViZjE0ZQ==',
                 'Content-Type': 'application/json'
             },
             validateStatus: (status) => status >= 200 && status <= 505
