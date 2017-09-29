@@ -44,12 +44,11 @@ class DeploymentsContains extends Component {
         e.stopPropagation();
     }
     handleClickDeletingDeployment(name) {
-        // this.setState({
-        //     ...this.state,
-        //     depName: name,
-        //     isOpened: true
-        // });
-        this.props.onDeleteDeployment(name);
+        this.setState({
+            ...this.state,
+            depName: name,
+            isOpened: true
+        });
     }
     render() {
         const ta = timeago();
@@ -113,11 +112,6 @@ class DeploymentsContains extends Component {
                                                             onClick={name => this.handleClickDeletingDeployment(item.name)}
                                                         >Delete</button>
                                                     </ul>
-                                                    {/*<CustomerModal*/}
-                                                        {/*type="deployment"*/}
-                                                        {/*name={this.state.depName}*/}
-                                                        {/*isOpened={this.state.isOpened}*/}
-                                                    {/*/>*/}
                                                 </td>
                                             </tr>
                                         );
@@ -125,6 +119,12 @@ class DeploymentsContains extends Component {
                                 }
                                 </tbody>
                             </table>
+                            <CustomerModal
+                                type="Deployment"
+                                name={this.state.depName}
+                                isOpened={this.state.isOpened}
+                                onDeleteDeployment={this.props.onDeleteDeployment}
+                            />
                         </div>
                     </div>
                 </div>

@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import redisLogo from '../../images/redis_logo.png';
 import Modal from 'react-modal';
 const customStyles = {
     overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(127, 127, 127, .8)'
+        position        : 'fixed',
+        top             : 0,
+        left            : 0,
+        right           : 0,
+        bottom          : 0,
+        backgroundColor : 'rgba(0, 0, 0, 0.01)',
+        transition      : 'transform .3s ease-out,-webkit-transform .3s ease-out',
+        zIndex: 1000
     },
     content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
+        position                : 'absolute',
+        top                     : '0',
+        left                    : '0',
+        right                   : '0',
+        bottom                  : '0',
+        border                  : 'none',
+        backgroundColor : 'rgba(0, 0, 0, 0.5)',
+        overflow                : 'hidden',
+        WebkitOverflowScrolling : 'touch',
+        borderRadius            : 'none',
+        outline                 : 'none',
+        padding                 : '0',
+        // transform: 'translate(0,-25%)'
     }
 };
 
@@ -26,57 +33,105 @@ class CustomerModal extends Component {
     constructor() {
         super();
         this.state = {
-            modalIsOpen: false
+            nameType: '',
+            modalIsOpen: this.props ? this.props.isOpened : false
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.isOpened && nextProps.name !== this.state.nameType) {
+            document.body.classList.add('overflow-hidden');
+            this.setState({
+                ...this.state,
+                modalIsOpen: true
+            })
         }
     }
     handleClickCloseModal() {
+        document.body.classList.remove('overflow-hidden');
         this.setState({
-            ...this.state,
+            nameType: '',
             modalIsOpen: false
         });
     }
-    handleClickOpenModal() {
+    handleSubmitDeletingDeployment(e) {
+        e.preventDefault();
+        if (this.state.nameType === this.props.name) {
+            document.body.classList.remove('overflow-hidden');
+            this.setState({
+                ...this.state,
+                modalIsOpen: false
+            });
+            this.props.onDeleteDeployment(this.props.name);
+        }
+    }
+    handleChangeNameOfType(e) {
         this.setState({
             ...this.state,
-            modalIsOpen: true
+            nameType: e.target.value.trim()
         });
     }
     render() {
-        console.log(this.props.isOpened, this.props.name, this.props.type);
+        // console.log(this.props.isOpened, this.props.name, this.props.type);
+        const styleSubmit = this.state.nameType === this.props.name ?
+            'btn modal-footer-solution-select' :
+            'btn modal-footer-solution-select modal-footer-volume-delete';
+        const isDisabledSubmit = this.state.nameType !== this.props.name;
         return (
             <Modal
                 isOpen={this.state.modalIsOpen}
                 onRequestClose={this.handleClickCloseModal.bind(this)}
-                styles={customStyles}
+                style={customStyles}
                 contentLabel="Delete"
             >
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button
-                                type="button"
-                                className="close"
-                                onClick={this.handleClickCloseModal.bind(this)}
-                            >
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <img className="modal-redis-icon" src={redisLogo} alt="redis" />
-                            <h4 className="modal-title" id="modalLabel">Redis</h4>
-                            <span className="modal-redis-text">Deployment will be removed</span>
-                            <input className="custom-select" />
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn modal-footer-solution-cancel"
-                            >Cancel</button>
-                            <button
-                                type="button"
-                                className="btn modal-footer-solution-select"
-                            >Delete</button>
-                        </div>
+                <div
+                    className="modal fade show"
+                    id="volume"
+                    tabIndex="-1"
+                    role="dialog"
+                    aria-labelledby="modalLabel"
+                >
+                    <div className="modal-dialog modal-dialog2" role="document">
+                        <form
+                            onSubmit={this.handleSubmitDeletingDeployment.bind(this)}
+                            className="modal-content"
+                        >
+                            <div className="modal-header">
+                                <button
+                                    type="button"
+                                    className="close"
+                                    onClick={this.handleClickCloseModal.bind(this)}>
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div className="modal-body text-left">
+                                <h4
+                                    className="modal-title modal-title-volume"
+                                    id="modalLabel"
+                                >{this.props.name}</h4>
+                                <span className="modal-redis-text">
+                                    Deleting your {this.props.type} is irreversible.<br />
+                                    Enter your {this.props.type} name ({this.props.name}) below to<br />
+                                    confirm you want to permanently delete it:
+                                </span>
+                                <input
+                                    type="text"
+                                    className="form-control volume-form-input"
+                                    placeholder="Name"
+                                    onChange={this.handleChangeNameOfType.bind(this)}
+                                />
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    className="btn modal-footer-solution-cancel"
+                                    onClick={this.handleClickCloseModal.bind(this)}
+                                >Cancel</button>
+                                <button
+                                    type="submit"
+                                    className={styleSubmit}
+                                    disabled={isDisabledSubmit}
+                                >Delete</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </Modal>
@@ -87,7 +142,8 @@ class CustomerModal extends Component {
 CustomerModal.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
-    isOpened: PropTypes.bool
+    isOpened: PropTypes.bool,
+    onDeleteDeployment: PropTypes.func
 };
 
 export default CustomerModal;

@@ -7,8 +7,16 @@ html {
     cursor: pointer;
 }
 
+.overflow-hidden {
+    overflow: hidden;
+}
+
 .documentation-link {
     color: #29abe2;
+}
+
+.modal.fade.show {
+    display: block;
 }
 
 .table tbody td {

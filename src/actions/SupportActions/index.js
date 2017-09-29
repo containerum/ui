@@ -11,8 +11,8 @@ export function sendSupport(data) {
     return dispatch => {
         dispatch(requestGetCreateDeployment());
         return axios.post(
-            // 'https://web.containerum.io/omnidesk',
-            'http://localhost:3001/omnidesk',
+            'https://web.containerum.io/omnidesk',
+            // 'http://localhost:3001/omnidesk',
             data,
             {
                 headers: {
@@ -27,7 +27,7 @@ export function sendSupport(data) {
             if (response.status === 200) {
                 // console.log(response.data);
                 dispatch(receiveGetCreateDeployment(response.data));
-                browserHistory.push('/SuccessTicket?num=' + response.data.case.case_id);
+                browserHistory.push('/Support/SuccessTicket?num=' + response.data.case.case_id);
             } else {
                 // console.log(response.data.message);
                 dispatch(failGetCreateDeployment(response.data.message));

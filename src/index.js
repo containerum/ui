@@ -16,16 +16,6 @@ const store = createStore(reducers, composeWithDevTools(
     applyMiddleware(reduxThunk)
 ));
 
-// function checkFooter(){
-//     if( $('body').height()<=$(window).height() ){
-//         $('body').addClass('footer-absolute');
-//     } else {
-//         $('body').removeClass('footer-absolute');
-//     }
-//
-//     $('.footer').show();
-// }
-
 function logPageView() {
     window.scrollTo(0, 0);
     ReactGA.set({ page: window.location.pathname + window.location.search });
