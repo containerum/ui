@@ -47,13 +47,11 @@ class CreateService extends Component {
     render() {
         return (
             <div>
-                <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                    <NamespacesDropDown
-                        idName={this.props.params.idName}
-                        IdCreateService={this.props.params.idName}
-                    />
-                    <CreateInstance idName={this.props.params.idName} />
-                </div>
+                <NamespacesDropDown
+                    idName={this.props.params.idName}
+                    IdCreateService={this.props.params.idName}
+                />
+                <CreateInstance idName={this.props.params.idName} />
 
                 <Tabs selectedTabClassName="i-selected-tab">
                     <TabList className="btn-group i-container-btn-gr">

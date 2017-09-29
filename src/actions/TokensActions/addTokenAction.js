@@ -15,6 +15,8 @@ export function addToken(addingToken) {
     return dispatch => {
         dispatch(requestAddToken());
         const token = localStorage.getItem('id_token');
+        const browser = localStorage.getItem('id_browser');
+
         const api = WEB_API + '/api/tokens/' + addingToken;
 
         return axios.put(
@@ -22,6 +24,7 @@ export function addToken(addingToken) {
             {
                 headers: {
                     'Authorization': token,
+                    'X-User-Fingerprint': browser,
                     'Content-Type': 'application/x-www-form-urlencode',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'

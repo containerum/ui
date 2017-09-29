@@ -6,13 +6,25 @@ import { routes } from './routes';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 import reducers from './reducers/index';
+import registerServiceWorker from './registerServiceWorker';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import $ from 'jquery';
 import ReactGA from 'react-ga';
 ReactGA.initialize('UA-104800418-1');
 
 const store = createStore(reducers, composeWithDevTools(
     applyMiddleware(reduxThunk)
 ));
+
+// function checkFooter(){
+//     if( $('body').height()<=$(window).height() ){
+//         $('body').addClass('footer-absolute');
+//     } else {
+//         $('body').removeClass('footer-absolute');
+//     }
+//
+//     $('.footer').show();
+// }
 
 function logPageView() {
     window.scrollTo(0, 0);
@@ -32,3 +44,4 @@ render(
 );
 
 export default setDeploymentId;
+registerServiceWorker();

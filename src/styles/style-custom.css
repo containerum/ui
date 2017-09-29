@@ -1,0 +1,54 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.hover-action {
+    cursor: pointer;
+}
+
+.documentation-link {
+    color: #29abe2;
+}
+
+.table tbody td {
+    border-top: 1px solid #e9ecef!important;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.tr-table-hover {
+    cursor: pointer;
+    height: 42px;
+}
+
+.header-top-menu__li:hover a, .header-top-menu__li a.active {
+    color:#333333;
+    border-color: #29abe2;
+}
+
+.header-top-account__name a.dropdown-toggle{
+    width: unset;
+    max-width: 200px;
+}
+
+.header-top-account__name{
+    width: unset;
+}
+
+.header-top-account{
+    width: unset;
+}
+/* Without volumes and biling!!! */
+.content-block-container {
+    padding: 25px 30px 25px 30px;
+}
+.card-container {
+     min-height: unset;
+}
+.add-new-block .action {
+    line-height: 185px;
+}
+/* Without volumes */

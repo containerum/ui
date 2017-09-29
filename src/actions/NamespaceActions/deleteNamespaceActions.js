@@ -15,12 +15,14 @@ export function deleteNamespace(idName) {
     return dispatch => {
         dispatch(requestDeleteNamespace());
         const token = localStorage.getItem('id_token');
+        const browser = localStorage.getItem('id_browser');
 
         return axios.get(
             WEB_API + '/api/namespaces',
             {
                 headers: {
                     'Authorization': token,
+                    'X-User-Fingerprint': browser,
                     'Content-Type': 'application/x-www-form-urlencode',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'

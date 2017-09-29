@@ -3,30 +3,50 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getDeployment } from '../../actions/DeploymentActions/getDeploymentAction';
+import { deleteDeployment } from '../../actions/DeploymentActions/deleteDeploymentAction';
 
-import Post from './Post';
 import Spinner from '../Spinner';
+import HeaderDropDown from '../HeaderDropDown';
+import DeploymentInfo from './DeploymentInfo';
+import DeploymentContains from './DeploymentContains';
+import Notification from '../Notification';
 
 class Deployment extends Component {
     componentDidMount() {
-        this.props.onGetDeployment(this.props.params.idName, this.props.params.idDep);
+        // if (!this.props.GetDeploymentReducer.data.length) {
+            this.props.onGetDeployment(this.props.params.idName, this.props.params.idDep);
+        // }
+    }
+    handleDeleteDeployment(idDep) {
+        // console.log(this.props.params.idName, idDep);
+        this.props.onDeleteDeployment(this.props.params.idName, idDep);
     }
     render() {
-        let isFetchingComponent = '';
+        let isFetchingDeploymentInfo = '';
         if (this.props.GetDeploymentReducer.isFetching === false) {
-            isFetchingComponent =
-                <Post
-                    deploymentReducer={this.props.GetDeploymentReducer.data}
-                    deploymentErrorMessage={this.props.GetDeploymentReducer.errorMessage}
+            isFetchingDeploymentInfo =
+                <DeploymentInfo
                     idName={this.props.params.idName}
-                    idDep={this.props.params.idDep}
+                    onDeleteDeployment={(idDep) => this.handleDeleteDeployment(idDep)}
                 />;
         } else {
-            isFetchingComponent = <Spinner />;
+            isFetchingDeploymentInfo = <Spinner />;
         }
         return (
             <div>
-                { isFetchingComponent }
+                <HeaderDropDown
+                    idName={this.props.params.idName}
+                    idDep={this.props.params.idDep}
+                />
+                <Notification
+                    status={this.props.DeleteDeploymentReducer.status}
+                    name={this.props.DeleteDeploymentReducer.deploymentName}
+                    errorMessage={this.props.DeleteDeploymentReducer.errorMessage}
+                />
+                { isFetchingDeploymentInfo }
+                <DeploymentContains
+                    children={this.props.children}
+                />
             </div>
         );
     }
@@ -45,7 +65,8 @@ function mapStateToProps(state) {
 
     return {
         errorMessage,
-        GetDeploymentReducer
+        GetDeploymentReducer,
+        DeleteDeploymentReducer: state.DeleteDeploymentReducer
     };
 }
 
@@ -53,6 +74,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onGetDeployment: (idName, idDep) => {
             dispatch(getDeployment(idName, idDep));
+        },
+        onDeleteDeployment: (idName, idDep) => {
+            dispatch(deleteDeployment(idName, idDep));
         }
     };
 };

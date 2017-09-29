@@ -4,23 +4,12 @@ import PropTypes from 'prop-types';
 class NotFoundNamespaces extends Component {
     render() {
         return (
-            <div className="container-fluid pt-3 pb-5">
-                <h5>Namespace</h5>
-                <div className="row">
-                    <div className="col-12">
-                        <div className="card i-card-border mt-3">
-                            <div className="card-block c-table-card-block">
-                                <div className="table table-hover c-table-card i-table-card">
-                                    <div className="i-table-tbody">
-                                        <div className="i-row-table">
-                                            <div className="i-td-table">
-                                                Let's Start <br />
-                                                Follow the <a href="https://containerum.com/fast-deploy" target="_blank">Documentation</a> to create your 1st Namespace
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div className="row double">
+                <div className="col-md-12 align-middle">
+                    <div className="add-new-block content-block-content card-container hover-action ">
+                        <div className="action">
+                            Let's Start <br />
+                            Follow the <a className="documentation-link" href="https://containerum.com/fast-deploy/hello-world" target="_blank">Documentation</a> to create your 1st Namespace
                         </div>
                     </div>
                 </div>

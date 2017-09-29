@@ -15,7 +15,7 @@ class ButtonCreateDeployment extends Component {
                                         <div className="i-row-table">
                                             <div className="i-td-table">
                                                 Let's Start <br />
-                                                Follow the <a href="https://containerum.com/fast-deploy" target="_blank">Documentation</a> to create your 1st Deployment
+                                                Follow the <a className="documentation-link" href="https://containerum.com/fast-deploy/hello-world" target="_blank">Documentation</a> to create your 1st Deployment
                                             </div>
                                         </div>
                                     </div>

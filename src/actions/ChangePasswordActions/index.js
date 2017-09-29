@@ -16,6 +16,7 @@ export function changePassword(data) {
     return dispatch => {
         dispatch(requestChangePassword());
         const token = localStorage.getItem('id_token');
+        const browser = localStorage.getItem('id_browser');
         const api = WEB_API + '/api/password_change';
         // const password = md5(data.password).toString(16);
         // const new_password = md5(data.new_password).toString(16);
@@ -26,6 +27,7 @@ export function changePassword(data) {
             {
                 headers: {
                     'Authorization': token,
+                    'X-User-Fingerprint': browser,
                     'Access-Control-Allow-Origin': '*'
                 },
                 validateStatus: (status) => status >= 200 && status <= 505

@@ -5,30 +5,50 @@ import PropTypes from 'prop-types';
 
 import { logoutUser } from '../../actions/LogoutActions';
 import { getProfile } from '../../actions/ProfileActions/getProfileActions';
-import logo from '../../images/Containerum_logo_new.svg';
-import CommonInfoDropdown from './CommonInfoDropdown';
 import ProfileInfoDropdown from './ProfileInfoDropdown';
+import NavLink from '../../containers/NavLink';
+import logo from '../../images/logo.png';
 
-import '../../localization/en/header';
-import '../../localization/ru/header';
+import '../../styles/bootstrap.min.css';
+import '../../styles/bootstrap-grid.min.css';
+import '../../styles/style.css';
+import '../../styles/style-custom.css';
+import '../../styles/custom.css';
+import '../../styles/individual.css';
 
 class Header extends Component {
     componentDidMount() {
         this.props.onLoadProfileData();
     }
     render() {
-        const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : '';
+        const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : 'no data';
         return (
-            <div className="c-navbar">
-                <div className="navbar navbar-inverse navbar-toggleable-md i-hover-pointer">
-                    <Link to="/Namespaces" className="navbar-brand i-navbar-brand-pd-l">
-                        <img className="d-inline-block align-top i-sizes-img-logo" src={logo} alt="Logo"/>
-                    </Link>
-                    <div className="collapse navbar-collapse justify-content-end">
-                        <CommonInfoDropdown />
-                        <ProfileInfoDropdown onLogoutClick={this.props.onLogoutClick} userEmail={userEmail} />
+            <div>
+                <header className="header ">
+                    <div className="header-top ">
+                        <div className="header-top-container container">
+                            <div className="header__logo">
+                                <NavLink to="/Namespaces" className=""><img src={logo} alt="logo" /></NavLink>
+                            </div>
+                            <ul className="header-top-menu nav">
+                                <li className="header-top-menu__li nav-item">
+                                    <NavLink to="/Namespaces" className="header-top-menu__link">Namespaces</NavLink>
+                                </li>
+                                {/*<li className="header-top-menu__li nav-item">*/}
+                                    {/*<NavLink to="/Volumes" className="header-top-menu__link">Volumes</NavLink>*/}
+                                {/*</li>*/}
+                                <li className="header-top-menu__li header-top-menu__li_last nav-item">
+                                    <NavLink to="/Support" className="header-top-menu__link">Support</NavLink>
+                                </li>
+                            </ul>
+                            {/*<div className="header-top-admin-mode">*/}
+                            {/*<div className="header-top-admin-mode__label">Admin<br />mode</div>*/}
+                            {/*<div className="header-top-admin-mode__switcher "></div>*/}
+                            {/*</div>*/}
+                            <ProfileInfoDropdown onLogoutClick={this.props.onLogoutClick} userEmail={userEmail} />
+                        </div>
                     </div>
-                </div>
+                </header>
             </div>
         );
     }

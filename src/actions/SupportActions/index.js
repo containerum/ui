@@ -25,11 +25,11 @@ export function sendSupport(data) {
         )
         .then(response => {
             if (response.status === 200) {
-                console.log(response.data);
+                // console.log(response.data);
                 dispatch(receiveGetCreateDeployment(response.data));
                 browserHistory.push('/SuccessTicket?num=' + response.data.case.case_id);
             } else {
-                console.log(response.data.message);
+                // console.log(response.data.message);
                 dispatch(failGetCreateDeployment(response.data.message));
             }
         }).catch(err => console.log(err));

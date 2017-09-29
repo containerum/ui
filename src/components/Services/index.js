@@ -1,59 +1,71 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import Spinner from '../Spinner';
+import Notification from '../Notification';
+import NotFoundServices from './NotFoundServices';
+import ServicesContains from './ServicesContains';
 import { getServices } from '../../actions/ServicesActions';
-import Posts from './Posts';
-// import Spinner from '../Spinner';
+import { deleteService } from '../../actions/ServiceActions/deleteServiceAction';
 
 class Services extends Component {
     componentDidMount() {
-        this.props.onGetServices(this.props.idName);
+        // if (!this.props.ServicesReducer.data.length) {
+            this.props.onGetServices(this.props.params.idName);
+        // }
+    }
+    handleDeleteService(idServ) {
+        this.props.onDeleteService(this.props.params.idName, idServ);
     }
     render() {
-        let isFetchingComponent = '';
+        // console.log(this.props.DeleteServiceReducer);
+        let isFetchingServicesContains = '';
         if (this.props.ServicesReducer.isFetching === false) {
-            isFetchingComponent =
-                <Posts
-                    servicesDataReducer={this.props.ServicesReducer.data}
-                    servicesErrorMessageReducer={this.props.ServicesReducer.errorMessage}
-                    servicesStatusErrorReducer={this.props.ServicesReducer.statusError}
-                    idName={this.props.idName}
-                />;
+            if (this.props.ServicesReducer.data.length === 0 || this.props.ServicesReducer.statusError === 404) {
+                isFetchingServicesContains = <NotFoundServices />;
+            } else {
+                isFetchingServicesContains =
+                    <ServicesContains
+                        idName={this.props.params.idName}
+                        onDeleteService={this.handleDeleteService.bind(this)}
+                    />;
+            }
+        } else {
+            isFetchingServicesContains = <Spinner />;
         }
-        // else {
-        //     isFetchingComponent = <Spinner />
-        // }
-
         return (
             <div>
-                { isFetchingComponent }
+                <Notification
+                    status={this.props.DeleteServiceReducer.status}
+                    name={this.props.DeleteServiceReducer.serviceName}
+                    errorMessage={this.props.DeleteServiceReducer.errorMessage}
+                />
+                { isFetchingServicesContains }
             </div>
         );
     }
 }
 
 Services.propTypes = {
-    onGetServices: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string,
-    ServicesReducer: PropTypes.object,
-    idName: PropTypes.string
+    params: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
-    const { ServicesReducer } = state;
-    const { errorMessage } = ServicesReducer;
-
     return {
-        errorMessage,
-        ServicesReducer
+        ServicesReducer: state.ServicesReducer,
+        DeleteServiceReducer: state.DeleteServiceReducer
     };
+
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onGetServices: idName => {
+        onGetServices: (idName) => {
             dispatch(getServices(idName));
+        },
+        onDeleteService: (idName, idServ) => {
+            dispatch(deleteService(idName, idServ));
         }
     };
 };

@@ -15,6 +15,8 @@ export function deleteProfile() {
     return dispatch => {
         dispatch(requestDeleteProfile());
         const token = localStorage.getItem('id_token');
+        const browser = localStorage.getItem('id_browser');
+
         const api = WEB_API + '/api/profile';
 
         return axios.delete(
@@ -22,6 +24,7 @@ export function deleteProfile() {
             {
                 headers: {
                     'Authorization': token,
+                    'X-User-Fingerprint': browser,
                     'Access-Control-Allow-Origin': '*'
                 },
                 validateStatus: (status) => status >= 200 && status <= 500

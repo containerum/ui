@@ -14,12 +14,14 @@ export function getCreateService(idName, data) {
     return dispatch => {
         dispatch(requestGetCreateService());
         const token = localStorage.getItem('id_token');
+        const browser = localStorage.getItem('id_browser');
         return axios.post(
             WEB_API + '/api/namespaces/' + idName + '/services',
             { ports: data },
             {
                 headers: {
                     'Authorization': token,
+                    'X-User-Fingerprint': browser,
                     'Access-Control-Allow-Origin': '*'
                 },
                 validateStatus: (status) => status >= 200 && status <= 505

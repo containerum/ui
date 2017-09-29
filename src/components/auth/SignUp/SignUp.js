@@ -63,15 +63,15 @@ class SignUp extends Component {
     handleCheckValidateEmailInput(email, isValidEmail) {
         this.setState({
             ...this.state,
-            email: email,
-            isValidEmail: isValidEmail
+            email,
+            isValidEmail
         });
     }
     handleCheckValidatePasswordInput(password, isValidPassword) {
         this.setState({
             ...this.state,
-            password: password,
-            isValidPassword: isValidPassword
+            password,
+            isValidPassword
         });
     }
     handleClick(event) {
@@ -111,7 +111,7 @@ class SignUp extends Component {
                             id="inlineFormInputCompanyName"
                             placeholder="Company name"
                         />
-                        <i className="c-form-control-icon fa fa-address-book fa-1"></i>
+                        <i className="c-form-control-icon fa fa-address-book fa-1" />
                     </div>
 
                     <label className="sr-only" htmlFor="inlineFormInputTaxCode">Tax Code</label>
@@ -124,7 +124,7 @@ class SignUp extends Component {
                             id="inlineFormInputTaxCode"
                             placeholder="Tax Code"
                         />
-                        <i className="c-form-control-icon fa fa-tag fa-1"></i>
+                        <i className="c-form-control-icon fa fa-tag fa-1" />
                     </div>
                 </div>
             );
@@ -137,7 +137,7 @@ class SignUp extends Component {
         const isActiveSignUpState = !!this.props.signUpReducer.isFetching;
 
         return (
-            <div className="container">
+            <div className="main_container">
                 <Logo />
                 <form className="form-signin" onSubmit={(event) => this.handleClick(event)}>
                     <div className="card c-card">
@@ -148,34 +148,34 @@ class SignUp extends Component {
                             <div id="loginAlert" className="alert alert-danger mb-4 c-alert-danger">
                                 { this.state.errorMsg }
                             </div>
-                            <div className="text-center i-height-btn-group i-mb-20">
-                                <div className="btn-group">
-                                    <label
-                                        className={this.state.idOfActiveToggle === "option1"
-                                            ? "btn btn-success active" : "btn btn-success"}>
-                                        <input
-                                            onChange={this.handleChangeOnToggle}
-                                            type="radio"
-                                            name="options"
-                                            id="option1"
-                                            checked={!this.state.toggleActive}
-                                        />Individual
-                                    </label>
-                                    <label
-                                        className="btn btn-success disabled"
-                                        // className={this.state.idOfActiveToggle === "option2"
-                                        //     ? "btn btn-success active" : "btn btn-success"}
-                                    >
-                                        <input
-                                            // onChange={this.handleChangeOnToggle}
-                                            type="radio"
-                                            name="options"
-                                            id="option2"
-                                            checked={this.state.toggleActive}
-                                        />Company
-                                    </label>
-                                </div>
-                            </div>
+                            {/* <div className="text-center i-height-btn-group i-mb-20">*/}
+                            {/* <div className="btn-group">*/}
+                            {/* <label*/}
+                            {/* className={this.state.idOfActiveToggle === "option1"*/}
+                            {/* ? "btn btn-success active" : "btn btn-success"}>*/}
+                            {/* <input*/}
+                            {/* onChange={this.handleChangeOnToggle}*/}
+                            {/* type="radio"*/}
+                            {/* name="options"*/}
+                            {/* id="option1"*/}
+                            {/* checked={!this.state.toggleActive}*/}
+                            {/* />Individual*/}
+                            {/* </label>*/}
+                            {/* <label*/}
+                            {/* className="btn btn-success disabled"*/}
+                            {/* // className={this.state.idOfActiveToggle === "option2"*/}
+                            {/* //     ? "btn btn-success active" : "btn btn-success"}*/}
+                            {/* >*/}
+                            {/* <input*/}
+                            {/* // onChange={this.handleChangeOnToggle}*/}
+                            {/* type="radio"*/}
+                            {/* name="options"*/}
+                            {/* id="option2"*/}
+                            {/* checked={this.state.toggleActive}*/}
+                            {/* />Company*/}
+                            {/* </label>*/}
+                            {/* </div>*/}
+                            {/* </div>*/}
                             <InputEmail
                                 handleEmail={
                                     (email, isValidEmail) =>

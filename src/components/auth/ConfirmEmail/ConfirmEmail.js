@@ -16,7 +16,7 @@ class ConfirmEmail extends Component {
             browserHistory.push('/SignUp');
         }
         return (
-            <div className="container">
+            <div className="main_container">
                 <Logo />
                 <form className="form-signin">
                     <div className="card c-card">

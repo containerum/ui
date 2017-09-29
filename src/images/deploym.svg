@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="32px" viewBox="0 0 28 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>F01D454F-0BC7-4CB8-A63F-2C54219F3224</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#53D5F3" offset="0%"></stop>
+            <stop stop-color="#29ABE2" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="ЛК-Panel" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI-Kit" transform="translate(-36.000000, -2148.000000)" stroke="#29ABE2" stroke-width="2" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="Иконка-Deploym" transform="translate(37.000000, 2149.000000)">
+                <path d="M24.8181818,6.60568984 L14.1818182,0.289742362 C13.4390744,-0.0965807874 12.5609256,-0.0965807874 11.8181818,0.289742362 L1.18181818,6.60568984 C0.482762917,7.07436377 0.0437762136,7.85638394 0,8.71100567 L0,21.2902677 C0.0454069543,22.1443953 0.484000196,22.9257146 1.18181818,23.3955836 L11.8181818,29.711531 C12.5613215,30.0961563 13.4386785,30.0961563 14.1818182,29.711531 L24.8181818,23.3955836 C25.5172371,22.9269096 25.9562238,22.1448895 26,21.2902677 L26,8.71100567 C25.9562238,7.85638394 25.5172371,7.07436377 24.8181818,6.60568984 L24.8181818,6.60568984 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

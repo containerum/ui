@@ -1,5 +1,6 @@
 .mini-spinner {
     display: inline-block;
+    vertical-align: middle;
 }
 
 .mini-spinner:not(:required) {

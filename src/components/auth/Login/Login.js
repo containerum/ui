@@ -134,7 +134,7 @@ class Login extends Component {
             'btn btn-block c-btn-green i-btn-login-strong';
         const isActiveLoginState = !!this.props.loginReducer.isFetching;
         return (
-            <div className="container">
+            <div className="main_container">
                 <Logo />
                 <form className="form-signin" onSubmit={(event) => this.handleClick(event)}>
                     <div className="card c-card">

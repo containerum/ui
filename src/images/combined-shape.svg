@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>7D0A2B02-B02E-46AE-B205-D5EF7BEDE1F1</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="111.184554%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#D3D3D3" offset="0%"></stop>
+            <stop stop-color="#A7A7A7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="ЛК-Panel" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI-Kit" transform="translate(-274.000000, -2149.000000)" fill="url(#linearGradient-1)">
+            <path d="M274,2149 L284,2149 L284,2159 L274,2159 L274,2149 Z M274,2162 L284,2162 L284,2172 L274,2172 L274,2162 Z M287,2162 L297,2162 L297,2172 L287,2172 L287,2162 Z" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>
