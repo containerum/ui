@@ -1,0 +1,12 @@
+.account-info {
+    position: sticky;
+    top: 15px;
+    overflow: visible;
+    max-height: calc(100vh - 50px);
+    /*margin-top: 50px;*/
+    margin-bottom: 50px;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: transparent;
+}

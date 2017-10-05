@@ -34,9 +34,9 @@ class Header extends Component {
                                 <li className="header-top-menu__li nav-item">
                                     <NavLink to="/Namespaces" className="header-top-menu__link">Namespaces</NavLink>
                                 </li>
-                                {/*<li className="header-top-menu__li nav-item">*/}
-                                    {/*<NavLink to="/Volumes" className="header-top-menu__link">Volumes</NavLink>*/}
-                                {/*</li>*/}
+                                <li className="header-top-menu__li nav-item">
+                                    <NavLink to="/Volumes" className="header-top-menu__link">Volumes</NavLink>
+                                </li>
                                 <li className="header-top-menu__li header-top-menu__li_last nav-item">
                                     <NavLink to="/Support" className="header-top-menu__link">Support</NavLink>
                                 </li>

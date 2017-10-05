@@ -10,6 +10,7 @@ import ResetPassword from './components/ResetPassword';
 import App from './components/App';
 import requireAuthentication from './components/auth/require-auth';
 import Workloads from './components/Workloads';
+import Volumes from './components/Volumes';
 import Namespace from './components/Namespace';
 import Deployments from './components/Deployments';
 import Services from './components/Services';
@@ -21,9 +22,8 @@ import Pods from './components/Pods';
 import Pod from './components/Pod';
 import Support from './components/Support';
 import SuccessTicket from './components/Support/SuccessTicket';
+import Account from './components/Account';
 import NotFound from './components/NotFound';
-
-// import Profile from './components/Profile';
 
 // import CreateDeployment from './components/CreateDeployment';
 // import CreateService from './components/CreateService';
@@ -32,6 +32,7 @@ export const routes = (
     <Route>
         <Route path="/" component={requireAuthentication(App)}>
             <IndexRedirect to="Namespaces" />
+            <Route path="/Volumes" component={Volumes}/>
             <Route path="/Namespaces" component={Workloads} />
             <Route path="/Namespaces/:idName" component={Namespace}>
                 <IndexRedirect to="Deployments" />
@@ -51,7 +52,7 @@ export const routes = (
             <Route path="/Support/SuccessTicket" component={SuccessTicket} />
             {/*<Route path="/Namespaces/:idName/CreateNewDeployment" component={CreateDeployment} />*/}
             {/*/!*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*!/*/}
-            {/*<Route path="/Profile" component={Profile} />*/}
+            <Route path="/Account" component={Account} />
         </Route>
             <Route path="/Login" component={Login}>
             <Route path="/" component={Workloads} />

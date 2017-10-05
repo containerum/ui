@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
@@ -36,7 +36,7 @@ class LinkedDeployment extends Component {
                 }
             });
             const depName = linkedDep ? linkedDep.name : '';
-            const cpu = linkedDep ? linkedDep.cpu / 1000 : '';
+            const cpu = linkedDep ? linkedDep.cpu : '';
             const ram = linkedDep ? linkedDep.ram : '';
             const id = linkedDep ? `item_${depName}` : '';
             isFetchingDeploymentsContains =
@@ -86,7 +86,7 @@ class LinkedDeployment extends Component {
                                     <td className="td-2">Name</td>
                                     <td className="td-3">Pods</td>
                                     <td className="td-4">RAM (MB)</td>
-                                    <td className="td-5">CPU</td>
+                                    <td className="td-5">CPU (m)</td>
                                     <td className="td-6">Age</td>
                                     <td className="td-7"> </td>
                                     <td className="td-7"> </td>

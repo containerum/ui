@@ -14,24 +14,21 @@ class InputPassword extends Component {
     render() {
         const refValue = this.props.refValue ? this.props.refValue : 'password';
         const placeholder = this.props.placeholder ? this.props.placeholder : 'Password';
-        const small = this.props.small ? <small>Password must be 8 or more characters</small> : '';
+        const small = this.props.small ? this.props.small : '';
         return (
-            <div>
-                <label className="sr-only" htmlFor="Password">Password</label>
-                <div className="form-group i-mb-20 c-has-feedback-left">
-                    <input
-                        onChange={(event) => this.ValidationGetValuePass(event)}
-                        type="password"
-                        ref={refValue}
-                        required="required"
-                        className="form-control"
-                        id="Password"
-                        placeholder={placeholder}
-                        disabled={this.props.isDisabled}
-                    />
-                    <i className="c-form-control-icon fa fa-lock"></i>
-                    {small}
-                </div>
+            <div className="form-group">
+                <input
+                    className="form-group__input-text form-control"
+                    onChange={(event) => this.ValidationGetValuePass(event)}
+                    type="password"
+                    ref={refValue}
+                    required="required"
+                    id={refValue}
+                    placeholder={placeholder}
+                    disabled={this.props.isDisabled}
+                />
+                <label className="form-group__label" htmlFor={refValue}>{placeholder}</label>
+                <div className="form-group__helper">{small}</div>
             </div>
         );
     }

@@ -67,6 +67,8 @@ class PodsContains extends Component {
                                 const milliseconds = Date.parse(item.created_at);
                                 const dateHours = new Date(milliseconds);
                                 const dateValue = ta.ago(dateHours, true);
+                                const activeContainers = item.active_containers;
+                                const totalContainers = item.total_containers;
                                 return (
                                     <tr
                                         id={id}
@@ -78,7 +80,7 @@ class PodsContains extends Component {
                                         <td className="td-2">{item.name}</td>
                                         <td className="td-3">{item.status}</td>
                                         <td className="td-4">{item.restarts} restarts</td>
-                                        <td className="td-5">4 / 5</td>
+                                        <td className="td-5">{activeContainers} / {totalContainers}</td>
                                         <td className="td-6">{dateValue}</td>
                                         <td className="td-7 dropdown no-arrow" onClick={this.handleClose.bind(this)}>
                                             <i

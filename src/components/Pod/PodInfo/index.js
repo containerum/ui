@@ -53,7 +53,7 @@ class PodInfo extends Component {
                             </div>
                             <div className="content-block__info-item">
                                 <div className="content-block__info-name">CPU ( Usage / Total ) : </div>
-                                <div className="content-block__info-text">{this.props.GetPodReducer.data.cpu / 1000}</div>
+                                <div className="content-block__info-text">{this.props.GetPodReducer.data.cpu} m</div>
                             </div>
                             {/*<div className="content-block__info-item">*/}
                                 {/*<div className="content-block__info-name">Volume ( Usage / Total ):</div>*/}

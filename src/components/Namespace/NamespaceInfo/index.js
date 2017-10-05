@@ -19,8 +19,8 @@ class NamespaceInfo extends Component {
         const NSname = currentNSArr ? currentNSArr.name : '';
         const NSmemory = currentNSArr ? currentNSArr.memory : '';
         const NSmemoryLimit = currentNSArr ? currentNSArr.memory_limit : '';
-        const NScpu = currentNSArr ? currentNSArr.cpu / 1000 : '';
-        const NScpuLimit = currentNSArr ? currentNSArr.cpu_limit / 1000 : '';
+        const NScpu = currentNSArr ? currentNSArr.cpu : '';
+        const NScpuLimit = currentNSArr ? currentNSArr.cpu_limit : '';
         return (
             <div className="content-block">
                 <div className="content-block-container content-block_common-statistic container">
@@ -54,7 +54,7 @@ class NamespaceInfo extends Component {
                         </div>
                         <div className="content-block__info-item">
                             <div className="content-block__info-name">CPU ( Usage / Total ) : </div>
-                            <div className="content-block__info-text">{NScpu} / {NScpuLimit}</div>
+                            <div className="content-block__info-text">{NScpu} / {NScpuLimit} m</div>
                         </div>
                         {/*<div className="content-block__info-item">*/}
                             {/*<div className="content-block__info-name">Volume ( Usage / Total ) :</div>*/}

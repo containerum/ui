@@ -9,7 +9,12 @@ class Footer extends Component {
                 <div className="footer-wrapper">
                     <div className="footer-container container">
                         <div className="footer__logo">Created by Exon Lab</div>
-                        <a target="_blank" href="https://github.com/containerum/chkit/releases/latest" className="footer__download_cli">
+                        <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://github.com/containerum/chkit/releases/latest"
+                            className="footer__download_cli"
+                        >
                             Download CLI <img src={arrows} alt="Download CLI" />
                         </a>
                     </div>

@@ -17,7 +17,7 @@ class DeploymentInfo extends Component {
     render() {
         // console.log(this.props.GetDeploymentReducer);
         const depName = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.name : '';
-        const cpu = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.cpu / 1000 : '';
+        const cpu = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.cpu : '';
         const ram = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.ram : '';
         const status = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.status : {};
         return (
@@ -53,7 +53,7 @@ class DeploymentInfo extends Component {
                         </div>
                         <div className="content-block__info-item">
                             <div className="content-block__info-name">CPU ( Usage / Total ) : </div>
-                            <div className="content-block__info-text">{cpu}</div>
+                            <div className="content-block__info-text">{cpu} m</div>
                         </div>
                         <div className="content-block__info-item">
                             <div className="content-block__info-name">Status: </div>

@@ -66,7 +66,7 @@ class NamespacesContainer extends Component {
                                             </div>
                                             <div className="content-block__info-item">
                                                 <div className="content-block__info-name inline">CPU ( Usage / Total ) :&nbsp;</div>
-                                                <div className="content-block__info-text inline">{item.cpu / 1000} / {item.cpu_limit / 1000}</div>
+                                                <div className="content-block__info-text inline">{item.cpu} / {item.cpu_limit} m</div>
                                             </div>
                                             {/*<div className="content-block__info-item">*/}
                                                 {/*<div className="content-block__info-name inline">Volume ( Usage / Total ) :&nbsp;</div>*/}

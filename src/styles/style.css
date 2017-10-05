@@ -166,7 +166,7 @@ h1{
 }
 
 .header-top-account__avatar{
-    width:27px;
+    width: 28px;
     height: 28px;
     float: left;
 }
@@ -344,8 +344,8 @@ h1{
     margin: 0 0 15px 0;
 }
 
-.block-item__copy-string{
-    width:100%;
+.block-item__copy-string {
+    width: 100%;
     height: 40px;
     padding: 5px 10px 5px 10px;
     margin: 25px 0 10px 0;
@@ -956,6 +956,7 @@ h1{
 .content-block__table  .td-1{
     width: 52px;
     padding-left: 30px;
+    font-weight: normal;
 }
 
 .content-block__table  .td-2{

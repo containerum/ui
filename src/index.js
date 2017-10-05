@@ -8,7 +8,6 @@ import reduxThunk from 'redux-thunk';
 import reducers from './reducers/index';
 import registerServiceWorker from './registerServiceWorker';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import $ from 'jquery';
 import ReactGA from 'react-ga';
 ReactGA.initialize('UA-104800418-1');
 

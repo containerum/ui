@@ -6,6 +6,7 @@ import logoutReducer from './logoutReducer';
 import signUpReducer from './signUpReducer';
 import confirmEmailReducer from './confirmEmailReducer';
 import NamespacesReducer from './NamespacesReducer';
+import VolumesReducer from './VolumesReducer';
 import DeploymentsReducer from './DeploymentsReducer';
 import GetDeploymentReducer from './DeploymentReducers/GetDeploymentReducer';
 import DeleteDeploymentReducer from './DeploymentReducers/DeleteDeploymentReducer';
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
     signUpReducer,
     confirmEmailReducer,
     NamespacesReducer,
+    VolumesReducer,
     DeploymentsReducer,
     ServicesReducer,
     getServiceReducer,

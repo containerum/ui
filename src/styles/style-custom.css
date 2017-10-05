@@ -60,3 +60,31 @@ html {
     line-height: 185px;
 }
 /* Without volumes */
+
+.form-group__label-always-onfocus {
+    color: #29abe2;
+    font-size: 12px;
+    top: 0;
+}
+
+.block-item__copy-string {
+    width: 100%;
+    height: 38px!important;
+    padding: 5px 10px 5px 10px;
+    margin: 25px 0 10px 0;
+    background: #eaeaea;
+    border: solid 1px #eaeaea;
+    border-radius: 3px;
+    position: relative;
+    word-wrap: normal;
+    white-space: nowrap;
+}
+.block-item__content-string {
+    height: 35px;
+    padding: 5px 10px 5px 10px;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: #29abe2;
+}

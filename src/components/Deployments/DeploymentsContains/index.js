@@ -67,7 +67,7 @@ class DeploymentsContains extends Component {
                                     <td className="td-2">Name</td>
                                     <td className="td-3">Pods</td>
                                     <td className="td-4">RAM (MB)</td>
-                                    <td className="td-5">CPU</td>
+                                    <td className="td-5">CPU (m)</td>
                                     <td className="td-6">Age</td>
                                     <td className="td-7"> </td>
                                     <td className="td-7"> </td>
@@ -79,7 +79,7 @@ class DeploymentsContains extends Component {
                                         const milliseconds = Date.parse(item.created_at);
                                         const dateHours = new Date(milliseconds);
                                         const dateValue = ta.ago(dateHours, true);
-                                        const cpu = item.cpu / 1000;
+                                        const cpu = item.cpu;
                                         const id = `item_${item.name}`;
                                         const podsActive = item.pods_active;
                                         const podsLimit = item.pods_limit;
