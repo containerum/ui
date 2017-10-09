@@ -23,62 +23,145 @@ class Tokens extends Component {
         //     'btn btn-block c-btn-green';
         // const isActiveTokenState = !!this.props.TokenReducer.isFetching;
         return (
-            <div className="card mt-3">
-                <div className="card-block c-table-card-block">
-                    <table className="table i-table-card">
-                        <tbody>
-                            <tr>
-                                <td className="first-td-width">
-                                    <h2 id="tokens">
-                                        <a name="tokens" className="anchor" href="#tokens">Token`s</a>
-                                    </h2> <br/>
-                                    <p>Token provide an another way to logging into a virtual private Namespace</p>
-                                </td>
-                                <td>
-                                    {this.props.TokensReducer.data.map((item, index) => {
-                                        return <div key={index}>{item.id}</div>;
-                                    })}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td style={{ width: '400px' }}>
-                                    <form onSubmit={this.handleSubmitToken.bind(this)}>
-                                        <div className="form-group i-mb-20 c-has-feedback-left">
-                                            {/*{this.props.TokensReducer.data.map((item, index) => {*/}
-                                            {/*return <div key={index}>{item.id}</div>;*/}
-                                            {/*})}*/}
-                                            {/*<label className="sr-only" htmlFor="inlineFormInputCompanyName">Add new Token</label>*/}
-                                            {/*<div className="form-group i-mb-20 c-has-feedback-left">*/}
-                                            {/*<input*/}
-                                            {/*ref="token"*/}
-                                            {/*id="token"*/}
-                                            {/*required="required"*/}
-                                            {/*type="token"*/}
-                                            {/*className="form-control"*/}
-                                            {/*placeholder="Name"*/}
-                                            {/*/>*/}
-                                            {/*<i className="c-form-control-icon fa fa-tag fa-1"></i>*/}
-                                            {/*</div>*/}
-                                        </div>
-                                        {/*<button*/}
-                                        {/*type="submit"*/}
-                                        {/*className="btn btn-block c-btn-green"*/}
-                                        {/*// className={isActiveTokenButton}*/}
-                                        {/*// disabled={isActiveTokenState}*/}
-                                        {/*>*/}
-                                        {/*/!*{tokenButtonText}*!/*/}
-                                        {/*Add new Token*/}
-                                        {/*</button>*/}
-                                    </form>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div className="block-item" id="tokens">
+                <div className="block-item__title">Tokens</div>
+                <form action="" className="" method="">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="light-text">Token provides another way to log into your private Namespace</div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="block-item__tokens col-md-12">
+                            <table className="block-item__tokens-table content-block__table table">
+                                <tbody>
+                                <tr>
+                                    <td>Name 1</td>
+                                    <td>#zdeschtotodolzchnobit</td>
+                                    <td className=" dropdown no-arrow">
+                                        <i
+                                            className="content-block-table__more ion-more dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        > </i>
+
+                                        <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Name 2</td>
+                                    <td>#zdeschtotodolzchnobit</td>
+                                    <td className=" dropdown no-arrow">
+                                        <i
+                                            className="content-block-table__more ion-more dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        > </i>
+
+                                        <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Name 3</td>
+                                    <td>#zdeschtotodolzchnobit</td>
+                                    <td className=" dropdown no-arrow">
+                                        <i
+                                            className="content-block-table__more ion-more dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        > </i>
+
+                                        <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Name 4</td>
+                                    <td>#zdeschtotodolzchnobit</td>
+                                    <td className=" dropdown no-arrow">
+                                        <i
+                                            className="content-block-table__more ion-more dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        > </i>
+
+                                        <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Name 5</td>
+                                    <td>#zdeschtotodolzchnobit</td>
+                                    <td className=" dropdown no-arrow">
+                                        <i
+                                            className="content-block-table__more ion-more dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        > </i>
+
+                                        <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Name 6</td>
+                                    <td>#zdeschtotodolzchnobit</td>
+                                    <td className=" dropdown no-arrow">
+                                        <i
+                                            className="content-block-table__more ion-more dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        > </i>
+
+                                        <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                            <a className="dropdown-item" href="#">Dropdown item</a>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div className="row ">
+                        <div className="col-md-6">
+                            <div className="form-group ">
+                                <input type="text" className="form-group__input-text form-control" id="new-name" />
+                                <label className="form-group__label" htmlFor="new-name"> </label>
+                                <div className="form-group__helper"> </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="form-group pt-0">
+                                <input type="submit" value="Add" className="button_blue btn btn-outline-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         );
     }

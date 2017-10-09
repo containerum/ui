@@ -33,6 +33,7 @@ import RecoveryPasswordReducer from './RecoveryPasswordReducers';
 import CheckRelationWithGitHubAccountReducer from './CheckRelationWithGitHubAccountReducer';
 import GroupOmnideskReducer from './getGroupOmnideskReducer';
 import TokensReducer from './TokensReducer';
+import GetReleasesGithubReducer from './GetReleasesGithubReducer';
 
 const rootReducer = combineReducers({
     dataDeployment,
@@ -67,7 +68,8 @@ const rootReducer = combineReducers({
     RecoveryPasswordReducer,
     CheckRelationWithGitHubAccountReducer,
     TokensReducer,
-    GroupOmnideskReducer
+    GroupOmnideskReducer,
+    GetReleasesGithubReducer
 });
 
 export default rootReducer;

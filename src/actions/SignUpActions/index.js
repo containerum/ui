@@ -20,10 +20,16 @@ export function SignUpUser(creds) {
     return dispatch => {
         dispatch(requestSignUp(creds));
         // const password = md5(creds.username + creds.password).toString(16);
+        const username = creds.username;
         const password = creds.password;
+        const country_code = creds.country_code;
         return axios.post(
             WEB_API + '/api/users',
-            { username: creds.username, password },
+            {
+                username,
+                password,
+                country_code
+            },
             {
                 validateStatus: (status) => status >= 200 && status <= 505
             }

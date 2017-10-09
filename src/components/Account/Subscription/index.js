@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Switch from 'react-toggle-switch';
+// import Switch from 'react-toggle-switch';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -24,40 +24,57 @@ class Subscription extends Component {
     }
     render() {
         return (
-            <div className="card mt-3">
-                <div className="card-block c-table-card-block">
-                    <table className="table i-table-card">
-                        <tbody>
-                            <tr>
-                                <td className="first-td-width">
-                                    <h2 id="email-subscriptions">
-                                        <a name="email-subscriptions" className="anchor" href="#email-subscriptions">E-mail subscriptions</a>
-                                    </h2>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    By subscribing to our email newsletter, you will be opting to
-                                    receive updates about new feature releases,<br/> discounts and promotional codes,
-                                    security updates and more
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    If you`re not interested in receiving this content, please uncheck the
-                                    box below to unsubscribe.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <Switch
-                                        on={this.state.on}
-                                        onClick={this.handleToggleSwitch}
-                                    /> Subscribe to new letters
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div className="block-item" id="subscriptions">
+                <div className="block-item__title">E-mail subscriptions</div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="light-text">If you are not interested in receiving this content, please uncheck the box below to unsubscribe</div>
+                    </div>
+                    <div className="col-md-6">
+                        <form action="" className="" method="">
+                            <div className="form-group form-group-inline pt-0">
+                                <div className="row double-2 input-group">
+                                    <div className="col-md-10">
+                                        <input type="checkbox" className="form-group__hidden-input" id="system-notification" />
+                                        <label className="form-group__label form-group__label__inline" htmlFor="system-notification">System e-mail notifications</label>
+                                        <div className="form-group__helper form-group__helper__inline">You can not turn them off</div>
+                                    </div>
+                                    <div className="col-md-2">
+                                        <div className="form-group__switcher"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group form-group-inline pt-0">
+                                <div className="row double-2 input-group">
+                                    <div className="col-md-10">
+                                        <input type="checkbox" className="form-group__hidden-input" id="newsletter-subscription" />
+                                        <label className="form-group__label form-group__label__inline" htmlFor="newsletter-subscription">Our newsletter subscription</label>
+                                        <div className="form-group__helper form-group__helper__inline">We will not spam you</div>
+                                    </div>
+                                    <div className="col-md-2">
+                                        <div className="form-group__switcher"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group form-group-inline pt-0">
+                                <div className="row double-2 input-group">
+                                    <div className="col-md-10">
+                                        <input
+                                            type="checkbox"
+                                            className="form-group__hidden-input"
+                                            id="funny-cat"
+                                            // checked
+                                        />
+                                        <label className="form-group__label form-group__label__inline" htmlFor="funny-cat">Funny cat video feed</label>
+                                        <div className="form-group__helper form-group__helper__inline">You can not turn them off</div>
+                                    </div>
+                                    <div className="col-md-2">
+                                        <div className="form-group__switcher form-group__switcher_on"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         );

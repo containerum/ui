@@ -3,17 +3,30 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
+import CustomerModal from '../../CustomerModal';
 import r from '../../../images/r.png';
 
 class DeploymentInfo extends Component {
+    constructor() {
+        super();
+        this.state = {
+            isOpened: false
+        }
+    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.DeleteDeploymentReducer.status === 202 && nextProps.DeleteDeploymentReducer.deploymentName) {
             browserHistory.push('/Namespaces/' + this.props.idName);
         }
     }
-    handleClickDeletingDeployment(idDep) {
-        this.props.onDeleteDeployment(idDep);
+    handleClickDeletingDeployment() {
+        this.setState({
+            ...this.state,
+            isOpened: true
+        });
     }
+    // handleClickDeletingDeployment(idDep) {
+    //     this.props.onDeleteDeployment(idDep);
+    // }
     render() {
         // console.log(this.props.GetDeploymentReducer);
         const depName = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.name : '';
@@ -73,6 +86,12 @@ class DeploymentInfo extends Component {
                             </div>
                         </div>
                     </div>
+                    <CustomerModal
+                        type="Deployment"
+                        name={depName}
+                        isOpened={this.state.isOpened}
+                        onHandleDelete={this.props.onDeleteDeployment}
+                    />
                 </div>
             </div>
         );

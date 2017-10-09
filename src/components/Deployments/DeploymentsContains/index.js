@@ -123,7 +123,7 @@ class DeploymentsContains extends Component {
                                 type="Deployment"
                                 name={this.state.depName}
                                 isOpened={this.state.isOpened}
-                                onDeleteDeployment={this.props.onDeleteDeployment}
+                                onHandleDelete={this.props.onDeleteDeployment}
                             />
                         </div>
                     </div>

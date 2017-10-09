@@ -563,7 +563,8 @@ h1{
 }
 
 
-.form-group__input-text.form-control:focus{
+.form-group__input-text.form-control:focus,
+.form-group__input-text.form-control:visited {
     outline: none;
     border: none ;
     border-bottom: 1.5px solid #29abe2;
@@ -708,6 +709,7 @@ h1{
 
 .content-block-header{
     position: relative;
+    /*overflow: hidden;*/
 }
 
 .content-block-header-img{
@@ -728,6 +730,11 @@ h1{
     text-transform: uppercase;
     color:#333333;
     font-size: 20px;
+    max-width: 322px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
 }
 
 .content-block-header-label_border{

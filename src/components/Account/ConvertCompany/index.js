@@ -16,59 +16,29 @@ class ConvertCompany extends Component {
     }
     render() {
         return (
-            <div className="card mt-3">
-                <div className="card-block c-table-card-block">
-                    <table className="table i-table-card">
-                        <tbody>
-                            <tr>
-                                <td className="first-td-width">
-                                    <h2 id="convert-to-company">
-                                        <a name="convert-to-company" className="anchor" href="#convert-to-company">Convert to company</a>
-                                    </h2> <br/>
-                                    <p>Warning: Convert to company</p>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td style={{ width: '400px' }}>
-                                    <form onSubmit={this.handleOnSubmitConvert.bind(this)}>
-                                        <div className="form-group i-mb-20 c-has-feedback-left">
-                                            <div className="form-group i-mb-20 c-has-feedback-left">
-                                                <input
-                                                    ref="company"
-                                                    id="company"
-                                                    required="required"
-                                                    type="company"
-                                                    className="form-control"
-                                                    placeholder="Company Name"
-                                                />
-                                                <i className="c-form-control-icon fa fa-tag fa-1"></i>
-                                            </div>
-                                        </div>
-                                        <div className="form-group i-mb-20 c-has-feedback-left">
-                                            <div className="form-group i-mb-20 c-has-feedback-left">
-                                                <input
-                                                    ref="code"
-                                                    id="code"
-                                                    required="required"
-                                                    type="code"
-                                                    className="form-control"
-                                                    placeholder="Tax Code"
-                                                />
-                                                <i className="c-form-control-icon fa fa-tag fa-1"></i>
-                                            </div>
-                                        </div>
-                                        <button className="btn btn-block c-btn-green" type="submit">Convert</button>
-                                    </form>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div className="block-item" id="company-account">
+                <div className="block-item__title">Company account</div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="light-text">Warning: this will totaly delete your Apps and Data</div>
+                    </div>
+                    <div className="col-md-6">
+                        <form action="" className="" method="">
+                            <div className="form-group pt-0">
+                                <input type="text" className="form-group__input-text form-control" id="company-name" />
+                                <label className="form-group__label" htmlFor="company-name">Company name</label>
+                                <div className="form-group__helper"></div>
+                            </div>
+                            <div className="form-group ">
+                                <input type="text" className="form-group__input-text form-control" id="tax-code" />
+                                <label className="form-group__label" htmlFor="tax-code">Tax code</label>
+                                <div className="form-group__helper"></div>
+                            </div>
+                            <div className="form-group pt-0">
+                                <input type="submit" value="Convert" className="button_blue btn btn-outline-primary" />
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         );

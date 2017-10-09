@@ -22,20 +22,27 @@ class Password extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.ChangePasswordReducer.errorMessage) {
-            this.setState({
-                ...this.state,
-                errorMsg: nextProps.ChangePasswordReducer.errorMessage
-            });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+            // this.setState({
+            //     ...this.state,
+            //     errorMsg: nextProps.ChangePasswordReducer.errorMessage
+            // });
+            // const getAlert = document.getElementById('loginAlert');
+            // getAlert.style.display = 'block';
+
+            const hasErrorGroupCurrentPassword = document.getElementById('group-current_password');
+            const hasErrorGroupNewPassword = document.getElementById('group-new_password');
+            const hasErrorGroupRepeatPassword = document.getElementById('group-repeat_password');
+            hasErrorGroupCurrentPassword.classList.add('has-error');
+            hasErrorGroupNewPassword.classList.add('has-error');
+            hasErrorGroupRepeatPassword.classList.add('has-error');
         }
         if (nextProps.ChangePasswordReducer.data) {
-            this.setState({
-                ...this.state,
-                successMsg: 'Your password has been changed successfully!'
-            });
-            const getSuccessfulAlert = document.getElementById('successfulAlert');
-            getSuccessfulAlert.style.display = 'block';
+            // this.setState({
+            //     ...this.state,
+            //     successMsg: 'Your password has been changed successfully!'
+            // });
+            // const getSuccessfulAlert = document.getElementById('successfulAlert');
+            // getSuccessfulAlert.style.display = 'block';
             this.refs.current_password.refs.current_password.value = '';
             this.refs.new_password.refs.new_password.value = '';
             this.refs.repeat_password.refs.repeat_password.value = '';
@@ -44,6 +51,9 @@ class Password extends Component {
     submitUpdatedPasswordData(e) {
         e.preventDefault();
 
+        const hasErrorGroupCurrentPassword = document.getElementById('group-current_password');
+        const hasErrorGroupNewPassword = document.getElementById('group-new_password');
+        const hasErrorGroupRepeatPassword = document.getElementById('group-repeat_password');
         const current_password = this.refs.current_password.refs.current_password.value;
         const new_password = this.refs.new_password.refs.new_password.value;
         const repeat_password = this.refs.repeat_password.refs.repeat_password.value;
@@ -58,17 +68,20 @@ class Password extends Component {
                 password: current_password,
                 new_password: new_password
             };
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'none';
+            // const getAlert = document.getElementById('loginAlert');
+            // getAlert.style.display = 'none';
             // console.log(updatePasswordData);
             this.props.onChangePassword(updatePasswordData);
         } else {
-            this.setState({
-                ...this.state,
-                errorMsg: 'Password is not valid'
-            });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+            // this.setState({
+            //     ...this.state,
+            //     errorMsg: 'Password is not valid'
+            // });
+            hasErrorGroupCurrentPassword.classList.add('has-error');
+            hasErrorGroupNewPassword.classList.add('has-error');
+            hasErrorGroupRepeatPassword.classList.add('has-error');
+            // const getAlert = document.getElementById('loginAlert');
+            // getAlert.style.display = 'block';
         }
     }
     checkCurrentPassword(password, isValidPassword) {
@@ -156,79 +169,6 @@ class Password extends Component {
                         </div>
                     </form>
                 </div>
-                {/*<div className="card-block c-table-card-block">*/}
-                    {/*<table className="table i-table-card">*/}
-                        {/*<tbody>*/}
-                        {/*<tr>*/}
-                            {/*<td className="first-td-width">*/}
-                                {/*<h2 id="password">*/}
-                                    {/*<a name="password" className="anchor" href="#password">Password</a>*/}
-                                {/*</h2> <br/>*/}
-                                {/*<p>Password changing</p>*/}
-                            {/*</td>*/}
-                            {/*<td>*/}
-                            {/*</td>*/}
-                        {/*</tr>*/}
-                        {/*<tr>*/}
-                            {/*<td>*/}
-                            {/*</td>*/}
-                            {/*<td style={{ width: '400px' }}>*/}
-                                {/*<form onSubmit={this.submitUpdatedPasswordData.bind(this)}>*/}
-                                    {/*<div id="loginAlert" className="alert alert-danger mb-4 c-alert-danger">*/}
-                                        {/*{ this.state.errorMsg }*/}
-                                    {/*</div>*/}
-                                    {/*<div id="successfulAlert" className="alert alert-success mb-4 c-alert-success">*/}
-                                        {/*{ this.state.successMsg }*/}
-                                    {/*</div>*/}
-                                    {/*<div className="form-group i-mb-20 c-has-feedback-left">*/}
-                                        {/*<InputPassword*/}
-                                            {/*placeholder="Current password"*/}
-                                            {/*refValue="current_password"*/}
-                                            {/*ref="current_password"*/}
-                                            {/*handlePassword={*/}
-                                                {/*(password, isValidPassword) =>*/}
-                                                    {/*this.checkCurrentPassword(password, isValidPassword)*/}
-                                            {/*}*/}
-                                        {/*/>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="form-group i-mb-20 c-has-feedback-left">*/}
-                                        {/*<InputPassword*/}
-                                            {/*placeholder="New password"*/}
-                                            {/*small="Password must be 8 or more characters"*/}
-                                            {/*refValue="new_password"*/}
-                                            {/*ref="new_password"*/}
-                                            {/*handlePassword={*/}
-                                                {/*(password, isValidPassword) =>*/}
-                                                    {/*this.checkNewPassword(password, isValidPassword)*/}
-                                            {/*}*/}
-                                        {/*/>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="form-group i-mb-20 c-has-feedback-left">*/}
-                                        {/*<InputPassword*/}
-                                            {/*placeholder="Confirm new password"*/}
-                                            {/*refValue="repeat_password"*/}
-                                            {/*ref="repeat_password"*/}
-                                            {/*handlePassword={*/}
-                                                {/*(password, isValidPassword) =>*/}
-                                                    {/*this.checkRepeatPassword(password, isValidPassword)*/}
-                                            {/*}*/}
-                                        {/*/>*/}
-                                    {/*</div>*/}
-                                    {/*<button*/}
-                                        {/*type="submit"*/}
-                                        {/*className={isActiveResetPasswordButton}*/}
-                                        {/*disabled={isActiveResetPasswordState}*/}
-                                    {/*>*/}
-                                        {/*{resetPasswordButtonText}*/}
-                                    {/*</button>*/}
-                                {/*</form>*/}
-                            {/*</td>*/}
-                            {/*<td>*/}
-                            {/*</td>*/}
-                        {/*</tr>*/}
-                        {/*</tbody>*/}
-                    {/*</table>*/}
-                {/*</div>*/}
             </div>
         );
     }

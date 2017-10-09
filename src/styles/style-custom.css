@@ -88,3 +88,126 @@ html {
 .dropdown-item:active {
     background-color: #29abe2;
 }
+
+/* Country selector*/
+.bfh-selectbox {
+    width: 100%;
+}
+
+.form-inline input {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.bfh-selectbox > .bfh-selectbox-toggle {
+    color: #000;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.bfh-selectbox-options {
+    /*bottom: 0!important;*/
+    /*height: fit-content!important;*/
+    width: 100%;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+    max-height: 155px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: top;
+    border-top: 4px solid #000000;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    content: "";
+}
+
+.bfh-selectbox .caret {
+    margin-top: 8px;
+    margin-left: 2px;
+    height: 8px;
+}
+
+.bfh-selectbox > .bfh-selectbox-toggle > .caret {
+    float: right;
+}
+
+.icon-flag {
+    width: 16px;
+    height: 16px;
+}
+
+.bfh-selectbox > .bfh-selectbox-toggle > .bfh-selectbox-option {
+    display: inline-block;
+    float: left;
+    height: 20px;
+    width: 260px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+/*.open > .bfh-selectbox-options {*/
+    /*display: block;*/
+/*}*/
+
+.bfh-selectbox-options ul {
+    /*max-height: 180px;*/
+    /*overflow-x: hidden;*/
+    /*overflow-y: auto;*/
+    margin: 5px 0 0 0;
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
+}
+
+.bfh-selectbox-options li {
+    line-height: 17px;
+}
+
+.bfh-selectbox-options li:hover {
+    background-color: rgba(0,0,0,.05);
+    cursor: pointer;
+}
+
+.bfh-selectbox-options a {
+    display: block;
+    padding: 6px 0 3px;
+    line-height: 17px;
+    height: 30px;
+    color: #333333;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.custom-select {
+    padding: 8px 8px 5px;
+    cursor: pointer;
+}
+
+.bfh-selectbox-filter {
+    width: 87%;
+    margin: 0 20px;
+}
+
+.flag {
+    margin-top: 4px;
+}
+
+
+
+/* Country selector*/

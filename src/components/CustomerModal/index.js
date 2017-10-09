@@ -61,7 +61,7 @@ class CustomerModal extends Component {
                 ...this.state,
                 modalIsOpen: false
             });
-            this.props.onDeleteDeployment(this.props.name);
+            this.props.onHandleDelete(this.props.name);
         }
     }
     handleChangeNameOfType(e) {
@@ -110,8 +110,7 @@ class CustomerModal extends Component {
                                 >{this.props.name}</h4>
                                 <span className="modal-redis-text">
                                     Deleting your {this.props.type} is irreversible.<br />
-                                    Enter your {this.props.type} name ({this.props.name}) below to<br />
-                                    confirm you want to permanently delete it:
+                                    Enter your {this.props.type} name ({this.props.name}) below to confirm you want to permanently delete it:
                                 </span>
                                 <input
                                     type="text"
@@ -143,7 +142,7 @@ CustomerModal.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     isOpened: PropTypes.bool,
-    onDeleteDeployment: PropTypes.func
+    onHandleDelete: PropTypes.func
 };
 
 export default CustomerModal;
