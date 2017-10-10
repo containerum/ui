@@ -256,7 +256,7 @@ class SignUp extends Component {
                                             /> {this.state.currentCountry}</span>
                                     </div>
                                     <div
-                                        className="dropdown-menu bfh-selectbox-options"
+                                        className="dropdown-menu dropdown-menu-width"
                                         aria-labelledby="dropdownMenu2"
                                     >
                                         <input
@@ -264,7 +264,8 @@ class SignUp extends Component {
                                             className="bfh-selectbox-filter"
                                             onInput={this.handleChangeCountry.bind(this)}
                                         />
-                                        <div>
+                                        <div
+                                            className="bfh-selectbox-options">
                                             <ul>
                                                 {
                                                     this.state.displayedCountries.map((item, index) => {

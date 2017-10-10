@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import AccountSidebar from './AccountSidebar';
+import ProfileSidebar from './ProfileSidebar';
 import Profile from './Profile';
 import Password from './Password';
 import CLI from './CLI';
@@ -12,7 +12,7 @@ import Spinner from '../Spinner';
 // import ConvertCompany from './ConvertCompany';
 // import Tokens from './Tokens';
 
-import { getProfile } from '../../actions/ProfileActions/getProfileActions';
+import { getProfile } from '../../actions/ProfileActions/getProfileAction';
 
 import './Account.css';
 
@@ -33,7 +33,7 @@ class Account extends Component {
                     <div className="content-block ">
                         <div className=" container no-back">
                             <div className="row double two-columns">
-                                <AccountSidebar />
+                                <ProfileSidebar />
                                 <div className="col-md-9 col-lg-9 col-xl-10">
                                     <div className="content-block">
                                         <div className="content-block-container container container-fluid">

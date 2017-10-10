@@ -24,7 +24,10 @@ import Support from './components/Support';
 import SuccessTicket from './components/Support/SuccessTicket';
 import Account from './components/Account';
 import NotFound from './components/NotFound';
+import Billing from './components/Account/Billing';
 
+import CreateNamespace from './components/CreateNamespace';
+import CreateVolume from './components/CreateVolume';
 // import CreateDeployment from './components/CreateDeployment';
 // import CreateService from './components/CreateService';
 
@@ -48,13 +51,16 @@ export const routes = (
                 <Route path="Deployment" component={LinkedDeployment} />
             </Route>
             <Route path="/Namespaces/:idName/Deployments/:idDep/Pods/:idPod" component={Pod} />
+            <Route path="/CreateNamespace" component={CreateNamespace} />
+            <Route path="/CreateVolume" component={CreateVolume} />
             <Route path="/Support" component={Support} />
             <Route path="/Support/SuccessTicket" component={SuccessTicket} />
             {/*<Route path="/Namespaces/:idName/CreateNewDeployment" component={CreateDeployment} />*/}
             {/*/!*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*!/*/}
             <Route path="/Account" component={Account} />
+            <Route path="/Billing" component={Billing} />
         </Route>
-            <Route path="/Login" component={Login}>
+        <Route path="/Login" component={Login}>
             <Route path="/" component={Workloads} />
         </Route>
         <Route path="/login/callback" component={Login} />

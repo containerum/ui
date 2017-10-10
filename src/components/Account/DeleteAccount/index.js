@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import CustomerModal from '../../CustomerModal';
 
-import { deleteProfile } from '../../../actions/ProfileActions/deleteProfileActions';
+import { deleteProfile } from '../../../actions/ProfileActions/deleteProfileAction';
 
 class DeleteAccount extends Component {
     constructor() {

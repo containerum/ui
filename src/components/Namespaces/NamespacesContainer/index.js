@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import nslogo from '../../../images/deploym.png';
+import NavLink from "../../../containers/NavLink";
 
 // import Notification from '../../components/Notification';
 
@@ -79,11 +80,11 @@ class NamespacesContainer extends Component {
                             );
                         })
                     }
-                    {/*<div className="col-md-4 align-middle">*/}
-                        {/*<div className="add-new-block content-block-content card-container hover-action ">*/}
-                            {/*<div className="action"><i>+</i> Add a namespace</div>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
+                    <NavLink to="/CreateNamespace" className="col-md-4 align-middle">
+                        <div className="add-new-block content-block-content card-container hover-action ">
+                            <div className="action"><i>+</i> Add a namespace</div>
+                        </div>
+                    </NavLink>
                 </div>
             </div>
         );

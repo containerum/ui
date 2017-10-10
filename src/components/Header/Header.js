@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
 import { logoutUser } from '../../actions/LogoutActions';
-import { getProfile } from '../../actions/ProfileActions/getProfileActions';
+import { getProfile } from '../../actions/ProfileActions/getProfileAction';
+import { getProfileBalance } from '../../actions/BillingActions/getProfileBalanceAction';
 import ProfileInfoDropdown from './ProfileInfoDropdown';
 import NavLink from '../../containers/NavLink';
 import logo from '../../images/logo.png';
@@ -19,9 +20,12 @@ import '../../styles/individual.css';
 class Header extends Component {
     componentDidMount() {
         this.props.onLoadProfileData();
+        this.props.onGetProfileBalance();
     }
     render() {
+        // console.log(this.props.GetProfileBalanceReducer.data.balance);
         const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : 'no data';
+        const userBalance = this.props.GetProfileBalanceReducer.data.balance ? parseFloat(this.props.GetProfileBalanceReducer.data.balance) : 0;
         return (
             <div>
                 <header className="header ">
@@ -45,7 +49,11 @@ class Header extends Component {
                             {/*<div className="header-top-admin-mode__label">Admin<br />mode</div>*/}
                             {/*<div className="header-top-admin-mode__switcher "></div>*/}
                             {/*</div>*/}
-                            <ProfileInfoDropdown onLogoutClick={this.props.onLogoutClick} userEmail={userEmail} />
+                            <ProfileInfoDropdown
+                                onLogoutClick={this.props.onLogoutClick}
+                                userEmail={userEmail}
+                                userBalance={userBalance}
+                            />
                         </div>
                     </div>
                 </header>
@@ -58,6 +66,7 @@ Header.propTypes = {
     idName: PropTypes.string,
     onLogoutClick: PropTypes.func,
     onLoadProfileData: PropTypes.func,
+    GetProfileBalanceReducer: PropTypes.object,
     GetProfileReducer: PropTypes.object
 };
 
@@ -65,6 +74,7 @@ function mapStateToProps(state) {
     return {
         logoutReducer: state.logoutReducer,
         GetProfileReducer: state.GetProfileReducer,
+        GetProfileBalanceReducer: state.GetProfileBalanceReducer,
         errorMessage: state.errorMessage
     };
 }
@@ -76,6 +86,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onLoadProfileData: () => {
             dispatch(getProfile());
+        },
+        onGetProfileBalance: () => {
+            dispatch(getProfileBalance());
         }
     };
 };

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 // import { browserHistory } from 'react-router';
 import nslogo from '../../../images/deploym.png';
+import NavLink from "../../../containers/NavLink";
 
 // import Notification from '../../components/Notification';
 
@@ -70,11 +71,11 @@ class VolumesContainer extends Component {
                         })
                     }
 
-                    {/*<div className="col-md-4 align-middle">*/}
-                    {/*<div className="add-new-block content-block-content card-container card-container-volume hover-action ">*/}
-                    {/*<div className="action"><i>+</i> Add a namespace</div>*/}
-                    {/*</div>*/}
-                    {/*</div>*/}
+                    <NavLink to="/CreateVolume" className="col-md-4 align-middle">
+                        <div className="add-new-block content-block-content card-container card-container-volume hover-action ">
+                            <div className="action"><i>+</i> Add a volume</div>
+                        </div>
+                    </NavLink>
                 </div>
             </div>
         );

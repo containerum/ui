@@ -21,10 +21,6 @@ function logPageView() {
     ReactGA.pageview(window.location.pathname + window.location.search);
 }
 
-function setDeploymentId(e) {
-    return store.dispatch({ type: 'SET_DATA_ID', payload: e.target.dataset.id });
-}
-
 render(
     <Provider store={store}>
         <Router onUpdate={logPageView} history={browserHistory} routes={routes} />
@@ -32,5 +28,4 @@ render(
     document.getElementById('root')
 );
 
-export default setDeploymentId;
 registerServiceWorker();

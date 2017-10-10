@@ -29,10 +29,11 @@ class ProfileInfoDropdown extends Component {
                             >{this.props.userEmail}</a>
                             <ul className="dropdown-menu dropdown-menu-right" role="menu">
                                 <NavLink className="dropdown-item" to="/Account">Account</NavLink>
+                                <NavLink className="dropdown-item" to="/Billing">Billing</NavLink>
                                 <NavLink className="dropdown-item text-danger" to="/Login" onClick={() => this.props.onLogoutClick()}>Log out</NavLink>
                             </ul>
                         </div>
-                        <div className="header-top-account__deposit">0 $</div>
+                        <div className="header-top-account__deposit">{this.props.userBalance} $</div>
                     </div>
                 </div>
                 <div className="clearfix"> </div>
@@ -43,6 +44,7 @@ class ProfileInfoDropdown extends Component {
 
 ProfileInfoDropdown.propTypes = {
     userEmail: PropTypes.string,
+    userBalance: PropTypes.number,
     onLogoutClick: PropTypes.func
 };
 
