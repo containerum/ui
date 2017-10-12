@@ -42,7 +42,7 @@ class CreateVolume extends Component {
     }
     render() {
         // console.log(this.props.VolumesTariffsReducer);
-        console.log(this.props.CreateVolumeReducer);
+        // console.log(this.props.CreateVolumeReducer);
         let isFetchingVolumesTariffs = '';
         if (this.props.VolumesTariffsReducer.isFetching === false) {
             isFetchingVolumesTariffs =

@@ -128,11 +128,11 @@ class Login extends Component {
     // }
     render() {
         // console.log(this.props.CheckRelationWithGitHubAccountReducer);
-        const loginButtonText = this.props.loginReducer.isFetching ? <MiniSpinner /> : 'Log In';
-        const isActiveLoginButton = this.props.loginReducer.isFetching ?
+        const loginButtonText = this.props.LoginReducer.isFetching ? <MiniSpinner /> : 'Log In';
+        const isActiveLoginButton = this.props.LoginReducer.isFetching ?
             'btn btn-block c-btn-green i-btn-login-strong disabled' :
             'btn btn-block c-btn-green i-btn-login-strong';
-        const isActiveLoginState = !!this.props.loginReducer.isFetching;
+        const isActiveLoginState = !!this.props.LoginReducer.isFetching;
         return (
             <div className="main_container">
                 <Logo />
@@ -217,7 +217,7 @@ Login.propTypes = {
     quote: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
-    loginReducer: PropTypes.object,
+    LoginReducer: PropTypes.object,
     RecoveryPasswordReducer: PropTypes.object,
     CheckRelationWithGitHubAccountReducer: PropTypes.object,
     location: PropTypes.object,
@@ -226,8 +226,8 @@ Login.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        loginReducer: state.loginReducer,
-        errorMessage: state.loginReducer.errorMessage,
+        LoginReducer: state.LoginReducer,
+        errorMessage: state.LoginReducer.errorMessage,
         UserHashConfirmReducer: state.UserHashConfirmReducer,
         RecoveryPasswordReducer: state.RecoveryPasswordReducer,
         CheckRelationWithGitHubAccountReducer: state.CheckRelationWithGitHubAccountReducer

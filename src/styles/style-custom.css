@@ -214,4 +214,14 @@ html {
 }
 /* Country selector*/
 
+.form-group.pt-0 .form-group__label.form-group__label-always-onfocus {
+    top: -23px;
+}
 
+.row.double {
+    margin-bottom: 30px;
+}
+
+.form-group.pt-0 .btn-outline-primary.disabled {
+    background-color: #29abe2;
+}

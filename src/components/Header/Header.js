@@ -7,6 +7,7 @@ import { logoutUser } from '../../actions/LogoutActions';
 import { getProfile } from '../../actions/ProfileActions/getProfileAction';
 import { getProfileBalance } from '../../actions/BillingActions/getProfileBalanceAction';
 import ProfileInfoDropdown from './ProfileInfoDropdown';
+import Spinner from '../Spinner';
 import NavLink from '../../containers/NavLink';
 import logo from '../../images/logo.png';
 
@@ -23,11 +24,13 @@ class Header extends Component {
         this.props.onGetProfileBalance();
     }
     render() {
-        // console.log(this.props.GetProfileBalanceReducer.data.balance);
-        const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : 'no data';
-        const userBalance = this.props.GetProfileBalanceReducer.data.balance ? parseFloat(this.props.GetProfileBalanceReducer.data.balance) : 0;
-        return (
-            <div>
+        // console.log(this.props.GetProfileReducer.data);
+        let isFetchingProfile = '';
+        if (this.props.GetProfileReducer.isFetching === false &&
+            this.props.GetProfileBalanceReducer.isFetching === false) {
+            const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : 'no data';
+            const userBalance = this.props.GetProfileBalanceReducer.data.balance ? parseFloat(this.props.GetProfileBalanceReducer.data.balance) : 0;
+            isFetchingProfile =
                 <header className="header ">
                     <div className="header-top ">
                         <div className="header-top-container container">
@@ -56,7 +59,13 @@ class Header extends Component {
                             />
                         </div>
                     </div>
-                </header>
+                </header>;
+        } else {
+            isFetchingProfile = <Spinner />;
+        }
+        return (
+            <div>
+                { isFetchingProfile }
             </div>
         );
     }
@@ -72,7 +81,7 @@ Header.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        logoutReducer: state.logoutReducer,
+        LogoutReducer: state.LogoutReducer,
         GetProfileReducer: state.GetProfileReducer,
         GetProfileBalanceReducer: state.GetProfileBalanceReducer,
         errorMessage: state.errorMessage

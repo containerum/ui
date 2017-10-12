@@ -178,11 +178,11 @@ class SignUp extends Component {
             );
         }
         const defaultEmail = this.props.location.query.email ? this.props.location.query.email : '';
-        const signUpButtonText = this.props.signUpReducer.isFetching ? <MiniSpinner /> : 'Sign Up';
-        const isActiveSignUpButton = this.props.signUpReducer.isFetching ?
+        const signUpButtonText = this.props.SignUpReducer.isFetching ? <MiniSpinner /> : 'Sign Up';
+        const isActiveSignUpButton = this.props.SignUpReducer.isFetching ?
             'btn btn-block c-btn-green disabled' :
             'btn btn-block c-btn-green';
-        const isActiveSignUpState = !!this.props.signUpReducer.isFetching;
+        const isActiveSignUpState = !!this.props.SignUpReducer.isFetching;
         return (
             <div className="main_container">
                 <Logo />
@@ -318,17 +318,17 @@ SignUp.propTypes = {
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
     location: PropTypes.object,
-    signUpReducer: PropTypes.object,
+    SignUpReducer: PropTypes.object,
     isSecretQuote: PropTypes.bool
 };
 
 function mapStateToProps(state) {
-    const { signUpReducer } = state;
-    const { errorMessage } = signUpReducer;
+    const { SignUpReducer } = state;
+    const { errorMessage } = SignUpReducer;
 
     return {
         errorMessage,
-        signUpReducer
+        SignUpReducer
     };
 }
 

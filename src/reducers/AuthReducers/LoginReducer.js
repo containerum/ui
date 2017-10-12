@@ -4,7 +4,7 @@ import {
     LOGIN_FAILURE
 } from '../../constants/LoginConstants';
 
-export default function loginReducer(state = {
+export default function LoginReducer(state = {
     isFetching: false,
     isAuthenticated: !!localStorage.getItem('id_token'),
     errorMessage: ''
@@ -14,7 +14,8 @@ export default function loginReducer(state = {
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             isAuthenticated: action.isAuthenticated,
-            user: action.creds
+            user: action.creds,
+            errorMessage: ''
         });
     case LOGIN_SUCCESS:
         return Object.assign({}, state, {

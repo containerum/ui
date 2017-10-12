@@ -13,6 +13,7 @@ export default function VolumesReducer(state = {
     case VOLUMES_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: [],
             errorMessage: ''
         });
     case VOLUMES_SUCCESS:

@@ -2,23 +2,25 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-    DELETE_NAMESPACE_REQUEST,
-    DELETE_NAMESPACE_SUCCESS,
-    DELETE_NAMESPACE_FAILURE
-} from '../../constants/NamespaceConstants';
+    GET_TARIFFS_REQUEST,
+    GET_TARIFFS_SUCCESS,
+    GET_TARIFFS_FAILURE
+} from '../../constants/TariffsConstants';
 
 import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function deleteNamespace(idName) {
+export function getTariffs(monthly) {
     return dispatch => {
-        dispatch(requestDeleteNamespace());
+        dispatch(requestGetTariffs());
         const token = localStorage.getItem('id_token');
         const browser = localStorage.getItem('id_browser');
 
-        return axios.delete(
-            WEB_API + '/api/namespaces/' + idName,
+        const api = WEB_API + '/api/profile/tariffs' + (monthly ? `?monthly=${monthly}` : '');
+
+        return axios.get(
+            api,
             {
                 headers: {
                     'Authorization': token,
@@ -31,37 +33,36 @@ export function deleteNamespace(idName) {
             }
         )
         .then(response => {
-            if (response.status === 202) {
-                dispatch(receiveDeleteNamespace(response.status, idName));
+            if (response.status === 200 || response.status === 201) {
+                dispatch(receiveGetTariffs(response.data));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failDeleteNamespace(response.data.message));
+                dispatch(failGetTariffs(response.data.message));
             }
-        }).catch(err => {console.log(err); dispatch(failDeleteNamespace(err))});
+        }).catch(err => console.log(err));
     };
 }
 
-function requestDeleteNamespace() {
+function requestGetTariffs() {
     return {
-        type: DELETE_NAMESPACE_REQUEST,
+        type: GET_TARIFFS_REQUEST,
         isFetching: true
     };
 }
 
-function receiveDeleteNamespace(status, idName) {
+function receiveGetTariffs(data) {
     return {
-        type: DELETE_NAMESPACE_SUCCESS,
+        type: GET_TARIFFS_SUCCESS,
         isFetching: false,
-        status,
-        idName
+        data
     };
 }
 
-function failDeleteNamespace(message) {
+function failGetTariffs(message) {
     return {
-        type: DELETE_NAMESPACE_FAILURE,
+        type: GET_TARIFFS_FAILURE,
         isFetching: false,
         message
     };

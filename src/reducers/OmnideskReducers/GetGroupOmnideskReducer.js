@@ -12,7 +12,9 @@ export default function GroupOmnideskReducer(state = {
     switch (action.type) {
     case GET_GROUP_OMNIDESK_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            data: [],
+            error: ''
         });
     case GET_GROUP_OMNIDESK_SUCCESS:
         return Object.assign({}, state, {

@@ -25,6 +25,7 @@ export function LOGINUser(creds) {
             }
         )
             .then(response => {
+                // console.log(response);
                 if (response.status === 200) {
                     dispatch(receiveLOGIN(response));
                     localStorage.setItem('id_token', response.data.token);

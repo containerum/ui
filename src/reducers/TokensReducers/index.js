@@ -13,6 +13,7 @@ export default function TokensReducer(state = {
     case TOKENS_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: [],
             errorMessage: ''
         });
     case TOKENS_SUCCESS:

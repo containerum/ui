@@ -13,6 +13,7 @@ export default function NamespacesReducer(state = {
     case NAMESPACES_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: [],
             errorMessage: ''
         });
     case NAMESPACES_SUCCESS:

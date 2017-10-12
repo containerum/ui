@@ -8,9 +8,10 @@ import {
     VALIDATE_EMAIL
 } from '../../constants/ValudateEmailConstaints';
 
-export default function signUpReducer(state = {
+export default function SignUpReducer(state = {
     isFetching: false,
     isAuthenticated: !!localStorage.getItem('id_token'),
+    errorMessage: '',
     emailUser: ''
 }, action) {
     switch (action.type) {
@@ -18,7 +19,8 @@ export default function signUpReducer(state = {
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             user: action.creds,
-            errorMessage: ''
+            errorMessage: '',
+            emailUser: ''
         });
     case SIGNUP_SUCCESS:
         return Object.assign({}, state, {

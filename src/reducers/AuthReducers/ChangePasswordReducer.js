@@ -13,6 +13,7 @@ export default function ChangePasswordReducer(state = {
     case CHANGE_PASSWORD_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: '',
             errorMessage: ''
         });
     case CHANGE_PASSWORD_SUCCESS:

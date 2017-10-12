@@ -12,7 +12,9 @@ export default function CheckRelationWithGitHubAccountReducer(state = {
     switch (action.type) {
     case CHECK_RELATION_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            data: '',
+            errorMessage: ''
         });
     case CHECK_RELATION_SUCCESS:
         return Object.assign({}, state, {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute, IndexRedirect } from 'react-router';
 
+import requireAuthentication from './components/auth/require-auth';
 import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
 import Forgot from './components/Forgot';
@@ -8,10 +9,9 @@ import RecoveryPassword from './components/RecoveryPassword';
 import ConfirmEmail from './components/auth/ConfirmEmail';
 import ResetPassword from './components/ResetPassword';
 import App from './components/App';
-import requireAuthentication from './components/auth/require-auth';
 import Workloads from './components/Workloads';
-import Volumes from './components/Volumes';
 import Namespace from './components/Namespace';
+import Volumes from './components/Volumes';
 import Deployments from './components/Deployments';
 import Services from './components/Services';
 import Deployment from './components/Deployment';
@@ -23,8 +23,8 @@ import Pod from './components/Pod';
 import Support from './components/Support';
 import SuccessTicket from './components/Support/SuccessTicket';
 import Account from './components/Account';
-import NotFound from './components/NotFound';
 import Billing from './components/Account/Billing';
+import NotFound from './components/NotFound';
 
 import CreateNamespace from './components/CreateNamespace';
 import CreateVolume from './components/CreateVolume';
@@ -52,11 +52,11 @@ export const routes = (
             </Route>
             <Route path="/Namespaces/:idName/Deployments/:idDep/Pods/:idPod" component={Pod} />
             <Route path="/CreateNamespace" component={CreateNamespace} />
-            <Route path="/CreateVolume" component={CreateVolume} />
+            {/*<Route path="/CreateVolume" component={CreateVolume} />*/}
+            {/*<Route path="/Namespaces/:idName/CreateNewDeployment" component={CreateDeployment} />*/}
+            {/*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*/}
             <Route path="/Support" component={Support} />
             <Route path="/Support/SuccessTicket" component={SuccessTicket} />
-            {/*<Route path="/Namespaces/:idName/CreateNewDeployment" component={CreateDeployment} />*/}
-            {/*/!*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*!/*/}
             <Route path="/Account" component={Account} />
             <Route path="/Billing" component={Billing} />
         </Route>

@@ -14,7 +14,9 @@ export default function ServicesReducer(state = {
     case SERVICES_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            errorMessage: ''
+            data: [],
+            errorMessage: '',
+            statusError: 200
         });
     case SERVICES_SUCCESS:
         return Object.assign({}, state, {

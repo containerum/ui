@@ -4,7 +4,7 @@ import {
     LOGOUT_FAILURE
 } from '../../constants/LogoutConstants';
 
-export default function logoutReducer(state = {
+export default function LogoutReducer(state = {
     isFetching: false,
     isAuthenticated: !!localStorage.getItem('id_token')
 }, action) {

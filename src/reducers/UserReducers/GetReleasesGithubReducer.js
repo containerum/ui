@@ -12,7 +12,9 @@ export default function GetReleasesGithubReducer(state = {
     switch (action.type) {
     case GET_RELEASES_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            data: [],
+            errorMessage: ''
         });
     case GET_RELEASES_SUCCESS:
         return Object.assign({}, state, {

@@ -11,7 +11,8 @@ export default function RecoveryPasswordReducer(state = {
     switch (action.type) {
     case RECOVERY_PASSWORD_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            status: 0
         });
     case RECOVERY_PASSWORD_SUCCESS:
         return Object.assign({}, state, {

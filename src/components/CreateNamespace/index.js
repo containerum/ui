@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Spinner from '../Spinner';
+import Notification from '../Notification';
 import { getNSTariffs } from '../../actions/NamespacesActions/getNSTariffsAction';
 import { createNamespace } from '../../actions/NamespaceActions/createNamespaceAction';
 
@@ -20,7 +21,7 @@ class CreateNamespace extends Component {
         }
     }
     handleChangeInput(e) {
-        const regexp = /^[a-zA-Z0-9-]+$/;
+        const regexp = /^[a-z0-9-]+$/;
         const inputValue = e.target.value.trim();
         if (inputValue.search(regexp) !== -1) {
             this.setState({
@@ -46,7 +47,8 @@ class CreateNamespace extends Component {
         // console.log(this.props.NSTariffsReducer);
         // console.log(this.props.CreateNamespaceReducer);
         let isFetchingNSTariffs = '';
-        if (this.props.NSTariffsReducer.isFetching === false) {
+        if (this.props.NSTariffsReducer.isFetching === false &&
+            this.props.CreateNamespaceReducer.isFetching === false) {
             isFetchingNSTariffs =
                 <div className="content-block">
                     <div className="content-block-container container no-back mt-0 no-padding">
@@ -102,86 +104,6 @@ class CreateNamespace extends Component {
                                     })
                                 }
                             </div>
-
-                            {/*<div className="col-md-3">*/}
-                            {/*<div className="namespace-plan-block-container hover-action-new">*/}
-                            {/*<div className="row">*/}
-                            {/*<div className="col-md-6 namespace-plan-block-container-left">*/}
-                            {/*<div className="namespace-plan-block-price">$999</div>*/}
-                            {/*<div className="namespace-plan-block-month">per month</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="col-md-6 namespace-plan-block-container-right">*/}
-                            {/*<div className="content-block-content card-block">*/}
-                            {/*<div className="content-block__info-item ">*/}
-                            {/*<div className="content-block__info-name inline">RAM : </div>*/}
-                            {/*<div className="content-block__info-text inline">32 GB</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="content-block__info-item">*/}
-                            {/*<div className="content-block__info-name inline">CPU : </div>*/}
-                            {/*<div className="content-block__info-text inline">4</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="content-block__info-item">*/}
-                            {/*<div className="content-block__info-name inline">Trafic : </div>*/}
-                            {/*<div className="content-block__info-text inline">10 TB</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-
-                            {/*<div className="col-md-3">*/}
-                            {/*<div className="namespace-plan-block-container hover-action-new disabled">*/}
-                            {/*<div className="row">*/}
-                            {/*<div className="col-md-6 namespace-plan-block-container-left">*/}
-                            {/*<div className="namespace-plan-block-price">Free</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="col-md-6 namespace-plan-block-container-right">*/}
-                            {/*<div className="content-block-content card-block">*/}
-                            {/*<div className="content-block__info-item ">*/}
-                            {/*<div className="content-block__info-name inline">RAM : </div>*/}
-                            {/*<div className="content-block__info-text inline">32 GB</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="content-block__info-item">*/}
-                            {/*<div className="content-block__info-name inline">CPU : </div>*/}
-                            {/*<div className="content-block__info-text inline">4</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="content-block__info-item">*/}
-                            {/*<div className="content-block__info-name inline">Trafic : </div>*/}
-                            {/*<div className="content-block__info-text inline">10 TB</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-
-                            {/*<div className="col-md-3">*/}
-                            {/*<div className="namespace-plan-block-container hover-action-new disabled">*/}
-                            {/*<div className="row">*/}
-                            {/*<div className="col-md-6 namespace-plan-block-container-left">*/}
-                            {/*<div className="namespace-plan-block-waiting">coming<br />soon</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="col-md-6 namespace-plan-block-container-right">*/}
-                            {/*<div className="content-block-content card-block">*/}
-                            {/*<div className="content-block__info-item ">*/}
-                            {/*<div className="content-block__info-name inline">RAM : </div>*/}
-                            {/*<div className="content-block__info-text inline">32 GB</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="content-block__info-item">*/}
-                            {/*<div className="content-block__info-name inline">CPU : </div>*/}
-                            {/*<div className="content-block__info-text inline">4</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="content-block__info-item">*/}
-                            {/*<div className="content-block__info-name inline">Trafic : </div>*/}
-                            {/*<div className="content-block__info-text inline">10 TB</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-                            {/*</div>*/}
-
                             <form
                                 className="col-md-6 namespace-plan"
                                 onSubmit={this.handleSubmitNSTariffs.bind(this)}
@@ -211,6 +133,11 @@ class CreateNamespace extends Component {
         }
         return (
             <div>
+                <Notification
+                    status={this.props.CreateNamespaceReducer.status}
+                    name={this.state.inputNSName}
+                    errorMessage={this.props.CreateNamespaceReducer.errorMessage}
+                />
                 { isFetchingNSTariffs }
             </div>
         );

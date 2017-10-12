@@ -12,7 +12,9 @@ export default function CheckHashPasswordReducer(state = {
     switch (action.type) {
     case HASH_PASSWORD_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            status: 0,
+            hashParam: ''
         });
     case HASH_PASSWORD_SUCCESS:
         return Object.assign({}, state, {

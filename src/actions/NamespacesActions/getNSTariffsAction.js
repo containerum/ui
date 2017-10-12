@@ -32,6 +32,9 @@ export function getNSTariffs() {
         )
         .then(response => {
             if (response.status === 200 || response.status === 201) {
+                response.data.sort(function(a, b) {
+                    return parseFloat(a.price) - parseFloat(b.price);
+                });
                 dispatch(receiveGetNSTariffs(response.data));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');

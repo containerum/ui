@@ -12,7 +12,9 @@ export default function CreateServiceReducer(state = {
     switch (action.type) {
     case CREATE_SERVICE_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            data: {},
+            errorMessage: ''
         });
     case CREATE_SERVICE_SUCCESS:
         return Object.assign({}, state, {

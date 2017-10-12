@@ -11,7 +11,8 @@ export default function ConvertToCompanyReducer(state = {
     switch (action.type) {
     case CONVERT_TO_COMPANY_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            errorMessage: ''
         });
     case CONVERT_TO_COMPANY_SUCCESS:
         return Object.assign({}, state, {

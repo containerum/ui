@@ -10,10 +10,18 @@ import { getNamespaces } from '../../actions/NamespacesActions';
 
 class Namespace extends Component {
     componentDidMount() {
-        if (!this.props.NamespacesReducer.data.length) {
-            this.props.onGetNamespaces();
-        }
+        // if (!this.props.NamespacesReducer.data.length) {
+        this.props.onGetNamespaces();
+        // }
     }
+    // componentWillReceiveProps(nextProps) {
+    //     // console.log(nextProps.DeleteDeploymentReducer);
+    //     if (nextProps.DeleteDeploymentReducer.status === 202 &&
+    //         this.props.DeleteDeploymentReducer.deploymentName !==
+    //         nextProps.DeleteDeploymentReducer.deploymentName) {
+    //         this.props.onGetNamespaces();
+    //     }
+    // }
     render() {
         let isFetchingNamespaceInfo = '';
         if (this.props.NamespacesReducer.isFetching === false) {
@@ -41,7 +49,8 @@ Namespace.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        NamespacesReducer: state.NamespacesReducer
+        NamespacesReducer: state.NamespacesReducer,
+        DeleteDeploymentReducer: state.DeleteDeploymentReducer
     };
 
 }

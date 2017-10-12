@@ -1,27 +1,27 @@
 import {
-    GET_PROFILE_BALANCE_REQUEST,
-    GET_PROFILE_BALANCE_SUCCESS,
-    GET_PROFILE_BALANCE_FAILURE
+    PAY_FOR_REQUEST,
+    PAY_FOR_SUCCESS,
+    PAY_FOR_FAILURE
 } from '../../constants/BillingConstants';
 
-export default function GetProfileBalanceReducer(state = {
+export default function PayForReducer(state = {
     isFetching: false,
-    data: {},
+    data: '',
     errorMessage: ''
 }, action) {
     switch (action.type) {
-        case GET_PROFILE_BALANCE_REQUEST:
+        case PAY_FOR_REQUEST:
             return Object.assign({}, state, {
                 isFetching: action.isFetching,
-                errorMessage: '',
-                data: {}
+                data: '',
+                errorMessage: ''
             });
-        case GET_PROFILE_BALANCE_SUCCESS:
+        case PAY_FOR_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: action.isFetching,
                 data: action.data
             });
-        case GET_PROFILE_BALANCE_FAILURE:
+        case PAY_FOR_FAILURE:
             return Object.assign({}, state, {
                 isFetching: action.isFetching,
                 errorMessage: action.message

@@ -13,6 +13,7 @@ export default function PodsReducer(state = {
     case PODS_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: [],
             errorMessage: ''
         });
     case PODS_SUCCESS:

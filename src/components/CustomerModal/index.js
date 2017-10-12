@@ -38,12 +38,14 @@ class CustomerModal extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        if(nextProps.isOpened && nextProps.name !== this.state.nameType) {
+        // console.log(nextProps);
+        // if(nextProps.isOpened && nextProps.name !== this.state.nameType) {
+        if(nextProps.isOpened && nextProps.name) {
             document.body.classList.add('overflow-hidden');
             this.setState({
                 ...this.state,
                 modalIsOpen: true
-            })
+            });
         }
     }
     handleClickCloseModal() {
@@ -53,12 +55,13 @@ class CustomerModal extends Component {
             modalIsOpen: false
         });
     }
-    handleSubmitDeletingDeployment(e) {
+    handleSubmitDeletingEssence(e) {
         e.preventDefault();
         if (this.state.nameType === this.props.name) {
             document.body.classList.remove('overflow-hidden');
             this.setState({
                 ...this.state,
+                nameType: '',
                 modalIsOpen: false
             });
             this.props.onHandleDelete(this.props.name);
@@ -71,6 +74,7 @@ class CustomerModal extends Component {
         });
     }
     render() {
+        // console.log(this.state);
         // console.log(this.props.isOpened, this.props.name, this.props.type);
         const styleSubmit = this.state.nameType === this.props.name ?
             'btn modal-footer-solution-select' :
@@ -92,7 +96,7 @@ class CustomerModal extends Component {
                 >
                     <div className="modal-dialog modal-dialog2" role="document">
                         <form
-                            onSubmit={this.handleSubmitDeletingDeployment.bind(this)}
+                            onSubmit={this.handleSubmitDeletingEssence.bind(this)}
                             className="modal-content"
                         >
                             <div className="modal-header">

@@ -13,6 +13,15 @@ class DeleteAccount extends Component {
             isOpened: false
         }
     }
+    componentWillReceiveProps(nextProps) {
+        // console.log(this.props.DeleteNamespaceReducer.idName, nextProps.DeleteNamespaceReducer.idName);
+        if (this.props.DeleteProfileReducer) {
+            this.setState({
+                ...this.state,
+                isOpened: false
+            });
+        }
+    }
     handleClickDeletingAccount() {
         this.setState({
             ...this.state,

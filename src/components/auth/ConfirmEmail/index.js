@@ -11,7 +11,7 @@ class ConfirmEmail extends Component {
         document.body.classList.add('c-body-bg');
     }
     render() {
-        const defaultEmail = this.props.location.query.email ? this.props.location.query.email : this.props.signUpReducer.emailUser;
+        const defaultEmail = this.props.location.query.email ? this.props.location.query.email : this.props.SignUpReducer.emailUser;
         if (!defaultEmail) {
             browserHistory.push('/SignUp');
         }
@@ -38,12 +38,12 @@ class ConfirmEmail extends Component {
 
 ConfirmEmail.propTypes = {
     location: PropTypes.object,
-    signUpReducer: PropTypes.object
+    SignUpReducer: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
-        signUpReducer: state.signUpReducer
+        SignUpReducer: state.SignUpReducer
     };
 }
 

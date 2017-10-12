@@ -1,33 +1,34 @@
 import {
-    DEPLOYMENTS_REQUEST,
-    DEPLOYMENTS_SUCCESS,
-    DEPLOYMENTS_FAILURE
-} from '../../constants/DeploymentsConstants';
+    DELETE_NAMESPACE_REQUEST,
+    DELETE_NAMESPACE_SUCCESS,
+    DELETE_NAMESPACE_FAILURE
+} from '../../constants/NamespaceConstants';
 
-export default function DeploymentsReducer(state = {
+export default function DeleteNamespaceReducer(state = {
     isFetching: false,
-    data: [],
+    status: 0,
     errorMessage: '',
-    statusError: 200
+    idName: ''
 }, action) {
     switch (action.type) {
-    case DEPLOYMENTS_REQUEST:
+    case DELETE_NAMESPACE_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            data: [],
             errorMessage: '',
-            statusError: 200
+            status: 0,
+            idName: ''
         });
-    case DEPLOYMENTS_SUCCESS:
+    case DELETE_NAMESPACE_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            data: action.data
+            status: action.status,
+            idName: action.status
         });
-    case DEPLOYMENTS_FAILURE:
+    case DELETE_NAMESPACE_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message,
-            statusError: action.status
+            status: action.status
         });
     default:
         return state;

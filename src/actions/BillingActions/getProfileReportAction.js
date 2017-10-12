@@ -2,23 +2,25 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-    DELETE_NAMESPACE_REQUEST,
-    DELETE_NAMESPACE_SUCCESS,
-    DELETE_NAMESPACE_FAILURE
-} from '../../constants/NamespaceConstants';
+    GET_PROFILE_REPORT_REQUEST,
+    GET_PROFILE_REPORT_SUCCESS,
+    GET_PROFILE_REPORT_FAILURE
+} from '../../constants/BillingConstants';
 
 import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function deleteNamespace(idName) {
+export function getProfileReport() {
     return dispatch => {
-        dispatch(requestDeleteNamespace());
+        dispatch(requestGetProfileReport());
         const token = localStorage.getItem('id_token');
         const browser = localStorage.getItem('id_browser');
 
-        return axios.delete(
-            WEB_API + '/api/namespaces/' + idName,
+        const api = WEB_API + '/api/profile/report';
+
+        return axios.get(
+            api,
             {
                 headers: {
                     'Authorization': token,
@@ -31,37 +33,36 @@ export function deleteNamespace(idName) {
             }
         )
         .then(response => {
-            if (response.status === 202) {
-                dispatch(receiveDeleteNamespace(response.status, idName));
+            if (response.status === 200 || response.status === 201) {
+                dispatch(receiveGetProfileReport(response.data));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failDeleteNamespace(response.data.message));
+                dispatch(failGetProfileReport(response.data.message));
             }
-        }).catch(err => {console.log(err); dispatch(failDeleteNamespace(err))});
+        }).catch(err => console.log(err));
     };
 }
 
-function requestDeleteNamespace() {
+function requestGetProfileReport() {
     return {
-        type: DELETE_NAMESPACE_REQUEST,
+        type: GET_PROFILE_REPORT_REQUEST,
         isFetching: true
     };
 }
 
-function receiveDeleteNamespace(status, idName) {
+function receiveGetProfileReport(data) {
     return {
-        type: DELETE_NAMESPACE_SUCCESS,
+        type: GET_PROFILE_REPORT_SUCCESS,
         isFetching: false,
-        status,
-        idName
+        data
     };
 }
 
-function failDeleteNamespace(message) {
+function failGetProfileReport(message) {
     return {
-        type: DELETE_NAMESPACE_FAILURE,
+        type: GET_PROFILE_REPORT_FAILURE,
         isFetching: false,
         message
     };

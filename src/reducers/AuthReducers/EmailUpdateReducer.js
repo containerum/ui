@@ -6,12 +6,15 @@ import {
 
 export default function EmailUpdateReducer(state = {
     isFetching: false,
-    errorMessage: ''
+    errorMessage: '',
+    data: ''
 }, action) {
     switch (action.type) {
     case EMAIL_UPDATE_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            errorMessage: '',
+            data: ''
         });
     case EMAIL_UPDATE_SUCCESS:
         return Object.assign({}, state, {

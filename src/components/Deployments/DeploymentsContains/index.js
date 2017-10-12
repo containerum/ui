@@ -25,6 +25,13 @@ class DeploymentsContains extends Component {
         })
     }
     componentWillReceiveProps(nextProps) {
+        if (this.props.DeleteDeploymentReducer) {
+            this.setState({
+                ...this.state,
+                depName: '',
+                isOpened: false
+            });
+        }
         if (nextProps.DeleteDeploymentReducer.isFetching === false &&
             nextProps.DeleteDeploymentReducer.status === 202 &&
             nextProps.DeleteDeploymentReducer.deploymentName) {
@@ -119,6 +126,7 @@ class DeploymentsContains extends Component {
                                 }
                                 </tbody>
                             </table>
+
                             <CustomerModal
                                 type="Deployment"
                                 name={this.state.depName}

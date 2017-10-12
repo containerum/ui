@@ -1,27 +1,27 @@
 import {
-    GET_PROFILE_BALANCE_REQUEST,
-    GET_PROFILE_BALANCE_SUCCESS,
-    GET_PROFILE_BALANCE_FAILURE
-} from '../../constants/BillingConstants';
+    GET_TARIFFS_REQUEST,
+    GET_TARIFFS_SUCCESS,
+    GET_TARIFFS_FAILURE
+} from '../../constants/TariffsConstants';
 
-export default function GetProfileBalanceReducer(state = {
+export default function GetTariffsReducer(state = {
     isFetching: false,
     data: {},
     errorMessage: ''
 }, action) {
     switch (action.type) {
-        case GET_PROFILE_BALANCE_REQUEST:
+        case GET_TARIFFS_REQUEST:
             return Object.assign({}, state, {
                 isFetching: action.isFetching,
-                errorMessage: '',
-                data: {}
+                data: {},
+                errorMessage: ''
             });
-        case GET_PROFILE_BALANCE_SUCCESS:
+        case GET_TARIFFS_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: action.isFetching,
                 data: action.data
             });
-        case GET_PROFILE_BALANCE_FAILURE:
+        case GET_TARIFFS_FAILURE:
             return Object.assign({}, state, {
                 isFetching: action.isFetching,
                 errorMessage: action.message

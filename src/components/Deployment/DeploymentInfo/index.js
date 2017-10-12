@@ -14,6 +14,12 @@ class DeploymentInfo extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
+        if (this.props.DeleteDeploymentReducer) {
+            this.setState({
+                ...this.state,
+                isOpened: false
+            });
+        }
         if (nextProps.DeleteDeploymentReducer.status === 202 && nextProps.DeleteDeploymentReducer.deploymentName) {
             browserHistory.push('/Namespaces/' + this.props.idName);
         }

@@ -12,7 +12,9 @@ export default function UserHashConfirmReducer(state = {
     switch (action.type) {
     case USER_HASH_CONFIRM_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            data: 0,
+            errorMessage: ''
         });
     case USER_HASH_CONFIRM_SUCCESS:
         return Object.assign({}, state, {

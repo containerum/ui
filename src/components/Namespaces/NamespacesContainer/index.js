@@ -1,13 +1,34 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
+
 import nslogo from '../../../images/deploym.png';
 import NavLink from "../../../containers/NavLink";
+import { deleteNamespace } from "../../../actions/NamespaceActions/deleteNamespaceAction";
+import CustomerModal from '../../CustomerModal';
 
-// import Notification from '../../components/Notification';
+import Notification from '../../../components/Notification';
 
 class NamespacesContainer extends Component {
+    constructor() {
+        super();
+        this.state = {
+            isOpened: false,
+            NSName: ''
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        // console.log(this.props.DeleteNamespaceReducer.idName, nextProps.DeleteNamespaceReducer.idName);
+        if (this.props.DeleteNamespaceReducer) {
+            this.setState({
+                ...this.state,
+                NSName: '',
+                isOpened: false
+            });
+        }
+    }
     handleClickTR(href) {
         browserHistory.push('/Namespaces/' + href);
     }
@@ -15,17 +36,22 @@ class NamespacesContainer extends Component {
         e.stopPropagation();
     }
     handleClickDeletingNamespace(idName) {
-        // this.props.onDeletingNamespace(idName);
-        console.log(idName);
+        this.setState({
+            ...this.state,
+            NSName: idName,
+            isOpened: true
+        });
+        // this.props.onDeleteNamespace(idName);
+        // console.log(idName);
     }
     render() {
         return (
             <div>
-                {/* <Notification*/}
-                {/* status={this.props.DeleteDeploymentReducer.status}*/}
-                {/* name={this.props.DeleteDeploymentReducer.deploymentName}*/}
-                {/* errorMessage={this.props.DeleteDeploymentReducer.errorMessage}*/}
-                {/* />*/}
+                 <Notification
+                     status={this.props.DeleteNamespaceReducer.status}
+                     name={this.props.DeleteNamespaceReducer.idName}
+                     errorMessage={this.props.DeleteNamespaceReducer.errorMessage}
+                 />
                 <div className="row double">
                     {
                         this.props.PostsNamespacesDataReducer.map((item) => {
@@ -33,8 +59,11 @@ class NamespacesContainer extends Component {
                             // const nameFirstChar = name.substring(0, 1).toUpperCase();
                             const id = `item_${name}`;
                             return (
-                                <div className="col-md-4" id={id} key={id} onClick={href => this.handleClickTR(item.name)}>
-                                    <div className="content-block-container card-container hover-action">
+                                <div className="col-md-4" id={id} key={id}>
+                                    <div
+                                        className="content-block-container card-container hover-action"
+                                        onClick={href => this.handleClickTR(item.name)}
+                                    >
                                         <div className="content-block-header">
                                             <div className="content-block-header-label">
                                                 <div className="content-block-header-img">
@@ -42,22 +71,22 @@ class NamespacesContainer extends Component {
                                                 </div>
                                                 <div className="content-block-header-label__text content-block-header-label_main">{name}</div>
                                             </div>
-                                            {/*<div className="content-block-header-extra-panel" onClick={this.handleClose.bind(this)}>*/}
-                                                {/*<div className="content-block-header-extra-panel dropdown no-arrow">*/}
-                                                    {/*<i*/}
-                                                        {/*className="content-block-header__more ion-more dropdown-toggle"*/}
-                                                        {/*data-toggle="dropdown"*/}
-                                                        {/*aria-haspopup="true"*/}
-                                                        {/*aria-expanded="false"*/}
-                                                    {/*> </i>*/}
-                                                    {/*<ul className="dropdown-menu dropdown-menu-right" role="menu">*/}
-                                                        {/*<button*/}
-                                                            {/*className="dropdown-item text-danger"*/}
-                                                            {/*onClick={idName => this.handleClickDeletingNamespace(name)}*/}
-                                                        {/*>Delete</button>*/}
-                                                    {/*</ul>*/}
-                                                {/*</div>*/}
-                                            {/*</div>*/}
+                                            <div className="content-block-header-extra-panel" onClick={this.handleClose.bind(this)}>
+                                                <div className="content-block-header-extra-panel dropdown no-arrow">
+                                                    <i
+                                                        className="content-block-header__more ion-more dropdown-toggle"
+                                                        data-toggle="dropdown"
+                                                        aria-haspopup="true"
+                                                        aria-expanded="false"
+                                                    > </i>
+                                                    <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                                        <button
+                                                            className="dropdown-item text-danger"
+                                                            onClick={idName => this.handleClickDeletingNamespace(name)}
+                                                        >Delete</button>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div className="content-block-content card-block">
@@ -86,6 +115,13 @@ class NamespacesContainer extends Component {
                         </div>
                     </NavLink>
                 </div>
+
+                <CustomerModal
+                    type="Namespace"
+                    name={this.state.NSName}
+                    isOpened={this.state.isOpened}
+                    onHandleDelete={this.props.onDeleteNamespace}
+                />
             </div>
         );
     }
@@ -95,4 +131,18 @@ NamespacesContainer.propTypes = {
     PostsNamespacesDataReducer: PropTypes.array
 };
 
-export default NamespacesContainer;
+function mapStateToProps(state) {
+    return {
+        DeleteNamespaceReducer: state.DeleteNamespaceReducer
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeleteNamespace: (idName) => {
+            dispatch(deleteNamespace(idName));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NamespacesContainer);

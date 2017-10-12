@@ -13,6 +13,7 @@ export default function NSTariffsReducer(state = {
     case NSTARIFFS_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: [],
             errorMessage: ''
         });
     case NSTARIFFS_SUCCESS:

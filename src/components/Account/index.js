@@ -18,7 +18,6 @@ import './Account.css';
 
 class Account extends Component {
     componentDidMount() {
-        // const cliBlock = document.querySelector('.block-item__copy-string');
         if (!!this.props.GetProfileReducer.data.login) {
             this.props.onLoadProfileData();
         }

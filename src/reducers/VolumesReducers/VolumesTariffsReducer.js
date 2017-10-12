@@ -13,6 +13,7 @@ export default function VolumesTariffsReducer(state = {
     case VOLUMES_TARIFFS_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: [],
             errorMessage: ''
         });
     case VOLUMES_TARIFFS_SUCCESS:

@@ -11,7 +11,8 @@ export default function EmailSubscriptionsReducer(state = {
     switch (action.type) {
     case EMAIL_SUBSCRIPTIONS_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            errorMessage: ''
         });
     case EMAIL_SUBSCRIPTIONS_SUCCESS:
         return Object.assign({}, state, {

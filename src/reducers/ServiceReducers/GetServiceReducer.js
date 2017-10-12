@@ -13,6 +13,7 @@ export default function GetServiceReducer(state = {
     case SERVICE_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: {},
             errorMessage: ''
         });
     case SERVICE_SUCCESS:

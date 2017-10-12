@@ -1,11 +1,11 @@
 import axios from 'axios';
-// import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import {
     CREATE_NAMESPACE_REQUEST,
     CREATE_NAMESPACE_SUCCESS,
     CREATE_NAMESPACE_FAILURE
-} from '../../constants/NamespacesConstants';
+} from '../../constants/NamespaceConstants';
 
 import {
     WEB_API
@@ -27,7 +27,7 @@ export function createNamespace(idName, tariff) {
                 headers: {
                     'Authorization': token,
                     'X-User-Fingerprint': browser,
-                    'Content-Type': 'application/x-www-form-urlencode',
+                    'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
@@ -35,16 +35,17 @@ export function createNamespace(idName, tariff) {
             }
         )
         .then(response => {
-            console.log(response);
-            // if (response.status === 200 || response.status === 201) {
-            //     dispatch(receiveCreateNamespace(response.data));
-            // } else if (response.status === 401) {
-            //     localStorage.removeItem('id_token');
-            //     browserHistory.push('/Login');
-            // } else {
-            //     dispatch(failCreateNamespace(response.data.message));
-            // }
-        }).catch(err => console.log(err));
+            // console.log(response);
+            if (response.status === 201) {
+                dispatch(receiveCreateNamespace(response.data, response.status));
+                browserHistory.push('/Namespaces');
+            } else if (response.status === 401) {
+                localStorage.removeItem('id_token');
+                browserHistory.push('/Login');
+            } else {
+                dispatch(failCreateNamespace(response.data.message, response.status));
+            }
+        }).catch(err => {dispatch(failCreateNamespace(err, 503)); console.log(err)})
     };
 }
 
@@ -55,18 +56,20 @@ function requestCreateNamespace() {
     };
 }
 
-function receiveCreateNamespace(data) {
+function receiveCreateNamespace(data, status) {
     return {
         type: CREATE_NAMESPACE_SUCCESS,
         isFetching: false,
-        data
+        data,
+        status
     };
 }
 
-function failCreateNamespace(message) {
+function failCreateNamespace(message, status) {
     return {
         type: CREATE_NAMESPACE_FAILURE,
         isFetching: false,
-        message
+        message,
+        status
     };
 }
