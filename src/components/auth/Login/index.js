@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 // import FacebookLogin from 'react-facebook-login';
 // import GitHubLogin from 'react-github-login';
 
-import { LOGINUser } from '../../../actions/LoginActions';
+import { loginUser } from '../../../actions/LoginActions';
 import { getUserHashConfirm } from '../../../actions/UserHashConfirmActions';
 import { checkRelationWithGitHubAccount } from '../../../actions/CheckRelationWithGitHubAccountActions';
 import InputEmail from '../InputEmail';
@@ -240,7 +240,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(getUserHashConfirm(hashParam));
         },
         onLoginUser: creds => {
-            dispatch(LOGINUser(creds));
+            dispatch(loginUser(creds));
         },
         onCheckRelationWithGitHubAccount: code => {
             dispatch(checkRelationWithGitHubAccount(code));

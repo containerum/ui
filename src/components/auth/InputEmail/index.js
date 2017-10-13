@@ -32,7 +32,7 @@ class InputEmail extends Component {
                         placeholder={placeholder}
                         defaultValue={defaultUserEmail}
                     />
-                    <i className="c-form-control-icon fa fa-user"></i>
+                    <i className="c-form-control-icon fa fa-user"> </i>
                 </div>
             </div>
         );

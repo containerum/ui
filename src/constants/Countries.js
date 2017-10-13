@@ -280,7 +280,7 @@ export const COUNTRIES = [
         "value": "CR"
     },
     {
-        "name": "Côte d'Ivoire",
+        "name": "Cote d'Ivoire",
         "ISONumericalCode": "384",
         "value": "CI"
     },

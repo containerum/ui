@@ -64,7 +64,7 @@ class Billing extends Component {
                                                         <tbody>
                                                         {
                                                             operations.length ? operations.map((item, index) => {
-                                                                console.log(item);
+                                                                // console.log(item);
                                                                 const amount = item.amount;
                                                                 const date = item.date;
                                                                 const info = item.info;

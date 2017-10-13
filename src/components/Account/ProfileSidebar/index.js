@@ -36,11 +36,11 @@ export default class ProfileSidebar extends Component {
                                         <a href="/Billing#information" className="nav-link">Information</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="/Billing#payment-method" className="nav-link">Payment method</a>
+                                        <a href="/Billing#add-funds" className="nav-link">Payment method</a>
                                     </li>
-                                    <li className="nav-item">
-                                        <a href="/Billing#alert" className="nav-link">Alert</a>
-                                    </li>
+                                    {/*<li className="nav-item">*/}
+                                        {/*<a href="/Billing#alert" className="nav-link">Alert</a>*/}
+                                    {/*</li>*/}
                                     <li className="nav-item">
                                         <a href="/Billing#history" className="nav-link">History</a>
                                     </li>

@@ -12,7 +12,7 @@ import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function LOGINUser(creds) {
+export function loginUser(creds) {
     return dispatch => {
         dispatch(requestLOGIN(creds));
         // const password = md5(creds.username + creds.password).toString(16);

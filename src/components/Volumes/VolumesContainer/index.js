@@ -22,7 +22,7 @@ class VolumesContainer extends Component {
                             const name = item.name;
                             // const nameFirstChar = name.substring(0, 1).toUpperCase();
                             const id = `item_${name}`;
-                            const status = item.status === 'Started' ? 'Active' : item.status;
+                            const status = item.status === 'Started' || item.status === 'Created' ? 'Active' : 'Not Active';
                             const usedSize = item.used_size ? parseInt(item.used_size) / 1000 : 0;
                             const totalSize = item.total_size ? parseInt(item.total_size) / 1000 : 0;
                             return (

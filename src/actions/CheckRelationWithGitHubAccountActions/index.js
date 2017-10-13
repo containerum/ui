@@ -6,7 +6,7 @@ import {
     CHECK_RELATION_FAILURE
 } from '../../constants/CheckRelationWithAccountConstants';
 
-// import { LOGINUser } from '../LoginActions';
+// import { loginUser } from '../LoginActions';
 
 export function checkRelationWithGitHubAccount(code) {
     return dispatch => {
@@ -41,7 +41,7 @@ export function checkRelationWithGitHubAccount(code) {
         .then(response => {
             if (response.status === 200) {
                 console.log(response);
-                // dispatch(LOGINUser(creds));
+                // dispatch(loginUser(creds));
                 dispatch(receiveCheckRelationWithAccount(response.data));
             } else {
                 console.log(response);

@@ -47,8 +47,7 @@ class CreateNamespace extends Component {
         // console.log(this.props.NSTariffsReducer);
         // console.log(this.props.CreateNamespaceReducer);
         let isFetchingNSTariffs = '';
-        if (this.props.NSTariffsReducer.isFetching === false &&
-            this.props.CreateNamespaceReducer.isFetching === false) {
+        if (this.props.NSTariffsReducer.isFetching === false) {
             isFetchingNSTariffs =
                 <div className="content-block">
                     <div className="content-block-container container no-back mt-0 no-padding">
@@ -64,7 +63,7 @@ class CreateNamespace extends Component {
                                     this.props.NSTariffsReducer.data.map((item, index) => {
                                         // console.log(item);
                                         const cpu = item.cpu_limit / 1000;
-                                        const memory = item.memory_limit / 1000;
+                                        const memory = item.memory_limit / 1024;
                                         const traffic = item.traffic;
                                         const price = item.price === 0 && item.label === "free" ? 'free' : `$${item.price}`;
                                         const label = item.label;
@@ -131,6 +130,10 @@ class CreateNamespace extends Component {
         } else {
             isFetchingNSTariffs = <Spinner />;
         }
+        let isFetchingCreateNS = '';
+        if (this.props.CreateNamespaceReducer.isFetching) {
+            isFetchingCreateNS = <Spinner />;
+        }
         return (
             <div>
                 <Notification
@@ -139,6 +142,7 @@ class CreateNamespace extends Component {
                     errorMessage={this.props.CreateNamespaceReducer.errorMessage}
                 />
                 { isFetchingNSTariffs }
+                { isFetchingCreateNS }
             </div>
         );
     }
