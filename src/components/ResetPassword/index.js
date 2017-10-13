@@ -11,7 +11,7 @@ class ResetPassword extends Component {
         document.body.classList.add('c-body-bg');
     }
     render() {
-        if (!this.props.confirmEmailReducer.emailUser) {
+        if (!this.props.ConfirmEmailReducer.emailUser) {
             browserHistory.push('/Login');
         }
         return (
@@ -40,12 +40,12 @@ class ResetPassword extends Component {
 }
 
 ResetPassword.propTypes = {
-    confirmEmailReducer: PropTypes.object
+    ConfirmEmailReducer: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
-        confirmEmailReducer: state.confirmEmailReducer
+        ConfirmEmailReducer: state.ConfirmEmailReducer
     };
 }
 

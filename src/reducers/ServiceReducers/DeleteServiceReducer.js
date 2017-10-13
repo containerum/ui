@@ -14,7 +14,9 @@ export default function DeleteServiceReducer(state = {
     case DELETE_SERVICE_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            errorMessage: ''
+            status: 0,
+            errorMessage: '',
+            serviceName: ''
         });
     case DELETE_SERVICE_SUCCESS:
         return Object.assign({}, state, {

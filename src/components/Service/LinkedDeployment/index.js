@@ -27,7 +27,7 @@ class LinkedDeployment extends Component {
     // }
     render() {
         // console.log(this.props);
-        const linkedDepName = Object.keys(this.props.getServiceReducer.data).length ? this.props.getServiceReducer.data.deployment : null;
+        const linkedDepName = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.deployment : null;
         let isFetchingDeploymentsContains = '';
         if (this.props.DeploymentsReducer.isFetching === false) {
             const linkedDep = this.props.DeploymentsReducer.data.find(item => {
@@ -109,7 +109,7 @@ LinkedDeployment.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        getServiceReducer: state.getServiceReducer,
+        GetServiceReducer: state.GetServiceReducer,
         DeploymentsReducer: state.DeploymentsReducer,
         DeleteDeploymentReducer: state.DeleteDeploymentReducer
     };

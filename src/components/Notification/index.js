@@ -4,6 +4,7 @@ import toastr from 'toastr';
 
 class Notification extends Component {
     componentWillReceiveProps(nextProps) {
+        // console.log(nextProps);
         toastr.options = {
             'closeButton': true,
             'debug': false,
@@ -23,7 +24,9 @@ class Notification extends Component {
         };
         if (nextProps.status === 202 && nextProps.name &&
             nextProps.name !== this.props.name) {
-            toastr.success(nextProps.name + ' was deleted', 'Success');
+            toastr.success(nextProps.name + ' was deleted', 'Deleted Success');
+        } else if (nextProps.status === 201 && nextProps.name) {
+            toastr.success(nextProps.name + ' was created', 'Created Success');
         } else if (nextProps.errorMessage && nextProps.errorMessage !== this.props.errorMessage) {
             toastr.error(nextProps.errorMessage, 'Error');
         }

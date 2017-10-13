@@ -10,12 +10,18 @@ import InputEmail from '../InputEmail';
 import InputPassword from '../InputPassword';
 import Logo from '../../Logo';
 import MiniSpinner from '../../MiniSpinner';
-import { COUNTRIES } from '../../../constants/Countries';
+import { COUNTRIES } from '../../../constants/CountriesBilling';
 import '../../../styles/flags.css';
 
 class SignUp extends Component {
     constructor() {
         super();
+        const sortedCountries = COUNTRIES.slice();
+        sortedCountries.sort(function(a, b) {
+            const nameA = a.name.toUpperCase();
+            const nameB = b.name.toUpperCase();
+            return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+        });
         this.state = {
             toggleActive: false,
             idOfActiveToggle: 'option1',
@@ -26,8 +32,8 @@ class SignUp extends Component {
             isValidPassword: false,
             currentCountry: 'Russian Federation',
             currentCountryCode: 'RU',
-            ISONumericalCode: '643',
-            displayedCountries: COUNTRIES
+            billing_code: '182',
+            displayedCountries: sortedCountries
         };
         this.handleChangeOnToggle = this.handleChangeOnToggle.bind(this);
         this.handleCheckValidateEmailInput = this.handleCheckValidateEmailInput.bind(this);
@@ -44,6 +50,7 @@ class SignUp extends Component {
             if (position) {
                 yandexGeocoder.resolve(`${position.coords.longitude},${position.coords.latitude}`, (err, collection) => {
                     if (err) throw err;
+                    // console.log(collection);
                     const defaultCountry = COUNTRIES.find(item => {
                         return item.value === collection[0].country_code
                     });
@@ -51,7 +58,7 @@ class SignUp extends Component {
                         ...this.state,
                         currentCountry: defaultCountry.name,
                         currentCountryCode: defaultCountry.value,
-                        ISONumericalCode: defaultCountry.ISONumericalCode
+                        billing_code: defaultCountry.country_code
                     });
                 });
             }
@@ -113,8 +120,9 @@ class SignUp extends Component {
             const creds = {
                 username: this.state.email.trim(),
                 password: this.state.password.trim(),
-                country_code: this.state.ISONumericalCode
+                country_code: this.state.billing_code
             };
+            // console.log(creds);
             this.props.onSignUpUser(creds);
         } else {
             this.setState({
@@ -125,12 +133,13 @@ class SignUp extends Component {
             getAlert.style.display = 'block';
         }
     }
-    handleSelectCountry(name, value, ISONumericalCode) {
+    handleSelectCountry(name, value, billing_code) {
+        // console.log(name, value, billing_code);
         this.setState({
             ...this.state,
             currentCountry: name,
             currentCountryCode: value,
-            ISONumericalCode
+            billing_code
         });
     }
     handleChangeCountry(e) {
@@ -178,11 +187,11 @@ class SignUp extends Component {
             );
         }
         const defaultEmail = this.props.location.query.email ? this.props.location.query.email : '';
-        const signUpButtonText = this.props.signUpReducer.isFetching ? <MiniSpinner /> : 'Sign Up';
-        const isActiveSignUpButton = this.props.signUpReducer.isFetching ?
+        const signUpButtonText = this.props.SignUpReducer.isFetching ? <MiniSpinner /> : 'Sign Up';
+        const isActiveSignUpButton = this.props.SignUpReducer.isFetching ?
             'btn btn-block c-btn-green disabled' :
             'btn btn-block c-btn-green';
-        const isActiveSignUpState = !!this.props.signUpReducer.isFetching;
+        const isActiveSignUpState = !!this.props.SignUpReducer.isFetching;
         return (
             <div className="main_container">
                 <Logo />
@@ -256,7 +265,7 @@ class SignUp extends Component {
                                             /> {this.state.currentCountry}</span>
                                     </div>
                                     <div
-                                        className="dropdown-menu bfh-selectbox-options"
+                                        className="dropdown-menu dropdown-menu-width"
                                         aria-labelledby="dropdownMenu2"
                                     >
                                         <input
@@ -264,17 +273,19 @@ class SignUp extends Component {
                                             className="bfh-selectbox-filter"
                                             onInput={this.handleChangeCountry.bind(this)}
                                         />
-                                        <div>
+                                        <div
+                                            className="bfh-selectbox-options">
                                             <ul>
                                                 {
                                                     this.state.displayedCountries.map((item, index) => {
                                                         const flag = item.value.toLowerCase();
+                                                        // console.log(item);
                                                         return (
                                                             <li
                                                                 tabIndex={index}
                                                                 className="dropdown-item"
                                                                 key={item.value}
-                                                                onClick={(name, value, ISONumericalCode) => this.handleSelectCountry(item.name, item.value, item.ISONumericalCode)}
+                                                                onClick={(name, value, billing_code) => this.handleSelectCountry(item.name, item.value, item.billing_code)}
                                                             >
                                                                 <a data-option={`${item.value}`}>
                                                                     <img className={`flag ${flag} fnone`} /> {item.name}
@@ -317,17 +328,17 @@ SignUp.propTypes = {
     isAuthenticated: PropTypes.bool,
     errorMessage: PropTypes.string,
     location: PropTypes.object,
-    signUpReducer: PropTypes.object,
+    SignUpReducer: PropTypes.object,
     isSecretQuote: PropTypes.bool
 };
 
 function mapStateToProps(state) {
-    const { signUpReducer } = state;
-    const { errorMessage } = signUpReducer;
+    const { SignUpReducer } = state;
+    const { errorMessage } = SignUpReducer;
 
     return {
         errorMessage,
-        signUpReducer
+        SignUpReducer
     };
 }
 

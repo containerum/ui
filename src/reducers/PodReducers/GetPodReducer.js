@@ -13,6 +13,7 @@ export default function GetPodReducer(state = {
     case POD_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: {},
             errorMessage: ''
         });
     case POD_SUCCESS:

@@ -11,6 +11,7 @@ import '../../../localization/ru/header';
 class ProfileInfoDropdown extends Component {
     render() {
         const email = this.props.userEmail ? this.props.userEmail : '';
+        const balance = this.props.userBalance ? parseFloat(this.props.userBalance).toFixed(2) : 0;
         const profileSvg = localStorage.getItem('icon_profile') ? localStorage.getItem('icon_profile') : identicons.generateSVGDataURIString(email, { width: 28, size: 4 });
         return (
             <div>
@@ -29,10 +30,11 @@ class ProfileInfoDropdown extends Component {
                             >{this.props.userEmail}</a>
                             <ul className="dropdown-menu dropdown-menu-right" role="menu">
                                 <NavLink className="dropdown-item" to="/Account">Account</NavLink>
+                                <NavLink className="dropdown-item" to="/Billing">Billing</NavLink>
                                 <NavLink className="dropdown-item text-danger" to="/Login" onClick={() => this.props.onLogoutClick()}>Log out</NavLink>
                             </ul>
                         </div>
-                        <div className="header-top-account__deposit">0 $</div>
+                        <div className="header-top-account__deposit">{balance} $</div>
                     </div>
                 </div>
                 <div className="clearfix"> </div>
@@ -43,6 +45,7 @@ class ProfileInfoDropdown extends Component {
 
 ProfileInfoDropdown.propTypes = {
     userEmail: PropTypes.string,
+    userBalance: PropTypes.number,
     onLogoutClick: PropTypes.func
 };
 

@@ -13,6 +13,7 @@ export default function GetProfileReducer(state = {
     case PROFILE_GET_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: {},
             errorMessage: ''
         });
     case PROFILE_GET_SUCCESS:

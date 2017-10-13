@@ -14,7 +14,9 @@ export default function DeleteDeploymentReducer(state = {
     case DELETE_DEPLOYMENT_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            errorMessage: ''
+            errorMessage: '',
+            status: 0,
+            deploymentName: ''
         });
     case DELETE_DEPLOYMENT_SUCCESS:
         return Object.assign({}, state, {

@@ -12,7 +12,9 @@ export default function SupportReducer(state = {
     switch (action.type) {
     case SUPPORT_REQUEST:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            data: {},
+            error: ''
         });
     case SUPPORT_SUCCESS:
         return Object.assign({}, state, {

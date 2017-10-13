@@ -11,10 +11,15 @@ import { deleteDeployment } from '../../actions/DeploymentActions/deleteDeployme
 
 class Deployments extends Component {
     componentDidMount() {
-        // if (!this.props.DeploymentsReducer.data.length) {
-            // console.log(this.props.DeploymentsReducer.data);
-            this.props.onGetNamespaces(this.props.params.idName);
-        // }
+        // console.log(this.props.DeploymentsReducer.data);
+        this.props.onGetDeployments(this.props.params.idName);
+    }
+    componentWillReceiveProps(nextProps) {
+        // console.log(this.props.params.idName);
+        if (this.props.DeploymentsReducer.data === nextProps.DeploymentsReducer.data &&
+            this.props.params.idName !== nextProps.params.idName) {
+            this.props.onGetDeployments(nextProps.params.idName);
+        }
     }
     handleDeleteDeployment(idDep) {
         // console.log(this.props.params.idName, idDep);
@@ -63,7 +68,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onGetNamespaces: (idName) => {
+        onGetDeployments: (idName) => {
             dispatch(getDeployments(idName));
         },
         onDeleteDeployment: (idName, idDep) => {

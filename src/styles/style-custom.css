@@ -107,20 +107,10 @@ html {
 }
 
 .bfh-selectbox-options {
-    /*bottom: 0!important;*/
-    /*height: fit-content!important;*/
     width: 100%;
     float: left;
-    min-width: 160px;
-    padding: 5px 0;
-    margin: 2px 0 0;
     background-color: #ffffff;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    background-clip: padding-box;
-    max-height: 155px;
+    max-height: 120px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -208,6 +198,20 @@ html {
     margin-top: 4px;
 }
 
-
-
+.dropdown-menu-width {
+    width: 100%;
+    min-width: 160px;
+}
 /* Country selector*/
+
+.form-group.pt-0 .form-group__label.form-group__label-always-onfocus {
+    top: -23px;
+}
+
+.row.double {
+    margin-bottom: 30px;
+}
+
+.form-group.pt-0 .btn-outline-primary.disabled {
+    background-color: #29abe2;
+}

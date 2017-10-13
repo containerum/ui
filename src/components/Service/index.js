@@ -13,7 +13,7 @@ import Notification from '../Notification';
 
 class Service extends Component {
     componentDidMount() {
-        // if (!this.props.getServiceReducer.data.length) {
+        // if (!this.props.GetServiceReducer.data.length) {
         this.props.onGetService(this.props.params.idName, this.props.params.idService);
         // }
     }
@@ -23,7 +23,7 @@ class Service extends Component {
     }
     render() {
         let isFetchingServiceInfo = '';
-        if (this.props.getServiceReducer.isFetching === false) {
+        if (this.props.GetServiceReducer.isFetching === false) {
             isFetchingServiceInfo =
                 <ServiceInfo
                     idName={this.props.params.idName}
@@ -57,17 +57,17 @@ class Service extends Component {
 Service.propTypes = {
     onGetService: PropTypes.func.isRequired,
     params: PropTypes.object,
-    getServiceReducer: PropTypes.object,
+    GetServiceReducer: PropTypes.object,
     errorMessage: PropTypes.string
 };
 
 function mapStateToProps(state) {
-    const { getServiceReducer } = state;
-    const { errorMessage } = getServiceReducer;
+    const { GetServiceReducer } = state;
+    const { errorMessage } = GetServiceReducer;
 
     return {
         errorMessage,
-        getServiceReducer,
+        GetServiceReducer,
         DeleteServiceReducer: state.DeleteServiceReducer
     };
 }

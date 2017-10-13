@@ -14,7 +14,9 @@ export default function DeletePodReducer(state = {
     case DELETE_POD_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            errorMessage: ''
+            errorMessage: '',
+            podName: '',
+            status: 0
         });
     case DELETE_POD_SUCCESS:
         return Object.assign({}, state, {

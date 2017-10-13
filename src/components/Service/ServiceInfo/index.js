@@ -15,13 +15,13 @@ class ServiceInfo extends Component {
         this.props.onDeleteService(name);
     }
     render() {
-        // console.log(this.props.getServiceReducer);
-        const serviceName = Object.keys(this.props.getServiceReducer.data).length ? this.props.getServiceReducer.data.name : '';
-        const clusterIp = Object.keys(this.props.getServiceReducer.data).length ? this.props.getServiceReducer.data.cluster_ip : '';
-        const domainHosts = Object.keys(this.props.getServiceReducer.data).length ? this.props.getServiceReducer.data.domain_hosts : [];
-        const isExternal = Object.keys(this.props.getServiceReducer.data).length ? this.props.getServiceReducer.data.labels.external : '';
+        // console.log(this.props.GetServiceReducer);
+        const serviceName = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.name : '';
+        const clusterIp = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.cluster_ip : '';
+        const domainHosts = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.domain_hosts : [];
+        const isExternal = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.labels.external : '';
         const type = '' + isExternal === 'true' ? 'External' : 'Internal';
-        const labels = Object.keys(this.props.getServiceReducer.data).length ? this.props.getServiceReducer.data.labels : [];
+        const labels = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.labels : [];
         const labelsArray = Object.keys(labels);
         return (
             <div className="content-block ">
@@ -97,7 +97,7 @@ ServiceInfo.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        getServiceReducer: state.getServiceReducer,
+        GetServiceReducer: state.GetServiceReducer,
         DeleteServiceReducer: state.DeleteServiceReducer
     };
 

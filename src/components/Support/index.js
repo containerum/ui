@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { sendSupport } from '../../actions/SupportActions';
 import { getGroupOmnidesk } from '../../actions/getGroupOmnideskActions';
-import { getProfile } from '../../actions/ProfileActions/getProfileActions';
+import { getProfile } from '../../actions/ProfileActions/getProfileAction';
 // import BackPanel from '../BackPanel';
 import './Support.css';
 import MiniSpinner from '../MiniSpinner';

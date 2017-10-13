@@ -29,7 +29,7 @@ class InputPassword extends Component {
                         placeholder={placeholder}
                         disabled={this.props.isDisabled}
                     />
-                    <i className="c-form-control-icon fa fa-lock"></i>
+                    <i className="c-form-control-icon fa fa-lock"> </i>
                     {small}
                 </div>
             </div>

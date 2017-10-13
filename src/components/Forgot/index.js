@@ -56,11 +56,11 @@ class Forgot extends Component {
         });
     }
     render() {
-        const resetButtonText = this.props.confirmEmailReducer.isFetching ? <MiniSpinner /> : 'Reset';
-        const isActiveResetButton = this.props.confirmEmailReducer.isFetching ?
+        const resetButtonText = this.props.ConfirmEmailReducer.isFetching ? <MiniSpinner /> : 'Reset';
+        const isActiveResetButton = this.props.ConfirmEmailReducer.isFetching ?
             'btn btn-block c-btn-green disabled' :
             'btn btn-block c-btn-green';
-        const isActiveResetState = !!this.props.confirmEmailReducer.isFetching;
+        const isActiveResetState = !!this.props.ConfirmEmailReducer.isFetching;
         return (
             <div className="main_container">
                 <Logo />
@@ -97,17 +97,17 @@ class Forgot extends Component {
 
 Forgot.propTypes = {
     onConfirmEmail: PropTypes.func.isRequired,
-    confirmEmailReducer: PropTypes.object,
+    ConfirmEmailReducer: PropTypes.object,
     errorMessage: PropTypes.string
 };
 
 function mapStateToProps(state) {
-    const { confirmEmailReducer } = state;
-    const { errorMessage } = confirmEmailReducer;
+    const { ConfirmEmailReducer } = state;
+    const { errorMessage } = ConfirmEmailReducer;
 
     return {
         errorMessage,
-        confirmEmailReducer
+        ConfirmEmailReducer
     };
 }
 

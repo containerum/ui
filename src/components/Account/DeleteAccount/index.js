@@ -4,13 +4,22 @@ import PropTypes from 'prop-types';
 
 import CustomerModal from '../../CustomerModal';
 
-import { deleteProfile } from '../../../actions/ProfileActions/deleteProfileActions';
+import { deleteProfile } from '../../../actions/ProfileActions/deleteProfileAction';
 
 class DeleteAccount extends Component {
     constructor() {
         super();
         this.state = {
             isOpened: false
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        // console.log(this.props.DeleteNamespaceReducer.idName, nextProps.DeleteNamespaceReducer.idName);
+        if (this.props.DeleteProfileReducer) {
+            this.setState({
+                ...this.state,
+                isOpened: false
+            });
         }
     }
     handleClickDeletingAccount() {

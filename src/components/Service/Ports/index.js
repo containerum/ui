@@ -5,9 +5,9 @@ import deploy from '../../../images/deploy.png';
 
 class Ports extends Component {
     render() {
-        // console.log(this.props.getServiceReducer.data.ports);
-        const ports = Object.keys(this.props.getServiceReducer.data).length ? this.props.getServiceReducer.data.ports : [];
-        const isExternal = Object.keys(this.props.getServiceReducer.data).length ? this.props.getServiceReducer.data.labels.external : '';
+        // console.log(this.props.GetServiceReducer.data.ports);
+        const ports = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.ports : [];
+        const isExternal = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.labels.external : '';
         const type = '' + isExternal === 'true';
         return (
             <div className="content-block-content full">
@@ -61,7 +61,7 @@ class Ports extends Component {
 
 function mapStateToProps(state) {
     return {
-        getServiceReducer: state.getServiceReducer
+        GetServiceReducer: state.GetServiceReducer
     };
 
 }

@@ -12,7 +12,7 @@ import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function LOGINUser(creds) {
+export function loginUser(creds) {
     return dispatch => {
         dispatch(requestLOGIN(creds));
         // const password = md5(creds.username + creds.password).toString(16);
@@ -25,6 +25,7 @@ export function LOGINUser(creds) {
             }
         )
             .then(response => {
+                // console.log(response);
                 if (response.status === 200) {
                     dispatch(receiveLOGIN(response));
                     localStorage.setItem('id_token', response.data.token);

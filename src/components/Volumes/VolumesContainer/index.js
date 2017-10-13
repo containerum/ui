@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 // import { browserHistory } from 'react-router';
 import nslogo from '../../../images/deploym.png';
+import NavLink from "../../../containers/NavLink";
 
 // import Notification from '../../components/Notification';
 
@@ -21,9 +22,9 @@ class VolumesContainer extends Component {
                             const name = item.name;
                             // const nameFirstChar = name.substring(0, 1).toUpperCase();
                             const id = `item_${name}`;
-                            const status = item.status === 'Started' ? 'Active' : item.status;
-                            const usedSize = parseInt(item.used_size) / 1000;
-                            const totalSize = parseInt(item.total_size) / 1000;
+                            const status = item.status === 'Started' || item.status === 'Created' ? 'Active' : 'Not Active';
+                            const usedSize = item.used_size ? parseInt(item.used_size) / 1000 : 0;
+                            const totalSize = item.total_size ? parseInt(item.total_size) / 1000 : 0;
                             return (
                                 <div className="col-md-4" id={id} key={id}>
                                     <div className="content-block-container card-container card-container-volume hover-action ">
@@ -70,11 +71,11 @@ class VolumesContainer extends Component {
                         })
                     }
 
-                    {/*<div className="col-md-4 align-middle">*/}
-                    {/*<div className="add-new-block content-block-content card-container card-container-volume hover-action ">*/}
-                    {/*<div className="action"><i>+</i> Add a namespace</div>*/}
-                    {/*</div>*/}
-                    {/*</div>*/}
+                    {/*<NavLink to="/CreateVolume" className="col-md-4 align-middle">*/}
+                        {/*<div className="add-new-block content-block-content card-container card-container-volume hover-action ">*/}
+                            {/*<div className="action"><i>+</i> Add a volume</div>*/}
+                        {/*</div>*/}
+                    {/*</NavLink>*/}
                 </div>
             </div>
         );
