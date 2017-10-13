@@ -7,6 +7,7 @@ import { timeago } from '../../../functions/timeago';
 import deploy from '../../../images/deploy.png';
 import NotFoundDeployments from '../NotFoundDeployments';
 import CustomerModal from '../../CustomerModal';
+import Spinner from '../../Spinner';
 
 class DeploymentsContains extends Component {
     constructor() {
@@ -62,6 +63,10 @@ class DeploymentsContains extends Component {
         // console.log(this.props.DeploymentsReducer.data);
         // console.log(this.state.countOfDeployments);
         let isDeploymentsEmpty = '';
+        let isFetchingDeleteDep = '';
+        if (this.props.DeleteDeploymentReducer.isFetching) {
+            isFetchingDeleteDep = <Spinner />;
+        }
         if (this.state.countOfDeployments) {
             isDeploymentsEmpty =
                 <div className="content-block-content full">
@@ -141,6 +146,7 @@ class DeploymentsContains extends Component {
         }
         return (
             <div>
+                { isFetchingDeleteDep }
                 { isDeploymentsEmpty }
             </div>
         );

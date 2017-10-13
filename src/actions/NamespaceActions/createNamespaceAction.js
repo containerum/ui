@@ -37,13 +37,13 @@ export function createNamespace(idName, tariff) {
         .then(response => {
             // console.log(response);
             if (response.status === 201) {
-                dispatch(receiveCreateNamespace(response.data, response.status));
+                dispatch(receiveCreateNamespace(response.data, response.status, idName));
                 browserHistory.push('/Namespaces');
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failCreateNamespace(response.data.message, response.status));
+                dispatch(failCreateNamespace(response.data.message, response.status, idName));
             }
         }).catch(err => {dispatch(failCreateNamespace(err, 503)); console.log(err)})
     };
@@ -56,20 +56,22 @@ function requestCreateNamespace() {
     };
 }
 
-function receiveCreateNamespace(data, status) {
+function receiveCreateNamespace(data, status, idName) {
     return {
         type: CREATE_NAMESPACE_SUCCESS,
         isFetching: false,
         data,
-        status
+        status,
+        idName
     };
 }
 
-function failCreateNamespace(message, status) {
+function failCreateNamespace(message, status, idName) {
     return {
         type: CREATE_NAMESPACE_FAILURE,
         isFetching: false,
         message,
-        status
+        status,
+        idName
     };
 }

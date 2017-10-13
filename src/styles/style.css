@@ -555,7 +555,7 @@ h1{
 
 .form-group__input-text.form-control{
     font-weight: 300;
-    color: #a7a7a7;
+    /*color: #a7a7a7;*/
     border: none ;
     border-bottom: 1.5px solid #eaeaea;
     padding: 0 0 8px 0px;
@@ -1017,6 +1017,7 @@ h1{
 }
 
 .add-new-block{
+    display: block;
     border-radius: 4px;
     border: solid 1px #29abe2;
     font-size: 20px;

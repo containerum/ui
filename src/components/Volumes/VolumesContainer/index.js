@@ -23,8 +23,8 @@ class VolumesContainer extends Component {
                             // const nameFirstChar = name.substring(0, 1).toUpperCase();
                             const id = `item_${name}`;
                             const status = item.status === 'Started' || item.status === 'Created' ? 'Active' : 'Not Active';
-                            const usedSize = item.used_size ? parseInt(item.used_size) / 1000 : 0;
-                            const totalSize = item.total_size ? parseInt(item.total_size) / 1000 : 0;
+                            const usedSize = item.used_size ? item.used_size : 0;
+                            const totalSize = item.total_size ? item.total_size : 0;
                             return (
                                 <div className="col-md-4" id={id} key={id}>
                                     <div className="content-block-container card-container card-container-volume hover-action ">
@@ -70,12 +70,11 @@ class VolumesContainer extends Component {
                             );
                         })
                     }
-
-                    {/*<NavLink to="/CreateVolume" className="col-md-4 align-middle">*/}
-                        {/*<div className="add-new-block content-block-content card-container card-container-volume hover-action ">*/}
+                    {/*<div className="col-md-4 align-middle">*/}
+                        {/*<NavLink to="/CreateVolume" className="add-new-block content-block-content card-container hover-action ">*/}
                             {/*<div className="action"><i>+</i> Add a volume</div>*/}
-                        {/*</div>*/}
-                    {/*</NavLink>*/}
+                        {/*</NavLink>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         );

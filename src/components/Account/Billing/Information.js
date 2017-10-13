@@ -18,13 +18,19 @@ class Information extends Component {
                                 <div className="billing-information-data">Balance</div>
                                 <div className="billing-information-data">Month usage</div>
                                 <div className="billing-information-data">Daily usage</div>
-                                <div className="billing-information-data">Paid up to</div>
+                                {
+                                    this.props.formatDateToActive ?
+                                        <div className="billing-information-data">Paid up to</div> : ''
+                                }
                             </div>
                             <div className="col-md-9">
                                 <div className="billing-information-data fw-normal">{this.props.balance ? this.props.balance.toFixed(2) : 0} $</div>
                                 <div className="billing-information-data">{this.props.monthUsage ? this.props.monthUsage.toFixed(2) : 0} $</div>
                                 <div className="billing-information-data">{this.props.dailyUsage ? this.props.dailyUsage.toFixed(2) : 0} $</div>
-                                <div className="billing-information-data">{this.props.formatDateToActive}</div>
+                                {
+                                    this.props.formatDateToActive ?
+                                        <div className="billing-information-data">{this.props.formatDateToActive}</div> : ''
+                                }
                             </div>
                         </div>
                     </div>
