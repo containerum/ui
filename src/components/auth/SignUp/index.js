@@ -2,26 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-// import { Scrollbars } from 'react-custom-scrollbars';
 
 import { SignUpUser } from '../../../actions/SignUpActions';
-import YandexGeocoder from '../../../functions/yandex-geocoder';
 import InputEmail from '../InputEmail';
 import InputPassword from '../InputPassword';
 import Logo from '../../Logo';
 import MiniSpinner from '../../MiniSpinner';
-import { COUNTRIES } from '../../../constants/CountriesBilling';
-import '../../../styles/flags.css';
+import CountrySelector from '../CountrySelector';
 
 class SignUp extends Component {
     constructor() {
         super();
-        const sortedCountries = COUNTRIES.slice();
-        sortedCountries.sort(function(a, b) {
-            const nameA = a.name.toUpperCase();
-            const nameB = b.name.toUpperCase();
-            return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
-        });
         this.state = {
             toggleActive: false,
             idOfActiveToggle: 'option1',
@@ -30,10 +21,7 @@ class SignUp extends Component {
             isValidEmail: false,
             password: '',
             isValidPassword: false,
-            currentCountry: 'Russian Federation',
-            currentCountryCode: 'RU',
-            billing_code: '182',
-            displayedCountries: sortedCountries
+            billing_code: '182'
         };
         this.handleChangeOnToggle = this.handleChangeOnToggle.bind(this);
         this.handleCheckValidateEmailInput = this.handleCheckValidateEmailInput.bind(this);
@@ -45,25 +33,6 @@ class SignUp extends Component {
         localStorage.removeItem('id_token');
     }
     componentDidMount() {
-        const yandexGeocoder = new YandexGeocoder();
-        navigator.geolocation.getCurrentPosition((position) => {
-            if (position) {
-                yandexGeocoder.resolve(`${position.coords.longitude},${position.coords.latitude}`, (err, collection) => {
-                    if (err) throw err;
-                    // console.log(collection);
-                    const defaultCountry = COUNTRIES.find(item => {
-                        return item.value === collection[0].country_code
-                    });
-                    this.setState({
-                        ...this.state,
-                        currentCountry: defaultCountry.name,
-                        currentCountryCode: defaultCountry.value,
-                        billing_code: defaultCountry.country_code
-                    });
-                });
-            }
-        });
-
         if (this.props.location.query.error) {
             this.setState({
                 ...this.state,
@@ -133,23 +102,11 @@ class SignUp extends Component {
             getAlert.style.display = 'block';
         }
     }
-    handleSelectCountry(name, value, billing_code) {
-        // console.log(name, value, billing_code);
+    handleSelectCountry(billing_code) {
+        console.log(billing_code);
         this.setState({
             ...this.state,
-            currentCountry: name,
-            currentCountryCode: value,
             billing_code
-        });
-    }
-    handleChangeCountry(e) {
-        const query = e.target.value.toLowerCase().trim();
-
-        const displayedCountries = COUNTRIES.filter(function(item) {
-            return item.name.toLowerCase().search(query) >= 0;
-        });
-        this.setState({
-            displayedCountries: displayedCountries
         });
     }
     render() {
@@ -157,7 +114,6 @@ class SignUp extends Component {
         if (this.state.toggleActive === true) {
             toggleCompanyComponent = (
                 <div>
-
                     <label className="sr-only" htmlFor="inlineFormInputCompanyName">Company name</label>
                     <div className="form-group i-mb-20 c-has-feedback-left">
                         <input
@@ -248,57 +204,10 @@ class SignUp extends Component {
                                 }
                             />
                             {toggleCompanyComponent}
-
-                            <div className="form-group i-mb-20 c-has-feedback-left">
-                                <div className="dropdown">
-                                    <div
-                                        className="btn btn-secondary bfh-selectbox-toggle custom-select"
-                                        id="dropdownMenu2"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                    >
-                                        <span className="bfh-selectbox-option input-medium">
-                                            <img
-                                                className={this.state.currentCountryCode ?
-                                                    `flag ${this.state.currentCountryCode.toLowerCase()} fnone` : ''}
-                                            /> {this.state.currentCountry}</span>
-                                    </div>
-                                    <div
-                                        className="dropdown-menu dropdown-menu-width"
-                                        aria-labelledby="dropdownMenu2"
-                                    >
-                                        <input
-                                            type="text"
-                                            className="bfh-selectbox-filter"
-                                            onInput={this.handleChangeCountry.bind(this)}
-                                        />
-                                        <div
-                                            className="bfh-selectbox-options">
-                                            <ul>
-                                                {
-                                                    this.state.displayedCountries.map((item, index) => {
-                                                        const flag = item.value.toLowerCase();
-                                                        // console.log(item);
-                                                        return (
-                                                            <li
-                                                                tabIndex={index}
-                                                                className="dropdown-item"
-                                                                key={item.value}
-                                                                onClick={(name, value, billing_code) => this.handleSelectCountry(item.name, item.value, item.billing_code)}
-                                                            >
-                                                                <a data-option={`${item.value}`}>
-                                                                    <img className={`flag ${flag} fnone`} /> {item.name}
-                                                                </a>
-                                                            </li>
-                                                        )
-                                                    })
-                                                }
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <CountrySelector
+                                handleSelectCountry={billing_code =>
+                                    this.handleSelectCountry(billing_code)}
+                            />
                             <button
                                 type="submit"
                                 ref="button"

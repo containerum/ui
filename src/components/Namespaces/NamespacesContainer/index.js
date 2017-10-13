@@ -8,6 +8,7 @@ import nslogo from '../../../images/deploym.png';
 import NavLink from "../../../containers/NavLink";
 import { deleteNamespace } from "../../../actions/NamespaceActions/deleteNamespaceAction";
 import CustomerModal from '../../CustomerModal';
+import Spinner from '../../Spinner';
 
 import Notification from '../../../components/Notification';
 
@@ -20,13 +21,19 @@ class NamespacesContainer extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        // console.log(this.props.DeleteNamespaceReducer.idName, nextProps.DeleteNamespaceReducer.idName);
         if (this.props.DeleteNamespaceReducer) {
             this.setState({
                 ...this.state,
                 NSName: '',
                 isOpened: false
             });
+        }
+        if (nextProps.DeleteNamespaceReducer.isFetching === false &&
+            nextProps.DeleteNamespaceReducer.status === 202 &&
+            nextProps.DeleteNamespaceReducer.idName) {
+            const id = `item_${nextProps.DeleteNamespaceReducer.idName}`;
+            const el = document.getElementById(id);
+            el ? el.remove() : el;
         }
     }
     handleClickTR(href) {
@@ -45,8 +52,13 @@ class NamespacesContainer extends Component {
         // console.log(idName);
     }
     render() {
+        let isFetchingDeleteNS = '';
+        if (this.props.DeleteNamespaceReducer.isFetching) {
+            isFetchingDeleteNS = <Spinner />;
+        }
         return (
             <div>
+                { isFetchingDeleteNS }
                  <Notification
                      status={this.props.DeleteNamespaceReducer.status}
                      name={this.props.DeleteNamespaceReducer.idName}
@@ -109,11 +121,11 @@ class NamespacesContainer extends Component {
                             );
                         })
                     }
-                    <NavLink to="/CreateNamespace" className="col-md-4 align-middle">
-                        <div className="add-new-block content-block-content card-container hover-action ">
+                    <div className="col-md-4 align-middle">
+                        <NavLink to="/CreateNamespace" className="add-new-block content-block-content card-container hover-action ">
                             <div className="action"><i>+</i> Add a namespace</div>
-                        </div>
-                    </NavLink>
+                        </NavLink>
+                    </div>
                 </div>
 
                 <CustomerModal

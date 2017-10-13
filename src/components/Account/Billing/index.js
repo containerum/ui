@@ -27,7 +27,7 @@ class Billing extends Component {
             const balance = parseFloat(this.props.GetProfileBalanceReducer.data.balance);
             const monthUsage = this.props.GetTariffsReducer.data.monthly_cost ? parseFloat(this.props.GetTariffsReducer.data.monthly_cost) : 0;
             const dailyUsage = monthUsage ? parseFloat(monthUsage / 30) : 0;
-            let formatDateToActive = 'no data';
+            let formatDateToActive = '';
             const dateNow = new Date;
             if (dailyUsage) {
                 const activityDays = Math.floor(balance / dailyUsage);
@@ -75,7 +75,7 @@ class Billing extends Component {
                                                                         <td className="w-25 table-border">{amount}</td>
                                                                     </tr>
                                                                 )
-                                                            }) : <tr><td>no data</td></tr>
+                                                            }) : ''
                                                         }
                                                         </tbody>
                                                     </table>

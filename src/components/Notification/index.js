@@ -25,7 +25,8 @@ class Notification extends Component {
         if (nextProps.status === 202 && nextProps.name &&
             nextProps.name !== this.props.name) {
             toastr.success(nextProps.name + ' was deleted', 'Deleted Success');
-        } else if (nextProps.status === 201 && nextProps.name) {
+        } else if (nextProps.status === 201 && nextProps.name &&
+            nextProps.name !== this.props.name) {
             toastr.success(nextProps.name + ' was created', 'Created Success');
         } else if (nextProps.errorMessage && nextProps.errorMessage !== this.props.errorMessage) {
             toastr.error(nextProps.errorMessage, 'Error');

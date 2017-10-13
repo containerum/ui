@@ -138,7 +138,7 @@ class CreateNamespace extends Component {
             <div>
                 <Notification
                     status={this.props.CreateNamespaceReducer.status}
-                    name={this.state.inputNSName}
+                    name={this.props.CreateNamespaceReducer.idName}
                     errorMessage={this.props.CreateNamespaceReducer.errorMessage}
                 />
                 { isFetchingNSTariffs }

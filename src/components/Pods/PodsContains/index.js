@@ -6,6 +6,7 @@ import { timeago } from '../../../functions/timeago';
 
 import pod from '../../../images/pod-3.png';
 import NotFoundPods from '../NotFoundPods';
+import Spinner from '../../Spinner';
 
 class PodsContains extends Component {
     constructor() {
@@ -106,8 +107,13 @@ class PodsContains extends Component {
         } else {
             isPodsEmpty = <NotFoundPods/>
         }
+        let isFetchingDeletePod = '';
+        if (this.props.DeletePodReducer.isFetching) {
+            isFetchingDeletePod = <Spinner />;
+        }
         return (
             <div>
+                { isFetchingDeletePod }
                 { isPodsEmpty }
             </div>
         );

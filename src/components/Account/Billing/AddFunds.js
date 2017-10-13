@@ -37,7 +37,7 @@ class AddFunds extends Component {
     }
     render() {
         // console.log(this.props.PayForReducer);
-        const paypalButtonText = this.props.PayForReducer.isFetching ? <MiniSpinner /> : 'Add funds by Pay Pall';
+        const paypalButtonText = this.props.PayForReducer.isFetching ? <MiniSpinner /> : 'Add funds by PayPal';
         const isActivePaypalButton = this.props.PayForReducer.isFetching ?
             'button_blue btn btn-outline-primary disabled' :
             'button_blue btn btn-outline-primary';
@@ -48,7 +48,7 @@ class AddFunds extends Component {
                 <form onSubmit={this.handleSubmitPay.bind(this)}>
                     <div className="row">
                         <div className="col-md-5">
-                            <div className="light-text">Здесь что-то написано важное про<br />PayPall</div>
+                            <div className="light-text">One-time payment via PayPal</div>
                         </div>
                         <div className="col-md-7">
                             <div className="form-group pt-0">
@@ -63,7 +63,7 @@ class AddFunds extends Component {
                                     className="form-group__label"
                                     htmlFor="payFunds"
                                     id="payLabel"
-                                >Input funds</label>
+                                >Amount, $</label>
                                 <div className="form-group__helper"> </div>
                             </div>
                             <div className="form-group pt-0">

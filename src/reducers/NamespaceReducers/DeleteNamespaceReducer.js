@@ -22,7 +22,7 @@ export default function DeleteNamespaceReducer(state = {
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             status: action.status,
-            idName: action.status
+            idName: action.idName
         });
     case DELETE_NAMESPACE_FAILURE:
         return Object.assign({}, state, {
