@@ -37,7 +37,7 @@ spec:
         env:
         - name: WEB_API
           value: '${WEB_API}'
-        image: ${IMAGE}
+        image: ${DEPLOY_IMAGE}
         ports:
         - containerPort: 5000
           protocol: TCP

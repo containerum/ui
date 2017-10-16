@@ -11,7 +11,7 @@ pipeline:
   deploy:
     image: mastanggt/drone-kubernetes
     deploy_file: deploy.yaml
-    image: exon/ch-ui:${DRONE_COMMIT_BRANCH}-${DRONE_COMMIT_SHA:0:8}
+    deploy_image: exon/ch-ui:${DRONE_COMMIT_BRANCH}-${DRONE_COMMIT_SHA:0:8}
     secrets: [ kubernetes_cert, port, image, kubernetes_client, kubernetes_client_key, kubernetes_ip, web_api ]
     when:
       branch: dev-v*
