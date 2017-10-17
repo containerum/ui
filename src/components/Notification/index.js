@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 import toastr from 'toastr';
 
 class Notification extends Component {
@@ -28,6 +29,8 @@ class Notification extends Component {
         } else if (nextProps.status === 201 && nextProps.name &&
             nextProps.name !== this.props.name) {
             toastr.success(nextProps.name + ' was created', 'Created Success');
+        } else if (nextProps.errorMessage === 'Not enough money to buy a namespace') {
+            toastr.error(`${nextProps.errorMessage}<br />Please, follow to <a href="/Billing">billing page</a>`, 'Error');
         } else if (nextProps.errorMessage && nextProps.errorMessage !== this.props.errorMessage) {
             toastr.error(nextProps.errorMessage, 'Error');
         }

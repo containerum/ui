@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import CustomerModal from '../../CustomerModal';
 
 import { deleteProfile } from '../../../actions/ProfileActions/deleteProfileAction';
+import Spinner from '../../Spinner';
 
 class DeleteAccount extends Component {
     constructor() {
@@ -29,23 +30,30 @@ class DeleteAccount extends Component {
         });
     }
     render() {
+        let isFetchingDeleteAccount = '';
+        if (this.props.DeleteProfileReducer.isFetching) {
+            isFetchingDeleteAccount = <Spinner />;
+        }
         return (
-            <div className="block-item" id="delete-account">
-                <div className="block-item__title">Delete Account</div>
-                <div className="light-text">This action will delete your Apps and Data</div>
-                <div className="block-item__buttons">
-                    <button
-                        className="button_red btn btn-outline-primary"
-                        onClick={this.handleClickDeletingAccount.bind(this)}
-                    >Delete</button>
-                </div>
+            <div>
+                { isFetchingDeleteAccount }
+                <div className="block-item" id="delete-account">
+                    <div className="block-item__title">Delete Account</div>
+                    <div className="light-text">This action will delete your Apps and Data</div>
+                    <div className="block-item__buttons">
+                        <button
+                            className="button_red btn btn-outline-primary"
+                            onClick={this.handleClickDeletingAccount.bind(this)}
+                        >Delete</button>
+                    </div>
 
-                <CustomerModal
-                    type="Account"
-                    name={this.props.email}
-                    isOpened={this.state.isOpened}
-                    onHandleDelete={this.props.onDeleteProfile}
-                />
+                    <CustomerModal
+                        type="Account"
+                        name={this.props.email}
+                        isOpened={this.state.isOpened}
+                        onHandleDelete={this.props.onDeleteProfile}
+                    />
+                </div>
             </div>
         );
     }

@@ -218,8 +218,7 @@ class SignUp extends Component {
                             </button>
                         </div>
                         <div className="card-footer p-3 text-center">
-                            By signing up, you agree to the <a href="https://containerum.com/license-agreement">Public Offer</a>
-                            and <br/><a href="https://containerum.com/privacy-policy">Privacy Policy</a>
+                            By signing up, you agree to the <a href="https://containerum.com/terms-of-service">Terms Of Service</a> and <br/><a href="https://containerum.com/privacy-policy">Privacy Policy</a>
                         </div>
                     </div>
                     <p className="text-center pt-3 c-wt">
