@@ -42,9 +42,9 @@ export function payFor(amount) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failPayFor(response.data.message));
+                dispatch(failPayFor(response.data.message, response.status));
             }
-        }).catch(err => console.log(err));
+        }).catch(err => {dispatch(failPayFor(err)); console.log(err)});
     };
 }
 
@@ -55,7 +55,7 @@ function requestPayFor() {
     };
 }
 
-function receivePayFor(data, status) {
+function receivePayFor(data) {
     return {
         type: PAY_FOR_SUCCESS,
         isFetching: false,
@@ -63,10 +63,11 @@ function receivePayFor(data, status) {
     };
 }
 
-function failPayFor(message) {
+function failPayFor(message, status) {
     return {
         type: PAY_FOR_FAILURE,
         isFetching: false,
-        message
+        message,
+        status
     };
 }

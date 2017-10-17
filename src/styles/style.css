@@ -752,7 +752,7 @@ h1{
 
 .content-block-header-extra-panel{
     position: absolute;
-    width: 200px;
+    /*width: 200px;*/
     right: 0px;
     top: 0px;
     text-align: right;

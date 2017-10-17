@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Tooltip from 'rc-tooltip';
+import ScrollableAnchor from 'react-scrollable-anchor';
 
 import Spinner from '../Spinner';
 import Notification from '../Notification';
 import { getNSTariffs } from '../../actions/NamespacesActions/getNSTariffsAction';
 import { createNamespace } from '../../actions/NamespaceActions/createNamespaceAction';
+import 'rc-tooltip/assets/bootstrap_white.css';
 
 class CreateNamespace extends Component {
     constructor() {
@@ -64,66 +67,74 @@ class CreateNamespace extends Component {
                                         // console.log(item);
                                         const cpu = item.cpu_limit / 1000;
                                         const memory = item.memory_limit / 1024;
-                                        const traffic = item.traffic;
+                                        const traffic = item.traffic ? item.traffic / 1024 : item.traffic;
                                         const price = item.price === 0 && item.label === "free" ? 'free' : `$${item.price}`;
                                         const label = item.label;
                                         return (
                                             <div className="col-md-3" key={index}>
-                                                <div
-                                                    id={label}
-                                                    className={label === this.state.NSTariffName ?
-                                                        "namespace-plan-block-container hover-action-new selected" :
-                                                        "namespace-plan-block-container hover-action-new"}
-                                                    onClick={labelName => this.handleClickTriff(label)}
+                                                <Tooltip
+                                                    placement="top"
+                                                    trigger={['click']}
+                                                    overlay={<a href="#bottom">Enter the name</a>}
                                                 >
-                                                    <div className="row">
-                                                        <div className="col-md-6 namespace-plan-block-container-left">
-                                                            <div className="namespace-plan-block-price">{price}</div>
-                                                        </div>
-                                                        <div className="col-md-6 namespace-plan-block-container-right">
-                                                            <div className="content-block-content card-block">
-                                                                <div className="content-block__info-item">
-                                                                    <div className="content-block__info-name inline">RAM : </div>
-                                                                    <div className="content-block__info-text inline">{memory} GB</div>
-                                                                </div>
-                                                                <div className="content-block__info-item">
-                                                                    <div className="content-block__info-name inline">CPU : </div>
-                                                                    <div className="content-block__info-text inline">{cpu}</div>
-                                                                </div>
-                                                                <div className="content-block__info-item">
-                                                                    <div className="content-block__info-name inline">Trafic : </div>
-                                                                    <div className="content-block__info-text inline">{traffic} TB</div>
+                                                    <div
+                                                        id={label}
+                                                        className={label === this.state.NSTariffName ?
+                                                            "namespace-plan-block-container hover-action-new selected" :
+                                                            "namespace-plan-block-container hover-action-new"}
+                                                        onClick={labelName => this.handleClickTriff(label)}
+                                                    >
+                                                        <div className="row">
+                                                            <div className="col-md-6 namespace-plan-block-container-left">
+                                                                <div className="namespace-plan-block-price">{price}</div>
+                                                            </div>
+                                                            <div className="col-md-6 namespace-plan-block-container-right">
+                                                                <div className="content-block-content card-block">
+                                                                    <div className="content-block__info-item">
+                                                                        <div className="content-block__info-name inline">RAM : </div>
+                                                                        <div className="content-block__info-text inline">{memory} GB</div>
+                                                                    </div>
+                                                                    <div className="content-block__info-item">
+                                                                        <div className="content-block__info-name inline">CPU : </div>
+                                                                        <div className="content-block__info-text inline">{cpu}</div>
+                                                                    </div>
+                                                                    <div className="content-block__info-item">
+                                                                        <div className="content-block__info-name inline">Traffic : </div>
+                                                                        <div className="content-block__info-text inline">{traffic} TB</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </Tooltip>
                                             </div>
                                         )
                                     })
                                 }
                             </div>
-                            <form
-                                className="col-md-6 namespace-plan"
-                                onSubmit={this.handleSubmitNSTariffs.bind(this)}
-                            >
-                                <div className="namespace-plan-first-step">2 / 2</div>
-                                <div className="namespace-plan-title">choose a Name</div>
-                                <div className="namespace-plan-info">Assign this Namespace an identifying name.
-                                    Namespace name can only contain alphanumeric characters and dashes.</div>
-                                <input
-                                    type="text"
-                                    className="form-control namespace-plan-input"
-                                    name="name"
-                                    placeholder="Name"
-                                    value={this.state.inputNSName}
-                                    onChange={this.handleChangeInput.bind(this)}
-                                />
-                                <button
-                                    className="btn namespace-plan-create-btn"
-                                    type="submit"
-                                >Create</button>
-                            </form>
+                            <ScrollableAnchor id={'bottom'}>
+                                <form
+                                    className="col-md-6 namespace-plan"
+                                    onSubmit={this.handleSubmitNSTariffs.bind(this)}
+                                >
+                                    <div className="namespace-plan-first-step">2 / 2</div>
+                                    <div className="namespace-plan-title">choose a Name</div>
+                                    <div className="namespace-plan-info">Assign this Namespace an identifying name.
+                                        Namespace name can only contain alphanumeric characters and dashes.</div>
+                                    <input
+                                        type="text"
+                                        className="form-control namespace-plan-input"
+                                        name="name"
+                                        placeholder="Name"
+                                        value={this.state.inputNSName}
+                                        onChange={this.handleChangeInput.bind(this)}
+                                    />
+                                    <button
+                                        className="btn namespace-plan-create-btn"
+                                        type="submit"
+                                    >Create</button>
+                                </form>
+                            </ScrollableAnchor>
                         </div>
                     </div>
                 </div>;

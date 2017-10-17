@@ -3,8 +3,19 @@ html {
     min-height: 100%;
 }
 
+input:required {
+    box-shadow:none;
+}
+input:invalid {
+    box-shadow:none;
+}
+
 .hover-action {
     cursor: pointer;
+}
+
+.form-group__label {
+    cursor: text;
 }
 
 .overflow-hidden {
@@ -214,4 +225,21 @@ html {
 
 .form-group.pt-0 .btn-outline-primary.disabled {
     background-color: #29abe2;
+}
+
+.rc-tooltip-inner {
+    background-color: #29abe2!important;
+    border: 1px solid #29abe2!important;
+}
+
+.rc-tooltip-inner a {
+    color: #fff;
+}
+
+.rc-tooltip-inner a:hover {
+    text-decoration: underline;
+}
+
+.rc-tooltip-arrow {
+    border-top-color: #29abe2!important;
 }

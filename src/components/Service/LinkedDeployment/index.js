@@ -13,7 +13,7 @@ class LinkedDeployment extends Component {
     componentDidMount() {
         if (!this.props.DeploymentsReducer.data.length) {
             // console.log(this.props.DeploymentsReducer.data);
-            this.props.onGetNamespaces(this.props.params.idName);
+            this.props.onGetDeployments(this.props.params.idName);
         }
     }
     handleClickDeployment(name) {
@@ -118,7 +118,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onGetNamespaces: (idName) => {
+        onGetDeployments: (idName) => {
             dispatch(getDeployments(idName));
         },
         onDeleteDeployment: (idName, idDep) => {
