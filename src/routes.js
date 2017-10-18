@@ -27,6 +27,7 @@ import Billing from './components/Account/Billing';
 import NotFound from './components/NotFound';
 
 import CreateNamespace from './components/CreateNamespace';
+// import UpdateNamespace from './components/UpdateNamespace';
 import CreateVolume from './components/CreateVolume';
 // import CreateDeployment from './components/CreateDeployment';
 // import CreateService from './components/CreateService';
@@ -52,6 +53,7 @@ export const routes = (
             </Route>
             <Route path="/Namespaces/:idName/Deployments/:idDep/Pods/:idPod" component={Pod} />
             <Route path="/CreateNamespace" component={CreateNamespace} />
+            {/*<Route path="/Namespaces/:idName/UpdateNamespace" component={UpdateNamespace} />*/}
             {/*<Route path="/CreateVolume" component={CreateVolume} />*/}
             {/*<Route path="/Namespaces/:idName/CreateNewDeployment" component={CreateDeployment} />*/}
             {/*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*/}

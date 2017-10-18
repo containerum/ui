@@ -14,6 +14,7 @@ import NamespacesReducer from './NamespacesReducers';
 import NSTariffsReducer from './NamespacesReducers/NSTariffsReducer';
 import CreateNamespaceReducer from './NamespaceReducers/CreateNamespaceReducer';
 import DeleteNamespaceReducer from './NamespaceReducers/DeleteNamespaceReducer';
+import UpdateNamespaceReducer from './NamespaceReducers/UpdateNamespaceReducer';
 import VolumesReducer from './VolumesReducers';
 import VolumesTariffsReducer from './VolumesReducers/VolumesTariffsReducer';
 import CreateVolumeReducer from './VolumeReducers/CreateVolumeReducer';
@@ -74,6 +75,7 @@ const rootReducer = combineReducers({
     GroupOmnideskReducer,
     GetReleasesGithubReducer,
     CreateNamespaceReducer,
+    UpdateNamespaceReducer,
     NSTariffsReducer,
     VolumesTariffsReducer,
     CreateVolumeReducer,

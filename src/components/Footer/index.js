@@ -29,6 +29,13 @@ class Footer extends Component {
                         >
                             Download CLI <img src={arrows} alt="Download CLI" />
                         </a>
+                        <a
+                            target="_blank"
+                            href="https://containerum.com/documentation"
+                            className="footer__help"
+                        >
+                            Help
+                        </a>
                     </div>
                 </div>
             </footer>
