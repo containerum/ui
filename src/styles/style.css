@@ -1740,11 +1740,16 @@ body.footer-absolute .footer{
     float: left;
 }
 
-.footer__download_cli{
+.footer__download_cli,
+.footer__help {
     font-weight: 300;
     color: #333333;
     display: inline-block;
     float: right;
+}
+
+.footer__help {
+    margin-right: 50px;
 }
 
 .footer__download_cli img{

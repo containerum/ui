@@ -2,35 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Tooltip from 'rc-tooltip';
-import ScrollableAnchor from 'react-scrollable-anchor';
 
 import Spinner from '../Spinner';
 import Notification from '../Notification';
 import { getNSTariffs } from '../../actions/NamespacesActions/getNSTariffsAction';
-import { createNamespace } from '../../actions/NamespaceActions/createNamespaceAction';
+import { updateNamespace } from '../../actions/NamespaceActions/updateNamespaceAction';
 import 'rc-tooltip/assets/bootstrap_white.css';
 
-class CreateNamespace extends Component {
+class UpdateNamespace extends Component {
     constructor() {
         super();
         this.state = {
-            NSTariffName: '',
-            inputNSName: ''
+            NSTariffName: ''
         };
     }
     componentDidMount() {
         if (!this.props.NSTariffsReducer.data.length) {
             this.props.onGetNSTariffs();
-        }
-    }
-    handleChangeInput(e) {
-        const regexp = /^[a-z0-9-]+$|^$/;
-        const inputValue = e.target.value.trim();
-        if (inputValue.search(regexp) !== -1) {
-            this.setState({
-                ...this.state,
-                inputNSName: inputValue
-            });
         }
     }
     handleClickTriff(label) {
@@ -41,14 +29,12 @@ class CreateNamespace extends Component {
     }
     handleSubmitNSTariffs(e) {
         e.preventDefault();
-        if (this.state.NSTariffName && this.state.inputNSName.length >= 2) {
-            this.props.onCreateNamespace(this.state.inputNSName, this.state.NSTariffName);
-            // console.log(this.state.NSTariffName, this.state.inputNSName)
-        }
+        // this.props.onUpdateNamespace(this.state.inputNSName, this.state.NSTariffName);
+        console.log(this.state.NSTariffName)
     }
     render() {
-        // console.log(this.props.NSTariffsReducer);
-        // console.log(this.props.CreateNamespaceReducer);
+        console.log(this.props.params);
+        // console.log(this.props.UpdateNamespaceReducer);
         let isFetchingNSTariffs = '';
         if (this.props.NSTariffsReducer.isFetching === false) {
             isFetchingNSTariffs =
@@ -112,29 +98,15 @@ class CreateNamespace extends Component {
                                     })
                                 }
                             </div>
-                            <ScrollableAnchor id={'bottom'}>
-                                <form
-                                    className="col-md-6 namespace-plan"
-                                    onSubmit={this.handleSubmitNSTariffs.bind(this)}
-                                >
-                                    <div className="namespace-plan-first-step">2 / 2</div>
-                                    <div className="namespace-plan-title">choose a Name</div>
-                                    <div className="namespace-plan-info">Assign this Namespace an identifying name.
-                                        Namespace name can only contain alphanumeric characters and dashes.</div>
-                                    <input
-                                        type="text"
-                                        className="form-control namespace-plan-input"
-                                        name="name"
-                                        placeholder="Name"
-                                        value={this.state.inputNSName}
-                                        onChange={this.handleChangeInput.bind(this)}
-                                    />
-                                    <button
-                                        className="btn namespace-plan-create-btn"
-                                        type="submit"
-                                    >Create</button>
-                                </form>
-                            </ScrollableAnchor>
+                            <form
+                                className="col-md-6 namespace-plan"
+                                onSubmit={this.handleSubmitNSTariffs.bind(this)}
+                            >
+                                <button
+                                    className="btn namespace-plan-create-btn"
+                                    type="submit"
+                                >Resize</button>
+                            </form>
                         </div>
                     </div>
                 </div>;
@@ -142,15 +114,15 @@ class CreateNamespace extends Component {
             isFetchingNSTariffs = <Spinner />;
         }
         let isFetchingCreateNS = '';
-        if (this.props.CreateNamespaceReducer.isFetching) {
+        if (this.props.UpdateNamespaceReducer.isFetching) {
             isFetchingCreateNS = <Spinner />;
         }
         return (
             <div>
                 <Notification
-                    status={this.props.CreateNamespaceReducer.status}
-                    name={this.props.CreateNamespaceReducer.idName}
-                    errorMessage={this.props.CreateNamespaceReducer.errorMessage}
+                    status={this.props.UpdateNamespaceReducer.status}
+                    name={this.props.UpdateNamespaceReducer.idName}
+                    errorMessage={this.props.UpdateNamespaceReducer.errorMessage}
                 />
                 { isFetchingNSTariffs }
                 { isFetchingCreateNS }
@@ -159,16 +131,16 @@ class CreateNamespace extends Component {
     }
 }
 
-CreateNamespace.propTypes = {
+UpdateNamespace.propTypes = {
     onGetNSTariffs: PropTypes.func.isRequired,
     NSTariffsReducer: PropTypes.object,
-    CreateNamespaceReducer: PropTypes.object
+    UpdateNamespaceReducer: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
         NSTariffsReducer: state.NSTariffsReducer,
-        CreateNamespaceReducer: state.CreateNamespaceReducer
+        UpdateNamespaceReducer: state.UpdateNamespaceReducer
     };
 }
 
@@ -177,10 +149,10 @@ const mapDispatchToProps = (dispatch) => {
         onGetNSTariffs: () => {
             dispatch(getNSTariffs());
         },
-        onCreateNamespace: (inputNSName, NSTariffName) => {
-            dispatch(createNamespace(inputNSName, NSTariffName));
+        onUpdateNamespace: (inputNSName, NSTariffName) => {
+            dispatch(updateNamespace(inputNSName, NSTariffName));
         }
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateNamespace);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateNamespace);

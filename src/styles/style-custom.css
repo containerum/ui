@@ -243,3 +243,9 @@ input:invalid {
 .rc-tooltip-arrow {
     border-top-color: #29abe2!important;
 }
+
+.button_red {
+    border-color: #fe4a49;
+    background-color: #fe4a49;
+    color: #fff;
+}
