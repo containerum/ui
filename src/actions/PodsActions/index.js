@@ -47,7 +47,7 @@ export function getPods(namespaceName, idDeployment) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else if (response.status === 400) {
-                browserHistory.push('/NotFound');
+                browserHistory.push('/Namespaces');
             } else if (response.status === 404) {
                 dispatch(receiveGetPods([]));
             } else {

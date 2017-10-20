@@ -10,22 +10,32 @@ export function GetReleasesGithub() {
     return dispatch => {
         dispatch(requestGetReleases());
 
-        return axios.get(
-            'https://api.github.com/repos/containerum/chkit/releases/latest',
-            {
-                validateStatus: (status) => status >= 200 && status <= 505
-            }
-        )
-        .then(response => {
-            if (response.status === 200) {
-                dispatch(receiveGetReleases(response.data));
-            } else {
-                dispatch(failGetReleases(response.data.message));
-            }
-        }).catch(err => {
-            console.log(err);
-            dispatch(failGetReleases(err));
-        });
+        let dateNow = new Date();
+        dateNow = Date.parse(dateNow);
+        const token = localStorage.getItem('github_obj');
+
+        if (token && JSON.parse(token).date + 18000000 >= dateNow) {
+            dispatch(receiveGetReleases(JSON.parse(token).data));
+        } else {
+            console.log(dateNow);
+            return axios.get(
+                'https://api.github.com/repos/containerum/chkit/releases/latest',
+                {
+                    validateStatus: (status) => status >= 200 && status <= 505
+                }
+            )
+            .then(response => {
+                if (response.status === 200) {
+                    localStorage.setItem('github_obj', JSON.stringify({data: response.data, date: dateNow}));
+                    dispatch(receiveGetReleases(response.data));
+                } else {
+                    dispatch(failGetReleases(response.data.message));
+                }
+            }).catch(err => {
+                console.log(err);
+                dispatch(failGetReleases(err));
+            });
+        }
     };
 }
 

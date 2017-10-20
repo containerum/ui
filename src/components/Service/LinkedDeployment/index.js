@@ -26,15 +26,17 @@ class LinkedDeployment extends Component {
     //     this.props.onDeleteDeployment(name);
     // }
     render() {
+        let linkedDep = '';
         // console.log(this.props);
         const linkedDepName = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.deployment : null;
         let isFetchingDeploymentsContains = '';
         if (this.props.DeploymentsReducer.isFetching === false) {
-            const linkedDep = this.props.DeploymentsReducer.data.find(item => {
+            linkedDep = this.props.DeploymentsReducer.data.find(item => {
                 if (item.name === linkedDepName) {
                     return item;
                 }
             });
+            // console.log(linkedDep);
             const depName = linkedDep ? linkedDep.name : '';
             const cpu = linkedDep ? linkedDep.cpu : '';
             const ram = linkedDep ? linkedDep.ram : '';
@@ -79,23 +81,32 @@ class LinkedDeployment extends Component {
             <div className="content-block-content full">
                 <div className="tab-content">
                     <div className="tab-pane fade show deployments active">
-                        <table className="content-block__table table" width="1170">
-                            <thead>
-                                <tr>
-                                    <td className="td-1"> </td>
-                                    <td className="td-2">Name</td>
-                                    <td className="td-3">Pods</td>
-                                    <td className="td-4">RAM (MB)</td>
-                                    <td className="td-5">CPU (m)</td>
-                                    <td className="td-6">Age</td>
-                                    <td className="td-7"> </td>
-                                    <td className="td-7"> </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {isFetchingDeploymentsContains}
-                            </tbody>
-                        </table>
+                        {
+                            linkedDep ?
+                                <table className="content-block__table table" width="1170">
+                                    <thead>
+                                    <tr>
+                                        <td className="td-1"> </td>
+                                        <td className="td-2">Name</td>
+                                        <td className="td-3">Pods</td>
+                                        <td className="td-4">RAM (MB)</td>
+                                        <td className="td-5">CPU (m)</td>
+                                        <td className="td-6">Age</td>
+                                        <td className="td-7"> </td>
+                                        <td className="td-7"> </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {isFetchingDeploymentsContains}
+                                    </tbody>
+                                </table> :
+                                <table className="content-block__table table" width="1170">
+                                    <tr>
+                                        <td className="td-1">No have linked Deployment</td>
+                                    </tr>
+                                </table>
+
+                        }
                     </div>
                 </div>
             </div>

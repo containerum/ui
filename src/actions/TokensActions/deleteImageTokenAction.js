@@ -2,29 +2,31 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-    DEPLOYMENT_REQUEST,
-    DEPLOYMENT_SUCCESS,
-    DEPLOYMENT_FAILURE
-} from '../../constants/DeploymentConstants';
+    DELETE_IMAGE_TOKENS_REQUEST,
+    DELETE_IMAGE_TOKENS_SUCCESS,
+    DELETE_IMAGE_TOKENS_FAILURE
+} from '../../constants/TokensConstants';
 
 import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function getDeployment(namespaceName, deploymentName) {
+export function deleteImageToken() {
     return dispatch => {
-        dispatch(requestGetDeployment());
+        const WebHook = "WebHook";
+        dispatch(requestDeleteImageTokens());
         const token = localStorage.getItem('id_token');
         const browser = localStorage.getItem('id_browser');
-        const api = WEB_API + '/api/namespaces/' + namespaceName + '/deployments/' + deploymentName;
 
-        return axios.get(
+        const api = WEB_API + '/api/set_image_tokens';
+
+        return axios.delete(
             api,
             {
                 headers: {
                     'Authorization': token,
                     'X-User-Fingerprint': browser,
-                    'Content-Type': 'application/x-www-form-urlencode',
+                    'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
@@ -32,38 +34,37 @@ export function getDeployment(namespaceName, deploymentName) {
             }
         )
             .then(response => {
-                if (response.status === 200 || response.status === 201) {
-                    dispatch(receiveGetDeployment(response.data));
+                if (response.status === 202) {
+                    dispatch(receiveDeleteImageTokens(response.status, WebHook));
                 } else if (response.status === 401) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
-                } else if (response.status === 400) {
-                    browserHistory.push('/Namespaces');
                 } else {
-                    dispatch(failGetDeployment(response.data.message));
+                    dispatch(failDeleteImageTokens(response.data.message, response.status));
                 }
-            }).catch(err => console.log(err));
+            }).catch(err => {console.log(err); dispatch(failDeleteImageTokens(err, 503))});
     };
 }
 
-function requestGetDeployment() {
+function requestDeleteImageTokens() {
     return {
-        type: DEPLOYMENT_REQUEST,
+        type: DELETE_IMAGE_TOKENS_REQUEST,
         isFetching: true
     };
 }
 
-function receiveGetDeployment(data) {
+function receiveDeleteImageTokens(status, WebHook) {
     return {
-        type: DEPLOYMENT_SUCCESS,
+        type: DELETE_IMAGE_TOKENS_SUCCESS,
         isFetching: false,
-        data
+        status,
+        WebHook
     };
 }
 
-function failGetDeployment(message) {
+function failDeleteImageTokens(message) {
     return {
-        type: DEPLOYMENT_FAILURE,
+        type: DELETE_IMAGE_TOKENS_FAILURE,
         isFetching: false,
         message
     };

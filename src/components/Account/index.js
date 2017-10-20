@@ -6,6 +6,7 @@ import ProfileSidebar from './ProfileSidebar';
 import Profile from './Profile';
 import Password from './Password';
 import CLI from './CLI';
+import WebHook from './WebHook';
 import DeleteAccount from './DeleteAccount';
 import Spinner from '../Spinner';
 // import Subscription from './Subscription';
@@ -38,6 +39,7 @@ class Account extends Component {
                                         <div className="content-block-container container container-fluid">
                                             <Profile email={email} />
                                             <Password />
+                                            <WebHook />
                                             <CLI />
                                             <DeleteAccount email={email} />
                                         </div>

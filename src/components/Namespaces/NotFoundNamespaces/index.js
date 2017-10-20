@@ -9,7 +9,7 @@ class NotFoundNamespaces extends Component {
                     <div className="add-new-block content-block-content card-container hover-action ">
                         <div className="action">
                             Let's Start <br />
-                            Follow the <a className="documentation-link" href="https://containerum.com/fast-deploy/hello-world" target="_blank">Documentation</a> to create your 1st Namespace
+                            Follow the <a className="documentation-link" href="https://containerum.com/documentation/Start-Guide" target="_blank">Documentation</a> to create your 1st Namespace
                         </div>
                     </div>
                 </div>

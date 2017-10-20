@@ -24,7 +24,7 @@ class CreateNamespace extends Component {
         }
     }
     handleChangeInput(e) {
-        const regexp = /^[a-z0-9-]+$|^$/;
+        const regexp = /^[a-z][a-z0-9-]*$|^$/;
         const inputValue = e.target.value.trim();
         if (inputValue.search(regexp) !== -1) {
             this.setState({

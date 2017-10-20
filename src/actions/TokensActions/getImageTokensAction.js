@@ -2,21 +2,22 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-    DEPLOYMENT_REQUEST,
-    DEPLOYMENT_SUCCESS,
-    DEPLOYMENT_FAILURE
-} from '../../constants/DeploymentConstants';
+    GET_IMAGE_TOKENS_REQUEST,
+    GET_IMAGE_TOKENS_SUCCESS,
+    GET_IMAGE_TOKENS_FAILURE
+} from '../../constants/TokensConstants';
 
 import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function getDeployment(namespaceName, deploymentName) {
+export function getImageTokens() {
     return dispatch => {
-        dispatch(requestGetDeployment());
+        dispatch(requestGetImageTokens());
         const token = localStorage.getItem('id_token');
         const browser = localStorage.getItem('id_browser');
-        const api = WEB_API + '/api/namespaces/' + namespaceName + '/deployments/' + deploymentName;
+
+        const api = WEB_API + '/api/set_image_tokens';
 
         return axios.get(
             api,
@@ -24,7 +25,7 @@ export function getDeployment(namespaceName, deploymentName) {
                 headers: {
                     'Authorization': token,
                     'X-User-Fingerprint': browser,
-                    'Content-Type': 'application/x-www-form-urlencode',
+                    'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
@@ -32,38 +33,38 @@ export function getDeployment(namespaceName, deploymentName) {
             }
         )
             .then(response => {
-                if (response.status === 200 || response.status === 201) {
-                    dispatch(receiveGetDeployment(response.data));
+                if (response.status === 200) {
+                    dispatch(receiveGetImageTokens(response.data));
                 } else if (response.status === 401) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
-                } else if (response.status === 400) {
-                    browserHistory.push('/Namespaces');
+                } else if (response.status === 404) {
+                    dispatch(receiveGetImageTokens({}));
                 } else {
-                    dispatch(failGetDeployment(response.data.message));
+                    dispatch(failGetImageTokens(response.data.message));
                 }
             }).catch(err => console.log(err));
     };
 }
 
-function requestGetDeployment() {
+function requestGetImageTokens() {
     return {
-        type: DEPLOYMENT_REQUEST,
+        type: GET_IMAGE_TOKENS_REQUEST,
         isFetching: true
     };
 }
 
-function receiveGetDeployment(data) {
+function receiveGetImageTokens(data) {
     return {
-        type: DEPLOYMENT_SUCCESS,
+        type: GET_IMAGE_TOKENS_SUCCESS,
         isFetching: false,
         data
     };
 }
 
-function failGetDeployment(message) {
+function failGetImageTokens(message) {
     return {
-        type: DEPLOYMENT_FAILURE,
+        type: GET_IMAGE_TOKENS_FAILURE,
         isFetching: false,
         message
     };

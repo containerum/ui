@@ -21,10 +21,10 @@ class CountrySelector extends Component {
             if (position) {
                 yandexGeocoder.resolve(`${position.coords.longitude},${position.coords.latitude}`, (err, collection) => {
                     if (err) throw err;
-                    // console.log(collection);
                     const defaultCountry = COUNTRIES.find(item => {
                         return item.value === collection[0].country_code
                     });
+                    // console.log(defaultCountry);
                     this.setState({
                         ...this.state,
                         currentCountry: defaultCountry.name,

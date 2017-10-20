@@ -92,6 +92,10 @@ class NamespacesContainer extends Component {
                                                         aria-expanded="false"
                                                     > </i>
                                                     <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                                        <NavLink
+                                                            className="dropdown-item"
+                                                            to={`/Namespaces/${name}/Update`}
+                                                        >Update</NavLink>
                                                         <button
                                                             className="dropdown-item text-danger"
                                                             onClick={idName => this.handleClickDeletingNamespace(name)}

@@ -1,38 +1,38 @@
 import {
-    CREATE_VOLUME_REQUEST,
-    CREATE_VOLUME_SUCCESS,
-    CREATE_VOLUME_FAILURE
-} from '../../constants/VolumeConstants';
+    CREATE_IMAGE_TOKENS_REQUEST,
+    CREATE_IMAGE_TOKENS_SUCCESS,
+    CREATE_IMAGE_TOKENS_FAILURE
+} from '../../constants/TokensConstants';
 
-export default function CreateVolumeReducer(state = {
+export default function CreateImageTokensReducer(state = {
     isFetching: false,
     data: {},
     status: '',
-    idVolume: '',
+    WebHook: '',
     errorMessage: ''
 }, action) {
     switch (action.type) {
-    case CREATE_VOLUME_REQUEST:
+    case CREATE_IMAGE_TOKENS_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: {},
             errorMessage: '',
             status: '',
-            idVolume: ''
+            WebHook: ''
         });
-    case CREATE_VOLUME_SUCCESS:
+    case CREATE_IMAGE_TOKENS_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data,
             status: action.status,
-            idVolume: action.idVolume
+            WebHook: action.WebHook
         });
-    case CREATE_VOLUME_FAILURE:
+    case CREATE_IMAGE_TOKENS_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message,
             status: action.status,
-            idVolume: action.idVolume
+            WebHook: action.WebHook
         });
     default:
         return state;

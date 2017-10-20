@@ -12,7 +12,7 @@ class Tokens extends Component {
     }
     handleSubmitToken(e) {
         e.preventDefault();
-        console.log(this.refs.token.value);
+        // console.log(this.refs.token.value);
         const addingToken = this.refs.token.value;
         this.props.onAddToken(addingToken);
     }

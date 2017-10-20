@@ -34,7 +34,7 @@ class Footer extends Component {
                             href="https://containerum.com/documentation"
                             className="footer__help"
                         >
-                            Help
+                            Docs
                         </a>
                     </div>
                 </div>

@@ -80,7 +80,7 @@ input:invalid {
 
 .block-item__copy-string {
     width: 100%;
-    height: 38px!important;
+    height: 215px!important;
     padding: 5px 10px 5px 10px;
     margin: 25px 0 10px 0;
     background: #eaeaea;
@@ -91,7 +91,6 @@ input:invalid {
     white-space: nowrap;
 }
 .block-item__content-string {
-    height: 35px;
     padding: 5px 10px 5px 10px;
 }
 
@@ -232,7 +231,8 @@ input:invalid {
     border: 1px solid #29abe2!important;
 }
 
-.rc-tooltip-inner a {
+.rc-tooltip-inner a,
+.rc-tooltip-inner span {
     color: #fff;
 }
 
@@ -248,4 +248,23 @@ input:invalid {
     border-color: #fe4a49;
     background-color: #fe4a49;
     color: #fff;
+}
+
+.namespace-plan-first-step {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.display-none {
+    display: none!important;
+}
+
+.block-item__tokens-block {
+    margin: 20px 0;
+}
+
+.block-item__tokens {
+    margin: 35px 0 0;
 }

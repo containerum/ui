@@ -12,7 +12,7 @@ class NotFoundServices extends Component {
                                 <tr>
                                     <td className="td-1">
                                         Let's Start <br/>
-                                        Follow the <a className="documentation-link" target="_blank" href="https://containerum.com/fast-deploy/hello-world">Documentation</a> to create your 1st Services
+                                        Follow the <a className="documentation-link" target="_blank" href="https://containerum.com/documentation/Start-Guide">Documentation</a> to create your 1st Services
                                     </td>
                                 </tr>
                                 </thead>

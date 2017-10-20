@@ -2,30 +2,28 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-    SERVICES_REQUEST,
-    SERVICES_SUCCESS,
-    SERVICES_FAILURE
-} from '../../constants/ServicesConstants';
+    GET_NAMESPACE_REQUEST,
+    GET_NAMESPACE_SUCCESS,
+    GET_NAMESPACE_FAILURE
+} from '../../constants/NamespaceConstants';
 
 import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function getServices(namespaceName) {
+export function getNamespace(idName) {
     return dispatch => {
-        dispatch(requestGetServices());
+        dispatch(requestGetNamespace());
         const token = localStorage.getItem('id_token');
         const browser = localStorage.getItem('id_browser');
 
-        const api = WEB_API + '/api/namespaces/' + namespaceName + '/services';
-
         return axios.get(
-            api,
+            WEB_API + '/api/namespaces/' + idName,
             {
                 headers: {
                     'Authorization': token,
                     'X-User-Fingerprint': browser,
-                    'Content-Type': 'application/x-www-form-urlencode',
+                    'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
@@ -33,42 +31,43 @@ export function getServices(namespaceName) {
             }
         )
         .then(response => {
-            if (response.status === 200 || response.status === 201) {
-                dispatch(receiveGetServices(response.data));
+            if (response.status === 200) {
+                dispatch(receiveGetNamespace(response.data, response.status, idName));
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else if (response.status === 400) {
                 browserHistory.push('/Namespaces');
-            } else if (response.status === 404) {
-                dispatch(receiveGetServices([]));
             } else {
-                dispatch(failGetServices(response.data.message, response.status));
+                dispatch(failGetNamespace(response.data.message, response.status, idName));
             }
-        }).catch(err => console.log(err));
+        }).catch(err => {dispatch(failGetNamespace(err, 503)); console.log(err)})
     };
 }
 
-function requestGetServices() {
+function requestGetNamespace() {
     return {
-        type: SERVICES_REQUEST,
+        type: GET_NAMESPACE_REQUEST,
         isFetching: true
     };
 }
 
-function receiveGetServices(data) {
+function receiveGetNamespace(data, status, idName) {
     return {
-        type: SERVICES_SUCCESS,
+        type: GET_NAMESPACE_SUCCESS,
         isFetching: false,
-        data
+        data,
+        status,
+        idName
     };
 }
 
-function failGetServices(message, status) {
+function failGetNamespace(message, status, idName) {
     return {
-        type: SERVICES_FAILURE,
+        type: GET_NAMESPACE_FAILURE,
         isFetching: false,
         message,
-        status
+        status,
+        idName
     };
 }

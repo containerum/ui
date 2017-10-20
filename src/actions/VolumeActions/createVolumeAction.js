@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import {
     CREATE_VOLUME_REQUEST,
@@ -18,16 +18,16 @@ export function createVolume(idVolume, tariff) {
         const browser = localStorage.getItem('id_browser');
 
         return axios.post(
-            WEB_API + '/api/create_volume',
+            WEB_API + '/api/volumes',
             {
-                idVolume,
-                tariff
+                label: idVolume,
+                tariff_label: tariff
             },
             {
                 headers: {
                     'Authorization': token,
                     'X-User-Fingerprint': browser,
-                    'Content-Type': 'application/x-www-form-urlencode',
+                    'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
@@ -36,15 +36,16 @@ export function createVolume(idVolume, tariff) {
         )
         .then(response => {
             console.log(response);
-            // if (response.status === 200 || response.status === 201) {
-            //     dispatch(receiveCreateVolume(response.data));
-            // } else if (response.status === 401) {
-            //     localStorage.removeItem('id_token');
-            //     browserHistory.push('/Login');
-            // } else {
-            //     dispatch(failCreateVolume(response.data.message));
-            // }
-        }).catch(err => console.log(err));
+            if (response.status === 201) {
+                dispatch(receiveCreateVolume(response.data, response.status, idVolume));
+                browserHistory.push('/Volumes');
+            } else if (response.status === 401) {
+                localStorage.removeItem('id_token');
+                browserHistory.push('/Login');
+            } else {
+                dispatch(failCreateVolume(response.data.message, response.status, idVolume));
+            }
+        }).catch(err => {dispatch(failCreateVolume(err, 503, idVolume)); console.log(err)});
     };
 }
 
@@ -55,18 +56,22 @@ function requestCreateVolume() {
     };
 }
 
-function receiveCreateVolume(data) {
+function receiveCreateVolume(data, status, idVolume) {
     return {
         type: CREATE_VOLUME_SUCCESS,
         isFetching: false,
-        data
+        data,
+        status,
+        idVolume
     };
 }
 
-function failCreateVolume(message) {
+function failCreateVolume(message, status, idVolume) {
     return {
         type: CREATE_VOLUME_FAILURE,
         isFetching: false,
-        message
+        message,
+        status,
+        idVolume
     };
 }

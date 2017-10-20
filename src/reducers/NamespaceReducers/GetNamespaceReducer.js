@@ -1,38 +1,38 @@
 import {
-    CREATE_VOLUME_REQUEST,
-    CREATE_VOLUME_SUCCESS,
-    CREATE_VOLUME_FAILURE
-} from '../../constants/VolumeConstants';
+    GET_NAMESPACE_REQUEST,
+    GET_NAMESPACE_SUCCESS,
+    GET_NAMESPACE_FAILURE
+} from '../../constants/NamespaceConstants';
 
-export default function CreateVolumeReducer(state = {
+export default function GetNamespaceReducer(state = {
     isFetching: false,
     data: {},
     status: '',
-    idVolume: '',
+    idName: '',
     errorMessage: ''
 }, action) {
     switch (action.type) {
-    case CREATE_VOLUME_REQUEST:
+    case GET_NAMESPACE_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: {},
             errorMessage: '',
             status: '',
-            idVolume: ''
+            idName: ''
         });
-    case CREATE_VOLUME_SUCCESS:
+    case GET_NAMESPACE_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data,
             status: action.status,
-            idVolume: action.idVolume
+            idName: action.idName
         });
-    case CREATE_VOLUME_FAILURE:
+    case GET_NAMESPACE_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message,
             status: action.status,
-            idVolume: action.idVolume
+            idName: action.idName
         });
     default:
         return state;

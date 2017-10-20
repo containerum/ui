@@ -31,6 +31,9 @@ export function getVolumesTariffs() {
             }
         )
         .then(response => {
+            response.data.sort(function(a, b) {
+                return parseFloat(a.price) - parseFloat(b.price);
+            });
             if (response.status === 200 || response.status === 201) {
                 dispatch(receiveGetVolumesTariffs(response.data));
             } else if (response.status === 401) {

@@ -34,11 +34,11 @@ class CreateService extends Component {
             value: this.refs.value.value,
             selectedLinkedDep: this.state.selectedLinkedDep
         };
-        console.log(serviceObject);
+        // console.log(serviceObject);
         // this.props.onGetCreateService(this.props.params.idName, serviceObject);
     }
     getSelectedLinkedDep(selectedLinkedDep) {
-        console.log(selectedLinkedDep);
+        // console.log(selectedLinkedDep);
         this.setState({
             ...this.state,
             selectedLinkedDep

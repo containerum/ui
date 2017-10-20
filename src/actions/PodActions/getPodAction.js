@@ -39,7 +39,7 @@ export function getPod(namespaceName, podName) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
                 } else if (response.status === 400) {
-                    browserHistory.push('/NotFound');
+                    browserHistory.push('/Namespaces');
                 } else {
                     dispatch(failGetPod(response.data.message));
                 }
