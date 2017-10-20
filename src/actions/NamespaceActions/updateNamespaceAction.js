@@ -17,11 +17,10 @@ export function updateNamespace(idName, tariff) {
         const token = localStorage.getItem('id_token');
         const browser = localStorage.getItem('id_browser');
 
-        return axios.post(
-            WEB_API + '/api/namespaces',
+        return axios.put(
+            WEB_API + '/api/namespaces/' + idName,
             {
-                label: idName,
-                tariff_label: tariff
+                "tariff_label": tariff
             },
             {
                 headers: {
@@ -36,7 +35,7 @@ export function updateNamespace(idName, tariff) {
         )
         .then(response => {
             console.log(response);
-            if (response.status === 201) {
+            if (response.status === 202) {
                 dispatch(receiveUpdateNamespace(response.data, response.status, idName));
                 browserHistory.push('/Namespaces');
             } else if (response.status === 401) {

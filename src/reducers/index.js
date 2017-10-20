@@ -12,6 +12,7 @@ import EmailUpdateReducer from './AuthReducers/EmailUpdateReducer';
 import CheckRelationWithGitHubAccountReducer from './AuthReducers/CheckRelationWithGitHubAccountReducer';
 import NamespacesReducer from './NamespacesReducers';
 import NSTariffsReducer from './NamespacesReducers/NSTariffsReducer';
+import GetNamespaceReducer from './NamespaceReducers/GetNamespaceReducer';
 import CreateNamespaceReducer from './NamespaceReducers/CreateNamespaceReducer';
 import DeleteNamespaceReducer from './NamespaceReducers/DeleteNamespaceReducer';
 import UpdateNamespaceReducer from './NamespaceReducers/UpdateNamespaceReducer';
@@ -41,6 +42,9 @@ import GetReleasesGithubReducer from './UserReducers/GetReleasesGithubReducer';
 import GroupOmnideskReducer from './OmnideskReducers/GetGroupOmnideskReducer';
 import SupportReducer from './SupportReducer';
 import TokensReducer from './TokensReducers';
+import GetImageTokensReducer from './TokensReducers/GetImageTokensReducer';
+import CreateImageTokensReducer from './TokensReducers/CreateImageTokensReducer';
+import DeleteImageTokensReducer from './TokensReducers/DeleteImageTokensReducer';
 
 const rootReducer = combineReducers({
     LoginReducer,
@@ -72,6 +76,7 @@ const rootReducer = combineReducers({
     RecoveryPasswordReducer,
     CheckRelationWithGitHubAccountReducer,
     TokensReducer,
+    GetImageTokensReducer,
     GroupOmnideskReducer,
     GetReleasesGithubReducer,
     CreateNamespaceReducer,
@@ -83,7 +88,10 @@ const rootReducer = combineReducers({
     GetTariffsReducer,
     PayForReducer,
     GetProfileReportReducer,
-    DeleteNamespaceReducer
+    DeleteNamespaceReducer,
+    GetNamespaceReducer,
+    CreateImageTokensReducer,
+    DeleteImageTokensReducer
 });
 
 export default rootReducer;

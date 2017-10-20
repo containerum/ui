@@ -35,7 +35,6 @@ export function createNamespace(idName, tariff) {
             }
         )
         .then(response => {
-            // console.log(response);
             if (response.status === 201) {
                 dispatch(receiveCreateNamespace(response.data, response.status, idName));
                 browserHistory.push('/Namespaces');
@@ -45,7 +44,7 @@ export function createNamespace(idName, tariff) {
             } else {
                 dispatch(failCreateNamespace(response.data.message, response.status, idName));
             }
-        }).catch(err => {dispatch(failCreateNamespace(err, 503)); console.log(err)})
+        }).catch(err => {dispatch(failCreateNamespace(err, 503, idName)); console.log(err)})
     };
 }
 

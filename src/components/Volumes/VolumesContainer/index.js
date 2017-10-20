@@ -9,6 +9,7 @@ import NavLink from "../../../containers/NavLink";
 
 class VolumesContainer extends Component {
     render() {
+        // console.log(this.props.VolumesReducer.data);
         return (
             <div>
                 {/* <Notification*/}
@@ -70,11 +71,11 @@ class VolumesContainer extends Component {
                             );
                         })
                     }
-                    {/*<div className="col-md-4 align-middle">*/}
-                        {/*<NavLink to="/CreateVolume" className="add-new-block content-block-content card-container hover-action ">*/}
-                            {/*<div className="action"><i>+</i> Add a volume</div>*/}
-                        {/*</NavLink>*/}
-                    {/*</div>*/}
+                    <div className="col-md-4 align-middle">
+                        <NavLink to="/CreateVolume" className="add-new-block content-block-content card-container hover-action ">
+                            <div className="action"><i>+</i> Add a volume</div>
+                        </NavLink>
+                    </div>
                 </div>
             </div>
         );

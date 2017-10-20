@@ -15,7 +15,7 @@ class ButtonCreateService extends Component {
                                         <div className="i-row-table">
                                             <div className="i-td-table">
                                                 Let's Start <br />
-                                                Follow the <a href="https://containerum.com/fast-deploy/hello-world" target="_blank">Documentation</a> to create your 1st Service
+                                                Follow the <a href="https://containerum.com/documentation/Start-Guide" target="_blank">Documentation</a> to create your 1st Service
                                             </div>
                                         </div>
                                     </div>

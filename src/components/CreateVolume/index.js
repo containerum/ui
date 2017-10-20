@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Spinner from '../Spinner';
+import Notification from '../Notification';
 import { getVolumesTariffs } from '../../actions/VolumesActions/getVolumesTariffsAction';
 import { createVolume } from '../../actions/VolumeActions/createVolumeAction';
 
@@ -18,7 +19,7 @@ class CreateVolume extends Component {
         this.props.onGetVolumesTariffs();
     }
     handleChangeInput(e) {
-        const regexp = /^[a-zA-Z0-9-]+$/;
+        const regexp = /^[a-z][a-z0-9-]*$|^$/;
         const inputValue = e.target.value.trim();
         if (inputValue.search(regexp) !== -1) {
             this.setState({
@@ -58,11 +59,8 @@ class CreateVolume extends Component {
                             <div className="row">
                                 {
                                     this.props.VolumesTariffsReducer.data.map((item, index) => {
-                                        // console.log(item);
-                                        // const cpu = item.cpu_limit / 1000;
-                                        // const memory = item.memory_limit / 1000;
-                                        // const traffic = item.traffic;
-                                        // const price = item.price === 0 && item.label === "free" ? 'free' : `$${item.price}`;
+                                        const storageLimit = item.storage_limit;
+                                        const price = item.price === 0 && item.label === "free" ? 'free' : `$${item.price}`;
                                         const label = item.label;
                                         return (
                                             <div className="col-md-3" key={index}>
@@ -75,11 +73,11 @@ class CreateVolume extends Component {
                                                 >
                                                     <div className="row">
                                                         <div className="col-md-6 namespace-plan-block-container-left">
-                                                            <div className="namespace-plan-block-price">$15</div>
+                                                            <div className="namespace-plan-block-price">{price}</div>
                                                             <div className="namespace-plan-block-month">per month</div>
                                                         </div>
                                                         <div className="col-md-6  volume-plan-container-right">
-                                                            <div className="hard-drive-size">10 GB</div>
+                                                            <div className="hard-drive-size">{storageLimit} GB</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -116,9 +114,19 @@ class CreateVolume extends Component {
         } else {
             isFetchingVolumesTariffs = <Spinner />;
         }
+        let isFetchingCreateVolumes = '';
+        if (this.props.CreateVolumeReducer.isFetching) {
+            isFetchingCreateVolumes = <Spinner />;
+        }
         return (
             <div>
+                <Notification
+                    status={this.props.CreateVolumeReducer.status}
+                    name={this.props.CreateVolumeReducer.idVolume}
+                    errorMessage={this.props.CreateVolumeReducer.errorMessage}
+                />
                 { isFetchingVolumesTariffs }
+                { isFetchingCreateVolumes }
             </div>
         );
     }

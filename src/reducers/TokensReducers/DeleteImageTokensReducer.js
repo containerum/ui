@@ -1,38 +1,34 @@
 import {
-    CREATE_NAMESPACE_REQUEST,
-    CREATE_NAMESPACE_SUCCESS,
-    CREATE_NAMESPACE_FAILURE
-} from '../../constants/NamespaceConstants';
+    DELETE_IMAGE_TOKENS_REQUEST,
+    DELETE_IMAGE_TOKENS_SUCCESS,
+    DELETE_IMAGE_TOKENS_FAILURE
+} from '../../constants/TokensConstants';
 
-export default function CreateNamespaceReducer(state = {
+export default function DeleteImageTokensReducer(state = {
     isFetching: false,
-    data: {},
-    status: '',
-    WebHook: '',
-    errorMessage: ''
+    status: 0,
+    errorMessage: '',
+    WebHook: ''
 }, action) {
     switch (action.type) {
-    case CREATE_NAMESPACE_REQUEST:
+    case DELETE_IMAGE_TOKENS_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            data: {},
             errorMessage: '',
-            status: '',
+            status: 0,
             WebHook: ''
         });
-    case CREATE_NAMESPACE_SUCCESS:
+    case DELETE_IMAGE_TOKENS_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            data: action.data,
             status: action.status,
             WebHook: action.WebHook
         });
-    case CREATE_NAMESPACE_FAILURE:
+    case DELETE_IMAGE_TOKENS_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message,
-            status: action.status,
-            WebHook: action.WebHook
+            status: action.status
         });
     default:
         return state;

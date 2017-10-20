@@ -103,7 +103,7 @@ class SignUp extends Component {
         }
     }
     handleSelectCountry(billing_code) {
-        console.log(billing_code);
+        // console.log(billing_code);
         this.setState({
             ...this.state,
             billing_code

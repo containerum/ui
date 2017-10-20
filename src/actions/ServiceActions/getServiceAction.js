@@ -39,7 +39,7 @@ export function getService(namespaceName, serviceName) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else if (response.status === 400) {
-                browserHistory.push('/NotFound');
+                browserHistory.push('/Namespaces');
             } else {
                 dispatch(failGetService(response.data.message));
             }

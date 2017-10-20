@@ -18,6 +18,9 @@ export default class ProfileSidebar extends Component {
                                     <li className="nav-item">
                                         <a href="/Account#password" className="nav-link ">Password</a>
                                     </li>
+                                    <li className="nav-item">
+                                        <a href="/Account#webhooks" className="nav-link ">WebHooks</a>
+                                    </li>
                                     {/*<li className="nav-item"><NavLink href="/Account#tokens" className="nav-link ">Tokens</NavLink></li>*/}
                                     <li className="nav-item">
                                         <a href="/Account#cli" className="nav-link ">CLI</a>
