@@ -71,6 +71,7 @@ class AddFunds extends Component {
                                         type="text"
                                         required="required"
                                         id="payFunds"
+                                        title=' '
                                     />
                                     <label
                                         className="form-group__label"

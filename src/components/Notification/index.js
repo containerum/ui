@@ -24,6 +24,9 @@ class Notification extends Component {
             'hideMethod': 'fadeOut'
         };
         if (nextProps.status === 202 && nextProps.name &&
+            nextProps.name !== this.props.name && nextProps.method === 'put') {
+            toastr.success(nextProps.name + ' was updated', 'Updated Success');
+        } else if (nextProps.status === 202 && nextProps.name &&
             nextProps.name !== this.props.name) {
             toastr.success(nextProps.name + ' was deleted', 'Deleted Success');
         } else if (nextProps.status === 201 && nextProps.name &&
@@ -45,6 +48,11 @@ class Notification extends Component {
 
 Notification.propTypes = {
     name: PropTypes.string,
+    status: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
+    method: PropTypes.string,
     errorMessage: PropTypes.string
 };
 

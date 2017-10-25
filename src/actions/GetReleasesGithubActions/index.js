@@ -17,7 +17,7 @@ export function GetReleasesGithub() {
         if (token && JSON.parse(token).date + 18000000 >= dateNow) {
             dispatch(receiveGetReleases(JSON.parse(token).data));
         } else {
-            console.log(dateNow);
+            // console.log(dateNow);
             return axios.get(
                 'https://api.github.com/repos/containerum/chkit/releases/latest',
                 {

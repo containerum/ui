@@ -41,7 +41,7 @@ export function getNamespace(idName) {
             } else {
                 dispatch(failGetNamespace(response.data.message, response.status, idName));
             }
-        }).catch(err => {dispatch(failGetNamespace(err, 503)); console.log(err)})
+        }).catch(err => {dispatch(failGetNamespace(err.toString(), 503)); console.log(err)})
     };
 }
 

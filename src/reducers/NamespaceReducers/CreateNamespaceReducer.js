@@ -8,7 +8,7 @@ export default function CreateNamespaceReducer(state = {
     isFetching: false,
     data: {},
     status: '',
-    WebHook: '',
+    idName: '',
     errorMessage: ''
 }, action) {
     switch (action.type) {
@@ -18,21 +18,21 @@ export default function CreateNamespaceReducer(state = {
             data: {},
             errorMessage: '',
             status: '',
-            WebHook: ''
+            idName: ''
         });
     case CREATE_NAMESPACE_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data,
             status: action.status,
-            WebHook: action.WebHook
+            idName: action.idName
         });
     case CREATE_NAMESPACE_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message,
             status: action.status,
-            WebHook: action.WebHook
+            idName: action.idName
         });
     default:
         return state;

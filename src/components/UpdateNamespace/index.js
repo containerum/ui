@@ -147,6 +147,7 @@ class UpdateNamespace extends Component {
             <div>
                 <Notification
                     status={this.props.UpdateNamespaceReducer.status}
+                    method={this.props.UpdateNamespaceReducer.method}
                     name={this.props.UpdateNamespaceReducer.idName}
                     errorMessage={this.props.UpdateNamespaceReducer.errorMessage}
                 />

@@ -39,7 +39,7 @@ export function deleteNamespace(idName) {
             } else {
                 dispatch(failDeleteNamespace(response.data.message));
             }
-        }).catch(err => {console.log(err); dispatch(failDeleteNamespace(err))});
+        }).catch(err => {console.log(err); dispatch(failDeleteNamespace(err.toString()))});
     };
 }
 

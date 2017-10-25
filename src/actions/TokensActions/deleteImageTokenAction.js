@@ -42,7 +42,7 @@ export function deleteImageToken() {
                 } else {
                     dispatch(failDeleteImageTokens(response.data.message, response.status));
                 }
-            }).catch(err => {console.log(err); dispatch(failDeleteImageTokens(err, 503))});
+            }).catch(err => {console.log(err); dispatch(failDeleteImageTokens(err.toString(), 503))});
     };
 }
 

@@ -45,7 +45,7 @@ export function createVolume(idVolume, tariff) {
             } else {
                 dispatch(failCreateVolume(response.data.message, response.status, idVolume));
             }
-        }).catch(err => {dispatch(failCreateVolume(err, 503, idVolume)); console.log(err)});
+        }).catch(err => {dispatch(failCreateVolume(err.toString(), 503, idVolume)); console.log(err)});
     };
 }
 

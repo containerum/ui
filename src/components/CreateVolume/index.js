@@ -93,8 +93,7 @@ class CreateVolume extends Component {
                             >
                                 <div className="namespace-plan-first-step">2 / 2</div>
                                 <div className="namespace-plan-title">choose a Name</div>
-                                <div className="namespace-plan-info">Assign this Namespace an identifying name.
-                                    Namespace name can only contain alphanumeric characters and dashes.</div>
+                                <div className="namespace-plan-info">Volume name can only contain alphanumeric characters and dashes.</div>
                                 <input
                                     type="text"
                                     className="form-control namespace-plan-input"
