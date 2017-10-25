@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { GetReleasesGithub } from '../../../actions/GetReleasesGithubActions';
+import { getPlatform } from '../../../functions/getPlatform';
 
 class NotFoundDeployments extends Component {
+    componentDidMount() {
+        if (!Object.keys(this.props.GetReleasesGithubReducer.data).length) {
+            this.props.onGetReleasesGithub();
+        }
+    }
     render() {
+        const { linkPlatform } = getPlatform(this.props.GetReleasesGithubReducer.data);
         return (
             <div>
                 <div className="content-block-content full">
@@ -11,8 +22,8 @@ class NotFoundDeployments extends Component {
                                 <thead>
                                 <tr>
                                     <td className="td-1">
-                                        Let's Start <br/>
-                                        Follow the <a className="documentation-link" target="_blank" href="https://containerum.com/documentation/Start-Guide">Documentation</a> to create your 1st Deployment
+                                        Deployment is a controller that contains one or several containers, united into Pods. <br /> <br />
+                                        To create a new Deployment use our <a className="documentation-link" href={linkPlatform}>CLI Tool</a> and refer to our <a className="documentation-link" href="https://containerum.com/documentation/Start-Guide" target="_blank">Documentation</a>
                                     </td>
                                 </tr>
                                 </thead>
@@ -25,4 +36,23 @@ class NotFoundDeployments extends Component {
     }
 }
 
-export default NotFoundDeployments;
+NotFoundDeployments.propTypes = {
+    GetReleasesGithubReducer: PropTypes.object,
+    onGetReleasesGithub: PropTypes.func
+};
+
+function mapStateToProps(state) {
+    return {
+        GetReleasesGithubReducer: state.GetReleasesGithubReducer
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetReleasesGithub: () => {
+            dispatch(GetReleasesGithub());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotFoundDeployments);

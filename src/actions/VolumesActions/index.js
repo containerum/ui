@@ -27,7 +27,7 @@ export function getVolumes() {
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
-                validateStatus: (status) => status >= 200 && status <= 500
+                validateStatus: (status) => status >= 200 && status <= 505
             }
         )
         .then(response => {
@@ -37,6 +37,8 @@ export function getVolumes() {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else if (response.status === 404) {
+                dispatch(receiveGetVolumes([]));
+            } else if (response.status === 503) {
                 dispatch(receiveGetVolumes([]));
             } else {
                 dispatch(failGetVolumes(response.data.message));

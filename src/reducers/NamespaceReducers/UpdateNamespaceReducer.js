@@ -8,6 +8,7 @@ export default function UpdateNamespaceReducer(state = {
     isFetching: false,
     data: {},
     status: '',
+    method: '',
     idName: '',
     errorMessage: ''
 }, action) {
@@ -18,6 +19,7 @@ export default function UpdateNamespaceReducer(state = {
             data: {},
             errorMessage: '',
             status: '',
+            method: '',
             idName: ''
         });
     case UPDATE_NAMESPACE_SUCCESS:
@@ -25,6 +27,7 @@ export default function UpdateNamespaceReducer(state = {
             isFetching: action.isFetching,
             data: action.data,
             status: action.status,
+            method: action.method,
             idName: action.idName
         });
     case UPDATE_NAMESPACE_FAILURE:

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import NavLink from "../../../containers/NavLink";
+import Scrollspy from 'react-scrollspy';
 
 export default class ProfileSidebar extends Component {
     render() {
@@ -11,30 +10,41 @@ export default class ProfileSidebar extends Component {
                         <ul className="account-menu nav nav-list">
                             <li>
                                 <div className="nav-root-item">Account</div>
-                                <ul className="sub-navbar">
+                                <Scrollspy
+                                    items={ ['profile', 'password', 'webhooks', 'cli', 'delete-account'] }
+                                    style={{
+                                        padding: '20px 0 0 20px'
+                                    }}
+                                    currentClassName="active">
                                     <li className="nav-item">
-                                        <a href="/Account#profile" className="nav-link active">Profile</a>
+                                        <a href="/Account#profile" className="nav-link">Profile</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="/Account#password" className="nav-link ">Password</a>
+                                        <a href="/Account#password" className="nav-link">Password</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="/Account#webhooks" className="nav-link ">WebHooks</a>
+                                        <a href="/Account#webhooks" className="nav-link">WebHooks</a>
                                     </li>
-                                    {/*<li className="nav-item"><NavLink href="/Account#tokens" className="nav-link ">Tokens</NavLink></li>*/}
+                                    {/*<li className="nav-item"><a href="/Account#tokens" className="nav-link">Tokens</a></li>*/}
                                     <li className="nav-item">
-                                        <a href="/Account#cli" className="nav-link ">CLI</a>
+                                        <a href="/Account#cli" className="nav-link">CLI</a>
                                     </li>
-                                    {/*<li className="nav-item"><NavLink href="/Account#company-account" className="nav-link ">Company account</NavLink></li>*/}
-                                    {/*<li className="nav-item"><NavLink href="/Account#subscriptions" className="nav-link ">E-mail subscriptions</NavLink></li>*/}
+                                    {/*<li className="nav-item"><a href="/Account#company-account" className="nav-link">Company account</a></li>*/}
+                                    {/*<li className="nav-item"><a href="/Account#subscriptions" className="nav-link">E-mail subscriptions</a></li>*/}
                                     <li className="nav-item">
-                                        <a href="/Account#delete-account" className="nav-link ">Delete Account</a>
+                                        <a href="/Account#delete-account" className="nav-link">Delete Account</a>
                                     </li>
-                                </ul>
+                                </Scrollspy>
                             </li>
                             <li>
                                 <div className="nav-root-item">Billing</div>
-                                <ul className="sub-navbar">
+                                <Scrollspy
+                                    items={ ['information', 'add-funds', 'history'] }
+                                    style={{
+                                        padding: '20px 0 0 20px'
+                                    }}
+                                    currentClassName="active">
+
                                     <li className="nav-item">
                                         <a href="/Billing#information" className="nav-link">Information</a>
                                     </li>
@@ -42,12 +52,12 @@ export default class ProfileSidebar extends Component {
                                         <a href="/Billing#add-funds" className="nav-link">Payment method</a>
                                     </li>
                                     {/*<li className="nav-item">*/}
-                                        {/*<a href="/Billing#alert" className="nav-link">Alert</a>*/}
+                                    {/*<a href="/Billing#alert" className="nav-link">Alert</a>*/}
                                     {/*</li>*/}
                                     <li className="nav-item">
                                         <a href="/Billing#history" className="nav-link">History</a>
                                     </li>
-                                </ul>
+                                </Scrollspy>
                             </li>
                         </ul>
                     </div>

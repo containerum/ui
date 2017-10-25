@@ -20,11 +20,25 @@ class WebHook extends Component {
         };
     }
     componentDidMount() {
-        if (!Object.keys(this.props.GetImageTokensReducer.data).length) {
+        // if (!Object.keys(this.props.GetImageTokensReducer.data).length) {
             this.props.onGetImageTokens();
+        // }
+        if (this.props.GetImageTokensReducer.data.token) {
+            this.setState({
+                ...this.state,
+                isTokenExists: true,
+                token: this.props.GetImageTokensReducer.data.token
+            });
         }
     }
     componentWillReceiveProps(nextProps) {
+        if (nextProps.GetImageTokensReducer.data.token) {
+            this.setState({
+                ...this.state,
+                isTokenExists: true,
+                token: nextProps.GetImageTokensReducer.data.token
+            });
+        }
         if (nextProps.DeleteImageTokensReducer.isFetching === false &&
             nextProps.DeleteImageTokensReducer.status === 202 &&
             nextProps.DeleteImageTokensReducer.status !== this.props.DeleteImageTokensReducer.status &&
@@ -44,26 +58,19 @@ class WebHook extends Component {
                 token: nextProps.CreateImageTokensReducer.data.token
             });
         }
-        if (Object.keys(this.props.GetImageTokensReducer.data).length &&
-            nextProps.GetImageTokensReducer.data !== this.props.GetImageTokensReducer.data) {
-            this.setState({
-                ...this.state,
-                isTokenExists: true,
-                token: nextProps.GetImageTokensReducer.data.token
-            });
-        }
     }
     handleSubmitGetImageTokens(e) {
         e.preventDefault();
         this.props.onCreateImageTokens();
     }
     handleClickCopy() {
-        copy(`curl -X POST https://web.api.containerum.io:5000/api/set/image/${this.state.token} -H 'content-type: application/json' -d '{"image": "python:3.5-slim","deployment_name": "deplo1","namespace": "aaa","container_name": "deplo1"}'`);
+        copy(`curl -X POST https://web.api.containerum.io:5000/api/set/image/${this.state.token} -H 'content-type: application/json' -d '{"image": "IMAGE_NAME","deployment_name": "DEPLOY_NAME","namespace": "NAMESPACE_NAME","container_name": "CONTAINER_NAME"}'`);
     }
     handleClickDeletingWebHook() {
         this.props.onDeleteImageToken();
     }
     render() {
+        // console.log(this.props.GetImageTokensReducer);
         let isFetchingComponent = '';
         if (this.props.GetImageTokensReducer.isFetching === false) {
         isFetchingComponent =
@@ -134,14 +141,14 @@ class WebHook extends Component {
                                     </svg>
                                 </button>
                                 <div className="block-item__content-string">
-                                    curl -X POST \ <br/>
-                                    https://web.api.containerum.io:5000/api/set/image/{this.state.token} \ <br/>
-                                    -H 'content-type: application/json' \ <br/>
-                                    -d '&#123; <br/>
-                                    &nbsp;&nbsp;"image": "IMAGE_NAME", <br/>
-                                    &nbsp;&nbsp;"deployment_name": "DEPLOY_NAME", <br/>
-                                    &nbsp;&nbsp;"namespace": "NAMESPACE_NAME", <br/>
-                                    &nbsp;&nbsp;"container_name": "CONTAINER_NAME" <br/>
+                                    curl -X POST \<br/>
+                                    https://web.api.containerum.io:5000/api/set/image/{this.state.token} \<br/>
+                                    -H 'content-type: application/json' \<br/>
+                                    -d '&#123;<br/>
+                                    &nbsp;&nbsp;"image": "IMAGE_NAME",<br/>
+                                    &nbsp;&nbsp;"deployment_name": "DEPLOY_NAME",<br/>
+                                    &nbsp;&nbsp;"namespace": "NAMESPACE_NAME",<br/>
+                                    &nbsp;&nbsp;"container_name": "CONTAINER_NAME"<br/>
                                     &#125;'
                                 </div>
                             </Scrollbars>
@@ -150,6 +157,11 @@ class WebHook extends Component {
                 </div>;
         } else {
             isFetchingComponent = <Spinner />;
+        }
+        let isFetchingDeleteToken = '';
+        if (this.props.DeleteImageTokensReducer.isFetching ||
+            this.props.CreateImageTokensReducer.isFetching) {
+            isFetchingDeleteToken = <Spinner />;
         }
         return (
             <div>
@@ -163,6 +175,7 @@ class WebHook extends Component {
                     name={this.props.CreateImageTokensReducer.WebHook}
                     errorMessage={this.props.CreateImageTokensReducer.errorMessage}
                 />
+                { isFetchingDeleteToken }
                 { isFetchingComponent }
             </div>
         );

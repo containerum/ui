@@ -296,20 +296,20 @@ h1{
     padding: 20px 0 0 20px;
 }
 
-.account-menu .sub-navbar .nav-item{
+.account-menu .nav-item {
     list-style: none;
     padding: 0 0 0 0;
     margin: 0 0 15px 0;
 }
 
-.account-menu .sub-navbar .nav-link{
+.account-menu .nav-link {
     font-weight: 300;
     color:#a7a7a7;
     padding: 0;
     margin: 0;
 }
 
-.account-menu .sub-navbar .nav-link:hover, .account-menu .sub-navbar .nav-link.active{
+.account-menu .nav-item:hover a, .account-menu .nav-item.active a{
     color:#29abe2;
 }
 

@@ -34,9 +34,9 @@ export function updateNamespace(idName, tariff) {
             }
         )
         .then(response => {
-            console.log(response);
+            // console.log(response.config.method);
             if (response.status === 202) {
-                dispatch(receiveUpdateNamespace(response.data, response.status, idName));
+                dispatch(receiveUpdateNamespace(response.data, response.status, response.config.method, idName));
                 browserHistory.push('/Namespaces');
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
@@ -44,7 +44,7 @@ export function updateNamespace(idName, tariff) {
             } else {
                 dispatch(failUpdateNamespace(response.data.message, response.status, idName));
             }
-        }).catch(err => {dispatch(failUpdateNamespace(err, 503)); console.log(err)})
+        }).catch(err => {dispatch(failUpdateNamespace(err.toString(), 503)); console.log(err)})
     };
 }
 
@@ -55,12 +55,13 @@ function requestUpdateNamespace() {
     };
 }
 
-function receiveUpdateNamespace(data, status, idName) {
+function receiveUpdateNamespace(data, status, method, idName) {
     return {
         type: UPDATE_NAMESPACE_SUCCESS,
         isFetching: false,
         data,
         status,
+        method,
         idName
     };
 }

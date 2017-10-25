@@ -44,7 +44,7 @@ export function createNamespace(idName, tariff) {
             } else {
                 dispatch(failCreateNamespace(response.data.message, response.status, idName));
             }
-        }).catch(err => {dispatch(failCreateNamespace(err, 503, idName)); console.log(err)})
+        }).catch(err => {dispatch(failCreateNamespace(err.toString(), 503, idName)); console.log(err)})
     };
 }
 

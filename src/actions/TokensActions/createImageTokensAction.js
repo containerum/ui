@@ -43,7 +43,7 @@ export function createImageTokens() {
                 } else {
                     dispatch(failCreateImageTokens(response.data.message, response.status, WebHook));
                 }
-            }).catch(err => {dispatch(failCreateImageTokens(err, 503, WebHook)); console.log(err)});
+            }).catch(err => {dispatch(failCreateImageTokens(err.toString(), 503, WebHook)); console.log(err)});
     };
 }
 

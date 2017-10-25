@@ -44,7 +44,7 @@ export function payFor(amount) {
             } else {
                 dispatch(failPayFor(response.data.message, response.status));
             }
-        }).catch(err => {dispatch(failPayFor(err)); console.log(err)});
+        }).catch(err => {dispatch(failPayFor(err.toString())); console.log(err)});
     };
 }
 

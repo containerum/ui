@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Tooltip from 'rc-tooltip';
-import ScrollableAnchor from 'react-scrollable-anchor';
+// import Tooltip from 'rc-tooltip';
+// import ScrollableAnchor from 'react-scrollable-anchor';
 
+import { getNamespaces } from '../../actions/NamespacesActions';
 import Spinner from '../Spinner';
 import Notification from '../Notification';
 import { getNSTariffs } from '../../actions/NamespacesActions/getNSTariffsAction';
@@ -21,6 +22,9 @@ class CreateNamespace extends Component {
     componentDidMount() {
         if (!this.props.NSTariffsReducer.data.length) {
             this.props.onGetNSTariffs();
+        }
+        if (!this.props.NamespacesReducer.data.length) {
+            this.props.onGetNamespaces();
         }
     }
     handleChangeInput(e) {
@@ -47,10 +51,15 @@ class CreateNamespace extends Component {
         }
     }
     render() {
-        // console.log(this.props.NSTariffsReducer);
-        // console.log(this.props.CreateNamespaceReducer);
+        let haveFreeTariff = false;
+        this.props.NamespacesReducer.data.map(item => {
+            if (item.tariff === 'free') {
+                haveFreeTariff = true;
+            }
+        });
         let isFetchingNSTariffs = '';
-        if (this.props.NSTariffsReducer.isFetching === false) {
+        if (this.props.NSTariffsReducer.isFetching === false ||
+            this.props.NamespacesReducer.isFetching === false) {
             isFetchingNSTariffs =
                 <div className="content-block">
                     <div className="content-block-container container no-back mt-0 no-padding">
@@ -72,21 +81,34 @@ class CreateNamespace extends Component {
                                         const label = item.label;
                                         return (
                                             <div className="col-md-3" key={index}>
-                                                <Tooltip
-                                                    placement="top"
-                                                    trigger={['click']}
-                                                    overlay={<a href="#bottom">Enter the name</a>}
-                                                >
+                                                {/*<Tooltip*/}
+                                                    {/*placement="top"*/}
+                                                    {/*trigger={['click']}*/}
+                                                    {/*overlay={<a href="#bottom">Enter the name</a>}*/}
+                                                {/*>*/}
                                                     <div
                                                         id={label}
-                                                        className={label === this.state.NSTariffName ?
-                                                            "namespace-plan-block-container hover-action-new selected" :
-                                                            "namespace-plan-block-container hover-action-new"}
-                                                        onClick={labelName => this.handleClickTriff(label)}
+                                                        className={
+                                                            haveFreeTariff && price === 'free' ?
+                                                                "namespace-plan-block-container hover-action-new disabled" :
+                                                                label !== this.state.NSTariffName ?
+                                                                    "namespace-plan-block-container hover-action-new" :
+                                                                    "namespace-plan-block-container hover-action-new selected"
+                                                        }
+                                                        onClick={() => {
+                                                            if (!(haveFreeTariff && price === 'free')) {
+                                                                // console.log(isActiveTariff, item.label !== 'free');
+                                                                this.handleClickTriff(label)
+                                                            }
+                                                        }}
                                                     >
                                                         <div className="row">
                                                             <div className="col-md-6 namespace-plan-block-container-left">
                                                                 <div className="namespace-plan-block-price">{price}</div>
+                                                                {
+                                                                    item.price === 0 && item.label === "free" ?
+                                                                        '' : <div className="namespace-plan-block-month">per month</div>
+                                                                }
                                                             </div>
                                                             <div className="col-md-6 namespace-plan-block-container-right">
                                                                 <div className="content-block-content card-block">
@@ -106,21 +128,20 @@ class CreateNamespace extends Component {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </Tooltip>
+                                                {/*</Tooltip>*/}
                                             </div>
                                         )
                                     })
                                 }
                             </div>
-                            <ScrollableAnchor id={'bottom'}>
+                            {/*<ScrollableAnchor id={'bottom'}>*/}
                                 <form
                                     className="col-md-6 namespace-plan"
                                     onSubmit={this.handleSubmitNSTariffs.bind(this)}
                                 >
                                     <div className="namespace-plan-first-step">2 / 2</div>
                                     <div className="namespace-plan-title">choose a Name</div>
-                                    <div className="namespace-plan-info">Assign this Namespace an identifying name.
-                                        Namespace name can only contain alphanumeric characters and dashes.</div>
+                                    <div className="namespace-plan-info">Namespace name can only contain alphanumeric characters and dashes.</div>
                                     <input
                                         type="text"
                                         className="form-control namespace-plan-input"
@@ -134,7 +155,7 @@ class CreateNamespace extends Component {
                                         type="submit"
                                     >Create</button>
                                 </form>
-                            </ScrollableAnchor>
+                            {/*</ScrollableAnchor>*/}
                         </div>
                     </div>
                 </div>;
@@ -162,13 +183,15 @@ class CreateNamespace extends Component {
 CreateNamespace.propTypes = {
     onGetNSTariffs: PropTypes.func.isRequired,
     NSTariffsReducer: PropTypes.object,
-    CreateNamespaceReducer: PropTypes.object
+    CreateNamespaceReducer: PropTypes.object,
+    NamespacesReducer: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
         NSTariffsReducer: state.NSTariffsReducer,
-        CreateNamespaceReducer: state.CreateNamespaceReducer
+        CreateNamespaceReducer: state.CreateNamespaceReducer,
+        NamespacesReducer: state.NamespacesReducer
     };
 }
 
@@ -179,6 +202,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onCreateNamespace: (inputNSName, NSTariffName) => {
             dispatch(createNamespace(inputNSName, NSTariffName));
+        },
+        onGetNamespaces: () => {
+            dispatch(getNamespaces());
         }
     };
 };
