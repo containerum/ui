@@ -1,22 +1,62 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 import nslogo from '../../../images/deploym.png';
 import NavLink from "../../../containers/NavLink";
 
-// import Notification from '../../components/Notification';
+import { deleteVolume } from "../../../actions/VolumeActions/deleteVolumeAction";
+import Notification from '../../Notification';
+import CustomerModal from '../../CustomerModal';
+import Spinner from '../../Spinner';
 
 class VolumesContainer extends Component {
+    constructor() {
+        super();
+        this.state = {
+            isOpened: false,
+            VolumeName: ''
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        // console.log('DeleteVolumeReducer', nextProps);
+        if (this.props.DeleteVolumeReducer) {
+            this.setState({
+                ...this.state,
+                VolumeName: '',
+                isOpened: false
+            });
+        }
+        if (nextProps.DeleteVolumeReducer.isFetching === false &&
+            nextProps.DeleteVolumeReducer.status === 202 &&
+            nextProps.DeleteVolumeReducer.idVolume) {
+            const id = `item_${nextProps.DeleteVolumeReducer.idVolume}`;
+            const el = document.getElementById(id);
+            el ? el.remove() : el;
+        }
+    }
+    handleClose(e) {
+        e.stopPropagation();
+    }
+    handleClickDeletingVolume(idVolume) {
+        this.setState({
+            ...this.state,
+            VolumeName: idVolume,
+            isOpened: true
+        });
+    }
     render() {
-        // console.log(this.props.VolumesReducer.data);
+        let isFetchingDeleteVolume = '';
+        if (this.props.DeleteVolumeReducer.isFetching) {
+            isFetchingDeleteVolume = <Spinner />;
+        }
         return (
             <div>
-                {/* <Notification*/}
-                {/* status={this.props.DeleteDeploymentReducer.status}*/}
-                {/* name={this.props.DeleteDeploymentReducer.deploymentName}*/}
-                {/* errorMessage={this.props.DeleteDeploymentReducer.errorMessage}*/}
-                {/* />*/}
+                { isFetchingDeleteVolume }
+                 <Notification
+                     status={this.props.DeleteVolumeReducer.status}
+                     name={this.props.DeleteVolumeReducer.idVolume}
+                     errorMessage={this.props.DeleteVolumeReducer.errorMessage}
+                 />
                 <div className="row double">
                     {
                         this.props.VolumesReducer.data.map((item) => {
@@ -38,21 +78,26 @@ class VolumesContainer extends Component {
                                                     {name}
                                                 </div>
                                             </div>
-                                            {/*<div className="content-block-header-extra-panel">*/}
-                                            {/*<div className="content-block-header-extra-panel dropdown no-arrow">*/}
-                                            {/*<i*/}
-                                            {/*className="content-block-header__more ion-more dropdown-toggle"*/}
-                                            {/*data-toggle="dropdown"*/}
-                                            {/*aria-haspopup="true"*/}
-                                            {/*aria-expanded="false"*/}
-                                            {/*> </i>*/}
-                                            {/*<ul className="dropdown-menu dropdown-menu-right" role="menu">*/}
-                                            {/*<a className="dropdown-item" data-toggle="modal" data-target="#volume" href="#">Delete</a>*/}
-                                            {/*<a className="dropdown-item" href="#">Dropdown item</a>*/}
-                                            {/*<a className="dropdown-item" href="#">Dropdown item</a>*/}
-                                            {/*</ul>*/}
-                                            {/*</div>*/}
-                                            {/*</div>*/}
+                                            <div className="content-block-header-extra-panel" onClick={this.handleClose.bind(this)}>
+                                                <div className="content-block-header-extra-panel dropdown no-arrow">
+                                                    <i
+                                                        className="content-block-header__more ion-more dropdown-toggle"
+                                                        data-toggle="dropdown"
+                                                        aria-haspopup="true"
+                                                        aria-expanded="false"
+                                                    > </i>
+                                                    <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                                        <NavLink
+                                                            className="dropdown-item"
+                                                            to={`/Volumes/${name}/Update`}
+                                                        >Update</NavLink>
+                                                        <button
+                                                            className="dropdown-item text-danger"
+                                                            onClick={idVolume => this.handleClickDeletingVolume(name)}
+                                                        >Delete</button>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div className="content-block-content card-block">
@@ -77,15 +122,37 @@ class VolumesContainer extends Component {
                         </NavLink>
                     </div>
                 </div>
+
+                <CustomerModal
+                    type="Volume"
+                    name={this.state.VolumeName}
+                    isOpened={this.state.isOpened}
+                    onHandleDelete={this.props.onDeleteVolume}
+                />
             </div>
         );
     }
 }
 
+VolumesContainer.propTypes = {
+    VolumesReducer: PropTypes.object,
+    DeleteVolumeReducer: PropTypes.object,
+    onDeleteVolume: PropTypes.func
+};
+
 function mapStateToProps(state) {
     return {
+        DeleteVolumeReducer: state.DeleteVolumeReducer,
         VolumesReducer: state.VolumesReducer
     };
 }
 
-export default connect(mapStateToProps)(VolumesContainer);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeleteVolume: (idVolume) => {
+            dispatch(deleteVolume(idVolume));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(VolumesContainer);

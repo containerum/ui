@@ -2,26 +2,25 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-    CREATE_VOLUME_REQUEST,
-    CREATE_VOLUME_SUCCESS,
-    CREATE_VOLUME_FAILURE
+    UPDATE_VOLUME_REQUEST,
+    UPDATE_VOLUME_SUCCESS,
+    UPDATE_VOLUME_FAILURE
 } from '../../constants/VolumeConstants';
 
 import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function createVolume(idVolume, tariff) {
+export function updateVolume(idVolume, tariff) {
     return dispatch => {
-        dispatch(requestCreateVolume());
+        dispatch(requestUpdateVolume());
         const token = localStorage.getItem('id_token');
         const browser = localStorage.getItem('id_browser');
 
-        return axios.post(
-            WEB_API + '/api/volumes',
+        return axios.put(
+            WEB_API + '/api/volumes/' + idVolume,
             {
-                label: idVolume,
-                tariff_label: tariff
+                "tariff_label": tariff
             },
             {
                 headers: {
@@ -35,40 +34,40 @@ export function createVolume(idVolume, tariff) {
             }
         )
         .then(response => {
-            // console.log(response);
-            if (response.status === 201) {
-                dispatch(receiveCreateVolume(response.data, response.status, idVolume));
+            if (response.status === 202) {
+                dispatch(receiveUpdateVolume(response.data, response.status, response.config.method, idVolume));
                 browserHistory.push('/Volumes');
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
             } else {
-                dispatch(failCreateVolume(response.data.message, response.status, idVolume));
+                dispatch(failUpdateVolume(response.data.message, response.status, idVolume));
             }
-        }).catch(err => {dispatch(failCreateVolume(err.toString(), 503, idVolume)); console.log(err)});
+        }).catch(err => {dispatch(failUpdateVolume(err.toString(), 503)); console.log(err)})
     };
 }
 
-function requestCreateVolume() {
+function requestUpdateVolume() {
     return {
-        type: CREATE_VOLUME_REQUEST,
+        type: UPDATE_VOLUME_REQUEST,
         isFetching: true
     };
 }
 
-function receiveCreateVolume(data, status, idVolume) {
+function receiveUpdateVolume(data, status, method, idVolume) {
     return {
-        type: CREATE_VOLUME_SUCCESS,
+        type: UPDATE_VOLUME_SUCCESS,
         isFetching: false,
         data,
         status,
+        method,
         idVolume
     };
 }
 
-function failCreateVolume(message, status, idVolume) {
+function failUpdateVolume(message, status, idVolume) {
     return {
-        type: CREATE_VOLUME_FAILURE,
+        type: UPDATE_VOLUME_FAILURE,
         isFetching: false,
         message,
         status,

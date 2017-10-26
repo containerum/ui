@@ -29,6 +29,7 @@ import NotFound from './components/NotFound';
 import CreateNamespace from './components/CreateNamespace';
 import UpdateNamespace from './components/UpdateNamespace';
 import CreateVolume from './components/CreateVolume';
+import UpdateVolume from './components/UpdateVolume';
 // import CreateDeployment from './components/CreateDeployment';
 // import CreateService from './components/CreateService';
 
@@ -55,6 +56,7 @@ export const routes = (
             <Route path="/CreateNamespace" component={CreateNamespace} />
             <Route path="/Namespaces/:idName/Update" component={UpdateNamespace} />
             <Route path="/CreateVolume" component={CreateVolume} />
+            <Route path="/Volumes/:idVolume/Update" component={UpdateVolume} />
             {/*<Route path="/Namespaces/:idName/CreateNewDeployment" component={CreateDeployment} />*/}
             {/*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*/}
             <Route path="/Support" component={Support} />
