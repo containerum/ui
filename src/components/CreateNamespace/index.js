@@ -58,7 +58,7 @@ class CreateNamespace extends Component {
             }
         });
         let isFetchingNSTariffs = '';
-        if (this.props.NSTariffsReducer.isFetching === false ||
+        if (this.props.NSTariffsReducer.isFetching === false &&
             this.props.NamespacesReducer.isFetching === false) {
             isFetchingNSTariffs =
                 <div className="content-block">
