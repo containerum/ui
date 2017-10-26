@@ -10,4 +10,4 @@ COPY . /usr/src/app
 ENV WEB_API "https://web.api.containerum.io:5000"
 
 EXPOSE 3000
-CMD npm start
+CMD npm run build && serve -s build -p 3000
