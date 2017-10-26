@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import copy from 'copy-text-to-clipboard';
+// import copy from 'copy-text-to-clipboard';
 
 import Spinner from '../../Spinner';
 import Notification from '../../Notification';
@@ -64,7 +64,7 @@ class WebHook extends Component {
         this.props.onCreateImageTokens();
     }
     handleClickCopy() {
-        copy(`curl -X POST https://web.api.containerum.io:5000/api/set/image/${this.state.token} -H 'content-type: application/json' -d '{"image": "IMAGE_NAME","deployment_name": "DEPLOY_NAME","namespace": "NAMESPACE_NAME","container_name": "CONTAINER_NAME"}'`);
+        // copy(`curl -X POST https://web.api.containerum.io:5000/api/set/image/${this.state.token} -H 'content-type: application/json' -d '{"image": "IMAGE_NAME","deployment_name": "DEPLOY_NAME","namespace": "NAMESPACE_NAME","container_name": "CONTAINER_NAME"}'`);
     }
     handleClickDeletingWebHook() {
         this.props.onDeleteImageToken();

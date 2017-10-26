@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Blockies from 'react-blockies';
+// import Blockies from 'react-blockies';
 
 import './Profile.css';
 
@@ -15,12 +15,12 @@ class Profile extends Component {
                         <div className="col-md-2">
                             <div className="form-group pt-0">
                                 <label className="form-group__label-image" htmlFor="avatar">
-                                    <Blockies
-                                        seed={this.props.email}
-                                        size={9}
-                                        scale={7}
-                                        bgColor="#fff"
-                                    />
+                                    {/*<Blockies*/}
+                                        {/*seed={this.props.email}*/}
+                                        {/*size={9}*/}
+                                        {/*scale={7}*/}
+                                        {/*bgColor="#fff"*/}
+                                    {/*/>*/}
                                 </label>
                                 {/*<input type="file" className="form-group__hidden-input" id="avatar" />*/}
                             </div>

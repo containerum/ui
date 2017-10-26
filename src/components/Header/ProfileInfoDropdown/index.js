@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Blockies from 'react-blockies';
+// import Blockies from 'react-blockies';
 
 import NavLink from '../../../containers/NavLink';
 // import profile from '../../../images/profile.png';
@@ -16,12 +16,12 @@ class ProfileInfoDropdown extends Component {
             <div>
                 <div className="header-top-account">
                     <div className="header-top-account__avatar">
-                        <Blockies
-                            seed={email}
-                            size={10}
-                            scale={3}
-                            bgColor="#fff"
-                        />
+                        {/*<Blockies*/}
+                            {/*seed={email}*/}
+                            {/*size={10}*/}
+                            {/*scale={3}*/}
+                            {/*bgColor="#fff"*/}
+                        {/*/>*/}
                     </div>
                     <div className="header-top-account__info">
                         <div className="header-top-account__name dropdown">
