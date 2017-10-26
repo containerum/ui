@@ -9,12 +9,16 @@ import reducers from './reducers/index';
 import registerServiceWorker from './registerServiceWorker';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReactGA from 'react-ga';
-ReactGA.initialize('UA-104800418-1', {
+ReactGA.initialize('UA-93921188-2', {
     gaOptions: {
-        allowAnchor: false
+        allowLinker: true
     }
 });
-// ReactGA.plugin.require('linker', { linker: 'autoLink', domain: ['containerum.com'] });
+
+const ga = ReactGA.ga();
+// ga('create', 'UA-93921188-2', 'auto', { allowLinker: true });
+ga('require', 'linker');
+ga('linker:autoLink', ['containerum.com']);
 
 const store = createStore(reducers, composeWithDevTools(
     applyMiddleware(reduxThunk)
