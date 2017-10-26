@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
 RUN npm install
+RUN npm install -g serve
 
 COPY . /usr/src/app
 ENV WEB_API "https://web.api.containerum.io:5000"
