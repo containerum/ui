@@ -13,6 +13,8 @@ export function logoutUser() {
         try {
             dispatch(requestLogout());
             localStorage.removeItem('id_token');
+            localStorage.removeItem('icon_profile');
+            localStorage.removeItem('icon_profile_big');
             dispatch(receiveLogout());
         } catch (e) {
             dispatch(failureLogout(e));

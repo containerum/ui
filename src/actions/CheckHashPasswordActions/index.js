@@ -16,7 +16,7 @@ export function checkHashPassword(hashParam) {
         return axios.get(
             WEB_API + '/api/reseted_password_change/' + hashParam,
             {
-                validateStatus: (status) => status >= 200 && status <= 500
+                validateStatus: (status) => status >= 200 && status <= 505
             }
         )
         .then(response => {

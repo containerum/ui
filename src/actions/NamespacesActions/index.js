@@ -15,12 +15,14 @@ export function getNamespaces() {
     return dispatch => {
         dispatch(requestGetNamespaces());
         const token = localStorage.getItem('id_token');
+        const browser = localStorage.getItem('id_browser');
 
         return axios.get(
             WEB_API + '/api/namespaces',
             {
                 headers: {
                     'Authorization': token,
+                    'X-User-Fingerprint': browser,
                     'Content-Type': 'application/x-www-form-urlencode',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
@@ -34,6 +36,8 @@ export function getNamespaces() {
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');
+            } else if (response.status === 404) {
+                dispatch(receiveGetNamespaces([]));
             } else {
                 dispatch(failGetNamespaces(response.data.message));
             }

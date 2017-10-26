@@ -10,7 +10,7 @@ import {
 //     WEB_API
 // } from '../../constants/WebApi';
 
-export function getCreateDeployment() {
+export function createDeployment() {
     return dispatch => {
         dispatch(requestGetCreateDeployment());
         dispatch(receiveGetCreateDeployment());

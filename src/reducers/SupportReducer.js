@@ -6,21 +6,25 @@ import {
 
 export default function SupportReducer(state = {
     isFetching: false,
-    data: {}
+    data: {},
+    error: ''
 }, action) {
     switch (action.type) {
     case SUPPORT_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            data: action.data
+            data: {},
+            error: ''
         });
     case SUPPORT_SUCCESS:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            data: action.data
         });
     case SUPPORT_FAILURE:
         return Object.assign({}, state, {
-            isFetching: action.isFetching
+            isFetching: action.isFetching,
+            error: action.error
         });
     default:
         return state;

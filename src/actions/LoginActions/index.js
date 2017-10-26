@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import identicons from 'identicons';
 
 import {
     LOGIN_REQUEST,
@@ -11,20 +12,27 @@ import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function LOGINUser(creds) {
+export function loginUser(creds) {
     return dispatch => {
         dispatch(requestLOGIN(creds));
+        // const password = md5(creds.username + creds.password).toString(16);
+        const password = creds.password;
         return axios.post(
             WEB_API + '/api/login',
-            { username: creds.username, password: creds.password },
+            { username: creds.username, password },
             {
                 validateStatus: (status) => status >= 200 && status <= 505
             }
         )
             .then(response => {
+                // console.log(response);
                 if (response.status === 200) {
                     dispatch(receiveLOGIN(response));
                     localStorage.setItem('id_token', response.data.token);
+                    localStorage.setItem('icon_profile',
+                        identicons.generateSVGDataURIString(creds.username, { width: 28, size: 4 }));
+                    localStorage.setItem('icon_profile_big',
+                        identicons.generateSVGDataURIString(creds.username, { width: 63, size: 4 }));
                     browserHistory.push('/');
                 } else if (response.status === 401) {
                     dispatch(LOGINError('Email or Password is not valid'));

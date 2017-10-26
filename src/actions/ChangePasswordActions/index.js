@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+// import md5 from 'md5';
 
 import {
     CHANGE_PASSWORD_REQUEST,
@@ -15,7 +16,10 @@ export function changePassword(data) {
     return dispatch => {
         dispatch(requestChangePassword());
         const token = localStorage.getItem('id_token');
+        const browser = localStorage.getItem('id_browser');
         const api = WEB_API + '/api/password_change';
+        // const password = md5(data.password).toString(16);
+        // const new_password = md5(data.new_password).toString(16);
 
         return axios.post(
             api,
@@ -23,6 +27,7 @@ export function changePassword(data) {
             {
                 headers: {
                     'Authorization': token,
+                    'X-User-Fingerprint': browser,
                     'Access-Control-Allow-Origin': '*'
                 },
                 validateStatus: (status) => status >= 200 && status <= 505
@@ -31,6 +36,7 @@ export function changePassword(data) {
         .then(response => {
             if (response.status === 202) {
                 dispatch(receiveChangePassword(response.data));
+                localStorage.setItem('id_token', response.data.token);
             } else if (response.status === 401) {
                 localStorage.removeItem('id_token');
                 browserHistory.push('/Login');

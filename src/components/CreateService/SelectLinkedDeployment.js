@@ -10,7 +10,7 @@ class SelectLinkedDeployment extends Component {
     }
     componentDidMount() {
         // const linkedDep = document.querySelector('.form-control.form-control-lg');
-        console.log(this.refs);
+        // console.log(this.refs);
         this.props.handleSelect(this.state.valueLinkedDep);
     }
     componentWillReceiveProps(nextProp) {
@@ -21,11 +21,11 @@ class SelectLinkedDeployment extends Component {
         }
     }
     handleChange(event) {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         this.props.handleSelect(event.target.value);
     }
     render() {
-        console.log(this.state.valueLinkedDep);
+        // console.log(this.state.valueLinkedDep);
         // const firstItemName = this.props.DeploymentsReducer.length ? this.props.DeploymentsReducer[0].name : '';
         // console.log(firstItemName);
         return (

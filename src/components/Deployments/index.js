@@ -1,69 +1,78 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import { getDeployments } from '../../actions/DeploymentsActions';
-import Posts from './Posts';
 import Spinner from '../Spinner';
+import DeploymentsContains from './DeploymentsContains';
+import Notification from '../Notification';
+import NotFoundDeployments from './NotFoundDeployments';
+import { getDeployments } from '../../actions/DeploymentsActions';
+import { deleteDeployment } from '../../actions/DeploymentActions/deleteDeploymentAction';
 
 class Deployments extends Component {
-    componentWillMount() {
-        this.props.onGetDeployments(this.props.idName);
+    componentDidMount() {
+        // console.log(this.props.DeploymentsReducer.data);
+        this.props.onGetDeployments(this.props.params.idName);
     }
-    // componentWillUpdate(nextProps) {
-    //     if (nextProps.idName !== this.props.idName) {
-    //         const { dispatch } = this.props;
-    //         dispatch(getDeployments(this.props.idName));
-    //     }
-    // }
-    render() {
-        let isFetchingComponent = '';
-        if (this.props.DeploymentsReducer.isFetching === false) {
-            isFetchingComponent =
-                <Posts
-                    deploymentsDataReducer={this.props.DeploymentsReducer.data}
-                    deploymentsErrorMessageReducer={this.props.DeploymentsReducer.errorMessage}
-                    deploymentsStatusErrorReducer={this.props.DeploymentsReducer.statusError}
-                    idName={this.props.idName}
-                    linkedDep={this.props.linkedDep}
-                />;
-        } else {
-            isFetchingComponent = <Spinner />;
+    componentWillReceiveProps(nextProps) {
+        // console.log(this.props.params.idName);
+        if (this.props.DeploymentsReducer.data === nextProps.DeploymentsReducer.data &&
+            this.props.params.idName !== nextProps.params.idName) {
+            this.props.onGetDeployments(nextProps.params.idName);
         }
-
+    }
+    handleDeleteDeployment(idDep) {
+        // console.log(this.props.params.idName, idDep);
+        this.props.onDeleteDeployment(this.props.params.idName, idDep);
+    }
+    render() {
+        let isFetchingDeploymentsContains = '';
+        if (this.props.DeploymentsReducer.isFetching === false) {
+            // console.log(this.props.DeploymentsReducer);
+            if (this.props.DeploymentsReducer.data.length === 0 || this.props.DeploymentsReducer.statusError === 404) {
+                isFetchingDeploymentsContains = <NotFoundDeployments />;
+            } else {
+                isFetchingDeploymentsContains =
+                    <DeploymentsContains
+                        idName={this.props.params.idName}
+                        onDeleteDeployment={(idDep) => this.handleDeleteDeployment(idDep)}
+                    />;
+            }
+        } else {
+            isFetchingDeploymentsContains = <Spinner />;
+        }
         return (
             <div>
-                { isFetchingComponent }
+                 <Notification
+                     status={this.props.DeleteDeploymentReducer.status}
+                     name={this.props.DeleteDeploymentReducer.deploymentName}
+                     errorMessage={this.props.DeleteDeploymentReducer.errorMessage}
+                 />
+                { isFetchingDeploymentsContains }
             </div>
         );
     }
 }
 
 Deployments.propTypes = {
-    onGetDeployments: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string,
-    statusError: PropTypes.number,
-    DeploymentsReducer: PropTypes.object,
-    idName: PropTypes.string,
-    linkedDep: PropTypes.string
+    params: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
-    const { DeploymentsReducer } = state;
-    const { errorMessage } = DeploymentsReducer;
-    const { statusError } = DeploymentsReducer;
-
     return {
-        DeploymentsReducer,
-        errorMessage,
-        statusError
+        DeploymentsReducer: state.DeploymentsReducer,
+        DeleteDeploymentReducer: state.DeleteDeploymentReducer
     };
+
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onGetDeployments: idName => {
+        onGetDeployments: (idName) => {
             dispatch(getDeployments(idName));
+        },
+        onDeleteDeployment: (idName, idDep) => {
+            dispatch(deleteDeployment(idName, idDep));
         }
     };
 };

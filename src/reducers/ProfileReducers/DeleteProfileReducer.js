@@ -13,6 +13,7 @@ export default function DeleteProfileReducer(state = {
     case PROFILE_DELETE_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
+            data: '',
             errorMessage: ''
         });
     case PROFILE_DELETE_SUCCESS:

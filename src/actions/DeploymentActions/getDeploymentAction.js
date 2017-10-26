@@ -15,6 +15,7 @@ export function getDeployment(namespaceName, deploymentName) {
     return dispatch => {
         dispatch(requestGetDeployment());
         const token = localStorage.getItem('id_token');
+        const browser = localStorage.getItem('id_browser');
         const api = WEB_API + '/api/namespaces/' + namespaceName + '/deployments/' + deploymentName;
 
         return axios.get(
@@ -22,6 +23,7 @@ export function getDeployment(namespaceName, deploymentName) {
             {
                 headers: {
                     'Authorization': token,
+                    'X-User-Fingerprint': browser,
                     'Content-Type': 'application/x-www-form-urlencode',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
@@ -35,6 +37,8 @@ export function getDeployment(namespaceName, deploymentName) {
                 } else if (response.status === 401) {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
+                } else if (response.status === 400) {
+                    browserHistory.push('/Namespaces');
                 } else {
                     dispatch(failGetDeployment(response.data.message));
                 }

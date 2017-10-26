@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getCreateDeployment } from '../../actions/CreateDeploymentActions';
+import { onCreateDeployment } from '../../actions/CreateDeploymentActions';
 
 class CreateDeployment extends Component {
     componentDidMount() {
-        this.props.onGetCreateDeployment();
+        this.props.onCreateDeployment();
     }
     render() {
         return (
@@ -28,7 +28,7 @@ class CreateDeployment extends Component {
 }
 
 CreateDeployment.propTypes = {
-    onGetCreateDeployment: PropTypes.func.isRequired
+    onCreateDeployment: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -41,8 +41,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onGetCreateDeployment: () => {
-            dispatch(getCreateDeployment());
+        onCreateDeployment: () => {
+            dispatch(onCreateDeployment());
         }
     };
 };

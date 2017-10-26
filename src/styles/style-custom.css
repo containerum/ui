@@ -1,0 +1,270 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+input:required {
+    box-shadow:none;
+}
+input:invalid {
+    box-shadow:none;
+}
+
+.hover-action {
+    cursor: pointer;
+}
+
+.form-group__label {
+    cursor: text;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.documentation-link {
+    color: #29abe2;
+}
+
+.modal.fade.show {
+    display: block;
+}
+
+.table tbody td {
+    border-top: 1px solid #e9ecef!important;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.tr-table-hover {
+    cursor: pointer;
+    height: 42px;
+}
+
+.header-top-menu__li:hover a, .header-top-menu__li a.active {
+    color:#333333;
+    border-color: #29abe2;
+}
+
+.header-top-account__name a.dropdown-toggle{
+    width: unset;
+    max-width: 200px;
+}
+
+.header-top-account__name{
+    width: unset;
+}
+
+.header-top-account{
+    width: unset;
+}
+/* Without volumes and biling!!! */
+.content-block-container {
+    padding: 25px 30px 25px 30px;
+}
+.card-container {
+     min-height: unset;
+}
+.add-new-block .action {
+    line-height: 185px;
+}
+/* Without volumes */
+
+.form-group__label-always-onfocus {
+    color: #29abe2;
+    font-size: 12px;
+    top: 0;
+}
+
+.block-item__copy-string {
+    width: 100%;
+    height: 215px!important;
+    padding: 5px 10px 5px 10px;
+    margin: 25px 0 10px 0;
+    background: #eaeaea;
+    border: solid 1px #eaeaea;
+    border-radius: 3px;
+    position: relative;
+    word-wrap: normal;
+    white-space: nowrap;
+}
+.block-item__content-string {
+    padding: 5px 10px 5px 10px;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: #29abe2;
+}
+
+/* Country selector*/
+.bfh-selectbox {
+    width: 100%;
+}
+
+.form-inline input {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.bfh-selectbox > .bfh-selectbox-toggle {
+    color: #000;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.bfh-selectbox-options {
+    width: 100%;
+    float: left;
+    background-color: #ffffff;
+    max-height: 120px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: top;
+    border-top: 4px solid #000000;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    content: "";
+}
+
+.bfh-selectbox .caret {
+    margin-top: 8px;
+    margin-left: 2px;
+    height: 8px;
+}
+
+.bfh-selectbox > .bfh-selectbox-toggle > .caret {
+    float: right;
+}
+
+.icon-flag {
+    width: 16px;
+    height: 16px;
+}
+
+.bfh-selectbox > .bfh-selectbox-toggle > .bfh-selectbox-option {
+    display: inline-block;
+    float: left;
+    height: 20px;
+    width: 260px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+/*.open > .bfh-selectbox-options {*/
+    /*display: block;*/
+/*}*/
+
+.bfh-selectbox-options ul {
+    /*max-height: 180px;*/
+    /*overflow-x: hidden;*/
+    /*overflow-y: auto;*/
+    margin: 5px 0 0 0;
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
+}
+
+.bfh-selectbox-options li {
+    line-height: 17px;
+}
+
+.bfh-selectbox-options li:hover {
+    background-color: rgba(0,0,0,.05);
+    cursor: pointer;
+}
+
+.bfh-selectbox-options a {
+    display: block;
+    padding: 6px 0 3px;
+    line-height: 17px;
+    height: 30px;
+    color: #333333;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.custom-select {
+    padding: 8px 8px 5px;
+    cursor: pointer;
+}
+
+.bfh-selectbox-filter {
+    width: 87%;
+    margin: 0 20px;
+}
+
+.flag {
+    margin-top: 4px;
+}
+
+.dropdown-menu-width {
+    width: 100%;
+    min-width: 160px;
+}
+/* Country selector*/
+
+.form-group.pt-0 .form-group__label.form-group__label-always-onfocus {
+    top: -23px;
+}
+
+.row.double {
+    margin-bottom: 30px;
+}
+
+.form-group.pt-0 .btn-outline-primary.disabled {
+    background-color: #29abe2;
+}
+
+.rc-tooltip-inner {
+    background-color: #29abe2!important;
+    border: 1px solid #29abe2!important;
+}
+
+.rc-tooltip-inner a,
+.rc-tooltip-inner span {
+    color: #fff;
+}
+
+.rc-tooltip-inner a:hover {
+    text-decoration: underline;
+}
+
+.rc-tooltip-arrow {
+    border-top-color: #29abe2!important;
+}
+
+.button_red {
+    border-color: #fe4a49;
+    background-color: #fe4a49;
+    color: #fff;
+}
+
+.namespace-plan-first-step {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.display-none {
+    display: none!important;
+}
+
+.block-item__tokens-block {
+    margin: 20px 0;
+}
+
+.block-item__tokens {
+    margin: 35px 0 0;
+}

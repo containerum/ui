@@ -1,4 +1,5 @@
-// import axios from 'axios';
+import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 import {
     SUPPORT_REQUEST,
@@ -6,36 +7,54 @@ import {
     SUPPORT_FAILURE
 } from '../../constants/SupportConstants';
 
-// import {
-//     WEB_API
-// } from '../../constants/WebApi';
-
-export function sendSupport(sendObj) {
+export function sendSupport(data) {
     return dispatch => {
-        dispatch(requestGetCreateDeployment(sendObj));
-        dispatch(receiveGetCreateDeployment());
-        dispatch(failGetCreateDeployment());
+        dispatch(requestGetCreateDeployment());
+        return axios.post(
+            'https://web.containerum.io/omnidesk',
+            // 'http://localhost:3001/omnidesk',
+            data,
+            {
+                headers: {
+                    'Accept': '*/*',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': 'X-Requested-With'
+                },
+                validateStatus: (status) => status >= 200 && status <= 505
+            }
+        )
+        .then(response => {
+            if (response.status === 200) {
+                // console.log(response.data);
+                dispatch(receiveGetCreateDeployment(response.data));
+                browserHistory.push('/Support/SuccessTicket?num=' + response.data.case.case_id);
+            } else {
+                // console.log(response.data.message);
+                dispatch(failGetCreateDeployment(response.data.message));
+            }
+        }).catch(err => console.log(err));
     };
 }
 
-function requestGetCreateDeployment(data) {
+function requestGetCreateDeployment() {
     return {
         type: SUPPORT_REQUEST,
-        isFetching: true,
+        isFetching: true
+    };
+}
+
+function receiveGetCreateDeployment(data) {
+    return {
+        type: SUPPORT_SUCCESS,
+        isFetching: false,
         data
     };
 }
 
-function receiveGetCreateDeployment() {
-    return {
-        type: SUPPORT_SUCCESS,
-        isFetching: false
-    };
-}
-
-function failGetCreateDeployment() {
+function failGetCreateDeployment(error) {
     return {
         type: SUPPORT_FAILURE,
-        isFetching: false
+        isFetching: false,
+        error
     };
 }

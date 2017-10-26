@@ -3,31 +3,38 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getPod } from '../../actions/PodActions/getPodAction';
+import { deletePod } from '../../actions/PodActions/deletePodAction';
 import Spinner from '../Spinner';
-
-import PostPodContainer from '../../containers/PostPodContainer';
-import NamespacesDropDown from '../../components/NamespacesDropDown';
-// import CreateInstance from '../../components/CreateInstance';
+import HeaderDropDown from '../../components/HeaderDropDown';
+import PodInfo from './PodInfo';
+import PodContainer from './PodContainer';
+import Notification from '../Notification';
 
 class Pod extends Component {
     componentDidMount() {
         this.props.onGetPod(this.props.params.idName, this.props.params.idPod);
+    }
+    handleDeletePod(idPod) {
+        // console.log(this.props.params.idName, idPod);
+        this.props.onDeletePod(this.props.params.idName, idPod);
     }
     render() {
         let isFetchingComponent = '';
         if (this.props.GetPodReducer.isFetching === false) {
             isFetchingComponent =
                 <div>
-                    <div className="navbar navbar-toggleable-md navbar-light bg-faded">
-                        <NamespacesDropDown
-                            idDep={this.props.params.idDep}
-                            idPod={this.props.params.idPod}
-                            idName={this.props.params.idName}
-                        />
-                        {/*<CreateInstance idName={this.props.params.idName} />*/}
-                    </div>
-                    <PostPodContainer
-                        GetPodReducer={this.props.GetPodReducer}
+                    <HeaderDropDown
+                        idName={this.props.params.idName}
+                        idDep={this.props.params.idDep}
+                        idPod={this.props.params.idPod}
+                    />
+                    <PodInfo
+                        idName={this.props.params.idName}
+                        idPod={this.props.params.idPod}
+                        idDep={this.props.params.idDep}
+                        onDeletePod={this.handleDeletePod.bind(this)}
+                    />
+                    <PodContainer
                         idName={this.props.params.idName}
                         idPod={this.props.params.idPod}
                         idDep={this.props.params.idDep}
@@ -38,6 +45,11 @@ class Pod extends Component {
         }
         return (
             <div>
+                <Notification
+                    status={this.props.DeletePodReducer.status}
+                    name={this.props.DeletePodReducer.podName}
+                    errorMessage={this.props.DeletePodReducer.errorMessage}
+                />
                 { isFetchingComponent }
             </div>
         );
@@ -48,6 +60,7 @@ Pod.propTypes = {
     onGetPod: PropTypes.func.isRequired,
     params: PropTypes.object,
     GetPodReducer: PropTypes.object,
+    DeletePodReducer: PropTypes.object,
     errorMessage: PropTypes.string
 };
 
@@ -57,7 +70,8 @@ function mapStateToProps(state) {
 
     return {
         errorMessage,
-        GetPodReducer
+        GetPodReducer,
+        DeletePodReducer: state.DeletePodReducer
     };
 }
 
@@ -65,6 +79,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onGetPod: (idName, idPod) => {
             dispatch(getPod(idName, idPod));
+        },
+        onDeletePod: (idName, idPod) => {
+            dispatch(deletePod(idName, idPod));
         }
     };
 };
