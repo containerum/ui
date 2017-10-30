@@ -31,7 +31,9 @@ class NamespaceInfo extends Component {
             });
         }
         if (nextProps.DeleteNamespaceReducer.status === 202 && nextProps.DeleteNamespaceReducer.idName) {
-            browserHistory.push('/Namespaces');
+            if (typeof window !== 'undefined') {
+                browserHistory.push('/Namespaces');
+            }
         }
     }
     render() {

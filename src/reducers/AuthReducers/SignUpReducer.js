@@ -8,9 +8,13 @@ import {
     VALIDATE_EMAIL
 } from '../../constants/ValudateEmailConstaints';
 
+let isExistToken = false;
+if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    isExistToken = !!localStorage.getItem('id_token');
+}
 export default function SignUpReducer(state = {
     isFetching: false,
-    isAuthenticated: !!localStorage.getItem('id_token'),
+    isAuthenticated: isExistToken,
     errorMessage: '',
     emailUser: ''
 }, action) {

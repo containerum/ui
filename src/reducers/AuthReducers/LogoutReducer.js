@@ -4,9 +4,13 @@ import {
     LOGOUT_FAILURE
 } from '../../constants/LogoutConstants';
 
+let isExistToken = false;
+if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    isExistToken = !!localStorage.getItem('id_token');
+}
 export default function LogoutReducer(state = {
     isFetching: false,
-    isAuthenticated: !!localStorage.getItem('id_token')
+    isAuthenticated: isExistToken
 }, action) {
     switch (action.type) {
     case LOGOUT_REQUEST:

@@ -27,7 +27,7 @@ class Footer extends Component {
                             href={linkPlatform}
                             className="footer__download_cli"
                         >
-                            Download CLI <img src={arrows} alt="Download CLI" />
+                            Download CLI <img src={arrows} alt="" />
                         </a>
                         <a
                             target="_blank"

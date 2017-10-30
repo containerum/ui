@@ -15,8 +15,12 @@ import {
 export function payFor(amount) {
     return dispatch => {
         dispatch(requestPayFor());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
 
         const api = WEB_API + '/api/pay_for';
         return axios.post(
@@ -37,10 +41,14 @@ export function payFor(amount) {
             if (response.status === 200) {
                 // console.log(response.data);
                 dispatch(receivePayFor(response.data));
-                window.location.replace(response.data);
+                if (typeof window !== 'undefined') {
+                    window.location.replace(response.data);
+                }
             } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                }
             } else {
                 dispatch(failPayFor(response.data.message, response.status));
             }

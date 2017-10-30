@@ -14,8 +14,12 @@ import {
 export function getNamespace(idName) {
     return dispatch => {
         dispatch(requestGetNamespace());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
 
         return axios.get(
             WEB_API + '/api/namespaces/' + idName,
@@ -34,10 +38,14 @@ export function getNamespace(idName) {
             if (response.status === 200) {
                 dispatch(receiveGetNamespace(response.data, response.status, idName));
             } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                }
             } else if (response.status === 400) {
-                browserHistory.push('/Namespaces');
+                if (typeof window !== 'undefined') {
+                    browserHistory.push('/Namespaces');
+                }
             } else {
                 dispatch(failGetNamespace(response.data.message, response.status, idName));
             }

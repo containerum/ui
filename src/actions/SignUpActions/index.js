@@ -38,7 +38,9 @@ export function SignUpUser(creds) {
                 if (response.status === 200 || response.status === 201) {
                     dispatch(receiveSignUp());
                     dispatch(confirmEmail(creds.username));
-                    browserHistory.push('/ConfirmEmail');
+                    if (typeof window !== 'undefined') {
+                        browserHistory.push('/ConfirmEmail');
+                    }
                 } else {
                     dispatch(SignUpError(response.data.message));
                 }

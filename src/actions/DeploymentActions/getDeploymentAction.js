@@ -14,8 +14,12 @@ import {
 export function getDeployment(namespaceName, deploymentName) {
     return dispatch => {
         dispatch(requestGetDeployment());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
         const api = WEB_API + '/api/namespaces/' + namespaceName + '/deployments/' + deploymentName;
 
         return axios.get(
@@ -35,10 +39,14 @@ export function getDeployment(namespaceName, deploymentName) {
                 if (response.status === 200 || response.status === 201) {
                     dispatch(receiveGetDeployment(response.data));
                 } else if (response.status === 401) {
-                    localStorage.removeItem('id_token');
-                    browserHistory.push('/Login');
+                    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                        localStorage.removeItem('id_token');
+                        browserHistory.push('/Login');
+                    }
                 } else if (response.status === 400) {
-                    browserHistory.push('/Namespaces');
+                    if (typeof window !== 'undefined') {
+                        browserHistory.push('/Namespaces');
+                    }
                 } else {
                     dispatch(failGetDeployment(response.data.message));
                 }

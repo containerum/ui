@@ -17,7 +17,9 @@ class LinkedDeployment extends Component {
         }
     }
     handleClickDeployment(name) {
-        browserHistory.push('/Namespaces/' + this.props.params.idName + '/Deployments/' + name);
+        if (typeof window !== 'undefined') {
+            browserHistory.push('/Namespaces/' + this.props.params.idName + '/Deployments/' + name);
+        }
     }
     // handleClose(e) {
     //     e.stopPropagation();

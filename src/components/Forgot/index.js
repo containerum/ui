@@ -21,7 +21,9 @@ class Forgot extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
     componentWillMount() {
-        document.body.classList.add('c-body-bg');
+        if (typeof window !== 'undefined') {
+            document.body.classList.add('c-body-bg');
+        }
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.errorMessage) {
@@ -29,8 +31,10 @@ class Forgot extends Component {
                 ...this.state,
                 errorMsg: nextProps.errorMessage
             });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+            if (typeof window !== 'undefined') {
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
     }
     handleClick(event) {
@@ -44,8 +48,10 @@ class Forgot extends Component {
                 ...this.state,
                 errorMsg: 'Email is not valid'
             });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+            if (typeof window !== 'undefined') {
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
     }
     checkValidateEmailInput(email, isValidEmail) {

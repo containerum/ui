@@ -22,19 +22,21 @@ class Password extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.ChangePasswordReducer.errorMessage) {
-            // this.setState({
-            //     ...this.state,
-            //     errorMsg: nextProps.ChangePasswordReducer.errorMessage
-            // });
-            // const getAlert = document.getElementById('loginAlert');
-            // getAlert.style.display = 'block';
+            if (typeof window !== 'undefined') {
+                // this.setState({
+                //     ...this.state,
+                //     errorMsg: nextProps.ChangePasswordReducer.errorMessage
+                // });
+                // const getAlert = document.getElementById('loginAlert');
+                // getAlert.style.display = 'block';
 
-            const hasErrorGroupCurrentPassword = document.getElementById('group-current_password');
-            const hasErrorGroupNewPassword = document.getElementById('group-new_password');
-            const hasErrorGroupRepeatPassword = document.getElementById('group-repeat_password');
-            hasErrorGroupCurrentPassword.classList.add('has-error');
-            hasErrorGroupNewPassword.classList.add('has-error');
-            hasErrorGroupRepeatPassword.classList.add('has-error');
+                const hasErrorGroupCurrentPassword = document.getElementById('group-current_password');
+                const hasErrorGroupNewPassword = document.getElementById('group-new_password');
+                const hasErrorGroupRepeatPassword = document.getElementById('group-repeat_password');
+                hasErrorGroupCurrentPassword.classList.add('has-error');
+                hasErrorGroupNewPassword.classList.add('has-error');
+                hasErrorGroupRepeatPassword.classList.add('has-error');
+            }
         }
         if (nextProps.ChangePasswordReducer.data) {
             // this.setState({
@@ -51,37 +53,39 @@ class Password extends Component {
     submitUpdatedPasswordData(e) {
         e.preventDefault();
 
-        const hasErrorGroupCurrentPassword = document.getElementById('group-current_password');
-        const hasErrorGroupNewPassword = document.getElementById('group-new_password');
-        const hasErrorGroupRepeatPassword = document.getElementById('group-repeat_password');
-        const current_password = this.refs.current_password.refs.current_password.value;
-        const new_password = this.refs.new_password.refs.new_password.value;
-        const repeat_password = this.refs.repeat_password.refs.repeat_password.value;
+        if (typeof window !== 'undefined') {
+            const hasErrorGroupCurrentPassword = document.getElementById('group-current_password');
+            const hasErrorGroupNewPassword = document.getElementById('group-new_password');
+            const hasErrorGroupRepeatPassword = document.getElementById('group-repeat_password');
+            const current_password = this.refs.current_password.refs.current_password.value;
+            const new_password = this.refs.new_password.refs.new_password.value;
+            const repeat_password = this.refs.repeat_password.refs.repeat_password.value;
 
-        if (
-            (current_password.length >= 8 && current_password.length <= 64) &&
-            (new_password.length >= 8 && new_password.length <= 64) &&
-            (repeat_password.length >= 8 && repeat_password.length <= 64) &&
-            new_password === repeat_password
-        ) {
-            const updatePasswordData = {
-                password: current_password,
-                new_password: new_password
-            };
-            // const getAlert = document.getElementById('loginAlert');
-            // getAlert.style.display = 'none';
-            // console.log(updatePasswordData);
-            this.props.onChangePassword(updatePasswordData);
-        } else {
-            // this.setState({
-            //     ...this.state,
-            //     errorMsg: 'Password is not valid'
-            // });
-            hasErrorGroupCurrentPassword.classList.add('has-error');
-            hasErrorGroupNewPassword.classList.add('has-error');
-            hasErrorGroupRepeatPassword.classList.add('has-error');
-            // const getAlert = document.getElementById('loginAlert');
-            // getAlert.style.display = 'block';
+            if (
+                (current_password.length >= 8 && current_password.length <= 64) &&
+                (new_password.length >= 8 && new_password.length <= 64) &&
+                (repeat_password.length >= 8 && repeat_password.length <= 64) &&
+                new_password === repeat_password
+            ) {
+                const updatePasswordData = {
+                    password: current_password,
+                    new_password: new_password
+                };
+                // const getAlert = document.getElementById('loginAlert');
+                // getAlert.style.display = 'none';
+                // console.log(updatePasswordData);
+                this.props.onChangePassword(updatePasswordData);
+            } else {
+                // this.setState({
+                //     ...this.state,
+                //     errorMsg: 'Password is not valid'
+                // });
+                hasErrorGroupCurrentPassword.classList.add('has-error');
+                hasErrorGroupNewPassword.classList.add('has-error');
+                hasErrorGroupRepeatPassword.classList.add('has-error');
+                // const getAlert = document.getElementById('loginAlert');
+                // getAlert.style.display = 'block';
+            }
         }
     }
     checkCurrentPassword(password, isValidPassword) {

@@ -170,6 +170,10 @@ h1{
     height: 28px;
     float: left;
 }
+.header-top-account__avatar svg {
+    height: 32px;
+    width: 28px;
+}
 .header-top-account__info{
     height: 28px;
     float: left;
@@ -639,6 +643,12 @@ h1{
 
 .form-group__label-image{
     cursor: pointer;
+    height: 70px;
+}
+
+.form-group__label-image svg {
+    height: 70px;
+    width: 64px;
 }
 
 .form-group__hidden-input{

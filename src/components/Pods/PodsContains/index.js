@@ -29,12 +29,16 @@ class PodsContains extends Component {
                 countOfPods: this.state.countOfPods - 1
             });
             const id = `item_${nextProps.DeletePodReducer.podName}`;
-            const el = document.getElementById(id);
-            el ? el.remove() : el;
+            if (typeof window !== 'undefined') {
+                const el = document.getElementById(id);
+                el ? el.remove() : el;
+            }
         }
     }
     handleClickPod(name) {
-        browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + this.props.idDep + '/Pods/' + name);
+        if (typeof window !== 'undefined') {
+            browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + this.props.idDep + '/Pods/' + name);
+        }
     }
     handleClose(e) {
         e.stopPropagation();

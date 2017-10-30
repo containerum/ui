@@ -32,12 +32,16 @@ class NamespacesContainer extends Component {
             nextProps.DeleteNamespaceReducer.status === 202 &&
             nextProps.DeleteNamespaceReducer.idName) {
             const id = `item_${nextProps.DeleteNamespaceReducer.idName}`;
-            const el = document.getElementById(id);
-            el ? el.remove() : el;
+            if (typeof window !== 'undefined') {
+                const el = document.getElementById(id);
+                el ? el.remove() : el;
+            }
         }
     }
     handleClickTR(href) {
-        browserHistory.push('/Namespaces/' + href);
+        if (typeof window !== 'undefined') {
+            browserHistory.push('/Namespaces/' + href);
+        }
     }
     handleClose(e) {
         e.stopPropagation();

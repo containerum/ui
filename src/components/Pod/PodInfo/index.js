@@ -8,7 +8,9 @@ import r from '../../../images/r.png';
 class PodInfo extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.DeletePodReducer.status === 202 && nextProps.DeletePodReducer.podName) {
-            browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + this.props.idDep);
+            if (typeof window !== 'undefined') {
+                browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + this.props.idDep);
+            }
         }
     }
     handleClickDeletingPod(name) {
