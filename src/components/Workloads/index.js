@@ -5,7 +5,9 @@ import Namespaces from '../Namespaces';
 
 class Workloads extends Component {
     componentWillMount() {
-        document.body.classList.remove('c-body-bg');
+        if (typeof window !== 'undefined') {
+            document.body.classList.remove('c-body-bg');
+        }
     }
     render() {
         return (

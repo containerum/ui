@@ -8,12 +8,16 @@ import Logo from '../../Logo';
 
 class ConfirmEmail extends Component {
     componentWillMount() {
-        document.body.classList.add('c-body-bg');
+        if (typeof window !== 'undefined') {
+            document.body.classList.add('c-body-bg');
+        }
     }
     render() {
         const defaultEmail = this.props.location.query.email ? this.props.location.query.email : this.props.SignUpReducer.emailUser;
         if (!defaultEmail) {
-            browserHistory.push('/SignUp');
+            if (typeof window !== 'undefined') {
+                browserHistory.push('/SignUp');
+            }
         }
         return (
             <div className="main_container">

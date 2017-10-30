@@ -12,7 +12,9 @@ export function logoutUser() {
     return dispatch => {
         try {
             dispatch(requestLogout());
-            localStorage.removeItem('id_token');
+            if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                localStorage.removeItem('id_token');
+            }
             // localStorage.removeItem('icon_profile');
             // localStorage.removeItem('icon_profile_big');
             dispatch(receiveLogout());

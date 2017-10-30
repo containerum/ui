@@ -29,8 +29,10 @@ class SignUp extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
     componentWillMount() {
-        document.body.classList.add('c-body-bg');
-        localStorage.removeItem('id_token');
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            document.body.classList.add('c-body-bg');
+            localStorage.removeItem('id_token');
+        }
     }
     componentDidMount() {
         if (this.props.location.query.error) {
@@ -38,8 +40,10 @@ class SignUp extends Component {
                 ...this.state,
                 errorMsg: 'Email or Password is not valid'
             });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+            if (typeof window !== 'undefined') {
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -48,8 +52,10 @@ class SignUp extends Component {
                 ...this.state,
                 errorMsg: nextProps.errorMessage
             });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+            if (typeof window !== 'undefined') {
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
     }
     handleChangeOnToggle(e) {
@@ -78,28 +84,30 @@ class SignUp extends Component {
     }
     handleClick(event) {
         event.preventDefault();
-        if (this.state.password.length <= 7) {
-            this.setState({
-                ...this.state,
-                errorMsg: 'Password must be at least 8 characters long'
-            });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
-        } else if (this.state.isValidEmail && this.state.isValidPassword) {
-            const creds = {
-                username: this.state.email.trim(),
-                password: this.state.password.trim(),
-                country_code: this.state.billing_code
-            };
-            // console.log(creds);
-            this.props.onSignUpUser(creds);
-        } else {
-            this.setState({
-                ...this.state,
-                errorMsg: 'Email or Password is not valid'
-            });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+        if (typeof window !== 'undefined') {
+            if (this.state.password.length <= 7) {
+                this.setState({
+                    ...this.state,
+                    errorMsg: 'Password must be at least 8 characters long'
+                });
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            } else if (this.state.isValidEmail && this.state.isValidPassword) {
+                const creds = {
+                    username: this.state.email.trim(),
+                    password: this.state.password.trim(),
+                    country_code: this.state.billing_code
+                };
+                // console.log(creds);
+                this.props.onSignUpUser(creds);
+            } else {
+                this.setState({
+                    ...this.state,
+                    errorMsg: 'Email or Password is not valid'
+                });
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
     }
     handleSelectCountry(billing_code) {

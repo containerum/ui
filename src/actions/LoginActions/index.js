@@ -28,12 +28,10 @@ export function loginUser(creds) {
                 // console.log(response);
                 if (response.status === 200) {
                     dispatch(receiveLOGIN(response));
-                    localStorage.setItem('id_token', response.data.token);
-                    // localStorage.setItem('icon_profile',
-                    //     JSON.stringify(<Identicons id={creds.username} width={28} size={4} />));
-                    // localStorage.setItem('icon_profile_big',
-                    //     JSON.stringify(<Identicons id={creds.username} width={63} size={4} />));
-                    browserHistory.push('/');
+                    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                        localStorage.setItem('id_token', response.data.token);
+                        browserHistory.push('/');
+                    }
                 } else if (response.status === 401) {
                     dispatch(LOGINError('Email or Password is not valid'));
                 } else {

@@ -26,7 +26,9 @@ export function ConfirmEmail(creds) {
             if (response.status === 200) {
                 dispatch(receiveEmailConfirm(response.data));
                 dispatch(receiveConfirm(creds.email));
-                browserHistory.push('/ResetPassword');
+                if (typeof window !== 'undefined') {
+                    browserHistory.push('/ResetPassword');
+                }
             } else if (response.status === 400) {
                 dispatch(errorEmailComfirm('Email is not valid'));
             } else {

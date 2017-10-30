@@ -3,26 +3,28 @@ import PropTypes from 'prop-types';
 
 class InputPassword extends Component {
     ValidationGetValuePass() {
-        const hasErrorGroupCurrentPassword = document.getElementById('group-current_password');
-        const hasErrorGroupNewPassword = document.getElementById('group-new_password');
-        const hasErrorGroupRepeatPassword = document.getElementById('group-repeat_password');
-        hasErrorGroupCurrentPassword.classList.remove('has-error');
-        hasErrorGroupNewPassword.classList.remove('has-error');
-        hasErrorGroupRepeatPassword.classList.remove('has-error');
-        const refValue = this.props.refValue ? this.props.refValue : 'password';
-        const password = this.refs[refValue].value;
+        if (typeof window !== 'undefined') {
+            const hasErrorGroupCurrentPassword = document.getElementById('group-current_password');
+            const hasErrorGroupNewPassword = document.getElementById('group-new_password');
+            const hasErrorGroupRepeatPassword = document.getElementById('group-repeat_password');
+            hasErrorGroupCurrentPassword.classList.remove('has-error');
+            hasErrorGroupNewPassword.classList.remove('has-error');
+            hasErrorGroupRepeatPassword.classList.remove('has-error');
+            const refValue = this.props.refValue ? this.props.refValue : 'password';
+            const password = this.refs[refValue].value;
 
-        // console.log(password);
-        if (password.length !== 0) {
-            document.getElementById('label-' + refValue).classList.add('form-group__label-always-onfocus');
-        } else {
-            document.getElementById('label-' + refValue).classList.remove('form-group__label-always-onfocus');
-        }
+            // console.log(password);
+            if (password.length !== 0) {
+                document.getElementById('label-' + refValue).classList.add('form-group__label-always-onfocus');
+            } else {
+                document.getElementById('label-' + refValue).classList.remove('form-group__label-always-onfocus');
+            }
 
-        if (password.length >= 8 && password.length <= 64) {
-            this.props.handlePassword(password, true);
-        } else {
-            this.props.handlePassword(password, false);
+            if (password.length >= 8 && password.length <= 64) {
+                this.props.handlePassword(password, true);
+            } else {
+                this.props.handlePassword(password, false);
+            }
         }
     }
     render() {

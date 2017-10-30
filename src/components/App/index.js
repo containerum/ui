@@ -9,7 +9,9 @@ class App extends Component {
     render() {
         // const options = {excludeUserAgent: true};
         new Fingerprint2().get(function(result, components){
-            localStorage.setItem('id_browser', result);
+            if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                localStorage.setItem('id_browser', result);
+            }
             // console.log(components); // an array of FP components
         });
         return (

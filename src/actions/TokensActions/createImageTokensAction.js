@@ -15,8 +15,12 @@ export function createImageTokens() {
     return dispatch => {
         const WebHook = "WebHook";
         dispatch(requestCreateImageTokens());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
 
         const api = WEB_API + '/api/set_image_tokens';
 
@@ -38,8 +42,10 @@ export function createImageTokens() {
                 if (response.status === 201) {
                     dispatch(receiveCreateImageTokens(response.data, response.status, WebHook));
                 } else if (response.status === 401) {
-                    localStorage.removeItem('id_token');
-                    browserHistory.push('/Login');
+                    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                        localStorage.removeItem('id_token');
+                        browserHistory.push('/Login');
+                    }
                 } else {
                     dispatch(failCreateImageTokens(response.data.message, response.status, WebHook));
                 }

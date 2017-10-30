@@ -5,9 +5,13 @@ import {
     CONFIRM_REQUEST
 } from '../../constants/ConfirmEmail';
 
+let isExistToken = false;
+if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    isExistToken = !!localStorage.getItem('id_token');
+}
 export default function ConfirmEmailReducer(state = {
     isFetching: false,
-    isAuthenticated: !!localStorage.getItem('id_token'),
+    isAuthenticated: isExistToken,
     isConfirmed: false,
     errorMessage: '',
     emailUser: ''

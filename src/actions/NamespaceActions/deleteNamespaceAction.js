@@ -14,8 +14,12 @@ import {
 export function deleteNamespace(idName) {
     return dispatch => {
         dispatch(requestDeleteNamespace());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
 
         return axios.delete(
             WEB_API + '/api/namespaces/' + idName,
@@ -34,8 +38,10 @@ export function deleteNamespace(idName) {
             if (response.status === 202) {
                 dispatch(receiveDeleteNamespace(response.status, idName));
             } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                }
             } else {
                 dispatch(failDeleteNamespace(response.data.message));
             }

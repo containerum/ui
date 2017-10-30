@@ -38,7 +38,7 @@ class Ports extends Component {
                                             className="tr-table-hover"
                                             key={index}
                                         >
-                                            <td className="td-1"><img src={deploy} alt="Port" /></td>
+                                            <td className="td-1"><img src={deploy} alt="" /></td>
                                             <td className="td-2">{name}</td>
                                             <td className="td-3">{port}:{targetPort}</td>
                                             <td className="td-4">{protocol}</td>

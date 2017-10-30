@@ -14,8 +14,12 @@ import {
 export function deleteProfile() {
     return dispatch => {
         dispatch(requestDeleteProfile());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
 
         const api = WEB_API + '/api/profile';
 
@@ -33,13 +37,19 @@ export function deleteProfile() {
         .then(response => {
             if (response.status === 200) {
                 dispatch(receiveDeleteProfile(response.data));
-                localStorage.removeItem('id_token');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                }
                 setTimeout(() => {
-                    window.location.replace('https://containerum.com/');
+                    if (typeof window !== 'undefined') {
+                        window.location.replace('https://containerum.com/');
+                    }
                 }, 200);
             } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                }
             } else {
                 dispatch(failDeleteProfile(response.data.message));
             }

@@ -14,8 +14,12 @@ import {
 export function deleteDeployment(namespaceName, deploymentName) {
     return dispatch => {
         dispatch(requestDeleteDeployment());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
         const api = WEB_API + '/api/namespaces/' + namespaceName + '/deployments/' + deploymentName;
 
         return axios.delete(
@@ -35,8 +39,10 @@ export function deleteDeployment(namespaceName, deploymentName) {
                 if (response.status === 202) {
                     dispatch(receiveDeleteDeployment(response.status, deploymentName));
                 } else if (response.status === 401) {
-                    localStorage.removeItem('id_token');
-                    browserHistory.push('/Login');
+                    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                        localStorage.removeItem('id_token');
+                        browserHistory.push('/Login');
+                    }
                 } else {
                     dispatch(failDeleteDeployment(response.data.message));
                 }
