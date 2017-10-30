@@ -45,6 +45,9 @@ import TokensReducer from './TokensReducers';
 import GetImageTokensReducer from './TokensReducers/GetImageTokensReducer';
 import CreateImageTokensReducer from './TokensReducers/CreateImageTokensReducer';
 import DeleteImageTokensReducer from './TokensReducers/DeleteImageTokensReducer';
+import GetVolumeReducer from './VolumeReducers/GetVolumeReducer';
+import DeleteVolumeReducer from './VolumeReducers/DeleteVolumeReducer';
+import UpdateVolumeReducer from './VolumeReducers/UpdateVolumeReducer';
 
 const rootReducer = combineReducers({
     LoginReducer,
@@ -91,7 +94,10 @@ const rootReducer = combineReducers({
     DeleteNamespaceReducer,
     GetNamespaceReducer,
     CreateImageTokensReducer,
-    DeleteImageTokensReducer
+    DeleteImageTokensReducer,
+    GetVolumeReducer,
+    DeleteVolumeReducer,
+    UpdateVolumeReducer
 });
 
 export default rootReducer;

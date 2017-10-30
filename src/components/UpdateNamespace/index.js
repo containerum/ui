@@ -99,6 +99,10 @@ class UpdateNamespace extends Component {
                                                     <div className="row">
                                                         <div className="col-md-6 namespace-plan-block-container-left">
                                                             <div className="namespace-plan-block-price">{isActiveTariff ? 'Active' : price}</div>
+                                                            {
+                                                                isActiveTariff || item.label === 'free' ? '' :
+                                                                    <div className="namespace-plan-block-month">per month</div>
+                                                            }
                                                         </div>
                                                         <div className="col-md-6 namespace-plan-block-container-right">
                                                             <div className="content-block-content card-block">
