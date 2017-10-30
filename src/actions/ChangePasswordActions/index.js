@@ -15,8 +15,12 @@ import {
 export function changePassword(data) {
     return dispatch => {
         dispatch(requestChangePassword());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
         const api = WEB_API + '/api/password_change';
         // const password = md5(data.password).toString(16);
         // const new_password = md5(data.new_password).toString(16);
@@ -36,10 +40,14 @@ export function changePassword(data) {
         .then(response => {
             if (response.status === 202) {
                 dispatch(receiveChangePassword(response.data));
-                localStorage.setItem('id_token', response.data.token);
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.setItem('id_token', response.data.token);
+                }
             } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                }
             } else {
                 dispatch(failChangePassword(response.data.message));
             }

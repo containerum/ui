@@ -21,7 +21,9 @@ class DeploymentInfo extends Component {
             });
         }
         if (nextProps.DeleteDeploymentReducer.status === 202 && nextProps.DeleteDeploymentReducer.deploymentName) {
-            browserHistory.push('/Namespaces/' + this.props.idName);
+            if (typeof window !== 'undefined') {
+                browserHistory.push('/Namespaces/' + this.props.idName);
+            }
         }
     }
     handleClickDeletingDeployment() {

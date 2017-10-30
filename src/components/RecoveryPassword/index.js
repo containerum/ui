@@ -23,12 +23,16 @@ class RecoveryPassword extends Component {
         };
     }
     componentWillMount() {
-        document.body.classList.add('c-body-bg');
-        localStorage.removeItem('id_token');
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            document.body.classList.add('c-body-bg');
+            localStorage.removeItem('id_token');
+        }
         if (this.props.location.query.hashParam) {
             this.props.onCheckHashPassword(this.props.location.query.hashParam);
         } else {
-            browserHistory.push('/Forgot');
+            if (typeof window !== 'undefined') {
+                browserHistory.push('/Forgot');
+            }
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -37,14 +41,18 @@ class RecoveryPassword extends Component {
                 ...this.state,
                 errorMsg: <div>Link is invalid. <Link to="/Forgot" className="c-link-wt">Forgot your password?</Link></div>
             });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+            if (typeof window !== 'undefined') {
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
         if (nextProps.RecoveryPasswordReducer.status === 202) {
-            browserHistory.push({
-                pathname: '/Login',
-                search: '?hashConf=' + this.props.CheckHashPasswordReducer.hashParam
-            });
+            if (typeof window !== 'undefined') {
+                browserHistory.push({
+                    pathname: '/Login',
+                    search: '?hashConf=' + this.props.CheckHashPasswordReducer.hashParam
+                });
+            }
         }
     }
     submitUpdatedPasswordData(e) {
@@ -61,16 +69,20 @@ class RecoveryPassword extends Component {
             const updatePasswordData = {
                 password: new_password
             };
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'none';
+            if (typeof window !== 'undefined') {
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'none';
+            }
             this.props.onRecoveryPassword(this.props.CheckHashPasswordReducer.hashParam, updatePasswordData.password);
         } else {
             this.setState({
                 ...this.state,
                 errorMsg: 'Password is not valid'
             });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+            if (typeof window !== 'undefined') {
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
     }
     checkNewPassword(password, isValidPassword) {

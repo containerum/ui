@@ -40,7 +40,7 @@ class CLI extends Component {
                                 <span className="block-item__download-title">{buttonPlatformContent}</span>
                                 <span className="block-item__download-note">Version {version} / {size} MB </span>
                                 <span className="block-item__download-arrow">
-                                    <img src={arrows} alt="Download CLI" />
+                                    <img src={arrows} alt="" />
                                 </span>
                             </a>
                             <a target="_blank" href="https://github.com/containerum/chkit/releases/latest" className="block-item__download block-item__download_alt">

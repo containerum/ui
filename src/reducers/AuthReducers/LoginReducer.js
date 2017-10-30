@@ -4,9 +4,13 @@ import {
     LOGIN_FAILURE
 } from '../../constants/LoginConstants';
 
+let isExistToken = false;
+if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    isExistToken = !!localStorage.getItem('id_token');
+}
 export default function LoginReducer(state = {
     isFetching: false,
-    isAuthenticated: !!localStorage.getItem('id_token'),
+    isAuthenticated: isExistToken,
     errorMessage: ''
 }, action) {
     switch (action.type) {

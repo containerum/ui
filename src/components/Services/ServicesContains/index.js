@@ -27,12 +27,16 @@ class ServicesContains extends Component {
                 countOfServices: this.state.countOfServices - 1
             });
             const id = `item_${nextProps.DeleteServiceReducer.serviceName}`;
-            const el = document.getElementById(id);
-            el ? el.remove() : el;
+            if (typeof window !== 'undefined') {
+                const el = document.getElementById(id);
+                el ? el.remove() : el;
+            }
         }
     }
     handleClickService(name) {
-        browserHistory.push('/Namespaces/' + this.props.idName + '/Services/' + name);
+        if (typeof window !== 'undefined') {
+            browserHistory.push('/Namespaces/' + this.props.idName + '/Services/' + name);
+        }
     }
     handleClose(e) {
         e.stopPropagation();

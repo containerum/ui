@@ -13,8 +13,12 @@ import {
 export function getCreateService(idName, data) {
     return dispatch => {
         dispatch(requestGetCreateService());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
         return axios.post(
             WEB_API + '/api/namespaces/' + idName + '/services',
             { ports: data },

@@ -15,13 +15,15 @@ class AddFunds extends Component {
     }
     handleChangeInputFunds(e) {
         const inputValue = e.target.value.trim();
-        if (inputValue.length !== 0) {
-            document.getElementById('payLabel').classList.add('form-group__label-always-onfocus');
-        } else {
-            document.getElementById('payLabel').classList.remove('form-group__label-always-onfocus');
+        if (typeof window !== 'undefined') {
+            if (inputValue.length !== 0) {
+                document.getElementById('payLabel').classList.add('form-group__label-always-onfocus');
+            } else {
+                document.getElementById('payLabel').classList.remove('form-group__label-always-onfocus');
+            }
+            const groupPayFunds = document.getElementById('group-pay-funds');
+            groupPayFunds.classList.remove('has-error');
         }
-        const groupPayFunds = document.getElementById('group-pay-funds');
-        groupPayFunds.classList.remove('has-error');
 
         const regexp = /^\d+(?:\.\d{0,2})?$|^$/;
         if (inputValue.search(regexp) !== -1) {
@@ -37,8 +39,10 @@ class AddFunds extends Component {
             // console.log(this.state.inputFunds);
             this.props.onPayFor(this.state.inputFunds);
         } else {
-            const groupPayFunds = document.getElementById('group-pay-funds');
-            groupPayFunds.classList.add('has-error');
+            if (typeof window !== 'undefined') {
+                const groupPayFunds = document.getElementById('group-pay-funds');
+                groupPayFunds.classList.add('has-error');
+            }
         }
     }
     render() {

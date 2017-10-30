@@ -41,7 +41,9 @@ class CustomerModal extends Component {
         // console.log(nextProps);
         // if(nextProps.isOpened && nextProps.name !== this.state.nameType) {
         if(nextProps.isOpened && nextProps.name) {
-            document.body.classList.add('overflow-hidden');
+            if (typeof window !== 'undefined') {
+                document.body.classList.add('overflow-hidden');
+            }
             this.setState({
                 ...this.state,
                 modalIsOpen: true
@@ -49,7 +51,9 @@ class CustomerModal extends Component {
         }
     }
     handleClickCloseModal() {
-        document.body.classList.remove('overflow-hidden');
+        if (typeof window !== 'undefined') {
+            document.body.classList.remove('overflow-hidden');
+        }
         this.setState({
             nameType: '',
             modalIsOpen: false
@@ -58,7 +62,9 @@ class CustomerModal extends Component {
     handleSubmitDeletingEssence(e) {
         e.preventDefault();
         if (this.state.nameType === this.props.name) {
-            document.body.classList.remove('overflow-hidden');
+            if (typeof window !== 'undefined') {
+                document.body.classList.remove('overflow-hidden');
+            }
             this.setState({
                 ...this.state,
                 nameType: '',

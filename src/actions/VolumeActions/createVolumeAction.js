@@ -14,8 +14,12 @@ import {
 export function createVolume(idVolume, tariff) {
     return dispatch => {
         dispatch(requestCreateVolume());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
 
         return axios.post(
             WEB_API + '/api/volumes',
@@ -38,10 +42,14 @@ export function createVolume(idVolume, tariff) {
             console.log(response);
             if (response.status === 201) {
                 dispatch(receiveCreateVolume(response.data, response.status, idVolume));
-                browserHistory.push('/Volumes');
+                if (typeof window !== 'undefined') {
+                    browserHistory.push('/Volumes');
+                }
             } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                }
             } else {
                 dispatch(failCreateVolume(response.data.message, response.status, idVolume));
             }

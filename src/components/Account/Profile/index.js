@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import identicons from 'identicons';
+import Blockies from 'react-blockies';
 
 import './Profile.css';
 
 class Profile extends Component {
     render() {
-        const profileBibSvg = localStorage.getItem('icon_profile_big') ?
-            localStorage.getItem('icon_profile_big') :
-            identicons.generateSVGDataURIString(this.props.email, { width: 63, size: 4 });
         return (
             <div className="block-item" id="profile">
                 <div className="block-item__title">Profile</div>
@@ -18,9 +15,14 @@ class Profile extends Component {
                         <div className="col-md-2">
                             <div className="form-group pt-0">
                                 <label className="form-group__label-image" htmlFor="avatar">
-                                    <img src={profileBibSvg} />
+                                    <Blockies
+                                        seed={this.props.email}
+                                        size={9}
+                                        scale={7}
+                                        bgColor="#fff"
+                                    />
                                 </label>
-                                <input type="file" className="form-group__hidden-input" id="avatar" />
+                                {/*<input type="file" className="form-group__hidden-input" id="avatar" />*/}
                             </div>
                         </div>
                         {/*<div className="col-md-5">*/}

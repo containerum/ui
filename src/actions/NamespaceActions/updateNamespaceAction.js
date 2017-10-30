@@ -14,8 +14,12 @@ import {
 export function updateNamespace(idName, tariff) {
     return dispatch => {
         dispatch(requestUpdateNamespace());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
 
         return axios.put(
             WEB_API + '/api/namespaces/' + idName,
@@ -37,10 +41,14 @@ export function updateNamespace(idName, tariff) {
             // console.log(response.config.method);
             if (response.status === 202) {
                 dispatch(receiveUpdateNamespace(response.data, response.status, response.config.method, idName));
-                browserHistory.push('/Namespaces');
+                if (typeof window !== 'undefined') {
+                    browserHistory.push('/Namespaces');
+                }
             } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                }
             } else {
                 dispatch(failUpdateNamespace(response.data.message, response.status, idName));
             }

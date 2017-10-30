@@ -14,8 +14,12 @@ import {
 export function createNamespace(idName, tariff) {
     return dispatch => {
         dispatch(requestCreateNamespace());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
 
         return axios.post(
             WEB_API + '/api/namespaces',
@@ -37,10 +41,14 @@ export function createNamespace(idName, tariff) {
         .then(response => {
             if (response.status === 201) {
                 dispatch(receiveCreateNamespace(response.data, response.status, idName));
-                browserHistory.push('/Namespaces');
+                if (typeof window !== 'undefined') {
+                    browserHistory.push('/Namespaces');
+                }
             } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                }
             } else {
                 dispatch(failCreateNamespace(response.data.message, response.status, idName));
             }

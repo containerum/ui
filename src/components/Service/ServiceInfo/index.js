@@ -8,7 +8,9 @@ import s from '../../../images/s.png';
 class ServiceInfo extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.DeleteServiceReducer.status === 202 && nextProps.DeleteServiceReducer.serviceName) {
-            browserHistory.push('/Namespaces/' + this.props.idName);
+            if (typeof window !== 'undefined') {
+                browserHistory.push('/Namespaces/' + this.props.idName);
+            }
         }
     }
     handleClickDeletingService(name) {

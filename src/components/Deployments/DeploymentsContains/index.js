@@ -41,12 +41,16 @@ class DeploymentsContains extends Component {
                 countOfDeployments: this.state.countOfDeployments - 1
             });
             const id = `item_${nextProps.DeleteDeploymentReducer.deploymentName}`;
-            const el = document.getElementById(id);
-            el ? el.remove() : el;
+            if (typeof window !== 'undefined') {
+                const el = document.getElementById(id);
+                el ? el.remove() : el;
+            }
         }
     }
     handleClickDeployment(name) {
-        browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + name);
+        if (typeof window !== 'undefined') {
+            browserHistory.push('/Namespaces/' + this.props.idName + '/Deployments/' + name);
+        }
     }
     handleClose(e) {
         e.stopPropagation();

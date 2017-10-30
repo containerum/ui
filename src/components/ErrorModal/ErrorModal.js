@@ -39,7 +39,9 @@ class ErrorModal extends Component {
         this.setState({ modalIsOpen: nextProps.modalIsOpen });
     }
     handleOnClickReload() {
-        window.location.reload();
+        if (typeof window !== 'undefined') {
+            window.location.reload();
+        }
     }
     openModal() {
         this.setState({ modalIsOpen: true });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import identicons from 'identicons';
+import Blockies from 'react-blockies';
 
 import NavLink from '../../../containers/NavLink';
 // import profile from '../../../images/profile.png';
@@ -12,12 +12,16 @@ class ProfileInfoDropdown extends Component {
     render() {
         const email = this.props.userEmail ? this.props.userEmail : '';
         const balance = this.props.userBalance ? parseFloat(this.props.userBalance).toFixed(2) : 0;
-        const profileSvg = localStorage.getItem('icon_profile') ? localStorage.getItem('icon_profile') : identicons.generateSVGDataURIString(email, { width: 28, size: 4 });
         return (
             <div>
                 <div className="header-top-account">
                     <div className="header-top-account__avatar">
-                        <img src={ profileSvg } />
+                        <Blockies
+                            seed={email}
+                            size={10}
+                            scale={3}
+                            bgColor="#fff"
+                        />
                     </div>
                     <div className="header-top-account__info">
                         <div className="header-top-account__name dropdown">

@@ -35,7 +35,7 @@ class Header extends Component {
                     <div className="header-top ">
                         <div className="header-top-container container">
                             <div className="header__logo">
-                                <NavLink to="/Namespaces" className=""><img src={logo} alt="logo" /></NavLink>
+                                <NavLink to="/Namespaces" className=""><img src={logo} alt="" /></NavLink>
                             </div>
                             <ul className="header-top-menu nav">
                                 <li className="header-top-menu__li nav-item">

@@ -14,8 +14,12 @@ import {
 export function getVolumesTariffs() {
     return dispatch => {
         dispatch(requestGetVolumesTariffs());
-        const token = localStorage.getItem('id_token');
-        const browser = localStorage.getItem('id_browser');
+        let token = '';
+        let browser = '';
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            token = localStorage.getItem('id_token');
+            browser = localStorage.getItem('id_browser');
+        }
 
         return axios.get(
             WEB_API + '/api/volume_tariffs',
@@ -37,8 +41,10 @@ export function getVolumesTariffs() {
             if (response.status === 200 || response.status === 201) {
                 dispatch(receiveGetVolumesTariffs(response.data));
             } else if (response.status === 401) {
-                localStorage.removeItem('id_token');
-                browserHistory.push('/Login');
+                if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+                    localStorage.removeItem('id_token');
+                    browserHistory.push('/Login');
+                }
             } else if (response.status === 404) {
                 dispatch(receiveGetVolumesTariffs([]));
             } else {

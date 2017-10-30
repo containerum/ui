@@ -30,52 +30,58 @@ class Login extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
     componentWillMount() {
-        document.body.classList.add('c-body-bg');
-        localStorage.removeItem('id_token');
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+            document.body.classList.add('c-body-bg');
+            localStorage.removeItem('id_token');
+        }
         if (this.props.location.query.hashParam) {
             this.props.onGetUserHashConfirm(this.props.location.query.hashParam);
         }
     }
     componentDidMount() {
-        if (this.props.location.query.hashConf && this.props.RecoveryPasswordReducer.status === 202) {
-            this.setState({
-                ...this.state,
-                successMsg: 'Your password has been changed successfully. Please Log In.'
-            });
-            const getSuccessAlert = document.getElementById('successfulAlert');
-            getSuccessAlert.style.display = 'block';
-        } else if (!!this.props.location.query.hashConf && this.props.RecoveryPasswordReducer.status !== 0) {
-            this.setState({
-                ...this.state,
-                errorMsg: 'Error! Your password was not changed.'
-            });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+        if (typeof window !== 'undefined') {
+            if (this.props.location.query.hashConf && this.props.RecoveryPasswordReducer.status === 202) {
+                this.setState({
+                    ...this.state,
+                    successMsg: 'Your password has been changed successfully. Please Log In.'
+                });
+                const getSuccessAlert = document.getElementById('successfulAlert');
+                getSuccessAlert.style.display = 'block';
+            } else if (!!this.props.location.query.hashConf && this.props.RecoveryPasswordReducer.status !== 0) {
+                this.setState({
+                    ...this.state,
+                    errorMsg: 'Error! Your password was not changed.'
+                });
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.UserHashConfirmReducer.data === 200) {
-            this.setState({
-                ...this.state,
-                successMsg: 'Your email has been confirmed. Please Log In.'
-            });
-            const getSuccessAlert = document.getElementById('successfulAlert');
-            getSuccessAlert.style.display = 'block';
-        } else if (this.props.location.query.hashParam && nextProps.UserHashConfirmReducer.errorMessage && !nextProps.errorMessage) {
-            this.setState({
-                ...this.state,
-                errorMsg: 'Hash is not valid'
-            });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
-        }
-        if (nextProps.errorMessage) {
-            this.setState({
-                ...this.state,
-                errorMsg: nextProps.errorMessage
-            });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+        if (typeof window !== 'undefined') {
+            if (nextProps.UserHashConfirmReducer.data === 200) {
+                this.setState({
+                    ...this.state,
+                    successMsg: 'Your email has been confirmed. Please Log In.'
+                });
+                const getSuccessAlert = document.getElementById('successfulAlert');
+                getSuccessAlert.style.display = 'block';
+            } else if (this.props.location.query.hashParam && nextProps.UserHashConfirmReducer.errorMessage && !nextProps.errorMessage) {
+                this.setState({
+                    ...this.state,
+                    errorMsg: 'Hash is not valid'
+                });
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
+            if (nextProps.errorMessage) {
+                this.setState({
+                    ...this.state,
+                    errorMsg: nextProps.errorMessage
+                });
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
     }
     handleCheckValidateEmailInput(email, isValidEmail) {
@@ -94,23 +100,25 @@ class Login extends Component {
     }
     handleClick(event) {
         event.preventDefault();
-        if (this.state.password.length <= 7) {
-            this.setState({
-                ...this.state,
-                errorMsg: 'Password must be at least 8 characters long'
-            });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
-        } else if (this.state.isValidEmail && this.state.isValidPassword) {
-            const creds = { username: this.state.email.trim(), password: this.state.password.trim() };
-            this.props.onLoginUser(creds);
-        } else {
-            this.setState({
-                ...this.state,
-                errorMsg: 'Email or Password is not valid'
-            });
-            const getAlert = document.getElementById('loginAlert');
-            getAlert.style.display = 'block';
+        if (typeof window !== 'undefined') {
+            if (this.state.password.length <= 7) {
+                this.setState({
+                    ...this.state,
+                    errorMsg: 'Password must be at least 8 characters long'
+                });
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            } else if (this.state.isValidEmail && this.state.isValidPassword) {
+                const creds = { username: this.state.email.trim(), password: this.state.password.trim() };
+                this.props.onLoginUser(creds);
+            } else {
+                this.setState({
+                    ...this.state,
+                    errorMsg: 'Email or Password is not valid'
+                });
+                const getAlert = document.getElementById('loginAlert');
+                getAlert.style.display = 'block';
+            }
         }
     }
     // responseGitHubSuccess(response) {

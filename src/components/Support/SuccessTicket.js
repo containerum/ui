@@ -10,7 +10,9 @@ import supportMan from '../../images/support-man.png';
 class SuccessTicket extends Component {
     componentDidMount() {
         if (!this.props.location.query.num) {
-            browserHistory.push('/');
+            if (typeof window !== 'undefined') {
+                browserHistory.push('/');
+            }
         }
     }
     render() {

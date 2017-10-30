@@ -27,7 +27,9 @@ export function sendSupport(data) {
             if (response.status === 200) {
                 // console.log(response.data);
                 dispatch(receiveGetCreateDeployment(response.data));
-                browserHistory.push('/Support/SuccessTicket?num=' + response.data.case.case_id);
+                if (typeof window !== 'undefined') {
+                    browserHistory.push('/Support/SuccessTicket?num=' + response.data.case.case_id);
+                }
             } else {
                 // console.log(response.data.message);
                 dispatch(failGetCreateDeployment(response.data.message));

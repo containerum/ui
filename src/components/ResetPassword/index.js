@@ -8,11 +8,15 @@ import Logo from '../Logo';
 
 class ResetPassword extends Component {
     componentWillMount() {
-        document.body.classList.add('c-body-bg');
+        if (typeof window !== 'undefined') {
+            document.body.classList.add('c-body-bg');
+        }
     }
     render() {
         if (!this.props.ConfirmEmailReducer.emailUser) {
-            browserHistory.push('/Login');
+            if (typeof window !== 'undefined') {
+                browserHistory.push('/Login');
+            }
         }
         return (
             <div className="main_container">
