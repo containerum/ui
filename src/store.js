@@ -2,6 +2,9 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import reducers from './reducers';
 import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { routerMiddleware } from 'react-router-redux';
+import { browserHistory } from 'react-router';
+
 //import createLogger from 'redux-logger'
 //import createSagaMiddleware from 'redux-saga'
 
@@ -9,6 +12,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 //const sagaMiddleware = createSagaMiddleware()
 
 export default function configureStore(initialState = {}) {
+  const reactRouterReduxMiddleware = routerMiddleware(browserHistory);
   // Create the store with two middlewares
   const middlewares = [
   //  sagaMiddleware
@@ -21,9 +25,10 @@ export default function configureStore(initialState = {}) {
   ]
 
   const store = createStore(
-    reducers
-  , initialState
-  , compose(...enhancers)
+    reducers,
+    initialState,
+    compose(...enhancers),
+    routerMiddleware(reactRouterReduxMiddleware)
   )
 
   // Extensions
