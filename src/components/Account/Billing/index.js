@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
+// import ReactPaginate from 'react-paginate';
 
 import ProfileSidebar from '../ProfileSidebar';
 import Information from './Information';
@@ -17,8 +18,28 @@ class Billing extends Component {
         this.props.onGetTariffs();
         this.props.onGetProfileReport();
     }
+    // handlePageClick = (page) => {
+    //     console.log(page);
+    //     // let selected = page.selected;
+    //     // let offset = Math.ceil(selected * this.props.perPage);
+    //
+    //     // this.setState({offset: offset}, () => {
+    //     //     this.loadCommentsFromServer();
+    //     // });
+    // };
+    // handleHrefClick(pageIndex) {
+    //     console.log(pageIndex);
+    //     return `/Billing?page=${pageIndex}`;
+    //     // if (this.props.hrefBuilder &&
+    //     //     pageIndex !== this.state.selected &&
+    //     //     pageIndex >= 0 &&
+    //     //     pageIndex < this.props.pageCount
+    //     // ) {
+    //     //     return this.props.hrefBuilder(pageIndex + 1);
+    //     // }
+    // }
     render() {
-        // console.log(this.props.GetProfileReportReducer.data);
+        console.log(this.props.GetProfileReportReducer.data);
         let isFetchingComponent = '';
         if (this.props.GetProfileBalanceReducer.isFetching === false &&
             this.props.GetTariffsReducer.isFetching === false &&
@@ -40,6 +61,7 @@ class Billing extends Component {
             const operations = Object.keys(this.props.GetProfileReportReducer.data).length ?
                 this.props.GetProfileReportReducer.data.operations : [];
             // console.log(monthUsage, dailyUsage);
+            const countPages = this.props.GetProfileReportReducer.data.pages;
             isFetchingComponent =
                 <div className="content-block ">
                     <div className=" container no-back">
@@ -81,6 +103,24 @@ class Billing extends Component {
                                                     </table>
                                                 </div>
                                             </div>
+                                            {/*<ReactPaginate*/}
+                                                {/*previousLabel={"Previous"}*/}
+                                                {/*nextLabel={"Next"}*/}
+                                                {/*breakLabel={<a href="/Billing?page=2">...</a>}*/}
+                                                {/*pageCount={countPages}*/}
+                                                {/*hrefBuilder={href => this.handleHrefClick(href)}*/}
+                                                {/*marginPagesDisplayed={1}*/}
+                                                {/*onPageChange={page => this.handlePageClick(page)}*/}
+                                                {/*containerClassName={"pagination pagination-sm"}*/}
+                                                {/*pageClassName={"page-item"}*/}
+                                                {/*nextClassName={"page-item"}*/}
+                                                {/*breakClassName={"page-item"}*/}
+                                                {/*previousClassName={"page-item"}*/}
+                                                {/*previousLinkClassName={"page-link"}*/}
+                                                {/*nextLinkClassName={"page-link"}*/}
+                                                {/*pageLinkClassName={"page-link"}*/}
+                                                {/*activeClassName={"active"}*/}
+                                            {/*/>*/}
                                             {/*<nav aria-label="Page navigation example">*/}
                                                 {/*<ul className="pagination pagination-sm">*/}
                                                     {/*<li className="page-item"><a className="page-link" href="#">Previous</a></li>*/}
