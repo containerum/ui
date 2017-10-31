@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { browserHistory } from 'react-router';
+import { push } from 'react-router-redux';
+
+import configureStore from '../../store';
+const store = configureStore();
 
 import {
     NAMESPACES_REQUEST,
@@ -40,8 +43,9 @@ export function getNamespaces() {
             } else if (response.status === 401) {
                 if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
                     localStorage.removeItem('id_token');
-                    browserHistory.push('/Login');
+                    // browserHistory.push('/Login');
                 }
+                store.dispatch(push('/Login'));
             } else if (response.status === 404) {
                 dispatch(receiveGetNamespaces([]));
             } else {

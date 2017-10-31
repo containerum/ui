@@ -21,13 +21,14 @@ import '../../styles/individual.css';
 class Header extends Component {
     componentDidMount() {
         this.props.onLoadProfileData();
-        this.props.onGetProfileBalance();
+        if (!this.props.GetProfileBalanceReducer.data.balance) {
+            this.props.onGetProfileBalance();
+        }
     }
     render() {
-        // console.log(this.props.GetProfileReducer.data);
+        console.log(this.props.GetProfileBalanceReducer.data);
         let isFetchingProfile = '';
-        if (this.props.GetProfileReducer.isFetching === false &&
-            this.props.GetProfileBalanceReducer.isFetching === false) {
+        if (this.props.GetProfileReducer.isFetching === false) {
             const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : 'no data';
             const userBalance = this.props.GetProfileBalanceReducer.data.balance ? parseFloat(this.props.GetProfileBalanceReducer.data.balance) : 0;
             isFetchingProfile =
