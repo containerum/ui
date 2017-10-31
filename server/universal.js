@@ -33,7 +33,7 @@ module.exports = function universalLoader(req, res) {
             <RouterContext {...renderProps} />
           </Provider>
         )
-        const RenderedApp = htmlData.replace('{{SSR}}', ReactApp)
+        const RenderedApp = htmlData.replace(`{{SSR}}<div class="placeholder-pre-render"><div><div class="wrapper"><header class="header"><div class="header-top"><div class="header-top-container container"><div class="header__logo"><a href="/" class=""><img src="logo.png" alt=""></a></div><ul class="header-top-menu nav"></ul><div class="header-top-account"><div class="header-top-account__info"><div class="header-top-account__name dropdown"></div></div></div><div class="clearfix"></div></div></div></header><div class="content-block"><div class=" container no-back"><div class="row double two-columns"><div class="clearfix"></div></div></div></div></div><footer class="footer"><div class="footer-wrapper"><div class="footer-container container"><div class="footer__logo">Created by Exon Lab</div><a target="_blank" class="footer__download_cli">Download CLI <img src="arrows.png" alt=""></a><a target="_blank" href="https://containerum.com/documentation" class="footer__help">Docs</a></div></div></footer></div></div>`, ReactApp);
         res.send(RenderedApp)
       } else {
         return res.status(404).end()
