@@ -1,3 +1,7 @@
+*, *:focus {
+    outline: none!important;
+}
+
 #root {
     min-width: 1000px;
     /*background: #f6f6f6;*/

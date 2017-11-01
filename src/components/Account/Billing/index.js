@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
-// import ReactPaginate from 'react-paginate';
+import scrollToComponent from 'react-scroll-to-component';
 
 import ProfileSidebar from '../ProfileSidebar';
+import Paginator from '../../Paginator';
 import Information from './Information';
 import AddFunds from './AddFunds';
 import Spinner from '../../Spinner';
@@ -13,38 +14,44 @@ import { getTariffs } from '../../../actions/BillingActions/getTariffsAction';
 import { getProfileReport } from '../../../actions/BillingActions/getProfileReportAction';
 
 class Billing extends Component {
-    componentDidMount() {
-        this.props.onGetProfileBalance();
-        this.props.onGetTariffs();
-        this.props.onGetProfileReport();
+    constructor() {
+        super();
+        this.state = {
+            currentPage: 1
+        };
     }
-    // handlePageClick = (page) => {
-    //     console.log(page);
-    //     // let selected = page.selected;
-    //     // let offset = Math.ceil(selected * this.props.perPage);
-    //
-    //     // this.setState({offset: offset}, () => {
-    //     //     this.loadCommentsFromServer();
-    //     // });
-    // };
-    // handleHrefClick(pageIndex) {
-    //     console.log(pageIndex);
-    //     return `/Billing?page=${pageIndex}`;
-    //     // if (this.props.hrefBuilder &&
-    //     //     pageIndex !== this.state.selected &&
-    //     //     pageIndex >= 0 &&
-    //     //     pageIndex < this.props.pageCount
-    //     // ) {
-    //     //     return this.props.hrefBuilder(pageIndex + 1);
-    //     // }
-    // }
+    componentDidMount() {
+        this.props.onGetTariffs();
+        this.props.onGetProfileBalance();
+
+        const page = this.props.location.query.page ? parseInt(this.props.location.query.page) : false;
+        if (page) {
+            this.props.onGetProfileReport(page);
+            this.setState({
+                currentPage: page
+            });
+        } else {
+            this.props.onGetProfileReport()
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.location.query.page !== this.props.location.query.page) {
+            const page = nextProps.location.query.page ? parseInt(nextProps.location.query.page) : 1;
+            this.props.onGetProfileReport(page);
+            this.setState({
+                currentPage: page
+            });
+            scrollToComponent(this.refs.scrollView);
+        }
+    }
     render() {
-        console.log(this.props.GetProfileReportReducer.data);
-        let isFetchingComponent = '';
+        // console.log(this.props.GetProfileReportReducer.data);
+        let isFetchingReport = '';
+        let isFetchingInformation = '';
+        const countPages = this.props.GetProfileReportReducer.data.pages;
+
         if (this.props.GetProfileBalanceReducer.isFetching === false &&
-            this.props.GetTariffsReducer.isFetching === false &&
-            this.props.GetProfileReportReducer.isFetching === false)
-        {
+            this.props.GetTariffsReducer.isFetching === false) {
             const balance = parseFloat(this.props.GetProfileBalanceReducer.data.balance);
             const monthUsage = this.props.GetTariffsReducer.data.monthly_cost ? parseFloat(this.props.GetTariffsReducer.data.monthly_cost) : 0;
             const dailyUsage = monthUsage ? parseFloat(monthUsage / 30) : 0;
@@ -58,91 +65,75 @@ class Billing extends Component {
                 }
             }
             const statusUser = '' + this.props.GetProfileReducer.data.is_active === 'true' ? 'Active' : 'Inactive';
+            isFetchingInformation =
+                <Information
+                    statusUser={statusUser}
+                    balance={balance}
+                    monthUsage={monthUsage}
+                    dailyUsage={dailyUsage}
+                    formatDateToActive={formatDateToActive}
+                />
+        } else {
+            isFetchingInformation = <Spinner />;
+        }
+
+        if (this.props.GetProfileReportReducer.isFetching === false)
+        {
             const operations = Object.keys(this.props.GetProfileReportReducer.data).length ?
                 this.props.GetProfileReportReducer.data.operations : [];
-            // console.log(monthUsage, dailyUsage);
-            const countPages = this.props.GetProfileReportReducer.data.pages;
-            isFetchingComponent =
-                <div className="content-block ">
+            isFetchingReport =
+                <tbody>
+                {
+                    operations.length ? operations.map((item, index) => {
+                        const amount = item.amount;
+                        const date = item.date;
+                        const info = item.info;
+                        return (
+                            <tr key={index}>
+                                <td className="w-25 table-border">{date}</td>
+                                <td className="w-50 table-border">{info}</td>
+                                <td className="w-25 table-border">{amount}</td>
+                            </tr>
+                        )
+                    }) : ''
+                }
+                </tbody>;
+        } else {
+            isFetchingReport = <Spinner />;
+        }
+        return (
+            <div>
+                <div className="content-block">
                     <div className=" container no-back">
                         <div className="row double two-columns">
                             <ProfileSidebar />
                             <div className="col-md-9 col-lg-9 col-xl-10">
                                 <div className="content-block">
                                     <div className="content-block-container container container-fluid">
-                                        <Information
-                                            statusUser={statusUser}
-                                            balance={balance}
-                                            monthUsage={monthUsage}
-                                            dailyUsage={dailyUsage}
-                                            formatDateToActive={formatDateToActive}
-                                        />
+                                        { isFetchingInformation }
                                         <AddFunds />
-                                        <div className="block-item" id="history">
+                                        <div className="block-item" id="history" ref="scrollView">
                                             <div className="block-item__title">History</div>
                                             <div className="row">
                                                 <div className="block-item__history col-md-12">
                                                     <table className="block-item__history-table content-block__table table">
-                                                        <tbody>
-                                                        {
-                                                            operations.length ? operations.map((item, index) => {
-                                                                // console.log(item);
-                                                                const amount = item.amount;
-                                                                const date = item.date;
-                                                                const info = item.info;
-                                                                return (
-                                                                    <tr key={index}>
-                                                                        <td className="w-25 table-border">{date}</td>
-                                                                        <td className="w-50 table-border">{info}</td>
-                                                                        <td className="w-25 table-border">{amount}</td>
-                                                                    </tr>
-                                                                )
-                                                            }) : ''
-                                                        }
-                                                        </tbody>
+                                                        { isFetchingReport }
                                                     </table>
                                                 </div>
+                                                <nav>
+                                                    <Paginator
+                                                        countPage={countPages}
+                                                        currentPage={this.state.currentPage}
+                                                    />
+                                                </nav>
                                             </div>
-                                            {/*<ReactPaginate*/}
-                                                {/*previousLabel={"Previous"}*/}
-                                                {/*nextLabel={"Next"}*/}
-                                                {/*breakLabel={<a href="/Billing?page=2">...</a>}*/}
-                                                {/*pageCount={countPages}*/}
-                                                {/*hrefBuilder={href => this.handleHrefClick(href)}*/}
-                                                {/*marginPagesDisplayed={1}*/}
-                                                {/*onPageChange={page => this.handlePageClick(page)}*/}
-                                                {/*containerClassName={"pagination pagination-sm"}*/}
-                                                {/*pageClassName={"page-item"}*/}
-                                                {/*nextClassName={"page-item"}*/}
-                                                {/*breakClassName={"page-item"}*/}
-                                                {/*previousClassName={"page-item"}*/}
-                                                {/*previousLinkClassName={"page-link"}*/}
-                                                {/*nextLinkClassName={"page-link"}*/}
-                                                {/*pageLinkClassName={"page-link"}*/}
-                                                {/*activeClassName={"active"}*/}
-                                            {/*/>*/}
-                                            {/*<nav aria-label="Page navigation example">*/}
-                                                {/*<ul className="pagination pagination-sm">*/}
-                                                    {/*<li className="page-item"><a className="page-link" href="#">Previous</a></li>*/}
-                                                    {/*<li className="page-item active"><a className="page-link" href="#">1</a></li>*/}
-                                                    {/*<li className="page-item"><a className="page-link" href="#">2</a></li>*/}
-                                                    {/*<li className="page-item"><a className="page-link" href="#">3</a></li>*/}
-                                                    {/*<li className="page-item"><a className="page-link" href="#">Next</a></li>*/}
-                                                {/*</ul>*/}
-                                            {/*</nav>*/}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>;
-        } else {
-            isFetchingComponent = <Spinner />;
-        }
-        return (
-            <div>
-                { isFetchingComponent }
+                </div>
             </div>
         );
     }
@@ -169,8 +160,8 @@ const mapDispatchToProps = (dispatch) => {
         onGetProfileBalance: () => {
             dispatch(getProfileBalance());
         },
-        onGetProfileReport: () => {
-            dispatch(getProfileReport());
+        onGetProfileReport: (page = 1) => {
+            dispatch(getProfileReport(page));
         },
         onGetTariffs: (monthly=1) => {
             dispatch(getTariffs(monthly));

@@ -37,7 +37,10 @@ export function getProfileReport(page = 1) {
             }
         )
         .then(response => {
-            if (response.status === 200 || response.status === 201) {
+            if (response.status === 200) {
+                if (!response.data.operations.length) {
+                    browserHistory.push('/Billing');
+                }
                 dispatch(receiveGetProfileReport(response.data));
             } else if (response.status === 401) {
                 if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {

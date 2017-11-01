@@ -26,7 +26,7 @@ class Header extends Component {
         }
     }
     render() {
-        console.log(this.props.GetProfileBalanceReducer.data);
+        // console.log(this.props.GetProfileBalanceReducer.data);
         let isFetchingProfile = '';
         if (this.props.GetProfileReducer.isFetching === false) {
             const userEmail = this.props.GetProfileReducer.data.login ? this.props.GetProfileReducer.data.login : 'no data';

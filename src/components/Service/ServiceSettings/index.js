@@ -9,7 +9,7 @@ class ServiceSettings extends Component {
         if (portType) {
             headerPortType = 'External Port';
         }
-        console.log(portType);
+        // console.log(portType);
         const portsContent =
             <tbody>
                 <tr>

@@ -66,6 +66,7 @@
     "react-redux": "^5.0.4",
     "react-router": "^3.0.0",
     "react-router-redux": "^4.0.8",
+    "react-scroll-to-component": "^1.0.1",
     "react-scrollable-anchor": "^0.5.0",
     "react-scrollspy": "^3.3.4",
     "react-snapshot": "^1.2.0",
