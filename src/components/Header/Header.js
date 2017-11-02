@@ -21,9 +21,7 @@ import '../../styles/individual.css';
 class Header extends Component {
     componentDidMount() {
         this.props.onLoadProfileData();
-        if (!this.props.GetProfileBalanceReducer.data.balance) {
-            this.props.onGetProfileBalance();
-        }
+        this.props.onGetProfileBalance();
     }
     render() {
         // console.log(this.props.GetProfileBalanceReducer.data);

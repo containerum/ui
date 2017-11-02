@@ -55,6 +55,8 @@ class UpdateVolume extends Component {
                             arrayWithInactiveTariff.push(itemIn)
                         }
                     });
+                } else {
+                    arrayWithInactiveTariff.push(itemOut);
                 }
             });
 
@@ -65,7 +67,7 @@ class UpdateVolume extends Component {
 
                             <div className="namespace-plan mt-0">
                                 <div className="namespace-plan-first-step">{this.props.params.idVolume}</div>
-                                <div className="namespace-plan-title">choose a namespace plan</div>
+                                <div className="namespace-plan-title">choose a volume plan</div>
                             </div>
                             <div className="row">
                                 {

@@ -89,8 +89,8 @@ class VolumesContainer extends Component {
                                                     <ul className="dropdown-menu dropdown-menu-right" role="menu">
                                                         <NavLink
                                                             className="dropdown-item"
-                                                            to={`/Volumes/${name}/Update`}
-                                                        >Update</NavLink>
+                                                            to={`/Volumes/${name}/Resize`}
+                                                        >Resize</NavLink>
                                                         <button
                                                             className="dropdown-item text-danger"
                                                             onClick={idVolume => this.handleClickDeletingVolume(name)}

@@ -22,7 +22,9 @@ class Billing extends Component {
     }
     componentDidMount() {
         this.props.onGetTariffs();
-        this.props.onGetProfileBalance();
+        if (!this.props.GetProfileBalanceReducer.data.balance) {
+            this.props.onGetProfileBalance();
+        }
 
         const page = this.props.location.query.page ? parseInt(this.props.location.query.page) : false;
         if (page) {
@@ -121,10 +123,13 @@ class Billing extends Component {
                                                     </table>
                                                 </div>
                                                 <nav>
-                                                    <Paginator
-                                                        countPage={countPages}
-                                                        currentPage={this.state.currentPage}
-                                                    />
+                                                    {
+                                                        countPages >= 2 ?
+                                                            <Paginator
+                                                                countPage={countPages > 25 ? 25 : countPages}
+                                                                currentPage={this.state.currentPage}
+                                                            /> : ''
+                                                    }
                                                 </nav>
                                             </div>
                                         </div>

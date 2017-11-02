@@ -47,8 +47,8 @@ class Paginator extends Component {
 }
 
 Paginator.propTypes = {
-    countPage: PropTypes.number.isRequired,
-    currentPage: PropTypes.number.isRequired
+    countPage: PropTypes.number,
+    currentPage: PropTypes.number
 };
 
 export default Paginator;

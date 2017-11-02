@@ -28,6 +28,7 @@ import NotFound from './components/NotFound';
 import CreateNamespace from './components/CreateNamespace';
 import UpdateNamespace from './components/UpdateNamespace';
 import CreateVolume from './components/CreateVolume';
+import UpdateVolume from './components/UpdateVolume';
 // import CreateDeployment from './components/CreateDeployment';
 // import CreateService from './components/CreateService';
 
@@ -70,6 +71,7 @@ const Routes = props => {
                 <Route path="/CreateNamespace" component={CreateNamespace} />
                 <Route path="/Namespaces/:idName/Resize" component={UpdateNamespace} />
                 <Route path="/CreateVolume" component={CreateVolume} />
+                <Route path="/Volumes/:idVolume/Resize" component={UpdateVolume} />
                 {/*<Route path="/Namespaces/:idName/CreateNewDeployment" component={CreateDeployment} />*/}
                 {/*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*/}
                 <Route path="/Support" component={Support} />
