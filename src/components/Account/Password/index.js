@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import InputPassword from '../InputPassword';
 import { changePassword } from '../../../actions/ChangePasswordActions';
+import Notification from '../../Notification';
 import MiniSpinner from '../../MiniSpinner';
 
 class Password extends Component {
@@ -117,6 +118,12 @@ class Password extends Component {
         const isActiveResetPasswordState = !!this.props.ChangePasswordReducer.isFetching;
         return (
             <div>
+                <Notification
+                    status={this.props.ChangePasswordReducer.status}
+                    method={this.props.ChangePasswordReducer.method}
+                    name={this.props.ChangePasswordReducer.password}
+                    errorMessage={this.props.ChangePasswordReducer.errorMessage}
+                />
                 <div className="block-item" id="password">
                     <div className="block-item__title">Password</div>
                     <form onSubmit={this.submitUpdatedPasswordData.bind(this)}>
@@ -162,6 +169,7 @@ class Password extends Component {
                             <div className="col-md-2">
                                 <div className="form-group pt-0 text-right">
                                     <button
+                                        style={{width: '75px'}}
                                         type="submit"
                                         className={isActiveResetPasswordButton}
                                         disabled={isActiveResetPasswordState}

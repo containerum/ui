@@ -11,7 +11,7 @@ import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function createImageTokens() {
+export function createImageTokens(label, regexp) {
     return dispatch => {
         const WebHook = "WebHook";
         dispatch(requestCreateImageTokens());
@@ -26,7 +26,10 @@ export function createImageTokens() {
 
         return axios.post(
             api,
-            {},
+            {
+                label,
+                regexp
+            },
             {
                 headers: {
                     'Authorization': token,

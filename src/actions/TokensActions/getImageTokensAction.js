@@ -45,7 +45,7 @@ export function getImageTokens() {
                         browserHistory.push('/Login');
                     }
                 } else if (response.status === 404) {
-                    dispatch(receiveGetImageTokens({}));
+                    dispatch(receiveGetImageTokens([]));
                 } else {
                     dispatch(failGetImageTokens(response.data.message));
                 }

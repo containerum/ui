@@ -268,3 +268,9 @@ input:invalid {
 .block-item__tokens {
     margin: 35px 0 0;
 }
+
+.td-label-wrapper {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

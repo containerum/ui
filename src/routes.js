@@ -68,7 +68,7 @@ const Routes = props => {
                 </Route>
                 <Route path="/Namespaces/:idName/Deployments/:idDep/Pods/:idPod" component={Pod} />
                 <Route path="/CreateNamespace" component={CreateNamespace} />
-                <Route path="/Namespaces/:idName/Update" component={UpdateNamespace} />
+                <Route path="/Namespaces/:idName/Resize" component={UpdateNamespace} />
                 <Route path="/CreateVolume" component={CreateVolume} />
                 {/*<Route path="/Namespaces/:idName/CreateNewDeployment" component={CreateDeployment} />*/}
                 {/*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*/}

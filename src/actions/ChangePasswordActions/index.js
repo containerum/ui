@@ -21,6 +21,7 @@ export function changePassword(data) {
             token = localStorage.getItem('id_token');
             browser = localStorage.getItem('id_browser');
         }
+        const password = 'Password';
         const api = WEB_API + '/api/password_change';
         // const password = md5(data.password).toString(16);
         // const new_password = md5(data.new_password).toString(16);
@@ -39,7 +40,7 @@ export function changePassword(data) {
         )
         .then(response => {
             if (response.status === 202) {
-                dispatch(receiveChangePassword(response.data));
+                dispatch(receiveChangePassword(response.data, response.status, 'put', password));
                 if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
                     localStorage.setItem('id_token', response.data.token);
                 }
@@ -49,9 +50,9 @@ export function changePassword(data) {
                     browserHistory.push('/Login');
                 }
             } else {
-                dispatch(failChangePassword(response.data.message));
+                dispatch(failChangePassword(response.data.message, response.status, password));
             }
-        }).catch(err => console.log(err));
+        }).catch(err => { dispatch(failChangePassword(err.toString(), 503, password)); console.log(err); });
     };
 }
 
@@ -62,18 +63,23 @@ function requestChangePassword() {
     };
 }
 
-function receiveChangePassword(data) {
+function receiveChangePassword(data, status, method, password) {
     return {
         type: CHANGE_PASSWORD_SUCCESS,
         isFetching: false,
-        data
+        data,
+        status,
+        method,
+        password
     };
 }
 
-function failChangePassword(message) {
+function failChangePassword(message, status, password) {
     return {
         type: CHANGE_PASSWORD_FAILURE,
         isFetching: false,
-        message
+        message,
+        status,
+        password
     };
 }

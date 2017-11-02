@@ -23,12 +23,18 @@ export function SignUpUser(creds) {
         const username = creds.username;
         const password = creds.password;
         const country_code = creds.country_code;
+
         return axios.post(
             WEB_API + '/api/users',
-            {
+            creds.with_trial ? {
                 username,
                 password,
-                country_code
+                country_code,
+                with_trial: creds.with_trial
+            } : {
+                username,
+                password,
+                country_code,
             },
             {
                 validateStatus: (status) => status >= 200 && status <= 505
