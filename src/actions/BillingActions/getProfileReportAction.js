@@ -11,7 +11,7 @@ import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function getProfileReport() {
+export function getProfileReport(page = 1) {
     return dispatch => {
         dispatch(requestGetProfileReport());
         let token = '';
@@ -21,7 +21,7 @@ export function getProfileReport() {
             browser = localStorage.getItem('id_browser');
         }
 
-        const api = WEB_API + '/api/profile/report';
+        const api = WEB_API + `/api/profile/report?page=${page}`;
 
         return axios.get(
             api,
@@ -37,7 +37,10 @@ export function getProfileReport() {
             }
         )
         .then(response => {
-            if (response.status === 200 || response.status === 201) {
+            if (response.status === 200) {
+                if (!response.data.operations.length) {
+                    browserHistory.push('/Billing');
+                }
                 dispatch(receiveGetProfileReport(response.data));
             } else if (response.status === 401) {
                 if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {

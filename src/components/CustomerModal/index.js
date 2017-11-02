@@ -76,7 +76,7 @@ class CustomerModal extends Component {
     handleChangeNameOfType(e) {
         this.setState({
             ...this.state,
-            nameType: e.target.value.trim()
+            nameType: e.target.value
         });
     }
     render() {
@@ -89,7 +89,7 @@ class CustomerModal extends Component {
         return (
             <Modal
                 isOpen={this.state.modalIsOpen}
-                onRequestClose={this.handleClickCloseModal.bind(this)}
+                // onRequestClose={this.handleClickCloseModal.bind(this)}
                 style={customStyles}
                 contentLabel="Delete"
             >
@@ -120,7 +120,7 @@ class CustomerModal extends Component {
                                 >{this.props.name}</h4>
                                 <span className="modal-redis-text">
                                     Deleting your {this.props.type} is irreversible.<br />
-                                    Enter your {this.props.type} name ({this.props.name}) below to confirm you want to permanently delete it:
+                                    Enter your {this.props.type} name (<strong>{this.props.name}</strong>) below to confirm you want to permanently delete it:
                                 </span>
                                 <input
                                     type="text"
