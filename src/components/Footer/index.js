@@ -36,6 +36,13 @@ class Footer extends Component {
                         >
                             Docs
                         </a>
+                        <a
+                            target="_blank"
+                            href="https://containerum.com/fast-deploy/hello-world"
+                            className="footer__help"
+                        >
+                            How To
+                        </a>
                     </div>
                 </div>
             </footer>

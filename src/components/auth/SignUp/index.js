@@ -21,7 +21,8 @@ class SignUp extends Component {
             isValidEmail: false,
             password: '',
             isValidPassword: false,
-            billing_code: '182'
+            billing_code: '182',
+            with_trial: false
         };
         this.handleChangeOnToggle = this.handleChangeOnToggle.bind(this);
         this.handleCheckValidateEmailInput = this.handleCheckValidateEmailInput.bind(this);
@@ -44,6 +45,12 @@ class SignUp extends Component {
                 const getAlert = document.getElementById('loginAlert');
                 getAlert.style.display = 'block';
             }
+        }
+        if (this.props.location.query.trial) {
+            this.setState({
+                ...this.state,
+                with_trial: 1
+            });
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -96,7 +103,8 @@ class SignUp extends Component {
                 const creds = {
                     username: this.state.email.trim(),
                     password: this.state.password.trim(),
-                    country_code: this.state.billing_code
+                    country_code: this.state.billing_code,
+                    with_trial: this.state.with_trial
                 };
                 // console.log(creds);
                 this.props.onSignUpUser(creds);

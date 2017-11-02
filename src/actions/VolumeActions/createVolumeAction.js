@@ -39,7 +39,7 @@ export function createVolume(idVolume, tariff) {
             }
         )
         .then(response => {
-            console.log(response);
+            // console.log(response);
             if (response.status === 201) {
                 dispatch(receiveCreateVolume(response.data, response.status, idVolume));
                 if (typeof window !== 'undefined') {

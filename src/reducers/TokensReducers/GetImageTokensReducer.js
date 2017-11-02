@@ -6,7 +6,7 @@ import {
 
 export default function GetImageTokensReducer(state = {
     isFetching: false,
-    data: {},
+    data: [],
     errorMessage: ''
 }, action) {
     switch (action.type) {

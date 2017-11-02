@@ -11,7 +11,7 @@ import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function deleteImageToken() {
+export function deleteImageToken(label) {
     return dispatch => {
         const WebHook = "WebHook";
         dispatch(requestDeleteImageTokens());
@@ -22,7 +22,7 @@ export function deleteImageToken() {
             browser = localStorage.getItem('id_browser');
         }
 
-        const api = WEB_API + '/api/set_image_tokens';
+        const api = WEB_API + `/api/set_image_tokens/${label}`;
 
         return axios.delete(
             api,

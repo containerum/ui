@@ -5,7 +5,7 @@ import toastr from 'toastr';
 
 class Notification extends Component {
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps);
+        // console.log('Notification', nextProps);
         toastr.options = {
             'closeButton': true,
             'debug': false,
@@ -24,11 +24,12 @@ class Notification extends Component {
             'hideMethod': 'fadeOut'
         };
         if (nextProps.status === 202 && nextProps.name &&
-            nextProps.name !== this.props.name && nextProps.method === 'put') {
-            toastr.success(nextProps.name + ' was updated', 'Updated Success');
-        } else if (nextProps.status === 202 && nextProps.name &&
             nextProps.name !== this.props.name) {
-            toastr.success(nextProps.name + ' was deleted', 'Deleted Success');
+            if (nextProps.method === 'put') {
+                toastr.success(nextProps.name + ' was updated', 'Updated Success');
+            } else {
+                toastr.success(nextProps.name + ' was deleted', 'Deleted Success');
+            }
         } else if (nextProps.status === 201 && nextProps.name &&
             nextProps.name !== this.props.name) {
             toastr.success(nextProps.name + ' was created', 'Created Success');

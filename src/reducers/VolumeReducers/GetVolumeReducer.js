@@ -1,41 +1,38 @@
 import {
-    CHANGE_PASSWORD_REQUEST,
-    CHANGE_PASSWORD_SUCCESS,
-    CHANGE_PASSWORD_FAILURE
-} from '../../constants/ChangePasswordConstaints';
+    GET_VOLUME_REQUEST,
+    GET_VOLUME_SUCCESS,
+    GET_VOLUME_FAILURE
+} from '../../constants/VolumeConstants';
 
-export default function ChangePasswordReducer(state = {
+export default function GetVolumeReducer(state = {
     isFetching: false,
-    data: '',
-    errorMessage: '',
+    data: {},
     status: '',
-    method: '',
-    password: ''
+    idName: '',
+    errorMessage: ''
 }, action) {
     switch (action.type) {
-    case CHANGE_PASSWORD_REQUEST:
+    case GET_VOLUME_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            data: '',
+            data: {},
             errorMessage: '',
             status: '',
-            method: '',
-            password: ''
+            idName: ''
         });
-    case CHANGE_PASSWORD_SUCCESS:
+    case GET_VOLUME_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data,
             status: action.status,
-            method: action.method,
-            password: action.password
+            idName: action.idName
         });
-    case CHANGE_PASSWORD_FAILURE:
+    case GET_VOLUME_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message,
             status: action.status,
-            password: action.password
+            idName: action.idName
         });
     default:
         return state;
