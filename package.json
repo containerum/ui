@@ -82,6 +82,7 @@
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.4",
     "toastr": "^2.1.2",
+    "tween": "^0.9.0",
     "url-loader": "0.5.9",
     "validator": "^7.0.0",
     "webpack": "3.5.1",
