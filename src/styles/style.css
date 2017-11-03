@@ -1251,11 +1251,20 @@ select.form-control:not([size]):not([multiple]) {
     margin-bottom: 15px;
 }
 
-.namespace-plan-title{
+.namespace-plan-title,
+.namespace-plan-content {
     font-size: 20px;
     text-align: left;
     text-transform: uppercase;
     margin-bottom: 10px;
+    color: #333;
+}
+
+.namespace-plan-content {
+    font-size: 18px;
+    text-transform: none;
+    font-weight: 300;
+    width: 45%;
 }
 
 .namespace-plan-info{
@@ -1310,7 +1319,7 @@ select.form-control:not([size]):not([multiple]) {
     min-height: 135px;
     border-radius: 4px;
     background-color: #fff;
-    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.05);
     margin-top: 30px;
     cursor: pointer;
 }
@@ -1491,6 +1500,7 @@ select.form-control:not([size]):not([multiple]) {
 .modal-header{
     display: block;
     border-bottom: none;
+    padding: 15px 15px 0;
 }
 
 .modal-body{

@@ -274,3 +274,7 @@ input:invalid {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.modal-dialog-create {
+    max-width: 430px;
+}
