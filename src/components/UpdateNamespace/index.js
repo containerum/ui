@@ -68,10 +68,10 @@ class UpdateNamespace extends Component {
                                         const cpu = item.cpu_limit / 1000;
                                         const memory = item.memory_limit / 1024;
                                         const traffic = item.traffic ? item.traffic / 1024 : item.traffic;
-                                        const price = item.price === 0 && item.label === 'free' ? 'free' : `$${item.price}`;
+                                        const price = item.price === 0 && item.label === 'trial' ? 'trial' : `$${item.price}`;
                                         const label = item.label;
                                         const isActiveTariff = label === active;
-                                        const isFreeNotActive = active !== 'free';
+                                        const isFreeNotActive = active !== 'trial';
                                         return (
                                             <div className="col-md-3" key={index}>
                                                 <Tooltip
@@ -83,15 +83,14 @@ class UpdateNamespace extends Component {
                                                 <div
                                                     id={label}
                                                     className={
-                                                        isActiveTariff || isFreeNotActive && item.label === 'free' ?
+                                                        isActiveTariff || isFreeNotActive && item.label === 'trial' ?
                                                             "namespace-plan-block-container hover-action-new disabled" :
                                                         label !== this.state.NSTariffName ?
                                                             "namespace-plan-block-container hover-action-new" :
                                                             "namespace-plan-block-container hover-action-new selected"
                                                     }
                                                     onClick={() => {
-                                                        if (!isActiveTariff && item.label !== 'free') {
-                                                            // console.log(isActiveTariff, item.label !== 'free');
+                                                        if (!isActiveTariff && item.label !== 'trial') {
                                                             this.handleClickTriff(label)
                                                         }
                                                     }}
@@ -100,7 +99,7 @@ class UpdateNamespace extends Component {
                                                         <div className="col-md-6 namespace-plan-block-container-left">
                                                             <div className="namespace-plan-block-price">{isActiveTariff ? 'Active' : price}</div>
                                                             {
-                                                                isActiveTariff || item.label === 'free' ? '' :
+                                                                isActiveTariff || item.label === 'trial' ? '' :
                                                                     <div className="namespace-plan-block-month">per month</div>
                                                             }
                                                         </div>

@@ -55,8 +55,6 @@ class UpdateVolume extends Component {
                             arrayWithInactiveTariff.push(itemIn)
                         }
                     });
-                } else {
-                    arrayWithInactiveTariff.push(itemOut);
                 }
             });
 

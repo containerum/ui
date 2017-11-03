@@ -53,7 +53,7 @@ class CreateNamespace extends Component {
     render() {
         let haveFreeTariff = false;
         this.props.NamespacesReducer.data.map(item => {
-            if (item.tariff === 'free') {
+            if (item.tariff === 'trial') {
                 haveFreeTariff = true;
             }
         });
@@ -77,7 +77,7 @@ class CreateNamespace extends Component {
                                         const cpu = item.cpu_limit / 1000;
                                         const memory = item.memory_limit / 1024;
                                         const traffic = item.traffic ? item.traffic / 1024 : item.traffic;
-                                        const price = item.price === 0 && item.label === "free" ? 'free' : `$${item.price}`;
+                                        const price = item.price === 0 && item.label === "trial" ? 'trial' : `$${item.price}`;
                                         const label = item.label;
                                         return (
                                             <div className="col-md-3" key={index}>
@@ -89,15 +89,14 @@ class CreateNamespace extends Component {
                                                     <div
                                                         id={label}
                                                         className={
-                                                            haveFreeTariff && price === 'free' ?
+                                                            haveFreeTariff && price === 'trial' ?
                                                                 "namespace-plan-block-container hover-action-new disabled" :
                                                                 label !== this.state.NSTariffName ?
                                                                     "namespace-plan-block-container hover-action-new" :
                                                                     "namespace-plan-block-container hover-action-new selected"
                                                         }
                                                         onClick={() => {
-                                                            if (!(haveFreeTariff && price === 'free')) {
-                                                                // console.log(isActiveTariff, item.label !== 'free');
+                                                            if (!(haveFreeTariff && price === 'trial')) {
                                                                 this.handleClickTriff(label)
                                                             }
                                                         }}
@@ -106,7 +105,7 @@ class CreateNamespace extends Component {
                                                             <div className="col-md-6 namespace-plan-block-container-left">
                                                                 <div className="namespace-plan-block-price">{price}</div>
                                                                 {
-                                                                    item.price === 0 && item.label === "free" ?
+                                                                    item.price === 0 && item.label === "trial" ?
                                                                         '' : <div className="namespace-plan-block-month">per month</div>
                                                                 }
                                                             </div>
