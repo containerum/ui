@@ -185,6 +185,17 @@ class WebHook extends Component {
                             </Scrollbars>
                         </div>
                     </div>
+                    <br />
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="normal-text">WebHook for Docker Hub Example:</div>
+                            <Scrollbars autoHide className="block-item__copy-string block-item__copy-string-docker">
+                                <div className="block-item__content-string block-item__content-string-docker">
+                                    http://web.api.containerum.io:5000/api/namespaces/&#123;NAMESPACE_NAME&#125;/deployments/&#123;DEPLOY_NAME&#125;/containers/&#123;CONTAINER_NAME&#125;/set/image/{firstToken}
+                                </div>
+                            </Scrollbars>
+                        </div>
+                    </div>
                 </div>
         } else {
             isFetchingComponent = <Spinner />;

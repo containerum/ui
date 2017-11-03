@@ -24,7 +24,7 @@ class SuccessTicket extends Component {
                         <div className="support-feedback__cloud">
                             <img src={supportCloud} alt="" />
                                 <div className="support-feedback__text">Ok, we’ve received your message.</div>
-                                <div className="support-feedback__note">* We’ll get back to you in less than 24 hours.</div>
+                                <div className="support-feedback__note">* We'll reach out to you by email in less than 24 hours.</div>
                         </div>
                         <div className="support-feedback__man"><img src={supportMan} alt="" /></div>
                     </div>
