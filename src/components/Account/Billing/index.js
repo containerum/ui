@@ -97,7 +97,7 @@ class Billing extends Component {
                                 <td className="w-25 table-border">{amount}</td>
                             </tr>
                         )
-                    }) : ''
+                    }) : <div className="light-text">Your billing history will be displayed here</div>
                 }
                 </tbody>;
         } else {

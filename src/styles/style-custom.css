@@ -94,6 +94,14 @@ input:invalid {
     padding: 5px 10px 5px 10px;
 }
 
+.block-item__content-string-docker {
+    position: inherit;
+}
+
+.block-item__copy-string-docker {
+    height: 50px!important;
+}
+
 .dropdown-item.active,
 .dropdown-item:active {
     background-color: #29abe2;
