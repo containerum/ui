@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import Tooltip from 'rc-tooltip';
-// import ScrollableAnchor from 'react-scrollable-anchor';
 
-import { getNamespaces } from '../../actions/NamespacesActions';
 import Spinner from '../Spinner';
 import Notification from '../Notification';
 import CreateModal from '../CustomerModal/CreateModal';
+import { getNamespaces } from '../../actions/NamespacesActions';
 import { getNSTariffs } from '../../actions/NamespacesActions/getNSTariffsAction';
 import { createNamespace } from '../../actions/NamespaceActions/createNamespaceAction';
 import 'rc-tooltip/assets/bootstrap_white.css';

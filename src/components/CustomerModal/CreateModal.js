@@ -24,8 +24,7 @@ const customStyles = {
         WebkitOverflowScrolling : 'touch',
         borderRadius            : 'none',
         outline                 : 'none',
-        padding                 : '0',
-        // transform: 'translate(0,-25%)'
+        padding                 : '0'
     }
 };
 
@@ -119,7 +118,7 @@ class CreateModal extends Component {
                                     className="modal-title modal-title-volume"
                                     id="modalLabel"
                                 >New {this.props.type}</h4>
-                                <div className="col-md-10">
+                                <div className="col-md-10 p-0">
                                     <div className=" namespace-plan-block-container hover-action-new">
                                         <div className="row">
                                             <div className="col-md-6 namespace-plan-block-container-left">
@@ -129,22 +128,26 @@ class CreateModal extends Component {
                                                         '' : <div className="namespace-plan-block-month">per month</div>
                                                 }
                                             </div>
-                                            <div className="col-md-6 namespace-plan-block-container-right">
-                                                <div className="content-block-content card-block">
-                                                    <div className="content-block__info-item ">
-                                                        <div className="content-block__info-name inline">RAM : </div>
-                                                        <div className="content-block__info-text inline">{this.props.data.memory} GB</div>
+                                            { this.props.data.memory && this.props.data.cpu && this.props.data.traffic ?
+                                                <div className="col-md-6 namespace-plan-block-container-right">
+                                                    <div className="content-block-content card-block">
+                                                        <div className="content-block__info-item ">
+                                                            <div className="content-block__info-name inline">RAM : </div>
+                                                            <div className="content-block__info-text inline">{this.props.data.memory} GB</div>
+                                                        </div>
+                                                        <div className="content-block__info-item">
+                                                            <div className="content-block__info-name inline">CPU : </div>
+                                                            <div className="content-block__info-text inline">{this.props.data.cpu}</div>
+                                                        </div>
+                                                        <div className="content-block__info-item">
+                                                            <div className="content-block__info-name inline">Trafic : </div>
+                                                            <div className="content-block__info-text inline">{this.props.data.traffic} TB</div>
+                                                        </div>
                                                     </div>
-                                                    <div className="content-block__info-item">
-                                                        <div className="content-block__info-name inline">CPU : </div>
-                                                        <div className="content-block__info-text inline">{this.props.data.cpu}</div>
-                                                    </div>
-                                                    <div className="content-block__info-item">
-                                                        <div className="content-block__info-name inline">Trafic : </div>
-                                                        <div className="content-block__info-text inline">{this.props.data.traffic} TB</div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                </div> : this.props.data.storageLimit ?
+                                                    <div className="col-md-6  volume-plan-container-right">
+                                                        <div className="hard-drive-size">{this.props.data.storageLimit} GB</div>
+                                                    </div> : ''}
                                         </div>
                                     </div>
                                 </div>
