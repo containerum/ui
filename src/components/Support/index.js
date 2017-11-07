@@ -87,7 +87,7 @@ class Support extends Component {
                                                 className="form-control"
                                                 value={this.state.textArea}
                                                 onChange={this.handleChangeTextArea.bind(this)}
-                                                placeholder="Problem description"
+                                                placeholder="Having a trouble with deployment or need assistance?&#13;&#10;Describe your issue here and we'll get back to you shortly."
                                                 ref="textArea"
                                                 rows="10"
                                                 required
