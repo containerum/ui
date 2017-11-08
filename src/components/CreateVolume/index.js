@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Spinner from '../Spinner';
 import Notification from '../Notification';
+import CreateModal from '../CustomerModal/CreateModal';
 import { getVolumesTariffs } from '../../actions/VolumesActions/getVolumesTariffsAction';
 import { createVolume } from '../../actions/VolumeActions/createVolumeAction';
 
@@ -11,35 +12,32 @@ class CreateVolume extends Component {
     constructor() {
         super();
         this.state = {
+            isOpened: false,
             VolumesTariffName: '',
-            inputVolumesName: ''
+            VolumesTariffPrice: '',
+            VolumesTariffStorageLimit: ''
         };
+    }
+    componentWillReceiveProps(nextProps) {
+        // console.log(nextProps.CreateVolumeReducer.isFetching);
+        if(nextProps.CreateVolumeReducer.isFetching !== this.props.CreateVolumeReducer.isFetching) {
+            this.setState({
+                ...this.state,
+                isOpened: false
+            });
+        }
     }
     componentDidMount() {
         this.props.onGetVolumesTariffs();
     }
-    handleChangeInput(e) {
-        const regexp = /^[a-z][a-z0-9-]*$|^$/;
-        const inputValue = e.target.value.trim();
-        if (inputValue.search(regexp) !== -1) {
-            this.setState({
-                ...this.state,
-                inputVolumesName: inputValue
-            });
-        }
-    }
-    handleClickTriff(label) {
+    handleClickTriff(label, price, storageLimit) {
         this.setState({
             ...this.state,
-            VolumesTariffName: label
+            isOpened: true,
+            VolumesTariffName: label,
+            VolumesTariffPrice: price,
+            VolumesTariffStorageLimit: storageLimit
         });
-    }
-    handleSubmitVolumesTariffs(e) {
-        e.preventDefault();
-        if (this.state.VolumesTariffName && this.state.inputVolumesName.length >= 2) {
-            this.props.onCreateVolume(this.state.inputVolumesName, this.state.VolumesTariffName);
-            // console.log(this.state.VolumesTariffName, this.state.inputVolumesName)
-        }
     }
     render() {
         // console.log(this.props.VolumesTariffsReducer);
@@ -52,8 +50,9 @@ class CreateVolume extends Component {
                         <div className="content-block-content mt-0">
 
                             <div className="namespace-plan">
-                                <div className="namespace-plan-first-step">1 / 2</div>
-                                <div className="namespace-plan-title">choose a persistent volume plan</div>
+                                <div className="namespace-plan-title">choose a volume size</div>
+                                <div className="namespace-plan-content">Assign this Volume an identifying name.
+                                    Volume name can only contain alphanumeric characters and dashes.</div>
                             </div>
 
                             <div className="row">
@@ -69,7 +68,7 @@ class CreateVolume extends Component {
                                                     className={label === this.state.VolumesTariffName ?
                                                         "namespace-plan-block-container hover-action-new selected" :
                                                         "namespace-plan-block-container hover-action-new"}
-                                                    onClick={labelName => this.handleClickTriff(label)}
+                                                    onClick={labelName => this.handleClickTriff(label, price, storageLimit)}
                                                 >
                                                     <div className="row">
                                                         <div className="col-md-6 namespace-plan-block-container-left">
@@ -86,27 +85,6 @@ class CreateVolume extends Component {
                                     })
                                 }
                             </div>
-
-                            <form
-                                className="col-md-6 namespace-plan"
-                                onSubmit={this.handleSubmitVolumesTariffs.bind(this)}
-                            >
-                                <div className="namespace-plan-first-step">2 / 2</div>
-                                <div className="namespace-plan-title">choose a Name</div>
-                                <div className="namespace-plan-info">Volume name can only contain alphanumeric characters and dashes.</div>
-                                <input
-                                    type="text"
-                                    className="form-control namespace-plan-input"
-                                    name="name"
-                                    placeholder="Name"
-                                    value={this.state.inputVolumesName}
-                                    onChange={this.handleChangeInput.bind(this)}
-                                />
-                                <button
-                                    className="btn namespace-plan-create-btn"
-                                    type="submit"
-                                >Create</button>
-                            </form>
                         </div>
                     </div>
                 </div>;
@@ -123,6 +101,16 @@ class CreateVolume extends Component {
                     status={this.props.CreateVolumeReducer.status}
                     name={this.props.CreateVolumeReducer.idVolume}
                     errorMessage={this.props.CreateVolumeReducer.errorMessage}
+                />
+                <CreateModal
+                    type="Volume"
+                    tariff={this.state.VolumesTariffName}
+                    data={{
+                        storageLimit: this.state.VolumesTariffStorageLimit,
+                        price: this.state.VolumesTariffPrice
+                    }}
+                    isOpened={this.state.isOpened}
+                    onHandleCreate={this.props.onCreateVolume}
                 />
                 { isFetchingVolumesTariffs }
                 { isFetchingCreateVolumes }

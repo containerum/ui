@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import Tooltip from 'rc-tooltip';
-// import ScrollableAnchor from 'react-scrollable-anchor';
 
-import { getNamespaces } from '../../actions/NamespacesActions';
 import Spinner from '../Spinner';
 import Notification from '../Notification';
+import CreateModal from '../CustomerModal/CreateModal';
+import { getNamespaces } from '../../actions/NamespacesActions';
 import { getNSTariffs } from '../../actions/NamespacesActions/getNSTariffsAction';
 import { createNamespace } from '../../actions/NamespaceActions/createNamespaceAction';
 import 'rc-tooltip/assets/bootstrap_white.css';
@@ -15,9 +14,22 @@ class CreateNamespace extends Component {
     constructor() {
         super();
         this.state = {
+            isOpened: false,
             NSTariffName: '',
-            inputNSName: ''
+            NSTariffCpu: '',
+            NSTariffMemory: '',
+            NSTariffTraffic: '',
+            NSTariffPrice: ''
         };
+    }
+    componentWillReceiveProps(nextProps) {
+        // console.log(nextProps.CreateNamespaceReducer.isFetching);
+        if(nextProps.CreateNamespaceReducer.isFetching !== this.props.CreateNamespaceReducer.isFetching) {
+            this.setState({
+                ...this.state,
+                isOpened: false
+            });
+        }
     }
     componentDidMount() {
         if (!this.props.NSTariffsReducer.data.length) {
@@ -27,28 +39,16 @@ class CreateNamespace extends Component {
             this.props.onGetNamespaces();
         }
     }
-    handleChangeInput(e) {
-        const regexp = /^[a-z][a-z0-9-]*$|^$/;
-        const inputValue = e.target.value.trim();
-        if (inputValue.search(regexp) !== -1) {
-            this.setState({
-                ...this.state,
-                inputNSName: inputValue
-            });
-        }
-    }
-    handleClickTriff(label) {
+    handleClickTriff(label, cpu, memory, traffic, price) {
         this.setState({
             ...this.state,
-            NSTariffName: label
+            isOpened: true,
+            NSTariffName: label,
+            NSTariffCpu: cpu,
+            NSTariffMemory: memory,
+            NSTariffTraffic: traffic,
+            NSTariffPrice: price
         });
-    }
-    handleSubmitNSTariffs(e) {
-        e.preventDefault();
-        if (this.state.NSTariffName && this.state.inputNSName.length >= 2) {
-            this.props.onCreateNamespace(this.state.inputNSName, this.state.NSTariffName);
-            // console.log(this.state.NSTariffName, this.state.inputNSName)
-        }
     }
     render() {
         let haveFreeTariff = false;
@@ -66,8 +66,9 @@ class CreateNamespace extends Component {
                         <div className="content-block-content mt-0">
 
                             <div className="namespace-plan mt-0">
-                                <div className="namespace-plan-first-step">1 / 2</div>
-                                <div className="namespace-plan-title">choose a namespace plan</div>
+                                <div className="namespace-plan-title">choose a namespace size</div>
+                                <div className="namespace-plan-content">Assign this Namespace an identifying name.
+                                    Namespace name can only contain alphanumeric characters and dashes.</div>
                             </div>
 
                             <div className="row">
@@ -77,7 +78,7 @@ class CreateNamespace extends Component {
                                         const cpu = item.cpu_limit / 1000;
                                         const memory = item.memory_limit / 1024;
                                         const traffic = item.traffic ? item.traffic / 1024 : item.traffic;
-                                        const price = item.price === 0 && item.label === "trial" ? 'trial' : `$${item.price}`;
+                                        const price = item.price === 0 && item.label === 'trial' ? 'trial' : `$${item.price}`;
                                         const label = item.label;
                                         return (
                                             <div className="col-md-3" key={index}>
@@ -97,7 +98,7 @@ class CreateNamespace extends Component {
                                                         }
                                                         onClick={() => {
                                                             if (!(haveFreeTariff && price === 'trial')) {
-                                                                this.handleClickTriff(label)
+                                                                this.handleClickTriff(label, cpu, memory, traffic, price)
                                                             }
                                                         }}
                                                     >
@@ -133,28 +134,6 @@ class CreateNamespace extends Component {
                                     })
                                 }
                             </div>
-                            {/*<ScrollableAnchor id={'bottom'}>*/}
-                                <form
-                                    className="col-md-6 namespace-plan"
-                                    onSubmit={this.handleSubmitNSTariffs.bind(this)}
-                                >
-                                    <div className="namespace-plan-first-step">2 / 2</div>
-                                    <div className="namespace-plan-title">choose a Name</div>
-                                    <div className="namespace-plan-info">Namespace name can only contain alphanumeric characters and dashes.</div>
-                                    <input
-                                        type="text"
-                                        className="form-control namespace-plan-input"
-                                        name="name"
-                                        placeholder="Name"
-                                        value={this.state.inputNSName}
-                                        onChange={this.handleChangeInput.bind(this)}
-                                    />
-                                    <button
-                                        className="btn namespace-plan-create-btn"
-                                        type="submit"
-                                    >Create</button>
-                                </form>
-                            {/*</ScrollableAnchor>*/}
                         </div>
                     </div>
                 </div>;
@@ -171,6 +150,18 @@ class CreateNamespace extends Component {
                     status={this.props.CreateNamespaceReducer.status}
                     name={this.props.CreateNamespaceReducer.idName}
                     errorMessage={this.props.CreateNamespaceReducer.errorMessage}
+                />
+                <CreateModal
+                    type="Namespace"
+                    tariff={this.state.NSTariffName}
+                    data={{
+                        cpu: this.state.NSTariffCpu,
+                        memory: this.state.NSTariffMemory,
+                        traffic: this.state.NSTariffTraffic,
+                        price: this.state.NSTariffPrice
+                    }}
+                    isOpened={this.state.isOpened}
+                    onHandleCreate={this.props.onCreateNamespace}
                 />
                 { isFetchingNSTariffs }
                 { isFetchingCreateNS }
