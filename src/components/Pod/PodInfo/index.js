@@ -50,11 +50,11 @@ class PodInfo extends Component {
                         <div className="content-block-content ">
                             <div className="content-block__r-img"><img src={r} /></div>
                             <div className="content-block__info-item">
-                                <div className="content-block__info-name">RAM ( Usage / Total ) : </div>
+                                <div className="content-block__info-name">RAM ( Usage ) : </div>
                                 <div className="content-block__info-text">{this.props.GetPodReducer.data.ram} MB</div>
                             </div>
                             <div className="content-block__info-item">
-                                <div className="content-block__info-name">CPU ( Usage / Total ) : </div>
+                                <div className="content-block__info-name">CPU ( Usage ) : </div>
                                 <div className="content-block__info-text">{this.props.GetPodReducer.data.cpu} m</div>
                             </div>
                             {/*<div className="content-block__info-item">*/}

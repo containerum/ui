@@ -286,3 +286,8 @@ input:invalid {
 .modal-dialog-create {
     max-width: 430px;
 }
+
+#g-recaptcha {
+    transform:scale(1.06);
+    transform-origin:0 0;
+}

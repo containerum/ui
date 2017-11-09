@@ -23,6 +23,7 @@ export function SignUpUser(creds) {
         const username = creds.username;
         const password = creds.password;
         const country_code = creds.country_code;
+        const recaptcha = creds.recaptcha;
 
         return axios.post(
             WEB_API + '/api/users',
@@ -30,11 +31,13 @@ export function SignUpUser(creds) {
                 username,
                 password,
                 country_code,
+                recaptcha,
                 with_trial: creds.with_trial
             } : {
                 username,
                 password,
                 country_code,
+                recaptcha,
             },
             {
                 validateStatus: (status) => status >= 200 && status <= 505
