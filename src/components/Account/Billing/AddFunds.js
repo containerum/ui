@@ -82,7 +82,7 @@ class AddFunds extends Component {
                                         id='payLabel'
                                         htmlFor='payFunds'
                                     >Amount, $</label>
-                                    <div className="form-group__helper">Enter Amount - 5$ min</div>
+                                    <div className="form-group__helper">Enter Amount - $5 min</div>
                                 </div>
                                 <div className="form-group pt-0">
                                     <button

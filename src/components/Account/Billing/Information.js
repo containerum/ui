@@ -24,9 +24,9 @@ class Information extends Component {
                                 }
                             </div>
                             <div className="col-md-9">
-                                <div className="billing-information-data fw-normal">{this.props.balance ? this.props.balance.toFixed(2) : 0} $</div>
-                                <div className="billing-information-data">{this.props.monthUsage ? this.props.monthUsage.toFixed(2) : 0} $</div>
-                                <div className="billing-information-data">{this.props.dailyUsage ? this.props.dailyUsage.toFixed(2) : 0} $</div>
+                                <div className="billing-information-data fw-normal">${this.props.balance ? this.props.balance.toFixed(2) : 0}</div>
+                                <div className="billing-information-data">${this.props.monthUsage ? this.props.monthUsage.toFixed(2) : 0}</div>
+                                <div className="billing-information-data">${this.props.dailyUsage ? this.props.dailyUsage.toFixed(2) : 0}</div>
                                 {
                                     this.props.formatDateToActive ?
                                         <div className="billing-information-data">{this.props.formatDateToActive}</div> : ''

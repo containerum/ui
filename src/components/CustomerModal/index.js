@@ -120,7 +120,7 @@ class CustomerModal extends Component {
                                 >{this.props.name}</h4>
                                 <span className="modal-redis-text">
                                     Deleting your {this.props.type} is irreversible.<br />
-                                    Enter your {this.props.type} name (<strong>{this.props.name}</strong>) below to confirm you want to permanently delete it:
+                                    Enter your {this.props.type} name (<strong style={{color: '#29abe2'}}>{this.props.name}</strong>) below to confirm you want to permanently delete it:
                                 </span>
                                 <input
                                     type="text"

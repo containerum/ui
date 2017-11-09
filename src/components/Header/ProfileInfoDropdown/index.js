@@ -38,7 +38,7 @@ class ProfileInfoDropdown extends Component {
                                 <NavLink className="dropdown-item text-danger" to="/Login" onClick={() => this.props.onLogoutClick()}>Log out</NavLink>
                             </ul>
                         </div>
-                        <div className="header-top-account__deposit">{balance} $</div>
+                        <div className="header-top-account__deposit">${balance}</div>
                     </div>
                 </div>
                 <div className="clearfix"> </div>

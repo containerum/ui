@@ -50,11 +50,11 @@ class PodContainer extends Component {
                                                 </div>
                                                 <div className="content-block-content card-block collapsed">
                                                     <div className="content-block__info-item ">
-                                                        <div className="content-block__info-name inline">RAM ( Usage / Total ) :&nbsp;</div>
+                                                        <div className="content-block__info-name inline">RAM ( Usage ) :&nbsp;</div>
                                                         <div className="content-block__info-text inline">{item.ram} MB</div>
                                                     </div>
                                                     <div className="content-block__info-item">
-                                                        <div className="content-block__info-name inline">CPU ( Usage / Total ) :&nbsp;</div>
+                                                        <div className="content-block__info-name inline">CPU ( Usage ) :&nbsp;</div>
                                                         <div className="content-block__info-text inline">{item.cpu} m</div>
                                                     </div>
                                                     <div className="content-block__info-item">

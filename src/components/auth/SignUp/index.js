@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import Recaptcha from 'react-recaptcha';
 
 import { SignUpUser } from '../../../actions/SignUpActions';
 import InputEmail from '../InputEmail';
@@ -22,7 +23,8 @@ class SignUp extends Component {
             password: '',
             isValidPassword: false,
             billing_code: '182',
-            with_trial: false
+            with_trial: false,
+            recaptcha: ''
         };
         this.handleChangeOnToggle = this.handleChangeOnToggle.bind(this);
         this.handleCheckValidateEmailInput = this.handleCheckValidateEmailInput.bind(this);
@@ -99,12 +101,13 @@ class SignUp extends Component {
                 });
                 const getAlert = document.getElementById('loginAlert');
                 getAlert.style.display = 'block';
-            } else if (this.state.isValidEmail && this.state.isValidPassword) {
+            } else if (this.state.isValidEmail && this.state.isValidPassword && this.state.recaptcha) {
                 const creds = {
                     username: this.state.email.trim(),
                     password: this.state.password.trim(),
                     country_code: this.state.billing_code,
-                    with_trial: this.state.with_trial
+                    with_trial: this.state.with_trial,
+                    recaptcha: this.state.recaptcha
                 };
                 // console.log(creds);
                 this.props.onSignUpUser(creds);
@@ -123,6 +126,12 @@ class SignUp extends Component {
         this.setState({
             ...this.state,
             billing_code
+        });
+    }
+    verifyCallback(recaptcha) {
+        this.setState({
+            ...this.state,
+            recaptcha
         });
     }
     render() {
@@ -160,10 +169,10 @@ class SignUp extends Component {
         }
         const defaultEmail = this.props.location.query.email ? this.props.location.query.email : '';
         const signUpButtonText = this.props.SignUpReducer.isFetching ? <MiniSpinner /> : 'Sign Up';
-        const isActiveSignUpButton = this.props.SignUpReducer.isFetching ?
+        const isActiveSignUpButton = this.props.SignUpReducer.isFetching || !this.state.recaptcha ?
             'btn btn-block c-btn-green disabled' :
             'btn btn-block c-btn-green';
-        const isActiveSignUpState = !!this.props.SignUpReducer.isFetching;
+        const isActiveSignUpState = !!this.props.SignUpReducer.isFetching || !this.state.recaptcha;
         return (
             <div className="main_container">
                 <Logo />
@@ -224,6 +233,13 @@ class SignUp extends Component {
                                 handleSelectCountry={billing_code =>
                                     this.handleSelectCountry(billing_code)}
                             />
+                            <div className="form-group i-mb-20 c-has-feedback-left">
+                                <Recaptcha
+                                    sitekey="6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS"
+                                    render="explicit"
+                                    verifyCallback={this.verifyCallback.bind(this)}
+                                />
+                            </div>
                             <button
                                 type="submit"
                                 ref="button"

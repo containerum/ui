@@ -69,11 +69,11 @@ class DeploymentInfo extends Component {
                     <div className="content-block-content collapsed">
                         <div className="content-block__r-img"><img src={r} /></div>
                         <div className="content-block__info-item">
-                            <div className="content-block__info-name">RAM ( Usage / Total ) : </div>
+                            <div className="content-block__info-name">RAM ( Usage ) : </div>
                             <div className="content-block__info-text">{ram} MB</div>
                         </div>
                         <div className="content-block__info-item">
-                            <div className="content-block__info-name">CPU ( Usage / Total ) : </div>
+                            <div className="content-block__info-name">CPU ( Usage ) : </div>
                             <div className="content-block__info-text">{cpu} m</div>
                         </div>
                         <div className="content-block__info-item">

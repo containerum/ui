@@ -7,6 +7,7 @@ import n from '../../../images/n.png';
 import { deleteNamespace } from "../../../actions/NamespaceActions/deleteNamespaceAction";
 import Notification from '../../Notification';
 import CustomerModal from '../../CustomerModal';
+import NavLink from '../../../containers/NavLink';
 
 class NamespaceInfo extends Component {
     constructor() {
@@ -71,6 +72,10 @@ class NamespaceInfo extends Component {
                                         aria-expanded="false"
                                     > </i>
                                     <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                        <NavLink
+                                            className="dropdown-item"
+                                            to={`/Namespaces/${this.props.idName}/Resize`}
+                                        >Resize</NavLink>
                                         <button
                                             className="dropdown-item text-danger"
                                             onClick={name => this.handleClickDeletingNamespace(this.props.idName)}

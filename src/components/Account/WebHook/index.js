@@ -83,8 +83,9 @@ class WebHook extends Component {
                 <div className="block-item" id="webhooks">
                     <div className="block-item__title">WebHook</div>
                     <div className="row">
-                        <div className="col-md-6">
-                            <div className="light-text">Token provides another way to log into your private Namespace</div>
+                        <div className="col-md-12">
+                            <div className="light-text">Here you can configure a CD Webhook to automate updating images
+                                in your containers.</div>
                         </div>
                     </div>
                     {
