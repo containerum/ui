@@ -1219,6 +1219,9 @@ select.form-control:not([size]):not([multiple]) {
 .namespace-plan-block-container.hover-action-new:hover{
     box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
 }
+.namespace-plan-block-container.hover-always-new{
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+}
 
 .namespace-plan-block-container.selected{
     border: solid 2px #29abe2;
@@ -1316,7 +1319,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .namespace-plan-block-container{
-    min-height: 135px;
+    min-height: 120px;
     border-radius: 4px;
     background-color: #fff;
     box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.05);

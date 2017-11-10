@@ -252,6 +252,10 @@ input:invalid {
     border-top-color: #29abe2!important;
 }
 
+.rc-tooltip {
+    opacity: 1!important;
+}
+
 .button_red {
     border-color: #fe4a49;
     background-color: #fe4a49;
@@ -290,4 +294,8 @@ input:invalid {
 #g-recaptcha {
     transform:scale(1.06);
     transform-origin:0 0;
+}
+
+.form-control-danger {
+    border-color: #fe4a49!important;
 }
