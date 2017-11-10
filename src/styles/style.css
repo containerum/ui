@@ -1991,6 +1991,7 @@ body.footer-absolute .footer{
 
     .support-feedback__note {
         font-size: 20px;
+        bottom: -40px;
         width: 236px;
     }
 
