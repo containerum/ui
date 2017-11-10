@@ -49,6 +49,9 @@ class NamespaceInfo extends Component {
         const NSmemoryLimit = currentNSArr ? currentNSArr.memory_limit : '';
         const NScpu = currentNSArr ? currentNSArr.cpu : '';
         const NScpuLimit = currentNSArr ? currentNSArr.cpu_limit : '';
+
+        const VolTotalSize = this.props.GetVolumeReducer.data ? this.props.GetVolumeReducer.data.total_size : '';
+        const VolUsedSize = this.props.GetVolumeReducer.data ? this.props.GetVolumeReducer.data.used_size : '';
         return (
             <div>
                 <Notification
@@ -94,10 +97,10 @@ class NamespaceInfo extends Component {
                                 <div className="content-block__info-name">CPU ( Usage / Total ) : </div>
                                 <div className="content-block__info-text">{NScpu} / {NScpuLimit} m</div>
                             </div>
-                            {/*<div className="content-block__info-item">*/}
-                            {/*<div className="content-block__info-name">Volume ( Usage / Total ) :</div>*/}
-                            {/*<div className="content-block__info-text">500 / 631 GB</div>*/}
-                            {/*</div>*/}
+                            <div className="content-block__info-item">
+                                <div className="content-block__info-name">Volume ( Usage / Total ) :</div>
+                                <div className="content-block__info-text">{VolUsedSize} / {VolTotalSize} GB</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -120,6 +123,7 @@ NamespaceInfo.propTypes = {
 function mapStateToProps(state) {
     return {
         NamespacesReducer: state.NamespacesReducer,
+        GetVolumeReducer: state.GetVolumeReducer,
         DeleteNamespaceReducer: state.DeleteNamespaceReducer
     };
 

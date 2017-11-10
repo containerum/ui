@@ -78,7 +78,7 @@ class WebHook extends Component {
             const data = this.props.GetImageTokensReducer.data.length ?
                 this.props.GetImageTokensReducer.data : [];
             const firstToken = this.props.GetImageTokensReducer.data.length ?
-                this.props.GetImageTokensReducer.data[0].token : '10e2730e60be4ab64f48e6cf626f729d';
+                this.props.GetImageTokensReducer.data[0].token : '{WEBHOOK_KEY}';
             isFetchingComponent =
                 <div className="block-item" id="webhooks">
                     <div className="block-item__title">WebHook</div>
