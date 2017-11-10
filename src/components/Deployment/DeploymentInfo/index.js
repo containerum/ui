@@ -77,21 +77,8 @@ class DeploymentInfo extends Component {
                             <div className="content-block__info-text">{cpu} m</div>
                         </div>
                         <div className="content-block__info-item">
-                            <div className="content-block__info-name">Status: </div>
-                            <div className="content-block__info-text">
-                                {
-                                    Object.keys(status).map((item, index) => {
-                                        const statusArray = Object.keys(status);
-                                        return (
-                                            statusArray[statusArray.length - 1] === item ?
-                                                <span key={index}>{status[item]}&nbsp;{item}</span> :
-                                                index % 2 === 0 ?
-                                                <span key={index}>{status[item]}&nbsp;{item}, </span> :
-                                                <span key={index}>{status[item]}&nbsp;{item},<br/></span>
-                                        )
-                                    })
-                                }
-                            </div>
+                            <div className="content-block__info-name">Status ( Available / Total ) : </div>
+                            <div className="content-block__info-text">{status.available} / {status.total}</div>
                         </div>
                     </div>
                     <CustomerModal

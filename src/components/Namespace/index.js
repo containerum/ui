@@ -7,24 +7,30 @@ import NamespaceInfo from './NamespaceInfo';
 import NamespaceContains from './NamespaceContains';
 import Spinner from '../Spinner';
 import { getNamespaces } from '../../actions/NamespacesActions';
+import { getVolume } from '../../actions/VolumeActions/getVolumeAction';
 
 class Namespace extends Component {
     componentDidMount() {
         // if (!this.props.NamespacesReducer.data.length) {
         this.props.onGetNamespaces();
+        this.props.onGetVolume(`${this.props.params.idName}-volume`);
         // }
     }
-    // componentWillReceiveProps(nextProps) {
-    //     // console.log(nextProps.DeleteDeploymentReducer);
-    //     if (nextProps.DeleteDeploymentReducer.status === 202 &&
-    //         this.props.DeleteDeploymentReducer.deploymentName !==
-    //         nextProps.DeleteDeploymentReducer.deploymentName) {
-    //         this.props.onGetNamespaces();
-    //     }
-    // }
+    componentWillReceiveProps(nextProps) {
+        // if (nextProps.DeleteDeploymentReducer.status === 202 &&
+        //     this.props.DeleteDeploymentReducer.deploymentName !==
+        //     nextProps.DeleteDeploymentReducer.deploymentName) {
+        //     this.props.onGetNamespaces();
+        // }
+        if (nextProps.params.idName !== this.props.params.idName) {
+            this.props.onGetVolume(`${nextProps.params.idName}-volume`);
+        }
+    }
     render() {
+        // console.log(this.props.GetVolumeReducer);
         let isFetchingNamespaceInfo = '';
-        if (this.props.NamespacesReducer.isFetching === false) {
+        if (this.props.NamespacesReducer.isFetching === false &&
+            this.props.GetVolumeReducer.isFetching === false) {
             isFetchingNamespaceInfo =
                 <NamespaceInfo idName={this.props.params.idName} />;
         } else {
@@ -50,6 +56,7 @@ Namespace.propTypes = {
 function mapStateToProps(state) {
     return {
         NamespacesReducer: state.NamespacesReducer,
+        GetVolumeReducer: state.GetVolumeReducer,
         DeleteDeploymentReducer: state.DeleteDeploymentReducer
     };
 
@@ -59,6 +66,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onGetNamespaces: () => {
             dispatch(getNamespaces());
+        },
+        onGetVolume: (idVolume) => {
+            dispatch(getVolume(idVolume));
         }
     };
 };

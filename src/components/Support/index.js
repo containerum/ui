@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+// import Dropzone from 'react-dropzone';
 
 import { sendSupport } from '../../actions/SupportActions';
 import { getGroupOmnidesk } from '../../actions/getGroupOmnideskActions';
@@ -13,7 +14,8 @@ class Support extends Component {
     constructor() {
         super();
         this.state = {
-            textArea: ''
+            textArea: '',
+            files: []
         };
     }
     componentWillMount() {
@@ -44,6 +46,30 @@ class Support extends Component {
         };
         this.props.onSendSupport(reqObj);
     }
+    // onDrop(files) {
+    //     this.setState({
+    //         ...this.state,
+    //         files
+    //     });
+    // }
+    // onDropAccepted(files) {
+    //     console.log(files)
+    // }
+    // onDropRejected(files) {
+    //     console.log(files)
+    // }
+    // onFileDialogCancel(files) {
+    //     console.log(files)
+    // }
+    // handleDeleteImage(imageName) {
+    //     const newFiles = this.state.files.filter(file => {
+    //         return file.name !== imageName;
+    //     });
+    //     this.setState({
+    //         ...this.state,
+    //         files: newFiles
+    //     });
+    // }
     render() {
         const groupData = this.props.GroupOmnideskReducer.data ? this.props.GroupOmnideskReducer.data : [];
         const profileButtonText = this.props.SupportReducer.isFetching ? <MiniSpinner /> : 'Submit Ticket';
@@ -51,6 +77,9 @@ class Support extends Component {
             'feedback-form__submit btn disabled' :
             'feedback-form__submit btn';
         const isActiveProfileState = !!this.props.SupportReducer.isFetching;
+        // console.log(this.state.files.map(f => {
+        //     return f;
+        // }));
         return (
             <div>
                 {/*<BackPanel />*/}
@@ -93,6 +122,35 @@ class Support extends Component {
                                                 required
                                             > </textarea>
                                         </div>
+                                        {/*<section style={{margin: '15px 0'}}>*/}
+                                            {/*{*/}
+                                                {/*this.state.files.length ?*/}
+                                                    {/*<aside>*/}
+                                                        {/*{*/}
+                                                            {/*this.state.files.map(f =>*/}
+                                                                {/*<div*/}
+                                                                    {/*key={f.name}*/}
+                                                                    {/*className='dropzone-item'*/}
+                                                                {/*>{f.name} - {f.size} bytes <i onClick={image => this.handleDeleteImage(f.name)} className="material-icons">delete</i>*/}
+                                                                {/*</div>*/}
+                                                            {/*)*/}
+                                                        {/*}*/}
+                                                    {/*</aside> :*/}
+                                                    {/*<div className='dropzone'>*/}
+                                                        {/*<Dropzone*/}
+                                                            {/*onDrop={this.onDrop.bind(this)}*/}
+                                                            {/*onDropAccepted={this.onDropAccepted.bind(this)}*/}
+                                                            {/*onDropRejected={this.onDropRejected.bind(this)}*/}
+                                                            {/*onFileDialogCancel={this.onFileDialogCancel.bind(this)}*/}
+                                                            {/*maxSize={15728640}*/}
+                                                            {/*accept="image/x-png,image/gif,image/jpeg,application/pdf,text/plain,text/html"*/}
+                                                            {/*className='dropzone-wrapper'*/}
+                                                        {/*>*/}
+                                                            {/*<p className='dropzone-p'><i className="material-icons">cloud_upload</i>Click here to upload image (file)</p>*/}
+                                                        {/*</Dropzone>*/}
+                                                    {/*</div>*/}
+                                            {/*}*/}
+                                        {/*</section>*/}
                                         <div className="feedback-form__buttons btn-block">
                                             <button
                                                 ref="button"

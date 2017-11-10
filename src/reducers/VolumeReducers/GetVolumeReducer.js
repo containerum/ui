@@ -8,7 +8,7 @@ export default function GetVolumeReducer(state = {
     isFetching: false,
     data: {},
     status: '',
-    idName: '',
+    idVolume: '',
     errorMessage: ''
 }, action) {
     switch (action.type) {
@@ -18,21 +18,21 @@ export default function GetVolumeReducer(state = {
             data: {},
             errorMessage: '',
             status: '',
-            idName: ''
+            idVolume: ''
         });
     case GET_VOLUME_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data,
             status: action.status,
-            idName: action.idName
+            idVolume: action.idVolume
         });
     case GET_VOLUME_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message,
             status: action.status,
-            idName: action.idName
+            idVolume: action.idVolume
         });
     default:
         return state;

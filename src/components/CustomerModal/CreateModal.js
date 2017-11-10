@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import Tooltip from 'rc-tooltip';
+import 'rc-tooltip/assets/bootstrap_white.css';
+
 const customStyles = {
     overlay: {
         position        : 'fixed',
@@ -37,11 +40,7 @@ class CreateModal extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps);
         if(nextProps.isOpened && nextProps.tariff) {
-            if (typeof window !== 'undefined') {
-                document.body.classList.add('overflow-hidden');
-            }
             this.setState({
                 ...this.state,
                 modalIsOpen: true
@@ -49,9 +48,6 @@ class CreateModal extends Component {
         }
     }
     handleClickCloseModal() {
-        if (typeof window !== 'undefined') {
-            document.body.classList.remove('overflow-hidden');
-        }
         this.setState({
             nameType: '',
             modalIsOpen: false
@@ -59,10 +55,11 @@ class CreateModal extends Component {
     }
     handleSubmitCreatingEssence(e) {
         e.preventDefault();
-        if (this.props.tariff && this.state.nameType.length >= 2) {
-            if (typeof window !== 'undefined') {
-                document.body.classList.remove('overflow-hidden');
-            }
+        const regexp = /^[a-z][a-z0-9-]*$|^$/;
+
+        if (this.props.tariff &&
+            this.state.nameType.length >= 2 &&
+            this.state.nameType.search(regexp) !== -1) {
             this.setState({
                 nameType: '',
                 modalIsOpen: false
@@ -71,21 +68,21 @@ class CreateModal extends Component {
         }
     }
     handleChangeNameOfType(e) {
-        const regexp = /^[a-z][a-z0-9-]*$|^$/;
         const inputValue = e.target.value.trim();
-        if (inputValue.search(regexp) !== -1) {
-            this.setState({
-                ...this.state,
-                nameType: e.target.value
-            });
-        }
+        this.setState({
+            ...this.state,
+            nameType: inputValue
+        });
     }
     render() {
-        // console.log(this.state);
-        const styleSubmit = this.state.nameType.length >= 2 ?
+        const regexp = /^[a-z][a-z0-9-]*$|^$/;
+        const styleSubmit = this.state.nameType.length >= 2 && this.state.nameType.search(regexp) !== -1 ?
             'btn modal-footer-solution-select' :
             'btn modal-footer-solution-select modal-footer-volume-delete';
-        const isDisabledSubmit = this.state.nameType.length >= 2;
+        const isDisabledSubmit = this.state.nameType.length >= 2 && this.state.nameType.search(regexp) !== -1;
+        const isErrorInputClass = this.state.nameType.search(regexp) !== -1 ?
+        'form-control volume-form-input' : 'form-control form-control-danger volume-form-input';
+        const isErrorTooltipClass = this.state.nameType.search(regexp) === -1;
         return (
             <Modal
                 isOpen={this.state.modalIsOpen}
@@ -119,7 +116,7 @@ class CreateModal extends Component {
                                     id="modalLabel"
                                 >New {this.props.type}</h4>
                                 <div className="col-md-10 p-0">
-                                    <div className=" namespace-plan-block-container hover-action-new">
+                                    <div className=" namespace-plan-block-container hover-action-new hover-always-new">
                                         <div className="row">
                                             <div className="col-md-6 namespace-plan-block-container-left">
                                                 <div className="namespace-plan-block-price">{this.props.data.price}</div>
@@ -152,13 +149,20 @@ class CreateModal extends Component {
                                     </div>
                                 </div>
                                 <span className="modal-redis-text mt-4">Please, enter the name to continue</span>
-                                <input
-                                    type="text"
-                                    className="form-control volume-form-input"
-                                    placeholder="Name"
-                                    value={this.state.nameType}
-                                    onChange={this.handleChangeNameOfType.bind(this)}
-                                />
+                                <Tooltip
+                                    placement="top"
+                                    visible={true}
+                                    overlay={<span>Invalid {this.props.type} name</span>}
+                                    overlayClassName={isErrorTooltipClass ? '' : 'display-none'}
+                                >
+                                    <input
+                                        type="text"
+                                        className={isErrorInputClass}
+                                        placeholder="Name"
+                                        value={this.state.nameType}
+                                        onChange={this.handleChangeNameOfType.bind(this)}
+                                    />
+                                </Tooltip>
                             </div>
                             <div className="modal-footer">
                                 <button
