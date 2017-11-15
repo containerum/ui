@@ -19,7 +19,8 @@ class CreateNamespace extends Component {
             NSTariffCpu: '',
             NSTariffMemory: '',
             NSTariffTraffic: '',
-            NSTariffPrice: ''
+            NSTariffPrice: '',
+            NSTariffPricePerDay: ''
         };
     }
     componentWillReceiveProps(nextProps) {
@@ -39,7 +40,7 @@ class CreateNamespace extends Component {
             this.props.onGetNamespaces();
         }
     }
-    handleClickTriff(label, cpu, memory, traffic, price) {
+    handleClickTriff(label, cpu, memory, traffic, price, pricePerDay) {
         this.setState({
             ...this.state,
             isOpened: true,
@@ -47,7 +48,8 @@ class CreateNamespace extends Component {
             NSTariffCpu: cpu,
             NSTariffMemory: memory,
             NSTariffTraffic: traffic,
-            NSTariffPrice: price
+            NSTariffPrice: price,
+            NSTariffPricePerDay: pricePerDay
         });
     }
     render() {
@@ -67,8 +69,8 @@ class CreateNamespace extends Component {
 
                             <div className="namespace-plan mt-0">
                                 <div className="namespace-plan-title">choose a namespace size</div>
-                                <div className="namespace-plan-content">Assign this Namespace an identifying name.
-                                    Namespace name can only contain alphanumeric characters and dashes.</div>
+                                {/*<div className="namespace-plan-content">Assign this Namespace an identifying name.*/}
+                                    {/*Namespace name can only contain alphanumeric characters and dashes.</div>*/}
                             </div>
 
                             <div className="row">
@@ -79,6 +81,8 @@ class CreateNamespace extends Component {
                                         const memory = item.memory_limit / 1024;
                                         const traffic = item.traffic ? item.traffic / 1024 : item.traffic;
                                         const price = item.price === 0 && item.label === 'trial' ? 'trial' : `$${item.price}`;
+                                        const pricePerDay = item.price === 0 && item.label === 'trial' ? '30 days left' :
+                                            `$${(item.price / 30).toFixed(2)} daily`;
                                         const label = item.label;
                                         return (
                                             <div className="col-md-3" key={index}>
@@ -98,20 +102,20 @@ class CreateNamespace extends Component {
                                                         }
                                                         onClick={() => {
                                                             if (!(haveFreeTariff && price === 'trial')) {
-                                                                this.handleClickTriff(label, cpu, memory, traffic, price)
+                                                                this.handleClickTriff(label, cpu, memory, traffic, price, pricePerDay)
                                                             }
                                                         }}
                                                     >
                                                         <div className="row">
-                                                            <div className="col-md-6 namespace-plan-block-container-left">
-                                                                <div className="namespace-plan-block-price">{price}</div>
+                                                            <div className={price === '$2' ? "col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars" : "col-md-6 namespace-plan-block-container-left"}>
+                                                                <div className="namespace-plan-block-price">{price}{price !== 'trial' ? <span className="namespace-plan-span-price">/mo</span>: ''}</div>
                                                                 {
                                                                     item.price === 0 && item.label === "trial" ?
-                                                                        '' : <div className="namespace-plan-block-month">per month</div>
+                                                                        '' : <div className="namespace-plan-block-month">{pricePerDay}</div>
                                                                 }
                                                             </div>
                                                             <div className="col-md-6 namespace-plan-block-container-right">
-                                                                <div className="content-block-content card-block">
+                                                                <div className={price === '$2' ? "content-block-content card-block card-block2dollars" : "content-block-content card-block"}>
                                                                     <div className="content-block__info-item">
                                                                         <div className="content-block__info-name inline">RAM : </div>
                                                                         <div className="content-block__info-text inline">{memory} GB</div>
@@ -120,10 +124,17 @@ class CreateNamespace extends Component {
                                                                         <div className="content-block__info-name inline">CPU : </div>
                                                                         <div className="content-block__info-text inline">{cpu}</div>
                                                                     </div>
-                                                                    <div className="content-block__info-item">
-                                                                        <div className="content-block__info-name inline">Traffic : </div>
-                                                                        <div className="content-block__info-text inline">{traffic} TB</div>
-                                                                    </div>
+                                                                    {/*<div className="content-block__info-item">*/}
+                                                                        {/*<div className="content-block__info-name inline">Traffic : </div>*/}
+                                                                        {/*<div className="content-block__info-text inline">{traffic} TB</div>*/}
+                                                                    {/*</div>*/}
+                                                                    {
+                                                                        price !== '$2' ?
+                                                                            <div className="content-block__info-item">
+                                                                                <div className="content-block__info-name inline">Volume : </div>
+                                                                                <div className="content-block__info-text inline">5 GB</div>
+                                                                            </div> : ''
+                                                                    }
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -158,7 +169,8 @@ class CreateNamespace extends Component {
                         cpu: this.state.NSTariffCpu,
                         memory: this.state.NSTariffMemory,
                         traffic: this.state.NSTariffTraffic,
-                        price: this.state.NSTariffPrice
+                        price: this.state.NSTariffPrice,
+                        pricePerDay: this.state.NSTariffPricePerDay,
                     }}
                     isOpened={this.state.isOpened}
                     onHandleCreate={this.props.onCreateNamespace}

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import Tooltip from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap_white.css';
 
 const customStyles = {
@@ -31,11 +30,10 @@ const customStyles = {
     }
 };
 
-class CreateModal extends Component {
+class ResizeModal extends Component {
     constructor() {
         super();
         this.state = {
-            nameType: '',
             modalIsOpen: this.props ? this.props.isOpened : false
         }
     }
@@ -49,46 +47,26 @@ class CreateModal extends Component {
     }
     handleClickCloseModal() {
         this.setState({
-            nameType: '',
             modalIsOpen: false
         });
     }
     handleSubmitCreatingEssence(e) {
         e.preventDefault();
-        const regexp = /^[a-z][a-z0-9-]*$|^$/;
 
-        if (this.props.tariff &&
-            this.state.nameType.length >= 2 &&
-            this.state.nameType.search(regexp) !== -1) {
+        if (this.props.tariff && this.props.data.idName) {
             this.setState({
-                nameType: '',
                 modalIsOpen: false
             });
-            this.props.onHandleCreate(this.state.nameType, this.props.tariff);
+            this.props.onHandleCreate(this.props.data.idName, this.props.tariff);
         }
     }
-    handleChangeNameOfType(e) {
-        const inputValue = e.target.value.trim();
-        this.setState({
-            ...this.state,
-            nameType: inputValue
-        });
-    }
     render() {
-        const regexp = /^[a-z][a-z0-9-]*$|^$/;
-        const styleSubmit = this.state.nameType.length >= 2 && this.state.nameType.search(regexp) !== -1 ?
-            'btn modal-footer-solution-select' :
-            'btn modal-footer-solution-select modal-footer-volume-delete';
-        const isDisabledSubmit = this.state.nameType.length >= 2 && this.state.nameType.search(regexp) !== -1;
-        const isErrorInputClass = this.state.nameType.search(regexp) !== -1 ?
-        'form-control volume-form-input' : 'form-control form-control-danger volume-form-input';
-        const isErrorTooltipClass = this.state.nameType.search(regexp) === -1;
         return (
             <Modal
                 isOpen={this.state.modalIsOpen}
                 onRequestClose={this.handleClickCloseModal.bind(this)}
                 style={customStyles}
-                contentLabel="Create"
+                contentLabel="Resize"
             >
                 <div
                     className="modal fade show"
@@ -149,21 +127,6 @@ class CreateModal extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <span className="modal-redis-text mt-4">Please, enter the name to continue</span>
-                                <Tooltip
-                                    placement="top"
-                                    visible={true}
-                                    overlay={<span>Invalid {this.props.type} name</span>}
-                                    overlayClassName={isErrorTooltipClass ? '' : 'display-none'}
-                                >
-                                    <input
-                                        type="text"
-                                        className={isErrorInputClass}
-                                        placeholder="Name"
-                                        value={this.state.nameType}
-                                        onChange={this.handleChangeNameOfType.bind(this)}
-                                    />
-                                </Tooltip>
                             </div>
                             <div className="modal-footer">
                                 <button
@@ -172,9 +135,8 @@ class CreateModal extends Component {
                                 >Cancel</button>
                                 <button
                                     type="submit"
-                                    className={styleSubmit}
-                                    disabled={!isDisabledSubmit}
-                                >Create</button>
+                                    className="btn modal-footer-solution-select"
+                                >Resize</button>
                             </div>
                         </form>
                     </div>
@@ -184,7 +146,7 @@ class CreateModal extends Component {
     }
 }
 
-CreateModal.propTypes = {
+ResizeModal.propTypes = {
     type: PropTypes.string,
     tariff: PropTypes.string,
     data: PropTypes.object,
@@ -192,4 +154,4 @@ CreateModal.propTypes = {
     onHandleCreate: PropTypes.func
 };
 
-export default CreateModal;
+export default ResizeModal;

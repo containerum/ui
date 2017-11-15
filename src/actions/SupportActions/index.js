@@ -10,6 +10,7 @@ import {
 export function sendSupport(data) {
     return dispatch => {
         dispatch(requestGetCreateDeployment());
+
         return axios.post(
             'https://web.containerum.io/omnidesk',
             // 'http://localhost:3001/omnidesk',
@@ -17,8 +18,9 @@ export function sendSupport(data) {
             {
                 headers: {
                     'Accept': '*/*',
+                    'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Headers': 'X-Requested-With'
+                    'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
                 validateStatus: (status) => status >= 200 && status <= 505
             }

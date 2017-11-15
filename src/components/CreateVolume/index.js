@@ -15,7 +15,8 @@ class CreateVolume extends Component {
             isOpened: false,
             VolumesTariffName: '',
             VolumesTariffPrice: '',
-            VolumesTariffStorageLimit: ''
+            VolumesTariffStorageLimit: '',
+            VolumesTariffPricePerDay: ''
         };
     }
     componentWillReceiveProps(nextProps) {
@@ -30,13 +31,14 @@ class CreateVolume extends Component {
     componentDidMount() {
         this.props.onGetVolumesTariffs();
     }
-    handleClickTriff(label, price, storageLimit) {
+    handleClickTriff(label, price, storageLimit, pricePerDay) {
         this.setState({
             ...this.state,
             isOpened: true,
             VolumesTariffName: label,
             VolumesTariffPrice: price,
-            VolumesTariffStorageLimit: storageLimit
+            VolumesTariffStorageLimit: storageLimit,
+            VolumesTariffPricePerDay: pricePerDay
         });
     }
     render() {
@@ -49,10 +51,10 @@ class CreateVolume extends Component {
                     <div className="content-block-container container no-back mt-0 no-padding">
                         <div className="content-block-content mt-0">
 
-                            <div className="namespace-plan">
+                            <div className="namespace-plan mt-0">
                                 <div className="namespace-plan-title">choose a volume size</div>
-                                <div className="namespace-plan-content">Assign this Volume an identifying name.
-                                    Volume name can only contain alphanumeric characters and dashes.</div>
+                                {/*<div className="namespace-plan-content">Assign this Volume an identifying name.*/}
+                                    {/*Volume name can only contain alphanumeric characters and dashes.</div>*/}
                             </div>
 
                             <div className="row">
@@ -61,6 +63,8 @@ class CreateVolume extends Component {
                                         const storageLimit = item.storage_limit;
                                         const price = item.price === 0 && item.label === "free" ? 'free' : `$${item.price}`;
                                         const label = item.label;
+                                        const pricePerDay = item.price === 0 ? '30 days left' :
+                                            `$${(item.price / 30).toFixed(2)} daily`;
                                         return (
                                             <div className="col-md-3" key={index}>
                                                 <div
@@ -68,12 +72,12 @@ class CreateVolume extends Component {
                                                     className={label === this.state.VolumesTariffName ?
                                                         "namespace-plan-block-container hover-action-new selected" :
                                                         "namespace-plan-block-container hover-action-new"}
-                                                    onClick={labelName => this.handleClickTriff(label, price, storageLimit)}
+                                                    onClick={labelName => this.handleClickTriff(label, price, storageLimit, pricePerDay)}
                                                 >
                                                     <div className="row">
                                                         <div className="col-md-6 namespace-plan-block-container-left">
-                                                            <div className="namespace-plan-block-price">{price}</div>
-                                                            <div className="namespace-plan-block-month">per month</div>
+                                                            <div className="namespace-plan-block-price">{price}<span className="namespace-plan-span-price">/mo</span></div>
+                                                            <div className="namespace-plan-block-month">{pricePerDay}</div>
                                                         </div>
                                                         <div className="col-md-6  volume-plan-container-right">
                                                             <div className="hard-drive-size">{storageLimit} GB</div>
@@ -107,7 +111,8 @@ class CreateVolume extends Component {
                     tariff={this.state.VolumesTariffName}
                     data={{
                         storageLimit: this.state.VolumesTariffStorageLimit,
-                        price: this.state.VolumesTariffPrice
+                        price: this.state.VolumesTariffPrice,
+                        pricePerDay: this.state.VolumesTariffPricePerDay
                     }}
                     isOpened={this.state.isOpened}
                     onHandleCreate={this.props.onCreateVolume}

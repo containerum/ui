@@ -825,6 +825,10 @@ h1{
     margin: 20px 0 0 0;
 }
 
+.content-block-content.card-block.card-block2dollars {
+    margin: 30px 0 0 0;
+}
+
 .card-container{
     min-height: 209px;
 }
@@ -1335,6 +1339,10 @@ select.form-control:not([size]):not([multiple]) {
     justify-content: center;
 }
 
+.namespace-plan-block2dollars {
+    padding: 10px 15px 0 30px;
+}
+
 .namespace-plan-block-container.disabled .volume-plan-container-right {
     color: #a7a7a7;
 }
@@ -1356,7 +1364,8 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .namespace-plan-block-price{
-    font-size: 35px;
+    display: flex;
+    font-size: 33px;
     font-weight: 300;
     margin: 0 auto;
     color: #29abe2;
