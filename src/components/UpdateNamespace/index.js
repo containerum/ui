@@ -5,6 +5,7 @@ import Tooltip from 'rc-tooltip';
 
 import Spinner from '../Spinner';
 import Notification from '../Notification';
+import ResizeModal from '../CustomerModal/ResizeModal';
 import { getNSTariffs } from '../../actions/NamespacesActions/getNSTariffsAction';
 import { updateNamespace } from '../../actions/NamespaceActions/updateNamespaceAction';
 import { getNamespace } from '../../actions/NamespaceActions/getNamespaceAction';
@@ -14,8 +15,22 @@ class UpdateNamespace extends Component {
     constructor() {
         super();
         this.state = {
-            NSTariffName: ''
+            isOpened: false,
+            NSTariffName: '',
+            NSTariffCpu: '',
+            NSTariffMemory: '',
+            NSTariffTraffic: '',
+            NSTariffPrice: '',
+            NSTariffPricePerDay: ''
         };
+    }
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.UpdateNamespaceReducer.isFetching !== this.props.UpdateNamespaceReducer.isFetching) {
+            this.setState({
+                ...this.state,
+                isOpened: false
+            });
+        }
     }
     componentDidMount() {
         this.props.onGetNamespace(this.props.params.idName);
@@ -23,17 +38,17 @@ class UpdateNamespace extends Component {
             this.props.onGetNSTariffs();
         }
     }
-    handleClickTriff(label) {
+    handleClickTriff(label, cpu, memory, traffic, price, pricePerDay) {
         this.setState({
             ...this.state,
-            NSTariffName: label
+            isOpened: true,
+            NSTariffName: label,
+            NSTariffCpu: cpu,
+            NSTariffMemory: memory,
+            NSTariffTraffic: traffic,
+            NSTariffPrice: price,
+            NSTariffPricePerDay: pricePerDay
         });
-    }
-    handleSubmitNSTariffs(e) {
-        e.preventDefault();
-        if (this.state.NSTariffName) {
-            this.props.onUpdateNamespace(this.props.params.idName, this.state.NSTariffName);
-        }
     }
     render() {
         // console.log(this.props.UpdateNamespaceReducer);
@@ -58,8 +73,7 @@ class UpdateNamespace extends Component {
                         <div className="content-block-content mt-0">
 
                             <div className="namespace-plan mt-0">
-                                <div className="namespace-plan-first-step">{this.props.params.idName}</div>
-                                <div className="namespace-plan-title">choose a namespace plan</div>
+                                <div className="namespace-plan-first-step">choose a namespace size for <span className="namespace-plan-first-step-blue">{this.props.params.idName}</span></div>
                             </div>
 
                             <div className="row">
@@ -72,6 +86,8 @@ class UpdateNamespace extends Component {
                                         const label = item.label;
                                         const isActiveTariff = label === active;
                                         const isFreeNotActive = active !== 'trial';
+                                        const pricePerDay = item.price === 0 && item.label === 'trial' ? '30 days left' :
+                                            `$${(item.price / 30).toFixed(2)} daily`;
                                         return (
                                             <div className="col-md-3" key={index}>
                                                 <Tooltip
@@ -91,16 +107,18 @@ class UpdateNamespace extends Component {
                                                     }
                                                     onClick={() => {
                                                         if (!isActiveTariff && item.label !== 'trial') {
-                                                            this.handleClickTriff(label)
+                                                            this.handleClickTriff(label, cpu, memory, traffic, price, pricePerDay)
                                                         }
                                                     }}
                                                 >
                                                     <div className="row">
                                                         <div className="col-md-6 namespace-plan-block-container-left">
-                                                            <div className="namespace-plan-block-price">{isActiveTariff ? 'Active' : price}</div>
+                                                            <div className="namespace-plan-block-price">{isActiveTariff ? 'Active' :
+                                                                price !== 'trial' ? <div>{price}<span className="namespace-plan-span-price">/mo</span></div> : ''}
+                                                            </div>
                                                             {
                                                                 isActiveTariff || item.label === 'trial' ? '' :
-                                                                    <div className="namespace-plan-block-month">per month</div>
+                                                                    <div className="namespace-plan-block-month">{pricePerDay}</div>
                                                             }
                                                         </div>
                                                         <div className="col-md-6 namespace-plan-block-container-right">
@@ -127,15 +145,6 @@ class UpdateNamespace extends Component {
                                     })
                                 }
                             </div>
-                            <form
-                                className="col-md-6 namespace-plan"
-                                onSubmit={this.handleSubmitNSTariffs.bind(this)}
-                            >
-                                <button
-                                    className="btn namespace-plan-create-btn"
-                                    type="submit"
-                                >Resize</button>
-                            </form>
                         </div>
                     </div>
                 </div>;
@@ -153,6 +162,20 @@ class UpdateNamespace extends Component {
                     method={this.props.UpdateNamespaceReducer.method}
                     name={this.props.UpdateNamespaceReducer.idName}
                     errorMessage={this.props.UpdateNamespaceReducer.errorMessage}
+                />
+                <ResizeModal
+                    type="Namespace"
+                    tariff={this.state.NSTariffName}
+                    data={{
+                        cpu: this.state.NSTariffCpu,
+                        memory: this.state.NSTariffMemory,
+                        traffic: this.state.NSTariffTraffic,
+                        price: this.state.NSTariffPrice,
+                        pricePerDay: this.state.NSTariffPricePerDay,
+                        idName: this.props.params.idName,
+                    }}
+                    isOpened={this.state.isOpened}
+                    onHandleCreate={this.props.onUpdateNamespace}
                 />
                 { isFetchingNSTariffs }
                 { isFetchingCreateNS }

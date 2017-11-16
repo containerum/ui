@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import Dropzone from 'react-dropzone';
+import toastr from 'toastr';
+import ReactFileReader from 'react-file-reader';
 
 import { sendSupport } from '../../actions/SupportActions';
 import { getGroupOmnidesk } from '../../actions/getGroupOmnideskActions';
@@ -15,7 +16,8 @@ class Support extends Component {
         super();
         this.state = {
             textArea: '',
-            files: []
+            files: [],
+            base64: []
         };
     }
     componentWillMount() {
@@ -41,45 +43,79 @@ class Support extends Component {
                 user_email: userEmail.trim(),
                 subject: 'web-ui',
                 content: textArea.trim(),
-                group_id: this.refs.group.value.trim()
+                group_id: this.refs.group.value.trim(),
+                base64: this.state.base64,
+                files: this.state.files
             }
         };
+        if (this.state.files.length) {
+            reqObj.case.files = this.state.files.map(item => {
+                return item.name;
+            });
+        }
+
         this.props.onSendSupport(reqObj);
     }
-    // onDrop(files) {
-    //     this.setState({
-    //         ...this.state,
-    //         files
-    //     });
-    // }
-    // onDropAccepted(files) {
-    //     console.log(files)
-    // }
-    // onDropRejected(files) {
-    //     console.log(files)
-    // }
-    // onFileDialogCancel(files) {
-    //     console.log(files)
-    // }
-    // handleDeleteImage(imageName) {
-    //     const newFiles = this.state.files.filter(file => {
-    //         return file.name !== imageName;
-    //     });
-    //     this.setState({
-    //         ...this.state,
-    //         files: newFiles
-    //     });
-    // }
+    handleDeleteImage(imageName) {
+        const arrBase64 = [];
+        const newFiles = this.state.files.filter((file, index) => {
+            if (file.name !== imageName) arrBase64.push(this.state.base64[index]);
+            return file.name !== imageName;
+        });
+
+        this.setState({
+            ...this.state,
+            files: newFiles,
+            base64: arrBase64
+        });
+    }
+    handleFiles(files) {
+        const errorFiles = [];
+        const successFiles = [];
+        const successBase64 = [];
+        Object.keys(files.fileList).filter((item, index) => {
+            if(files.fileList[item].size >= 15728640) {
+                errorFiles.push(files.fileList[item]);
+            } else {
+                successFiles.push(files.fileList[item]);
+                successBase64.push(files.base64[index]);
+            }
+        });
+        if (errorFiles.length) {
+            toastr.error(`<div>${errorFiles.map(file => (`
+${file.name}`))}</div>`,
+                `The following files were not downloaded because the attachment size (15 MB maximum) was exceeded:`);
+        }
+        this.setState({
+            ...this.state,
+            files: successFiles,
+            base64: successBase64
+        });
+    }
     render() {
+        toastr.options = {
+            'closeButton': true,
+            'debug': false,
+            'newestOnTop': false,
+            'progressBar': true,
+            'positionClass': 'toast-top-right',
+            'preventDuplicates': false,
+            'onclick': null,
+            'showDuration': '300',
+            'hideDuration': '1000',
+            'timeOut': '5000',
+            'extendedTimeOut': '1000',
+            'showEasing': 'swing',
+            'hideEasing': 'linear',
+            'showMethod': 'fadeIn',
+            'hideMethod': 'fadeOut'
+        };
         const groupData = this.props.GroupOmnideskReducer.data ? this.props.GroupOmnideskReducer.data : [];
         const profileButtonText = this.props.SupportReducer.isFetching ? <MiniSpinner /> : 'Submit Ticket';
         const isActiveProfileButton = this.props.SupportReducer.isFetching ?
             'feedback-form__submit btn disabled' :
             'feedback-form__submit btn';
         const isActiveProfileState = !!this.props.SupportReducer.isFetching;
-        // console.log(this.state.files.map(f => {
-        //     return f;
-        // }));
         return (
             <div>
                 {/*<BackPanel />*/}
@@ -122,35 +158,34 @@ class Support extends Component {
                                                 required
                                             > </textarea>
                                         </div>
-                                        {/*<section style={{margin: '15px 0'}}>*/}
-                                            {/*{*/}
-                                                {/*this.state.files.length ?*/}
-                                                    {/*<aside>*/}
-                                                        {/*{*/}
-                                                            {/*this.state.files.map(f =>*/}
-                                                                {/*<div*/}
-                                                                    {/*key={f.name}*/}
-                                                                    {/*className='dropzone-item'*/}
-                                                                {/*>{f.name} - {f.size} bytes <i onClick={image => this.handleDeleteImage(f.name)} className="material-icons">delete</i>*/}
-                                                                {/*</div>*/}
-                                                            {/*)*/}
-                                                        {/*}*/}
-                                                    {/*</aside> :*/}
-                                                    {/*<div className='dropzone'>*/}
-                                                        {/*<Dropzone*/}
-                                                            {/*onDrop={this.onDrop.bind(this)}*/}
-                                                            {/*onDropAccepted={this.onDropAccepted.bind(this)}*/}
-                                                            {/*onDropRejected={this.onDropRejected.bind(this)}*/}
-                                                            {/*onFileDialogCancel={this.onFileDialogCancel.bind(this)}*/}
-                                                            {/*maxSize={15728640}*/}
-                                                            {/*accept="image/x-png,image/gif,image/jpeg,application/pdf,text/plain,text/html"*/}
-                                                            {/*className='dropzone-wrapper'*/}
-                                                        {/*>*/}
-                                                            {/*<p className='dropzone-p'><i className="material-icons">cloud_upload</i>Click here to upload image (file)</p>*/}
-                                                        {/*</Dropzone>*/}
-                                                    {/*</div>*/}
-                                            {/*}*/}
-                                        {/*</section>*/}
+                                        <section style={{margin: '15px 0'}}>
+                                            {
+                                                this.state.files.length ?
+                                                    <aside>
+                                                        {
+                                                            this.state.files.map(f =>
+                                                                <div
+                                                                    key={f.name}
+                                                                    className='dropzone-item'
+                                                                ><span className='dropzone-item-span'>{f.name}</span>
+                                                                    <i onClick={image => this.handleDeleteImage(f.name)}
+                                                                       className="material-icons">delete</i>
+                                                                </div>
+                                                            )
+                                                        }
+                                                    </aside> :
+                                                    <ReactFileReader
+                                                        fileTypes={["image/x-png", "image/gif", "image/jpeg", "application/pdf", "text/*"]}
+                                                        base64={true}
+                                                        multipleFiles={true}
+                                                        handleFiles={this.handleFiles.bind(this)}
+                                                    >
+                                                        <div className='dropzone'>
+                                                            <p className='dropzone-p'><i className="material-icons">cloud_upload</i>Click here to upload image (file)</p>
+                                                        </div>
+                                                    </ReactFileReader>
+                                            }
+                                        </section>
                                         <div className="feedback-form__buttons btn-block">
                                             <button
                                                 ref="button"

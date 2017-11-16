@@ -5,6 +5,7 @@ import Tooltip from 'rc-tooltip';
 
 import Spinner from '../Spinner';
 import Notification from '../Notification';
+import ResizeModal from '../CustomerModal/ResizeModal';
 import { getVolumesTariffs } from '../../actions/VolumesActions/getVolumesTariffsAction';
 import { updateVolume } from '../../actions/VolumeActions/updateVolumeAction';
 import { getVolume } from '../../actions/VolumeActions/getVolumeAction';
@@ -14,8 +15,20 @@ class UpdateVolume extends Component {
     constructor() {
         super();
         this.state = {
-            VolumeTariffName: ''
+            isOpened: false,
+            VolumeTariffName: '',
+            VolumesTariffStorageLimit: '',
+            VolumesTariffPrice: '',
+            VolumesPricePerDay: '',
         };
+    }
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.UpdateVolumeReducer.isFetching !== this.props.UpdateVolumeReducer.isFetching) {
+            this.setState({
+                ...this.state,
+                isOpened: false
+            });
+        }
     }
     componentDidMount() {
         this.props.onGetVolume(this.props.params.idVolume);
@@ -23,10 +36,14 @@ class UpdateVolume extends Component {
             this.props.onGetVolumeTariffs();
         }
     }
-    handleClickTriff(label) {
+    handleClickTriff(label, price, storageLimit, pricePerDay) {
         this.setState({
             ...this.state,
-            VolumeTariffName: label
+            isOpened: true,
+            VolumeTariffName: label,
+            VolumesTariffStorageLimit: storageLimit,
+            VolumesTariffPrice: price,
+            VolumesPricePerDay: pricePerDay
         });
     }
     handleSubmitVolumeTariffs(e) {
@@ -64,8 +81,7 @@ class UpdateVolume extends Component {
                         <div className="content-block-content mt-0">
 
                             <div className="namespace-plan mt-0">
-                                <div className="namespace-plan-first-step">{this.props.params.idVolume}</div>
-                                <div className="namespace-plan-title">choose a volume plan</div>
+                                <div className="namespace-plan-first-step">choose a volume size for <span className="namespace-plan-first-step-blue">{this.props.params.idVolume}</span></div>
                             </div>
                             <div className="row">
                                 {
@@ -75,6 +91,8 @@ class UpdateVolume extends Component {
                                         const label = item.label;
                                         const isActiveTariff = label === active;
                                         const isDisabled = item.isDisabled;
+                                        const pricePerDay = item.price === 0 ? '30 days left' :
+                                            `$${(item.price / 30).toFixed(2)} daily`;
                                         return (
                                             <div className="col-md-3" key={index}>
                                                 <Tooltip
@@ -94,7 +112,7 @@ class UpdateVolume extends Component {
                                                     }
                                                     onClick={() => {
                                                         if (!isActiveTariff && !isDisabled) {
-                                                            this.handleClickTriff(label)
+                                                            this.handleClickTriff(label, price, storageLimit, pricePerDay)
                                                         }
                                                     }}
                                                 >
@@ -103,7 +121,7 @@ class UpdateVolume extends Component {
                                                             <div className="namespace-plan-block-price">{isActiveTariff ? 'Active' : price}</div>
                                                             {
                                                                 isActiveTariff ? '' :
-                                                                    <div className="namespace-plan-block-month">per month</div>
+                                                                    <div className="namespace-plan-block-month">{pricePerDay}</div>
                                                             }
                                                         </div>
                                                         <div className="col-md-6  volume-plan-container-right">
@@ -117,15 +135,6 @@ class UpdateVolume extends Component {
                                     })
                                 }
                             </div>
-                            <form
-                                className="col-md-6 namespace-plan"
-                                onSubmit={this.handleSubmitVolumeTariffs.bind(this)}
-                            >
-                                <button
-                                    className="btn namespace-plan-create-btn"
-                                    type="submit"
-                                >Resize</button>
-                            </form>
                         </div>
                     </div>
                 </div>;
@@ -143,6 +152,18 @@ class UpdateVolume extends Component {
                     method={this.props.UpdateVolumeReducer.method}
                     name={this.props.UpdateVolumeReducer.idVolume}
                     errorMessage={this.props.UpdateVolumeReducer.errorMessage}
+                />
+                <ResizeModal
+                    type="Volume"
+                    tariff={this.state.VolumeTariffName}
+                    data={{
+                        storageLimit: this.state.VolumesTariffStorageLimit,
+                        price: this.state.VolumesTariffPrice,
+                        pricePerDay: this.state.VolumesPricePerDay,
+                        idName: this.props.params.idVolume,
+                    }}
+                    isOpened={this.state.isOpened}
+                    onHandleCreate={this.props.onUpdateVolume}
                 />
                 { isFetchingVolumeTariffs }
                 { isFetchingCreateVolume }
