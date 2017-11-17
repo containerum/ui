@@ -72,8 +72,8 @@ class NamespacesContainer extends Component {
                     {
                         this.props.PostsNamespacesDataReducer.map((item) => {
                             const name = item.name;
-                            const volumeSize = item.volume_size ? item.volume_size : 0;
-                            const volumeUsed = item.volume_used ? item.volume_used: 0;
+                            const volumeSize = item.volume_size ? item.volume_size : '-';
+                            const volumeUsed = item.volume_used ? item.volume_used: '-';
                             // const nameFirstChar = name.substring(0, 1).toUpperCase();
                             const id = `item_${name}`;
                             return (
@@ -122,7 +122,7 @@ class NamespacesContainer extends Component {
                                             </div>
                                             <div className="content-block__info-item">
                                                 <div className="content-block__info-name inline">Volume ( Usage / Total ) :&nbsp;</div>
-                                                <div className="content-block__info-text inline">{volumeUsed} / {volumeSize} GB</div>
+                                                <div className="content-block__info-text inline">{volumeUsed} / {volumeSize} {volumeSize !== '-' ? 'GB': ''}</div>
                                             </div>
                                         </div>
 

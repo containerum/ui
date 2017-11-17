@@ -49,8 +49,8 @@ class NamespaceInfo extends Component {
         const NSmemoryLimit = currentNSArr ? currentNSArr.memory_limit : '';
         const NScpu = currentNSArr ? currentNSArr.cpu : '';
         const NScpuLimit = currentNSArr ? currentNSArr.cpu_limit : '';
-        const volumeSize = currentNSArr.volume_size ? currentNSArr.volume_size : 0;
-        const volumeUsed = currentNSArr.volume_used ? currentNSArr.volume_used: 0;
+        const volumeSize = currentNSArr.volume_size ? currentNSArr.volume_size : '-';
+        const volumeUsed = currentNSArr.volume_used ? currentNSArr.volume_used: '-';
         return (
             <div>
                 <Notification
@@ -98,7 +98,7 @@ class NamespaceInfo extends Component {
                             </div>
                             <div className="content-block__info-item">
                                 <div className="content-block__info-name">Volume ( Usage / Total ) :</div>
-                                <div className="content-block__info-text">{volumeSize} / {volumeUsed} GB</div>
+                                <div className="content-block__info-text">{volumeSize} / {volumeUsed} {volumeSize !== '-' ? 'GB': ''}</div>
                             </div>
                         </div>
                     </div>
