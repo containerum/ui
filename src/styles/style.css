@@ -177,7 +177,7 @@ h1{
 .header-top-account__info{
     height: 28px;
     float: left;
-    margin: 0 0 0 15px;
+    margin: -2px 0 0 15px;
 }
 .header-top-account__name{
     font-weight: 300;
@@ -562,7 +562,7 @@ h1{
     /*color: #a7a7a7;*/
     border: none ;
     border-bottom: 1.5px solid #eaeaea;
-    padding: 0 0 8px 0px;
+    padding: 7px 0 8px 0;
     border-radius: 0;
 }
 

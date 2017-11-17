@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 // import md5 from 'md5';
+import ReactGA from 'react-ga';
 
 import {
     SIGNUP_REQUEST,
@@ -47,6 +48,10 @@ export function SignUpUser(creds) {
                 if (response.status === 200 || response.status === 201) {
                     dispatch(receiveSignUp());
                     dispatch(confirmEmail(creds.username));
+                    ReactGA.event({
+                        category: 'UI',
+                        action: 'UI_SUp_request'
+                    });
                     if (typeof window !== 'undefined') {
                         browserHistory.push('/ConfirmEmail');
                     }

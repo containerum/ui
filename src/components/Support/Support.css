@@ -17,7 +17,7 @@
   cursor: pointer;
   display: table;
   border-radius: 5px;
-  border: dashed 1px #0c5460;
+  border: dashed 2px #a7a7a7;
 }
 
 .dropzone-p {

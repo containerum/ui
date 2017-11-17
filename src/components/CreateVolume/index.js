@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ReactGA from 'react-ga';
 
 import Spinner from '../Spinner';
 import Notification from '../Notification';
@@ -30,6 +31,10 @@ class CreateVolume extends Component {
     }
     componentDidMount() {
         this.props.onGetVolumesTariffs();
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_create_Vol'
+        });
     }
     handleClickTriff(label, price, storageLimit, pricePerDay) {
         this.setState({
@@ -142,8 +147,8 @@ const mapDispatchToProps = (dispatch) => {
         onGetVolumesTariffs: () => {
             dispatch(getVolumesTariffs());
         },
-        onCreateVolume: (inputVolumesName, VolumesTariffName) => {
-            dispatch(createVolume(inputVolumesName, VolumesTariffName));
+        onCreateVolume: (inputVolumesName, VolumesTariffName, price) => {
+            dispatch(createVolume(inputVolumesName, VolumesTariffName, price));
         }
     };
 };

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 import {
     DELETE_NAMESPACE_REQUEST,
@@ -37,6 +38,10 @@ export function deleteNamespace(idName) {
         .then(response => {
             if (response.status === 202) {
                 dispatch(receiveDeleteNamespace(response.status, idName));
+                ReactGA.event({
+                    category: 'UI',
+                    action: 'UI_ns_delete'
+                });
             } else if (response.status === 401) {
                 if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
                     localStorage.removeItem('id_token');

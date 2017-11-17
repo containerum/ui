@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
 import scrollToComponent from 'react-scroll-to-component';
+import ReactGA from 'react-ga';
 
 import ProfileSidebar from '../ProfileSidebar';
 import Paginator from '../../Paginator';
@@ -35,6 +36,10 @@ class Billing extends Component {
         } else {
             this.props.onGetProfileReport()
         }
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_billing_visit'
+        });
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.location.query.page !== this.props.location.query.page) {
@@ -124,7 +129,7 @@ class Billing extends Component {
                                                 </div>
                                                 <nav>
                                                     {
-                                                        countPages >= 2 ?
+                                                        countPages > 1 ?
                                                             <Paginator
                                                                 countPage={countPages > 25 ? 25 : countPages}
                                                                 currentPage={this.state.currentPage}

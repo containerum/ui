@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 import {
     CREATE_IMAGE_TOKENS_REQUEST,
@@ -44,6 +45,10 @@ export function createImageTokens(label, regexp) {
             .then(response => {
                 if (response.status === 201) {
                     dispatch(receiveCreateImageTokens(response.data, response.status, WebHook));
+                    ReactGA.event({
+                        category: 'UI',
+                        action: 'UI_acccount_webhook_add'
+                    });
                 } else if (response.status === 401) {
                     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
                         localStorage.removeItem('id_token');

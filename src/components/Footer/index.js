@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactGA from 'react-ga';
 
 import arrows from '../../images/arrows.png';
 import { GetReleasesGithub } from '../../actions/GetReleasesGithubActions';
@@ -11,6 +12,24 @@ class Footer extends Component {
         if (!Object.keys(this.props.GetReleasesGithubReducer.data).length) {
             this.props.onGetReleasesGithub();
         }
+    }
+    handleClickAnaliticsDownloadCLIFooter() {
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_CLI_download_footer'
+        });
+    }
+    handleClickAnaliticsHowToFooter() {
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_HowTo_footer'
+        });
+    }
+    handleClickAnaliticsDocsFooter() {
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_Docs_footer'
+        });
     }
     render() {
         const {
@@ -26,6 +45,7 @@ class Footer extends Component {
                             rel="noopener noreferrer"
                             href={linkPlatform}
                             className="footer__download_cli"
+                            onClick={() => this.handleClickAnaliticsDownloadCLIFooter()}
                         >
                             Download CLI <img src={arrows} alt="" />
                         </a>
@@ -33,6 +53,7 @@ class Footer extends Component {
                             target="_blank"
                             href="https://containerum.com/documentation"
                             className="footer__help"
+                            onClick={() => this.handleClickAnaliticsDocsFooter()}
                         >
                             Docs
                         </a>
@@ -40,6 +61,7 @@ class Footer extends Component {
                             target="_blank"
                             href="https://containerum.com/fast-deploy/hello-world"
                             className="footer__help"
+                            onClick={() => this.handleClickAnaliticsHowToFooter()}
                         >
                             How To
                         </a>

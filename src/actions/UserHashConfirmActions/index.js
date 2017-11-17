@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 import {
     USER_HASH_CONFIRM_REQUEST,
@@ -28,13 +28,13 @@ export function getUserHashConfirm(userHash) {
             }
         )
         .then(response => {
-            if (response.status === 200 || response.status === 201) {
-                dispatch(receiveGetUserHashConfirm(response.data));
+            if (response.status === 200) {
+                dispatch(receiveGetUserHashConfirm(response.status));
+                ReactGA.event({
+                    category: 'UI',
+                    action: 'UI_SUp_confirmed'
+                });
             }
-            // else if (response.status === 401) {
-            //     localStorage.removeItem('id_token');
-            //     browserHistory.push('/Login');
-            // }
             else {
                 dispatch(failGetUserHashConfirm(response.data.message));
             }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 import {
     CREATE_VOLUME_REQUEST,
@@ -11,7 +12,7 @@ import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function createVolume(idVolume, tariff) {
+export function createVolume(idVolume, tariff, price) {
     return dispatch => {
         dispatch(requestCreateVolume());
         let token = '';
@@ -42,6 +43,10 @@ export function createVolume(idVolume, tariff) {
             // console.log(response);
             if (response.status === 201) {
                 dispatch(receiveCreateVolume(response.data, response.status, idVolume));
+                ReactGA.event({
+                    category: 'UI',
+                    action: `UI_create_volume_${price}`
+                });
                 if (typeof window !== 'undefined') {
                     browserHistory.push('/Volumes');
                 }

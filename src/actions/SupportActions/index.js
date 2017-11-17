@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 import {
     SUPPORT_REQUEST,
@@ -29,6 +30,10 @@ export function sendSupport(data) {
             if (response.status === 200) {
                 // console.log(response.data);
                 dispatch(receiveGetCreateDeployment(response.data));
+                ReactGA.event({
+                    category: 'UI',
+                    action: 'UI_support_submit'
+                });
                 if (typeof window !== 'undefined') {
                     browserHistory.push('/Support/SuccessTicket?num=' + response.data.case.case_id);
                 }

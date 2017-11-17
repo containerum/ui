@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Tooltip from 'rc-tooltip';
+import ReactGA from 'react-ga';
 
 import Spinner from '../Spinner';
 import Notification from '../Notification';
@@ -37,6 +38,10 @@ class UpdateNamespace extends Component {
         if (!this.props.NSTariffsReducer.data.length) {
             this.props.onGetNSTariffs();
         }
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_ns_resize'
+        });
     }
     handleClickTriff(label, cpu, memory, traffic, price, pricePerDay) {
         this.setState({

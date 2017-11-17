@@ -18,7 +18,7 @@ class ProfileInfoDropdown extends Component {
                     <div className="header-top-account__avatar">
                         <Blockies
                             seed={email}
-                            size={10}
+                            size={9}
                             scale={3}
                             bgColor="#fff"
                         />

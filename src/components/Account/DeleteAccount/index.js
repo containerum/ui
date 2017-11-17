@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import CustomerModal from '../../CustomerModal';
+import DeleteModal from '../../CustomerModal/DeleteModal';
 
 import { deleteProfile } from '../../../actions/ProfileActions/deleteProfileAction';
 import Spinner from '../../Spinner';
@@ -47,7 +47,7 @@ class DeleteAccount extends Component {
                         >Delete</button>
                     </div>
 
-                    <CustomerModal
+                    <DeleteModal
                         type="Account"
                         name={this.props.email}
                         isOpened={this.state.isOpened}

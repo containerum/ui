@@ -6,7 +6,7 @@ import NavLink from "../../../containers/NavLink";
 
 import { deleteVolume } from "../../../actions/VolumeActions/deleteVolumeAction";
 import Notification from '../../Notification';
-import CustomerModal from '../../CustomerModal';
+import DeleteModal from '../../CustomerModal/DeleteModal';
 import Spinner from '../../Spinner';
 
 class VolumesContainer extends Component {
@@ -118,12 +118,12 @@ class VolumesContainer extends Component {
                     }
                     <div className="col-md-4 align-middle">
                         <NavLink to="/CreateVolume" className="add-new-block content-block-content card-container hover-action ">
-                            <div className="action"><i>+</i> Add a volume</div>
+                            <div className="action action-vol"><i>+</i> Add a volume</div>
                         </NavLink>
                     </div>
                 </div>
 
-                <CustomerModal
+                <DeleteModal
                     type="Volume"
                     name={this.state.VolumeName}
                     isOpened={this.state.isOpened}
