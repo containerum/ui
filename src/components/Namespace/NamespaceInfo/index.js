@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 import n from '../../../images/n.png';
 import { deleteNamespace } from "../../../actions/NamespaceActions/deleteNamespaceAction";
 import Notification from '../../Notification';
-import CustomerModal from '../../CustomerModal';
+import DeleteModal from '../../CustomerModal/DeleteModal';
 import NavLink from '../../../containers/NavLink';
 
 class NamespaceInfo extends Component {
@@ -49,9 +49,8 @@ class NamespaceInfo extends Component {
         const NSmemoryLimit = currentNSArr ? currentNSArr.memory_limit : '';
         const NScpu = currentNSArr ? currentNSArr.cpu : '';
         const NScpuLimit = currentNSArr ? currentNSArr.cpu_limit : '';
-
-        const VolTotalSize = this.props.GetVolumeReducer.data ? this.props.GetVolumeReducer.data.total_size : '';
-        const VolUsedSize = this.props.GetVolumeReducer.data ? this.props.GetVolumeReducer.data.used_size : '';
+        const volumeSize = currentNSArr.volume_size ? currentNSArr.volume_size : '-';
+        const volumeUsed = currentNSArr.volume_used ? currentNSArr.volume_used: '-';
         return (
             <div>
                 <Notification
@@ -99,13 +98,13 @@ class NamespaceInfo extends Component {
                             </div>
                             <div className="content-block__info-item">
                                 <div className="content-block__info-name">Volume ( Usage / Total ) :</div>
-                                <div className="content-block__info-text">{VolUsedSize} / {VolTotalSize} GB</div>
+                                <div className="content-block__info-text">{volumeSize} / {volumeUsed} {volumeSize !== '-' ? 'GB': ''}</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <CustomerModal
+                <DeleteModal
                     type="Namespace"
                     name={this.state.NSName}
                     isOpened={this.state.isOpened}
@@ -123,7 +122,6 @@ NamespaceInfo.propTypes = {
 function mapStateToProps(state) {
     return {
         NamespacesReducer: state.NamespacesReducer,
-        GetVolumeReducer: state.GetVolumeReducer,
         DeleteNamespaceReducer: state.DeleteNamespaceReducer
     };
 

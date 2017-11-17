@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactGA from 'react-ga';
 
 import HeaderDropDown from '../HeaderDropDown';
 import NamespaceInfo from './NamespaceInfo';
 import NamespaceContains from './NamespaceContains';
 import Spinner from '../Spinner';
 import { getNamespaces } from '../../actions/NamespacesActions';
-import { getVolume } from '../../actions/VolumeActions/getVolumeAction';
 
 class Namespace extends Component {
     componentDidMount() {
         // if (!this.props.NamespacesReducer.data.length) {
         this.props.onGetNamespaces();
-        this.props.onGetVolume(`${this.props.params.idName}-volume`);
-        // }
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_ns_open'
+        });
     }
     componentWillReceiveProps(nextProps) {
         // if (nextProps.DeleteDeploymentReducer.status === 202 &&
@@ -22,15 +24,10 @@ class Namespace extends Component {
         //     nextProps.DeleteDeploymentReducer.deploymentName) {
         //     this.props.onGetNamespaces();
         // }
-        if (nextProps.params.idName !== this.props.params.idName) {
-            this.props.onGetVolume(`${nextProps.params.idName}-volume`);
-        }
     }
     render() {
-        // console.log(this.props.GetVolumeReducer);
         let isFetchingNamespaceInfo = '';
-        if (this.props.NamespacesReducer.isFetching === false &&
-            this.props.GetVolumeReducer.isFetching === false) {
+        if (this.props.NamespacesReducer.isFetching === false) {
             isFetchingNamespaceInfo =
                 <NamespaceInfo idName={this.props.params.idName} />;
         } else {
@@ -66,9 +63,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onGetNamespaces: () => {
             dispatch(getNamespaces());
-        },
-        onGetVolume: (idVolume) => {
-            dispatch(getVolume(idVolume));
         }
     };
 };

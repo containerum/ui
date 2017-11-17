@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
 import ReactFileReader from 'react-file-reader';
+import ReactGA from 'react-ga';
 
 import { sendSupport } from '../../actions/SupportActions';
 import { getGroupOmnidesk } from '../../actions/getGroupOmnideskActions';
@@ -27,6 +28,10 @@ class Support extends Component {
     }
     componentDidMount() {
         this.props.onGetGroupOmnidesk();
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_support'
+        });
     }
     handleChangeTextArea(e) {
         const textArea = e.target.value;
@@ -175,13 +180,13 @@ ${file.name}`))}</div>`,
                                                         }
                                                     </aside> :
                                                     <ReactFileReader
-                                                        fileTypes={["image/x-png", "image/gif", "image/jpeg", "application/pdf", "text/*"]}
+                                                        fileTypes={["image/x-png", "image/gif", "image/jpeg", "application/pdf", "text/plain"]}
                                                         base64={true}
                                                         multipleFiles={true}
                                                         handleFiles={this.handleFiles.bind(this)}
                                                     >
                                                         <div className='dropzone'>
-                                                            <p className='dropzone-p'><i className="material-icons">cloud_upload</i>Click here to upload image (file)</p>
+                                                            <p className='dropzone-p'><i className="material-icons">cloud_upload</i>Click here to upload file (.png, .gif, .jpeg, .pdf or .txt)</p>
                                                         </div>
                                                     </ReactFileReader>
                                             }

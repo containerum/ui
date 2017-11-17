@@ -10,9 +10,9 @@ const customStyles = {
         left            : 0,
         right           : 0,
         bottom          : 0,
-        backgroundColor : 'rgba(0, 0, 0, 0.01)',
         transition      : 'transform .3s ease-out,-webkit-transform .3s ease-out',
-        zIndex: 1000
+        zIndex          : 1000,
+        backgroundColor : 'rgba(0, 0, 0, 0.5)'
     },
     content: {
         position                : 'absolute',
@@ -21,18 +21,18 @@ const customStyles = {
         right                   : '0',
         bottom                  : '0',
         border                  : 'none',
-        backgroundColor : 'rgba(0, 0, 0, 0.5)',
         overflow                : 'hidden',
         WebkitOverflowScrolling : 'touch',
         borderRadius            : 'none',
         outline                 : 'none',
-        padding                 : '0'
+        padding                 : '0',
+        maxHeight               : '350px'
     }
 };
 
 class ResizeModal extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             modalIsOpen: this.props ? this.props.isOpened : false
         }
@@ -52,7 +52,7 @@ class ResizeModal extends Component {
     }
     handleSubmitCreatingEssence(e) {
         e.preventDefault();
-
+        console.log(this.props.tariff, this.props.data.idName);
         if (this.props.tariff && this.props.data.idName) {
             this.setState({
                 modalIsOpen: false
@@ -67,80 +67,74 @@ class ResizeModal extends Component {
                 onRequestClose={this.handleClickCloseModal.bind(this)}
                 style={customStyles}
                 contentLabel="Resize"
+                className={{
+                    base: 'modal-dialog modal-dialog2 modal-dialog-create'
+                }}
             >
-                <div
-                    className="modal fade show"
-                    id="volume"
-                    tabIndex="-1"
-                    role="dialog"
-                    aria-labelledby="modalLabel"
+                <form
+                    onSubmit={this.handleSubmitCreatingEssence.bind(this)}
+                    className="modal-content"
                 >
-                    <div className="modal-dialog modal-dialog2 modal-dialog-create" role="document">
-                        <form
-                            onSubmit={this.handleSubmitCreatingEssence.bind(this)}
-                            className="modal-content"
-                        >
-                            <div className="modal-header">
-                                <button
-                                    type="button"
-                                    className="close"
-                                    onClick={this.handleClickCloseModal.bind(this)}>
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div className="modal-body text-left">
-                                <h4
-                                    className="modal-title modal-title-volume"
-                                    id="modalLabel"
-                                >New {this.props.type}</h4>
-                                <div className="col-md-10 p-0">
-                                    <div className=" namespace-plan-block-container hover-action-new hover-always-new">
-                                        <div className="row">
-                                            <div className="col-md-6 namespace-plan-block-container-left">
-                                                <div className="namespace-plan-block-price">{this.props.data.price}{this.props.data.price !== 'trial' ?
-                                                    <span className="namespace-plan-span-price">/mo</span>: ''}</div>
-                                                {
-                                                    this.props.price === 0 && this.props.tariff === "trial" ?
-                                                        '' : <div className="namespace-plan-block-month">{this.props.data.pricePerDay}</div>
-                                                }
-                                            </div>
-                                            { this.props.data.memory && this.props.data.cpu && this.props.data.traffic ?
-                                                <div className="col-md-6 namespace-plan-block-container-right">
-                                                    <div className="content-block-content card-block">
-                                                        <div className="content-block__info-item ">
-                                                            <div className="content-block__info-name inline">RAM : </div>
-                                                            <div className="content-block__info-text inline">{this.props.data.memory} GB</div>
-                                                        </div>
-                                                        <div className="content-block__info-item">
-                                                            <div className="content-block__info-name inline">CPU : </div>
-                                                            <div className="content-block__info-text inline">{this.props.data.cpu}</div>
-                                                        </div>
-                                                        <div className="content-block__info-item">
-                                                            <div className="content-block__info-name inline">Trafic : </div>
-                                                            <div className="content-block__info-text inline">{this.props.data.traffic} TB</div>
-                                                        </div>
-                                                    </div>
-                                                </div> : this.props.data.storageLimit ?
-                                                    <div className="col-md-6  volume-plan-container-right">
-                                                        <div className="hard-drive-size">{this.props.data.storageLimit} GB</div>
-                                                    </div> : ''}
-                                        </div>
+                    <div className="modal-header">
+                        <button
+                            type="button"
+                            className="close"
+                            onClick={this.handleClickCloseModal.bind(this)}>
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div className="modal-body text-left">
+                        <h4
+                            className="modal-title modal-title-volume"
+                            id="modalLabel"
+                        >New {this.props.type}</h4>
+                        <div className="col-md-10 p-0">
+                            <div className=" namespace-plan-block-container hover-action-new hover-always-new">
+                                <div className="row">
+                                    <div className="col-md-6 namespace-plan-block-container-left">
+                                        <div className="namespace-plan-block-price">{this.props.data.price}{this.props.data.price !== 'trial' ?
+                                            <span className="namespace-plan-span-price">/mo</span>: ''}</div>
+                                        {
+                                            this.props.price === 0 && this.props.tariff === "trial" ?
+                                                '' : <div className="namespace-plan-block-month">{this.props.data.pricePerDay}</div>
+                                        }
                                     </div>
+                                    { this.props.data.memory && this.props.data.cpu && this.props.data.traffic ?
+                                        <div className="col-md-6 namespace-plan-block-container-right">
+                                            <div className="content-block-content card-block">
+                                                <div className="content-block__info-item ">
+                                                    <div className="content-block__info-name inline">RAM : </div>
+                                                    <div className="content-block__info-text inline">{this.props.data.memory} GB</div>
+                                                </div>
+                                                <div className="content-block__info-item">
+                                                    <div className="content-block__info-name inline">CPU : </div>
+                                                    <div className="content-block__info-text inline">{this.props.data.cpu}</div>
+                                                </div>
+                                                <div className="content-block__info-item">
+                                                    <div className="content-block__info-name inline">Trafic : </div>
+                                                    <div className="content-block__info-text inline">{this.props.data.traffic} TB</div>
+                                                </div>
+                                            </div>
+                                        </div> : this.props.data.storageLimit ?
+                                            <div className="col-md-6  volume-plan-container-right">
+                                                <div className="hard-drive-size">{this.props.data.storageLimit} GB</div>
+                                            </div> : ''}
                                 </div>
                             </div>
-                            <div className="modal-footer">
-                                <button
-                                    className="btn modal-footer-solution-cancel"
-                                    onClick={this.handleClickCloseModal.bind(this)}
-                                >Cancel</button>
-                                <button
-                                    type="submit"
-                                    className="btn modal-footer-solution-select"
-                                >Resize</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                    <div className="modal-footer">
+                        <button
+                            type="button"
+                            className="btn modal-footer-solution-cancel"
+                            onClick={this.handleClickCloseModal.bind(this)}
+                        >Cancel</button>
+                        <button
+                            type="submit"
+                            className="btn modal-footer-solution-select"
+                        >Resize</button>
+                    </div>
+                </form>
             </Modal>
         );
     }

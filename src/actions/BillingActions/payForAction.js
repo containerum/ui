@@ -1,6 +1,6 @@
-import fs from 'fs';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 import {
     PAY_FOR_REQUEST,
@@ -40,6 +40,10 @@ export function payFor(amount) {
         .then(response => {
             if (response.status === 200) {
                 // console.log(response.data);
+                ReactGA.event({
+                    category: 'UI',
+                    action: 'UI_billing_button'
+                });
                 dispatch(receivePayFor(response.data));
                 if (typeof window !== 'undefined') {
                     window.location.replace(response.data);

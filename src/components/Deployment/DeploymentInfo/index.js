@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import CustomerModal from '../../CustomerModal';
+import DeleteModal from '../../CustomerModal/DeleteModal';
 import r from '../../../images/r.png';
 
 class DeploymentInfo extends Component {
@@ -81,7 +81,7 @@ class DeploymentInfo extends Component {
                             <div className="content-block__info-text">{status.available} / {status.total}</div>
                         </div>
                     </div>
-                    <CustomerModal
+                    <DeleteModal
                         type="Deployment"
                         name={depName}
                         isOpened={this.state.isOpened}

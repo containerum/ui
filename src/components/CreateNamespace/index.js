@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ReactGA from 'react-ga';
 
 import Spinner from '../Spinner';
 import Notification from '../Notification';
@@ -39,6 +40,10 @@ class CreateNamespace extends Component {
         if (!this.props.NamespacesReducer.data.length) {
             this.props.onGetNamespaces();
         }
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_create_NS'
+        });
     }
     handleClickTriff(label, cpu, memory, traffic, price, pricePerDay) {
         this.setState({
@@ -202,8 +207,8 @@ const mapDispatchToProps = (dispatch) => {
         onGetNSTariffs: () => {
             dispatch(getNSTariffs());
         },
-        onCreateNamespace: (inputNSName, NSTariffName) => {
-            dispatch(createNamespace(inputNSName, NSTariffName));
+        onCreateNamespace: (inputNSName, NSTariffName, price) => {
+            dispatch(createNamespace(inputNSName, NSTariffName, price));
         },
         onGetNamespaces: () => {
             dispatch(getNamespaces());

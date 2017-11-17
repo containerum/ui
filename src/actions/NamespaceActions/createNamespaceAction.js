@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 import {
     CREATE_NAMESPACE_REQUEST,
@@ -11,7 +12,7 @@ import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function createNamespace(idName, tariff) {
+export function createNamespace(idName, tariff, price) {
     return dispatch => {
         dispatch(requestCreateNamespace());
         let token = '';
@@ -41,6 +42,10 @@ export function createNamespace(idName, tariff) {
         .then(response => {
             if (response.status === 201) {
                 dispatch(receiveCreateNamespace(response.data, response.status, idName));
+                ReactGA.event({
+                    category: 'UI',
+                    action: `UI_create_ns_${price}`
+                });
                 if (typeof window !== 'undefined') {
                     browserHistory.push('/Namespaces');
                 }

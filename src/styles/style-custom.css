@@ -67,7 +67,7 @@ input:invalid {
 .card-container {
      min-height: unset;
 }
-.add-new-block .action {
+.add-new-block .action-vol {
     line-height: 185px;
 }
 /* Without volumes */

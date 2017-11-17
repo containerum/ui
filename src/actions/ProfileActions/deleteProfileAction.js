@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 import {
     PROFILE_DELETE_REQUEST,
@@ -37,6 +38,10 @@ export function deleteProfile() {
         .then(response => {
             if (response.status === 200) {
                 dispatch(receiveDeleteProfile(response.data));
+                ReactGA.event({
+                    category: 'UI',
+                    action: 'UI_account_delete'
+                });
                 if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
                     localStorage.removeItem('id_token');
                 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import { Scrollbars } from 'react-custom-scrollbars';
+import ReactGA from 'react-ga';
 
 import Spinner from '../../Spinner';
 import arrows from '../../../images/arrows.png';
@@ -13,6 +14,12 @@ class CLI extends Component {
         if (!Object.keys(this.props.GetReleasesGithubReducer.data).length) {
             this.props.onGetReleasesGithub();
         }
+    }
+    handleClickAnaliticsDownloadCLIAccount() {
+        ReactGA.event({
+            category: 'UI',
+            action: 'UI_account_CLI_download'
+        });
     }
     render() {
         let isFetchingComponent = '';
@@ -36,7 +43,12 @@ class CLI extends Component {
                         </div>
                         <div className="col-md-4">
                             <div className="block-item__sub-title">Download</div>
-                            <a target="_blank" href={linkPlatform} className="block-item__download">
+                            <a
+                                target="_blank"
+                                href={linkPlatform}
+                                className="block-item__download"
+                                onClick={() => this.handleClickAnaliticsDownloadCLIAccount()}
+                            >
                                 <span className="block-item__download-title">{buttonPlatformContent}</span>
                                 <span className="block-item__download-note">Version {version} / {size} MB </span>
                                 <span className="block-item__download-arrow">

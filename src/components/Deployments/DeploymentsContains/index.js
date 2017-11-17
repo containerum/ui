@@ -6,7 +6,7 @@ import { timeago } from '../../../functions/timeago';
 
 import deploy from '../../../images/deploy.png';
 import NotFoundDeployments from '../NotFoundDeployments';
-import CustomerModal from '../../CustomerModal';
+import DeleteModal from '../../CustomerModal/DeleteModal';
 import Spinner from '../../Spinner';
 
 class DeploymentsContains extends Component {
@@ -136,7 +136,7 @@ class DeploymentsContains extends Component {
                                 </tbody>
                             </table>
 
-                            <CustomerModal
+                            <DeleteModal
                                 type="Deployment"
                                 name={this.state.depName}
                                 isOpened={this.state.isOpened}

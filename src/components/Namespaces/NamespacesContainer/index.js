@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router';
 import nslogo from '../../../images/deploym.png';
 import NavLink from "../../../containers/NavLink";
 import { deleteNamespace } from "../../../actions/NamespaceActions/deleteNamespaceAction";
-import CustomerModal from '../../CustomerModal';
+import DeleteModal from '../../CustomerModal/DeleteModal';
 import Spinner from '../../Spinner';
 
 import Notification from '../../../components/Notification';
@@ -72,6 +72,8 @@ class NamespacesContainer extends Component {
                     {
                         this.props.PostsNamespacesDataReducer.map((item) => {
                             const name = item.name;
+                            const volumeSize = item.volume_size ? item.volume_size : '-';
+                            const volumeUsed = item.volume_used ? item.volume_used: '-';
                             // const nameFirstChar = name.substring(0, 1).toUpperCase();
                             const id = `item_${name}`;
                             return (
@@ -118,10 +120,10 @@ class NamespacesContainer extends Component {
                                                 <div className="content-block__info-name inline">CPU ( Usage / Total ) :&nbsp;</div>
                                                 <div className="content-block__info-text inline">{item.cpu} / {item.cpu_limit} m</div>
                                             </div>
-                                            {/*<div className="content-block__info-item">*/}
-                                                {/*<div className="content-block__info-name inline">Volume ( Usage / Total ) :&nbsp;</div>*/}
-                                                {/*<div className="content-block__info-text inline">431 / 500 GB</div>*/}
-                                            {/*</div>*/}
+                                            <div className="content-block__info-item">
+                                                <div className="content-block__info-name inline">Volume ( Usage / Total ) :&nbsp;</div>
+                                                <div className="content-block__info-text inline">{volumeUsed} / {volumeSize} {volumeSize !== '-' ? 'GB': ''}</div>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -136,7 +138,7 @@ class NamespacesContainer extends Component {
                     </div>
                 </div>
 
-                <CustomerModal
+                <DeleteModal
                     type="Namespace"
                     name={this.state.NSName}
                     isOpened={this.state.isOpened}
