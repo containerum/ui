@@ -33,12 +33,14 @@ app.post('/omnidesk', (req, res) => {
     const formData = {
         'case[content]': req.body.case.content,
         'case[subject]': req.body.case.subject,
-        'case[user_email]': req.body.case.user_email,
-        'case[group_id]': req.body.case.group_id,
+        'case[user_email]': req.body.case.user_email
     };
+    if (req.body.case.group_id) {
+        formData['case[group_id]'] = req.body.case.group_id;
+    }
 
     const arrayOfPaths = [];
-    if (req.body.case.base64.length) {
+    if (req.body.case.base64 && req.body.case.base64.length) {
         req.body.case.base64.map((item, index) => {
             const dateId = +new Date;
             const imageBuffer = decodeBase64Image(item);
