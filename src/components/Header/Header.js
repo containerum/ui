@@ -11,8 +11,6 @@ import Spinner from '../Spinner';
 import NavLink from '../../containers/NavLink';
 import logo from '../../images/logo.png';
 
-import '../../styles/bootstrap.min.css';
-import '../../styles/bootstrap-grid.min.css';
 import '../../styles/style.css';
 import '../../styles/style-custom.css';
 import '../../styles/custom.css';

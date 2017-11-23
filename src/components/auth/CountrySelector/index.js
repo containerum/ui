@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import YandexGeocoder from '../../../functions/yandex-geocoder';
+import resolve from '../../../functions/yandex-geocoder';
 import { COUNTRIES } from '../../../constants/CountriesBilling';
 import '../../../styles/flags.css';
 
@@ -16,10 +16,9 @@ class CountrySelector extends Component {
         };
     }
     componentDidMount() {
-        const yandexGeocoder = new YandexGeocoder();
         navigator.geolocation.getCurrentPosition((position) => {
             if (position) {
-                yandexGeocoder.resolve(`${position.coords.longitude},${position.coords.latitude}`, (err, collection) => {
+                resolve(`${position.coords.longitude},${position.coords.latitude}`, (err, collection) => {
                     if (err) throw err;
                     const defaultCountry = COUNTRIES.find(item => {
                         return item.value === collection[0].country_code
