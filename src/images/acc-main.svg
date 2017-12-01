@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="880" height="529" viewBox="0 0 880 529">
+    <defs>
+        <rect id="b" width="870" height="519" rx="4"/>
+        <filter id="a" width="102%" height="103.3%" x="-.7%" y="-1.3%" filterUnits="objectBoundingBox">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+        </filter>
+        <rect id="c" width="63" height="63" rx="6"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(3 3)">
+            <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+            <use fill="#FFF" fill-opacity=".8" xlink:href="#b"/>
+        </g>
+        <g transform="translate(53 39)">
+            <text fill="#333" font-family="OpenSans-Light, Open Sans" font-size="20" font-weight="300">
+                <tspan x="0" y="26">Profile</tspan>
+            </text>
+            <rect width="328" height="30" fill="#F6F6F6" rx="2"/>
+            <use fill="#F6F6F6" transform="translate(0 55)" xlink:href="#c"/>
+            <rect width="269" height="20" x="104" y="85" fill="#F6F6F6" rx="2"/>
+            <rect width="269" height="20" x="413" y="85" fill="#F6F6F6" rx="2"/>
+            <rect width="328" height="30" y="193" fill="#F6F6F6" rx="2"/>
+            <rect width="214" height="20" x="2" y="258" fill="#F6F6F6" rx="2"/>
+            <rect width="214" height="20" x="238" y="258" fill="#F6F6F6" rx="2"/>
+            <rect width="214" height="20" x="474" y="258" fill="#F6F6F6" rx="2"/>
+        </g>
+    </g>
+</svg>

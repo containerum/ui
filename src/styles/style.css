@@ -9,6 +9,11 @@ body{
     margin-bottom: 45px;
 }
 
+a:focus, a:hover {
+    text-decoration: none;
+    color: #333333;
+}
+
 a{
     color:#333;
 }
@@ -288,6 +293,10 @@ h1{
 
 .account-menu{
     margin: -25px 0 0 0;
+}
+
+.account-menu.nav.nav-list {
+    display: block;
 }
 
 .account-menu .nav-root-item{
@@ -824,6 +833,7 @@ h1{
 
 .content-block-content.card-block{
     margin: 20px 0 0 0;
+    padding: 0;
 }
 
 .content-block-content.card-block.card-block2dollars {
@@ -1332,8 +1342,13 @@ select.form-control:not([size]):not([multiple]) {
     cursor: pointer;
 }
 
+.namespace-plan-block-placeholder {
+    margin-top: 23px;
+    margin-left: -15px;
+}
+
 .namespace-plan-block-container-left{
-    padding: 0 15px 0 30px;
+    padding: 0 15px 5px 25px;
     border-right: solid 1px #eaeaea;
     display: flex;
     flex-direction: column;

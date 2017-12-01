@@ -7,10 +7,12 @@ import s from '../../../images/s.png';
 
 class ServiceInfo extends Component {
     componentWillReceiveProps(nextProps) {
-        if (nextProps.DeleteServiceReducer.status === 202 && nextProps.DeleteServiceReducer.serviceName) {
-            if (typeof window !== 'undefined') {
-                browserHistory.push('/Namespaces/' + this.props.idName);
-            }
+        if (nextProps.DeleteServiceReducer.isFetching === false &&
+	        nextProps.DeleteServiceReducer.status === 202 &&
+	        nextProps.DeleteServiceReducer.serviceName &&
+	        nextProps.DeleteServiceReducer.serviceName !==
+	        this.props.DeleteServiceReducer.serviceName) {
+	        browserHistory.push('/Namespaces/' + this.props.idName);
         }
     }
     handleClickDeletingService(name) {
@@ -18,6 +20,7 @@ class ServiceInfo extends Component {
     }
     render() {
         // console.log(this.props.GetServiceReducer);
+	    let isFetchingComponent = '';
         const serviceName = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.name : '';
         const clusterIp = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.cluster_ip : '';
         const domainHosts = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.domain_hosts : [];
@@ -25,8 +28,8 @@ class ServiceInfo extends Component {
         const type = '' + isExternal === 'true' ? 'External' : 'Internal';
         const labels = Object.keys(this.props.GetServiceReducer.data).length ? this.props.GetServiceReducer.data.labels : [];
         const labelsArray = Object.keys(labels);
-        return (
-            <div className="content-block ">
+	    if (this.props.GetServiceReducer.isFetching === false) {
+		    isFetchingComponent =
                 <div className="content-block-container content-block_common-statistic container ">
                     <div className="content-block-header">
                         <div className="content-block-header-label">
@@ -63,30 +66,58 @@ class ServiceInfo extends Component {
                         <div className="content-block__info-item">
                             <div className="content-block__info-name">Domain:</div>
                             <div className="content-block__info-text">
-                                {
-                                    domainHosts.length ? domainHosts.map((item, index) => {
-                                        return (
+							    {
+								    domainHosts.length ? domainHosts.map((item, index) => {
+									    return (
                                             <span key={index}>{item}</span>
-                                        )
-                                    }) : '-'
-                                }
+									    )
+								    }) : '-'
+							    }
                             </div>
                         </div>
-                        <div className="clearfix mt-2"> </div>
-                        <div className="content-block__info-item i-1">
-                            <div className="content-block__info-name">Labels: </div>
+                        <div className="content-block__info-item">
+                            <div className="content-block__info-name">Labels:</div>
                             <div className="content-block__info-text">
-                                {labelsArray.map((item, index) => {
-                                    return (
-                                        labelsArray[labelsArray.length - 1] === item ?
+	                            {labelsArray.map((item, index) => {
+		                            return (
+			                            labelsArray[labelsArray.length - 1] === item ?
                                             <span key={index} className="padding">{item}: {labels[item]}</span> :
                                             <span key={index} className="padding">{item}: {labels[item]}, </span>
-                                    )
-                                })}
+		                            )
+	                            })}
                             </div>
                         </div>
+                        {/*<div className="clearfix mt-2"> </div>*/}
+                        {/*<div className="content-block__info-item i-1">*/}
+                            {/*<div className="content-block__info-name">Labels: </div>*/}
+                            {/*<div className="content-block__info-text">*/}
+							    {/*{labelsArray.map((item, index) => {*/}
+								    {/*return (*/}
+									    {/*labelsArray[labelsArray.length - 1] === item ?*/}
+                                            {/*<span key={index} className="padding">{item}: {labels[item]}</span> :*/}
+                                            {/*<span key={index} className="padding">{item}: {labels[item]}, </span>*/}
+								    {/*)*/}
+							    {/*})}*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
+	    } else {
+		    isFetchingComponent =
+                <div
+                    className="container"
+                    style={{
+					    padding: '0',
+					    marginTop: '17px',
+					    marginBottom: '30px',
+					    backgroundColor: 'transparent'
+				    }}>
+                    <img src={require('../../../images/ns-dep.svg')} style={{width: '100%'}}/>
+                </div>
+	    }
+        return (
+            <div className="content-block ">
+                { isFetchingComponent }
             </div>
         );
     }

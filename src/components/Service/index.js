@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { getService } from '../../actions/ServiceActions/getServiceAction';
 import { deleteService } from '../../actions/ServiceActions/deleteServiceAction';
 
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import HeaderDropDown from '../HeaderDropDown';
 import ServiceInfo from './ServiceInfo';
 import ServiceContains from './ServiceContains';
@@ -22,16 +22,6 @@ class Service extends Component {
         this.props.onDeleteService(this.props.params.idName, idService);
     }
     render() {
-        let isFetchingServiceInfo = '';
-        if (this.props.GetServiceReducer.isFetching === false) {
-            isFetchingServiceInfo =
-                <ServiceInfo
-                    idName={this.props.params.idName}
-                    onDeleteService={this.handleDeleteService.bind(this)}
-                />;
-        } else {
-            isFetchingServiceInfo = <Spinner />;
-        }
         return (
             <div>
                 <HeaderDropDown
@@ -43,7 +33,10 @@ class Service extends Component {
                     name={this.props.DeleteServiceReducer.serviceName}
                     errorMessage={this.props.DeleteServiceReducer.errorMessage}
                 />
-                { isFetchingServiceInfo }
+                <ServiceInfo
+                    idName={this.props.params.idName}
+                    onDeleteService={this.handleDeleteService.bind(this)}
+                />
                 <ServiceContains
                     idName={this.props.params.idName}
                     idService={this.props.params.idService}

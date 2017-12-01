@@ -121,37 +121,35 @@ ${file.name}`))}</div>`,
             'feedback-form__submit btn disabled' :
             'feedback-form__submit btn';
         const isActiveProfileState = !!this.props.SupportReducer.isFetching;
-        return (
-            <div>
-                {/*<BackPanel />*/}
-                <div className="content-block ">
-                    <div className="content-block-container container no-back">
-                        <div className="content-block-content ">
-                            <div className="feedback-form">
-                                <div className="feedback-form__title title">New support ticket</div>
-                                <div className="form-group">
-                                    <form onSubmit={this.handleOnSubmit.bind(this)}>
-                                        <div className="input-group select">
-                                            <select
-                                                name="category"
-                                                id="feedback-category"
-                                                className="custom-select"
-                                                ref="group"
-                                                required>
-                                                {Object.keys(groupData).map((item) => {
-                                                    if (!Number.isInteger(groupData[item])) {
-                                                        return (
-                                                            <option
-                                                                key={groupData[item].group.group_id}
-                                                                value={groupData[item].group.group_id}
-                                                            >{groupData[item].group.group_title}</option>
-                                                        );
-                                                    }
-                                                })}
-                                            </select>
-                                            <label htmlFor="feedback-category"> </label>
-                                        </div>
-                                        <div className="input-group">
+        let isFetchingGroup = '';
+        if (!this.props.GroupOmnideskReducer.isFetching) {
+	        isFetchingGroup =
+                <div className="content-block-content ">
+                <div className="feedback-form">
+                    <div className="feedback-form__title title">New support ticket</div>
+                    <div className="form-group">
+                        <form onSubmit={this.handleOnSubmit.bind(this)}>
+                            <div className="input-group select">
+                                <select
+                                    name="category"
+                                    id="feedback-category"
+                                    className="custom-select"
+                                    ref="group"
+                                    required>
+							        {Object.keys(groupData).map((item) => {
+								        if (!Number.isInteger(groupData[item])) {
+									        return (
+                                                <option
+                                                    key={groupData[item].group.group_id}
+                                                    value={groupData[item].group.group_id}
+                                                >{groupData[item].group.group_title}</option>
+									        );
+								        }
+							        })}
+                                </select>
+                                <label htmlFor="feedback-category"> </label>
+                            </div>
+                            <div className="input-group">
                                             <textarea
                                                 name="textArea"
                                                 className="form-control"
@@ -162,49 +160,65 @@ ${file.name}`))}</div>`,
                                                 rows="10"
                                                 required
                                             > </textarea>
-                                        </div>
-                                        <section style={{margin: '15px 0'}}>
-                                            {
-                                                this.state.files.length ?
-                                                    <aside>
-                                                        {
-                                                            this.state.files.map(f =>
-                                                                <div
-                                                                    key={f.name}
-                                                                    className='dropzone-item'
-                                                                ><span className='dropzone-item-span'>{f.name}</span>
-                                                                    <i onClick={image => this.handleDeleteImage(f.name)}
-                                                                       className="material-icons">delete</i>
-                                                                </div>
-                                                            )
-                                                        }
-                                                    </aside> :
-                                                    <ReactFileReader
-                                                        fileTypes={["image/x-png", "image/gif", "image/jpeg", "application/pdf", "text/plain"]}
-                                                        base64={true}
-                                                        multipleFiles={true}
-                                                        handleFiles={this.handleFiles.bind(this)}
-                                                    >
-                                                        <div className='dropzone'>
-                                                            <p className='dropzone-p'><i className="material-icons">cloud_upload</i>Click here to upload file (.png, .gif, .jpeg, .pdf or .txt)</p>
-                                                        </div>
-                                                    </ReactFileReader>
-                                            }
-                                        </section>
-                                        <div className="feedback-form__buttons btn-block">
-                                            <button
-                                                ref="button"
-                                                type="submit"
-                                                className={isActiveProfileButton}
-                                                disabled={isActiveProfileState}
-                                            >
-                                                { profileButtonText }
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
-                        </div>
+                            <section style={{margin: '15px 0'}}>
+						        {
+							        this.state.files.length ?
+                                        <aside>
+									        {
+										        this.state.files.map(f =>
+                                                    <div
+                                                        key={f.name}
+                                                        className='dropzone-item'
+                                                    ><span className='dropzone-item-span'>{f.name}</span>
+                                                        <i onClick={image => this.handleDeleteImage(f.name)}
+                                                           className="material-icons">delete</i>
+                                                    </div>
+										        )
+									        }
+                                        </aside> :
+                                        <ReactFileReader
+                                            fileTypes={["image/x-png", "image/gif", "image/jpeg", "application/pdf", "text/plain"]}
+                                            base64={true}
+                                            multipleFiles={true}
+                                            handleFiles={this.handleFiles.bind(this)}
+                                        >
+                                            <div className='dropzone'>
+                                                <p className='dropzone-p'><i className="material-icons">cloud_upload</i>Click here to upload file (.png, .gif, .jpeg, .pdf or .txt)</p>
+                                            </div>
+                                        </ReactFileReader>
+						        }
+                            </section>
+                            <div className="feedback-form__buttons btn-block">
+                                <button
+                                    ref="button"
+                                    type="submit"
+                                    className={isActiveProfileButton}
+                                    disabled={isActiveProfileState}
+                                >
+							        { profileButtonText }
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        } else {
+	        isFetchingGroup =
+                <div style={{
+	                width: '665px',
+                    padding: '30px',
+                    margin: '0 auto'
+                }}>
+                    <img src={require('../../images/support.svg')} />
+                </div>
+        }
+        return (
+            <div>
+                {/*<BackPanel />*/}
+                <div className="content-block ">
+                    <div className="content-block-container container no-back">
+                        { isFetchingGroup }
                     </div>
                 </div>
             </div>

@@ -3,29 +3,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getVolumes } from '../../actions/VolumesActions';
+import { getProfileBalance } from '../../actions/BillingActions/getProfileBalanceAction';
 import VolumesContainer from './VolumesContainer';
-import Spinner from '../Spinner';
 
 class Volumes extends Component {
     componentDidMount() {
-        // if (!this.props.VolumesReducer.data.length) {
-            this.props.onGetVolumes();
-        // }
+	    this.props.onGetVolumes();
+	    this.props.onGetProfileBalance();
     }
     render() {
         // console.log(this.props.VolumesReducer);
-        let isFetchingComponent = '';
-        if (this.props.VolumesReducer.isFetching === false) {
-            isFetchingComponent = <VolumesContainer/>;
-        } else {
-            isFetchingComponent = <Spinner />;
-        }
-
         return (
             <div>
                 <div className="content-block">
                     <div className="container no-back">
-                        { isFetchingComponent }
+                        <VolumesContainer/>
                     </div>
                 </div>
             </div>
@@ -35,6 +27,7 @@ class Volumes extends Component {
 
 Volumes.propTypes = {
     errorMessage: PropTypes.string,
+	onGetProfileBalance: PropTypes.func,
     onGetVolumes: PropTypes.func.isRequired,
     VolumesReducer: PropTypes.object
 };
@@ -47,6 +40,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+	    onGetProfileBalance: () => {
+		    dispatch(getProfileBalance());
+	    },
         onGetVolumes: () => {
             dispatch(getVolumes());
         }

@@ -59,7 +59,7 @@ class Login extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if (typeof window !== 'undefined') {
-            console.log(nextProps.UserHashConfirmReducer);
+            // console.log(nextProps.UserHashConfirmReducer);
             if (nextProps.UserHashConfirmReducer.data === 200) {
                 this.setState({
                     ...this.state,

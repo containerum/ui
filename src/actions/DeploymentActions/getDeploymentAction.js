@@ -44,9 +44,7 @@ export function getDeployment(namespaceName, deploymentName) {
                         browserHistory.push('/Login');
                     }
                 } else if (response.status === 400) {
-                    if (typeof window !== 'undefined') {
-                        browserHistory.push('/Namespaces');
-                    }
+	                browserHistory.push('/Namespaces');
                 } else {
                     dispatch(failGetDeployment(response.data.message));
                 }

@@ -63,6 +63,9 @@ const getPlugins = () => {
       __CLIENT__: true,
       __SERVER__: false,
       __DEV__: isDev,
+      'process.env':{
+          REACT_APP_API: `"${process.env.REACT_APP_API}"`,
+      },
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     webpackIsomorphicToolsPlugin,

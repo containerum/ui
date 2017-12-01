@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Tooltip from 'rc-tooltip';
 import ReactGA from 'react-ga';
 
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import Notification from '../Notification';
 import ResizeModal from '../CustomerModal/ResizeModal';
 import { getNSTariffs } from '../../actions/NamespacesActions/getNSTariffsAction';
@@ -20,7 +20,7 @@ class UpdateNamespace extends Component {
             NSTariffName: '',
             NSTariffCpu: '',
             NSTariffMemory: '',
-            NSTariffTraffic: '',
+            NSTariffVolume: '',
             NSTariffPrice: '',
             NSTariffPricePerDay: ''
         };
@@ -43,14 +43,14 @@ class UpdateNamespace extends Component {
             action: 'UI_ns_resize'
         });
     }
-    handleClickTriff(label, cpu, memory, traffic, price, pricePerDay) {
+    handleClickTriff(label, cpu, memory, volume, price, pricePerDay) {
         this.setState({
             ...this.state,
             isOpened: true,
             NSTariffName: label,
             NSTariffCpu: cpu,
             NSTariffMemory: memory,
-            NSTariffTraffic: traffic,
+            NSTariffVolume: volume,
             NSTariffPrice: price,
             NSTariffPricePerDay: pricePerDay
         });
@@ -61,17 +61,6 @@ class UpdateNamespace extends Component {
         if (this.props.NSTariffsReducer.isFetching === false) {
             const active = this.props.GetNamespaceReducer.data.tariff;
             const arrayTariff = this.props.NSTariffsReducer.data;
-            // let notActiveItems = [];
-            // let ActiveItems = [];
-            // arrayTariff.map((item, index) => {
-            //     if (arrayTariff[index].label === active) {
-            //         notActiveItems = arrayTariff.slice(0, index + 1);
-            //         ActiveItems = arrayTariff.slice(index + 1);
-            //     } else {
-            //         notActiveItems = arrayTariff.slice(0, 1);
-            //         ActiveItems = arrayTariff.slice(1);
-            //     }
-            // });
             isFetchingNSTariffs =
                 <div className="content-block">
                     <div className="content-block-container container no-back mt-0 no-padding">
@@ -86,13 +75,11 @@ class UpdateNamespace extends Component {
                                     arrayTariff.map((item, index) => {
                                         const cpu = item.cpu_limit / 1000;
                                         const memory = item.memory_limit / 1024;
-                                        const traffic = item.traffic ? item.traffic / 1024 : item.traffic;
-                                        const price = item.price === 0 && item.label === 'trial' ? 'trial' : `$${item.price}`;
+	                                    const volume = item.volume_size ? Math.ceil(item.volume_size) : item.volume_size;
+                                        const price = `$${item.price}`;
                                         const label = item.label;
                                         const isActiveTariff = label === active;
-                                        const isFreeNotActive = active !== 'trial';
-                                        const pricePerDay = item.price === 0 && item.label === 'trial' ? '30 days left' :
-                                            `$${(item.price / 30).toFixed(2)} daily`;
+                                        const pricePerDay = `$${(item.price / 30).toFixed(2)} daily`;
                                         return (
                                             <div className="col-md-3" key={index}>
                                                 <Tooltip
@@ -104,30 +91,34 @@ class UpdateNamespace extends Component {
                                                 <div
                                                     id={label}
                                                     className={
-                                                        isActiveTariff || isFreeNotActive && item.label === 'trial' ?
+                                                        isActiveTariff ?
                                                             "namespace-plan-block-container hover-action-new disabled" :
                                                         label !== this.state.NSTariffName ?
                                                             "namespace-plan-block-container hover-action-new" :
                                                             "namespace-plan-block-container hover-action-new selected"
                                                     }
                                                     onClick={() => {
-                                                        if (!isActiveTariff && item.label !== 'trial') {
-                                                            this.handleClickTriff(label, cpu, memory, traffic, price, pricePerDay)
+                                                        if (!isActiveTariff) {
+                                                            this.handleClickTriff(label, cpu, memory, volume, price, pricePerDay)
                                                         }
                                                     }}
                                                 >
                                                     <div className="row">
-                                                        <div className="col-md-6 namespace-plan-block-container-left">
+                                                        <div className={price === '$2' ?
+		                                                    "col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars" :
+		                                                    "col-md-6 namespace-plan-block-container-left"}>
                                                             <div className="namespace-plan-block-price">{isActiveTariff ? 'Active' :
-                                                                price !== 'trial' ? <div>{price}<span className="namespace-plan-span-price">/mo</span></div> : ''}
+                                                                <div>{price}<span className="namespace-plan-span-price">/mo</span></div>}
                                                             </div>
                                                             {
-                                                                isActiveTariff || item.label === 'trial' ? '' :
+                                                                isActiveTariff ? '' :
                                                                     <div className="namespace-plan-block-month">{pricePerDay}</div>
                                                             }
                                                         </div>
                                                         <div className="col-md-6 namespace-plan-block-container-right">
-                                                            <div className="content-block-content card-block">
+                                                            <div className={price === '$2' ?
+                                                                "content-block-content card-block card-block2dollars" :
+                                                                "content-block-content card-block"}>
                                                                 <div className="content-block__info-item">
                                                                     <div className="content-block__info-name inline">RAM : </div>
                                                                     <div className="content-block__info-text inline">{memory} GB</div>
@@ -136,10 +127,13 @@ class UpdateNamespace extends Component {
                                                                     <div className="content-block__info-name inline">CPU : </div>
                                                                     <div className="content-block__info-text inline">{cpu}</div>
                                                                 </div>
-                                                                <div className="content-block__info-item">
-                                                                    <div className="content-block__info-name inline">Traffic : </div>
-                                                                    <div className="content-block__info-text inline">{traffic} TB</div>
-                                                                </div>
+	                                                            {
+		                                                            price !== '$2' ?
+                                                                        <div className="content-block__info-item">
+                                                                            <div className="content-block__info-name inline">Volume : </div>
+                                                                            <div className="content-block__info-text inline">{volume} GB</div>
+                                                                        </div> : ''
+	                                                            }
                                                             </div>
                                                         </div>
                                                     </div>
@@ -154,11 +148,50 @@ class UpdateNamespace extends Component {
                     </div>
                 </div>;
         } else {
-            isFetchingNSTariffs = <Spinner />;
+            isFetchingNSTariffs =
+                <div className="content-block">
+                    <div className="content-block-container container no-back mt-0 no-padding">
+                        <div className="content-block-content mt-0">
+                            <div className="namespace-plan mt-0">
+                                <div className="namespace-plan-title">choose a volume size</div>
+                            </div>
+                            <div className="row">
+					            {
+						            new Array(8).fill().map((item, index) => {
+							            return (
+                                            <div key={index} className="col-md-3">
+                                                <div className="namespace-plan-block-placeholder">
+                                                    <img src={require('../../images/add-vol-block.svg')} style={{width: '104%'}}/>
+                                                </div>
+                                            </div>
+							            )
+						            })
+					            }
+                            </div>
+                        </div>
+                    </div>
+                </div>;
         }
-        let isFetchingCreateNS = '';
         if (this.props.UpdateNamespaceReducer.isFetching) {
-            isFetchingCreateNS = <Spinner />;
+	        isFetchingNSTariffs =
+                <div className="content-block">
+                    <div className="container no-back">
+                        <div className="row double">
+				            {
+					            new Array(3).fill().map((item, index) => {
+						            return (
+                                        <div key={index} className="col-md-4 align-middle">
+                                            <img
+                                                className="content-block-container-img"
+                                                src={require('../../images/ns-1.svg')}
+                                                alt="ns"/>
+                                        </div>
+						            )
+					            })
+				            }
+                        </div>
+                    </div>
+                </div>;
         }
         return (
             <div>
@@ -174,7 +207,7 @@ class UpdateNamespace extends Component {
                     data={{
                         cpu: this.state.NSTariffCpu,
                         memory: this.state.NSTariffMemory,
-                        traffic: this.state.NSTariffTraffic,
+                        volume: this.state.NSTariffVolume,
                         price: this.state.NSTariffPrice,
                         pricePerDay: this.state.NSTariffPricePerDay,
                         idName: this.props.params.idName,
@@ -183,7 +216,6 @@ class UpdateNamespace extends Component {
                     onHandleCreate={this.props.onUpdateNamespace}
                 />
                 { isFetchingNSTariffs }
-                { isFetchingCreateNS }
             </div>
         );
     }

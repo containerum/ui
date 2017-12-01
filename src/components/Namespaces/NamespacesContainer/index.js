@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
+import ns from '../../../images/ns-1.svg';
 
 import nslogo from '../../../images/deploym.png';
 import NavLink from "../../../containers/NavLink";
 import { deleteNamespace } from "../../../actions/NamespaceActions/deleteNamespaceAction";
 import DeleteModal from '../../CustomerModal/DeleteModal';
-import Spinner from '../../Spinner';
+// import Spinner from '../../Spinner';
 
 import Notification from '../../../components/Notification';
 
@@ -17,8 +18,23 @@ class NamespacesContainer extends Component {
         super();
         this.state = {
             isOpened: false,
-            NSName: ''
+            NSName: '',
+	        nss: [],
+            isMount: false
         }
+    }
+	componentWillUpdate(prevProps) {
+		if (this.props.NamespacesReducer.data.length !==
+			prevProps.NamespacesReducer.data.length &&
+			!this.state.isMount) {
+			this.setState({
+				...this.state,
+				isMount: true,
+				nss: prevProps.NamespacesReducer.data.length ?
+					prevProps.NamespacesReducer.data :
+					this.props.NamespacesReducer.data
+			});
+		}
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.DeleteNamespaceReducer) {
@@ -29,19 +45,21 @@ class NamespacesContainer extends Component {
             });
         }
         if (nextProps.DeleteNamespaceReducer.isFetching === false &&
-            nextProps.DeleteNamespaceReducer.status === 202 &&
-            nextProps.DeleteNamespaceReducer.idName) {
-            const id = `item_${nextProps.DeleteNamespaceReducer.idName}`;
-            if (typeof window !== 'undefined') {
-                const el = document.getElementById(id);
-                el ? el.remove() : el;
-            }
+	        nextProps.DeleteNamespaceReducer.status === 202 &&
+	        nextProps.DeleteNamespaceReducer.idName &&
+	        nextProps.DeleteNamespaceReducer.idName !==
+	        this.props.DeleteNamespaceReducer.idName) {
+            // const id = `item_${nextProps.DeleteNamespaceReducer.idName}`;
+            this.setState({
+                ...this.state,
+	            nss: this.state.nss.filter(item => {
+	                return item.name !== nextProps.DeleteNamespaceReducer.idName
+                })
+            })
         }
     }
     handleClickTR(href) {
-        if (typeof window !== 'undefined') {
-            browserHistory.push('/Namespaces/' + href);
-        }
+	    browserHistory.push('/Namespaces/' + href);
     }
     handleClose(e) {
         e.stopPropagation();
@@ -52,31 +70,22 @@ class NamespacesContainer extends Component {
             NSName: idName,
             isOpened: true
         });
-        // this.props.onDeleteNamespace(idName);
-        // console.log(idName);
     }
     render() {
-        let isFetchingDeleteNS = '';
-        if (this.props.DeleteNamespaceReducer.isFetching) {
-            isFetchingDeleteNS = <Spinner />;
-        }
-        return (
-            <div>
-                { isFetchingDeleteNS }
-                 <Notification
-                     status={this.props.DeleteNamespaceReducer.status}
-                     name={this.props.DeleteNamespaceReducer.idName}
-                     errorMessage={this.props.DeleteNamespaceReducer.errorMessage}
-                 />
+        // console.log(this.state.nss);
+        let isFetchingComponent = '';
+	    if (!this.props.NamespacesReducer.isFetching &&
+		    !this.props.DeleteNamespaceReducer.isFetching) {
+		    isFetchingComponent =
                 <div className="row double">
-                    {
-                        this.props.PostsNamespacesDataReducer.map((item) => {
-                            const name = item.name;
-                            const volumeSize = item.volume_size ? item.volume_size : '-';
-                            const volumeUsed = item.volume_used ? item.volume_used: '-';
-                            // const nameFirstChar = name.substring(0, 1).toUpperCase();
-                            const id = `item_${name}`;
-                            return (
+				    {
+					    this.state.nss.map((item) => {
+						    const name = item.name;
+						    const volumeSize = item.volume_size ? item.volume_size : '-';
+						    const volumeUsed = item.volume_used ? item.volume_used: '-';
+						    // const nameFirstChar = name.substring(0, 1).toUpperCase();
+						    const id = `item_${name}`;
+						    return (
                                 <div className="col-md-4" id={id} key={id}>
                                     <div
                                         className="content-block-container card-container hover-action"
@@ -128,16 +137,37 @@ class NamespacesContainer extends Component {
 
                                     </div>
                                 </div>
-                            );
-                        })
-                    }
+						    );
+					    })
+				    }
                     <div className="col-md-4 align-middle">
                         <NavLink to="/CreateNamespace" className="add-new-block content-block-content card-container hover-action ">
                             <div className="action"><i>+</i> Add a namespace</div>
                         </NavLink>
                     </div>
+                </div>;
+	    } else {
+		    isFetchingComponent =
+                <div className="row double">
+                    {
+	                    new Array(3).fill().map((item, index) => {
+		                    return (
+                                <div key={index} className="col-md-4 align-middle">
+                                    <img className="content-block-container-img" src={ns} alt="ns"/>
+                                </div>
+	                        )
+                        })
+                    }
                 </div>
-
+	    }
+        return (
+            <div>
+                 <Notification
+                     status={this.props.DeleteNamespaceReducer.status}
+                     name={this.props.DeleteNamespaceReducer.idName}
+                     errorMessage={this.props.DeleteNamespaceReducer.errorMessage}
+                 />
+                { isFetchingComponent }
                 <DeleteModal
                     type="Namespace"
                     name={this.state.NSName}
@@ -150,12 +180,14 @@ class NamespacesContainer extends Component {
 }
 
 NamespacesContainer.propTypes = {
-    PostsNamespacesDataReducer: PropTypes.array
+    PostsNamespacesDataReducer: PropTypes.array,
+	NamespacesReducer: PropTypes.object
 };
 
 function mapStateToProps(state) {
     return {
-        DeleteNamespaceReducer: state.DeleteNamespaceReducer
+        DeleteNamespaceReducer: state.DeleteNamespaceReducer,
+	    NamespacesReducer: state.NamespacesReducer
     };
 }
 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import DeleteModal from '../../CustomerModal/DeleteModal';
 
 import { deleteProfile } from '../../../actions/ProfileActions/deleteProfileAction';
-import Spinner from '../../Spinner';
+// import Spinner from '../../Spinner';
 
 class DeleteAccount extends Component {
     constructor() {
@@ -30,13 +30,8 @@ class DeleteAccount extends Component {
         });
     }
     render() {
-        let isFetchingDeleteAccount = '';
-        if (this.props.DeleteProfileReducer.isFetching) {
-            isFetchingDeleteAccount = <Spinner />;
-        }
         return (
             <div>
-                { isFetchingDeleteAccount }
                 <div className="block-item" id="delete-account">
                     <div className="block-item__title">Delete Account</div>
                     <div className="light-text">This action will delete your Apps and Data</div>
@@ -62,6 +57,7 @@ class DeleteAccount extends Component {
 DeleteAccount.propTypes = {
     onDeleteProfile: PropTypes.func.isRequired,
     GetProfileReducer: PropTypes.object,
+    DeleteProfileReducer: PropTypes.object,
     email: PropTypes.string
 };
 

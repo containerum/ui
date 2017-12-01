@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Tooltip from 'rc-tooltip';
 
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import Notification from '../Notification';
 import ResizeModal from '../CustomerModal/ResizeModal';
 import { getVolumesTariffs } from '../../actions/VolumesActions/getVolumesTariffsAction';
@@ -139,11 +139,50 @@ class UpdateVolume extends Component {
                     </div>
                 </div>;
         } else {
-            isFetchingVolumeTariffs = <Spinner />;
+            isFetchingVolumeTariffs =
+                <div className="content-block">
+                    <div className="content-block-container container no-back mt-0 no-padding">
+                        <div className="content-block-content mt-0">
+                            <div className="namespace-plan mt-0">
+                                <div className="namespace-plan-title">choose a volume size</div>
+                            </div>
+                            <div className="row">
+					            {
+						            new Array(8).fill().map((item, index) => {
+							            return (
+                                            <div key={index} className="col-md-3">
+                                                <div className="namespace-plan-block-placeholder">
+                                                    <img src={require('../../images/add-vol-block.svg')} style={{width: '104%'}}/>
+                                                </div>
+                                            </div>
+							            )
+						            })
+					            }
+                            </div>
+                        </div>
+                    </div>
+                </div>;
         }
-        let isFetchingCreateVolume = '';
         if (this.props.UpdateVolumeReducer.isFetching) {
-            isFetchingCreateVolume = <Spinner />;
+	        isFetchingVolumeTariffs =
+                <div className="content-block">
+                    <div className="container no-back">
+                        <div className="row double">
+					        {
+						        new Array(3).fill().map((item, index) => {
+							        return (
+                                        <div key={index} className="col-md-4 align-middle">
+                                            <img
+                                                className="content-block-container-img"
+                                                src={require('../../images/ns-1.svg')}
+                                                alt="ns"/>
+                                        </div>
+							        )
+						        })
+					        }
+                        </div>
+                    </div>
+                </div>;
         }
         return (
             <div>
@@ -166,7 +205,6 @@ class UpdateVolume extends Component {
                     onHandleCreate={this.props.onUpdateVolume}
                 />
                 { isFetchingVolumeTariffs }
-                { isFetchingCreateVolume }
             </div>
         );
     }

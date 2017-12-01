@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import { getDeployment } from '../../actions/DeploymentActions/getDeploymentAction';
 import { deleteDeployment } from '../../actions/DeploymentActions/deleteDeploymentAction';
 
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import HeaderDropDown from '../HeaderDropDown';
 import DeploymentInfo from './DeploymentInfo';
 import DeploymentContains from './DeploymentContains';
-import Notification from '../Notification';
+// import Notification from '../Notification';
 
 class Deployment extends Component {
     componentDidMount() {
@@ -22,28 +22,16 @@ class Deployment extends Component {
         this.props.onDeleteDeployment(this.props.params.idName, idDep);
     }
     render() {
-        let isFetchingDeploymentInfo = '';
-        if (this.props.GetDeploymentReducer.isFetching === false) {
-            isFetchingDeploymentInfo =
-                <DeploymentInfo
-                    idName={this.props.params.idName}
-                    onDeleteDeployment={(idDep) => this.handleDeleteDeployment(idDep)}
-                />;
-        } else {
-            isFetchingDeploymentInfo = <Spinner />;
-        }
         return (
             <div>
                 <HeaderDropDown
                     idName={this.props.params.idName}
                     idDep={this.props.params.idDep}
                 />
-                <Notification
-                    status={this.props.DeleteDeploymentReducer.status}
-                    name={this.props.DeleteDeploymentReducer.deploymentName}
-                    errorMessage={this.props.DeleteDeploymentReducer.errorMessage}
+                <DeploymentInfo
+                    idName={this.props.params.idName}
+                    onDeleteDeployment={(idDep) => this.handleDeleteDeployment(idDep)}
                 />
-                { isFetchingDeploymentInfo }
                 <DeploymentContains
                     children={this.props.children}
                 />

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import Notification from '../Notification';
 import CreateModal from '../CustomerModal/CreateModal';
 import { getVolumesTariffs } from '../../actions/VolumesActions/getVolumesTariffsAction';
@@ -50,33 +50,29 @@ class CreateVolume extends Component {
         // console.log(this.props.VolumesTariffsReducer);
         // console.log(this.props.CreateVolumeReducer);
         let isFetchingVolumesTariffs = '';
-        if (this.props.VolumesTariffsReducer.isFetching === false) {
+        if (!this.props.VolumesTariffsReducer.isFetching) {
             isFetchingVolumesTariffs =
                 <div className="content-block">
                     <div className="content-block-container container no-back mt-0 no-padding">
                         <div className="content-block-content mt-0">
-
                             <div className="namespace-plan mt-0">
                                 <div className="namespace-plan-title">choose a volume size</div>
-                                {/*<div className="namespace-plan-content">Assign this Volume an identifying name.*/}
-                                    {/*Volume name can only contain alphanumeric characters and dashes.</div>*/}
                             </div>
-
                             <div className="row">
-                                {
-                                    this.props.VolumesTariffsReducer.data.map((item, index) => {
-                                        const storageLimit = item.storage_limit;
-                                        const price = item.price === 0 && item.label === "free" ? 'free' : `$${item.price}`;
-                                        const label = item.label;
-                                        const pricePerDay = item.price === 0 ? '30 days left' :
-                                            `$${(item.price / 30).toFixed(2)} daily`;
-                                        return (
+		                        {
+			                        this.props.VolumesTariffsReducer.data.map((item, index) => {
+				                        const storageLimit = item.storage_limit;
+				                        const price = item.price === 0 && item.label === "free" ? 'free' : `$${item.price}`;
+				                        const label = item.label;
+				                        const pricePerDay = item.price === 0 ? '30 days left' :
+					                        `$${(item.price / 30).toFixed(2)} daily`;
+				                        return (
                                             <div className="col-md-3" key={index}>
                                                 <div
                                                     id={label}
                                                     className={label === this.state.VolumesTariffName ?
-                                                        "namespace-plan-block-container hover-action-new selected" :
-                                                        "namespace-plan-block-container hover-action-new"}
+								                        "namespace-plan-block-container hover-action-new selected" :
+								                        "namespace-plan-block-container hover-action-new"}
                                                     onClick={labelName => this.handleClickTriff(label, price, storageLimit, pricePerDay)}
                                                 >
                                                     <div className="row">
@@ -90,20 +86,59 @@ class CreateVolume extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                        )
-                                    })
-                                }
+				                        )
+			                        })
+		                        }
                             </div>
                         </div>
                     </div>
                 </div>;
         } else {
-            isFetchingVolumesTariffs = <Spinner />;
+            isFetchingVolumesTariffs =
+                <div className="content-block">
+                    <div className="content-block-container container no-back mt-0 no-padding">
+                        <div className="content-block-content mt-0">
+                            <div className="namespace-plan mt-0">
+                                <div className="namespace-plan-title">choose a volume size</div>
+                            </div>
+                            <div className="row">
+		                        {
+			                        new Array(8).fill().map((item, index) => {
+				                        return (
+                                            <div key={index} className="col-md-3">
+                                                <div className="namespace-plan-block-placeholder">
+                                                    <img src={require('../../images/add-vol-block.svg')} style={{width: '104%'}}/>
+                                                </div>
+                                            </div>
+				                        )
+			                        })
+		                        }
+                            </div>
+                        </div>
+                    </div>
+                </div>;
         }
-        let isFetchingCreateVolumes = '';
-        if (this.props.CreateVolumeReducer.isFetching) {
-            isFetchingCreateVolumes = <Spinner />;
-        }
+	    if (this.props.CreateVolumeReducer.isFetching) {
+		    isFetchingVolumesTariffs =
+                <div className="content-block">
+                    <div className="container no-back">
+                        <div className="row double">
+						    {
+							    new Array(3).fill().map((item, index) => {
+								    return (
+                                        <div key={index} className="col-md-4 align-middle">
+                                            <img
+                                                className="content-block-container-img"
+                                                src={require('../../images/ns-1.svg')}
+                                                alt="ns"/>
+                                        </div>
+								    )
+							    })
+						    }
+                        </div>
+                    </div>
+                </div>;
+	    }
         return (
             <div>
                 <Notification
@@ -123,7 +158,6 @@ class CreateVolume extends Component {
                     onHandleCreate={this.props.onCreateVolume}
                 />
                 { isFetchingVolumesTariffs }
-                { isFetchingCreateVolumes }
             </div>
         );
     }

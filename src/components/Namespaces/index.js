@@ -3,31 +3,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getNamespaces } from '../../actions/NamespacesActions';
+import { getProfileBalance } from '../../actions/BillingActions/getProfileBalanceAction';
 import NamespacesRoute from './NamespacesRoute';
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 
 class Namespaces extends Component {
     componentDidMount() {
-        // if (!this.props.NamespacesReducer.data.length) {
-            this.props.onGetNamespaces();
-        // }
+        this.props.onGetNamespaces();
+	    this.props.onGetProfileBalance();
     }
     render() {
-        let isFetchingComponent = '';
-        if (this.props.NamespacesReducer.isFetching === false) {
-            isFetchingComponent =
+        return (
+            <div>
                 <NamespacesRoute
                     namespacesDataReducer={this.props.NamespacesReducer.data}
                     namespacesErrorMessageReducer={this.props.NamespacesReducer.errorMessage}
                     namespacesStatusErrorReducer={this.props.NamespacesReducer.statusError}
-                />;
-        } else {
-            isFetchingComponent = <Spinner />;
-        }
-
-        return (
-            <div>
-                { isFetchingComponent }
+                />
             </div>
         );
     }
@@ -35,6 +27,7 @@ class Namespaces extends Component {
 
 Namespaces.propTypes = {
     errorMessage: PropTypes.string,
+	onGetProfileBalance: PropTypes.func,
     onGetNamespaces: PropTypes.func.isRequired,
     NamespacesReducer: PropTypes.object
 };
@@ -47,6 +40,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+	    onGetProfileBalance: () => {
+		    dispatch(getProfileBalance());
+	    },
         onGetNamespaces: () => {
             dispatch(getNamespaces());
         }

@@ -10,7 +10,7 @@ class NotFoundPods extends Component {
                             <table className="content-block__table table" width="1170">
                                 <thead>
                                 <tr>
-                                    <td className="td-1">
+                                    <td className="td-1" style={{paddingLeft: '60px'}}>
                                         At the moment the Pod is rebooting
                                     </td>
                                 </tr>
