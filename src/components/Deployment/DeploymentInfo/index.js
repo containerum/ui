@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router';
 
 import DeleteModal from '../../CustomerModal/DeleteModal';
 import r from '../../../images/r.png';
+import Notification from '../../Notification';
 
 class DeploymentInfo extends Component {
     constructor() {
@@ -20,10 +21,11 @@ class DeploymentInfo extends Component {
                 isOpened: false
             });
         }
-        if (nextProps.DeleteDeploymentReducer.status === 202 && nextProps.DeleteDeploymentReducer.deploymentName) {
-            if (typeof window !== 'undefined') {
-                browserHistory.push('/Namespaces/' + this.props.idName);
-            }
+        if (nextProps.DeleteDeploymentReducer.status === 202 &&
+	        nextProps.DeleteDeploymentReducer.deploymentName !==
+            this.props.DeleteDeploymentReducer.deploymentName &&
+	        !nextProps.DeleteDeploymentReducer.isFetching) {
+	        browserHistory.push('/Namespaces/' + this.props.idName);
         }
     }
     handleClickDeletingDeployment() {
@@ -36,13 +38,14 @@ class DeploymentInfo extends Component {
     //     this.props.onDeleteDeployment(idDep);
     // }
     render() {
-        // console.log(this.props.GetDeploymentReducer);
-        const depName = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.name : '';
-        const cpu = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.cpu : '';
-        const ram = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.ram : '';
-        const status = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.status : {};
-        return (
-            <div className="content-block ">
+	    let isFetchingComponent = '';
+	    const depName = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.name : '';
+	    const cpu = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.cpu : '';
+	    const ram = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.ram : '';
+	    const status = Object.keys(this.props.GetDeploymentReducer.data).length ? this.props.GetDeploymentReducer.data.status : {};
+	    if (!this.props.GetDeploymentReducer.isFetching &&
+		    !this.props.DeleteDeploymentReducer.isFetching) {
+		    isFetchingComponent =
                 <div className="content-block-container content-block_common-statistic container ">
                     <div className="content-block-header">
                         <div className="content-block-header-label">
@@ -81,13 +84,35 @@ class DeploymentInfo extends Component {
                             <div className="content-block__info-text">{status.available} / {status.total}</div>
                         </div>
                     </div>
-                    <DeleteModal
-                        type="Deployment"
-                        name={depName}
-                        isOpened={this.state.isOpened}
-                        onHandleDelete={this.props.onDeleteDeployment}
-                    />
                 </div>
+        } else {
+		    isFetchingComponent =
+                <div
+                    className="container"
+                    style={{
+					    padding: '0',
+					    marginTop: '17px',
+					    marginBottom: '30px',
+					    backgroundColor: 'transparent'
+				    }}>
+                    <img src={require('../../../images/ns-dep.svg')} style={{width: '100%'}}/>
+                </div>
+        }
+        // console.log(this.props.GetDeploymentReducer);
+        return (
+            <div className="content-block">
+                <Notification
+                    status={this.props.DeleteDeploymentReducer.status}
+                    name={this.props.DeleteDeploymentReducer.deploymentName}
+                    errorMessage={this.props.DeleteDeploymentReducer.errorMessage}
+                />
+                { isFetchingComponent }
+                <DeleteModal
+                    type="Deployment"
+                    name={depName}
+                    isOpened={this.state.isOpened}
+                    onHandleDelete={this.props.onDeleteDeployment}
+                />
             </div>
         );
     }

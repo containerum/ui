@@ -7,16 +7,32 @@ import NavLink from "../../../containers/NavLink";
 import { deleteVolume } from "../../../actions/VolumeActions/deleteVolumeAction";
 import Notification from '../../Notification';
 import DeleteModal from '../../CustomerModal/DeleteModal';
-import Spinner from '../../Spinner';
+// import Spinner from '../../Spinner';
+import ns from '../../../images/ns-1.svg';
 
 class VolumesContainer extends Component {
     constructor() {
         super();
         this.state = {
             isOpened: false,
-            VolumeName: ''
+            VolumeName: '',
+	        vol: [],
+	        isMount: false
         }
     }
+	componentWillUpdate(prevProps) {
+		if (this.props.VolumesReducer.data.length !==
+			prevProps.VolumesReducer.data.length &&
+			!this.state.isMount) {
+			this.setState({
+				...this.state,
+				isMount: true,
+				vol: prevProps.VolumesReducer.data.length ?
+					prevProps.VolumesReducer.data :
+					this.props.VolumesReducer.data
+			});
+		}
+	}
     componentWillReceiveProps(nextProps) {
         // console.log('DeleteVolumeReducer', nextProps);
         if (this.props.DeleteVolumeReducer) {
@@ -28,10 +44,16 @@ class VolumesContainer extends Component {
         }
         if (nextProps.DeleteVolumeReducer.isFetching === false &&
             nextProps.DeleteVolumeReducer.status === 202 &&
-            nextProps.DeleteVolumeReducer.idVolume) {
-            const id = `item_${nextProps.DeleteVolumeReducer.idVolume}`;
-            const el = document.getElementById(id);
-            el ? el.remove() : el;
+            nextProps.DeleteVolumeReducer.idVolume &&
+	        nextProps.DeleteVolumeReducer.idVolume !==
+	        this.props.DeleteVolumeReducer.idVolume) {
+            // const id = `item_${nextProps.DeleteVolumeReducer.idVolume}`;
+	        this.setState({
+		        ...this.state,
+		        vol: this.state.vol.filter(item => {
+			        return item.name !== nextProps.DeleteVolumeReducer.idVolume
+		        })
+	        })
         }
     }
     handleClose(e) {
@@ -45,28 +67,20 @@ class VolumesContainer extends Component {
         });
     }
     render() {
-        let isFetchingDeleteVolume = '';
-        if (this.props.DeleteVolumeReducer.isFetching) {
-            isFetchingDeleteVolume = <Spinner />;
-        }
-        return (
-            <div>
-                { isFetchingDeleteVolume }
-                 <Notification
-                     status={this.props.DeleteVolumeReducer.status}
-                     name={this.props.DeleteVolumeReducer.idVolume}
-                     errorMessage={this.props.DeleteVolumeReducer.errorMessage}
-                 />
+	    let isFetchingComponent = '';
+	    if (!this.props.VolumesReducer.isFetching &&
+		    !this.props.DeleteVolumeReducer.isFetching) {
+		    isFetchingComponent =
                 <div className="row double">
-                    {
-                        this.props.VolumesReducer.data.map((item) => {
-                            const name = item.name;
-                            // const nameFirstChar = name.substring(0, 1).toUpperCase();
-                            const id = `item_${name}`;
-                            const status = item.status === 'Started' || item.status === 'Created' ? 'Active' : 'Not Active';
-                            const usedSize = item.used_size ? item.used_size : 0;
-                            const totalSize = item.total_size ? item.total_size : 0;
-                            return (
+				    {
+					    this.state.vol.map((item) => {
+						    const name = item.name;
+						    // const nameFirstChar = name.substring(0, 1).toUpperCase();
+						    const id = `item_${name}`;
+						    const status = item.status === 'Started' || item.status === 'Created' ? 'Active' : 'Not Active';
+						    const usedSize = item.used_size ? item.used_size : 0;
+						    const totalSize = item.total_size ? item.total_size : 0;
+						    return (
                                 <div className="col-md-4" id={id} key={id}>
                                     <div className="content-block-container card-container card-container-volume hover-action ">
                                         <div className="content-block-header">
@@ -75,7 +89,7 @@ class VolumesContainer extends Component {
                                                     <img src={nslogo} alt="" />
                                                 </div>
                                                 <div className="content-block-header-label__text content-block-header-label_main">
-                                                    {name}
+												    {name}
                                                 </div>
                                             </div>
                                             <div className="content-block-header-extra-panel" onClick={this.handleClose.bind(this)}>
@@ -113,15 +127,37 @@ class VolumesContainer extends Component {
 
                                     </div>
                                 </div>
-                            );
-                        })
-                    }
+						    );
+					    })
+				    }
                     <div className="col-md-4 align-middle">
                         <NavLink to="/CreateVolume" className="add-new-block content-block-content card-container hover-action ">
                             <div className="action action-vol"><i>+</i> Add a volume</div>
                         </NavLink>
                     </div>
-                </div>
+                </div>;
+	    } else {
+		    isFetchingComponent =
+                <div className="row double">
+	                {
+		                new Array(3).fill().map((item, index) => {
+			                return (
+                                <div key={index} className="col-md-4 align-middle">
+                                    <img className="content-block-container-img" src={ns} alt="ns"/>
+                                </div>
+			                )
+		                })
+	                }
+                </div>;
+	    }
+        return (
+            <div>
+                 <Notification
+                     status={this.props.DeleteVolumeReducer.status}
+                     name={this.props.DeleteVolumeReducer.idVolume}
+                     errorMessage={this.props.DeleteVolumeReducer.errorMessage}
+                 />
+                { isFetchingComponent }
 
                 <DeleteModal
                     type="Volume"

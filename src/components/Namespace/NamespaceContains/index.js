@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import NavLink from '../../../containers/NavLink';
-import Spinner from '../../Spinner';
+// import Spinner from '../../Spinner';
 
 class NamespaceContains extends Component {
     render() {
-        let isFetchingDeleteNS = '';
-        if (this.props.DeleteNamespaceReducer.isFetching) {
-            isFetchingDeleteNS = <Spinner />;
-        }
         return (
             <div>
-                { isFetchingDeleteNS }
                 <div className="content-block">
                     <div className="content-block-container container">
                         <div className="content-block-header">
@@ -52,10 +47,4 @@ NamespaceContains.propTypes = {
     idName: PropTypes.string
 };
 
-function mapStateToProps(state) {
-    return {
-        DeleteNamespaceReducer: state.DeleteNamespaceReducer
-    };
-}
-
-export default connect(mapStateToProps)(NamespaceContains);
+export default NamespaceContains;

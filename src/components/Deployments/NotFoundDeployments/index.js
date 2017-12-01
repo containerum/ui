@@ -21,7 +21,7 @@ class NotFoundDeployments extends Component {
                             <table className="content-block__table table" width="1170">
                                 <thead>
                                 <tr>
-                                    <td className="td-1">
+                                    <td className="td-1" style={{paddingLeft: '60px'}}>
                                         Deployment is a controller that contains one or several containers, united into Pods. <br /> <br />
                                         To create a new Deployment use our <a className="documentation-link" href={linkPlatform}>CLI Tool</a> and refer to our <a className="documentation-link" href="https://containerum.com/documentation/Start-Guide" target="_blank">Documentation</a>
                                     </td>

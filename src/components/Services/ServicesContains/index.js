@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import service from '../../../images/service.png';
+import { getServices } from '../../../actions/ServicesActions';
 import NotFoundServices from '../NotFoundServices';
 
 class ServicesContains extends Component {
@@ -13,26 +14,30 @@ class ServicesContains extends Component {
             countOfServices: 0
         }
     }
-    componentDidMount() {
-        this.setState({
-            countOfServices: this.props.ServicesReducer.data ?
-                this.props.ServicesReducer.data.length : 0
-        })
-    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.DeleteServiceReducer.isFetching === false &&
             nextProps.DeleteServiceReducer.status === 202 &&
-            nextProps.DeleteServiceReducer.serviceName) {
-            this.setState({
-                countOfServices: this.state.countOfServices - 1
-            });
+            nextProps.DeleteServiceReducer.serviceName &&
+	        nextProps.DeleteServiceReducer.serviceName !==
+	        this.props.DeleteServiceReducer.serviceName) {
             const id = `item_${nextProps.DeleteServiceReducer.serviceName}`;
             if (typeof window !== 'undefined') {
                 const el = document.getElementById(id);
                 el ? el.remove() : el;
+	            el ? this.setState({
+		            ...this.state,
+		            countOfServices: this.state.countOfServices + 1
+	            }) : null;
             }
         }
     }
+	componentWillUnmount() {
+		this.props.onGetServices(this.props.idName);
+		this.setState({
+			...this.state,
+			countOfServices: 0
+		})
+	}
     handleClickService(name) {
         if (typeof window !== 'undefined') {
             browserHistory.push('/Namespaces/' + this.props.idName + '/Services/' + name);
@@ -45,68 +50,80 @@ class ServicesContains extends Component {
         this.props.onDeleteService(name);
     }
     render() {
+        // console.log(this.props.ServicesReducer.data);
+        // console.log(this.state.countOfServices);
         let isServicesEmpty = '';
-        if (this.state.countOfServices) {
+        if (this.props.ServicesReducer.data.length &&
+	        this.state.countOfServices !== this.props.ServicesReducer.data.length) {
             isServicesEmpty =
-                <div className="content-block-content full">
-                    <div className="tab-content">
-                        <div className="tab-pane services active">
-                            <table className="content-block__table table" width="1170">
-                                <thead>
-                                <tr>
-                                    <td className="td-1"> </td>
-                                    <td className="td-2">Name</td>
-                                    <td className="td-2">Type</td>
-                                    <td className="td-2">Domain</td>
-                                    <td className="td-7"> </td>
+                <table className="content-block__table table" width="1170">
+                    <thead>
+                    <tr>
+                        <td className="td-1"> </td>
+                        <td className="td-2">Name</td>
+                        <td className="td-2">Type</td>
+                        <td className="td-2">Domain</td>
+                        <td className="td-7"> </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+		            {
+			            this.props.ServicesReducer.data.map((item, index) => {
+				            const type = '' + item.labels.external === 'true' ? 'External' : 'Internal';
+				            const domain = item.domain_hosts[0] ? item.domain_hosts[0] : '-';
+				            const id = `item_${item.name}`;
+				            return (
+                                <tr
+                                    key={index}
+                                    className="tr-table-hover"
+                                    id={id}
+                                    onClick={name => this.handleClickService(item.name)}
+                                >
+                                    <td className="td-1"><img src={service} /></td>
+                                    <td className="td-2">{item.name}</td>
+                                    <td className="td-2">{type}</td>
+                                    <td className="td-2">{domain}</td>
+                                    <td className="td-7 dropdown no-arrow" onClick={this.handleClose.bind(this)}>
+                                        <i
+                                            className="content-block-table__more ion-more dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        > </i>
+                                        <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                            <button
+                                                className="dropdown-item text-danger"
+                                                onClick={name => this.handleClickDeletingService(item.name)}
+                                            >Delete</button>
+                                        </ul>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    this.props.ServicesReducer.data.map((item, index) => {
-                                        const type = '' + item.labels.external === 'true' ? 'External' : 'Internal';
-                                        const domain = item.domain_hosts[0] ? item.domain_hosts[0] : '-';
-                                        const id = `item_${item.name}`;
-                                        return (
-                                            <tr
-                                                key={index}
-                                                className="tr-table-hover"
-                                                id={id}
-                                                onClick={name => this.handleClickService(item.name)}
-                                            >
-                                                <td className="td-1"><img src={service} /></td>
-                                                <td className="td-2">{item.name}</td>
-                                                <td className="td-2">{type}</td>
-                                                <td className="td-2">{domain}</td>
-                                                <td className="td-7 dropdown no-arrow" onClick={this.handleClose.bind(this)}>
-                                                    <i
-                                                        className="content-block-table__more ion-more dropdown-toggle"
-                                                        data-toggle="dropdown"
-                                                        aria-haspopup="true"
-                                                        aria-expanded="false"
-                                                    > </i>
-                                                    <ul className="dropdown-menu dropdown-menu-right" role="menu">
-                                                        <button
-                                                            className="dropdown-item text-danger"
-                                                            onClick={name => this.handleClickDeletingService(item.name)}
-                                                        >Delete</button>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+				            );
+			            })
+		            }
+                    </tbody>
+                </table>
+        } else if (this.props.ServicesReducer.isFetching ||
+	        this.props.DeleteNamespaceReducer.isFetching) {
+	        isServicesEmpty =
+                <div style={{
+			        height: '270px',
+			        margin: '0 30px',
+			        borderRadius: '2px',
+			        backgroundColor: '#f6f6f6'
+		        }} />
         } else {
             isServicesEmpty = <NotFoundServices/>
         }
         return (
             <div>
-                { isServicesEmpty }
+                <div className="content-block-content full">
+                    <div className="tab-content">
+                        <div className="tab-pane services active">
+	                        { isServicesEmpty }
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -120,9 +137,18 @@ ServicesContains.propTypes = {
 function mapStateToProps(state) {
     return {
         ServicesReducer: state.ServicesReducer,
-        DeleteServiceReducer: state.DeleteServiceReducer
+        DeleteServiceReducer: state.DeleteServiceReducer,
+	    DeleteNamespaceReducer: state.DeleteNamespaceReducer
     };
 
 }
 
-export default connect(mapStateToProps)(ServicesContains);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onGetServices: (idName) => {
+			dispatch(getServices(idName));
+		}
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ServicesContains);

@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import Notification from '../Notification';
-import NotFoundServices from './NotFoundServices';
 import ServicesContains from './ServicesContains';
 import { getServices } from '../../actions/ServicesActions';
 import { deleteService } from '../../actions/ServiceActions/deleteServiceAction';
@@ -19,21 +18,6 @@ class Services extends Component {
         this.props.onDeleteService(this.props.params.idName, idServ);
     }
     render() {
-        // console.log(this.props.DeleteServiceReducer);
-        let isFetchingServicesContains = '';
-        if (this.props.ServicesReducer.isFetching === false) {
-            if (this.props.ServicesReducer.data.length === 0 || this.props.ServicesReducer.statusError === 404) {
-                isFetchingServicesContains = <NotFoundServices />;
-            } else {
-                isFetchingServicesContains =
-                    <ServicesContains
-                        idName={this.props.params.idName}
-                        onDeleteService={this.handleDeleteService.bind(this)}
-                    />;
-            }
-        } else {
-            isFetchingServicesContains = <Spinner />;
-        }
         return (
             <div>
                 <Notification
@@ -41,7 +25,10 @@ class Services extends Component {
                     name={this.props.DeleteServiceReducer.serviceName}
                     errorMessage={this.props.DeleteServiceReducer.errorMessage}
                 />
-                { isFetchingServicesContains }
+                <ServicesContains
+                    idName={this.props.params.idName}
+                    onDeleteService={this.handleDeleteService.bind(this)}
+                />
             </div>
         );
     }
