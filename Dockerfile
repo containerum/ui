@@ -1,14 +1,21 @@
-FROM node:slim
+FROM ubuntu:17.10
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
+RUN apt-get update
+RUN apt-get install -y libpng-dev
+RUN apt-get install -y dh-autoreconf
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install yarn -g
 RUN npm install
-RUN npm install -g nodemon
 
 COPY . /usr/src/app
 ENV WEB_API "https://web.api.containerum.io:5000"
+RUN npm run build
 
 EXPOSE 3000
-CMD REACT_APP_API=$WEB_API npm run build && npm run start:server & npm run start-omnidesk
+CMD REACT_APP_API=$WEB_API npm run start & npm run start-omnidesk

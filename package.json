@@ -6,6 +6,7 @@
     "start": "better-npm-run start",
     "start:production": "yarn build && yarn start:prod",
     "start:prod": "better-npm-run start:prod",
+    "start-omnidesk": "node server/omnideskServer.js",
     "build": "yarn clean:build && better-npm-run build",
     "lint": "yarn lint:js && yarn lint:style",
     "lint:js": "better-npm-run lint:js",
