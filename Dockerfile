@@ -1,14 +1,16 @@
-FROM node:slim
+FROM ubuntu:17.10
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
-RUN apt update
-RUN apt install -y libpng-dev libpng libfontconfig1
-RUN wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb \
-      && dpkg -i /tmp/libpng12.deb \
-      && rm /tmp/libpng12.deb
+RUN apt-get update
+RUN apt-get install -y libpng-dev
+RUN apt-get install -y dh-autoreconf
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install yarn -g
 RUN npm install
 
 COPY . /usr/src/app
