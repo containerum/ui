@@ -1,7 +1,7 @@
 /* eslint max-len:0 */
 
 module.exports = {
-  host: process.env.HOST || 'localhost',
+  host: process.env.HOST || '0.0.0.0',
   port: process.env.PORT,
   app: {
     htmlAttributes: { lang: 'en' },
