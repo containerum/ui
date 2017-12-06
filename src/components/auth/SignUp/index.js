@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import Recaptcha from 'react-recaptcha';
+import Recaptcha from 'react-google-recaptcha';
 
 import { SignUpUser } from '../../../actions/SignUpActions';
 import InputEmail from '../InputEmail';
@@ -236,8 +236,7 @@ class SignUp extends Component {
                             <div className="form-group i-mb-20 c-has-feedback-left">
                                 <Recaptcha
                                     sitekey="6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS"
-                                    render="explicit"
-                                    verifyCallback={this.verifyCallback.bind(this)}
+                                    onChange={this.verifyCallback.bind(this)}
                                 />
                             </div>
                             <button
