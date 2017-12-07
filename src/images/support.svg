@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="610" height="477" viewBox="0 0 610 477">
+    <defs>
+        <rect id="b" width="600" height="40" y="77" rx="4"/>
+        <filter id="a" width="102.8%" height="142.5%" x="-1.1%" y="-16.2%" filterUnits="objectBoundingBox">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+        </filter>
+        <rect id="d" width="600" height="200" y="137" rx="4"/>
+        <filter id="c" width="102.8%" height="108.5%" x="-1.1%" y="-3.2%" filterUnits="objectBoundingBox">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+        </filter>
+        <rect id="f" width="600" height="50" y="357" rx="4"/>
+        <filter id="e" width="102.8%" height="134%" x="-1.1%" y="-13%" filterUnits="objectBoundingBox">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(3)">
+        <text fill="#333" font-family="OpenSans, Open Sans" font-size="20">
+            <tspan x="211.851" y="21">New support ticket</tspan>
+        </text>
+        <rect width="210" height="30" x="195" fill="#EAEAEA" rx="2"/>
+        <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+        <use fill="#FFF" xlink:href="#b"/>
+        <use fill="#000" filter="url(#c)" xlink:href="#d"/>
+        <use fill="#FFF" xlink:href="#d"/>
+        <rect width="270" height="20" x="15" y="87" fill="#F6F6F6" rx="2"/>
+        <rect width="570" height="20" x="15" y="147" fill="#F6F6F6" rx="2"/>
+        <use fill="#000" filter="url(#e)" xlink:href="#f"/>
+        <use fill="#FFF" xlink:href="#f"/>
+        <rect width="270" height="20" x="15" y="372" fill="#F6F6F6" rx="2"/>
+        <rect width="600" height="50" y="427" fill="#EAEAEA" rx="4"/>
+    </g>
+</svg>

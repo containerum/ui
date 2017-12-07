@@ -3,17 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // import NavLink from '../../../containers/NavLink';
-import Spinner from '../../Spinner';
+// import Spinner from '../../Spinner';
 
 class DeploymentContains extends Component {
     render() {
-        let isFetchingDeleteDep = '';
-        if (this.props.DeleteDeploymentReducer.isFetching) {
-            isFetchingDeleteDep = <Spinner />;
-        }
         return (
             <div>
-                { isFetchingDeleteDep }
                 <div className="content-block">
                     <div className="content-block-container container ">
                         <div className="content-block-header">

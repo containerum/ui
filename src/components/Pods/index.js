@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import PodsContains from './PodsContains';
 import { getPods } from '../../actions/PodsActions';
 import { deletePod } from '../../actions/PodActions/deletePodAction';
@@ -19,17 +19,6 @@ class Pods extends Component {
         this.props.onDeletePod(this.props.params.idName, idPod);
     }
     render() {
-        let isFetchingPodsContains = '';
-        if (this.props.PodsReducer.isFetching === false) {
-            isFetchingPodsContains =
-                <PodsContains
-                    idName={this.props.params.idName}
-                    idDep={this.props.params.idDep}
-                    onDeletePod={this.handleDeletePod.bind(this)}
-                />;
-        } else {
-            isFetchingPodsContains = <Spinner />;
-        }
         return (
             <div>
                 <Notification
@@ -37,7 +26,11 @@ class Pods extends Component {
                     name={this.props.DeletePodReducer.podName}
                     errorMessage={this.props.DeletePodReducer.errorMessage}
                 />
-                { isFetchingPodsContains }
+                <PodsContains
+                    idName={this.props.params.idName}
+                    idDep={this.props.params.idDep}
+                    onDeletePod={this.handleDeletePod.bind(this)}
+                />
             </div>
         );
     }

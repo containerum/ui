@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import { Scrollbars } from 'react-custom-scrollbars';
 import ReactGA from 'react-ga';
 
-import Spinner from '../../Spinner';
+// import Spinner from '../../Spinner';
 import arrows from '../../../images/arrows.png';
 import { GetReleasesGithub } from '../../../actions/GetReleasesGithubActions';
 import { getPlatform } from '../../../functions/getPlatform';
@@ -22,24 +22,23 @@ class CLI extends Component {
         });
     }
     render() {
-        let isFetchingComponent = '';
         const {
             buttonPlatformContent,
             linkPlatform,
             version,
             size
         } = getPlatform(this.props.GetReleasesGithubReducer.data);
-        if (this.props.GetReleasesGithubReducer.isFetching === false) {
-            isFetchingComponent =
+        return (
+            <div>
                 <div className="block-item" id="cli">
                     <div className="block-item__title">CLI</div>
                     <div className="row">
                         <div className="col-md-8">
                             <div className="light-text">You can download our CLI Tool for your operating system. For fast authentication use the token below.</div>
-                            {/*<Scrollbars autoHide className="block-item__copy-string">*/}
-                            {/*<div className="block-item__content-string">chkit config --set-token anvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlll</div>*/}
-                            {/*</Scrollbars>*/}
-                            {/*<div className="normal-text">Copy and paste into installed CLI client</div>*/}
+				            {/*<Scrollbars autoHide className="block-item__copy-string">*/}
+				            {/*<div className="block-item__content-string">chkit config --set-token anvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlllanvbdfjxbckshdbmmjghgtnkmnokjlll</div>*/}
+				            {/*</Scrollbars>*/}
+				            {/*<div className="normal-text">Copy and paste into installed CLI client</div>*/}
                         </div>
                         <div className="col-md-4">
                             <div className="block-item__sub-title">Download</div>
@@ -61,13 +60,7 @@ class CLI extends Component {
                             </a>
                         </div>
                     </div>
-                </div>;
-        } else {
-            isFetchingComponent = <Spinner />;
-        }
-        return (
-            <div>
-                { isFetchingComponent }
+                </div>
             </div>
         );
     }

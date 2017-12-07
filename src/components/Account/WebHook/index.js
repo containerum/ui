@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import Spinner from '../../Spinner';
+// import Spinner from '../../Spinner';
 import Notification from '../../Notification';
 import { deleteImageToken } from '../../../actions/TokensActions/deleteImageTokenAction';
 import { getImageTokens } from '../../../actions/TokensActions/getImageTokensAction';
@@ -73,13 +73,22 @@ class WebHook extends Component {
                     elementName.classList.remove('form-group__label-always-onfocus') : '';
             }
         }
-        let isFetchingComponent = '';
-        if (this.props.GetImageTokensReducer.isFetching === false) {
-            const data = this.props.GetImageTokensReducer.data.length ?
-                this.props.GetImageTokensReducer.data : [];
-            const firstToken = this.props.GetImageTokensReducer.data.length ?
-                this.props.GetImageTokensReducer.data[0].token : '{WEBHOOK_KEY}';
-            isFetchingComponent =
+	    const data = this.props.GetImageTokensReducer.data.length ?
+		    this.props.GetImageTokensReducer.data : [];
+	    const firstToken = this.props.GetImageTokensReducer.data.length ?
+		    this.props.GetImageTokensReducer.data[0].token : '{WEBHOOK_KEY}';
+        return (
+            <div>
+                <Notification
+                    status={this.props.DeleteImageTokensReducer.status}
+                    name={this.props.DeleteImageTokensReducer.WebHook}
+                    errorMessage={this.props.DeleteImageTokensReducer.errorMessage}
+                />
+                <Notification
+                    status={this.props.CreateImageTokensReducer.status}
+                    name={this.props.CreateImageTokensReducer.WebHook}
+                    errorMessage={this.props.CreateImageTokensReducer.errorMessage}
+                />
                 <div className="block-item" id="webhooks">
                     <div className="block-item__title">WebHook</div>
                     <div className="row">
@@ -88,15 +97,15 @@ class WebHook extends Component {
                                 in your containers.</div>
                         </div>
                     </div>
-                    {
-                        this.props.GetImageTokensReducer.data.length ?
+		            {
+			            this.props.GetImageTokensReducer.data.length ?
                             <div className="row">
                                 <div className="block-item__tokens col-md-12">
                                     <table className="block-item__tokens-table content-block__table table">
                                         <tbody>
-                                        {
-                                            data.map((item, index) => {
-                                                return (
+							            {
+								            data.map((item, index) => {
+									            return (
                                                     <tr key={index}>
                                                         <td className="td-label-wrapper">{item.label}</td>
                                                         <td className="td-label-wrapper">{item.regexp}</td>
@@ -110,14 +119,14 @@ class WebHook extends Component {
                                                             </ul>
                                                         </td>
                                                     </tr>
-                                                )
-                                            })
-                                        }
+									            )
+								            })
+							            }
                                         </tbody>
                                     </table>
                                 </div>
                             </div> : ''
-                    }
+		            }
                     <form
                         onSubmit={this.handleSubmitGetImageTokens.bind(this)}
                         className="row mt-2"
@@ -198,28 +207,6 @@ class WebHook extends Component {
                         </div>
                     </div>
                 </div>
-        } else {
-            isFetchingComponent = <Spinner />;
-        }
-        let isFetchingDeleteToken = '';
-        if (this.props.DeleteImageTokensReducer.isFetching ||
-            this.props.CreateImageTokensReducer.isFetching) {
-            isFetchingDeleteToken = <Spinner />;
-        }
-        return (
-            <div>
-                <Notification
-                    status={this.props.DeleteImageTokensReducer.status}
-                    name={this.props.DeleteImageTokensReducer.WebHook}
-                    errorMessage={this.props.DeleteImageTokensReducer.errorMessage}
-                />
-                <Notification
-                    status={this.props.CreateImageTokensReducer.status}
-                    name={this.props.CreateImageTokensReducer.WebHook}
-                    errorMessage={this.props.CreateImageTokensReducer.errorMessage}
-                />
-                { isFetchingDeleteToken }
-                { isFetchingComponent }
             </div>
         );
     }

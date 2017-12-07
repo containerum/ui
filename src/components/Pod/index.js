@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { getPod } from '../../actions/PodActions/getPodAction';
 import { deletePod } from '../../actions/PodActions/deletePodAction';
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import HeaderDropDown from '../../components/HeaderDropDown';
 import PodInfo from './PodInfo';
 import PodContainer from './PodContainer';
@@ -19,30 +19,6 @@ class Pod extends Component {
         this.props.onDeletePod(this.props.params.idName, idPod);
     }
     render() {
-        let isFetchingComponent = '';
-        if (this.props.GetPodReducer.isFetching === false) {
-            isFetchingComponent =
-                <div>
-                    <HeaderDropDown
-                        idName={this.props.params.idName}
-                        idDep={this.props.params.idDep}
-                        idPod={this.props.params.idPod}
-                    />
-                    <PodInfo
-                        idName={this.props.params.idName}
-                        idPod={this.props.params.idPod}
-                        idDep={this.props.params.idDep}
-                        onDeletePod={this.handleDeletePod.bind(this)}
-                    />
-                    <PodContainer
-                        idName={this.props.params.idName}
-                        idPod={this.props.params.idPod}
-                        idDep={this.props.params.idDep}
-                    />
-                </div>;
-        } else {
-            isFetchingComponent = <Spinner />;
-        }
         return (
             <div>
                 <Notification
@@ -50,7 +26,22 @@ class Pod extends Component {
                     name={this.props.DeletePodReducer.podName}
                     errorMessage={this.props.DeletePodReducer.errorMessage}
                 />
-                { isFetchingComponent }
+                <HeaderDropDown
+                    idName={this.props.params.idName}
+                    idDep={this.props.params.idDep}
+                    idPod={this.props.params.idPod}
+                />
+                <PodInfo
+                    idName={this.props.params.idName}
+                    idPod={this.props.params.idPod}
+                    idDep={this.props.params.idDep}
+                    onDeletePod={this.handleDeletePod.bind(this)}
+                />
+                <PodContainer
+                    idName={this.props.params.idName}
+                    idPod={this.props.params.idPod}
+                    idDep={this.props.params.idDep}
+                />
             </div>
         );
     }

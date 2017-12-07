@@ -31,26 +31,98 @@ class NamespaceInfo extends Component {
                 isOpened: false
             });
         }
-        if (nextProps.DeleteNamespaceReducer.status === 202 && nextProps.DeleteNamespaceReducer.idName) {
-            if (typeof window !== 'undefined') {
-                browserHistory.push('/Namespaces');
-            }
+        if (nextProps.DeleteNamespaceReducer.isFetching === false &&
+	        nextProps.DeleteNamespaceReducer.status === 202 &&
+	        nextProps.DeleteNamespaceReducer.idName &&
+	        nextProps.DeleteNamespaceReducer.idName !==
+	        this.props.DeleteNamespaceReducer.idName) {
+	        browserHistory.push('/Namespaces');
         }
     }
     render() {
-        const NamespacesReducer = this.props.NamespacesReducer.data ? this.props.NamespacesReducer.data : [];
-        const currentNSArr = NamespacesReducer.find(item => {
-            if (item.name === this.props.idName) {
-                return item;
-            }
-        });
-        const NSname = currentNSArr ? currentNSArr.name : '';
-        const NSmemory = currentNSArr ? currentNSArr.memory : '';
-        const NSmemoryLimit = currentNSArr ? currentNSArr.memory_limit : '';
-        const NScpu = currentNSArr ? currentNSArr.cpu : '';
-        const NScpuLimit = currentNSArr ? currentNSArr.cpu_limit : '';
-        const volumeSize = currentNSArr.volume_size ? currentNSArr.volume_size : '-';
-        const volumeUsed = currentNSArr.volume_used ? currentNSArr.volume_used: '-';
+        // const NamespacesReducer = this.props.NamespacesReducer.data ? this.props.NamespacesReducer.data : [];
+
+	    let isFetchingNamespaceInfo = '';
+	    if (!this.props.NamespacesReducer.isFetching &&
+		    !this.props.DeleteNamespaceReducer.isFetching) {
+		    const currentNSArr = this.props.NamespacesReducer.data.find(item => {
+			    if (item.name === this.props.idName) {
+				    return item;
+			    }
+		    });
+		    if (typeof currentNSArr === 'undefined') {
+		       browserHistory.push('/Namespaces');
+		    }
+		    const NSname = currentNSArr ? currentNSArr.name : '';
+		    const NSmemory = currentNSArr ? currentNSArr.memory : '';
+		    const NSmemoryLimit = currentNSArr ? currentNSArr.memory_limit : '';
+		    const NScpu = currentNSArr ? currentNSArr.cpu : '';
+		    const NScpuLimit = currentNSArr ? currentNSArr.cpu_limit : '';
+		    let volumeSize = '-';
+		    let volumeUsed = '-';
+		    if (currentNSArr) {
+			    if (currentNSArr.volume_size || currentNSArr.volume_used) {
+				    volumeSize = currentNSArr.volume_size;
+				    volumeUsed = currentNSArr.volume_used;
+			    }
+		    }
+		    isFetchingNamespaceInfo =
+                <div className="content-block-container content-block_common-statistic container">
+                    <div className="content-block-header">
+                        <div className="content-block-header-label">
+                            <div className="content-block-header-label__text content-block-header-label_main">{NSname}</div>
+                            <div className="content-block-header-label__descript">namespace</div>
+                        </div>
+                        <div className="content-block-header-extra-panel">
+                            <div className="content-block-header-extra-panel dropdown no-arrow">
+                                <i
+                                    className="content-block-header__more ion-more dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                > </i>
+                                <ul className="dropdown-menu dropdown-menu-right" role="menu">
+                                    <NavLink
+                                        className="dropdown-item"
+                                        to={`/Namespaces/${this.props.idName}/Resize`}
+                                    >Resize</NavLink>
+                                    <button
+                                        className="dropdown-item text-danger"
+                                        onClick={name => this.handleClickDeletingNamespace(this.props.idName)}
+                                    >Delete</button>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="content-block-content">
+                        <div className="content-block__r-img"><img src={n} /></div>
+                        <div className="content-block__info-item">
+                            <div className="content-block__info-name">RAM ( Usage / Total ) : </div>
+                            <div className="content-block__info-text">{NSmemory} / {NSmemoryLimit} MB</div>
+                        </div>
+                        <div className="content-block__info-item">
+                            <div className="content-block__info-name">CPU ( Usage / Total ) : </div>
+                            <div className="content-block__info-text">{NScpu} / {NScpuLimit} m</div>
+                        </div>
+                        <div className="content-block__info-item">
+                            <div className="content-block__info-name">Volume ( Usage / Total ) :</div>
+                            <div className="content-block__info-text">{volumeUsed} / {volumeSize} {volumeSize !== '-' ? 'GB': ''}</div>
+                        </div>
+                    </div>
+                </div>
+	    } else {
+		    isFetchingNamespaceInfo =
+                <div
+                    className="container"
+                    style={{
+                        padding: '0',
+                        marginTop: '17px',
+                        marginBottom: '30px',
+                        backgroundColor: 'transparent'
+                    }}>
+                    <img src={require('../../../images/ns-dep.svg')} style={{width: '100%'}}/>
+                </div>;
+	    }
         return (
             <div>
                 <Notification
@@ -59,49 +131,7 @@ class NamespaceInfo extends Component {
                     errorMessage={this.props.DeleteNamespaceReducer.errorMessage}
                 />
                 <div className="content-block">
-                    <div className="content-block-container content-block_common-statistic container">
-                        <div className="content-block-header">
-                            <div className="content-block-header-label">
-                                <div className="content-block-header-label__text content-block-header-label_main">{NSname}</div>
-                                <div className="content-block-header-label__descript">namespace</div>
-                            </div>
-                            <div className="content-block-header-extra-panel">
-                                <div className="content-block-header-extra-panel dropdown no-arrow">
-                                    <i
-                                        className="content-block-header__more ion-more dropdown-toggle"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                    > </i>
-                                    <ul className="dropdown-menu dropdown-menu-right" role="menu">
-                                        <NavLink
-                                            className="dropdown-item"
-                                            to={`/Namespaces/${this.props.idName}/Resize`}
-                                        >Resize</NavLink>
-                                        <button
-                                            className="dropdown-item text-danger"
-                                            onClick={name => this.handleClickDeletingNamespace(this.props.idName)}
-                                        >Delete</button>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="content-block-content">
-                            <div className="content-block__r-img"><img src={n} /></div>
-                            <div className="content-block__info-item">
-                                <div className="content-block__info-name">RAM ( Usage / Total ) : </div>
-                                <div className="content-block__info-text">{NSmemory} / {NSmemoryLimit} MB</div>
-                            </div>
-                            <div className="content-block__info-item">
-                                <div className="content-block__info-name">CPU ( Usage / Total ) : </div>
-                                <div className="content-block__info-text">{NScpu} / {NScpuLimit} m</div>
-                            </div>
-                            <div className="content-block__info-item">
-                                <div className="content-block__info-name">Volume ( Usage / Total ) :</div>
-                                <div className="content-block__info-text">{volumeSize} / {volumeUsed} {volumeSize !== '-' ? 'GB': ''}</div>
-                            </div>
-                        </div>
-                    </div>
+                    { isFetchingNamespaceInfo }
                 </div>
 
                 <DeleteModal
