@@ -14,6 +14,7 @@ RUN npm install
 
 COPY . /usr/src/app
 ENV WEB_API "https://web.api.containerum.io:5000"
+ENV COUNTRY "US"
 RUN npm run build
 RUN apt-get autoremove
 

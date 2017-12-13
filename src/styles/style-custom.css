@@ -333,3 +333,428 @@ input:invalid {
     text-transform: lowercase;
     margin-top: 25px;
 }
+
+
+/* create depl */
+.pageWidth{
+    max-width: 1120px
+}
+.sideMenuHeader{
+    font-size: 15px;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+.sideMenuItem{
+    font-size: 15px;
+    font-weight: 300;
+    color: #a7a7a7;
+    padding: 7px 20px;
+}
+.sideMenuItem.active{
+    font-size: 15px;
+    font-weight: 300;
+    color: #29abe2;
+}
+.sideMenuHeader.active{
+    color: #29abe2;
+}
+.blockContainer{
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+    padding: 40px 20px 30px 20px;
+    margin-bottom: 30px;
+}
+.blockContainerPadin{
+    padding: 40px 35px;
+}
+.blockAddContainerPadin{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.containerTitle{
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1;
+    color: #333333;
+    text-transform: uppercase;
+    position: relative;
+}
+.containerTitle span{
+    color: #df5952;
+}
+.addBlockBtn .myTooltip,
+.containerTitle .myTooltip{
+    position: absolute;
+    top: 3.5px;
+    right: -22px;
+    width: 13px;
+    height: 13px;
+    line-height: 13px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #eaeaea;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.addBlockBtn .myTooltip{
+    background-color: #a7a7a7;
+}
+.containerSubTitle{
+    font-weight: 300;
+    color: #a7a7a7;
+    margin-top: 15px;
+    margin-bottom: 50px;
+}
+.tooltip{
+    width: 340px;
+    margin-left: 247px;
+    margin-bottom: 15px;
+}
+.containerTitle .myTooltip:hover{
+    background-color: #29abe2;
+}
+body .tooltip > .tooltip-inner {
+    font-family: 'Open Sans';
+    max-width: 340px;
+    padding: 15px;
+    border-radius: 4px;
+    background-color: #eaeaea;
+    font-size: 12px;
+    font-weight: 300;
+    color: #333333;
+    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+.tooltip.bs-tooltip-auto[x-placement^=bottom] .arrow::before, .tooltip.bs-tooltip-bottom .arrow::before,
+.tooltip.bs-tooltip-auto[x-placement^=top] .arrow::before, .tooltip.bs-tooltip-top .arrow::before{
+    border-width: 11px 11px 0;
+    border-top-color: #eaeaea;
+    left: -251px;
+}
+.tooltip.bs-tooltip-auto[x-placement^=bottom] .arrow::before, .tooltip.bs-tooltip-bottom .arrow::before{
+    border-width: 0 11px 11px;
+    border-bottom-color: #eaeaea;
+    margin-top: -5px;
+}
+.tooltip.bs-tooltip-bottom{
+    margin-top: 15px;
+}
+.customInput{
+    font-weight: 300;
+    color: #a7a7a7;
+    border: none;
+    border-bottom: 1.5px solid #eaeaea;
+    border-radius: 0;
+    padding-left: 0;
+    width: 100%;
+    margin-bottom: 7px;
+    padding-bottom: 4px;
+}
+.customInput:focus{
+    border: none;
+}
+.customInput:hover{
+    border-bottom: 1.5px solid #a7a7a7;
+}
+.customInput:focus{
+    border-bottom: 1.5px solid #29abe2;
+}
+.customLabel{
+    font-weight: 300;
+    color: #a7a7a7;
+}
+.has-float-label label{
+    left: 0;
+}
+.has-float-label .form-control:placeholder-shown:not(:focus)+label{
+    font-size: 100%;
+    top: 4px;
+    opacity: 1;
+}
+.helperText a,
+.helperText{
+    font-size: 12px;
+    font-weight: 300;
+    color: #a7a7a7;
+}
+.helperText a{
+    text-decoration: underline;
+}
+.marLeft20{
+    margin-left: 20px;
+}
+.rowLine{
+    border-bottom: 1px solid #f6f6f6;
+    padding-bottom: 40px;
+    padding-left: 20px;
+}
+.rowWithoutLine{
+    padding-left: 20px;
+}
+.myColumn{
+    flex: 0 0 44.666667%;
+    max-width: 44.666667%;
+}
+.addBlockBtn{
+    display: inline-block;
+    margin: 30px 0 0 15px;
+    font-weight: 300;
+    color: #29abe2;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.addBlockBtn:hover{
+    color: #1d87b3;
+}
+.addBlockBtnBig{
+    display: inherit;
+    font-size: 20px;
+    margin-left: 0;
+}
+.marLeft{
+    margin-left: 0;
+}
+.iconBasket{
+    margin-top: 19px;
+    margin-left: 30px;
+    width: 12px;
+    height: 15px;
+    cursor: pointer;
+}
+.iconBasket:hover .st0{
+    fill: #29abe2;
+}
+.containerBlockTitle{
+    font-size: 15px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    text-transform: initial;
+}
+.containerBlockTitle .myTooltip{
+    top: 0;
+}
+.marBot40{
+    margin-bottom: 40px;
+}
+.marBot30{
+    margin-bottom: 30px;
+}
+.marTop40{
+    margin-top: 40px;
+}
+.marTop30{
+    margin-top: 30px;
+}
+.marLeftt10{
+    margin-left: -10px;
+}
+.select-wrapper{
+    position: relative;
+}
+.selectCustom{
+    position: relative;
+    width: 100%;
+    font-weight: 300;
+    color: #333333;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1.5px solid #eaeaea;
+    border-radius: 0;
+    padding: 2px 0 8px;
+    margin-bottom: 7px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+}
+.select-wrapper select::-ms-expand{
+    display: none;             /* remove arrow IE     */
+}
+.select-arrow-3 {
+    position: absolute;
+    border: 8px solid transparent;
+    border-bottom: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+}
+.select-arrow-3:nth-child(1) {
+    top: 10px;
+    border-top-color: #29abe2;
+}
+.select-arrow-3:nth-child(2) {
+    top: 9px;
+    border-top-color: #FFF;
+}
+.inputSubpath{
+    position: relative;
+}
+.inputSubpathSign{
+    position: absolute;
+    left: -17px;
+    font-weight: 300;
+    color: #a7a7a7;
+}
+.myCol31{
+    -ms-flex: 0 0 31%;
+    flex: 0 0 31%;
+    max-width: 31%;
+}
+.btnTooltipContainer{
+    display: inline-block;
+    position: relative;
+    margin-top: 10px;
+}
+.btnTooltipContainer .myTooltip{
+    top: 8.5px;
+}
+.btnDeployment{
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    color: #fff;
+    border-radius: 2px;
+    background-color: #29abe2;
+    border: none;
+    padding: 11px 0;
+    cursor: pointer;
+    margin: 40px 0 25px;
+    text-transform: uppercase;
+}
+.btnDeployment:focus{
+    outline: 0;
+}
+.btnDeployment:active{
+    background-color: #1d87b3;
+}
+.serviceSwitcher{
+    width: 49px;
+    float: right;
+    position: relative;
+    margin-top: 4px;
+    margin-right: 20px;
+}
+.serviceSwitcher:before{
+    display: block;
+    content: "";
+    width: 49px;
+    height:16px;
+    border: solid 1px #eaeaea;
+    border-radius: 15px;
+    background: #transparent;
+    -webkit-transition: 0.08s linear;
+    -moz-transition: 0.08s linear;
+    -o-transition: 0.08s linear;
+    transition: 0.08s linear;
+}
+.serviceSwitcher:after{
+    display: block;
+    content: "";
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: -1px;
+    top: -5px;
+    -webkit-transition: left 0.08s linear;
+    -moz-transition: left 0.08s linear;
+    -o-transition: left 0.08s linear;
+    transition: left 0.08s linear;
+    cursor: pointer;
+}
+.serviceSwitcherOn:after{
+    left:25px
+}
+.serviceSwitcherOn:before{
+    background-color: #29abe2;
+    border: solid 1px #29abe2;
+}
+.isHidden,
+.iconTitleBasket,
+.serviceWrapperOff{
+    display: none;
+}
+.iconTitleBasketOn{
+    display: inline-block;
+    width: 16px;
+    height: 20px;
+}
+.iconTitleBasketOn .st0{
+    fill: #29abe2;
+}
+.isVisible{
+    display: block;
+}
+.linkedServTitle:hover,
+.linkedServTitle{
+    margin-bottom: 30px;
+    color: #333;
+    cursor: default;
+}
+
+/* Create Services */
+.bodyRelative{
+    position: relative;
+}
+.deployBtn{
+    padding: 2px 20px 4px;
+    border-radius: 2px;
+    border: solid 1px #29abe2;
+    background-color: #fff;
+    color: #29abe2;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.deployBtn:hover{
+    background-color: #29abe2;
+    color: #fff;
+}
+.deployBtn:active{
+    background-color: #1d87b3;
+}
+.deployBtn:focus{
+    outline: none;
+}
+.selectGreyColor{
+    color: #a7a7a7;
+}
+.btnService{
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+/* Upgrade Services */
+.containerTitle .containerTitleText{
+    font-size: 15px;
+    font-weight: 300;
+    color: #a7a7a7;
+    text-transform: lowercase;
+    margin-left: 10px;
+}
+.customLabelBlack{
+    color: #333;
+}
+.helperText .helperTextUnderline{
+    text-decoration: none;
+}
+.myCol1{
+    -ms-flex: 0 0 7.333333%;
+    flex: 0 0 7.333333%;
+    max-width: 7.333333%;
+    margin-left: -20px;
+}
+.marLeft15{
+    margin-left: 15px;
+}
