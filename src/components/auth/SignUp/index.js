@@ -10,10 +10,15 @@ import InputPassword from '../InputPassword';
 import Logo from '../../Logo';
 import MiniSpinner from '../../MiniSpinner';
 import CountrySelector from '../CountrySelector';
+import { COUNTRIES } from '../../../constants/CountriesBilling';
+import config from '../../../config';
 
 class SignUp extends Component {
     constructor() {
         super();
+	    const defaultCountry = COUNTRIES.find(item => {
+		    return item.value === config.country
+	    });
         this.state = {
             toggleActive: false,
             idOfActiveToggle: 'option1',
@@ -22,7 +27,7 @@ class SignUp extends Component {
             isValidEmail: false,
             password: '',
             isValidPassword: false,
-            billing_code: '182',
+            billing_code: defaultCountry.billing_code,
             with_trial: false,
             recaptcha: ''
         };
@@ -122,7 +127,6 @@ class SignUp extends Component {
         }
     }
     handleSelectCountry(billing_code) {
-        // console.log(billing_code);
         this.setState({
             ...this.state,
             billing_code

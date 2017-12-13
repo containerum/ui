@@ -3,15 +3,20 @@ import PropTypes from 'prop-types';
 
 import resolve from '../../../functions/yandex-geocoder';
 import { COUNTRIES } from '../../../constants/CountriesBilling';
+import config from '../../../config';
 import '../../../styles/flags.css';
 
 class CountrySelector extends Component {
     constructor() {
         super();
+	    const defaultCountry = COUNTRIES.find(item => {
+		    return item.value === config.country
+	    });
+	    // console.log(defaultCountry);
         this.state = {
-            currentCountry: 'Russian Federation',
-            currentCountryCode: 'RU',
-            billing_code: '182',
+            currentCountry: defaultCountry.name,
+            currentCountryCode: defaultCountry.value,
+            billing_code: defaultCountry.billing_code,
             displayedCountries: COUNTRIES
         };
     }
@@ -35,6 +40,7 @@ class CountrySelector extends Component {
         });
     }
     handleSelectCountryCode(name, value, billing_code) {
+        // console.log(billing_code);
         this.setState({
             ...this.state,
             currentCountry: name,
@@ -54,6 +60,7 @@ class CountrySelector extends Component {
         });
     }
     render() {
+        // console.log(this.state);
         return (
             <div className="form-group i-mb-20 c-has-feedback-left">
                 <div className="dropdown">

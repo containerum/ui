@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 // import { connect } from 'react-redux';
 
 import NavLink from '../../../containers/NavLink';
@@ -29,9 +30,9 @@ class NamespaceContains extends Component {
                                 </ul>
                             </div>
                             {/*<div className="content-block-header-extra-panel">*/}
-                            {/*<div className="content-block-header-extra-panel">*/}
-                            {/*<button type="button" className="button_blue btn btn-outline-primary">Create</button>*/}
-                            {/*</div>*/}
+                                {/*<div className="content-block-header-extra-panel">*/}
+                                    {/*<Link to={`/Namespaces/${this.props.idName}/CreateNamespace`} className="button_blue btn btn-outline-primary">Create</Link>*/}
+                                {/*</div>*/}
                             {/*</div>*/}
                         </div>
                         {this.props.children}

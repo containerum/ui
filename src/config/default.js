@@ -3,6 +3,7 @@
 module.exports = {
   host: process.env.HOST || '0.0.0.0',
   port: process.env.PORT,
+  country: process.env.COUNTRY || 'US',
   app: {
     htmlAttributes: { lang: 'en' },
     title: 'Containerum',
