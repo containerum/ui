@@ -9,7 +9,7 @@ import {
 } from '../../constants/LoginConstants';
 
 import {
-    WEB_API
+    WEB_API_OTHER
 } from '../../constants/WebApi';
 
 export function loginUser(creds) {
@@ -18,7 +18,7 @@ export function loginUser(creds) {
         // const password = md5(creds.username + creds.password).toString(16);
         const password = creds.password;
         return axios.post(
-            WEB_API + '/api/login',
+	        WEB_API_OTHER + '/api/login',
             { username: creds.username, password },
             {
                 validateStatus: (status) => status >= 200 && status <= 505

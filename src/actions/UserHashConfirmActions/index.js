@@ -8,13 +8,13 @@ import {
 } from '../../constants/UserHashConfirmConstants';
 
 import {
-    WEB_API
+	WEB_API_OTHER
 } from '../../constants/WebApi';
 
 export function getUserHashConfirm(userHash) {
     return dispatch => {
         dispatch(requestGetUserHashConfirm());
-        const api = WEB_API + '/api/confirm/' + userHash;
+        const api = WEB_API_OTHER + '/api/confirm/' + userHash;
 
         return axios.get(
             api,

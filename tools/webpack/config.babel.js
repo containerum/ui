@@ -64,6 +64,7 @@ const getPlugins = () => {
       __SERVER__: false,
       __DEV__: isDev,
       'process.env':{
+	      REACT_APP_OTHER: `"${process.env.REACT_APP_OTHER}"`,
           REACT_APP_API: `"${process.env.REACT_APP_API}"`,
       },
     }),

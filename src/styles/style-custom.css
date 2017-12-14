@@ -339,6 +339,14 @@ input:invalid {
 .pageWidth{
     max-width: 1120px
 }
+.sideMenu{
+    position: sticky;
+    top: 15px;
+    overflow: visible;
+    max-height: calc(100vh - 50px);
+    /* margin-top: 50px; */
+    margin-bottom: 50px;
+}
 .sideMenuHeader{
     font-size: 15px;
     font-weight: 300;
