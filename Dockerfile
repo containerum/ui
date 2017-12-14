@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
 RUN apt-get update
-RUN apt-get install -y libpng-dev
+RUN apt-get install -y libpng-dev dh-autoreconf
 RUN apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
