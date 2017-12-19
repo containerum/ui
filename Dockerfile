@@ -18,9 +18,10 @@ RUN npm install
 
 COPY . /usr/src/app
 ENV WEB_API "https://web.api.containerum.io:5000"
+ENV WEB_API_OTHER "https://web.api.containerum.io:5000"
 ENV COUNTRY "US"
 RUN npm run build
 RUN apt-get autoremove
 
 EXPOSE 3000
-CMD REACT_APP_API=$WEB_API npm run start & npm run start-omnidesk
+CMD REACT_APP_API=$WEB_API REACT_APP_OTHER=$WEB_API_OTHER npm run start & npm run start-omnidesk

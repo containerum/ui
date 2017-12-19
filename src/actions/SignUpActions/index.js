@@ -14,7 +14,7 @@ import {
 } from '../../constants/ValudateEmailConstaints';
 
 import {
-    WEB_API
+	WEB_API_OTHER
 } from '../../constants/WebApi';
 
 export function SignUpUser(creds) {
@@ -27,7 +27,7 @@ export function SignUpUser(creds) {
         const recaptcha = creds.recaptcha;
 
         return axios.post(
-            WEB_API + '/api/users',
+	        WEB_API_OTHER + '/api/users',
             creds.with_trial ? {
                 username,
                 password,

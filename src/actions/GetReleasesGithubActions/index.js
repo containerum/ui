@@ -12,10 +12,7 @@ export function GetReleasesGithub() {
 
         let dateNow = new Date();
         dateNow = Date.parse(dateNow);
-        let token = '';
-        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-            token = localStorage.getItem('github_obj');
-        }
+	    const token = localStorage.getItem('github_obj');
 
         if (token && JSON.parse(token).date + 18000000 >= dateNow) {
             dispatch(receiveGetReleases(JSON.parse(token).data));
@@ -33,6 +30,8 @@ export function GetReleasesGithub() {
                         localStorage.setItem('github_obj', JSON.stringify({data: response.data, date: dateNow}));
                     }
                     dispatch(receiveGetReleases(response.data));
+                } else if (response.status === 403) {
+	                dispatch(receiveGetReleases(JSON.parse(token).data));
                 } else {
                     dispatch(failGetReleases(response.data.message));
                 }

@@ -7,14 +7,14 @@ import {
 } from '../../constants/CheckHashPasswordConstants';
 
 import {
-    WEB_API
+	WEB_API
 } from '../../constants/WebApi';
 
 export function checkHashPassword(hashParam) {
     return dispatch => {
         dispatch(requestCheckHashPassword());
         return axios.get(
-            WEB_API + '/api/reseted_password_change/' + hashParam,
+	        WEB_API + '/api/reseted_password_change/' + hashParam,
             {
                 validateStatus: (status) => status >= 200 && status <= 505
             }

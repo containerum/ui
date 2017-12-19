@@ -11,7 +11,7 @@ import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function createDeployment(idName, name) {
+export function createDeployment(idName, data) {
     return dispatch => {
         dispatch(requestCreateDeployment());
         let token = '';
@@ -21,13 +21,20 @@ export function createDeployment(idName, name) {
             browser = localStorage.getItem('id_browser');
         }
 
+        let labels = {};
+        data.labels.map(item => {
+            const key = item.key;
+            const label = item.label;
+	        labels = {
+                ...labels,
+		        [key]: label
+            };
+        });
         return axios.post(
             WEB_API + `/api/namespaces/${idName}/deployments`,
             {
-                name,
-                labels: {
-                    "key": "value"
-                },
+                name: data.name,
+                labels,
                 replicas: 1,
                 containers: [
                     {

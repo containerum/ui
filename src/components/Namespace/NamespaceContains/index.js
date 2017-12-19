@@ -31,7 +31,7 @@ class NamespaceContains extends Component {
                             </div>
                             {/*<div className="content-block-header-extra-panel">*/}
                                 {/*<div className="content-block-header-extra-panel">*/}
-                                    {/*<Link to={`/Namespaces/${this.props.idName}/CreateNamespace`} className="button_blue btn btn-outline-primary">Create</Link>*/}
+                                    {/*<Link to={`/Namespaces/${this.props.idName}/CreateDeployment`} className="button_blue btn btn-outline-primary">Create</Link>*/}
                                 {/*</div>*/}
                             {/*</div>*/}
                         </div>
