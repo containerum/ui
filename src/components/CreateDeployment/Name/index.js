@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 
 class Name extends Component {
     render() {
@@ -12,7 +12,14 @@ class Name extends Component {
 			        </div>
 			        <div className="containerSubTitle">Enter Deployment name</div>
 			        <div className="has-float-label">
-				        <input className="form-control customInput" id="text" type="text" placeholder=" " />
+				        <input
+					        className="form-control
+					        customInput"
+					        id="text"
+					        type="text"
+					        placeholder=" "
+					        onChange={(e) => (this.props.onChangeInputName(e.target.value))}
+				        />
 				        <label className="customLabel" htmlFor="text">Name</label>
 				        <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
 			        </div>
@@ -22,22 +29,8 @@ class Name extends Component {
     }
 }
 
-// CreateDeployment.propTypes = {
-//     onCreateDeployment: PropTypes.func.isRequired
-// };
-//
-// function mapStateToProps(state) {
-//     return {
-//         CreateDeploymentReducer: state.CreateDeploymentReducer
-//     };
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         onCreateDeployment: (idName, name) => {
-//             dispatch(createDeployment(idName, name));
-//         }
-//     };
-// };
+Name.propTypes = {
+	onChangeInputName: PropTypes.func.isRequired
+};
 
 export default Name;

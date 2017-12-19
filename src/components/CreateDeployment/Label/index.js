@@ -1,10 +1,78 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import icon from '../../../images/icon-create-dep.svg';
 
 class Label extends Component {
+	constructor() {
+		super();
+		this.state = this.initialState();
+	}
+	initialState() {
+		return {
+			labels: [{
+				key: '',
+				label: '',
+				id: '_first'
+			}]
+		};
+	}
+	handleClickAddLabel() {
+		this.setState({
+			labels: [
+				...this.state.labels,
+				{
+					key: '',
+					label: '',
+					id: '_' + Math.random().toString(36).substr(2, 9)
+				}
+			]
+		})
+	}
+	handleClickRemoveLabel(id) {
+		if (this.state.labels.length > 1) {
+			const nextLabels = Object.assign({}, this.state).labels.filter((item) => {
+				return item.id !== id;
+			});
+			this.setState({
+				labels: nextLabels
+			}, () => {
+				this.props.onChangeInputLabels(this.state.labels);
+			});
+		} else {
+			this.setState(this.initialState(), () => {
+				this.props.onChangeInputLabels(this.state.labels);
+			});
+		}
+	}
+	handleChangeInputKey(e, id) {
+		const nextState = Object.assign({}, this.state);
+		nextState.labels.filter(item => {
+			if (item.id === id) {
+				item.key = e.target.value;
+			}
+		});
+		this.setState({
+			labels: nextState.labels
+		}, () => {
+			this.props.onChangeInputLabels(this.state.labels);
+		});
+	}
+	handleChangeInputLabel(e, id) {
+		const nextState = Object.assign({}, this.state);
+		nextState.labels.filter(item => {
+			if (item.id === id) {
+				item.label = e.target.value;
+			}
+		});
+		this.setState({
+			labels: nextState.labels
+		}, () => {
+			this.props.onChangeInputLabels(this.state.labels);
+		});
+	}
     render() {
+	    // console.log(this.state);
         return (
 	        <div className="blockContainer blockContainerPadin" id="labels">
 		        <div className="col-md-12">
@@ -13,48 +81,63 @@ class Label extends Component {
 			        </div>
 			        <div className="containerSubTitle">Enter Labels</div>
 		        </div>
-		        <div className="row marLeft">
-			        <div className="col-md-5 myColumn">
-				        <div className="has-float-label">
-					        <input className="form-control customInput" id="text1" type="text" placeholder=" " />
-					        <label className="customLabel" htmlFor="text1">Key</label>
-					        <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
-				        </div>
-			        </div>
-			        <div className="col-md-5 myColumn">
-				        <div className="has-float-label">
-					        <input className="form-control customInput" id="text2" type="text" placeholder=" " />
-					        <label className="customLabel" htmlFor="text2">Label</label>
-					        <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
-				        </div>
-			        </div>
-			        <div className="col-md-1">
-				        <img src={icon} alt="" />
-			        </div>
-		        </div>
+		        {
+			        this.state.labels.map((item, index) => {
+			        	const id = item.id;
+				        return (
+					        <div className="row marLeft" key={id}>
+						        <div className="col-md-5 myColumn">
+							        <div className="has-float-label">
+								        <input
+									        className="form-control customInput"
+									        id="text1"
+									        type="text"
+									        placeholder=" "
+									        value={this.state.labels[index].id === id &&
+									            this.state.labels[index].key}
+									        onChange={(e) => this.handleChangeInputKey(e, id)}
+								        />
+								        <label className="customLabel" htmlFor="text1">Key</label>
+								        <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
+							        </div>
+						        </div>
+						        <div className="col-md-5 myColumn">
+							        <div className="has-float-label">
+								        <input
+									        className="form-control customInput"
+									        id="text2"
+									        type="text"
+									        placeholder=" "
+									        value={this.state.labels[index].id === id &&
+									            this.state.labels[index].label}
+									        onChange={(e) => this.handleChangeInputLabel(e, id)}
+								        />
+								        <label className="customLabel" htmlFor="text2">Label</label>
+								        <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
+							        </div>
+						        </div>
+						        <div
+							        className="col-md-1"
+							        onClick={() => this.handleClickRemoveLabel(id)}
+						        >
+							        <img src={icon} alt="delete" className="iconBasket" />
+						        </div>
+					        </div>
+				        )
+			        })
+		        }
 
-		        <div className="addBlockBtn">+ Add label</div>
+		        <div
+			        className="addBlockBtn"
+			        onClick={this.handleClickAddLabel.bind(this)}
+		        >+ Add label</div>
 	        </div>
         );
     }
 }
 
-// CreateDeployment.propTypes = {
-//     onCreateDeployment: PropTypes.func.isRequired
-// };
-//
-// function mapStateToProps(state) {
-//     return {
-//         CreateDeploymentReducer: state.CreateDeploymentReducer
-//     };
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         onCreateDeployment: (idName, name) => {
-//             dispatch(createDeployment(idName, name));
-//         }
-//     };
-// };
+Label.propTypes = {
+	onChangeInputLabels: PropTypes.func.isRequired
+};
 
 export default Label;

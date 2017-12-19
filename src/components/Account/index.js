@@ -28,7 +28,6 @@ class Account extends Component {
             this.props.GetProfileReducer.data.data.email : '';
         let isFetchingComponent = '';
         if (!this.props.GetProfileReducer.isFetching &&
-	        !this.props.GetReleasesGithubReducer.isFetching &&
             !this.props.DeleteProfileReducer.isFetching) {
             isFetchingComponent =
                 <div className="content-block-container container container-fluid">
@@ -67,7 +66,6 @@ Account.propTypes = {
     onLoadProfileData: PropTypes.func,
     GetProfileReducer: PropTypes.object,
 	GetProfileReportReducer: PropTypes.object,
-	GetReleasesGithubReducer: PropTypes.object,
 	DeleteProfileReducer: PropTypes.object
 };
 
@@ -75,7 +73,6 @@ function mapStateToProps(state) {
     return {
         GetProfileReducer: state.GetProfileReducer,
 	    GetProfileReportReducer: state.GetProfileReportReducer,
-	    GetReleasesGithubReducer: state.GetReleasesGithubReducer,
 	    DeleteProfileReducer: state.DeleteProfileReducer
     };
 }

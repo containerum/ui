@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types";
 // import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 
@@ -12,7 +13,16 @@ class Replicas extends Component {
 			        </div>
 			        <div className="containerSubTitle">Enter Replicas count</div>
 			        <div className="has-float-label">
-				        <input className="form-control customInput" id="text3" type="number" placeholder=" " />
+				        <input
+					        className="form-control
+					        customInput"
+					        id="text3"
+					        value={this.props.value}
+					        type="number"
+					        min="1"
+					        max="15"
+					        onChange={(e) => (this.props.onChangeInputReplicas(e.target.value))}
+				        />
 				        <label className="customLabel" htmlFor="text3">Count</label>
 				        <div className="helperText">Max 15 replicas</div>
 			        </div>
@@ -22,22 +32,9 @@ class Replicas extends Component {
     }
 }
 
-// CreateDeployment.propTypes = {
-//     onCreateDeployment: PropTypes.func.isRequired
-// };
-//
-// function mapStateToProps(state) {
-//     return {
-//         CreateDeploymentReducer: state.CreateDeploymentReducer
-//     };
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         onCreateDeployment: (idName, name) => {
-//             dispatch(createDeployment(idName, name));
-//         }
-//     };
-// };
+Replicas.propTypes = {
+	onChangeInputReplicas: PropTypes.func.isRequired,
+	value: PropTypes.string
+};
 
 export default Replicas;
