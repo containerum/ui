@@ -49,22 +49,22 @@ class AddFunds extends Component {
         // console.log(this.props.PayForReducer);
         const paypalButtonText = this.props.PayForReducer.isFetching ? <MiniSpinner /> : 'Proceed';
         const isActivePaypalButton = this.props.PayForReducer.isFetching ?
-            'button_blue btn btn-outline-primary disabled' :
-            'button_blue btn btn-outline-primary';
+            'feedback-form__submit btn disabled' :
+            'feedback-form__submit btn';
         const isActivePaypalState = !!this.props.PayForReducer.isFetching;
         return (
-            <div>
+            <div className="block-item" id="add-funds">
                 <Notification
                     status={this.props.PayForReducer.status}
                     name="Account"
                     errorMessage={this.props.PayForReducer.errorMessage}
                 />
-                <div className="block-item" id="add-funds">
+                <div>
                     <div className="block-item__title">Add funds</div>
                     <form onSubmit={this.handleSubmitPay.bind(this)}>
                         <div className="row">
                             <div className="col-md-5">
-                                <div className="light-text">Add funds via PayPal or bank card</div>
+                                <div className="light-text">Add funds via PayPal</div>
                             </div>
                             <div className="col-md-7">
                                 <div className="form-group" id="group-pay-funds">
@@ -81,8 +81,8 @@ class AddFunds extends Component {
                                         className="form-group__label"
                                         id='payLabel'
                                         htmlFor='payFunds'
-                                    >Amount, $</label>
-                                    <div className="form-group__helper">Enter Amount - $5 min</div>
+                                    >Enter Amount - $5 min</label>
+                                    {/*<div className="form-group__helper">Enter Amount - $5 min</div>*/}
                                 </div>
                                 <div className="form-group pt-0">
                                     <button

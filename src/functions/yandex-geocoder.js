@@ -11,9 +11,9 @@ export default function resolve(query, options, callback) {
 		options  = {};
 	}
 
-	let geoRequest = this.buildRequest(query, options);
+	let geoRequest = buildRequest(query, options);
 
-	this.resolveQuery(geoRequest, options, callback);
+	resolveQuery(geoRequest, options, callback);
 }
 
 function buildRequest(query, options) {
@@ -71,7 +71,7 @@ function resolveQuery(geoRequest, options, callback) {
 			//     }
 			// }
 
-			var refinedGeoObject = this.refineGeoObject(geoObject);
+			var refinedGeoObject = refineGeoObject(geoObject);
 
 			if (refinedGeoObject != null) {
 				collection.push(refinedGeoObject);

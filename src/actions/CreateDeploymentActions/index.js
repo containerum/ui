@@ -21,6 +21,21 @@ export function createDeployment(idName, data) {
             browser = localStorage.getItem('id_browser');
         }
 
+	    // console.log(data);
+        // const countOfContainers = data.containers.length;
+	    const splitContainers = data.containers.slice();
+	    splitContainers.map(item => {
+		    item.ports.map(includePorts => {
+			    delete includePorts.id;
+			    delete includePorts.index;
+            });
+		    item.env.map(includeEnvs => {
+			    delete includeEnvs.id;
+			    delete includeEnvs.index;
+            });
+        });
+	    // console.log(data.containers);
+
         let labels = {};
         data.labels.map(item => {
             const key = item.key;
@@ -35,46 +50,13 @@ export function createDeployment(idName, data) {
             {
                 name: data.name,
                 labels,
-                replicas: 1,
-                containers: [
-                    {
-                        image: "python",
-                        name: "deplo5",
-                        resources: {
-                            requests: {
-                                cpu: "100m",
-                                memory: "128Mi"
-                            }
-                        },
-                        ports: [
-                            {
-                                containerPort: 8080
-                            },
-                            {
-                                containerPort: 443
-                            },
-                            {
-                                containerPort: 5000
-                            }
-                        ],
-                        env: [
-                            {
-                                value: "value",
-                                name: "key"
-                            }
-                        ],
-                        command: [
-                            "git",
-                            "pull",
-                            "origin"
-                        ]
-                    }
-                ]
+                replicas: data.replicas,
+                containers: splitContainers
             },
             {
                 headers: {
                     'Authorization': token,
-                    'X-User-Fingerprint': browser,
+                    'User-Client': browser,
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'

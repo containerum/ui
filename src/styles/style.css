@@ -635,6 +635,10 @@ h1{
     background: #29abe2;
 }
 
+.form-group .has-error-visible{
+    visibility: hidden;
+}
+
 .form-group.has-error .form-group__label{
     color:#fe4a49;
 }

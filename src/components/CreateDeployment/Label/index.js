@@ -87,33 +87,31 @@ class Label extends Component {
 				        return (
 					        <div className="row marLeft" key={id}>
 						        <div className="col-md-5 myColumn">
-							        <div className="has-float-label">
+							        <div className="form-group">
 								        <input
-									        className="form-control customInput"
-									        id="text1"
+									        className="form-group__input-text form-control"
 									        type="text"
-									        placeholder=" "
+									        id={`key${index}`}
 									        value={this.state.labels[index].id === id &&
-									            this.state.labels[index].key}
+									        this.state.labels[index].key}
 									        onChange={(e) => this.handleChangeInputKey(e, id)}
 								        />
-								        <label className="customLabel" htmlFor="text1">Key</label>
-								        <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
+								        <label className="form-group__label" htmlFor={`key${index}`}>Key</label>
+								        {index === 0 && <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>}
 							        </div>
 						        </div>
 						        <div className="col-md-5 myColumn">
-							        <div className="has-float-label">
+							        <div className="form-group">
 								        <input
-									        className="form-control customInput"
-									        id="text2"
+									        className="form-group__input-text form-control"
 									        type="text"
-									        placeholder=" "
+									        id={`label${index}`}
 									        value={this.state.labels[index].id === id &&
-									            this.state.labels[index].label}
+									        this.state.labels[index].label}
 									        onChange={(e) => this.handleChangeInputLabel(e, id)}
 								        />
-								        <label className="customLabel" htmlFor="text2">Label</label>
-								        <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
+								        <label className="form-group__label" htmlFor={`label${index}`}>Label</label>
+								        {index === 0 && <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>}
 							        </div>
 						        </div>
 						        <div

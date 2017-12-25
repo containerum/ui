@@ -2,18 +2,18 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-    DELETE_SERVICE_REQUEST,
-    DELETE_SERVICE_SUCCESS,
-    DELETE_SERVICE_FAILURE
-} from '../../constants/ServiceConstants';
+    COUPON_PAY_REQUEST,
+    COUPON_PAY_SUCCESS,
+    COUPON_PAY_FAILURE
+} from '../../constants/BillingConstants';
 
 import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function deleteService(namespaceName, serviceName) {
+export function couponPay(coupon) {
     return dispatch => {
-        dispatch(requestDeleteService());
+        dispatch(requestCouponPay());
         let token = '';
         let browser = '';
         if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
@@ -21,15 +21,15 @@ export function deleteService(namespaceName, serviceName) {
             browser = localStorage.getItem('id_browser');
         }
 
-        const api = WEB_API + '/api/namespaces/' + namespaceName + '/services/' + serviceName;
-
-        return axios.delete(
+        const api = WEB_API + '/api/apply_coupon';
+        return axios.post(
             api,
+            { code: coupon },
             {
                 headers: {
                     'Authorization': token,
                     'User-Client': browser,
-                    'Content-Type': 'application/x-www-form-urlencode',
+                    'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
                 },
@@ -37,42 +37,42 @@ export function deleteService(namespaceName, serviceName) {
             }
         )
         .then(response => {
-            if (response.status === 202) {
-                dispatch(receiveDeleteService(response.status, serviceName));
+            if (response.status === 200) {
+                dispatch(receiveCouponPay(response.data, coupon, response.status));
             } else if (response.status === 401) {
                 if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
                     localStorage.removeItem('id_token');
                     browserHistory.push('/Login');
                 }
             } else {
-                dispatch(failDeleteService(response.data.message));
+                dispatch(failCouponPay(response.data.message, response.status));
             }
-        }).catch(err => {
-            console.log(err); dispatch(failDeleteService(err.toString()));
-        });
+        }).catch(err => {dispatch(failCouponPay(err.toString())); console.log(err)});
     };
 }
 
-function requestDeleteService() {
+function requestCouponPay() {
     return {
-        type: DELETE_SERVICE_REQUEST,
+        type: COUPON_PAY_REQUEST,
         isFetching: true
     };
 }
 
-function receiveDeleteService(status, serviceName) {
+function receiveCouponPay(data, coupon, status) {
     return {
-        type: DELETE_SERVICE_SUCCESS,
+        type: COUPON_PAY_SUCCESS,
         isFetching: false,
-        serviceName,
-        status
+        data,
+	    coupon,
+	    status
     };
 }
 
-function failDeleteService(message) {
+function failCouponPay(message, status) {
     return {
-        type: DELETE_SERVICE_FAILURE,
+        type: COUPON_PAY_FAILURE,
         isFetching: false,
-        message
+        message,
+        status
     };
 }

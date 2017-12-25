@@ -35,6 +35,7 @@ import DeleteProfileReducer from './ProfileReducers/DeleteProfileReducer';
 import GetProfileBalanceReducer from './BillingReducers/GetProfileBalanceReducer';
 import GetTariffsReducer from './BillingReducers/GetTariffsReducer';
 import PayForReducer from './BillingReducers/PayForReducer';
+import CouponPayReducer from './BillingReducers/CouponPayReducer';
 import GetProfileReportReducer from './BillingReducers/GetProfileReportReducer';
 import ConvertToCompanyReducer from './UserReducers/ConvertToCompanyReducer';
 import EmailSubscriptionsReducer from './UserReducers/EmailSubscriptionsReducer';
@@ -90,6 +91,7 @@ const rootReducer = combineReducers({
     GetProfileBalanceReducer,
     GetTariffsReducer,
     PayForReducer,
+	CouponPayReducer,
     GetProfileReportReducer,
     DeleteNamespaceReducer,
     GetNamespaceReducer,
