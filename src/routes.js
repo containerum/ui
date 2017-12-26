@@ -54,7 +54,7 @@ export default (
             <Route path="/Namespaces/:idName/Deployments/:idDep/Pods/:idPod" component={Pod} />
             <Route path="/CreateNamespace" component={CreateNamespace} />
             <Route path="/Namespaces/:idName/Resize" component={UpdateNamespace} />
-            <Route path="/Namespaces/:idName/CreateDeployment" component={CreateDeployment} />
+            {/*<Route path="/Namespaces/:idName/CreateDeployment" component={CreateDeployment} />*/}
             <Route path="/CreateVolume" component={CreateVolume} />
             <Route path="/Volumes/:idVolume/Resize" component={UpdateVolume} />
 		    {/*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*/}

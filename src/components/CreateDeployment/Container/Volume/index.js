@@ -118,10 +118,10 @@ class Volume extends Component {
 						        key={id}
 					        >
 						        <div className="col-md-4 myCol31">
-							        <div className="form-group">
+							        <div className="form-group" style={{padding: 0}}>
 								        <div className="select-wrapper">
-									        <div className="select-arrow-3"></div>
-									        <div className="select-arrow-3"></div>
+									        <div className="select-arrow-3"> </div>
+									        <div className="select-arrow-3"> </div>
 									        <select
 										        name="volimes"
 										        className="selectCustom"
