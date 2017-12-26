@@ -9,7 +9,7 @@ import ProfileSidebar from '../ProfileSidebar';
 import Paginator from '../../Paginator';
 import Information from './Information';
 import AddFunds from './AddFunds';
-// import Spinner from '../../Spinner';
+import Coupon from '../Coupon';
 import { getProfileBalance } from '../../../actions/BillingActions/getProfileBalanceAction';
 import { getTariffs } from '../../../actions/BillingActions/getTariffsAction';
 import { getProfileReport } from '../../../actions/BillingActions/getProfileReportAction';
@@ -82,6 +82,7 @@ class Billing extends Component {
                         formatDateToActive={formatDateToActive}
                     />
                     <AddFunds />
+                    <Coupon />
                     <div className="block-item" id="history" ref="scrollView">
                         <div className="block-item__title">History</div>
                         <div className="row">

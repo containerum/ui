@@ -248,8 +248,11 @@ input:invalid {
     margin-bottom: 30px;
 }
 
-.form-group.pt-0 .btn-outline-primary.disabled {
-    background-color: #29abe2;
+.form-group.pt-0 .btn-outline-primary.disabled,
+.form-group.pt-0 .btn-outline-primary.disabled:hover {
+    background-color: transparent;
+    /*color: #fff;*/
+    opacity: 0.3;
 }
 
 .rc-tooltip-inner {

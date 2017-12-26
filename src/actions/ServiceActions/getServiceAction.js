@@ -28,7 +28,7 @@ export function getService(namespaceName, serviceName) {
             {
                 headers: {
                     'Authorization': token,
-                    'X-User-Fingerprint': browser,
+                    'User-Client': browser,
                     'Content-Type': 'application/x-www-form-urlencode',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'

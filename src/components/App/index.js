@@ -14,7 +14,7 @@ class App extends Component {
             if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
                 localStorage.setItem('id_browser', result);
             }
-            // console.log(components); // an array of FP components
+            // console.log(result, components); // an array of FP components
         });
         return (
             <div>

@@ -12,19 +12,19 @@ class Replicas extends Component {
 				        <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
 			        </div>
 			        <div className="containerSubTitle">Enter Replicas count</div>
-			        <div className="has-float-label">
+			        <div className="form-group">
 				        <input
-					        className="form-control
-					        customInput"
-					        id="text3"
+					        className="form-group__input-text form-control"
+					        id="replica"
 					        value={this.props.value}
 					        type="number"
+					        required
 					        min="1"
 					        max="15"
 					        onChange={(e) => (this.props.onChangeInputReplicas(e.target.value))}
 				        />
-				        <label className="customLabel" htmlFor="text3">Count</label>
-				        <div className="helperText">Max 15 replicas</div>
+				        <label className="form-group__label" htmlFor="replica">Count</label>
+				        <div className="form-group__helper">Max 15 replicas</div>
 			        </div>
 		        </div>
 	        </div>

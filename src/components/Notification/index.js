@@ -33,6 +33,10 @@ class Notification extends Component {
         } else if (nextProps.status === 201 && nextProps.name &&
             nextProps.name !== this.props.name) {
             toastr.success(nextProps.name + ' was created', 'Created Success');
+        } else if (nextProps.status === 200 &&
+            this.props.name !== nextProps.name
+            && nextProps.data && !nextProps.errorMessage) {
+            toastr.success(nextProps.name + ' was successfully applied', 'Applied Success');
         } else if ((nextProps.errorMessage === 'Not enough money to buy a namespace' ||
                 nextProps.errorMessage === 'Not enough money to buy volume' ||
                 nextProps.errorMessage === 'Not enough money to resize volume') &&
@@ -56,6 +60,8 @@ Notification.propTypes = {
         PropTypes.number
     ]),
     method: PropTypes.string,
+	coupon: PropTypes.string,
+	data: PropTypes.string,
     errorMessage: PropTypes.string
 };
 

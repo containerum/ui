@@ -22,7 +22,7 @@ export function getVolume(idVolume) {
             {
                 headers: {
                     'Authorization': token,
-                    'X-User-Fingerprint': browser,
+                    'User-Client': browser,
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'

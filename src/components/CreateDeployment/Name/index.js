@@ -11,17 +11,15 @@ class Name extends Component {
 				        <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
 			        </div>
 			        <div className="containerSubTitle">Enter Deployment name</div>
-			        <div className="has-float-label">
+			        <div className="form-group">
 				        <input
-					        className="form-control
-					        customInput"
-					        id="text"
+					        className="form-group__input-text form-control"
 					        type="text"
-					        placeholder=" "
+					        required="required"
 					        onChange={(e) => (this.props.onChangeInputName(e.target.value))}
 				        />
-				        <label className="customLabel" htmlFor="text">Name</label>
-				        <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
+				        <label className="form-group__label">Name</label>
+				        <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>
 			        </div>
 		        </div>
 	        </div>

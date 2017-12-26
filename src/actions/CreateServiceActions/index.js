@@ -25,7 +25,7 @@ export function getCreateService(idName, data) {
             {
                 headers: {
                     'Authorization': token,
-                    'X-User-Fingerprint': browser,
+                    'User-Client': browser,
                     'Access-Control-Allow-Origin': '*'
                 },
                 validateStatus: (status) => status >= 200 && status <= 505
