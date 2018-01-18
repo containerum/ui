@@ -14,7 +14,7 @@ build-and-push-develop:
   image: docker:latest
   stage: build
   tags:
-    - sandbox
+    - build
   script:
     - docker login  ${DOCKER_REGISTRY} -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
     - docker build --pull -t ${DOCKER_REGISTRY_IMAGE}:${TAG} .
@@ -29,7 +29,7 @@ deploy-to-kubernetes-develop:
   environment:
     name: sandbox
   tags:
-    - sandbox
+    - deploy
   script:
     - export IMAGE="$DOCKER_REGISTRY_IMAGE:${TAG}"
     - echo $SANDBOX_KUBE_CONFIG | base64 -d > admin.conf
@@ -45,7 +45,7 @@ docker-build-test:
   image: docker:latest
   stage: build
   tags:
-    - m1s
+    - prebuild
   script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
     - docker build --pull -t ${CI_REGISTRY_IMAGE}:${TAG} .

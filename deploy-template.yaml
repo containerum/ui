@@ -28,8 +28,6 @@ spec:
         access: "true"
       namespace: web
     spec:
-      nodeSelector:
-        role: slave
       imagePullSecrets:
       - name: gitlab-registry
       containers:
