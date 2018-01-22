@@ -26,9 +26,18 @@ class Commands extends Component {
 							        command: e.target.value,
 							        index: this.props.index - 1
 						        });
+						        if (e.target.value.length === 0) {
+							        document.getElementById(`commands-name-form-group__label${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+						        } else {
+							        document.getElementById(`commands-name-form-group__label${this.props.index}`).classList.add('form-group__label-always-onfocus');
+						        }
 					        }}
 				        />
-				        <label className="form-group__label" htmlFor="commands">Commands</label>
+				        <label
+					        className="form-group__label"
+					        id={`commands-name-form-group__label${this.props.index}`}
+					        htmlFor="commands"
+				        >Commands</label>
 				        <div className="form-group__helper helperText">Your Deployment name can only contain alphanumeric and characters</div>
 			        </div>
 		        </div>

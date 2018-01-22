@@ -70,7 +70,7 @@ h1{
 
 .dropdown-toggle::after{
     border-top-color: #29abe2;
-    margin: 4px 0 0 12px;
+    margin: 4px 0 5px 12px;
 }
 
 

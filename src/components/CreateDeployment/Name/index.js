@@ -15,10 +15,22 @@ class Name extends Component {
 				        <input
 					        className="form-group__input-text form-control"
 					        type="text"
-					        required="required"
-					        onChange={(e) => (this.props.onChangeInputName(e.target.value))}
+					        pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
+					        required title="error"
+					        ref="name"
+					        onChange={(e) => {
+						        this.props.onChangeInputName(e.target.value);
+						        if (e.target.value.length === 0) {
+							        document.getElementById('name-form-group__label').classList.remove('form-group__label-always-onfocus');
+						        } else {
+							        document.getElementById('name-form-group__label').classList.add('form-group__label-always-onfocus');
+						        }
+					        }}
 				        />
-				        <label className="form-group__label">Name</label>
+				        <label
+					        className="form-group__label"
+					        id="name-form-group__label"
+				        >Name</label>
 				        <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>
 			        </div>
 		        </div>

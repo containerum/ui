@@ -30,6 +30,7 @@ class Namespace extends Component {
                 <NamespaceContains
                     children={this.props.children}
                     idName={this.props.params.idName}
+                    params={this.props}
                 />
             </div>
         );

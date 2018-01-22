@@ -66,6 +66,7 @@ const getPlugins = () => {
       'process.env':{
 	      REACT_APP_OTHER: `"${process.env.REACT_APP_OTHER}"`,
           REACT_APP_API: `"${process.env.REACT_APP_API}"`,
+	      REACT_APP_RECAPTCHA: `"${process.env.REACT_APP_RECAPTCHA}"`,
       },
     }),
     new webpack.NoEmitOnErrorsPlugin(),

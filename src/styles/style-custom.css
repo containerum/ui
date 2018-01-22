@@ -680,11 +680,12 @@ body .tooltip > .tooltip-inner {
     height:16px;
     border: solid 1px #eaeaea;
     border-radius: 15px;
-    background: #transparent;
+    background: transparent;
     -webkit-transition: 0.08s linear;
     -moz-transition: 0.08s linear;
     -o-transition: 0.08s linear;
     transition: 0.08s linear;
+    cursor: pointer;
 }
 .serviceSwitcher:after{
     display: block;

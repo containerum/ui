@@ -18,6 +18,7 @@ import DeleteNamespaceReducer from './NamespaceReducers/DeleteNamespaceReducer';
 import UpdateNamespaceReducer from './NamespaceReducers/UpdateNamespaceReducer';
 import VolumesReducer from './VolumesReducers';
 import VolumesTariffsReducer from './VolumesReducers/VolumesTariffsReducer';
+import VolumesByNSReducer from './VolumesReducers/VolumesByNSReducer';
 import CreateVolumeReducer from './VolumeReducers/CreateVolumeReducer';
 import DeploymentsReducer from './DeploymentsReducers';
 import GetDeploymentReducer from './DeploymentReducers/GetDeploymentReducer';
@@ -87,6 +88,7 @@ const rootReducer = combineReducers({
     UpdateNamespaceReducer,
     NSTariffsReducer,
     VolumesTariffsReducer,
+	VolumesByNSReducer,
     CreateVolumeReducer,
     GetProfileBalanceReducer,
     GetTariffsReducer,

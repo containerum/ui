@@ -76,7 +76,7 @@ class Label extends Component {
         return (
 	        <div className="blockContainer blockContainerPadin" id="labels">
 		        <div className="col-md-12">
-			        <div className="containerTitle"><span>*</span> Label
+			        <div className="containerTitle">Label
 				        <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
 			        </div>
 			        <div className="containerSubTitle">Enter Labels</div>
@@ -92,11 +92,24 @@ class Label extends Component {
 									        className="form-group__input-text form-control"
 									        type="text"
 									        id={`key${index}`}
+									        pattern="(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?"
+									        required title="error"
 									        value={this.state.labels[index].id === id &&
 									        this.state.labels[index].key}
-									        onChange={(e) => this.handleChangeInputKey(e, id)}
+									        onChange={(e) => {
+										        this.handleChangeInputKey(e, id);
+										        if (e.target.value.length === 0) {
+											        document.getElementById(`key-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+										        } else {
+											        document.getElementById(`key-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+										        }
+									        }}
 								        />
-								        <label className="form-group__label" htmlFor={`key${index}`}>Key</label>
+								        <label
+									        className="form-group__label"
+									        htmlFor={`key${index}`}
+									        id={`key-form-group__label${index}`}
+								        >Key</label>
 								        {index === 0 && <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>}
 							        </div>
 						        </div>
@@ -106,11 +119,24 @@ class Label extends Component {
 									        className="form-group__input-text form-control"
 									        type="text"
 									        id={`label${index}`}
+									        pattern="(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?"
+									        required title="error"
 									        value={this.state.labels[index].id === id &&
 									        this.state.labels[index].label}
-									        onChange={(e) => this.handleChangeInputLabel(e, id)}
+									        onChange={(e) => {
+										        this.handleChangeInputLabel(e, id);
+										        if (e.target.value.length === 0) {
+											        document.getElementById(`label-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+										        } else {
+											        document.getElementById(`label-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+										        }
+									        }}
 								        />
-								        <label className="form-group__label" htmlFor={`label${index}`}>Label</label>
+								        <label
+									        className="form-group__label"
+									        htmlFor={`label${index}`}
+									        id={`label-form-group__label${index}`}
+								        >Label</label>
 								        {index === 0 && <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>}
 							        </div>
 						        </div>
