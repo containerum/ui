@@ -26,8 +26,8 @@ class Container extends Component {
 	onChangeInputEnv(env) {
 		this.props.onChangeInputEnv(env);
 	}
-	onChangeSelectVolume(volume) {
-		this.props.onChangeSelectVolume(volume);
+	onChangeSelectVolume(volume, index) {
+		this.props.onChangeSelectVolume(volume, index);
 	}
     render() {
         return (
@@ -37,7 +37,10 @@ class Container extends Component {
 			        	const fixedIndex = index + 1;
 			        	let id = item.id;
 				        return (
-					        <div className="blockContainer blockAddContainerPadin">
+					        <div
+						        className="blockContainer blockAddContainerPadin"
+						        key={id}
+					        >
 						        <div className="col-md-12">
 							        <div className="containerTitle marLeft20" id={`container${fixedIndex}`}>Container {fixedIndex}
 								        <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
@@ -97,8 +100,8 @@ class Container extends Component {
 							        />
 
 							        <Volume
-								        onChangeSelectVolume={(volume) =>
-									        this.onChangeSelectVolume(volume)}
+								        onChangeSelectVolume={(volume, index) =>
+									        this.onChangeSelectVolume(volume, index)}
 								        volumes={this.props.volumes}
 								        idName={this.props.idName}
 								        index={fixedIndex}/>
@@ -133,7 +136,7 @@ Container.propTypes = {
 	onChangeInputEnv: PropTypes.func.isRequired,
 	onChangeSelectVolume: PropTypes.func.isRequired,
 	volumes: PropTypes.array.isRequired,
-	containers: PropTypes.object.isRequired,
+	containers: PropTypes.array.isRequired,
 	idName: PropTypes.string.isRequired
 };
 

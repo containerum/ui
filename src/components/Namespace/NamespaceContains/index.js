@@ -8,6 +8,7 @@ import NavLink from '../../../containers/NavLink';
 
 class NamespaceContains extends Component {
     render() {
+        const pathname = this.props.params.location.pathname;
         return (
             <div>
                 <div className="content-block">
@@ -29,11 +30,26 @@ class NamespaceContains extends Component {
                                     </li>
                                 </ul>
                             </div>
-                            {/*<div className="content-block-header-extra-panel">*/}
-                                {/*<div className="content-block-header-extra-panel">*/}
-                                    {/*<Link to={`/Namespaces/${this.props.idName}/CreateDeployment`} className="button_blue btn btn-outline-primary">Create</Link>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
+                            {/*{*/}
+	                            {/*pathname.indexOf('/Services') + 1 ?*/}
+	                            {/*<div className="content-block-header-extra-panel">*/}
+                                    {/*<div className="content-block-header-extra-panel">*/}
+                                        {/*<Link*/}
+                                            {/*to={`/Namespaces/${this.props.idName}/CreateService`}*/}
+                                            {/*className="button_blue btn btn-outline-primary">Create</Link>*/}
+                                    {/*</div>*/}
+                                {/*</div> : ''*/}
+                            {/*}*/}
+                            {/*{*/}
+	                            {/*pathname.indexOf('/Deployments') + 1 ?*/}
+	                            {/*<div className="content-block-header-extra-panel">*/}
+                                    {/*<div className="content-block-header-extra-panel">*/}
+                                        {/*<Link*/}
+                                            {/*to={`/Namespaces/${this.props.idName}/CreateDeployment`}*/}
+                                            {/*className="button_blue btn btn-outline-primary">Create</Link>*/}
+                                    {/*</div>*/}
+                                {/*</div> : ''*/}
+                            {/*}*/}
                         </div>
                         {this.props.children}
                     </div>
@@ -45,7 +61,8 @@ class NamespaceContains extends Component {
 
 NamespaceContains.propTypes = {
     children: PropTypes.object.isRequired,
-    idName: PropTypes.string
+    idName: PropTypes.string,
+	params: PropTypes.object
 };
 
 export default NamespaceContains;

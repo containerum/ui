@@ -41,7 +41,7 @@ class ImagePorts extends Component {
 			});
 		} else {
 			this.setState(this.initialState(), () => {
-				console.log(this.state.ports);
+				// console.log(this.state.ports);
 				this.props.onChangeInputImagePorts(this.state.ports);
 			});
 		}
@@ -65,7 +65,7 @@ class ImagePorts extends Component {
 		}
 	}
     render() {
-	    console.log(this.props.item);
+	    // console.log('props', this.props.item);
         return (
 	        <div
 		        className="row rowLine"
@@ -94,10 +94,20 @@ class ImagePorts extends Component {
 									        type="text"
 									        value={this.state.ports[index].id === id &&
 									        this.state.ports[index].containerPort}
-									        onChange={(e) =>
-										        this.handleChangeInputImagePort(e, id, this.props.index)}
+									        onChange={(e) => {
+										        this.handleChangeInputImagePort(e, id, this.props.index);
+										        if (e.target.value.length === 0) {
+											        document.getElementById(`port-name-form-group__label${id}`).classList.remove('form-group__label-always-onfocus');
+										        } else {
+											        document.getElementById(`port-name-form-group__label${id}`).classList.add('form-group__label-always-onfocus');
+										        }
+									        }}
 								        />
-								        <label className="form-group__label" htmlFor={`port${index}`}>Port</label>
+								        <label
+									        className="form-group__label"
+									        id={`port-name-form-group__label${id}`}
+									        htmlFor={`port${index}`}
+								        >Port</label>
 								        {index === 0 && <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>}
 							        </div>
 						        </div>

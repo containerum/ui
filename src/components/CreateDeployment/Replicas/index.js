@@ -4,6 +4,14 @@ import PropTypes from "prop-types";
 // import PropTypes from 'prop-types';
 
 class Replicas extends Component {
+	componentDidMount() {
+		// console.log(this.props.value);
+		if (this.props.value) {
+			document.getElementById('replica-form-group__label').classList.add('form-group__label-always-onfocus');
+		} else {
+			document.getElementById('replica-form-group__label').classList.remove('form-group__label-always-onfocus');
+		}
+	}
     render() {
         return (
 	        <div className="blockContainer blockContainerPadin" id="replicas">
@@ -21,9 +29,20 @@ class Replicas extends Component {
 					        required
 					        min="1"
 					        max="15"
-					        onChange={(e) => (this.props.onChangeInputReplicas(e.target.value))}
+					        onChange={(e) => {
+						        this.props.onChangeInputReplicas(e.target.value);
+						        if (e.target.value.length === 0) {
+							        document.getElementById('replica-form-group__label').classList.remove('form-group__label-always-onfocus');
+						        } else {
+							        document.getElementById('replica-form-group__label').classList.add('form-group__label-always-onfocus');
+						        }
+					        }}
 				        />
-				        <label className="form-group__label" htmlFor="replica">Count</label>
+				        <label
+					        className="form-group__label"
+					        htmlFor="replica"
+					        id="replica-form-group__label"
+				        >Count</label>
 				        <div className="form-group__helper">Max 15 replicas</div>
 			        </div>
 		        </div>
@@ -34,7 +53,7 @@ class Replicas extends Component {
 
 Replicas.propTypes = {
 	onChangeInputReplicas: PropTypes.func.isRequired,
-	value: PropTypes.string
+	value: PropTypes.number
 };
 
 export default Replicas;

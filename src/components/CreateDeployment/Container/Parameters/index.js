@@ -20,16 +20,26 @@ class Parameters extends Component {
 					        className="form-group__input-text form-control"
 					        id="cpu"
 					        type="text"
-					        required
+					        pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
+					        required title="error"
 					        value={this.props.item.resources.requests.cpu}
 					        onChange={(e) => {
 						        this.props.onChangeInputParameters({
 							        cpu: e.target.value,
 							        index: this.props.index - 1
 						        });
+						        if (e.target.value.length === 0) {
+							        document.getElementById(`cpu-name-form-group__label${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+						        } else {
+							        document.getElementById(`cpu-name-form-group__label${this.props.index}`).classList.add('form-group__label-always-onfocus');
+						        }
 					        }}
 				        />
-				        <label className="form-group__label" htmlFor="cpu">CPU</label>
+				        <label
+					        className="form-group__label"
+					        id={`cpu-name-form-group__label${this.props.index}`}
+					        htmlFor="cpu"
+				        >CPU</label>
 				        <div className="form-group__helper helperText">Example: 0,3 or 300m<br /><a href="">Documentation…</a></div>
 			        </div>
 		        </div>
@@ -47,9 +57,18 @@ class Parameters extends Component {
 							        memory: e.target.value,
 							        index: this.props.index - 1
 						        });
+						        if (e.target.value.length === 0) {
+							        document.getElementById(`ram-name-form-group__label${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+						        } else {
+							        document.getElementById(`ram-name-form-group__label${this.props.index}`).classList.add('form-group__label-always-onfocus');
+						        }
 					        }}
 				        />
-				        <label className="form-group__label" htmlFor="ram">RAM</label>
+				        <label
+					        className="form-group__label"
+					        htmlFor="ram"
+					        id={`ram-name-form-group__label${this.props.index}`}
+				        >RAM</label>
 				        <div className="form-group__helper helperText">Example: 0,5Gi or 512Mi or 512<br /><a href="">Documentation…</a></div>
 			        </div>
 		        </div>

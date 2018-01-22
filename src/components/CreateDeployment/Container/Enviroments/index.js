@@ -9,6 +9,9 @@ class Enviroments extends Component {
 		super();
 		this.state = this.initialState();
 	}
+	componentDidMount() {
+
+	}
 	initialState() {
 		return {
 			envs: [{
@@ -102,9 +105,20 @@ class Enviroments extends Component {
 									        type="text"
 									        value={this.state.envs[index].id === id &&
 									        this.state.envs[index].name}
-									        onChange={(e) => this.handleChangeInputEnviromentsName(e, id, this.props.index)}
+									        onChange={(e) => {
+										        this.handleChangeInputEnviromentsName(e, id, this.props.index);
+										        if (e.target.value.length === 0) {
+											        document.getElementById(`env-name-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+										        } else {
+											        document.getElementById(`env-name-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+										        }
+									        }}
 								        />
-								        <label className="form-group__label" htmlFor={`envName${index}`}>Name</label>
+								        <label
+									        className="form-group__label"
+									        htmlFor={`envName${index}`}
+									        id={`env-name-form-group__label${index}`}
+								        >Name</label>
 								        {index === 0 && <div className="form-group__helper helperText">Your Deployment name can only contain alphanumeric and characters</div>}
 							        </div>
 						        </div>
@@ -116,9 +130,20 @@ class Enviroments extends Component {
 									        type="text"
 									        value={this.state.envs[index].id === id &&
 									        this.state.envs[index].value}
-									        onChange={(e) => this.handleChangeInputEnviromentsValue(e, id, this.props.index)}
+									        onChange={(e) => {
+										        this.handleChangeInputEnviromentsValue(e, id, this.props.index);
+										        if (e.target.value.length === 0) {
+											        document.getElementById(`value-name-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+										        } else {
+											        document.getElementById(`value-name-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+										        }
+									        }}
 								        />
-								        <label className="form-group__label" htmlFor={`envValue${index}`}>Value</label>
+								        <label
+									        className="form-group__label"
+									        htmlFor={`envValue${index}`}
+									        id={`value-name-form-group__label${index}`}
+								        >Value</label>
 								        {index === 0 && <div className="form-group__helper helperText">Your Deployment name can only contain alphanumeric and characters</div>}
 							        </div>
 						        </div>

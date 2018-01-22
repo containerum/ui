@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import NavLink from '../../components/NavLink';
+// import NavLink from '../../components/NavLink';
 
 class CreateInstance extends Component {
     render() {
@@ -33,10 +33,10 @@ class CreateInstance extends Component {
                         {/*<span className="c-dropdown-item-name">Deployment</span>*/}
                         {/*</NavLink>*/}
                         {/*<div className="dropdown-divider"></div>*/}
-                        <NavLink className="dropdown-item c-dropdown-item-wrap" to={createService}>
-                            <img className="c-dropdown-item-img" src="https://avatars0.githubusercontent.com/u/107673?v=3&amp;s=400" alt="" />
-                            <span className="c-dropdown-item-name">Service</span>
-                        </NavLink>
+                        {/*<NavLink className="dropdown-item c-dropdown-item-wrap" to={createService}>*/}
+                            {/*<img className="c-dropdown-item-img" src="https://avatars0.githubusercontent.com/u/107673?v=3&amp;s=400" alt="" />*/}
+                            {/*<span className="c-dropdown-item-name">Service</span>*/}
+                        {/*</NavLink>*/}
                     </div>
                 </div>
             </div>

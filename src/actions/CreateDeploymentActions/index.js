@@ -25,6 +25,7 @@ export function createDeployment(idName, data) {
         // const countOfContainers = data.containers.length;
 	    const splitContainers = data.containers.slice();
 	    splitContainers.map(item => {
+		    delete item.id;
 		    item.ports.map(includePorts => {
 			    delete includePorts.id;
 			    delete includePorts.index;
@@ -33,8 +34,12 @@ export function createDeployment(idName, data) {
 			    delete includeEnvs.id;
 			    delete includeEnvs.index;
             });
+            item.volumeMounts.map(volumeMountsEnvs => {
+		        // console.log(volumeMountsEnvs);
+			    delete volumeMountsEnvs.id;
+			    delete volumeMountsEnvs.index;
+            });
         });
-	    // console.log(data.containers);
 
         let labels = {};
         data.labels.map(item => {
@@ -45,6 +50,14 @@ export function createDeployment(idName, data) {
 		        [key]: label
             };
         });
+
+	    console.log('containers', {
+		    name: data.name,
+		    labels,
+		    replicas: data.replicas,
+		    containers: splitContainers
+	    });
+
         return axios.post(
             WEB_API + `/api/namespaces/${idName}/deployments`,
             {
