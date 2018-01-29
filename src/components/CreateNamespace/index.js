@@ -93,14 +93,14 @@ class CreateNamespace extends Component {
 									                }}
                                                 >
                                                     <div className="row">
-                                                        <div className={price === '$2' ?
+                                                        <div className={price === '$1' ?
                                                             "col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars" :
                                                             "col-md-6 namespace-plan-block-container-left"}>
                                                             <div className="namespace-plan-block-price">{price}<span className="namespace-plan-span-price">/mo</span></div>
                                                             <div className="namespace-plan-block-month">{pricePerDay}</div>
                                                         </div>
                                                         <div className="col-md-6 namespace-plan-block-container-right">
-                                                            <div className={price === '$2' ?
+                                                            <div className={price === '$1' ?
                                                                 "content-block-content card-block card-block2dollars" :
                                                                 "content-block-content card-block"}>
                                                                 <div className="content-block__info-item">
@@ -112,7 +112,7 @@ class CreateNamespace extends Component {
                                                                     <div className="content-block__info-text inline">{cpu}</div>
                                                                 </div>
 												                {
-													                price !== '$2' ?
+													                price !== '$1' ?
                                                                         <div className="content-block__info-item">
                                                                             <div className="content-block__info-name inline">Volume : </div>
                                                                             <div className="content-block__info-text inline">{volume} GB</div>

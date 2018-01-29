@@ -183,7 +183,7 @@ class Volume extends Component {
 									        id={`mountPath${index}${id}`}
 									        type="text"
 									        pattern="[a-z0-9/]([-a-z0-9/]*[a-z0-9])?"
-									        required title="Example: data/mountPath"
+									        required title="error"
 									        value={this.state.volumeMounts[index].id === id &&
 									        this.state.volumeMounts[index].mountPath}
 									        onChange={(e) => {

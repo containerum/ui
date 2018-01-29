@@ -27,7 +27,8 @@ import CreateDeploymentReducer from './DeploymentReducers/CreateDeploymentReduce
 import ServicesReducer from './ServicesReducers';
 import GetServiceReducer from './ServiceReducers/GetServiceReducer';
 import DeleteServiceReducer from './ServiceReducers/DeleteServiceReducer';
-import CreateServiceReducer from './ServiceReducers/CreateServiceReducer';
+import CreateIntServiceReducer from './ServiceReducers/CreateIntServiceReducer';
+import CreateExtServiceReducer from './ServiceReducers/CreateExtServiceReducer';
 import PodsReducer from './PodsReducers';
 import GetPodReducer from './PodReducers/GetPodReducer';
 import DeletePodReducer from './PodReducers/DeletePodReducer';
@@ -63,7 +64,8 @@ const rootReducer = combineReducers({
     GetServiceReducer,
     GetProfileReducer,
     DeleteProfileReducer,
-    CreateServiceReducer,
+	CreateExtServiceReducer,
+    CreateIntServiceReducer,
     CreateDeploymentReducer,
     GetPodReducer,
     GetDeploymentReducer,

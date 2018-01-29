@@ -256,13 +256,22 @@ input:invalid {
 }
 
 .rc-tooltip-inner {
-    background-color: #29abe2!important;
-    border: 1px solid #29abe2!important;
+    background-color: #eaeaea!important;
+    border: 1px solid #eaeaea!important;
+    font-family: 'Open Sans';
+    max-width: 340px;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 300;
+    color: #333333;
+    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.05);
+    text-align: left;
 }
 
 .rc-tooltip-inner a,
 .rc-tooltip-inner span {
-    color: #fff;
+    color: #333333;
 }
 
 .rc-tooltip-inner a:hover {
@@ -270,7 +279,7 @@ input:invalid {
 }
 
 .rc-tooltip-arrow {
-    border-top-color: #29abe2!important;
+    border-top-color: #eaeaea!important;
 }
 
 .rc-tooltip {
@@ -787,4 +796,12 @@ body .tooltip > .tooltip-inner {
 }
 .marLeft15{
     margin-left: 15px;
+}
+
+.sideMenuHeader-nomargin {
+    margin: 0;
+}
+
+.sideMenuItem-transformInit {
+    text-transform: initial;
 }

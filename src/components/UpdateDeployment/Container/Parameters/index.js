@@ -28,7 +28,7 @@ class Parameters extends Component {
 					        id={`cpu${this.props.index}`}
 					        type="text"
 					        pattern="^\d+(.\d+)?m?$"
-					        required title="Example: 0,3 or 300m"
+					        required title="error"
 					        value={this.props.item.resources.requests.cpu}
 					        onChange={(e) => {
 						        this.props.onChangeInputParameters({
@@ -58,7 +58,7 @@ class Parameters extends Component {
 					        id={`ram${this.props.index}`}
 					        type="text"
 					        pattern="^\d+(.\d+)?(Mi|Gi)$"
-					        required title="Example 0,5Gi or 512Mi"
+					        required title="error"
 					        value={this.props.item.resources.requests.memory}
 					        onChange={(e) => {
 						        this.props.onChangeInputParameters({

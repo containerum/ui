@@ -26,12 +26,15 @@ class Ports extends Component {
                     </thead>
                     <tbody>
 			        {ports.map((item, index) => {
+			            // console.log(this.props.GetServiceReducer.data.domain_hosts[0]);
+			            const domainHost = this.props.GetServiceReducer.data.domain_hosts[0] ?
+                            this.props.GetServiceReducer.data.domain_hosts[0] : 'x1.containerum.io';
 				        const name = item.name;
 				        const port = item.port;
 				        const targetPort = item.targetPort;
 				        const protocol = item.protocol;
-				        const linkServ = `http://p${port}.x1.containerum.io`;
-				        const viewLinkServ = `p${port}.x1.containerum.io`;
+				        const linkServ = `http://p${port}.${domainHost}`;
+				        const viewLinkServ = `p${port}.${domainHost}`;
 				        return (
                             <tr
                                 className="tr-table-hover"

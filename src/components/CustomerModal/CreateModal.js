@@ -112,7 +112,7 @@ class CreateModal extends Component {
                         <div className="col-md-10 p-0">
                             <div className="namespace-plan-block-container hover-action-new hover-always-new">
                                 <div className="row">
-                                    <div className={this.props.data.price === '$2' ?
+                                    <div className={this.props.data.price === '$1' ?
 		                                "col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars" :
 		                                "col-md-6 namespace-plan-block-container-left"}>
                                         <div className="namespace-plan-block-price">{this.props.data.price}<span className="namespace-plan-span-price">/mo</span></div>
@@ -120,7 +120,7 @@ class CreateModal extends Component {
                                     </div>
                                     { this.props.data.memory && this.props.data.cpu ?
                                         <div className="col-md-6 namespace-plan-block-container-right">
-                                            <div className={this.props.data.price === '$2' ?
+                                            <div className={this.props.data.price === '$1' ?
                                                 "content-block-content card-block card-block2dollars" :
                                                 "content-block-content card-block"}>
                                                 <div className="content-block__info-item ">
