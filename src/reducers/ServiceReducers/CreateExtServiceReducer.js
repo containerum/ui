@@ -1,38 +1,38 @@
 import {
-	CREATE_DEPLOYMENT_REQUEST,
-	CREATE_DEPLOYMENT_SUCCESS,
-	CREATE_DEPLOYMENT_FAILURE
-} from '../../constants/CreateDeploymentConstants';
+    CREATE_EXT_SERVICE_REQUEST,
+    CREATE_EXT_SERVICE_SUCCESS,
+    CREATE_EXT_SERVICE_FAILURE
+} from '../../constants/CreateServiceConstants';
 
-export default function CreateDeploymentReducer(state = {
+export default function CreateExtServiceReducer(state = {
 	isFetching: false,
 	data: {},
 	status: '',
-	idDep: '',
+	idServ: '',
 	errorMessage: ''
 }, action) {
 	switch (action.type) {
-		case CREATE_DEPLOYMENT_REQUEST:
+		case CREATE_EXT_SERVICE_REQUEST:
 			return Object.assign({}, state, {
 				isFetching: action.isFetching,
 				data: {},
 				errorMessage: '',
 				status: '',
-				idDep: ''
+				idServ: ''
 			});
-		case CREATE_DEPLOYMENT_SUCCESS:
+		case CREATE_EXT_SERVICE_SUCCESS:
 			return Object.assign({}, state, {
 				isFetching: action.isFetching,
 				data: action.data,
 				status: action.status,
-				idDep: action.idDep
+				idServ: action.idServ
 			});
-		case CREATE_DEPLOYMENT_FAILURE:
+		case CREATE_EXT_SERVICE_FAILURE:
 			return Object.assign({}, state, {
 				isFetching: action.isFetching,
 				errorMessage: action.message,
 				status: action.status,
-				idDep: action.idDep
+				idServ: action.idServ
 			});
 		default:
 			return state;

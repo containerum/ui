@@ -18,7 +18,7 @@ import Replicas from './Replicas';
 import Container from './Container';
 import createDepServ from '../../images/create-dep-serv.svg';
 
-class CreateDeployment extends Component {
+class UpdateDeployment extends Component {
 	constructor(props) {
 		super(props);
 		this.state = this.initialState();
@@ -795,7 +795,7 @@ class CreateDeployment extends Component {
     }
 }
 
-CreateDeployment.propTypes = {
+UpdateDeployment.propTypes = {
     onCreateDeployment: PropTypes.func.isRequired
 };
 
@@ -829,4 +829,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateDeployment);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateDeployment);

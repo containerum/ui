@@ -14,7 +14,7 @@ import ServiceForm from './ServiceForm';
 import createDepServ from '../../images/create-dep-serv.svg';
 // import icon from '../../images/icon-create-dep.svg';
 
-class CreateService extends Component {
+class UpdateService extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -236,7 +236,7 @@ class CreateService extends Component {
     }
 }
 
-CreateService.propTypes = {
+UpdateService.propTypes = {
     onGetCreateIntService: PropTypes.func.isRequired,
 	onGetCreateExtService: PropTypes.func.isRequired,
     onGetDeployments: PropTypes.func,
@@ -268,4 +268,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateService);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateService);
