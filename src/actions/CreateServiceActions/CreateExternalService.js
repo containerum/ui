@@ -13,7 +13,7 @@ import {
 
 export function getCreateExtService(idName, data) {
     return dispatch => {
-        dispatch(requestGetCreateService());
+        dispatch(requestCreateExtService());
         let token = '';
         let browser = '';
         if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
@@ -33,6 +33,7 @@ export function getCreateExtService(idName, data) {
 			    protocol: item.extServiceType,
 		    })
 	    });
+	    let idServ = idName;
         return axios.post(
             WEB_API + '/api/namespaces/' + idName + '/services',
 	        extObj,
@@ -47,8 +48,9 @@ export function getCreateExtService(idName, data) {
         )
         .then(response => {
 	        if (response.status === 201) {
-		        console.log(response.data);
-		        dispatch(receiveGetCreateService(response.data, response.status, idName));
+		        // console.log(response.data);
+		        idServ = `External service ${response.data.name} for ${extObj.deployment_name}`;
+		        dispatch(receiveCreateExtService(response.data, response.status, idServ));
 		        if (typeof window !== 'undefined') {
 			        browserHistory.push('/Namespaces');
 		        }
@@ -57,35 +59,35 @@ export function getCreateExtService(idName, data) {
 		        browserHistory.push('/Login');
 	        } else {
                 console.log(response);
-                dispatch(failGetCreateService(response.data.message, response.status, idName));
+                dispatch(failCreateExtService(response.data.message, response.status, idServ));
             }
-        }).catch(err => {dispatch(failGetCreateService(err.toString(), 503, idName)); console.log(err)});
+        }).catch(err => {dispatch(failCreateExtService(err.toString(), 503, idServ)); console.log(err)});
     };
 }
 
-function requestGetCreateService() {
+function requestCreateExtService() {
     return {
         type: CREATE_EXT_SERVICE_REQUEST,
         isFetching: true
     };
 }
 
-function receiveGetCreateService(data, status, idName) {
+function receiveCreateExtService(data, status, idServ) {
     return {
         type: CREATE_EXT_SERVICE_SUCCESS,
         isFetching: false,
         data,
 	    status,
-	    idName
+	    idServ
     };
 }
 
-function failGetCreateService(message, status, idName) {
+function failCreateExtService(message, status, idServ) {
     return {
         type: CREATE_EXT_SERVICE_FAILURE,
         isFetching: false,
 	    message,
 	    status,
-	    idName
+	    idServ
     };
 }

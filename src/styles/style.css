@@ -570,6 +570,7 @@ h1{
 .form-group__input-text.form-control{
     font-weight: 300;
     /*color: #a7a7a7;*/
+    color: #333333;
     border: none ;
     border-bottom: 1.5px solid #eaeaea;
     padding: 7px 0 8px 0;

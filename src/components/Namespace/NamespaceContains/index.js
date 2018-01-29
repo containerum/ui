@@ -30,26 +30,26 @@ class NamespaceContains extends Component {
                                     </li>
                                 </ul>
                             </div>
-                            {/*{*/}
-	                            {/*pathname.indexOf('/Services') + 1 ?*/}
-	                            {/*<div className="content-block-header-extra-panel">*/}
-                                    {/*<div className="content-block-header-extra-panel">*/}
-                                        {/*<Link*/}
-                                            {/*to={`/Namespaces/${this.props.idName}/CreateService`}*/}
-                                            {/*className="button_blue btn btn-outline-primary">Create</Link>*/}
-                                    {/*</div>*/}
-                                {/*</div> : ''*/}
-                            {/*}*/}
-                            {/*{*/}
-	                            {/*pathname.indexOf('/Deployments') + 1 ?*/}
-	                            {/*<div className="content-block-header-extra-panel">*/}
-                                    {/*<div className="content-block-header-extra-panel">*/}
-                                        {/*<Link*/}
-                                            {/*to={`/Namespaces/${this.props.idName}/CreateDeployment`}*/}
-                                            {/*className="button_blue btn btn-outline-primary">Create</Link>*/}
-                                    {/*</div>*/}
-                                {/*</div> : ''*/}
-                            {/*}*/}
+                            {
+	                            pathname.indexOf('/Services') + 1 ?
+	                            <div className="content-block-header-extra-panel">
+                                    <div className="content-block-header-extra-panel">
+                                        <Link
+                                            to={`/Namespaces/${this.props.idName}/CreateService`}
+                                            className="button_blue btn btn-outline-primary">Create</Link>
+                                    </div>
+                                </div> : ''
+                            }
+                            {
+	                            pathname.indexOf('/Deployments') + 1 ?
+	                            <div className="content-block-header-extra-panel">
+                                    <div className="content-block-header-extra-panel">
+                                        <Link
+                                            to={`/Namespaces/${this.props.idName}/CreateDeployment`}
+                                            className="button_blue btn btn-outline-primary">Create</Link>
+                                    </div>
+                                </div> : ''
+                            }
                         </div>
                         {this.props.children}
                     </div>

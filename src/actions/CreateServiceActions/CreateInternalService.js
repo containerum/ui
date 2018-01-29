@@ -13,7 +13,7 @@ import {
 
 export function getCreateIntService(idName, data) {
     return dispatch => {
-        dispatch(requestGetCreateService());
+        dispatch(requestCreateIntService());
         let token = '';
         let browser = '';
         if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
@@ -34,7 +34,7 @@ export function getCreateIntService(idName, data) {
 			    protocol: item.intServiceType,
 		    })
 	    });
-        // console.log(intObj);
+	    let idServ = idName;
         return axios.post(
             WEB_API + '/api/namespaces/' + idName + '/services',
 	        intObj,
@@ -49,8 +49,9 @@ export function getCreateIntService(idName, data) {
         )
         .then(response => {
 	        if (response.status === 201) {
-		        console.log(response.data);
-		        dispatch(receiveGetCreateService(response.data, response.status, idName));
+		        // console.log(response.data);
+		        idServ = `Internal service ${response.data.name} for ${intObj.deployment_name}`;
+		        dispatch(receiveCreateIntService(response.data, response.status, idServ));
 		        if (typeof window !== 'undefined') {
 			        browserHistory.push('/Namespaces');
 		        }
@@ -58,36 +59,35 @@ export function getCreateIntService(idName, data) {
 		        localStorage.removeItem('id_token');
 		        browserHistory.push('/Login');
 	        } else {
-                console.log(response);
-                dispatch(failGetCreateService(response.data.message, response.status, idName));
+                dispatch(failCreateIntService(response.data.message, response.status, idServ));
             }
-        }).catch(err => {dispatch(failGetCreateService(err.toString(), 503, idName)); console.log(err)});
+        }).catch(err => {dispatch(failCreateIntService(err.toString(), 503, idServ)); console.log(err)});
     };
 }
 
-function requestGetCreateService() {
+function requestCreateIntService() {
     return {
         type: CREATE_INT_SERVICE_REQUEST,
         isFetching: true
     };
 }
 
-function receiveGetCreateService(data, status, idName) {
+function receiveCreateIntService(data, status, idServ) {
     return {
         type: CREATE_INT_SERVICE_SUCCESS,
         isFetching: false,
         data,
 	    status,
-	    idName
+	    idServ
     };
 }
 
-function failGetCreateService(message, status, idName) {
+function failCreateIntService(message, status, idServ) {
     return {
         type: CREATE_INT_SERVICE_FAILURE,
         isFetching: false,
 	    message,
 	    status,
-	    idName
+	    idServ
     };
 }

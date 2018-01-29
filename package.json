@@ -134,6 +134,7 @@
     "body-parser": "^1.17.2",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "2.3.0",
+    "clone-deep": "^3.0.1",
     "compression": "1.7.1",
     "config": "^1.26.1",
     "console-stream": "^0.1.1",
