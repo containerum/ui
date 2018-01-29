@@ -198,6 +198,11 @@ class CreateService extends Component {
 		            name={this.props.CreateIntServiceReducer.idServ}
 		            errorMessage={this.props.CreateIntServiceReducer.errorMessage}
 	            />
+	            <Notification
+		            status={this.props.CreateExtServiceReducer.status}
+		            name={this.props.CreateExtServiceReducer.idServ}
+		            errorMessage={this.props.CreateExtServiceReducer.errorMessage}
+	            />
 	            <div className="container-fluid breadcrumbNavigation">
 		            <HeaderDropDown
 			            idName={this.props.params.idName}
