@@ -72,9 +72,9 @@ class ServiceForm extends Component {
 			});
 		}
 		if (e.target.value.length === 0) {
-			document.getElementById(`int-service-port-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`int-service-port-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`int-service-port-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`int-service-port-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeIntServiceName(e, id, index) {
@@ -92,9 +92,9 @@ class ServiceForm extends Component {
 			this.props.handleSubmitForm(this.state);
 		});
 		if (e.target.value.length === 0) {
-			document.getElementById(`int-service-name-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`int-service-name-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`int-service-name-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`int-service-name-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeIntServiceTargetPort(e, id, index) {
@@ -116,9 +116,9 @@ class ServiceForm extends Component {
 			});
 		}
 		if (e.target.value.length === 0) {
-			document.getElementById(`int-service-target-port-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`int-service-target-port-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`int-service-target-port-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`int-service-target-port-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeIntServiceType(e, id, index) {
@@ -153,7 +153,7 @@ class ServiceForm extends Component {
 			this.props.handleSubmitForm(this.state);
 		})
 	}
-	handleClickRemoveIntServicePort(id) {
+	handleClickRemoveIntServicePort(id, index) {
 		if (this.state.internalServObj.length > 1) {
 			const nextLabels = Object.assign({}, this.state).internalServObj.filter((item) => {
 				return item.id !== id;
@@ -167,6 +167,7 @@ class ServiceForm extends Component {
 			this.setState({
 				...this.state,
 				internalServObj: [{
+					internalServName: '',
 					internalServPort: '',
 					internalServTargetPort: '',
 					intServiceType: 'TCP',
@@ -174,6 +175,12 @@ class ServiceForm extends Component {
 					index: 1
 				}]
 			}, () => {
+				document.getElementById(`int-service-name-form-group__label${index}${id}`) ?
+					document.getElementById(`int-service-name-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
+				document.getElementById(`int-service-port-form-group__label${index}${id}`) ?
+					document.getElementById(`int-service-port-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
+				document.getElementById(`int-service-target-port-form-group__label${index}${id}`) ?
+					document.getElementById(`int-service-target-port-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
 				this.props.handleSubmitForm(this.state);
 			});
 		}
@@ -212,9 +219,9 @@ class ServiceForm extends Component {
 			this.props.handleSubmitForm(this.state);
 		});
 		if (e.target.value.length === 0) {
-			document.getElementById(`ext-service-name-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`ext-service-name-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`ext-service-name-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`ext-service-name-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeExtServicePort(e, id, index) {
@@ -236,9 +243,9 @@ class ServiceForm extends Component {
 			});
 		}
 		if (e.target.value.length === 0) {
-			document.getElementById(`ext-service-port-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`ext-service-port-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`ext-service-port-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`ext-service-port-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeExtServiceType(e, id, index) {
@@ -256,7 +263,7 @@ class ServiceForm extends Component {
 			this.props.handleSubmitForm(this.state);
 		});
 	}
-	handleClickRemoveExtServicePort(id) {
+	handleClickRemoveExtServicePort(id, index) {
 		if (this.state.externalServObj.length > 1) {
 			const nextLabels = Object.assign({}, this.state).externalServObj.filter((item) => {
 				return item.id !== id;
@@ -270,12 +277,17 @@ class ServiceForm extends Component {
 			this.setState({
 				...this.state,
 				externalServObj: [{
+					externalServName: '',
 					externalServPort: '',
 					extServiceType: 'TCP',
 					id: '_first',
 					index: 1
 				}]
 			}, () => {
+				document.getElementById(`ext-service-name-form-group__label${index}${id}`) ?
+					document.getElementById(`ext-service-name-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
+				document.getElementById(`ext-service-port-form-group__label${index}${id}`) ?
+					document.getElementById(`ext-service-port-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
 				this.props.handleSubmitForm(this.state);
 			});
 		}
@@ -384,15 +396,15 @@ class ServiceForm extends Component {
 																required title="3 characters minimum"
 																value={this.state.internalServObj[index].id === id &&
 																this.state.internalServObj[index].internalServName}
-																id={`int-service-name${index}`}
+																id={`int-service-name${index}${id}`}
 																onChange={(e) => this.onChangeIntServiceName(e, id, index)}
 															/>
 															<label
 																className="form-group__label"
-																id={`int-service-name-form-group__label${index}`}
-																htmlFor={`int-service-name${index}`}
+																id={`int-service-name-form-group__label${index}${id}`}
+																htmlFor={`int-service-name${index}${id}`}
 															>Name</label>
-															{index === 0 && <div className="helperText">The name of Internal Service</div>}
+															{index === 0 && <div className="helperText">The port name of Internal Service</div>}
 														</div>
 													</div>
 												</div>
@@ -407,13 +419,13 @@ class ServiceForm extends Component {
 																max="65535"
 																value={this.state.internalServObj[index].id === id &&
 																this.state.internalServObj[index].internalServPort}
-																id={`int-service-port${index}`}
+																id={`int-service-port${index}${id}`}
 																onChange={(e) => this.onChangeIntServicePort(e, id, index)}
 															/>
 															<label
 																className="form-group__label"
-																id={`int-service-port-form-group__label${index}`}
-																htmlFor={`int-service-port${index}`}
+																id={`int-service-port-form-group__label${index}${id}`}
+																htmlFor={`int-service-port${index}${id}`}
 															>Port</label>
 															{index === 0 && <div className="helperText">The port of Internal Service</div>}
 														</div>
@@ -430,13 +442,13 @@ class ServiceForm extends Component {
 																max="65535"
 																value={this.state.internalServObj[index].id === id &&
 																this.state.internalServObj[index].internalServTargetPort}
-																id={`int-service-target-port${index}`}
+																id={`int-service-target-port${index}${id}`}
 																onChange={(e) => this.onChangeIntServiceTargetPort(e, id, index)}
 															/>
 															<label
 																className="form-group__label"
-																id={`int-service-target-port-form-group__label${index}`}
-																htmlFor={`int-service-target-port${index}`}
+																id={`int-service-target-port-form-group__label${index}${id}`}
+																htmlFor={`int-service-target-port${index}${id}`}
 															>Target Port</label>
 															{index === 0 && <div className="helperText">The target port into your Container</div>}
 														</div>
@@ -463,7 +475,7 @@ class ServiceForm extends Component {
 												</div>
 												<div
 													className="col-md-1"
-													onClick={() => this.handleClickRemoveIntServicePort(id)}
+													onClick={() => this.handleClickRemoveIntServicePort(id, index)}
 												>
 													<img
 														src={icon}
@@ -575,7 +587,7 @@ class ServiceForm extends Component {
 															/>
 															<label
 																className="form-group__label"
-																id={`ext-service-name-form-group__label${index}`}
+																id={`ext-service-name-form-group__label${index}${id}`}
 																htmlFor={`ext-service-name${index}`}
 															>Name</label>
 															{index === 0 && <div className="helperText">The name of Internal Service</div>}
@@ -598,7 +610,7 @@ class ServiceForm extends Component {
 															/>
 															<label
 																className="form-group__label"
-																id={`ext-service-port-form-group__label${index}`}
+																id={`ext-service-port-form-group__label${index}${id}`}
 																htmlFor={`ext-service-port${index}`}
 															>Port</label>
 															{index === 0 && <div className="helperText">The target port into your Container</div>}
@@ -626,7 +638,7 @@ class ServiceForm extends Component {
 												</div>
 												<div
 													className="col-md-1"
-													onClick={() => this.handleClickRemoveExtServicePort(id)}
+													onClick={() => this.handleClickRemoveExtServicePort(id, index)}
 												>
 													<img
 														src={icon}

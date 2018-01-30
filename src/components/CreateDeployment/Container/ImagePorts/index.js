@@ -33,10 +33,10 @@ class ImagePorts extends Component {
 			this.props.onChangeInputImagePorts(this.state.ports);
 		})
 	}
-	handleClickRemoveImagePort(id) {
+	handleClickRemoveImagePort(id, index) {
 		if (this.state.ports.length > 1) {
 			const nextLabels = Object.assign({}, this.state).ports.filter((item) => {
-				return item.id !== id;
+				return item.id !== id && item.index === index;
 			});
 			this.setState({
 				ports: nextLabels
@@ -44,7 +44,15 @@ class ImagePorts extends Component {
 				this.props.onChangeInputImagePorts(this.state.ports);
 			});
 		} else {
-			this.setState(this.initialState(), () => {
+			this.setState({
+				ports: [{
+					containerPort: '',
+					id,
+					index
+				}]
+			}, () => {
+				document.getElementById(`port-name-form-group__label${index}${id}`) ?
+					document.getElementById(`port-name-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
 				// console.log(this.state.ports);
 				this.props.onChangeInputImagePorts(this.state.ports);
 			});
@@ -107,16 +115,16 @@ class ImagePorts extends Component {
 									        onChange={(e) => {
 										        this.handleChangeInputImagePort(e, id, this.props.index);
 										        if (e.target.value.length === 0) {
-											        document.getElementById(`port-name-form-group__label${id}`).classList.remove('form-group__label-always-onfocus');
+											        document.getElementById(`port-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
 										        } else {
-											        document.getElementById(`port-name-form-group__label${id}`).classList.add('form-group__label-always-onfocus');
+											        document.getElementById(`port-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
 										        }
 									        }}
 								        />
 								        <label
 									        className="form-group__label"
-									        id={`port-name-form-group__label${id}`}
 									        htmlFor={`port${this.props.index}${id}`}
+									        id={`port-name-form-group__label${this.props.index}${id}`}
 								        >Port</label>
 								        {/*{index === 0 && <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>}*/}
 							        </div>
@@ -124,7 +132,7 @@ class ImagePorts extends Component {
 						        <div className="col-md-5 myColumn"> </div>
 						        <div
 							        className="col-md-1"
-							        onClick={() => this.handleClickRemoveImagePort(id)}
+							        onClick={() => this.handleClickRemoveImagePort(id, this.props.index)}
 						        >
 							        <img src={icon} alt="delete" className="iconBasket" />
 						        </div>

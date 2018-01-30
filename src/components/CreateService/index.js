@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import Scrollspy from 'react-scrollspy';
-import Tooltip from 'rc-tooltip';
+// import Tooltip from 'rc-tooltip';
 
 import { getCreateIntService } from '../../actions/CreateServiceActions/CreateInternalService';
 import { getCreateExtService } from '../../actions/CreateServiceActions/CreateExternalService';

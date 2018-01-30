@@ -35,10 +35,10 @@ class Enviroments extends Component {
 			this.props.onChangeInputEnv(this.state.env);
 		})
 	}
-	handleClickRemoveEnviroments(id) {
+	handleClickRemoveEnviroments(id, index) {
 		if (this.state.env.length > 1) {
 			const nextLabels = Object.assign({}, this.state).env.filter((item) => {
-				return item.id !== id;
+				return item.id !== id && item.index === index;
 			});
 			this.setState({
 				env: nextLabels
@@ -46,7 +46,18 @@ class Enviroments extends Component {
 				this.props.onChangeInputEnv(this.state.env);
 			});
 		} else {
-			this.setState(this.initialState(), () => {
+			document.getElementById(`env-name-form-group__label${this.props.index}${id}`) ?
+				document.getElementById(`env-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
+			document.getElementById(`value-name-form-group__label${this.props.index}${id}`) ?
+				document.getElementById(`value-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
+			this.setState({
+				env: [{
+					value: '',
+					name: '',
+					id,
+					index
+				}]
+			}, () => {
 				this.props.onChangeInputEnv(this.state.env);
 			});
 		}
@@ -110,7 +121,7 @@ class Enviroments extends Component {
 							        <div className="form-group">
 								        <input
 									        className="form-group__input-text form-control customInput"
-									        id={`envName${index}${this.props.index}`}
+									        id={`envName${this.props.index}${id}`}
 									        type="text"
 									        pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])?$|^$"
 									        title="Name can only contain letters, numbers and characters"
@@ -119,16 +130,16 @@ class Enviroments extends Component {
 									        onChange={(e) => {
 										        this.handleChangeInputEnviromentsName(e, id, this.props.index);
 										        if (e.target.value.length === 0) {
-											        document.getElementById(`env-name-form-group__label${index}${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+											        document.getElementById(`env-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
 										        } else {
-											        document.getElementById(`env-name-form-group__label${index}${this.props.index}`).classList.add('form-group__label-always-onfocus');
+											        document.getElementById(`env-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
 										        }
 									        }}
 								        />
 								        <label
 									        className="form-group__label"
-									        htmlFor={`envName${index}${this.props.index}`}
-									        id={`env-name-form-group__label${index}${this.props.index}`}
+									        htmlFor={`envName${this.props.index}${id}`}
+									        id={`env-name-form-group__label${this.props.index}${id}`}
 								        >Name</label>
 								        {index === 0 && <div className="form-group__helper helperText">The Enviroments instruction sets the environment variable {`<key>`} to the value {`<value>`}.</div>}
 							        </div>
@@ -137,7 +148,7 @@ class Enviroments extends Component {
 							        <div className="form-group">
 								        <input
 									        className="form-group__input-text form-control customInput"
-									        id={`envValue${index}${this.props.index}`}
+									        id={`envValue${this.props.index}${id}`}
 									        type="text"
 									        pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])?$|^$"
 									        title="Value can only contain letters, numbers and characters"
@@ -146,23 +157,23 @@ class Enviroments extends Component {
 									        onChange={(e) => {
 										        this.handleChangeInputEnviromentsValue(e, id, this.props.index);
 										        if (e.target.value.length === 0) {
-											        document.getElementById(`value-name-form-group__label${index}${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+											        document.getElementById(`value-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
 										        } else {
-											        document.getElementById(`value-name-form-group__label${index}${this.props.index}`).classList.add('form-group__label-always-onfocus');
+											        document.getElementById(`value-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
 										        }
 									        }}
 								        />
 								        <label
 									        className="form-group__label"
-									        htmlFor={`envValue${index}${this.props.index}`}
-									        id={`value-name-form-group__label${index}${this.props.index}`}
+									        htmlFor={`envValue${this.props.index}${id}`}
+									        id={`value-name-form-group__label${this.props.index}${id}`}
 								        >Value</label>
 								        {/*{index === 0 && <div className="form-group__helper helperText">Your Deployment name can only contain alphanumeric and characters</div>}*/}
 							        </div>
 						        </div>
 						        <div
 							        className="col-md-1"
-							        onClick={() => this.handleClickRemoveEnviroments(id)}
+							        onClick={() => this.handleClickRemoveEnviroments(id, this.props.index)}
 						        >
 							        <img src={icon} alt="delete" className="iconBasket" />
 						        </div>
