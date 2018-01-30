@@ -9,6 +9,7 @@ import { getNamespace } from '../../actions/NamespaceActions/getNamespaceAction'
 import { getVolumesByNSAction } from '../../actions/VolumesActions/getVolumesByNSAction';
 import { getCreateIntService } from '../../actions/CreateServiceActions/CreateInternalService';
 import { getCreateExtService } from '../../actions/CreateServiceActions/CreateExternalService';
+import MiniSpinner from '../MiniSpinner';
 import Notification from '../Notification';
 import ServiceForm from '../CreateService/ServiceForm';
 import HeaderDropDown from '../HeaderDropDown';
@@ -412,6 +413,12 @@ class CreateDeployment extends Component {
 	}
     render() {
 		// console.log('this.state', this.state);
+	    const submitButtonText = this.props.CreateDeploymentReducer.isFetching ?
+		    <MiniSpinner /> : 'Create deployment';
+	    const isActiveSubmitButton = this.props.CreateDeploymentReducer.isFetching ?
+		    'btnDeployment btnService disabled' :
+		    'btnDeployment btnService';
+	    const isActiveSubmitState = !!this.props.CreateDeploymentReducer.isFetching;
 	    let isFetchingComponent = '';
 	    let isFetchingSidebar = '';
 	    if (!this.props.VolumesByNSReducer.isFetching &&
@@ -478,9 +485,13 @@ class CreateDeployment extends Component {
 					    }
 				    </div>
 				    <button
+					    ref="button"
 					    type="submit"
-					    className="btnDeployment"
-				    >Create deployment</button>
+					    className={isActiveSubmitButton}
+					    disabled={isActiveSubmitState}
+				    >
+					    { submitButtonText }
+				    </button>
 			    </form>;
 		    const arrayOfContainersLinks = [
 			    'name',
@@ -758,6 +769,17 @@ class CreateDeployment extends Component {
 								    key={index}
 								    src={require('../../images/profile-sidebar-small.svg')}
 								    style={{marginBottom: '20px', float: 'right'}}
+							    />
+						    )
+					    })
+				    }
+				    {
+					    new Array(1).fill().map((item, index) => {
+						    return (
+							    <img
+								    key={index}
+								    src={require('../../images/profile-sidebar-big.svg')}
+								    style={{width: '100%', marginBottom: '20px'}}
 							    />
 						    )
 					    })

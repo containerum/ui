@@ -54,28 +54,25 @@ class ServiceForm extends Component {
 		}
 	}
 	onChangeIntServicePort(e, id, index) {
-		const regexp = /^[0-9]{0,5}$|^$/;
 		const portToInt = e.target.value ? parseInt(e.target.value, 10) : '';
-		if (e.target.value.search(regexp) !== -1) {
-			const nextState = Object.assign({}, this.state);
-			nextState.internalServObj.filter(item => {
-				if (item.id === id) {
-					item.internalServPort = portToInt;
-					item.index = index + 1;
-				}
-			});
-			this.setState({
-				...this.state,
-				internalServObj: nextState.internalServObj
-			}, () => {
-				this.props.handleSubmitForm(this.state);
-			});
-		}
 		if (e.target.value.length === 0) {
 			document.getElementById(`int-service-port-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
 			document.getElementById(`int-service-port-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
+		const nextState = Object.assign({}, this.state);
+		nextState.internalServObj.filter(item => {
+			if (item.id === id) {
+				item.internalServPort = portToInt;
+				item.index = index + 1;
+			}
+		});
+		this.setState({
+			...this.state,
+			internalServObj: nextState.internalServObj
+		}, () => {
+			this.props.handleSubmitForm(this.state);
+		});
 	}
 	onChangeIntServiceName(e, id, index) {
 		const nextState = Object.assign({}, this.state);
@@ -98,28 +95,25 @@ class ServiceForm extends Component {
 		}
 	}
 	onChangeIntServiceTargetPort(e, id, index) {
-		const regexp = /^[0-9]{0,5}$|^$/;
 		const portToInt = e.target.value ? parseInt(e.target.value, 10) : '';
-		if (e.target.value.search(regexp) !== -1) {
-			const nextState = Object.assign({}, this.state);
-			nextState.internalServObj.filter(item => {
-				if (item.id === id) {
-					item.internalServTargetPort = portToInt;
-					item.index = index + 1;
-				}
-			});
-			this.setState({
-				...this.state,
-				internalServObj: nextState.internalServObj
-			}, () => {
-				this.props.handleSubmitForm(this.state);
-			});
-		}
 		if (e.target.value.length === 0) {
 			document.getElementById(`int-service-target-port-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
 			document.getElementById(`int-service-target-port-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
+		const nextState = Object.assign({}, this.state);
+		nextState.internalServObj.filter(item => {
+			if (item.id === id) {
+				item.internalServTargetPort = portToInt;
+				item.index = index + 1;
+			}
+		});
+		this.setState({
+			...this.state,
+			internalServObj: nextState.internalServObj
+		}, () => {
+			this.props.handleSubmitForm(this.state);
+		});
 	}
 	onChangeIntServiceType(e, id, index) {
 		const nextState = Object.assign({}, this.state);
@@ -225,28 +219,25 @@ class ServiceForm extends Component {
 		}
 	}
 	onChangeExtServicePort(e, id, index) {
-		const regexp = /^[0-9]{0,5}$|^$/;
 		const portToInt = e.target.value ? parseInt(e.target.value, 10) : '';
-		if (e.target.value.search(regexp) !== -1) {
-			const nextState = Object.assign({}, this.state);
-			nextState.externalServObj.filter(item => {
-				if (item.id === id) {
-					item.externalServPort = portToInt;
-					item.index = index + 1;
-				}
-			});
-			this.setState({
-				...this.state,
-				externalServObj: nextState.externalServObj
-			}, () => {
-				this.props.handleSubmitForm(this.state);
-			});
-		}
 		if (e.target.value.length === 0) {
 			document.getElementById(`ext-service-port-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
 			document.getElementById(`ext-service-port-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
+		const nextState = Object.assign({}, this.state);
+		nextState.externalServObj.filter(item => {
+			if (item.id === id) {
+				item.externalServPort = portToInt;
+				item.index = index + 1;
+			}
+		});
+		this.setState({
+			...this.state,
+			externalServObj: nextState.externalServObj
+		}, () => {
+			this.props.handleSubmitForm(this.state);
+		});
 	}
 	onChangeExtServiceType(e, id, index) {
 		const nextState = Object.assign({}, this.state);
@@ -415,7 +406,7 @@ class ServiceForm extends Component {
 																className="form-group__input-text form-control customInput"
 																type="number"
 																required
-																min="1"
+																min="10000"
 																max="65535"
 																value={this.state.internalServObj[index].id === id &&
 																this.state.internalServObj[index].internalServPort}
@@ -438,7 +429,7 @@ class ServiceForm extends Component {
 																className="form-group__input-text form-control customInput"
 																type="number"
 																required
-																min="1"
+																min="10000"
 																max="65535"
 																value={this.state.internalServObj[index].id === id &&
 																this.state.internalServObj[index].internalServTargetPort}
@@ -601,7 +592,7 @@ class ServiceForm extends Component {
 																className="form-group__input-text form-control customInput"
 																type="number"
 																required
-																min="1"
+																min="10000"
 																max="65535"
 																value={this.state.externalServObj[index].id === id &&
 																this.state.externalServObj[index].externalServPort}

@@ -8,6 +8,7 @@ import Scrollspy from 'react-scrollspy';
 import { getCreateIntService } from '../../actions/CreateServiceActions/CreateInternalService';
 import { getCreateExtService } from '../../actions/CreateServiceActions/CreateExternalService';
 import { getDeployments } from '../../actions/DeploymentsActions';
+import MiniSpinner from '../MiniSpinner';
 import Notification from '../Notification';
 import HeaderDropDown from '../HeaderDropDown';
 import ServiceForm from './ServiceForm';
@@ -92,7 +93,14 @@ class CreateService extends Component {
 	}
     render() {
 	    // console.log(this.state.externalServObj);
+	    const submitButtonText = (this.props.CreateIntServiceReducer.isFetching || this.props.CreateExtServiceReducer.isFetching) ?
+		    <MiniSpinner /> : 'Create service';
+	    const isActiveSubmitButton = (this.props.CreateIntServiceReducer.isFetching || this.props.CreateExtServiceReducer.isFetching) ?
+		    'btnDeployment btnService disabled' :
+		    'btnDeployment btnService';
+	    const isActiveSubmitState = !!(this.props.CreateIntServiceReducer.isFetching || this.props.CreateExtServiceReducer.isFetching);
 	    let isFetchingComponent = '';
+	    let isFetchingSidebar = '';
 	    if (!this.props.DeploymentsReducer.isFetching) {
 		    isFetchingComponent =
 			    <div>
@@ -163,12 +171,33 @@ class CreateService extends Component {
 						    (this.state.isActiveInternal ||
 							    this.state.isActiveExternal) &&
 						    <button
-							    className="btnDeployment btnService"
+							    ref="button"
 							    type="submit"
-						    >Create service</button>
+							    className={isActiveSubmitButton}
+							    disabled={isActiveSubmitState}
+						    >
+							    { submitButtonText }
+						    </button>
 					    }
 				    </form>
 			    </div>;
+		    isFetchingSidebar =
+			    <Scrollspy
+				    items={[
+					    'target-deployment',
+					    'internal-service',
+					    'external-service'
+				    ]}
+				    style={{
+					    padding: '50px 0',
+					    margin: '-40px 0 0'
+				    }}
+				    currentClassName="active"
+			    >
+				    <div className="sideMenuHeader"><a href="#target-deployment">Target Deployment</a></div>
+				    <div className="sideMenuHeader"><a href="#internal-service">Internal Service</a></div>
+				    <div className="sideMenuHeader"><a href="#external-service">External Service</a></div>
+			    </Scrollspy>;
 	    } else {
 		    isFetchingComponent =
 			    <div>
@@ -183,6 +212,20 @@ class CreateService extends Component {
 									    marginBottom: '30px',
 									    width: '100%'
 								    }} />
+						    )
+					    })
+				    }
+			    </div>;
+		    isFetchingSidebar =
+			    <div style={{marginTop: '40px', width: '80%'}}>
+				    {
+					    new Array(3).fill().map((item, index) => {
+						    return (
+							    <img
+								    key={index}
+								    src={require('../../images/profile-sidebar-big.svg')}
+								    style={{width: '100%', marginBottom: '20px'}}
+							    />
 						    )
 					    })
 				    }
@@ -213,22 +256,7 @@ class CreateService extends Component {
 		            <div className="container no-back">
 			            <div className="row pageWidth">
 				            <div className="col-md-3 sideMenu" style={{padding: '20px 0px'}}>
-					            <Scrollspy
-						            items={[
-							            'target-deployment',
-							            'internal-service',
-							            'external-service'
-						            ]}
-						            style={{
-							            padding: '50px 0',
-							            margin: '-40px 0 0'
-						            }}
-						            currentClassName="active"
-					            >
-						            <div className="sideMenuHeader"><a href="#target-deployment">Target Deployment</a></div>
-						            <div className="sideMenuHeader"><a href="#internal-service">Internal Service</a></div>
-						            <div className="sideMenuHeader"><a href="#external-service">External Service</a></div>
-					            </Scrollspy>
+					            { isFetchingSidebar }
 				            </div>
 				            <div className="col-md-9 pageContent">
 					            { isFetchingComponent }

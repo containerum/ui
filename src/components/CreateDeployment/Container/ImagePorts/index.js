@@ -59,22 +59,24 @@ class ImagePorts extends Component {
 		}
 	}
 	handleChangeInputImagePort(e, id, index) {
-		const regexp = /^[0-9]{0,5}$|^$/;
 		const portToInt = e.target.value ? parseInt(e.target.value, 10) : '';
-		if (e.target.value.search(regexp) !== -1) {
-			const nextState = Object.assign({}, this.state);
-			nextState.ports.filter(item => {
-				if (item.id === id) {
-					item.containerPort = portToInt;
-					item.index = index;
-				}
-			});
-			this.setState({
-				ports: nextState.ports
-			}, () => {
-				this.props.onChangeInputImagePorts(this.state.ports);
-			});
+		if (e.target.value.length === 0) {
+			document.getElementById(`port-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
+		} else {
+			document.getElementById(`port-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
+		const nextState = Object.assign({}, this.state);
+		nextState.ports.filter(item => {
+			if (item.id === id) {
+				item.containerPort = portToInt;
+				item.index = index;
+			}
+		});
+		this.setState({
+			ports: nextState.ports
+		}, () => {
+			this.props.onChangeInputImagePorts(this.state.ports);
+		});
 	}
     render() {
 	    // console.log('props', this.props.item);
@@ -109,16 +111,13 @@ class ImagePorts extends Component {
 								        <input
 									        className="form-group__input-text form-control customInput"
 									        id={`port${this.props.index}${id}`}
-									        type="text"
+									        type="number"
+									        min="10000"
+									        max="65535"
 									        value={this.props.item.ports[index].id === id &&
 									        this.props.item.ports[index].containerPort}
 									        onChange={(e) => {
 										        this.handleChangeInputImagePort(e, id, this.props.index);
-										        if (e.target.value.length === 0) {
-											        document.getElementById(`port-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
-										        } else {
-											        document.getElementById(`port-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
-										        }
 									        }}
 								        />
 								        <label
