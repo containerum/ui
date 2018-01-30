@@ -31,7 +31,7 @@ class Label extends Component {
 			]
 		})
 	}
-	handleClickRemoveLabel(id) {
+	handleClickRemoveLabel(id, index) {
 		if (this.state.labels.length > 1) {
 			const nextLabels = Object.assign({}, this.state).labels.filter((item) => {
 				return item.id !== id;
@@ -42,6 +42,10 @@ class Label extends Component {
 				this.props.onChangeInputLabels(this.state.labels);
 			});
 		} else {
+			document.getElementById(`key-form-group__label${index}`) ?
+				document.getElementById(`key-form-group__label${index}`).classList.remove('form-group__label-always-onfocus') : null;
+			document.getElementById(`label-form-group__label${index}`) ?
+				document.getElementById(`label-form-group__label${index}`).classList.remove('form-group__label-always-onfocus') : null;
 			this.setState(this.initialState(), () => {
 				this.props.onChangeInputLabels(this.state.labels);
 			});
@@ -149,7 +153,7 @@ class Label extends Component {
 						        </div>
 						        <div
 							        className="col-md-1"
-							        onClick={() => this.handleClickRemoveLabel(id)}
+							        onClick={() => this.handleClickRemoveLabel(id, index)}
 						        >
 							        <img
 								        src={icon}
