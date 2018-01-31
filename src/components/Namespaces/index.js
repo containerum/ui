@@ -51,7 +51,7 @@ function mapStateToProps(state) {
     return {
         NamespacesReducer: state.NamespacesReducer,
 	    CreateIntServiceReducer: state.CreateIntServiceReducer,
-	    CreateExtServiceReducer: state.CreateExtServiceReducer,
+	    CreateExtServiceReducer: state.CreateExtServiceReducer
     };
 }
 

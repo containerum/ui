@@ -112,7 +112,7 @@ class ImagePorts extends Component {
 									        className="form-group__input-text form-control customInput"
 									        id={`port${this.props.index}${id}`}
 									        type="number"
-									        min="10000"
+									        min="0"
 									        max="65535"
 									        value={this.props.item.ports[index].id === id &&
 									        this.props.item.ports[index].containerPort}

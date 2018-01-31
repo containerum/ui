@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import service from '../../../images/service.png';
 import { getServices } from '../../../actions/ServicesActions';
 import NotFoundServices from '../NotFoundServices';
+import NavLink from "../../../containers/NavLink";
 
 class ServicesContains extends Component {
     constructor() {
@@ -95,6 +96,10 @@ class ServicesContains extends Component {
                                                 className="dropdown-item text-danger"
                                                 onClick={name => this.handleClickDeletingService(item.name)}
                                             >Delete</button>
+                                            <NavLink
+	                                            to={`/Namespaces/${this.props.idName}/UpdateService/${item.name}`}
+                                                className="dropdown-item"
+                                            >Update</NavLink>
                                         </ul>
                                     </td>
                                 </tr>

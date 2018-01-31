@@ -429,7 +429,7 @@ class ServiceForm extends Component {
 																className="form-group__input-text form-control customInput"
 																type="number"
 																required
-																min="10000"
+																min="1"
 																max="65535"
 																value={this.state.internalServObj[index].id === id &&
 																this.state.internalServObj[index].internalServTargetPort}

@@ -51,6 +51,8 @@ import DeleteImageTokensReducer from './TokensReducers/DeleteImageTokensReducer'
 import GetVolumeReducer from './VolumeReducers/GetVolumeReducer';
 import DeleteVolumeReducer from './VolumeReducers/DeleteVolumeReducer';
 import UpdateVolumeReducer from './VolumeReducers/UpdateVolumeReducer';
+import UpdateExtServiceReducer from './ServiceReducers/UpdateExtServiceReducer';
+import UpdateIntServiceReducer from './ServiceReducers/UpdateIntServiceReducer';
 
 const rootReducer = combineReducers({
     LoginReducer,
@@ -103,7 +105,9 @@ const rootReducer = combineReducers({
     DeleteImageTokensReducer,
     GetVolumeReducer,
     DeleteVolumeReducer,
-    UpdateVolumeReducer
+    UpdateVolumeReducer,
+	UpdateExtServiceReducer,
+	UpdateIntServiceReducer
 });
 
 export default rootReducer;
