@@ -112,6 +112,24 @@ class HeaderDropDown extends Component {
 				    </li>
 			    </div>
         }
+	    let IdUpdate = '';
+	    if (this.props.IdUpdate === "service") {
+		    IdUpdate =
+			    <div className="d-flex">
+				    <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">/</li>
+				    <li className="breadcrumbs__li nav-item">
+					    <div className="breadcrumbs__link">Update {this.props.typeOfUpdateService} Service</div>
+				    </li>
+			    </div>
+	    } else if (this.props.IdUpdate === "deployment") {
+		    IdUpdate =
+			    <div className="d-flex">
+				    <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">/</li>
+				    <li className="breadcrumbs__li nav-item">
+					    <div className="breadcrumbs__link">Update Deployment</div>
+				    </li>
+			    </div>
+        }
         if (this.props.idPod ||
             this.props.idDep ||
             this.props.idService) {
@@ -136,6 +154,7 @@ class HeaderDropDown extends Component {
                             {isIdDep}
                             {idPod}
 	                        {IdCreate}
+	                        {IdUpdate}
                         </ul>
                     </div>
                 </div>
@@ -154,6 +173,8 @@ HeaderDropDown.propTypes = {
     idPod: PropTypes.string,
     idService: PropTypes.string,
 	IdCreate: PropTypes.string,
+	IdUpdate: PropTypes.string,
+	typeOfUpdateService: PropTypes.string,
     NamespacesReducer: PropTypes.object
 };
 

@@ -57,11 +57,11 @@ export default (
             <Route path="/CreateNamespace" component={CreateNamespace} />
             <Route path="/Namespaces/:idName/Resize" component={UpdateNamespace} />
             <Route path="/Namespaces/:idName/CreateDeployment" component={CreateDeployment} />
-            {/*<Route path="/Namespaces/:idName/UpdateDeployment" component={UpdateDeployment} />*/}
+            <Route path="/Namespaces/:idName/UpdateDeployment/:idDep" component={UpdateDeployment} />
             <Route path="/CreateVolume" component={CreateVolume} />
             <Route path="/Volumes/:idVolume/Resize" component={UpdateVolume} />
 		    <Route path="/Namespaces/:idName/CreateService" component={CreateService} />
-		    {/*<Route path="/Namespaces/:idName/UpdateService" component={UpdateService} />*/}
+		    <Route path="/Namespaces/:idName/UpdateService/:idService" component={UpdateService} />
             <Route path="/Support" component={Support} />
             <Route path="/Support/SuccessTicket" component={SuccessTicket} />
             <Route path="/Account" component={Account} />

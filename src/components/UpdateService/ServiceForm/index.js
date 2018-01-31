@@ -9,48 +9,26 @@ import icon from '../../../images/icon-create-dep.svg';
 class ServiceForm extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			currentDeployment: this.props.currentDeployment,
-			isActiveInternal: false,
-			isActiveExternal: false,
-			internalServObj: [{
-				internalServName: '',
-				internalServPort: '',
-				internalServTargetPort: '',
-				intServiceType: 'TCP',
-				id: '_first',
-				index: 1
-			}],
-			internalServName: '',
-			externalServObj: [{
-				externalServName: '',
-				externalServPort: '',
-				extServiceType: 'TCP',
-				id: '_first',
-				index: 1
-			}],
-			externalServName: '',
-		};
+		this.state = this.props.state;
 	}
-	handleChangeInternal() {
-		if (this.props.currentDeployment) {
-
-			this.setState({
-				...this.state,
-				currentDeployment: this.props.currentDeployment,
-				isActiveInternal: !this.state.isActiveInternal,
-				internalServObj: [{
-					internalServName: '',
-					internalServPort: '',
-					internalServTargetPort: '',
-					intServiceType: 'TCP',
-					id: '_first',
-					index: 1
-				}]
-			}, () => {
-				this.props.handleSubmitForm(this.state);
-			})
-			this.props.handleChangeActivityInternal();
+	componentDidMount() {
+		if (this.props.state.internalServObj.length) {
+			this.props.state.internalServObj.map((item) => {
+				const intSvcName = document.getElementById(`int-service-name-form-group__label${item.id}`);
+				intSvcName ? intSvcName.classList.add('form-group__label-always-onfocus') : null;
+				const intSvcPort = document.getElementById(`int-service-port-form-group__label${item.id}`);
+				intSvcPort ? intSvcPort.classList.add('form-group__label-always-onfocus') : null;
+				const intSvcTargetPort = document.getElementById(`int-service-target-port-form-group__label${item.id}`);
+				intSvcTargetPort ? intSvcTargetPort.classList.add('form-group__label-always-onfocus') : null;
+			});
+		}
+		if (this.props.state.externalServObj.length) {
+			this.props.state.externalServObj.map((item) => {
+				const extSvcName = document.getElementById(`ext-service-name-form-group__label${item.id}`);
+				extSvcName ? extSvcName.classList.add('form-group__label-always-onfocus') : null;
+				const extSvcPort = document.getElementById(`ext-service-port-form-group__label${item.id}`);
+				extSvcPort ? extSvcPort.classList.add('form-group__label-always-onfocus') : null;
+			});
 		}
 	}
 	onChangeIntServicePort(e, id, index) {
@@ -72,9 +50,9 @@ class ServiceForm extends Component {
 			});
 		}
 		if (e.target.value.length === 0) {
-			document.getElementById(`int-service-port-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`int-service-port-form-group__label${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`int-service-port-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`int-service-port-form-group__label${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeIntServiceName(e, id, index) {
@@ -92,9 +70,9 @@ class ServiceForm extends Component {
 			this.props.handleSubmitForm(this.state);
 		});
 		if (e.target.value.length === 0) {
-			document.getElementById(`int-service-name-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`int-service-name-form-group__label${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`int-service-name-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`int-service-name-form-group__label${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeIntServiceTargetPort(e, id, index) {
@@ -116,9 +94,9 @@ class ServiceForm extends Component {
 			});
 		}
 		if (e.target.value.length === 0) {
-			document.getElementById(`int-service-target-port-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`int-service-target-port-form-group__label${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`int-service-target-port-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`int-service-target-port-form-group__label${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeIntServiceType(e, id, index) {
@@ -178,25 +156,6 @@ class ServiceForm extends Component {
 			});
 		}
 	}
-	handleChangeExternal() {
-		if (this.props.currentDeployment) {
-			this.setState({
-				...this.state,
-				currentDeployment: this.props.currentDeployment,
-				isActiveExternal: !this.state.isActiveExternal,
-				externalServObj: [{
-					externalServName: '',
-					externalServPort: '',
-					extServiceType: 'TCP',
-					id: '_first',
-					index: 1
-				}]
-			}, () => {
-				this.props.handleSubmitForm(this.state);
-			});
-			this.props.handleChangeActivityExternal();
-		}
-	}
 	onChangeExtServiceName(e, id, index) {
 		const nextState = Object.assign({}, this.state);
 		nextState.externalServObj.filter(item => {
@@ -212,9 +171,9 @@ class ServiceForm extends Component {
 			this.props.handleSubmitForm(this.state);
 		});
 		if (e.target.value.length === 0) {
-			document.getElementById(`ext-service-name-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`ext-service-name-form-group__label${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`ext-service-name-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`ext-service-name-form-group__label${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeExtServicePort(e, id, index) {
@@ -236,9 +195,9 @@ class ServiceForm extends Component {
 			});
 		}
 		if (e.target.value.length === 0) {
-			document.getElementById(`ext-service-port-form-group__label${index}`).classList.remove('form-group__label-always-onfocus');
+			document.getElementById(`ext-service-port-form-group__label${id}`).classList.remove('form-group__label-always-onfocus');
 		} else {
-			document.getElementById(`ext-service-port-form-group__label${index}`).classList.add('form-group__label-always-onfocus');
+			document.getElementById(`ext-service-port-form-group__label${id}`).classList.add('form-group__label-always-onfocus');
 		}
 	}
 	onChangeExtServiceType(e, id, index) {
@@ -299,36 +258,25 @@ class ServiceForm extends Component {
 	render() {
 		return (
 			<div>
-				<div
-					className="blockContainer blockContainerPadin"
-					id="internal-service"
-				>
-					<div className="row">
-						<div className="col-md-9">
-							<div className="containerTitle marLeft20"><span className="isHidden">*</span> Internal Service
-								{/*<Tooltip*/}
+				{
+					this.props.isActiveInternal &&
+					<div
+						className="blockContainer blockContainerPadin"
+						id="internal-service"
+					>
+						<div className="row">
+							<div className="col-md-9">
+								<div className="containerTitle marLeft20" id="port">{this.props.idService} <span className="containerTitleText">internal service</span>
+									{/*<Tooltip*/}
 									{/*placement='top'*/}
 									{/*trigger={['hover']}*/}
 									{/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
-								{/*>*/}
+									{/*>*/}
 									{/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
-								{/*</Tooltip>*/}
+									{/*</Tooltip>*/}
+								</div>
 							</div>
 						</div>
-
-						<div className="col-md-3">
-							<div
-								className={
-									this.props.isActiveInternal ?
-										"serviceSwitcher serviceSwitcherOn" :
-										"serviceSwitcher"
-								}
-								onClick={this.handleChangeInternal.bind(this)}
-							> </div>
-						</div>
-					</div>
-					{
-						this.props.isActiveInternal &&
 						<div className="serviceWrapper">
 							<div>
 								{/*<div className="row rowLine">*/}
@@ -358,11 +306,11 @@ class ServiceForm extends Component {
 								<div className="col-md-12">
 									<div className="containerTitle containerBlockTitle"><span>*</span> Ports
 										{/*<Tooltip*/}
-											{/*placement='top'*/}
-											{/*trigger={['hover']}*/}
-											{/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
+										{/*placement='top'*/}
+										{/*trigger={['hover']}*/}
+										{/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
 										{/*>*/}
-											{/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
+										{/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
 										{/*</Tooltip>*/}
 									</div>
 								</div>
@@ -389,7 +337,7 @@ class ServiceForm extends Component {
 															/>
 															<label
 																className="form-group__label"
-																id={`int-service-name-form-group__label${index}`}
+																id={`int-service-name-form-group__label${id}`}
 																htmlFor={`int-service-name${index}`}
 															>Name</label>
 															{index === 0 && <div className="helperText">The name of Internal Service</div>}
@@ -412,7 +360,7 @@ class ServiceForm extends Component {
 															/>
 															<label
 																className="form-group__label"
-																id={`int-service-port-form-group__label${index}`}
+																id={`int-service-port-form-group__label${id}`}
 																htmlFor={`int-service-port${index}`}
 															>Port</label>
 															{index === 0 && <div className="helperText">The port of Internal Service</div>}
@@ -435,7 +383,7 @@ class ServiceForm extends Component {
 															/>
 															<label
 																className="form-group__label"
-																id={`int-service-target-port-form-group__label${index}`}
+																id={`int-service-target-port-form-group__label${id}`}
 																htmlFor={`int-service-target-port${index}`}
 															>Target Port</label>
 															{index === 0 && <div className="helperText">The target port into your Container</div>}
@@ -484,37 +432,29 @@ class ServiceForm extends Component {
 								</div>
 							</div>
 						</div>
-					}
-				</div>
-				<div
-					className="blockContainer blockContainerPadin"
-					id="external-service"
-				>
-					<div className="row">
-						<div className="col-md-9">
-							<div className="containerTitle marLeft20"><span className="isHidden">*</span> External Service
-								{/*<Tooltip*/}
+					</div>
+				}
+
+
+				{
+					this.props.isActiveExternal &&
+					<div
+						className="blockContainer blockContainerPadin"
+						id="external-service"
+					>
+						<div className="row">
+							<div className="col-md-9">
+								<div className="containerTitle marLeft20">{this.props.idService} <span className="containerTitleText">external service</span>
+									{/*<Tooltip*/}
 									{/*placement='top'*/}
 									{/*trigger={['hover']}*/}
 									{/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
-								{/*>*/}
+									{/*>*/}
 									{/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
-								{/*</Tooltip>*/}
+									{/*</Tooltip>*/}
+								</div>
 							</div>
 						</div>
-						<div className="col-md-3">
-							<div
-								className={
-									this.props.isActiveExternal ?
-										"serviceSwitcher serviceSwitcherOn" :
-										"serviceSwitcher"
-								}
-								onClick={this.handleChangeExternal.bind(this)}
-							> </div>
-						</div>
-					</div>
-					{
-						this.props.isActiveExternal &&
 						<div className="serviceWrapper">
 							<div>
 								{/*<div className="row rowLine">*/}
@@ -544,11 +484,11 @@ class ServiceForm extends Component {
 								<div className="col-md-12">
 									<div className="containerTitle containerBlockTitle"><span>*</span> Ports
 										{/*<Tooltip*/}
-											{/*placement='top'*/}
-											{/*trigger={['hover']}*/}
-											{/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
+										{/*placement='top'*/}
+										{/*trigger={['hover']}*/}
+										{/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
 										{/*>*/}
-											{/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
+										{/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
 										{/*</Tooltip>*/}
 									</div>
 								</div>
@@ -575,7 +515,7 @@ class ServiceForm extends Component {
 															/>
 															<label
 																className="form-group__label"
-																id={`ext-service-name-form-group__label${index}`}
+																id={`ext-service-name-form-group__label${id}`}
 																htmlFor={`ext-service-name${index}`}
 															>Name</label>
 															{index === 0 && <div className="helperText">The name of Internal Service</div>}
@@ -598,7 +538,7 @@ class ServiceForm extends Component {
 															/>
 															<label
 																className="form-group__label"
-																id={`ext-service-port-form-group__label${index}`}
+																id={`ext-service-port-form-group__label${id}`}
 																htmlFor={`ext-service-port${index}`}
 															>Port</label>
 															{index === 0 && <div className="helperText">The target port into your Container</div>}
@@ -647,8 +587,8 @@ class ServiceForm extends Component {
 								</div>
 							</div>
 						</div>
-					}
-				</div>
+					</div>
+				}
 			</div>
 		);
 	}
@@ -656,11 +596,10 @@ class ServiceForm extends Component {
 
 ServiceForm.propTypes = {
 	handleSubmitForm: PropTypes.func,
-	handleChangeActivityInternal: PropTypes.func,
-	handleChangeActivityExternal: PropTypes.func,
-	currentDeployment: PropTypes.string,
 	isActiveInternal: PropTypes.bool,
-	isActiveExternal: PropTypes.bool
+	isActiveExternal: PropTypes.bool,
+	state: PropTypes.object,
+	idService: PropTypes.string
 };
 
 export default ServiceForm;

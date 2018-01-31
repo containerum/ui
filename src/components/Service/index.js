@@ -35,6 +35,7 @@ class Service extends Component {
                 />
                 <ServiceInfo
                     idName={this.props.params.idName}
+                    idService={this.props.params.idService}
                     onDeleteService={this.handleDeleteService.bind(this)}
                 />
                 <ServiceContains

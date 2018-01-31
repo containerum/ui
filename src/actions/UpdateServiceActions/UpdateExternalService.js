@@ -2,18 +2,18 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import {
-    CREATE_EXT_SERVICE_REQUEST,
-    CREATE_EXT_SERVICE_SUCCESS,
-    CREATE_EXT_SERVICE_FAILURE
-} from '../../constants/CreateServiceConstants';
+    UPDATE_EXT_SERVICE_REQUEST,
+    UPDATE_EXT_SERVICE_SUCCESS,
+    UPDATE_EXT_SERVICE_FAILURE
+} from '../../constants/UpdateServiceConstants';
 
 import {
     WEB_API
 } from '../../constants/WebApi';
 
-export function getCreateExtService(idName, data) {
+export function getUpdateExtService(idName, idService, data) {
     return dispatch => {
-        dispatch(requestCreateExtService());
+        dispatch(requestUpdateExtService());
         let token = '';
         let browser = '';
         if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
@@ -34,8 +34,8 @@ export function getCreateExtService(idName, data) {
 		    })
 	    });
 	    let idServ = idName;
-        return axios.post(
-            WEB_API + '/api/namespaces/' + idName + '/services',
+        return axios.put(
+            WEB_API + `/api/namespaces/${idName}/services/${idService}`,
 	        extObj,
             {
                 headers: {
@@ -47,44 +47,46 @@ export function getCreateExtService(idName, data) {
             }
         )
         .then(response => {
-	        if (response.status === 201) {
+	        // console.log(response.config);
+            if (response.status === 202) {
 		        // console.log(response.data);
-		        idServ = `External service ${response.data.name} for ${extObj.deployment_name}`;
-		        dispatch(receiveCreateExtService(response.data, response.status, idServ));
+		        idServ = `External service ${response.data.name}`;
+		        dispatch(receiveUpdateExtService(response.data, response.status, response.config.method, idServ));
 		        if (typeof window !== 'undefined') {
 			        browserHistory.push('/Namespaces');
 		        }
-	        } else if (response.status === 401) {
+            } else if (response.status === 401) {
 		        localStorage.removeItem('id_token');
 		        browserHistory.push('/Login');
-	        } else {
-                // console.log(response);
-                dispatch(failCreateExtService(response.data.message, response.status, idServ));
+            } else {
+                console.log(response);
+                dispatch(failUpdateExtService(response.data.message, response.status, idServ));
             }
-        }).catch(err => {dispatch(failCreateExtService(err.toString(), 503, idServ)); console.log(err)});
+        }).catch(err => {dispatch(failUpdateExtService(err.toString(), 503, idServ)); console.log(err)});
     };
 }
 
-function requestCreateExtService() {
+function requestUpdateExtService() {
     return {
-        type: CREATE_EXT_SERVICE_REQUEST,
+        type: UPDATE_EXT_SERVICE_REQUEST,
         isFetching: true
     };
 }
 
-function receiveCreateExtService(data, status, idServ) {
+function receiveUpdateExtService(data, status, method, idServ) {
     return {
-        type: CREATE_EXT_SERVICE_SUCCESS,
+        type: UPDATE_EXT_SERVICE_SUCCESS,
         isFetching: false,
         data,
 	    status,
+	    method,
 	    idServ
     };
 }
 
-function failCreateExtService(message, status, idServ) {
+function failUpdateExtService(message, status, idServ) {
     return {
-        type: CREATE_EXT_SERVICE_FAILURE,
+        type: UPDATE_EXT_SERVICE_FAILURE,
         isFetching: false,
 	    message,
 	    status,
