@@ -70,7 +70,7 @@ h1{
 
 .dropdown-toggle::after{
     border-top-color: #29abe2;
-    margin: 4px 0 0 12px;
+    margin: 4px 0 5px 12px;
 }
 
 
@@ -570,6 +570,7 @@ h1{
 .form-group__input-text.form-control{
     font-weight: 300;
     /*color: #a7a7a7;*/
+    color: #333333;
     border: none ;
     border-bottom: 1.5px solid #eaeaea;
     padding: 7px 0 8px 0;

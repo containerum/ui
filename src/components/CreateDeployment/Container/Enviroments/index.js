@@ -1,77 +1,93 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Tooltip from 'rc-tooltip';
 
 import icon from '../../../../images/icon-create-dep.svg';
 
 class Enviroments extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = this.initialState();
 	}
 	initialState() {
 		return {
-			envs: [{
+			env: [{
 				value: '',
 				name: '',
-				id: '_first'
+				id: '_first',
+				index: this.props.index
 			}]
 		};
 	}
-	handleClickAddEnviroments() {
+	handleClickAddEnviroments(index) {
 		this.setState({
-			envs: [
-				...this.state.envs,
+			env: [
+				...this.state.env,
 				{
 					value: '',
 					name: '',
-					id: '_' + Math.random().toString(36).substr(2, 9)
+					id: '_' + Math.random().toString(36).substr(2, 9),
+					index
 				}
 			]
+		}, () => {
+			this.props.onChangeInputEnv(this.state.env);
 		})
 	}
-	handleClickRemoveEnviroments(id) {
-		if (this.state.envs.length > 1) {
-			const nextLabels = Object.assign({}, this.state).envs.filter((item) => {
-				return item.id !== id;
+	handleClickRemoveEnviroments(id, index) {
+		if (this.state.env.length > 1) {
+			const nextLabels = Object.assign({}, this.state).env.filter((item) => {
+				return item.id !== id && item.index === index;
 			});
 			this.setState({
-				envs: nextLabels
+				env: nextLabels
 			}, () => {
-				this.props.onChangeInputEnv(this.state.envs);
+				this.props.onChangeInputEnv(this.state.env);
 			});
 		} else {
-			this.setState(this.initialState(), () => {
-				this.props.onChangeInputEnv(this.state.envs);
+			document.getElementById(`env-name-form-group__label${this.props.index}${id}`) ?
+				document.getElementById(`env-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
+			document.getElementById(`value-name-form-group__label${this.props.index}${id}`) ?
+				document.getElementById(`value-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
+			this.setState({
+				env: [{
+					value: '',
+					name: '',
+					id,
+					index
+				}]
+			}, () => {
+				this.props.onChangeInputEnv(this.state.env);
 			});
 		}
 	}
 	handleChangeInputEnviromentsName(e, id, index) {
 		const nextState = Object.assign({}, this.state);
-		nextState.envs.filter(item => {
+		nextState.env.filter(item => {
 			if (item.id === id) {
 				item.name = e.target.value;
 				item.index = index;
 			}
 		});
 		this.setState({
-			envs: nextState.envs
+			env: nextState.env
 		}, () => {
-			this.props.onChangeInputEnv(this.state.envs);
+			this.props.onChangeInputEnv(this.state.env);
 		});
 	}
 	handleChangeInputEnviromentsValue(e, id, index) {
 		const nextState = Object.assign({}, this.state);
-		nextState.envs.filter(item => {
+		nextState.env.filter(item => {
 			if (item.id === id) {
 				item.value = e.target.value;
 				item.index = index;
 			}
 		});
 		this.setState({
-			envs: nextState.envs
+			env: nextState.env
 		}, () => {
-			this.props.onChangeInputEnv(this.state.envs);
+			this.props.onChangeInputEnv(this.state.env);
 		});
 	}
     render() {
@@ -82,11 +98,18 @@ class Enviroments extends Component {
 	        >
 		        <div className="col-md-12">
 			        <div className="containerTitle containerBlockTitle">Enviroments
-				        <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
+				        {/*<Tooltip*/}
+					        {/*placement='top'*/}
+					        {/*trigger={['hover']}*/}
+					        {/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
+				        {/*>*/}
+					        {/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
+				        {/*</Tooltip>*/}
 			        </div>
 		        </div>
 		        {
-			        this.state.envs.map((item, index) => {
+			        this.props.item.env.map((item, index) => {
+				        // console.log('env', this.props.item.env[index]);
 				        const id = item.id;
 				        return (
 					        <div
@@ -97,34 +120,60 @@ class Enviroments extends Component {
 						        <div className="col-md-5 myColumn">
 							        <div className="form-group">
 								        <input
-									        className="form-group__input-text form-control"
-									        id={`envName${index}`}
+									        className="form-group__input-text form-control customInput"
+									        id={`envName${this.props.index}${id}`}
 									        type="text"
-									        value={this.state.envs[index].id === id &&
-									        this.state.envs[index].name}
-									        onChange={(e) => this.handleChangeInputEnviromentsName(e, id, this.props.index)}
+									        pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])?$|^$"
+									        title="Name can only contain letters, numbers and characters"
+									        value={this.props.item.env[index].id === id &&
+									        this.props.item.env[index].name}
+									        onChange={(e) => {
+										        this.handleChangeInputEnviromentsName(e, id, this.props.index);
+										        if (e.target.value.length === 0) {
+											        document.getElementById(`env-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
+										        } else {
+											        document.getElementById(`env-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
+										        }
+									        }}
 								        />
-								        <label className="form-group__label" htmlFor={`envName${index}`}>Name</label>
-								        {index === 0 && <div className="form-group__helper helperText">Your Deployment name can only contain alphanumeric and characters</div>}
+								        <label
+									        className="form-group__label"
+									        htmlFor={`envName${this.props.index}${id}`}
+									        id={`env-name-form-group__label${this.props.index}${id}`}
+								        >Name</label>
+								        {index === 0 && <div className="form-group__helper helperText">The Enviroments instruction sets the environment variable {`<key>`} to the value {`<value>`}.</div>}
 							        </div>
 						        </div>
 						        <div className="col-md-5 myColumn">
 							        <div className="form-group">
 								        <input
-									        className="form-group__input-text form-control"
-									        id={`envValue${index}`}
+									        className="form-group__input-text form-control customInput"
+									        id={`envValue${this.props.index}${id}`}
 									        type="text"
-									        value={this.state.envs[index].id === id &&
-									        this.state.envs[index].value}
-									        onChange={(e) => this.handleChangeInputEnviromentsValue(e, id, this.props.index)}
+									        pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])?$|^$"
+									        title="Value can only contain letters, numbers and characters"
+									        value={this.props.item.env[index].id === id &&
+									        this.props.item.env[index].value}
+									        onChange={(e) => {
+										        this.handleChangeInputEnviromentsValue(e, id, this.props.index);
+										        if (e.target.value.length === 0) {
+											        document.getElementById(`value-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
+										        } else {
+											        document.getElementById(`value-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
+										        }
+									        }}
 								        />
-								        <label className="form-group__label" htmlFor={`envValue${index}`}>Value</label>
-								        {index === 0 && <div className="form-group__helper helperText">Your Deployment name can only contain alphanumeric and characters</div>}
+								        <label
+									        className="form-group__label"
+									        htmlFor={`envValue${this.props.index}${id}`}
+									        id={`value-name-form-group__label${this.props.index}${id}`}
+								        >Value</label>
+								        {/*{index === 0 && <div className="form-group__helper helperText">Your Deployment name can only contain alphanumeric and characters</div>}*/}
 							        </div>
 						        </div>
 						        <div
 							        className="col-md-1"
-							        onClick={() => this.handleClickRemoveEnviroments(id)}
+							        onClick={() => this.handleClickRemoveEnviroments(id, this.props.index)}
 						        >
 							        <img src={icon} alt="delete" className="iconBasket" />
 						        </div>
@@ -135,7 +184,7 @@ class Enviroments extends Component {
 		        <div className="col-md-12">
 			        <div
 				        className="addBlockBtn marLeft"
-				        onClick={this.handleClickAddEnviroments.bind(this)}
+				        onClick={() => this.handleClickAddEnviroments(this.props.index)}
 			        >+ Add Enviroment</div>
 		        </div>
 	        </div>
@@ -145,6 +194,7 @@ class Enviroments extends Component {
 
 Enviroments.propTypes = {
 	index: PropTypes.number.isRequired,
+	item: PropTypes.object.isRequired,
 	onChangeInputEnv: PropTypes.func.isRequired
 };
 

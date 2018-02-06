@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
 import s from '../../../images/s.png';
+import NavLink from '../../../containers/NavLink';
 
 class ServiceInfo extends Component {
     componentWillReceiveProps(nextProps) {
@@ -49,6 +50,10 @@ class ServiceInfo extends Component {
                                         className="dropdown-item text-danger"
                                         onClick={name => this.handleClickDeletingService(serviceName)}
                                     >Delete</button>
+	                                <NavLink
+		                                to={`/Namespaces/${this.props.idName}/UpdateService/${this.props.idService}`}
+		                                className="dropdown-item"
+	                                >Update</NavLink>
                                 </ul>
                             </div>
                         </div>
@@ -125,6 +130,7 @@ class ServiceInfo extends Component {
 
 ServiceInfo.propTypes = {
     idName: PropTypes.string,
+	idService: PropTypes.string,
     onDeleteService: PropTypes.func
 };
 

@@ -9,6 +9,7 @@ import NotFoundDeployments from '../NotFoundDeployments';
 import DeleteModal from '../../CustomerModal/DeleteModal';
 // import Spinner from '../../Spinner';
 import { getDeployments } from '../../../actions/DeploymentsActions';
+import NavLink from "../../../containers/NavLink";
 
 class DeploymentsContains extends Component {
     constructor() {
@@ -125,6 +126,10 @@ class DeploymentsContains extends Component {
                                                 className="dropdown-item text-danger"
                                                 onClick={name => this.handleClickDeletingDeployment(item.name)}
                                             >Delete</button>
+                                            {/*<NavLink*/}
+                                                {/*className="dropdown-item"*/}
+                                                {/*to={`/Namespaces/${this.props.idName}/UpdateDeployment`}*/}
+                                            {/*>Update</NavLink>*/}
                                         </ul>
                                     </td>
                                 </tr>

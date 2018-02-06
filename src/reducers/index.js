@@ -18,6 +18,7 @@ import DeleteNamespaceReducer from './NamespaceReducers/DeleteNamespaceReducer';
 import UpdateNamespaceReducer from './NamespaceReducers/UpdateNamespaceReducer';
 import VolumesReducer from './VolumesReducers';
 import VolumesTariffsReducer from './VolumesReducers/VolumesTariffsReducer';
+import VolumesByNSReducer from './VolumesReducers/VolumesByNSReducer';
 import CreateVolumeReducer from './VolumeReducers/CreateVolumeReducer';
 import DeploymentsReducer from './DeploymentsReducers';
 import GetDeploymentReducer from './DeploymentReducers/GetDeploymentReducer';
@@ -26,7 +27,8 @@ import CreateDeploymentReducer from './DeploymentReducers/CreateDeploymentReduce
 import ServicesReducer from './ServicesReducers';
 import GetServiceReducer from './ServiceReducers/GetServiceReducer';
 import DeleteServiceReducer from './ServiceReducers/DeleteServiceReducer';
-import CreateServiceReducer from './ServiceReducers/CreateServiceReducer';
+import CreateIntServiceReducer from './ServiceReducers/CreateIntServiceReducer';
+import CreateExtServiceReducer from './ServiceReducers/CreateExtServiceReducer';
 import PodsReducer from './PodsReducers';
 import GetPodReducer from './PodReducers/GetPodReducer';
 import DeletePodReducer from './PodReducers/DeletePodReducer';
@@ -49,6 +51,8 @@ import DeleteImageTokensReducer from './TokensReducers/DeleteImageTokensReducer'
 import GetVolumeReducer from './VolumeReducers/GetVolumeReducer';
 import DeleteVolumeReducer from './VolumeReducers/DeleteVolumeReducer';
 import UpdateVolumeReducer from './VolumeReducers/UpdateVolumeReducer';
+import UpdateExtServiceReducer from './ServiceReducers/UpdateExtServiceReducer';
+import UpdateIntServiceReducer from './ServiceReducers/UpdateIntServiceReducer';
 
 const rootReducer = combineReducers({
     LoginReducer,
@@ -62,7 +66,8 @@ const rootReducer = combineReducers({
     GetServiceReducer,
     GetProfileReducer,
     DeleteProfileReducer,
-    CreateServiceReducer,
+	CreateExtServiceReducer,
+    CreateIntServiceReducer,
     CreateDeploymentReducer,
     GetPodReducer,
     GetDeploymentReducer,
@@ -87,6 +92,7 @@ const rootReducer = combineReducers({
     UpdateNamespaceReducer,
     NSTariffsReducer,
     VolumesTariffsReducer,
+	VolumesByNSReducer,
     CreateVolumeReducer,
     GetProfileBalanceReducer,
     GetTariffsReducer,
@@ -99,7 +105,9 @@ const rootReducer = combineReducers({
     DeleteImageTokensReducer,
     GetVolumeReducer,
     DeleteVolumeReducer,
-    UpdateVolumeReducer
+    UpdateVolumeReducer,
+	UpdateExtServiceReducer,
+	UpdateIntServiceReducer
 });
 
 export default rootReducer;

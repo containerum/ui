@@ -30,7 +30,9 @@ import UpdateNamespace from './components/UpdateNamespace';
 import CreateVolume from './components/CreateVolume';
 import UpdateVolume from './components/UpdateVolume';
 import CreateDeployment from './components/CreateDeployment';
-// import CreateService from './components/CreateService';
+import UpdateDeployment from './components/UpdateDeployment';
+import CreateService from './components/CreateService';
+import UpdateService from './components/UpdateService';
 
 export default (
     <Route>
@@ -54,10 +56,12 @@ export default (
             <Route path="/Namespaces/:idName/Deployments/:idDep/Pods/:idPod" component={Pod} />
             <Route path="/CreateNamespace" component={CreateNamespace} />
             <Route path="/Namespaces/:idName/Resize" component={UpdateNamespace} />
-            {/*<Route path="/Namespaces/:idName/CreateDeployment" component={CreateDeployment} />*/}
+            <Route path="/Namespaces/:idName/CreateDeployment" component={CreateDeployment} />
+            <Route path="/Namespaces/:idName/UpdateDeployment/:idDep" component={UpdateDeployment} />
             <Route path="/CreateVolume" component={CreateVolume} />
             <Route path="/Volumes/:idVolume/Resize" component={UpdateVolume} />
-		    {/*<Route path="/Namespaces/:idName/CreateNewService" component={CreateService} />*/}
+		    <Route path="/Namespaces/:idName/CreateService" component={CreateService} />
+		    <Route path="/Namespaces/:idName/UpdateService/:idService" component={UpdateService} />
             <Route path="/Support" component={Support} />
             <Route path="/Support/SuccessTicket" component={SuccessTicket} />
             <Route path="/Account" component={Account} />

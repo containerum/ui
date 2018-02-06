@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Tooltip from 'rc-tooltip';
 
 import icon from '../../../../images/icon-create-dep.svg';
 
@@ -18,21 +19,24 @@ class ImagePorts extends Component {
 			}]
 		};
 	}
-	handleClickAddImagePort() {
+	handleClickAddImagePort(index) {
 		this.setState({
 			ports: [
 				...this.state.ports,
 				{
 					containerPort: '',
-					id: '_' + Math.random().toString(36).substr(2, 9)
+					id: '_' + Math.random().toString(36).substr(2, 9),
+					index
 				}
 			]
+		}, () => {
+			this.props.onChangeInputImagePorts(this.state.ports);
 		})
 	}
-	handleClickRemoveImagePort(id) {
+	handleClickRemoveImagePort(id, index) {
 		if (this.state.ports.length > 1) {
 			const nextLabels = Object.assign({}, this.state).ports.filter((item) => {
-				return item.id !== id;
+				return item.id !== id && item.index === index;
 			});
 			this.setState({
 				ports: nextLabels
@@ -40,32 +44,42 @@ class ImagePorts extends Component {
 				this.props.onChangeInputImagePorts(this.state.ports);
 			});
 		} else {
-			this.setState(this.initialState(), () => {
-				console.log(this.state.ports);
+			this.setState({
+				ports: [{
+					containerPort: '',
+					id,
+					index
+				}]
+			}, () => {
+				document.getElementById(`port-name-form-group__label${index}${id}`) ?
+					document.getElementById(`port-name-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus') : null;
+				// console.log(this.state.ports);
 				this.props.onChangeInputImagePorts(this.state.ports);
 			});
 		}
 	}
 	handleChangeInputImagePort(e, id, index) {
-		const regexp = /^[0-9]{0,5}$|^$/;
 		const portToInt = e.target.value ? parseInt(e.target.value, 10) : '';
-		if (e.target.value.search(regexp) !== -1) {
-			const nextState = Object.assign({}, this.state);
-			nextState.ports.filter(item => {
-				if (item.id === id) {
-					item.containerPort = portToInt;
-					item.index = index;
-				}
-			});
-			this.setState({
-				ports: nextState.ports
-			}, () => {
-				this.props.onChangeInputImagePorts(this.state.ports);
-			});
+		if (e.target.value.length === 0) {
+			document.getElementById(`port-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
+		} else {
+			document.getElementById(`port-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
 		}
+		const nextState = Object.assign({}, this.state);
+		nextState.ports.filter(item => {
+			if (item.id === id) {
+				item.containerPort = portToInt;
+				item.index = index;
+			}
+		});
+		this.setState({
+			ports: nextState.ports
+		}, () => {
+			this.props.onChangeInputImagePorts(this.state.ports);
+		});
 	}
     render() {
-	    console.log(this.props.item);
+	    // console.log('props', this.props.item);
         return (
 	        <div
 		        className="row rowLine"
@@ -73,13 +87,19 @@ class ImagePorts extends Component {
 	        >
 		        <div className="col-md-12">
 			        <div className="containerTitle containerBlockTitle">Image Ports
-				        <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
+				        {/*<Tooltip*/}
+					        {/*placement='top'*/}
+					        {/*trigger={['hover']}*/}
+					        {/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
+				        {/*>*/}
+					        {/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
+				        {/*</Tooltip>*/}
 			        </div>
 		        </div>
-
 		        {
-			        this.state.ports.map((item, index) => {
+			        this.props.item.ports.map((item, index) => {
 				        const id = item.id;
+				        // console.log('this.props.index, id', this.props.index, id);
 				        return (
 					        <div
 						        className="row marLeft"
@@ -89,22 +109,29 @@ class ImagePorts extends Component {
 						        <div className="col-md-5 myColumn">
 							        <div className="form-group">
 								        <input
-									        className="form-group__input-text form-control"
-									        id={`port${index}`}
-									        type="text"
-									        value={this.state.ports[index].id === id &&
-									        this.state.ports[index].containerPort}
-									        onChange={(e) =>
-										        this.handleChangeInputImagePort(e, id, this.props.index)}
+									        className="form-group__input-text form-control customInput"
+									        id={`port${this.props.index}${id}`}
+									        type="number"
+									        min="0"
+									        max="65535"
+									        value={this.props.item.ports[index].id === id &&
+									        this.props.item.ports[index].containerPort}
+									        onChange={(e) => {
+										        this.handleChangeInputImagePort(e, id, this.props.index);
+									        }}
 								        />
-								        <label className="form-group__label" htmlFor={`port${index}`}>Port</label>
-								        {index === 0 && <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>}
+								        <label
+									        className="form-group__label"
+									        htmlFor={`port${this.props.index}${id}`}
+									        id={`port-name-form-group__label${this.props.index}${id}`}
+								        >Port</label>
+								        {/*{index === 0 && <div className="form-group__helper">Your Deployment name can only contain alphanumeric and characters</div>}*/}
 							        </div>
 						        </div>
 						        <div className="col-md-5 myColumn"> </div>
 						        <div
 							        className="col-md-1"
-							        onClick={() => this.handleClickRemoveImagePort(id)}
+							        onClick={() => this.handleClickRemoveImagePort(id, this.props.index)}
 						        >
 							        <img src={icon} alt="delete" className="iconBasket" />
 						        </div>
@@ -123,7 +150,7 @@ class ImagePorts extends Component {
 		        <div className="col-md-12">
 			        <div
 				        className="addBlockBtn marLeft"
-				        onClick={this.handleClickAddImagePort.bind(this)}
+				        onClick={() => this.handleClickAddImagePort(this.props.index)}
 			        >+ Add Image Port</div>
 		        </div>
 	        </div>

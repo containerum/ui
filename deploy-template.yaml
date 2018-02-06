@@ -28,16 +28,16 @@ spec:
         access: "true"
       namespace: web
     spec:
-      nodeSelector:
-        role: slave
       imagePullSecrets:
-      - name: regsecret
+      - name: gitlab-registry
       containers:
       - name: ch-ui
         env:
+        - name: WEB_API_OTHER
+          value: '${WEB_API_OTHER}'
         - name: WEB_API
           value: '${WEB_API}'
-        image: ${DEPLOY_IMAGE}
+        image: ${IMAGE}
         ports:
         - containerPort: 5000
           protocol: TCP

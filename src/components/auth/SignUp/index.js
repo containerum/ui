@@ -12,6 +12,7 @@ import MiniSpinner from '../../MiniSpinner';
 import CountrySelector from '../CountrySelector';
 import { COUNTRIES } from '../../../constants/CountriesBilling';
 import config from '../../../config';
+import { APP_RECAPTCHA } from '../../../constants/WebApi';
 
 class SignUp extends Component {
     constructor() {
@@ -239,7 +240,7 @@ class SignUp extends Component {
                             />
                             <div className="form-group i-mb-20 c-has-feedback-left">
                                 <Recaptcha
-                                    sitekey="6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS"
+                                    sitekey={APP_RECAPTCHA}
                                     onChange={this.verifyCallback.bind(this)}
                                 />
                             </div>

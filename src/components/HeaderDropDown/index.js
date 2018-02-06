@@ -18,18 +18,23 @@ class HeaderDropDown extends Component {
         if (this.props.idName) {
             isIdName =
                 <li className="breadcrumbs__li nav-item dropdown">
-                    <NavLink
-                        to={`/Namespaces/${this.props.idName}`}
+                    <div
+                        style={{cursor: 'pointer'}}
+                        // to={`/Namespaces/${this.props.idName}`}
                         className="breadcrumbs__link dropdown-toggle"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
-                    >{this.props.idName}</NavLink>
+                    >{this.props.idName}</div>
                     <ul className="dropdown-menu dropdown-menu-left" role="menu">
                         {
                             this.props.NamespacesReducer.data.map((item, index) => {
                                 return (
-                                    <NavLink key={index} className="dropdown-item" to={`/Namespaces/${item.name}`}>{item.name}</NavLink>
+                                    <NavLink
+                                        key={index}
+                                        className="dropdown-item"
+                                        to={`/Namespaces/${item.name}`}
+                                    >{item.name}</NavLink>
                                 );
                             })
                         }
@@ -89,7 +94,45 @@ class HeaderDropDown extends Component {
                     </li>
                 </div>
         }
-        if (this.props.idPod || this.props.idDep || this.props.idService) {
+	    let IdCreate = '';
+	    if (this.props.IdCreate === "service") {
+		    IdCreate =
+			    <div className="d-flex">
+				    <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">/</li>
+				    <li className="breadcrumbs__li nav-item">
+					    <div className="breadcrumbs__link">Create Service</div>
+				    </li>
+			    </div>
+	    } else if (this.props.IdCreate === "deployment") {
+		    IdCreate =
+			    <div className="d-flex">
+				    <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">/</li>
+				    <li className="breadcrumbs__li nav-item">
+					    <div className="breadcrumbs__link">Create Deployment</div>
+				    </li>
+			    </div>
+        }
+	    let IdUpdate = '';
+	    if (this.props.IdUpdate === "service") {
+		    IdUpdate =
+			    <div className="d-flex">
+				    <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">/</li>
+				    <li className="breadcrumbs__li nav-item">
+					    <div className="breadcrumbs__link">Update {this.props.typeOfUpdateService} Service</div>
+				    </li>
+			    </div>
+	    } else if (this.props.IdUpdate === "deployment") {
+		    IdUpdate =
+			    <div className="d-flex">
+				    <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">/</li>
+				    <li className="breadcrumbs__li nav-item">
+					    <div className="breadcrumbs__link">Update Deployment</div>
+				    </li>
+			    </div>
+        }
+        if (this.props.idPod ||
+            this.props.idDep ||
+            this.props.idService) {
             mainContent =
                 <div className="header-bottom">
                     <div className="header-bottom-container container">
@@ -110,6 +153,8 @@ class HeaderDropDown extends Component {
                             {isIdService}
                             {isIdDep}
                             {idPod}
+	                        {IdCreate}
+	                        {IdUpdate}
                         </ul>
                     </div>
                 </div>
@@ -124,10 +169,12 @@ class HeaderDropDown extends Component {
 
 HeaderDropDown.propTypes = {
     idName: PropTypes.string,
-    IdCreateService: PropTypes.string,
     idDep: PropTypes.string,
     idPod: PropTypes.string,
     idService: PropTypes.string,
+	IdCreate: PropTypes.string,
+	IdUpdate: PropTypes.string,
+	typeOfUpdateService: PropTypes.string,
     NamespacesReducer: PropTypes.object
 };
 

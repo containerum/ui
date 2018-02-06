@@ -1,27 +1,27 @@
 import {
-    CREATE_SERVICE_REQUEST,
-    CREATE_SERVICE_SUCCESS,
-    CREATE_SERVICE_FAILURE
-} from '../../constants/CreateServiceConstants';
+    GET_VOLUMES_BY_NS_REQUEST,
+    GET_VOLUMES_BY_NS_SUCCESS,
+    GET_VOLUMES_BY_NS_FAILURE
+} from '../../constants/VolumesConstants';
 
-export default function CreateServiceReducer(state = {
+export default function VolumesByNSReducer(state = {
     isFetching: false,
-    data: {},
+    data: [],
     errorMessage: ''
 }, action) {
     switch (action.type) {
-    case CREATE_SERVICE_REQUEST:
+    case GET_VOLUMES_BY_NS_REQUEST:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
-            data: {},
+            data: [],
             errorMessage: ''
         });
-    case CREATE_SERVICE_SUCCESS:
+    case GET_VOLUMES_BY_NS_SUCCESS:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             data: action.data
         });
-    case CREATE_SERVICE_FAILURE:
+    case GET_VOLUMES_BY_NS_FAILURE:
         return Object.assign({}, state, {
             isFetching: action.isFetching,
             errorMessage: action.message

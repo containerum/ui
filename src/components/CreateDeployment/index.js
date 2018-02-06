@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Scrollspy from 'react-scrollspy';
+// import Tooltip from 'rc-tooltip';
 
 import { createDeployment } from '../../actions/CreateDeploymentActions';
 import { getNamespace } from '../../actions/NamespaceActions/getNamespaceAction';
-import { getVolumes } from '../../actions/VolumesActions';
+import { getVolumesByNSAction } from '../../actions/VolumesActions/getVolumesByNSAction';
+import { getCreateIntService } from '../../actions/CreateServiceActions/CreateInternalService';
+import { getCreateExtService } from '../../actions/CreateServiceActions/CreateExternalService';
+import MiniSpinner from '../MiniSpinner';
+import Notification from '../Notification';
+import ServiceForm from '../CreateService/ServiceForm';
 import HeaderDropDown from '../HeaderDropDown';
 import Name from './Name';
 import Label from './Label';
@@ -20,8 +26,26 @@ class CreateDeployment extends Component {
 	}
     componentDidMount() {
 	    this.props.onGetNamespace(this.props.params.idName);
-	    this.props.onGetVolumes();
+	    this.props.onGetVolumes(this.props.params.idName);
     }
+	componentWillReceiveProps(nextProps) {
+		// console.log(this.props.CreateDeploymentReducer, nextProps.CreateDeploymentReducer);
+		if (this.props.CreateDeploymentReducer.status !== nextProps.CreateDeploymentReducer.status &&
+			nextProps.CreateDeploymentReducer.status === 201) {
+			const serviceObject = this.state;
+			if (serviceObject.internalServObj.length &&
+				serviceObject.internalServObj[0].internalServPort) {
+				this.props.onGetCreateIntService(this.props.params.idName,
+					serviceObject);
+			}
+			if (serviceObject.externalServObj.length &&
+				serviceObject.externalServObj[0].externalServPort) {
+				// console.log('externalServObj', serviceObject.externalServObj);
+				this.props.onGetCreateExtService(this.props.params.idName,
+					serviceObject);
+			}
+		}
+	}
 	initialState() {
 		return {
 			name: '',
@@ -41,31 +65,54 @@ class CreateDeployment extends Component {
 					ports: [
 						{
 							containerPort: '',
-							id: '_first'
+							id: '_first',
+							index: 1
 						}
 					],
 					env: [
 						{
 							value: '',
-							name: ''
+							name: '',
+							id: '_first',
+							index: 1
 						}
 					],
 					command: [],
-					volumeMounts: [
-						{
-							name: `${this.props.params.idName}-default`,
-							mountPath: '',
-							subPath: ''
-						}
-					]
+					volumeMounts: []
 				}
 			],
 			containersCount: 1,
-			activeSubMenu: 'container1'
+			isActiveService: false,
+			activeSubMenu: `container${1}`,
+
+			currentDeployment: '',
+			isActiveInternal: false,
+			isActiveExternal: false,
+			internalServObj: [{
+				internalServName: '',
+				internalServPort: '',
+				internalServTargetPort: '',
+				intServiceType: 'TCP',
+				id: '_first',
+				index: 1
+			}],
+			internalServName: '',
+			externalServObj: [{
+				externalServName: '',
+				externalServPort: '',
+				extServiceType: 'TCP',
+				id: '_first',
+				index: 1
+			}],
+			externalServName: ''
 		};
 	}
 	onChangeInputName(name) {
-        this.setState({ ...this.state, name });
+        this.setState({
+	        ...this.state,
+	        name,
+	        currentDeployment: name
+        });
     }
 	onChangeInputReplicas(replicas) {
 		const regexp = /^[0-9]{1,2}$|^$/;
@@ -108,23 +155,20 @@ class CreateDeployment extends Component {
 					ports: [
 						{
 							containerPort: '',
-							id: '_first'
+							id: '_first',
+							index: this.state.containersCount + 1
 						}
 					],
 					env: [
 						{
 							value: '',
-							name: ''
+							name: '',
+							id: '_first',
+							index: this.state.containersCount + 1
 						}
 					],
 					command: [],
-					volumeMounts: [
-						{
-							name: `${this.props.params.idName}-default`,
-							mountPath: '',
-							subPath: ''
-						}
-					]
+					volumeMounts: []
 				}
 			]
 		});
@@ -144,29 +188,37 @@ class CreateDeployment extends Component {
 		});
     }
 	onChangeInputCommon(common) {
+		// console.log('common', common);
 		const split = this.state.containers.slice();
-		common.dockerImage ? split[common.index].image = common.dockerImage : null;
-		common.containerName ? split[common.index].name = common.containerName : null;
+		common.dockerImage || common.dockerImage === "" ?
+			split[common.index].image = common.dockerImage : null;
+		common.containerName || common.containerName === "" ?
+			split[common.index].name = common.containerName : null;
 		this.setState({
 			...this.state,
 			containers: split
 		});
     }
 	onChangeInputParameters(parameters) {
+		// console.log('parameters', parameters);
 		const split = this.state.containers.slice();
-		parameters.cpu ? split[parameters.index].resources.requests.cpu = parameters.cpu : null;
-		parameters.memory ? split[parameters.index].resources.requests.memory = parameters.memory : null;
-		// console.log(parameters);
+		parameters.cpu || parameters.cpu === "" ?
+			split[parameters.index].resources.requests.cpu = parameters.cpu : null;
+		parameters.memory || parameters.memory === "" ?
+			split[parameters.index].resources.requests.memory = parameters.memory : null;
+		// split[parameters.index].resources.requests.memory = parameters.memory;
 		this.setState({
 			...this.state,
 			containers: split
 		});
     }
 	onChangeInputImagePorts(imagePorts) {
+		// console.log('imagePorts', imagePorts);
 		const split = this.state.containers.slice();
 		imagePorts.map(item => {
 			split[item.index - 1].ports = imagePorts;
 		});
+		// console.log('onChangeInputImagePorts split', split);
 		this.setState({
 			...this.state,
 			containers: split
@@ -174,17 +226,19 @@ class CreateDeployment extends Component {
     }
 	onChangeInputCommands(commands) {
 		const split = this.state.containers.slice();
-		const splitCommands = commands.command.split(' ');
-		commands.command ? split[commands.index].command = splitCommands : null;
+		// const splitCommands = commands.command.split(' ');
+		split[commands.index].command = commands.command.split(' ');
 		this.setState({
 			...this.state,
 			containers: split
 		});
     }
 	onChangeInputEnv(env) {
+		// console.log(env);
 		let envs = [];
 		const split = this.state.containers.slice();
 		env.map(item => {
+			// console.log('item', item);
 			split[item.index - 1].env = env;
 			envs = split[item.index - 1];
 		});
@@ -193,51 +247,181 @@ class CreateDeployment extends Component {
 			containers: split
 		});
 	}
-	onChangeSelectVolume(volume) {
+	onChangeSelectVolume(volume, index) {
 		const split = this.state.containers.slice();
-		volume.map(item => {
-			split[item.index - 1].volumeMounts = volume;
-		});
+		// console.log('volume', volume, index);
+		if (index) {
+			split[index - 1].volumeMounts = volume;
+		} else {
+			volume.map(item => {
+				split[item.index - 1].volumeMounts = volume;
+			});
+			this.setState({
+				...this.state,
+				containers: split
+			});
+		}
+	}
+	handleClickCreateService() {
 		this.setState({
 			...this.state,
-			containers: split
+			isActiveService: !this.state.isActiveService
 		});
 	}
-    handleSubmitDeployment(e) {
+	handleUpdateMenu(obj) {
+		// console.log(obj);
+		if ((obj && obj.id === `container${1}`) ||
+			(obj && obj.id === `container${1}-volume`)) {
+			this.setState({
+				...this.state,
+				activeSubMenu: `container${1}`
+			});
+			[1,2,3].map(item => {
+				if (item === 1) {
+					document.getElementById(`container${item}-info-spy`).style.display = "block";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "block";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "block";
+					document.getElementById(`container${item}-commands-spy`).style.display = "block";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "block";
+					document.getElementById(`container${item}-volume-spy`).style.display = "block";
+				} else {
+					document.getElementById(`container${item}-info-spy`).style.display = "none";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "none";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "none";
+					document.getElementById(`container${item}-commands-spy`).style.display = "none";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "none";
+					document.getElementById(`container${item}-volume-spy`).style.display = "none";
+				}
+			});
+		} else if ((obj && obj.id === `container${2}`) ||
+			(obj && obj.id === `container${2}-volume`)) {
+			this.setState({
+				...this.state,
+				activeSubMenu: `container${2}`
+			});
+			[1,2,3].map(item => {
+				if (item === 2) {
+					document.getElementById(`container${item}-info-spy`).style.display = "block";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "block";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "block";
+					document.getElementById(`container${item}-commands-spy`).style.display = "block";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "block";
+					document.getElementById(`container${item}-volume-spy`).style.display = "block";
+				} else {
+					document.getElementById(`container${item}-info-spy`).style.display = "none";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "none";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "none";
+					document.getElementById(`container${item}-commands-spy`).style.display = "none";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "none";
+					document.getElementById(`container${item}-volume-spy`).style.display = "none";
+				}
+			});
+		} else if ((obj && obj.id === `container${3}`) ||
+			(obj && obj.id === `container${3}-volume`)) {
+			this.setState({
+				...this.state,
+				activeSubMenu: `container${3}`
+			});
+			[1,2,3].map(item => {
+				if (item === 3) {
+					document.getElementById(`container${item}-info-spy`).style.display = "block";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "block";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "block";
+					document.getElementById(`container${item}-commands-spy`).style.display = "block";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "block";
+					document.getElementById(`container${item}-volume-spy`).style.display = "block";
+				} else {
+					document.getElementById(`container${item}-info-spy`).style.display = "none";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "none";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "none";
+					document.getElementById(`container${item}-commands-spy`).style.display = "none";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "none";
+					document.getElementById(`container${item}-volume-spy`).style.display = "none";
+				}
+			});
+		} else if (!obj && this.state.activeSubMenu === `container${1}`) {
+			this.setState({
+				...this.state,
+				activeSubMenu: `container${2}`
+			});
+			[1,2,3].map(item => {
+				if (item === 2) {
+					document.getElementById(`container${item}-info-spy`).style.display = "block";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "block";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "block";
+					document.getElementById(`container${item}-commands-spy`).style.display = "block";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "block";
+					document.getElementById(`container${item}-volume-spy`).style.display = "block";
+				} else {
+					document.getElementById(`container${item}-info-spy`).style.display = "none";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "none";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "none";
+					document.getElementById(`container${item}-commands-spy`).style.display = "none";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "none";
+					document.getElementById(`container${item}-volume-spy`).style.display = "none";
+				}
+			});
+		} else if (!obj && this.state.activeSubMenu === `container${2}`) {
+			this.setState({
+				...this.state,
+				activeSubMenu: `container${3}`
+			});
+			[1,2,3].map(item => {
+				if (item === 3) {
+					document.getElementById(`container${item}-info-spy`).style.display = "block";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "block";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "block";
+					document.getElementById(`container${item}-commands-spy`).style.display = "block";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "block";
+					document.getElementById(`container${item}-volume-spy`).style.display = "block";
+				} else {
+					document.getElementById(`container${item}-info-spy`).style.display = "none";
+					document.getElementById(`container${item}-parameters-spy`).style.display = "none";
+					document.getElementById(`container${item}-image-ports-spy`).style.display = "none";
+					document.getElementById(`container${item}-commands-spy`).style.display = "none";
+					document.getElementById(`container${item}-enviroments-spy`).style.display = "none";
+					document.getElementById(`container${item}-volume-spy`).style.display = "none";
+				}
+			});
+		}
+	}
+	handleChangeActivityInternal() {
+		this.setState({
+			...this.state,
+			isActiveInternal: !this.state.isActiveInternal
+		});
+	}
+	handleChangeActivityExternal() {
+		this.setState({
+			...this.state,
+			isActiveExternal: !this.state.isActiveExternal
+		});
+	}
+	handleSubmitForm(obj) {
+		// console.log(obj);
+		this.setState({
+			...this.state,
+			internalServObj: obj.internalServObj,
+			internalServName: obj.internalServName,
+			externalServObj: obj.externalServObj,
+			externalServName: obj.externalServName
+		})
+	}
+	handleSubmitDeployment(e) {
 		e.preventDefault();
-        this.props.onCreateDeployment(this.props.params.idName, this.state);
-    }
+		this.props.onCreateDeployment(this.props.params.idName, this.state);
+	}
     render() {
-		// console.log('containers', this.state.containers);
-	    const arrayOfContainersLinks = [
-		    'name',
-		    'labels',
-		    'replicas',
-		    'container1',
-		    'container1-info',
-		    'container1-parameters',
-		    'container1-image-ports',
-		    'container1-commands',
-		    'container1-enviroments',
-		    'container1-volume',
-		    'container2',
-		    'container2-info',
-		    'container2-parameters',
-		    'container2-image-ports',
-		    'container2-commands',
-		    'container2-enviroments',
-		    'container2-volume',
-		    'container3',
-		    'container3-info',
-		    'container3-parameters',
-		    'container3-image-ports',
-		    'container3-commands',
-		    'container3-enviroments',
-		    'container3-volume'
-	    ];
+		// console.log('this.state', this.state);
+	    const submitButtonText = this.props.CreateDeploymentReducer.isFetching ?
+		    <MiniSpinner /> : 'Create deployment';
+	    const isActiveSubmitButton = this.props.CreateDeploymentReducer.isFetching ?
+		    'btnDeployment btnService disabled' :
+		    'btnDeployment btnService';
+	    const isActiveSubmitState = !!this.props.CreateDeploymentReducer.isFetching;
 	    let isFetchingComponent = '';
 	    let isFetchingSidebar = '';
-	    if (!this.props.VolumesReducer.isFetching &&
+	    if (!this.props.VolumesByNSReducer.isFetching &&
 		    !this.props.GetNamespaceReducer.isFetching) {
 		    isFetchingComponent =
 			    <form onSubmit={this.handleSubmitDeployment.bind(this)}>
@@ -249,7 +433,6 @@ class CreateDeployment extends Component {
 					    this.onChangeInputReplicas(replicasInput)}
 				              value={this.state.replicas}
 				    />
-
 				    <Container
 					    containersCount={this.state.containersCount}
 					    containers={this.state.containers}
@@ -267,149 +450,79 @@ class CreateDeployment extends Component {
 						    this.onChangeInputCommands(commands)}
 					    onChangeInputEnv={(env) =>
 						    this.onChangeInputEnv(env)}
-					    onChangeSelectVolume={(env) =>
-						    this.onChangeSelectVolume(env)}
-					    volumes={this.props.VolumesReducer.data}
+					    onChangeSelectVolume={(env, index) =>
+						    this.onChangeSelectVolume(env, index)}
+					    volumes={this.props.VolumesByNSReducer.data}
 					    idName={this.props.params.idName}
 				    />
-
-				    <div className="addBlockBtn addBlockBtnBig btnTooltipContainer linkedServBtn">+ Add Linked Services
-					    <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
+				    <div id="linked-services">
+					    {
+						    this.state.isActiveService ?
+							    <ServiceForm
+								    handleSubmitForm={(obj) =>
+									    this.handleSubmitForm(obj)}
+								    handleChangeActivityInternal={() =>
+									    this.handleChangeActivityInternal()}
+								    handleChangeActivityExternal={() =>
+									    this.handleChangeActivityExternal()}
+								    currentDeployment={this.state.currentDeployment}
+								    isActiveInternal={this.state.isActiveInternal}
+								    isActiveExternal={this.state.isActiveExternal}
+								    params={this.props.params}
+							    /> :
+							    <div
+								    className="addBlockBtn addBlockBtnBig btnTooltipContainer linkedServBtn"
+								    onClick={this.handleClickCreateService.bind(this)}
+							    >+ Add Linked Services
+								    {/*<Tooltip*/}
+									    {/*placement='top'*/}
+									    {/*trigger={['hover']}*/}
+									    {/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
+								    {/*>*/}
+								        {/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
+								    {/*</Tooltip>*/}
+							    </div>
+					    }
 				    </div>
-
-				    <div className="linkedServicesWrapper serviceWrapperOff">
-					    <div className="blockContainer blockContainerPadin">
-						    <div className="row">
-							    <div className="col-md-9">
-								    <div className="containerTitle marLeft20">Internal Service
-									    <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
-								    </div>
-							    </div>
-
-							    <div className="col-md-3">
-								    <div className="serviceSwitcher serviceSwitcherOn"></div>
-							    </div>
-						    </div>
-
-						    <div className="serviceWrapper">
-							    <div className="row rowLine">
-								    <div className="col-md-6">
-									    <div className="has-float-label marTop40">
-										    <input className="form-control customInput" id="text15" type="text" placeholder=" " />
-										    <label className="customLabel" htmlFor="text15">* Service Name</label>
-										    <div className="helperText">Your Internal Name is the same as the name of Deployment</div>
-									    </div>
-								    </div>
-							    </div>
-
-							    <div className="row rowWithoutLine">
-								    <div className="col-md-12">
-									    <div className="containerTitle containerBlockTitle"><span>*</span> Ports
-										    <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
-									    </div>
-								    </div>
-
-								    <div className="col-md-4">
-									    <div className="has-float-label">
-										    <input className="form-control customInput" id="text16" type="text" placeholder=" " />
-										    <label className="customLabel" htmlFor="text16">Port</label>
-										    <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
-									    </div>
-								    </div>
-
-								    <div className="col-md-4">
-									    <div className="has-float-label">
-										    <input className="form-control customInput" id="text17" type="text" placeholder=" " />
-										    <label className="customLabel" htmlFor="text17">Target Port</label>
-										    <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
-									    </div>
-								    </div>
-
-								    <div className="col-md-2">
-									    <div className="select-wrapper">
-										    <div className="select-arrow-3"></div>
-										    <div className="select-arrow-3"></div>
-										    <select className="selectCustom">
-											    <option value="">TCP</option>
-											    <option value="">Option</option>
-										    </select>
-									    </div>
-								    </div>
-
-								    <div className="col-md-12">
-									    <div className="addBlockBtn marLeft">+ Add Port</div>
-								    </div>
-							    </div>
-						    </div>
-					    </div>
-
-					    <div className="blockContainer blockContainerPadin">
-						    <div className="row">
-							    <div className="col-md-9">
-								    <div className="containerTitle marLeft20">External Service
-									    <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
-								    </div>
-							    </div>
-
-							    <div className="col-md-3">
-								    <div className="serviceSwitcher"></div>
-							    </div>
-						    </div>
-
-						    <div className="serviceWrapper serviceWrapperOff">
-							    <div className="row rowLine">
-								    <div className="col-md-6">
-									    <div className="has-float-label marTop40">
-										    <input className="form-control customInput" id="text18" type="text" placeholder=" " />
-										    <label className="customLabel" htmlFor="text18">* Service Name</label>
-										    <div className="helperText">Your Internal Name is the same as the name of Deployment with «… ext-service» index</div>
-									    </div>
-								    </div>
-							    </div>
-
-							    <div className="row rowWithoutLine">
-								    <div className="col-md-12">
-									    <div className="containerTitle containerBlockTitle"><span>*</span> Ports
-										    <span className="myTooltip" data-toggle="tooltip" title="Text of notificatiorem ipsum alist delor set. Text of notification. Lore ipsum delor upset ore ipsum delor upset">?</span>
-									    </div>
-								    </div>
-
-								    <div className="col-md-4">
-									    <div className="has-float-label">
-										    <input className="form-control customInput" id="text19" type="text" placeholder=" " />
-										    <label className="customLabel" htmlFor="text19">Port</label>
-										    <div className="helperText">Your Deployment name can only contain alphanumeric and characters</div>
-									    </div>
-								    </div>
-
-								    <div className="col-md-2">
-									    <div className="select-wrapper">
-										    <div className="select-arrow-3"></div>
-										    <div className="select-arrow-3"></div>
-										    <select className="selectCustom">
-											    <option value="">UDP</option>
-											    <option value="">Option</option>
-										    </select>
-									    </div>
-								    </div>
-
-								    <div className="col-md-12">
-									    <div className="addBlockBtn marLeft">+ Add Port</div>
-								    </div>
-							    </div>
-						    </div>
-					    </div>
-				    </div>
-
 				    <button
+					    ref="button"
 					    type="submit"
-					    className="btnDeployment"
-				    >Create deployment</button>
+					    className={isActiveSubmitButton}
+					    disabled={isActiveSubmitState}
+				    >
+					    { submitButtonText }
+				    </button>
 			    </form>;
+		    const arrayOfContainersLinks = [
+			    'name',
+			    'labels',
+			    'replicas',
+			    'container1',
+			    'container1-info',
+			    'container1-parameters',
+			    'container1-image-ports',
+			    'container1-commands',
+			    'container1-enviroments',
+			    'container1-volume',
+			    'container2',
+			    'container2-info',
+			    'container2-parameters',
+			    'container2-image-ports',
+			    'container2-commands',
+			    'container2-enviroments',
+			    'container2-volume',
+			    'container3',
+			    'container3-info',
+			    'container3-parameters',
+			    'container3-image-ports',
+			    'container3-commands',
+			    'container3-enviroments',
+			    'container3-volume'
+		    ];
 		    isFetchingSidebar =
 			    <Scrollspy
 				    items={arrayOfContainersLinks}
-				    // onUpdate={this.handleUpdateMenu.bind(this)}
+				    onUpdate={this.handleUpdateMenu.bind(this)}
 				    style={{
 					    padding: '20px 0'
 				    }}
@@ -418,51 +531,204 @@ class CreateDeployment extends Component {
 				    <div className="sideMenuHeader"><a href="#labels">labels</a></div>
 				    <div className="sideMenuHeader"><a href="#replicas">replicas</a></div>
 
-				    <div className="sideMenuHeader">
-					    <a href={`#container${1}`}>Container {1}</a>
+				    <div className="sideMenuHeader" id={`container${1}spy`}>
+					    <a href={`#container${1}`}>Container 1</a>
 				    </div>
-				    <div className="sideMenuHeader">
+				    <div className="sideMenuHeader sideMenuHeader-nomargin" id={`container${1}-info-spy`}>
 					    <a
-						    className="nav-link sideMenuItem"
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
 						    href={`#container${1}-info`}
 					    >Info</a>
 				    </div>
-				    <div className="sideMenuHeader">
+				    <div className="sideMenuHeader sideMenuHeader-nomargin" id={`container${1}-parameters-spy`}>
 					    <a
-						    className="nav-link sideMenuItem"
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+
 						    href={`#container${1}-parameters`}
 					    >Parameters</a>
 				    </div>
-				    <div className="sideMenuHeader">
+				    <div className="sideMenuHeader sideMenuHeader-nomargin" id={`container${1}-image-ports-spy`}>
 					    <a
-						    className="nav-link sideMenuItem"
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+
 						    href={`#container${1}-image-ports`}
 					    >Image Ports</a>
 				    </div>
-				    <div className="sideMenuHeader">
+				    <div className="sideMenuHeader sideMenuHeader-nomargin" id={`container${1}-commands-spy`}>
 					    <a
-						    className="nav-link sideMenuItem"
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+
 						    href={`#container${1}-commands`}
 					    >Commands</a>
 				    </div>
-				    <div className="sideMenuHeader">
+				    <div className="sideMenuHeader sideMenuHeader-nomargin" id={`container${1}-enviroments-spy`}>
 					    <a
-						    className="nav-link sideMenuItem"
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+
 						    href={`#container${1}-enviroments`}
 					    >Enviroments</a>
 				    </div>
-				    <div className="sideMenuHeader">
+				    <div className="sideMenuHeader sideMenuHeader-nomargin" id={`container${1}-volume-spy`}>
 					    <a
-						    className="nav-link sideMenuItem"
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+
 						    href={`#container${1}-volume`}
 					    >Volume</a>
 				    </div>
 
-				    <div className="sideMenuHeader">
+				    <div
+					    className="sideMenuHeader"
+					    id={`container${2}spy`}
+					    style={this.state.containers.length === 1 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a href={`#container${2}`}>Container 2</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${2}-info-spy`}
+					    style={this.state.containers.length === 1 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
 					    <a
-						    className="nav-link sideMenuItem"
-						    href="#linked-services"
-					    >Linked Services</a></div>
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${2}-info`}
+					    >Info</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${2}-parameters-spy`}
+					    style={this.state.containers.length === 1 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${2}-parameters`}
+					    >Parameters</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${2}-image-ports-spy`}
+					    style={this.state.containers.length === 1 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${2}-image-ports`}
+					    >Image Ports</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${2}-commands-spy`}
+					    style={this.state.containers.length === 1 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${2}-commands`}
+					    >Commands</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${2}-enviroments-spy`}
+					    style={this.state.containers.length === 1 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${2}-enviroments`}
+					    >Enviroments</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${2}-volume-spy`}
+					    style={this.state.containers.length === 1 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${2}-volume`}
+					    >Volume</a>
+				    </div>
+
+				    <div
+					    className="sideMenuHeader"
+					    id={`container${3}spy`}
+					    style={this.state.containers.length <= 2 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a href={`#container${3}`}>Container 3</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${3}-info-spy`}
+					    style={this.state.containers.length <= 2 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${3}-info`}
+					    >Info</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${3}-parameters-spy`}
+					    style={this.state.containers.length <= 2 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${3}-parameters`}
+					    >Parameters</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${3}-image-ports-spy`}
+					    style={this.state.containers.length <= 2 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${3}-image-ports`}
+					    >Image Ports</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${3}-commands-spy`}
+					    style={this.state.containers.length <= 2 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${3}-commands`}
+					    >Commands</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${3}-enviroments-spy`}
+					    style={this.state.containers.length <= 2 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${3}-enviroments`}
+					    >Enviroments</a>
+				    </div>
+				    <div
+					    className="sideMenuHeader sideMenuHeader-nomargin"
+					    id={`container${3}-volume-spy`}
+					    style={this.state.containers.length <= 2 ?
+						    {display: 'none'} : {display: 'block'}}
+				    >
+					    <a
+						    className="nav-link sideMenuItem sideMenuItem-transformInit"
+						    href={`#container${3}-volume`}
+					    >Volume</a>
+				    </div>
+
+				    <div className="sideMenuHeader">
+					    <a href="#linked-services">Linked Services</a>
+				    </div>
 				    <ul className="nav flex-column linkedMenu"> </ul>
 			    </Scrollspy>;
 	    } else {
@@ -507,13 +773,32 @@ class CreateDeployment extends Component {
 						    )
 					    })
 				    }
+				    {
+					    new Array(1).fill().map((item, index) => {
+						    return (
+							    <img
+								    key={index}
+								    src={require('../../images/profile-sidebar-big.svg')}
+								    style={{width: '100%', marginBottom: '20px'}}
+							    />
+						    )
+					    })
+				    }
 			    </div>;
 	    }
 
         return (
         	<div>
+		        <Notification
+			        status={this.props.CreateDeploymentReducer.status}
+			        name={this.props.CreateDeploymentReducer.idDep}
+			        errorMessage={this.props.CreateDeploymentReducer.errorMessage}
+		        />
 		        <div className="container-fluid breadcrumbNavigation">
-			        <HeaderDropDown idName={this.props.params.idName} />
+			        <HeaderDropDown
+				        idName={this.props.params.idName}
+				        IdCreate="deployment"
+			        />
 		        </div>
 		        <div className="content-block">
 			        <div className="container no-back">
@@ -540,7 +825,9 @@ function mapStateToProps(state) {
     return {
         CreateDeploymentReducer: state.CreateDeploymentReducer,
 	    GetNamespaceReducer: state.GetNamespaceReducer,
-	    VolumesReducer: state.VolumesReducer
+	    VolumesByNSReducer: state.VolumesByNSReducer,
+	    onGetCreateIntService: PropTypes.func.isRequired,
+	    onGetCreateExtService: PropTypes.func.isRequired
     };
 }
 
@@ -549,11 +836,17 @@ const mapDispatchToProps = (dispatch) => {
         onCreateDeployment: (idName, name) => {
             dispatch(createDeployment(idName, name));
         },
+	    onGetCreateIntService: (idName, data) => {
+		    dispatch(getCreateIntService(idName, data));
+	    },
+	    onGetCreateExtService: (idName, data) => {
+		    dispatch(getCreateExtService(idName, data));
+	    },
 	    onGetNamespace: (NSTariffName) => {
 		    dispatch(getNamespace(NSTariffName));
 	    },
-	    onGetVolumes: () => {
-		    dispatch(getVolumes());
+	    onGetVolumes: (name) => {
+		    dispatch(getVolumesByNSAction(name));
 	    }
     };
 };

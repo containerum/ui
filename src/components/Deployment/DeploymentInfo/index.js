@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
 import DeleteModal from '../../CustomerModal/DeleteModal';
+import NavLink from '../../../containers/NavLink';
 import r from '../../../images/r.png';
 import Notification from '../../Notification';
 
@@ -65,6 +66,10 @@ class DeploymentInfo extends Component {
                                         className="dropdown-item text-danger"
                                         onClick={idDep => this.handleClickDeletingDeployment(depName)}
                                     >Delete</button>
+	                                {/*<NavLink*/}
+		                                {/*className="dropdown-item"*/}
+		                                {/*to={`/Namespaces/${this.props.idName}/UpdateDeployment`}*/}
+	                                {/*>Update</NavLink>*/}
                                 </ul>
                             </div>
                         </div>

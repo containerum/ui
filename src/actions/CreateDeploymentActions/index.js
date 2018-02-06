@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import cloneDeep from 'clone-deep';
 
 import {
     CREATE_DEPLOYMENT_REQUEST,
@@ -21,20 +22,41 @@ export function createDeployment(idName, data) {
             browser = localStorage.getItem('id_browser');
         }
 
-	    // console.log(data);
-        // const countOfContainers = data.containers.length;
-	    const splitContainers = data.containers.slice();
+	    const splitContainers = cloneDeep(data.containers);
 	    splitContainers.map(item => {
-		    item.ports.map(includePorts => {
-			    delete includePorts.id;
-			    delete includePorts.index;
-            });
-		    item.env.map(includeEnvs => {
-			    delete includeEnvs.id;
-			    delete includeEnvs.index;
-            });
+		    delete item.id;
+		    if (item.ports[0].containerPort) {
+			    item.ports.map(includePorts => {
+				    delete includePorts.id;
+				    delete includePorts.index;
+			    });
+		    } else {
+			    item.ports = [];
+		    }
+		    if (item.env[0].value) {
+			    item.env.map(includeEnvs => {
+				    delete includeEnvs.id;
+				    delete includeEnvs.index;
+			    });
+		    } else {
+			    item.env = [];
+		    }
+		    if (item.volumeMounts.length) {
+			    item.volumeMounts.map(volumeMountsEnvs => {
+				    if (!volumeMountsEnvs.subPath) {
+					    delete volumeMountsEnvs.subPath;
+				    }
+				    delete volumeMountsEnvs.id;
+				    delete volumeMountsEnvs.index;
+			    });
+		    } else {
+			    item.volumeMounts = [];
+		    }
+		    if (!item.command.length) {
+			    delete item.command;
+		    	// item.command = [];
+		    }
         });
-	    // console.log(data.containers);
 
         let labels = {};
         data.labels.map(item => {
@@ -45,6 +67,14 @@ export function createDeployment(idName, data) {
 		        [key]: label
             };
         });
+
+	    // console.log('containers', {
+		 //    name: data.name,
+		 //    labels,
+		 //    replicas: data.replicas,
+		 //    containers: splitContainers
+	    // });
+
         return axios.post(
             WEB_API + `/api/namespaces/${idName}/deployments`,
             {
@@ -66,7 +96,7 @@ export function createDeployment(idName, data) {
         )
             .then(response => {
                 if (response.status === 201) {
-                    dispatch(receiveCreateDeployment(response.data, response.status, idName));
+                    dispatch(receiveCreateDeployment(response.data, response.status, data.name));
                     if (typeof window !== 'undefined') {
                         browserHistory.push('/Namespaces');
                     }
@@ -76,9 +106,9 @@ export function createDeployment(idName, data) {
                         browserHistory.push('/Login');
                     }
                 } else {
-                    dispatch(failCreateDeployment(response.data.message, response.status, idName));
+                    dispatch(failCreateDeployment(response.data.message, response.status, data.name));
                 }
-            }).catch(err => {dispatch(failCreateDeployment(err.toString(), 503, idName)); console.log(err)})
+            }).catch(err => {dispatch(failCreateDeployment(err.toString(), 503, data.name)); console.log(err)})
     };
 }
 function requestCreateDeployment() {
@@ -88,22 +118,22 @@ function requestCreateDeployment() {
     };
 }
 
-function receiveCreateDeployment(data, status, idName) {
+function receiveCreateDeployment(data, status, idDep) {
     return {
         type: CREATE_DEPLOYMENT_SUCCESS,
         isFetching: false,
         data,
         status,
-        idName
+        idDep
     };
 }
 
-function failCreateDeployment(message, status, idName) {
+function failCreateDeployment(message, status, idDep) {
     return {
         type: CREATE_DEPLOYMENT_FAILURE,
         isFetching: false,
         message,
         status,
-        idName
+        idDep
     };
 }
