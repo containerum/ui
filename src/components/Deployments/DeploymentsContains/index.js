@@ -97,7 +97,7 @@ class DeploymentsContains extends Component {
 				            const cpu = item.cpu;
 				            const id = `item_${item.name}`;
 				            const podsActive = item.pods_active;
-				            const podsLimit = item.pods_limit;
+				            const replicas = item.replicas;
 				            return (
                                 <tr
                                     key={index}
@@ -107,7 +107,7 @@ class DeploymentsContains extends Component {
                                 >
                                     <td className="td-1"><img src={deploy} /></td>
                                     <td className="td-2">{item.name}</td>
-                                    <td className="td-3">{podsActive} / {podsLimit}</td>
+                                    <td className="td-3">{podsActive} / {replicas}</td>
                                     <td className="td-4">{item.ram}</td>
                                     <td className="td-5">{cpu}</td>
                                     <td className="td-6">{dateValue}</td>
@@ -126,10 +126,10 @@ class DeploymentsContains extends Component {
                                                 className="dropdown-item text-danger"
                                                 onClick={name => this.handleClickDeletingDeployment(item.name)}
                                             >Delete</button>
-                                            {/*<NavLink*/}
-                                                {/*className="dropdown-item"*/}
-                                                {/*to={`/Namespaces/${this.props.idName}/UpdateDeployment`}*/}
-                                            {/*>Update</NavLink>*/}
+                                            <NavLink
+                                                className="dropdown-item"
+                                                to={`/Namespaces/${this.props.idName}/UpdateDeployment/${item.name}`}
+                                            >Update</NavLink>
                                         </ul>
                                     </td>
                                 </tr>
