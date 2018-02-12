@@ -17,7 +17,7 @@ class Replicas extends Component {
         return (
 	        <div className="blockContainer blockContainerPadin" id="replicas">
 		        <div className="col-md-7">
-			        <div className="containerTitle"><span>*</span> Replicas
+			        <div className="containerTitle">{this.props.idDep} <span className="containerTitleText">deployment</span>
 				        {/*<Tooltip*/}
 					        {/*placement='top'*/}
 					        {/*trigger={['hover']}*/}
@@ -26,7 +26,19 @@ class Replicas extends Component {
 					        {/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
 				        {/*</Tooltip>*/}
 			        </div>
-			        <div className="containerSubTitle">Enter Replicas count</div>
+		        </div>
+		        <div className="col-md-7">
+			        <div className="containerTitle containerBlockTitle marTop30">Replicas
+				        {/*<Tooltip*/}
+				        {/*placement='top'*/}
+				        {/*trigger={['hover']}*/}
+				        {/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
+				        {/*>*/}
+				        {/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
+				        {/*</Tooltip>*/}
+			        </div>
+		        </div>
+		        <div className="col-md-7">
 			        <div className="form-group">
 				        <input
 					        className="form-group__input-text form-control customInput"
@@ -60,6 +72,7 @@ class Replicas extends Component {
 
 Replicas.propTypes = {
 	onChangeInputReplicas: PropTypes.func.isRequired,
+	idDep: PropTypes.string.isRequired,
 	value: PropTypes.number
 };
 

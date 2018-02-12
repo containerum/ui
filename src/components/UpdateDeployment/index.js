@@ -4,16 +4,17 @@ import PropTypes from 'prop-types';
 import Scrollspy from 'react-scrollspy';
 // import Tooltip from 'rc-tooltip';
 
-import { createDeployment } from '../../actions/CreateDeploymentActions';
-import { getNamespace } from '../../actions/NamespaceActions/getNamespaceAction';
+import { updateDeployment } from '../../actions/UpdateDeploymentActions';
+import { getDeployment } from '../../actions/DeploymentActions/getDeploymentAction';
 import { getVolumesByNSAction } from '../../actions/VolumesActions/getVolumesByNSAction';
 import { getCreateIntService } from '../../actions/CreateServiceActions/CreateInternalService';
 import { getCreateExtService } from '../../actions/CreateServiceActions/CreateExternalService';
 import Notification from '../Notification';
-import ServiceForm from '../CreateService/ServiceForm';
+import MiniSpinner from '../MiniSpinner';
+// import ServiceForm from '../CreateService/ServiceForm';
 import HeaderDropDown from '../HeaderDropDown';
-import Name from './Name';
-import Label from './Label';
+// import Name from './Name';
+// import Label from './Label';
 import Replicas from './Replicas';
 import Container from './Container';
 import createDepServ from '../../images/create-dep-serv.svg';
@@ -24,13 +25,86 @@ class UpdateDeployment extends Component {
 		this.state = this.initialState();
 	}
     componentDidMount() {
-	    this.props.onGetNamespace(this.props.params.idName);
+	    this.props.onGetDeployment(this.props.params.idName, this.props.params.idDep);
 	    this.props.onGetVolumes(this.props.params.idName);
     }
 	componentWillReceiveProps(nextProps) {
-		// console.log(this.props.CreateDeploymentReducer, nextProps.CreateDeploymentReducer);
-		if (this.props.CreateDeploymentReducer.status !== nextProps.CreateDeploymentReducer.status &&
-			nextProps.CreateDeploymentReducer.status === 201) {
+		if (Object.keys(nextProps.GetDeploymentReducer.data).length &&
+			Object.keys(this.props.GetDeploymentReducer.data).length !==
+			Object.keys(nextProps.GetDeploymentReducer.data).length) {
+			const data = nextProps.GetDeploymentReducer.data;
+			const { name, labels, replicas, containers } = data;
+			const containersArr = [];
+			containers.map((item, index) => {
+				const {
+					image,
+					name: imgName,
+					cpu,
+					ram: memory,
+					ports,
+					environments,
+					commands,
+					volumes
+				} = item;
+				if (ports) {
+					ports.map(item => {
+						item.id = '_' + Math.random().toString(36).substr(2, 9);
+						item.index = index + 1;
+					});
+				}
+				if (environments) {
+					environments.map(item => {
+						item.id = '_' + Math.random().toString(36).substr(2, 9);
+						item.index = index + 1;
+					});
+				}
+				if (volumes) {
+					volumes.map(item => {
+						item.id = '_' + Math.random().toString(36).substr(2, 9);
+						item.index = index + 1;
+					});
+				}
+				containersArr.push({
+					id: '_' + Math.random().toString(36).substr(2, 9),
+					image,
+					name : imgName,
+					resources: {
+						requests: {
+							cpu: `${cpu}m`,
+							memory: `${memory}Mi`
+						}
+					},
+					ports: ports ? ports : [
+						{
+							containerPort: '',
+							id: '_first',
+							index: 1
+						}
+					],
+					env: environments ? environments : [
+						{
+							value: '',
+							name: '',
+							id: '_first',
+							index: 1
+						}
+					],
+					command: commands ? commands : [],
+					volumeMounts: volumes ? volumes : []
+				});
+			});
+			this.setState({
+				...this.state,
+				name,
+				labels,
+				replicas,
+				containers: containersArr,
+				containersCount: containersArr.length
+			})
+		}
+		// console.log(this.props.UpdateDeploymentReducer, nextProps.UpdateDeploymentReducer);
+		if (this.props.UpdateDeploymentReducer.status !== nextProps.UpdateDeploymentReducer.status &&
+			nextProps.UpdateDeploymentReducer.status === 201) {
 			const serviceObject = this.state;
 			if (serviceObject.internalServObj.length &&
 				serviceObject.internalServObj[0].internalServPort) {
@@ -48,7 +122,7 @@ class UpdateDeployment extends Component {
 	initialState() {
 		return {
 			name: '',
-			labels: [],
+			labels: {},
 			replicas: 1,
 			containers: [
 				{
@@ -106,33 +180,11 @@ class UpdateDeployment extends Component {
 			externalServName: ''
 		};
 	}
-	onChangeInputName(name) {
-        this.setState({
-	        ...this.state,
-	        name,
-	        currentDeployment: name
-        });
-    }
 	onChangeInputReplicas(replicas) {
 		const regexp = /^[0-9]{1,2}$|^$/;
 		const replicasToInt = replicas ? parseInt(replicas, 10) : '';
 		if (replicas.search(regexp) !== -1) {
 			this.setState({ ...this.state, replicas: replicasToInt });
-		}
-    }
-	onChangeInputLabels(labels) {
-		if (labels.length === 1 &&
-			!labels[0].key &&
-			!labels[0].label) {
-			this.setState({
-				...this.state,
-				labels: []
-			});
-		} else {
-			this.setState({
-				...this.state,
-				labels
-			});
 		}
     }
 	onChangeContainerCount() {
@@ -233,7 +285,7 @@ class UpdateDeployment extends Component {
 		});
     }
 	onChangeInputEnv(env) {
-		// console.log(env);
+		// console.log('env', env);
 		let envs = [];
 		const split = this.state.containers.slice();
 		env.map(item => {
@@ -408,23 +460,26 @@ class UpdateDeployment extends Component {
 	}
 	handleSubmitDeployment(e) {
 		e.preventDefault();
-		this.props.onCreateDeployment(this.props.params.idName, this.state);
+		this.props.onUpdateDeployment(this.props.params.idName, this.props.params.idDep, this.state);
 	}
     render() {
-		// console.log('this.state', this.state);
+		// console.log('state', this.state);
+	    const submitButtonText = this.props.UpdateDeploymentReducer.isFetching ?
+		    <MiniSpinner /> : 'Update deployment';
+	    const isActiveSubmitButton = this.props.UpdateDeploymentReducer.isFetching ?
+		    'btnDeployment btnService disabled' :
+		    'btnDeployment btnService';
+	    const isActiveSubmitState = !!this.props.UpdateDeploymentReducer.isFetching;
 	    let isFetchingComponent = '';
 	    let isFetchingSidebar = '';
 	    if (!this.props.VolumesByNSReducer.isFetching &&
-		    !this.props.GetNamespaceReducer.isFetching) {
+		    !this.props.GetDeploymentReducer.isFetching) {
 		    isFetchingComponent =
 			    <form onSubmit={this.handleSubmitDeployment.bind(this)}>
-				    <Name onChangeInputName={(nameInput) =>
-					    this.onChangeInputName(nameInput)}/>
-				    <Label onChangeInputLabels={(labels) =>
-					    this.onChangeInputLabels(labels)}/>
 				    <Replicas onChangeInputReplicas={(replicasInput) =>
 					    this.onChangeInputReplicas(replicasInput)}
 				              value={this.state.replicas}
+		                idDep={this.props.params.idDep}
 				    />
 				    <Container
 					    containersCount={this.state.containersCount}
@@ -448,43 +503,45 @@ class UpdateDeployment extends Component {
 					    volumes={this.props.VolumesByNSReducer.data}
 					    idName={this.props.params.idName}
 				    />
-				    <div id="linked-services">
-					    {
-						    this.state.isActiveService ?
-							    <ServiceForm
-								    handleSubmitForm={(obj) =>
-									    this.handleSubmitForm(obj)}
-								    handleChangeActivityInternal={() =>
-									    this.handleChangeActivityInternal()}
-								    handleChangeActivityExternal={() =>
-									    this.handleChangeActivityExternal()}
-								    currentDeployment={this.state.currentDeployment}
-								    isActiveInternal={this.state.isActiveInternal}
-								    isActiveExternal={this.state.isActiveExternal}
-								    params={this.props.params}
-							    /> :
-							    <div
-								    className="addBlockBtn addBlockBtnBig btnTooltipContainer linkedServBtn"
-								    onClick={this.handleClickCreateService.bind(this)}
-							    >+ Add Linked Services
-								    {/*<Tooltip*/}
-									    {/*placement='top'*/}
-									    {/*trigger={['hover']}*/}
-									    {/*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*/}
-								    {/*>*/}
-								        {/*<span className="myTooltip" data-toggle="tooltip">?</span>*/}
-								    {/*</Tooltip>*/}
-							    </div>
-					    }
-				    </div>
+				    {/*<div id="linked-services">*/}
+					    {/*{*/}
+						    {/*this.state.isActiveService ?*/}
+							    {/*<ServiceForm*/}
+								    {/*handleSubmitForm={(obj) =>*/}
+									    {/*this.handleSubmitForm(obj)}*/}
+								    {/*handleChangeActivityInternal={() =>*/}
+									    {/*this.handleChangeActivityInternal()}*/}
+								    {/*handleChangeActivityExternal={() =>*/}
+									    {/*this.handleChangeActivityExternal()}*/}
+								    {/*currentDeployment={this.state.currentDeployment}*/}
+								    {/*isActiveInternal={this.state.isActiveInternal}*/}
+								    {/*isActiveExternal={this.state.isActiveExternal}*/}
+								    {/*params={this.props.params}*/}
+							    {/*/> :*/}
+							    {/*<div*/}
+								    {/*className="addBlockBtn addBlockBtnBig btnTooltipContainer linkedServBtn"*/}
+								    {/*onClick={this.handleClickCreateService.bind(this)}*/}
+							    {/*>+ Add Linked Services*/}
+								    {/*/!*<Tooltip*!/*/}
+									    {/*/!*placement='top'*!/*/}
+									    {/*/!*trigger={['hover']}*!/*/}
+									    {/*/!*overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>}*!/*/}
+								    {/*/!*>*!/*/}
+								        {/*/!*<span className="myTooltip" data-toggle="tooltip">?</span>*!/*/}
+								    {/*/!*</Tooltip>*!/*/}
+							    {/*</div>*/}
+					    {/*}*/}
+				    {/*</div>*/}
 				    <button
+					    ref="button"
 					    type="submit"
-					    className="btnDeployment"
-				    >Create deployment</button>
+					    className={isActiveSubmitButton}
+					    disabled={isActiveSubmitState}
+				    >
+					    { submitButtonText }
+				    </button>
 			    </form>;
 		    const arrayOfContainersLinks = [
-			    'name',
-			    'labels',
 			    'replicas',
 			    'container1',
 			    'container1-info',
@@ -516,8 +573,6 @@ class UpdateDeployment extends Component {
 					    padding: '20px 0'
 				    }}
 				    currentClassName="active">
-				    <div className="sideMenuHeader"><a href="#name">name</a></div>
-				    <div className="sideMenuHeader"><a href="#labels">labels</a></div>
 				    <div className="sideMenuHeader"><a href="#replicas">replicas</a></div>
 
 				    <div className="sideMenuHeader" id={`container${1}spy`}>
@@ -768,14 +823,15 @@ class UpdateDeployment extends Component {
         return (
         	<div>
 		        <Notification
-			        status={this.props.CreateDeploymentReducer.status}
-			        name={this.props.CreateDeploymentReducer.idDep}
-			        errorMessage={this.props.CreateDeploymentReducer.errorMessage}
+			        status={this.props.UpdateDeploymentReducer.status}
+			        method={this.props.UpdateDeploymentReducer.method}
+			        name={this.props.UpdateDeploymentReducer.idDep}
+			        errorMessage={this.props.UpdateDeploymentReducer.errorMessage}
 		        />
 		        <div className="container-fluid breadcrumbNavigation">
 			        <HeaderDropDown
 				        idName={this.props.params.idName}
-				        IdCreate="deployment"
+				        IdUpdate="deployment"
 			        />
 		        </div>
 		        <div className="content-block">
@@ -796,14 +852,17 @@ class UpdateDeployment extends Component {
 }
 
 UpdateDeployment.propTypes = {
-    onCreateDeployment: PropTypes.func.isRequired
+	onGetDeployment: PropTypes.func.isRequired,
+	GetDeploymentReducer: PropTypes.object,
+    onUpdateDeployment: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
     return {
-        CreateDeploymentReducer: state.CreateDeploymentReducer,
-	    GetNamespaceReducer: state.GetNamespaceReducer,
+        UpdateDeploymentReducer: state.UpdateDeploymentReducer,
+	    // GetNamespaceReducer: state.GetNamespaceReducer,
 	    VolumesByNSReducer: state.VolumesByNSReducer,
+	    GetDeploymentReducer: state.GetDeploymentReducer,
 	    onGetCreateIntService: PropTypes.func.isRequired,
 	    onGetCreateExtService: PropTypes.func.isRequired
     };
@@ -811,8 +870,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onCreateDeployment: (idName, name) => {
-            dispatch(createDeployment(idName, name));
+        onUpdateDeployment: (idName, idDep, name) => {
+            dispatch(updateDeployment(idName, idDep, name));
         },
 	    onGetCreateIntService: (idName, data) => {
 		    dispatch(getCreateIntService(idName, data));
@@ -820,8 +879,8 @@ const mapDispatchToProps = (dispatch) => {
 	    onGetCreateExtService: (idName, data) => {
 		    dispatch(getCreateExtService(idName, data));
 	    },
-	    onGetNamespace: (NSTariffName) => {
-		    dispatch(getNamespace(NSTariffName));
+	    onGetDeployment: (idName, idDep) => {
+		    dispatch(getDeployment(idName, idDep));
 	    },
 	    onGetVolumes: (name) => {
 		    dispatch(getVolumesByNSAction(name));

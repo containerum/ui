@@ -53,6 +53,7 @@ import DeleteVolumeReducer from './VolumeReducers/DeleteVolumeReducer';
 import UpdateVolumeReducer from './VolumeReducers/UpdateVolumeReducer';
 import UpdateExtServiceReducer from './ServiceReducers/UpdateExtServiceReducer';
 import UpdateIntServiceReducer from './ServiceReducers/UpdateIntServiceReducer';
+import UpdateDeploymentReducer from './DeploymentReducers/UpdateDeploymentReducer';
 
 const rootReducer = combineReducers({
     LoginReducer,
@@ -62,6 +63,7 @@ const rootReducer = combineReducers({
     NamespacesReducer,
     VolumesReducer,
     DeploymentsReducer,
+	UpdateDeploymentReducer,
     ServicesReducer,
     GetServiceReducer,
     GetProfileReducer,

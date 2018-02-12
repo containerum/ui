@@ -6,78 +6,67 @@ import Tooltip from 'rc-tooltip';
 import icon from '../../../../images/icon-create-dep.svg';
 
 class Enviroments extends Component {
-	constructor(props) {
-		super(props);
-		this.state = this.initialState();
-	}
-	initialState() {
-		return {
-			env: [{
-				value: '',
-				name: '',
-				id: '_first',
-				index: this.props.index
-			}]
-		};
+	componentDidMount() {
+		this.props.item.env.map((item) => {
+			if (item.value) {
+				// console.log('item.containerPort', item.id, item.index);
+				const envName = document.getElementById(`env-name-form-group__label${item.index}${item.id}`);
+				// console.log('item.port', `port-name-form-group__label${this.props.index}${this.props.item.id}`);
+				envName ? envName.classList.add('form-group__label-always-onfocus') : null;
+			}
+			if (item.name) {
+				// console.log('item.containerPort', item.id, item.index);
+				const port = document.getElementById(`env-value-form-group__label${item.index}${item.id}`);
+				// console.log('item.port', `port-name-form-group__label${this.props.index}${this.props.item.id}`);
+				port ? port.classList.add('form-group__label-always-onfocus') : null;
+			}
+		});
 	}
 	handleClickAddEnviroments(index) {
-		this.setState({
-			env: [
-				...this.state.env,
-				{
-					value: '',
-					name: '',
-					id: '_' + Math.random().toString(36).substr(2, 9),
-					index
-				}
-			]
-		}, () => {
-			this.props.onChangeInputEnv(this.state.env);
-		})
+		const envs = this.props.item.env;
+		envs.push({
+			value: '',
+			name: '',
+			id: '_' + Math.random().toString(36).substr(2, 9),
+			index
+		});
+		this.props.onChangeInputEnv(envs);
 	}
-	handleClickRemoveEnviroments(id) {
-		if (this.state.env.length > 1) {
-			const nextLabels = Object.assign({}, this.state).env.filter((item) => {
-				return item.id !== id;
+	handleClickRemoveEnviroments(id, index) {
+		const envs = this.props.item.env;
+		if (envs.length > 1) {
+			const nextLabels = envs.filter((item) => {
+				return item.id !== id && item.index === index;
 			});
-			this.setState({
-				env: nextLabels
-			}, () => {
-				this.props.onChangeInputEnv(this.state.env);
-			});
+			this.props.onChangeInputEnv(nextLabels);
 		} else {
-			this.setState(this.initialState(), () => {
-				this.props.onChangeInputEnv(this.state.env);
-			});
+			this.props.onChangeInputEnv([{
+				value: '',
+				name: '',
+				id,
+				index
+			}]);
 		}
 	}
 	handleChangeInputEnviromentsName(e, id, index) {
-		const nextState = Object.assign({}, this.state);
-		nextState.env.filter(item => {
+		const envs = this.props.item.env;
+		envs.filter(item => {
 			if (item.id === id) {
 				item.name = e.target.value;
 				item.index = index;
 			}
 		});
-		this.setState({
-			env: nextState.env
-		}, () => {
-			this.props.onChangeInputEnv(this.state.env);
-		});
+		this.props.onChangeInputEnv(envs);
 	}
 	handleChangeInputEnviromentsValue(e, id, index) {
-		const nextState = Object.assign({}, this.state);
-		nextState.env.filter(item => {
+		const envs = this.props.item.env;
+		envs.filter(item => {
 			if (item.id === id) {
 				item.value = e.target.value;
 				item.index = index;
 			}
 		});
-		this.setState({
-			env: nextState.env
-		}, () => {
-			this.props.onChangeInputEnv(this.state.env);
-		});
+		this.props.onChangeInputEnv(envs);
 	}
     render() {
         return (
@@ -119,16 +108,16 @@ class Enviroments extends Component {
 									        onChange={(e) => {
 										        this.handleChangeInputEnviromentsName(e, id, this.props.index);
 										        if (e.target.value.length === 0) {
-											        document.getElementById(`env-name-form-group__label${index}${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+											        document.getElementById(`env-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
 										        } else {
-											        document.getElementById(`env-name-form-group__label${index}${this.props.index}`).classList.add('form-group__label-always-onfocus');
+											        document.getElementById(`env-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
 										        }
 									        }}
 								        />
 								        <label
 									        className="form-group__label"
 									        htmlFor={`envName${index}${this.props.index}`}
-									        id={`env-name-form-group__label${index}${this.props.index}`}
+									        id={`env-name-form-group__label${this.props.index}${id}`}
 								        >Name</label>
 								        {index === 0 && <div className="form-group__helper helperText">The Enviroments instruction sets the environment variable {`<key>`} to the value {`<value>`}.</div>}
 							        </div>
@@ -146,23 +135,23 @@ class Enviroments extends Component {
 									        onChange={(e) => {
 										        this.handleChangeInputEnviromentsValue(e, id, this.props.index);
 										        if (e.target.value.length === 0) {
-											        document.getElementById(`value-name-form-group__label${index}${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+											        document.getElementById(`env-value-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
 										        } else {
-											        document.getElementById(`value-name-form-group__label${index}${this.props.index}`).classList.add('form-group__label-always-onfocus');
+											        document.getElementById(`env-value-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
 										        }
 									        }}
 								        />
 								        <label
 									        className="form-group__label"
 									        htmlFor={`envValue${index}${this.props.index}`}
-									        id={`value-name-form-group__label${index}${this.props.index}`}
+									        id={`env-value-form-group__label${this.props.index}${id}`}
 								        >Value</label>
 								        {/*{index === 0 && <div className="form-group__helper helperText">Your Deployment name can only contain alphanumeric and characters</div>}*/}
 							        </div>
 						        </div>
 						        <div
 							        className="col-md-1"
-							        onClick={() => this.handleClickRemoveEnviroments(id)}
+							        onClick={() => this.handleClickRemoveEnviroments(id, this.props.index)}
 						        >
 							        <img src={icon} alt="delete" className="iconBasket" />
 						        </div>
@@ -184,6 +173,7 @@ class Enviroments extends Component {
 Enviroments.propTypes = {
 	index: PropTypes.number.isRequired,
 	item: PropTypes.object.isRequired,
+	containers: PropTypes.array,
 	onChangeInputEnv: PropTypes.func.isRequired
 };
 

@@ -8,7 +8,23 @@ import icon from '../../../../images/icon-create-dep.svg';
 class Volume extends Component {
 	constructor(props) {
 		super(props);
-		this.state = this.initialState();
+		this.state = {
+			volumeMounts: this.props.containers[this.props.index - 1].volumeMounts
+		};
+	}
+	componentDidMount() {
+		// console.log(this.props.item.volumeMounts);
+		this.props.item.volumeMounts.map((item) => {
+			if (item.mountPath) {
+				// console.log('item.containerPort', item.id, item.index);
+				const mountPath = document.getElementById(`path-name-form-group__label${item.index}${item.id}`);
+				mountPath ? mountPath.classList.add('form-group__label-always-onfocus') : null;
+			}
+			if (item.subPath) {
+				const subPath = document.getElementById(`subpath-name-form-group__label${item.index}${item.id}`);
+				subPath ? subPath.classList.add('form-group__label-always-onfocus') : null;
+			}
+		});
 	}
 	initialState() {
 		return {
@@ -155,23 +171,23 @@ class Volume extends Component {
 								        <span className="inputSubpathSign">/</span>
 								        <input
 									        className="form-group__input-text form-control customInput"
-									        id={`subPath${index}${id}`}
+									        id={`subPath${this.props.index}${id}`}
 									        type="text"
 									        value={this.state.volumeMounts[index].id === id &&
 									        this.state.volumeMounts[index].subPath}
 									        onChange={(e) => {
 										        this.handleChangeInputVolumeSubpath(e, id, this.props.index);
 										        if (e.target.value.length === 0) {
-											        document.getElementById(`subpath-name-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
+											        document.getElementById(`subpath-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
 										        } else {
-											        document.getElementById(`subpath-name-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
+											        document.getElementById(`subpath-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
 										        }
 									        }}
 								        />
 								        <label
 									        className="form-group__label"
 									        htmlFor={`subPath${index}${id}`}
-									        id={`subpath-name-form-group__label${index}${id}`}
+									        id={`subpath-name-form-group__label${this.props.index}${id}`}
 									        style={{marginTop: '-20px'}}
 								        >Subpath</label>
 							        </div>
@@ -189,16 +205,16 @@ class Volume extends Component {
 									        onChange={(e) => {
 										        this.handleChangeInputVolumePath(e, id, this.props.index);
 										        if (e.target.value.length === 0) {
-											        document.getElementById(`path-name-form-group__label${index}${id}`).classList.remove('form-group__label-always-onfocus');
+											        document.getElementById(`path-name-form-group__label${this.props.index}${id}`).classList.remove('form-group__label-always-onfocus');
 										        } else {
-											        document.getElementById(`path-name-form-group__label${index}${id}`).classList.add('form-group__label-always-onfocus');
+											        document.getElementById(`path-name-form-group__label${this.props.index}${id}`).classList.add('form-group__label-always-onfocus');
 										        }
 									        }}
 								        />
 								        <label
 									        className="form-group__label"
 									        htmlFor={`mountPath${index}${id}`}
-									        id={`path-name-form-group__label${index}${id}`}
+									        id={`path-name-form-group__label${this.props.index}${id}`}
 									        style={{marginTop: '-20px'}}
 								        >Path</label>
 							        </div>
@@ -233,7 +249,9 @@ Volume.propTypes = {
 	onChangeSelectVolume: PropTypes.func.isRequired,
 	isContainersMore: PropTypes.bool,
 	// idName: PropTypes.string.isRequired,
-	volumes: PropTypes.array.isRequired
+	item: PropTypes.object.isRequired,
+	volumes: PropTypes.array.isRequired,
+	containers: PropTypes.array
 };
 
 export default Volume;

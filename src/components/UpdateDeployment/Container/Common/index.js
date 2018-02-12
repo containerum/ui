@@ -4,14 +4,23 @@ import Tooltip from 'rc-tooltip';
 import PropTypes from 'prop-types';
 
 class Common extends Component {
+	componentDidMount() {
+		if (this.props.item.name) {
+			const containerName = document.getElementById(`container-name-form-group__label${this.props.item.id}`);
+			containerName ? containerName.classList.add('form-group__label-always-onfocus') : null;
+		}
+		if (this.props.item.image) {
+			const dockerImage = document.getElementById(`docker-image-form-group__label${this.props.item.id}`);
+			dockerImage ? dockerImage.classList.add('form-group__label-always-onfocus') : null;
+		}
+	}
     render() {
-    	// console.log('item', this.props.item);
+    	// console.log('item', this.props.item.id);
         return (
 	        <div className="row rowLine">
 		        <div className="col-md-7">
 			        <div
-				        className="containerTitle
-										        containerBlockTitle"
+				        className="containerTitle containerBlockTitle"
 				        id={`container${this.props.index}-info`}
 			        ><span>*</span> Common
 				        {/*<Tooltip*/}
@@ -36,15 +45,15 @@ class Common extends Component {
 							        index: this.props.index - 1
 						        });
 						        if (e.target.value.length === 0) {
-							        document.getElementById(`container-name-form-group__label${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+							        document.getElementById(`container-name-form-group__label${this.props.item.id}`).classList.remove('form-group__label-always-onfocus');
 						        } else {
-							        document.getElementById(`container-name-form-group__label${this.props.index}`).classList.add('form-group__label-always-onfocus');
+							        document.getElementById(`container-name-form-group__label${this.props.item.id}`).classList.add('form-group__label-always-onfocus');
 						        }
 					        }}
 				        />
 				        <label
 					        className="form-group__label"
-					        id={`container-name-form-group__label${this.props.index}`}
+					        id={`container-name-form-group__label${this.props.item.id}`}
 					        htmlFor={`containerName${this.props.index}`}
 				        >Container Name</label>
 				        <div className="form-group__helper">Container name can only contain letters, numbers and characters</div>
@@ -64,15 +73,15 @@ class Common extends Component {
 							        index: this.props.index - 1
 						        });
 						        if (e.target.value.length === 0) {
-							        document.getElementById(`docker-image-form-group__label${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+							        document.getElementById(`docker-image-form-group__label${this.props.item.id}`).classList.remove('form-group__label-always-onfocus');
 						        } else {
-							        document.getElementById(`docker-image-form-group__label${this.props.index}`).classList.add('form-group__label-always-onfocus');
+							        document.getElementById(`docker-image-form-group__label${this.props.item.id}`).classList.add('form-group__label-always-onfocus');
 						        }
 					        }}
 				        />
 				        <label
 					        className="form-group__label"
-					        id={`docker-image-form-group__label${this.props.index}`}
+					        id={`docker-image-form-group__label${this.props.item.id}`}
 					        htmlFor={`dockerImage${this.props.index}`}
 				        >Docker Image</label>
 				        <div className="form-group__helper">Example: redis or redis:latest or redis:4.0.7-alpine</div>

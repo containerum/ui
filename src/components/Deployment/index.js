@@ -30,6 +30,7 @@ class Deployment extends Component {
                 />
                 <DeploymentInfo
                     idName={this.props.params.idName}
+                    idDep={this.props.params.idDep}
                     onDeleteDeployment={(idDep) => this.handleDeleteDeployment(idDep)}
                 />
                 <DeploymentContains

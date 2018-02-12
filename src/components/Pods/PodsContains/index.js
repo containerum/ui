@@ -51,7 +51,7 @@ class PodsContains extends Component {
     }
     render() {
 	    // console.log(this.state.countOfPods);
-        // console.log(this.props.PodsReducer);
+	    // console.log(this.props.PodsReducer);
         const ta = timeago();
         let isPodsEmpty = '';
         if (this.props.PodsReducer.data.length &&
