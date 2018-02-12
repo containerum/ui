@@ -89,6 +89,7 @@ class Container extends Component {
 								        onChangeInputImagePorts={(imagePorts) =>
 							                this.onChangeInputImagePorts(imagePorts)}
 								        index={fixedIndex}
+								        containers={this.props.containers}
 								        item={item}
 							        />
 
@@ -102,6 +103,7 @@ class Container extends Component {
 							        <Enviroments
 								        onChangeInputEnv={(env) =>
 									        this.onChangeInputEnv(env)}
+								        containers={this.props.containers}
 								        index={fixedIndex}
 								        item={item}
 							        />
@@ -110,7 +112,10 @@ class Container extends Component {
 								        onChangeSelectVolume={(volume, index) =>
 									        this.onChangeSelectVolume(volume, index)}
 								        volumes={this.props.volumes}
+								        volumeMounts={this.props.volumes}
 								        idName={this.props.idName}
+								        item={item}
+								        containers={this.props.containers}
 								        isContainersMore={this.props.containersCount === fixedIndex &&
 								        this.props.containersCount < 3}
 								        index={fixedIndex}

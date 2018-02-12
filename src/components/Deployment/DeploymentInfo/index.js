@@ -66,10 +66,10 @@ class DeploymentInfo extends Component {
                                         className="dropdown-item text-danger"
                                         onClick={idDep => this.handleClickDeletingDeployment(depName)}
                                     >Delete</button>
-	                                {/*<NavLink*/}
-		                                {/*className="dropdown-item"*/}
-		                                {/*to={`/Namespaces/${this.props.idName}/UpdateDeployment`}*/}
-	                                {/*>Update</NavLink>*/}
+	                                <NavLink
+		                                className="dropdown-item"
+		                                to={`/Namespaces/${this.props.idName}/UpdateDeployment/${this.props.idDep}`}
+	                                >Update</NavLink>
                                 </ul>
                             </div>
                         </div>
@@ -125,6 +125,7 @@ class DeploymentInfo extends Component {
 
 DeploymentInfo.propTypes = {
     idName: PropTypes.string,
+	idDep: PropTypes.string,
     onDeleteDeployment: PropTypes.func
 };
 

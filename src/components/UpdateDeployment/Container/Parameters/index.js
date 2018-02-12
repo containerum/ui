@@ -4,6 +4,16 @@ import PropTypes from 'prop-types';
 import Tooltip from 'rc-tooltip';
 
 class Parameters extends Component {
+	componentDidMount() {
+		if (this.props.item.resources.requests.cpu) {
+			const cpu = document.getElementById(`cpu-name-form-group__label${this.props.item.id}`);
+			cpu ? cpu.classList.add('form-group__label-always-onfocus') : null;
+		}
+		if (this.props.item.resources.requests.memory) {
+			const memory = document.getElementById(`ram-name-form-group__label${this.props.item.id}`);
+			memory ? memory.classList.add('form-group__label-always-onfocus') : null;
+		}
+	}
     render() {
         return (
 	        <div
@@ -36,15 +46,15 @@ class Parameters extends Component {
 							        index: this.props.index - 1
 						        });
 						        if (e.target.value.length === 0) {
-							        document.getElementById(`cpu-name-form-group__label${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+							        document.getElementById(`cpu-name-form-group__label${this.props.item.id}`).classList.remove('form-group__label-always-onfocus');
 						        } else {
-							        document.getElementById(`cpu-name-form-group__label${this.props.index}`).classList.add('form-group__label-always-onfocus');
+							        document.getElementById(`cpu-name-form-group__label${this.props.item.id}`).classList.add('form-group__label-always-onfocus');
 						        }
 					        }}
 				        />
 				        <label
 					        className="form-group__label"
-					        id={`cpu-name-form-group__label${this.props.index}`}
+					        id={`cpu-name-form-group__label${this.props.item.id}`}
 					        htmlFor={`cpu${this.props.index}`}
 				        >CPU</label>
 				        <div className="form-group__helper helperText">Example: 0,3 or 300m</div>
@@ -66,16 +76,16 @@ class Parameters extends Component {
 							        index: this.props.index - 1
 						        });
 						        if (e.target.value.length === 0) {
-							        document.getElementById(`ram-name-form-group__label${this.props.index}`).classList.remove('form-group__label-always-onfocus');
+							        document.getElementById(`ram-name-form-group__label${this.props.item.id}`).classList.remove('form-group__label-always-onfocus');
 						        } else {
-							        document.getElementById(`ram-name-form-group__label${this.props.index}`).classList.add('form-group__label-always-onfocus');
+							        document.getElementById(`ram-name-form-group__label${this.props.item.id}`).classList.add('form-group__label-always-onfocus');
 						        }
 					        }}
 				        />
 				        <label
 					        className="form-group__label"
 					        htmlFor={`ram${this.props.index}`}
-					        id={`ram-name-form-group__label${this.props.index}`}
+					        id={`ram-name-form-group__label${this.props.item.id}`}
 				        >RAM</label>
 				        <div className="form-group__helper helperText">Example 0,5Gi or 512Mi</div>
 			        </div>
