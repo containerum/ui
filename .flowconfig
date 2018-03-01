@@ -7,8 +7,6 @@
 .*/node_modules/react-router/node_modules/fbjs/lib/.*
 ; Ignore react-router-dom errors
 .*/node_modules/react-router-dom/node_modules/fbjs/lib/.*
-; Ignore react-router-redux errors
-.*/node_modules/react-router-redux/node_modules/fbjs/lib/.*
 ; Ignore redbox-react errors
 .*/node_modules/redbox-react/node_modules/fbjs/lib/.*
 
@@ -26,7 +24,6 @@ module.system=haste
 
 esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
-unsafe.enable_getters_and_setters=true
 
 munge_underscores=false
 
@@ -38,10 +35,10 @@ suppress_type=$FlowFixMe
 suppress_type=$FixMe
 suppress_type=$FlowExpectedError
 
-suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(>=0\\.\\(3[0-3]\\|[1-2][0-9]\\|[0-9]\\).[0-9]\\)? *\\(site=[a-z,_]*www[a-z,_]*\\)?)\\)
-suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(>=0\\.\\(3[0-3]\\|[1-2][0-9]\\|[0-9]\\).[0-9]\\)? *\\(site=[a-z,_]*www[a-z,_]*\\)?)\\)?:? #[0-9]+
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
 [version]
-^0.59.0
+^0.64.0

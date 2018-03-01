@@ -1,0 +1,19 @@
+.formControl:focus {
+  border: solid 0.5px #a7a7a7;
+}
+
+.customInput {
+  padding: 9.5px;
+  border-radius: 2px;
+  background-color: #fff;
+  color: #a7a7a7;
+  border: solid 0.5px #a7a7a7;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.customInput::placeholder {
+  color: #a7a7a7;
+  font-size: 15px;
+  font-weight: 300;
+}
