@@ -1,115 +1,116 @@
+/* @flow */
+
 import { combineReducers } from 'redux';
+import { routerReducer as router } from 'react-router-redux';
 
-import LoginReducer from './AuthReducers/LoginReducer';
-import LogoutReducer from './AuthReducers/LogoutReducer';
-import SignUpReducer from './AuthReducers/SignUpReducer';
-import ChangePasswordReducer from './AuthReducers/ChangePasswordReducer';
-import UserHashConfirmReducer from './AuthReducers/UserHashConfirmReducer';
-import ConfirmEmailReducer from './AuthReducers/ConfirmEmailReducer';
-import CheckHashPasswordReducer from './AuthReducers/CheckHashPasswordReducer';
-import RecoveryPasswordReducer from './AuthReducers/RecoveryPasswordReducers';
-import EmailUpdateReducer from './AuthReducers/EmailUpdateReducer';
-import CheckRelationWithGitHubAccountReducer from './AuthReducers/CheckRelationWithGitHubAccountReducer';
-import NamespacesReducer from './NamespacesReducers';
-import NSTariffsReducer from './NamespacesReducers/NSTariffsReducer';
-import GetNamespaceReducer from './NamespaceReducers/GetNamespaceReducer';
-import CreateNamespaceReducer from './NamespaceReducers/CreateNamespaceReducer';
-import DeleteNamespaceReducer from './NamespaceReducers/DeleteNamespaceReducer';
-import UpdateNamespaceReducer from './NamespaceReducers/UpdateNamespaceReducer';
-import VolumesReducer from './VolumesReducers';
-import VolumesTariffsReducer from './VolumesReducers/VolumesTariffsReducer';
-import VolumesByNSReducer from './VolumesReducers/VolumesByNSReducer';
-import CreateVolumeReducer from './VolumeReducers/CreateVolumeReducer';
-import DeploymentsReducer from './DeploymentsReducers';
-import GetDeploymentReducer from './DeploymentReducers/GetDeploymentReducer';
-import DeleteDeploymentReducer from './DeploymentReducers/DeleteDeploymentReducer';
-import CreateDeploymentReducer from './DeploymentReducers/CreateDeploymentReducer';
-import ServicesReducer from './ServicesReducers';
-import GetServiceReducer from './ServiceReducers/GetServiceReducer';
-import DeleteServiceReducer from './ServiceReducers/DeleteServiceReducer';
-import CreateIntServiceReducer from './ServiceReducers/CreateIntServiceReducer';
-import CreateExtServiceReducer from './ServiceReducers/CreateExtServiceReducer';
-import PodsReducer from './PodsReducers';
-import GetPodReducer from './PodReducers/GetPodReducer';
-import DeletePodReducer from './PodReducers/DeletePodReducer';
-import GetProfileReducer from './ProfileReducers/GetProfileReducer';
-import DeleteProfileReducer from './ProfileReducers/DeleteProfileReducer';
-import GetProfileBalanceReducer from './BillingReducers/GetProfileBalanceReducer';
-import GetTariffsReducer from './BillingReducers/GetTariffsReducer';
-import PayForReducer from './BillingReducers/PayForReducer';
-import CouponPayReducer from './BillingReducers/CouponPayReducer';
-import GetProfileReportReducer from './BillingReducers/GetProfileReportReducer';
-import ConvertToCompanyReducer from './UserReducers/ConvertToCompanyReducer';
-import EmailSubscriptionsReducer from './UserReducers/EmailSubscriptionsReducer';
-import GetReleasesGithubReducer from './UserReducers/GetReleasesGithubReducer';
-import GroupOmnideskReducer from './OmnideskReducers/GetGroupOmnideskReducer';
-import SupportReducer from './SupportReducer';
-import TokensReducer from './TokensReducers';
-import GetImageTokensReducer from './TokensReducers/GetImageTokensReducer';
-import CreateImageTokensReducer from './TokensReducers/CreateImageTokensReducer';
-import DeleteImageTokensReducer from './TokensReducers/DeleteImageTokensReducer';
-import GetVolumeReducer from './VolumeReducers/GetVolumeReducer';
-import DeleteVolumeReducer from './VolumeReducers/DeleteVolumeReducer';
-import UpdateVolumeReducer from './VolumeReducers/UpdateVolumeReducer';
-import UpdateExtServiceReducer from './ServiceReducers/UpdateExtServiceReducer';
-import UpdateIntServiceReducer from './ServiceReducers/UpdateIntServiceReducer';
-import UpdateDeploymentReducer from './DeploymentReducers/UpdateDeploymentReducer';
+import home from './home';
+import userInfo from './userInfo';
+import loginReducer from './loginReducer';
+import logoutReducer from './logoutReducer';
+import signUpReducer from './signUpReducer';
+import confirmSignUpReducer from './confirmSignUpReducer';
+import forgotReducer from './forgotReducer';
+import checkHashPasswordReducer from './checkHashPasswordReducer';
+import recoveryPasswordReducer from './recoveryPasswordReducer';
+import getNamespacesReducer from './namespacesReducers/getNamespaces';
+import getNamespaceReducer from './namespaceReducers/getNamespace';
+import deleteNamespaceReducer from './namespaceReducers/deleteNamespace';
+import getNamespacesTariffsReducer from './namespacesReducers/getNamespacesTariffs';
+import createNamespaceReducer from './namespaceReducers/createNamespace';
+import resizeNamespaceReducer from './namespaceReducers/resizeNamespace';
+import getDeploymentsReducer from './deploymentsReducers/getDeployments';
+import deleteDeploymentReducer from './deploymentReducers/deleteDeployment';
+import createDeploymentReducer from './deploymentReducers/createDeployment';
+import updateDeploymentReducer from './deploymentReducers/updateDeployment';
+import getDeploymentReducer from './deploymentReducers/getDeployment';
+import getPodsReducer from './podsReducers/getPods';
+import getPodReducer from './podReducers/getPod';
+import deletePodReducer from './podReducers/deletePod';
+import getServicesReducer from './servicesReducers/getServices';
+import getServiceReducer from './serviceReducers/getService';
+import deleteServiceReducer from './serviceReducers/deleteService';
+import createInternalServiceReducer from './serviceReducers/createInternalService';
+import createExternalServiceReducer from './serviceReducers/createExternalService';
+import updateInternalServiceReducer from './serviceReducers/updateInternalService';
+import updateExternalServiceReducer from './serviceReducers/updateExternalService';
+import getReleasesGithubReducer from './getReleasesGithubReducer';
+import getProfileReducer from './profileReducers/getProfile';
+import getBalanceReducer from './billingReducers/getBalance';
+import payForReducer from './billingReducers/payFor';
+import couponPayReducer from './billingReducers/couponPay';
+import getVolumesReducer from './volumesReducers/getVolumes';
+import getVolumesByNSReducer from './volumesReducers/getVolumesByNS';
+import getVolumesTariffsReducer from './volumesReducers/getVolumesTariffs';
+import deleteVolumeReducer from './volumeReducers/deleteVolume';
+import createVolumeReducer from './volumeReducers/createVolume';
+import resizeVolumeReducer from './volumeReducers/resizeVolume';
+import getVolumeReducer from './volumeReducers/getVolume';
+import getSupportGroupsReducer from './supportReducers/getSupportGroups';
+import sendSupportTicketReducer from './supportReducers/sendSupportTicket';
+import changePasswordReducer from './profileReducers/changePassword';
+import getProfileTariffsReducer from './profileReducers/getProfileTariffs';
+import getProfileReportReducer from './profileReducers/getProfileReport';
+import getImagesTokenReducer from './webHookReducers/getImagesToken';
+import deleteImageTokenReducer from './webHookReducers/deleteImageToken';
+import createImageTokenReducer from './webHookReducers/createImageToken';
+import deleteAccountReducer from './profileReducers/deleteAccount';
+import changeProfileInfoReducer from './profileReducers/changeProfileInfo';
 
-const rootReducer = combineReducers({
-    LoginReducer,
-    LogoutReducer,
-    SignUpReducer,
-    ConfirmEmailReducer,
-    NamespacesReducer,
-    VolumesReducer,
-    DeploymentsReducer,
-	UpdateDeploymentReducer,
-    ServicesReducer,
-    GetServiceReducer,
-    GetProfileReducer,
-    DeleteProfileReducer,
-	CreateExtServiceReducer,
-    CreateIntServiceReducer,
-    CreateDeploymentReducer,
-    GetPodReducer,
-    GetDeploymentReducer,
-    PodsReducer,
-    ChangePasswordReducer,
-    DeleteDeploymentReducer,
-    DeletePodReducer,
-    DeleteServiceReducer,
-    UserHashConfirmReducer,
-    SupportReducer,
-    EmailUpdateReducer,
-    ConvertToCompanyReducer,
-    EmailSubscriptionsReducer,
-    CheckHashPasswordReducer,
-    RecoveryPasswordReducer,
-    CheckRelationWithGitHubAccountReducer,
-    TokensReducer,
-    GetImageTokensReducer,
-    GroupOmnideskReducer,
-    GetReleasesGithubReducer,
-    CreateNamespaceReducer,
-    UpdateNamespaceReducer,
-    NSTariffsReducer,
-    VolumesTariffsReducer,
-	VolumesByNSReducer,
-    CreateVolumeReducer,
-    GetProfileBalanceReducer,
-    GetTariffsReducer,
-    PayForReducer,
-	CouponPayReducer,
-    GetProfileReportReducer,
-    DeleteNamespaceReducer,
-    GetNamespaceReducer,
-    CreateImageTokensReducer,
-    DeleteImageTokensReducer,
-    GetVolumeReducer,
-    DeleteVolumeReducer,
-    UpdateVolumeReducer,
-	UpdateExtServiceReducer,
-	UpdateIntServiceReducer
-});
+const reducers = {
+  home,
+  userInfo,
+  loginReducer,
+  logoutReducer,
+  signUpReducer,
+  confirmSignUpReducer,
+  forgotReducer,
+  checkHashPasswordReducer,
+  recoveryPasswordReducer,
+  getNamespacesReducer,
+  getNamespaceReducer,
+  deleteNamespaceReducer,
+  getNamespacesTariffsReducer,
+  createNamespaceReducer,
+  resizeNamespaceReducer,
+  getDeploymentsReducer,
+  deleteDeploymentReducer,
+  createDeploymentReducer,
+  updateDeploymentReducer,
+  getDeploymentReducer,
+  getPodsReducer,
+  getPodReducer,
+  deletePodReducer,
+  getServicesReducer,
+  getServiceReducer,
+  deleteServiceReducer,
+  getReleasesGithubReducer,
+  getProfileReducer,
+  changeProfileInfoReducer,
+  getProfileTariffsReducer,
+  getProfileReportReducer,
+  getBalanceReducer,
+  payForReducer,
+  couponPayReducer,
+  getVolumesReducer,
+  getVolumesByNSReducer,
+  getVolumesTariffsReducer,
+  deleteVolumeReducer,
+  createVolumeReducer,
+  resizeVolumeReducer,
+  getVolumeReducer,
+  getSupportGroupsReducer,
+  sendSupportTicketReducer,
+  changePasswordReducer,
+  getImagesTokenReducer,
+  deleteImageTokenReducer,
+  createImageTokenReducer,
+  deleteAccountReducer,
+  createInternalServiceReducer,
+  createExternalServiceReducer,
+  updateInternalServiceReducer,
+  updateExternalServiceReducer,
+  router
+};
 
-export default rootReducer;
+export type Reducers = typeof reducers;
+export default combineReducers(reducers);

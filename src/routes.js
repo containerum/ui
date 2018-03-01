@@ -1,81 +1,232 @@
-import React from 'react';
-import { Route, IndexRoute, IndexRedirect } from 'react-router';
+/* @flow */
 
-import requireAuthentication from './components/auth/require-auth';
-import Login from './components/auth/Login';
-import SignUp from './components/auth/SignUp';
-import Forgot from './components/Forgot';
-import RecoveryPassword from './components/RecoveryPassword';
-import ConfirmEmail from './components/auth/ConfirmEmail';
-import ResetPassword from './components/ResetPassword';
-import App from './components/App';
-import Workloads from './components/Workloads';
-import Namespace from './components/Namespace';
-import Volumes from './components/Volumes';
-import Deployments from './components/Deployments';
-import Services from './components/Services';
-import Deployment from './components/Deployment';
-import Service from './components/Service';
-import Ports from './components/Service/Ports';
-import LinkedDeployment from './components/Service/LinkedDeployment';
-import Pods from './components/Pods';
-import Pod from './components/Pod';
-import Support from './components/Support';
-import SuccessTicket from './components/Support/SuccessTicket';
-import Account from './components/Account';
-import Billing from './components/Account/Billing';
-import NotFound from './components/NotFound';
-import CreateNamespace from './components/CreateNamespace';
-import UpdateNamespace from './components/UpdateNamespace';
-import CreateVolume from './components/CreateVolume';
-import UpdateVolume from './components/UpdateVolume';
-import CreateDeployment from './components/CreateDeployment';
-import UpdateDeployment from './components/UpdateDeployment';
-import CreateService from './components/CreateService';
-import UpdateService from './components/UpdateService';
+import type { Dispatch } from './types';
+import { routerLinks } from './config';
+import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
+import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
+import { fetchGetNamespaceIfNeeded } from './actions/namespaceActions/getNamespace';
+import { fetchGetDeploymentsIfNeeded } from './actions/deploymentsActions/getDeployments';
+import { fetchGetDeploymentIfNeeded } from './actions/deploymentActions/getDeployment';
+import { fetchGetPodsIfNeeded } from './actions/podsActions/getPods';
+import { fetchGetPodIfNeeded } from './actions/podActions/getPod';
+import { fetchGetServicesIfNeeded } from './actions/servicesActions/getServices';
+import { fetchGetServiceIfNeeded } from './actions/serviceActions/getService';
+import { fetchGetNamespacesTariffsIfNeeded } from './actions/namespacesActions/getNamespacesTariffs';
+import { fetchGetVolumesTariffsIfNeeded } from './actions/volumesActions/getVolumesTariffs';
+import { fetchGetSupportGroupsIfNeeded } from './actions/supportActions/getSupportGroups';
+import HomePage from './containers/Home';
+import NamespacesPage from './containers/Namespaces';
+import VolumesPage from './containers/Volumes';
+import NamespacePage from './containers/Namespace';
+import ResizeNamespacePage from './containers/ResizeNamespace';
+import CreateNamespacePage from './containers/CreateNamespace';
+import DeploymentsPage from './containers/Deployments';
+import PodsPage from './containers/Pods';
+import PodPage from './containers/Pod';
+import ServicesPage from './containers/Services';
+import ServicePage from './containers/Service';
+import CreateServicePage from './containers/CreateService';
+import UpdateServicePage from './containers/UpdateService';
+import DeploymentPage from './containers/Deployment';
+import CreateDeploymentPage from './containers/CreateDeployment';
+import UpdateDeploymentPage from './containers/UpdateDeployment';
+import CreateVolumePage from './containers/CreateVolume';
+import ResizeVolumePage from './containers/ResizeVolume';
+import Login from './containers/Login';
+import SignUp from './containers/SignUp';
+import ConfirmEmail from './containers/ConfirmEmail';
+import RecoveryPassword from './containers/RecoveryPassword';
+import Forgot from './containers/Forgot';
+import CheckEmail from './containers/CheckEmail';
+import SupportPage from './containers/Support';
+import AccountPage from './containers/Account';
+import BillingPage from './containers/Billing';
+import NotFoundPage from './containers/NotFound';
 
-export default (
-    <Route>
-        <Route path="/" component={requireAuthentication(App)}>
-            <IndexRedirect to="Namespaces" />
-            <Route path="/Volumes" component={Volumes}/>
-            <Route path="/Namespaces" component={Workloads} />
-            <Route path="/Namespaces/:idName" component={Namespace}>
-                <IndexRedirect to="Deployments" />
-                <Route path="Deployments" component={Deployments} />
-                <Route path="Services" component={Services} />
-            </Route>
-            <Route path="/Namespaces/:idName/Deployments/:idDep" component={Deployment}>
-                <IndexRoute component={Pods}/>
-            </Route>
-            <Route path="/Namespaces/:idName/Services/:idService" component={Service}>
-                <IndexRedirect to="Ports" />
-                <Route path="Ports" component={Ports} />
-                <Route path="Deployment" component={LinkedDeployment} />
-            </Route>
-            <Route path="/Namespaces/:idName/Deployments/:idDep/Pods/:idPod" component={Pod} />
-            <Route path="/CreateNamespace" component={CreateNamespace} />
-            <Route path="/Namespaces/:idName/Resize" component={UpdateNamespace} />
-            <Route path="/Namespaces/:idName/CreateDeployment" component={CreateDeployment} />
-            <Route path="/Namespaces/:idName/UpdateDeployment/:idDep" component={UpdateDeployment} />
-            <Route path="/CreateVolume" component={CreateVolume} />
-            <Route path="/Volumes/:idVolume/Resize" component={UpdateVolume} />
-		    <Route path="/Namespaces/:idName/CreateService" component={CreateService} />
-		    <Route path="/Namespaces/:idName/UpdateService/:idService" component={UpdateService} />
-            <Route path="/Support" component={Support} />
-            <Route path="/Support/SuccessTicket" component={SuccessTicket} />
-            <Route path="/Account" component={Account} />
-            <Route path="/Billing" component={Billing} />
-        </Route>
-        <Route path="/Login" component={Login}>
-            <Route path="/" component={Workloads} />
-        </Route>
-        <Route path="/login/callback" component={Login} />
-        <Route path="/Forgot" component={Forgot} />
-        <Route path="/RecoveryPassword" component={RecoveryPassword} />
-        <Route path="/SignUp" component={SignUp} />
-        <Route path="/ConfirmEmail" component={ConfirmEmail} />
-        <Route path="/ResetPassword" component={ResetPassword} />
-        <Route path="*" component={NotFound} />
-    </Route>
-);
+export default [
+  {
+    path: routerLinks.index,
+    exact: true,
+    component: HomePage
+  },
+  {
+    path: routerLinks.namespaces,
+    exact: true,
+    component: NamespacesPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetNamespacesIfNeeded())])
+  },
+  {
+    path: routerLinks.volumes,
+    exact: true,
+    component: VolumesPage,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetVolumesIfNeeded())])
+  },
+  {
+    path: routerLinks.namespace,
+    component: NamespacePage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([dispatch(fetchGetNamespaceIfNeeded(params.idName))])
+  },
+  {
+    path: routerLinks.getDeployments,
+    exact: true,
+    component: DeploymentsPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([dispatch(fetchGetDeploymentsIfNeeded(params.idName))])
+  },
+  {
+    path: routerLinks.getDeployment,
+    // exact: true,
+    component: DeploymentPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetDeploymentIfNeeded(params.idName, params.idDep))
+      ])
+  },
+  {
+    path: routerLinks.createDeployment,
+    component: CreateDeploymentPage,
+    include: true
+  },
+  {
+    path: routerLinks.resizeDeployment,
+    component: UpdateDeploymentPage,
+    include: true
+  },
+  {
+    path: routerLinks.getPods,
+    component: PodsPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([dispatch(fetchGetPodsIfNeeded(params.idName, params.idDep))])
+  },
+  {
+    path: routerLinks.getPod,
+    component: PodPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([dispatch(fetchGetPodIfNeeded(params.idName, params.idDep))])
+  },
+  {
+    path: routerLinks.getServices,
+    exact: true,
+    component: ServicesPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([dispatch(fetchGetServicesIfNeeded(params.idName))])
+  },
+  {
+    path: routerLinks.getService,
+    // exact: true,
+    component: ServicePage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetServiceIfNeeded(params.idName, params.idSrv))
+      ])
+  },
+  {
+    path: routerLinks.createService,
+    component: CreateServicePage,
+    include: true
+  },
+  {
+    path: routerLinks.resizeService,
+    component: UpdateServicePage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetServiceIfNeeded(params.idName, params.idSrv))
+      ])
+  },
+  {
+    path: routerLinks.createNamespace,
+    exact: true,
+    component: CreateNamespacePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetNamespacesTariffsIfNeeded())])
+  },
+  {
+    path: routerLinks.resizeNamespace,
+    // exact: true,
+    component: ResizeNamespacePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetNamespacesTariffsIfNeeded())])
+  },
+  {
+    path: routerLinks.createVolume,
+    exact: true,
+    component: CreateVolumePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetVolumesTariffsIfNeeded())])
+  },
+  {
+    path: routerLinks.resizeVolume,
+    exact: true,
+    component: ResizeVolumePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetVolumesTariffsIfNeeded())])
+  },
+  {
+    path: routerLinks.account,
+    exact: true,
+    component: AccountPage,
+    include: true
+    // loadData: (dispatch: Dispatch) =>
+    //   Promise.all([dispatch(fetchGetSupportGroupsIfNeeded())])
+  },
+  {
+    path: routerLinks.billing,
+    exact: true,
+    component: BillingPage,
+    include: true
+    // loadData: (dispatch: Dispatch) =>
+    //   Promise.all([dispatch(fetchGetSupportGroupsIfNeeded())])
+  },
+  {
+    path: routerLinks.support,
+    exact: true,
+    component: SupportPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetSupportGroupsIfNeeded())])
+  },
+  {
+    path: routerLinks.login,
+    component: Login
+  },
+  {
+    path: routerLinks.signUp,
+    component: SignUp
+  },
+  {
+    path: routerLinks.recoveryPassword,
+    component: RecoveryPassword
+  },
+  {
+    path: routerLinks.confirmEmail,
+    component: ConfirmEmail
+  },
+  {
+    path: routerLinks.forgot,
+    component: Forgot
+  },
+  {
+    path: routerLinks.checkEmail,
+    component: CheckEmail
+  },
+  {
+    path: '*',
+    component: NotFoundPage
+  }
+];

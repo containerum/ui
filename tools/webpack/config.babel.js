@@ -4,36 +4,41 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const BabiliPlugin = require('babili-webpack-plugin');
+const MinifyPlugin = require('babel-minify-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer') // eslint-disable-line prefer-destructuring
+  .BundleAnalyzerPlugin;
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDev = nodeEnv !== 'production';
 
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./WIT.config')).development(isDev);
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(
+  require('./WIT.config')
+).development(isDev);
 
+// Disable SCSSModules here
+const SCSSModules = true;
 // Disable CSSModules here
 const CSSModules = false;
-// Disable js lint error terminating here
+// Enable build process terminated while there's an eslint error
 const eslint = false;
-// Disable style lint error terminating here
+// Enable build process terminated while there's an stylelint error
 const stylelint = false;
 // Register vendors here
 const vendor = [
+  // Allows you to use the full set of ES6 features on client-side (place it before anything else)
+  'babel-polyfill',
   'react',
   'react-dom',
   'redux',
   'react-redux',
   'redux-thunk',
-  'react-hot-loader',
+  'react-router-dom',
   'history',
   'react-router-redux',
   'react-helmet',
-  'axios',
-  'redbox-react',
-  'chalk',
-  'lodash',
+  'axios'
 ];
 
 // Setting the plugins for development/prodcution
@@ -44,18 +49,18 @@ const getPlugins = () => {
       filename: '[name].[contenthash:8].css',
       allChunks: true,
       disable: isDev, // Disable css extracting on development
-      ignoreOrder: CSSModules,
+      ignoreOrder: CSSModules
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
         // Javascript lint
         eslint: { failOnError: eslint },
         debug: isDev,
-        minimize: !isDev,
-      },
+        minimize: !isDev
+      }
     }),
     // Style lint
-    new StyleLintPlugin({ syntax: 'scss', failOnError: stylelint }),
+    new StyleLintPlugin({ failOnError: stylelint }),
     // Setup enviorment variables for client
     new webpack.EnvironmentPlugin({ NODE_ENV: JSON.stringify(nodeEnv) }),
     // Setup global variables for client
@@ -63,36 +68,52 @@ const getPlugins = () => {
       __CLIENT__: true,
       __SERVER__: false,
       __DEV__: isDev,
-      'process.env':{
-	      REACT_APP_OTHER: `"${process.env.REACT_APP_OTHER}"`,
-          REACT_APP_API: `"${process.env.REACT_APP_API}"`,
-	      REACT_APP_RECAPTCHA: `"${process.env.REACT_APP_RECAPTCHA}"`,
-      },
+      'process.env': {
+        WEB_API_OTHER: process.env.WEB_API_OTHER
+          ? `"${process.env.WEB_API_OTHER}"`
+          : undefined,
+        WEB_API: process.env.WEB_API ? `"${process.env.WEB_API}"` : undefined,
+        RECAPTCHA: process.env.RECAPTCHA
+          ? `"${process.env.RECAPTCHA}"`
+          : undefined,
+        COUNTRY: process.env.COUNTRY ? `"${process.env.COUNTRY}"` : undefined
+      }
     }),
     new webpack.NoEmitOnErrorsPlugin(),
-    webpackIsomorphicToolsPlugin,
+    webpackIsomorphicToolsPlugin
   ];
 
-  if (isDev) { // For development
+  if (isDev) {
+    // For development
     plugins.push(
       new webpack.HotModuleReplacementPlugin(),
       // Prints more readable module names in the browser console on HMR updates
       new webpack.NamedModulesPlugin(),
-      new webpack.IgnorePlugin(/webpack-stats\.json$/) // eslint-disable-line comma-dangle
+      new webpack.IgnorePlugin(/webpack-stats\.json$/)
     );
   } else {
-    plugins.push( // For production
-      new BabiliPlugin(),
+    plugins.push(
+      // For production
+      new MinifyPlugin({}, { test: /\.jsx?$/, comments: false }),
       new webpack.HashedModuleIdsPlugin(),
-      new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', minChunks: Infinity }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: Infinity
+      }),
       new webpack.optimize.ModuleConcatenationPlugin(),
       new CompressionPlugin({
         asset: '[path].gz[query]',
         algorithm: 'gzip',
         test: /\.jsx?$|\.css$|\.(scss|sass)$|\.html$/,
         threshold: 10240,
-        minRatio: 0.8,
-      }) // eslint-disable-line comma-dangle
+        minRatio: 0.8
+      }),
+      // Visualizing all of the webpack bundles
+      // Check "https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin"
+      // for more configurations
+      new BundleAnalyzerPlugin({
+        analyzerMode: process.env.STATS === 'enabled' ? 'server' : 'disabled'
+      })
     );
   }
 
@@ -103,9 +124,10 @@ const getPlugins = () => {
 const getEntry = () => {
   // For development
   let entry = [
-    'react-hot-loader/patch',
+    // Allows you to use the full set of ES6 features on client-side (place it before anything else)
+    'babel-polyfill',
     'webpack-hot-middleware/client?reload=true',
-    './src/client.js',
+    './src/client.js'
   ];
 
   // For prodcution
@@ -113,7 +135,7 @@ const getEntry = () => {
     entry = {
       main: './src/client.js',
       // Register vendors here
-      vendor,
+      vendor
     };
   }
 
@@ -125,7 +147,7 @@ module.exports = {
   name: 'client',
   target: 'web',
   cache: isDev,
-  devtool: isDev ? 'cheap-module-eval-source-map' : 'hidden-source-map',
+  devtool: isDev ? 'cheap-module-source-map' : 'hidden-source-map',
   context: path.join(process.cwd()),
   entry: getEntry(),
   output: {
@@ -134,7 +156,7 @@ module.exports = {
     // Don't use chunkhash in development it will increase compilation time
     filename: isDev ? '[name].js' : '[name].[chunkhash:8].js',
     chunkFilename: isDev ? '[name].chunk.js' : '[name].[chunkhash:8].chunk.js',
-    pathinfo: isDev,
+    pathinfo: isDev
   },
   module: {
     rules: [
@@ -142,7 +164,7 @@ module.exports = {
         test: /\.jsx?$/,
         enforce: 'pre',
         exclude: /node_modules/,
-        loader: 'eslint',
+        loader: 'eslint'
       },
       {
         test: /\.jsx?$/,
@@ -151,10 +173,15 @@ module.exports = {
         options: {
           cacheDirectory: isDev,
           babelrc: false,
-          presets: [['env', { modules: false }], 'react', 'stage-0', 'flow'],
-          plugins: ['transform-runtime', 'react-hot-loader/babel', 'lodash'],
-          env: { production: { plugins: ['transform-remove-console'] } },
-        },
+          presets: [
+            ['env', { modules: false, useBuiltIns: true }],
+            'react',
+            'stage-0',
+            'flow'
+          ],
+          plugins: ['react-hot-loader/babel', 'lodash'],
+          env: { production: { plugins: ['transform-remove-console'] } }
+        }
       },
       {
         test: /\.css$/,
@@ -171,12 +198,12 @@ module.exports = {
                 // or the style will flick when page first loaded
                 context: path.join(process.cwd(), './src'),
                 localIdentName: '[name]__[local]--[hash:base64:5]',
-                minimize: !isDev,
-              },
+                minimize: !isDev
+              }
             },
-            { loader: 'postcss', options: { sourceMap: true } },
-          ],
-        }),
+            { loader: 'postcss', options: { sourceMap: true } }
+          ]
+        })
       },
       {
         test: /\.(scss|sass)$/,
@@ -188,11 +215,11 @@ module.exports = {
               options: {
                 importLoaders: 2,
                 sourceMap: true,
-                modules: CSSModules,
+                modules: SCSSModules,
                 context: path.join(process.cwd(), './src'),
                 localIdentName: '[name]__[local]--[hash:base64:5]',
-                minimize: !isDev,
-              },
+                minimize: !isDev
+              }
             },
             { loader: 'postcss', options: { sourceMap: true } },
             {
@@ -200,16 +227,16 @@ module.exports = {
               options: {
                 outputStyle: 'expanded',
                 sourceMap: true,
-                sourceMapContents: !isDev,
-              },
-            },
-          ],
-        }),
+                sourceMapContents: !isDev
+              }
+            }
+          ]
+        })
       },
       {
         test: /\.(woff2?|ttf|eot|svg)$/,
         loader: 'url',
-        options: { limit: 10000 },
+        options: { limit: 10000 }
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
@@ -217,26 +244,26 @@ module.exports = {
         use: [
           {
             loader: 'url',
-            options: { limit: 10240 },
+            options: { limit: 10240 }
           },
           // Using for image optimization
           {
             loader: 'image-webpack',
-            options: { bypassOnDebug: true },
-          },
-        ],
-      },
-    ],
+            options: { bypassOnDebug: true }
+          }
+        ]
+      }
+    ]
   },
   plugins: getPlugins(),
   resolveLoader: {
     // Use loaders without the -loader suffix
-    moduleExtensions: ['-loader'],
+    moduleExtensions: ['-loader']
   },
   resolve: {
     modules: ['src', 'node_modules'],
     descriptionFiles: ['package.json'],
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json']
   },
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
@@ -246,6 +273,6 @@ module.exports = {
     fs: 'empty',
     vm: 'empty',
     net: 'empty',
-    tls: 'empty',
-  },
+    tls: 'empty'
+  }
 };
