@@ -95,11 +95,20 @@ export class Header extends PureComponent<Props> {
           <div className="header-top">
             <div className="header-top-container container">
               <div className="header__logo">
-                <NavLink activeClassName="active" to={routerLinks.namespaces}>
+                <NavLink activeClassName="active" to={routerLinks.dashboard}>
                   <img src={logo} alt="logo" />
                 </NavLink>
               </div>
               <ul className="header-top-menu nav">
+                <li className="header-top-menu__li nav-item">
+                  <NavLink
+                    activeClassName="active"
+                    to={routerLinks.dashboard}
+                    className="header-top-menu__link"
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
                 <li className="header-top-menu__li nav-item">
                   <NavLink
                     activeClassName="active"

@@ -21,6 +21,7 @@ module.exports = {
   },
   routerLinks: {
     index: '/',
+    dashboard: '/dashboard',
     login: '/login',
     signUp: '/signUp',
     confirmEmail: '/confirmEmail',

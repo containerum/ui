@@ -55,11 +55,13 @@ export class CreateService extends PureComponent<Props> {
         nextProps.getDeploymentsReducer.readyStatus &&
       nextProps.getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_SUCCESS
     ) {
-      this.setState({
-        ...this.state,
-        currentDeployment: nextProps.getDeploymentsReducer.data[0].name,
-        deploymentList: nextProps.getDeploymentsReducer.data
-      });
+      if (nextProps.getDeploymentsReducer.data[0]) {
+        this.setState({
+          ...this.state,
+          currentDeployment: nextProps.getDeploymentsReducer.data[0].name,
+          deploymentList: nextProps.getDeploymentsReducer.data
+        });
+      }
     }
   }
   handleSubmitCreateService = e => {

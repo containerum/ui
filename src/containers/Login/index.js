@@ -21,7 +21,7 @@ import './Login.css';
 import InputEmail from '../../components/InputEmail';
 import InputPassword from '../../components/InputPassword';
 import LoadButton from '../../components/LoadButton';
-import { LOGIN_FAILURE } from '../../constants/loginConstants';
+import { LOGIN_FAILURE, LOGIN_SUCCESS } from '../../constants/loginConstants';
 import { RECOVERY_PASSWORD_SUCCESS } from '../../constants/recoveryPasswordConstants';
 
 type Props = {
@@ -53,6 +53,9 @@ class Login extends PureComponent<Props> {
         successMessage:
           'Your password has been changed successfully. Please Log In.'
       });
+    }
+    if (this.props.loginReducer.readyStatus === LOGIN_SUCCESS) {
+      this.setState(this.initialState());
     }
   }
   componentDidMount() {
@@ -102,14 +105,10 @@ class Login extends PureComponent<Props> {
         successMessage: null,
         isValidEmail: false,
         isValidPassword: false,
-        errorMessage: nextProps.loginReducer.err
+        errorMessage: 'Email or Password is not valid'
       });
     }
   }
-  // componentWillUnmount() {
-  //   console.log('Hi');
-  //   this.setState(this.initialState());
-  // }
   initialState = () => ({
     email: '',
     isValidEmail: true,

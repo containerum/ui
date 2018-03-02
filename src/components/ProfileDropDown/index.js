@@ -55,7 +55,9 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
             </NavLink>
           </ul>
         </div>
-        <div className="header-top-account__deposit">${balance}</div>
+        <div className="header-top-account__deposit">
+          {balance ? parseFloat(balance).toFixed(2) : 0}$
+        </div>
       </div>
     </div>
     <div className="clearfix" />

@@ -4,7 +4,7 @@ import React from 'react';
 import _ from 'lodash/fp';
 
 // import { routerLinks } from '../../config';
-import deployPng from '../../images/deploy.png';
+import deployPng from '../../images/deployments.svg';
 
 type Props = {
   data: Object

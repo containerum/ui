@@ -14,7 +14,12 @@ import { fetchGetServiceIfNeeded } from './actions/serviceActions/getService';
 import { fetchGetNamespacesTariffsIfNeeded } from './actions/namespacesActions/getNamespacesTariffs';
 import { fetchGetVolumesTariffsIfNeeded } from './actions/volumesActions/getVolumesTariffs';
 import { fetchGetSupportGroupsIfNeeded } from './actions/supportActions/getSupportGroups';
-import HomePage from './containers/Home';
+import { fetchGetCountDeploymentsIfNeeded } from './actions/statisticsActions/getCountDeployments';
+import { fetchGetCountServicesIfNeeded } from './actions/statisticsActions/getCountServices';
+import { fetchGetCountPodsIfNeeded } from './actions/statisticsActions/getCountPods';
+import { fetchGetSolutionsIfNeeded } from './actions/solutionsActions/getSolutions';
+import Main from './containers/Main';
+import DashboardPage from './containers/Dashboard';
 import NamespacesPage from './containers/Namespaces';
 import VolumesPage from './containers/Volumes';
 import NamespacePage from './containers/Namespace';
@@ -47,7 +52,22 @@ export default [
   {
     path: routerLinks.index,
     exact: true,
-    component: HomePage
+    component: Main,
+    include: true
+  },
+  {
+    path: routerLinks.dashboard,
+    exact: true,
+    component: DashboardPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([
+        dispatch(fetchGetNamespacesIfNeeded()),
+        dispatch(fetchGetSolutionsIfNeeded()),
+        dispatch(fetchGetCountDeploymentsIfNeeded()),
+        dispatch(fetchGetCountServicesIfNeeded()),
+        dispatch(fetchGetCountPodsIfNeeded())
+      ])
   },
   {
     path: routerLinks.namespaces,

@@ -55,6 +55,10 @@ import deleteImageTokenReducer from './webHookReducers/deleteImageToken';
 import createImageTokenReducer from './webHookReducers/createImageToken';
 import deleteAccountReducer from './profileReducers/deleteAccount';
 import changeProfileInfoReducer from './profileReducers/changeProfileInfo';
+import getCountDeploymentsReducer from './statisticsReducers/getCountDeployments';
+import getCountServicesReducer from './statisticsReducers/getCountServices';
+import getCountPodsReducer from './statisticsReducers/getCountPods';
+import getSolutionsReducer from './solutionsReducers/getSolutions';
 
 const reducers = {
   home,
@@ -109,6 +113,10 @@ const reducers = {
   createExternalServiceReducer,
   updateInternalServiceReducer,
   updateExternalServiceReducer,
+  getCountDeploymentsReducer,
+  getCountServicesReducer,
+  getCountPodsReducer,
+  getSolutionsReducer,
   router
 };
 

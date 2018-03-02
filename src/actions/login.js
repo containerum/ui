@@ -51,7 +51,7 @@ export const fetchLogin = (
     case 200: {
       cookie.save('token', token, { path: '/' });
       dispatch(loginSuccess(token));
-      dispatch(push('/'));
+      dispatch(push('/dashboard'));
       break;
     }
     default: {
