@@ -8,7 +8,7 @@ const Home = () => (
   <div>
     <Helmet title="Containerum" />
     <Switch>
-      <Redirect from="/" to="/namespaces" />
+      <Redirect from="/" to="/dashboard" />
     </Switch>
   </div>
 );

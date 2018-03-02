@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 import { routerLinks } from '../../config';
 // import { timeago } from '../../functions/timeago';
-import servicePng from '../../images/service.png';
+import servicePng from '../../images/link.svg';
 
 type Props = {
   data: Object,

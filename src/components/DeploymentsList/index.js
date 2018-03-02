@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 import { routerLinks } from '../../config';
 import { timeago } from '../../functions/timeago';
-import deployPng from '../../images/deploy.png';
+import deployPng from '../../images/deployments.svg';
 
 type Props = {
   data: Object,
