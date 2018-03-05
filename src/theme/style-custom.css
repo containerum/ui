@@ -1564,6 +1564,12 @@ body .tooltip > .tooltip-inner {
   position: absolute;
 }
 
+@-moz-document url-prefix() {
+  .dashboard-table tbody {
+    margin-top: 30px;
+  }
+}
+
 .dashboard-table tr {
   width: 100%;
   display: inline-table;
