@@ -4,13 +4,10 @@ stages:
 
 .create_tag: &create_tag
   before_script:
-    - export DATE=$(date +"%Y-%m-%d")
-    - export TAG="${DATE}-${CI_COMMIT_SHA:0:8}"
+    - export TAG="${CI_COMMIT_SHA:0:8}"-${CI_PIPELINE_ID}
 
 build-and-push-develop:
   <<: *create_tag
-  services:
-    - docker:dind
   image: docker:latest
   stage: build
   tags:
@@ -19,6 +16,7 @@ build-and-push-develop:
     - docker login  ${DOCKER_REGISTRY} -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
     - docker build --pull -t ${DOCKER_REGISTRY_IMAGE}:${TAG} .
     - docker push "${DOCKER_REGISTRY_IMAGE}:${TAG}"
+    - docker rmi ${DOCKER_REGISTRY_IMAGE}:${TAG}
   only:
     - develop
 
