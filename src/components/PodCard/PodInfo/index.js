@@ -4,6 +4,7 @@ import React from 'react';
 import _ from 'lodash/fp';
 
 import r from '../../../images/r.png';
+import fullScreen from '../../../images/full-screen.svg';
 
 type Props = {
   data: Object,
@@ -17,7 +18,7 @@ const PodInfo = ({ data, handleDeletePod }: Props) => {
   const { name, labels, ram, cpu, status } = data;
   const labelsToArray = Object.keys(labels);
   return (
-    <div className="content-block-container content-block_common-statistic container ">
+    <div className="content-block-container content-block_common-statistic container">
       <div className="content-block-header">
         <div className="content-block-header-label">
           <div className="content-block-header-label__text content-block-header-label_main">
@@ -44,7 +45,7 @@ const PodInfo = ({ data, handleDeletePod }: Props) => {
           </div>
         </div>
       </div>
-      <div className="content-block-content ">
+      <div className="content-block-content">
         <div className="content-block__r-img">
           <img src={r} alt="pod" />
         </div>
@@ -78,6 +79,51 @@ const PodInfo = ({ data, handleDeletePod }: Props) => {
                   </span>
                 )
             )}
+          </div>
+        </div>
+        <div
+          className="collapse content-block__info-logs log-block i-1"
+          id="collapseExample"
+        >
+          <div className="content-block__info-name">
+            Logs:{' '}
+            <span className="full-screen-btn">
+              <div
+                data-toggle="collapse"
+                data-target="#collapseExample"
+                aria-expanded="true"
+                aria-controls="collapseExample"
+              >
+                Full Screen<img src={fullScreen} alt="full screen" />
+              </div>
+            </span>
+          </div>
+          <div className="log-data">
+            error: Unable to update build status: resource name may not be empty<br />Registry
+            server Address:<br />Registry server User Name: serviceaccount<br />Registry
+            server Email: serviceaccount@example.org<br />Registry server
+            Password: non-empty<br />error: Unable to update build status:
+            resource name may not be empty resource name may not be empty
+            resource name may not be empty resource name mama<br />error: build
+            error: Failed to push image: unauthorized: authentication required<br />error:
+            Unable to update build status: resource name may not be empty<br />error:
+            build error: Failed to push image: unauthorized: authentication
+            required<br />error: Unable to update build status: resource name
+            may not be empty
+          </div>
+        </div>
+        <div className="content-block__more-panel">
+          <div
+            className="content-block__more-panel-toogle slide-down"
+            data-toggle="collapse"
+            data-target="#collapseExample"
+            aria-expanded="true"
+            aria-controls="collapseExample"
+          >
+            view logs<i className="content-block__more-panel-toogle-more ion-ios-arrow-down" />{' '}
+          </div>
+          <div className="content-block__more-panel-toogle slide-up">
+            <i className="content-block__more-panel-toogle-more ion-ios-arrow-up" />{' '}
           </div>
         </div>
       </div>

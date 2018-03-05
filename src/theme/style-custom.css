@@ -1254,12 +1254,14 @@ body .tooltip > .tooltip-inner {
   margin-left: 4px;
 }
 
-.content-block__info-name .full-screen-btn a {
+.content-block__info-name .full-screen-btn a,
+.content-block__info-name .full-screen-btn div {
   color: #29abe2;
   font-weight: 400;
 }
 
-.content-block__info-name .full-screen-btn a:hover {
+.content-block__info-name .full-screen-btn a:hover,
+.content-block__info-name .full-screen-btn div:hover {
   color: #29abe2;
 }
 
