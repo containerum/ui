@@ -23,7 +23,7 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
     <div>
       {data.length >= 1 && (
         <table className="content-block__table dashboard-table table">
-          <thead>
+          <thead style={{ height: '30px' }}>
             <tr>
               <td className="td-1" />
               <td className="td-2 pleft">Name</td>
