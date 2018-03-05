@@ -62,7 +62,7 @@ export const fetchGetVolume = (
       break;
     }
     case 401: {
-      dispatch(getVolumeFailure(data.message));
+      dispatch(getVolumeRequest());
       dispatch(push('/login'));
       break;
     }

@@ -55,7 +55,7 @@ export const fetchGetImagesToken = (
       break;
     }
     case 401: {
-      dispatch(getImagesTokenFailure(data.message));
+      dispatch(getImagesTokenRequest());
       dispatch(push('/login'));
       break;
     }

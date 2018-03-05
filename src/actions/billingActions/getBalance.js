@@ -56,7 +56,7 @@ export const fetchGetBalance = (
       break;
     }
     case 401: {
-      dispatch(getBalanceFailure(data.message));
+      dispatch(getBalanceRequest());
       dispatch(push('/login'));
       break;
     }

@@ -11,8 +11,8 @@ import type {
 } from '../../types/index';
 import {
   GET_COUNT_PODS_REQUESTING,
-  GET_COUNT_PODS_SUCCESS,
-  GET_COUNT_PODS_FAILURE
+  GET_COUNT_PODS_SUCCESS
+  // GET_COUNT_PODS_FAILURE
 } from '../../constants/statisticsConstants/getCountPodsConstants';
 import { webApi } from '../../config/index';
 
@@ -27,11 +27,11 @@ const getCountPodsSuccess = data => ({
   data
 });
 
-const getCountPodsFailure = err => ({
-  type: GET_COUNT_PODS_FAILURE,
-  isFetching: false,
-  err
-});
+// const getCountPodsFailure = err => ({
+//   type: GET_COUNT_PODS_FAILURE,
+//   isFetching: false,
+//   err
+// });
 
 export const fetchGetCountPods = (
   axios: any,
@@ -61,7 +61,7 @@ export const fetchGetCountPods = (
       break;
     }
     case 401: {
-      dispatch(getCountPodsFailure(data.message));
+      dispatch(getCountPodsRequest());
       dispatch(push('/login'));
       break;
     }

@@ -74,7 +74,7 @@ export const fetchGetPods = (
       break;
     }
     case 401: {
-      dispatch(getPodsFailure(data.message));
+      dispatch(getPodsRequest());
       dispatch(push('/login'));
       break;
     }
