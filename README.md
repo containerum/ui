@@ -61,7 +61,7 @@ yarn
 yarn build    # Run once
 yarn start
 ```
-Now the app should be running at [http://localhost:3000/](http://localhost:3000/)
+Now the app should be running at [http://localhost:3001/](http://localhost:3001/)
 
 **4. Start production mode:**
 
@@ -79,10 +79,11 @@ I use [better-npm-run](https://github.com/benoror/better-npm-run) to manage the 
 
 | `yarn <script>`           | Description                                                                                |
 | ------------------------- | ------------------------------------------------------------------------------------------ |
-| `start`                   | Run your app on the development server at `localhost:3000`. HMR will be enabled.           |
+| `start`                   | Run your app on the development server at `localhost:3001`. HMR will be enabled.           |
 | `start:production`        | Bundle files to `./public/assets` and run it on the production server at `localhost:8080`. |
 | `start:prod`              | Run your app on the production server only at `localhost:8080`.                            |
-| `start:production:docker` | Run your app on the production server in container at `localhost:80`.                      |
+| `start:production:docker` | Run your app on the production server in container at `localhost:3000`.                    |
+| `start:start:omnidesk`    | Run omnidesk server on production at `localhost:3001`.                                     |
 | `build`                   | Remove the previous bundled files and bundle it to `./public/assets`.                      |
 | `build:stats`             | Viusalize the contents of all your bundles.                                                |
 | `lint`                    | Lint all `.js` and `.scss` files.                                                          |

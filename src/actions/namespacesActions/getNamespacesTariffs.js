@@ -66,7 +66,7 @@ export const fetchGetNamespacesTariffs = (
       break;
     }
     case 401: {
-      dispatch(getNamespacesTariffsFailure(data.message));
+      dispatch(getNamespacesTariffsRequest());
       dispatch(push('/login'));
       break;
     }

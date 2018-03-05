@@ -11,8 +11,8 @@ import type {
 } from '../../types/index';
 import {
   GET_VOLUMES_REQUESTING,
-  GET_VOLUMES_SUCCESS,
-  GET_VOLUMES_FAILURE
+  GET_VOLUMES_SUCCESS
+  // GET_VOLUMES_FAILURE
 } from '../../constants/volumesConstants/getVolumes';
 import { webApi } from '../../config/index';
 
@@ -27,11 +27,11 @@ const getVolumesSuccess = data => ({
   data
 });
 
-const getVolumesFailure = err => ({
-  type: GET_VOLUMES_FAILURE,
-  isFetching: false,
-  err
-});
+// const getVolumesFailure = err => ({
+//   type: GET_VOLUMES_FAILURE,
+//   isFetching: false,
+//   err
+// });
 
 export const fetchGetVolumes = (
   axios: any,
@@ -65,7 +65,7 @@ export const fetchGetVolumes = (
       break;
     }
     case 401: {
-      dispatch(getVolumesFailure(data.message));
+      dispatch(getVolumesRequest());
       dispatch(push('/login'));
       break;
     }

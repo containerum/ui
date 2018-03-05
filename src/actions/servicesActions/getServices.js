@@ -71,7 +71,7 @@ export const fetchGetServices = (
       break;
     }
     case 401: {
-      dispatch(getServicesFailure(data.message));
+      dispatch(getServicesRequest());
       dispatch(push('/login'));
       break;
     }

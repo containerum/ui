@@ -67,7 +67,7 @@ export const fetchGetNamespace = (
       break;
     }
     case 401: {
-      dispatch(getNamespaceFailure(data.message));
+      dispatch(getNamespaceRequest());
       dispatch(push('/login'));
       break;
     }

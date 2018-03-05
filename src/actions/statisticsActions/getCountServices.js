@@ -11,8 +11,8 @@ import type {
 } from '../../types/index';
 import {
   GET_COUNT_SERVICES_REQUESTING,
-  GET_COUNT_SERVICES_SUCCESS,
-  GET_COUNT_SERVICES_FAILURE
+  GET_COUNT_SERVICES_SUCCESS
+  // GET_COUNT_SERVICES_FAILURE
 } from '../../constants/statisticsConstants/getCountServicesConstants';
 import { webApi } from '../../config/index';
 
@@ -27,11 +27,11 @@ const getCountServicesSuccess = data => ({
   data
 });
 
-const getCountServicesFailure = err => ({
-  type: GET_COUNT_SERVICES_FAILURE,
-  isFetching: false,
-  err
-});
+// const getCountServicesFailure = err => ({
+//   type: GET_COUNT_SERVICES_FAILURE,
+//   isFetching: false,
+//   err
+// });
 
 export const fetchGetCountServices = (
   axios: any,
@@ -61,7 +61,7 @@ export const fetchGetCountServices = (
       break;
     }
     case 401: {
-      dispatch(getCountServicesFailure(data.message));
+      dispatch(getCountServicesRequest());
       dispatch(push('/login'));
       break;
     }

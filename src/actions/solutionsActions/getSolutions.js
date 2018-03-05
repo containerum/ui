@@ -11,8 +11,8 @@ import type {
 } from '../../types/index';
 import {
   GET_SOLUTIONS_REQUESTING,
-  GET_SOLUTIONS_SUCCESS,
-  GET_SOLUTIONS_FAILURE
+  GET_SOLUTIONS_SUCCESS
+  // GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
 import { webApi } from '../../config/index';
 
@@ -27,11 +27,11 @@ const getSolutionsSuccess = data => ({
   data
 });
 
-const getSolutionsFailure = err => ({
-  type: GET_SOLUTIONS_FAILURE,
-  isFetching: false,
-  err
-});
+// const getSolutionsFailure = err => ({
+//   type: GET_SOLUTIONS_FAILURE,
+//   isFetching: false,
+//   err
+// });
 
 export const fetchGetSolutions = (
   axios: any,
@@ -65,7 +65,7 @@ export const fetchGetSolutions = (
       break;
     }
     case 401: {
-      dispatch(getSolutionsFailure(data.message));
+      dispatch(getSolutionsRequest());
       dispatch(push('/login'));
       break;
     }

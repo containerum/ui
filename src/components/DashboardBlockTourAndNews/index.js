@@ -67,7 +67,15 @@ const DashboardBlockTourAndNews = ({ linkToDeployment }: Props) => (
             >
               Launch 1st Deployment
             </Link>
-            {/* <Link to="/">Launch 1st Service with DNS</Link> */}
+            <Link
+              to={
+                linkToDeployment
+                  ? routerLinks.createServiceLink(linkToDeployment)
+                  : 'createNamespace'
+              }
+            >
+              Launch 1st Service
+            </Link>
             <Link to="/account">
               Set up Web Hooks for Continuous Deployment
             </Link>

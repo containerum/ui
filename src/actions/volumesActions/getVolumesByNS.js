@@ -61,7 +61,7 @@ export const fetchGetVolumesByNS = (
       break;
     }
     case 401: {
-      dispatch(getVolumesByNSFailure(data.message));
+      dispatch(getVolumesByNSRequest());
       dispatch(push('/login'));
       break;
     }

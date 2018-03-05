@@ -22,7 +22,16 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
   return (
     <div>
       {data.length >= 1 && (
-        <table className="content-block__table dashboard-table table">
+        <table
+          className="content-block__table dashboard-table table"
+          style={{
+            tableLayout: 'fixed',
+            width: '100%',
+            border: 0,
+            cellspacing: 0,
+            cellpadding: 0
+          }}
+        >
           <thead style={{ height: '30px' }}>
             <tr>
               <td className="td-1" />
@@ -51,7 +60,10 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
                   tabIndex={0}
                   style={{ margin: 0 }}
                 >
-                  <td className="td-1">
+                  <td
+                    className="td-1"
+                    // style={{ verticalAlign: 'top', width: '75%' }}
+                  >
                     <img src={deployment} alt="deployment" />
                   </td>
                   <td className="td-2">{name}</td>

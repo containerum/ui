@@ -11,8 +11,8 @@ import type {
 } from '../../types/index';
 import {
   GET_COUNT_DEPLOYMENTS_REQUESTING,
-  GET_COUNT_DEPLOYMENTS_SUCCESS,
-  GET_COUNT_DEPLOYMENTS_FAILURE
+  GET_COUNT_DEPLOYMENTS_SUCCESS
+  // GET_COUNT_DEPLOYMENTS_FAILURE
 } from '../../constants/statisticsConstants/getCountDeploymentsConstants';
 import { webApi } from '../../config/index';
 
@@ -27,11 +27,11 @@ const getCountDeploymentsSuccess = data => ({
   data
 });
 
-const getCountDeploymentsFailure = err => ({
-  type: GET_COUNT_DEPLOYMENTS_FAILURE,
-  isFetching: false,
-  err
-});
+// const getCountDeploymentsFailure = err => ({
+//   type: GET_COUNT_DEPLOYMENTS_FAILURE,
+//   isFetching: false,
+//   err
+// });
 
 export const fetchGetCountDeployments = (
   axios: any,
@@ -61,7 +61,7 @@ export const fetchGetCountDeployments = (
       break;
     }
     case 401: {
-      dispatch(getCountDeploymentsFailure(data.message));
+      dispatch(getCountDeploymentsRequest());
       dispatch(push('/login'));
       break;
     }
