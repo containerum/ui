@@ -68,14 +68,10 @@ export class CreateDeployment extends PureComponent<Props> {
         nextProps.getVolumesByNSReducer.readyStatus &&
       nextProps.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS
     ) {
-      const nextState = Object.assign([], this.state.containers);
       if (nextProps.getVolumesByNSReducer.data[0]) {
-        nextState[0].volumeMounts[0].name =
-          nextProps.getVolumesByNSReducer.data[0].name;
         this.setState({
           ...this.state,
-          volumes: nextProps.getVolumesByNSReducer.data,
-          containers: nextState
+          volumes: nextProps.getVolumesByNSReducer.data
         });
       }
     }
@@ -140,15 +136,7 @@ export class CreateDeployment extends PureComponent<Props> {
           }
         ],
         command: [],
-        volumeMounts: [
-          {
-            name: '',
-            mountPath: '',
-            subPath: '',
-            id: _.uniqueId(),
-            index: 0
-          }
-        ]
+        volumeMounts: []
       }
     ],
     volumes: [],
@@ -587,15 +575,7 @@ export class CreateDeployment extends PureComponent<Props> {
             }
           ],
           command: [],
-          volumeMounts: [
-            {
-              name: '',
-              mountPath: '',
-              subPath: '',
-              id: _.uniqueId(),
-              index: 0
-            }
-          ]
+          volumeMounts: []
         }
       ]
     });

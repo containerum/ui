@@ -36,7 +36,7 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           value={resources.cpu}
           id={`cpu${id}`}
           type="text"
-          pattern="^\d+(.\d+)?m?$"
+          pattern="^\d+(.\d+)?m$"
           required
           baseClassName="form-group__input-text form-control customInput"
           baseClassNameLabel={`form-group__label ${resources.cpu &&
