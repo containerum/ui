@@ -53,7 +53,7 @@ export const fetchCreateExternalService = (
     intObj.ports.push({
       name: item.externalSrvName,
       targetPort: parseInt(item.externalSrvTargetPort, 10),
-      protocol: item.intServiceType
+      protocol: item.extServiceType
     });
     return null;
   });

@@ -55,7 +55,7 @@ const Volumes = ({
       </div>
     </div>
 
-    {volumes.length
+    {volumes.length && volumeMounts.length
       ? volumeMounts.map((item, indexVolume) => {
           // console.log(item);
           const { id, name, subPath, mountPath } = item;
