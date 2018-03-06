@@ -4,6 +4,8 @@ module.exports = {
   webApi: process.env.WEB_API || 'https://web.api.containerum.io:5000',
   webApiLoginGroup:
     process.env.WEB_API_OTHER || 'https://web.api.containerum.io:5000',
+  webApiLogin:
+    process.env.WEB_API_LOGIN || 'https://web.api.containerum.io:5000',
   // webApiLoginGroup: process.env.WEB_API_OTHER || 'http://192.168.88.200:5000',
   appRecaptcha:
     process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS',

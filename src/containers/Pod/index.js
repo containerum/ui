@@ -6,6 +6,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 
+import initSocket from '../../functions/getSockets';
 import * as actionGetPod from '../../actions/podActions/getPod';
 import * as actionDeletePod from '../../actions/podActions/deletePod';
 import {
@@ -34,10 +35,27 @@ type Props = {
 
 // Export this for unit testing more easily
 export class Pod extends PureComponent<Props> {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     logs: []
+  //   };
+  // }
   componentDidMount() {
     const { fetchGetPodIfNeeded, match } = this.props;
     const { idName, idDep, idPod } = match.params;
     fetchGetPodIfNeeded(idName, idDep, idPod);
+    const socket = initSocket();
+    if (socket) {
+      socket.on('message', data => {
+        console.log('componentDidMount', data);
+        this.onMessageReceived(data);
+      });
+      // socket.on('message', this.onMessageReceived);
+      // setTimeout(() => {
+      //   socket.emit('history', { offset: 0, length: 100 });
+      // }, 100);
+    }
   }
   componentWillUpdate(nextProps) {
     if (
@@ -48,6 +66,18 @@ export class Pod extends PureComponent<Props> {
       this.props.history.goBack();
     }
   }
+  // componentWillUnmount() {
+  //   if (socket) {
+  //     console.log(socket);
+  //     // socket.removeListener('msg', this.onMessageReceived);
+  //   }
+  // }
+  onMessageReceived = data => {
+    // const { logs } = this.state.logs;
+    console.log('onMessageReceived', data);
+    // logs.push(data);
+    // this.setState({ logs });
+  };
   onHandleDelete = idPod => {
     const { fetchDeletePodIfNeeded, match } = this.props;
     fetchDeletePodIfNeeded(match.params.idName, idPod);
@@ -94,7 +124,6 @@ export class Pod extends PureComponent<Props> {
       />
     );
   };
-
   renderPodList = () => {
     const { getPodReducer, deletePodReducer, match } = this.props;
 

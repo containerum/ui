@@ -9,7 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE
 } from '../constants/loginConstants';
-import { webApiLoginGroup } from '../config';
+import { webApiLogin } from '../config';
 
 const loginRequest = (email, password) => ({
   type: LOGIN_REQUESTING,
@@ -34,14 +34,19 @@ export const fetchLogin = (
   email: string,
   password: string,
   axios: any,
-  URL: string = webApiLoginGroup
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(loginRequest(email, password));
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
   const response = await axios.post(
-    `${URL}/api/login`,
+    // `${URL}/api/login`,
+    `${URL}/login`,
     { username: email, password },
     {
+      headers: {
+        'User-Client': browser
+      },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
