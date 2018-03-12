@@ -80,7 +80,7 @@ export const fetchCreateNamespace = (
       //     action: `UI_create_ns_${price}`
       //   });
       // }
-      dispatch(push('/'));
+      dispatch(push('/namespaces'));
       break;
     }
     case 401: {

@@ -2,11 +2,16 @@ module.exports = {
   host: process.env.NODE_HOST || 'localhost', // Define your host from 'package.json'
   port: process.env.PORT,
   webApi: process.env.WEB_API || 'https://web.api.containerum.io:5000',
+  // webApi: process.env.WEB_API || 'http://192.168.88.200:5000',
   webApiLoginGroup:
     process.env.WEB_API_OTHER || 'https://web.api.containerum.io:5000',
-  webApiLogin:
-    process.env.WEB_API_LOGIN || 'https://web.api.containerum.io:5000',
   // webApiLoginGroup: process.env.WEB_API_OTHER || 'http://192.168.88.200:5000',
+  webApiLogin: process.env.WEB_API_LOGIN || 'https://94.130.209.147:8082',
+  // webApiLogin: process.env.WEB_API_LOGIN || 'https://192.168.88.200:8082',
+  // webApiLogin: process.env.WEB_API_LOGIN || 'https://192.168.88.59:8082',
+  wsApi: process.env.WS_API || 'wss://94.130.209.147:8082',
+  // wsApi: process.env.WS_API || 'wss://192.168.88.200:8082',
+  // wsApi: process.env.WS_API || 'wss://192.168.88.59:8082',
   appRecaptcha:
     process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS',
   defaultCountry: process.env.COUNTRY || 'US',
@@ -52,6 +57,9 @@ module.exports = {
     getPod: '/namespace/:idName/deployment/:idDep/pods/:idPod',
     getPodLink: (idName: string, idDep: string, idPod: string) =>
       `/namespace/${idName}/deployment/${idDep}/pods/${idPod}`,
+    getPodLogs: '/namespace/:idName/deployment/:idDep/pod/:idPod/logs',
+    getPodLogsLink: (idName: string, idDep: string, idPod: string) =>
+      `/namespace/${idName}/deployment/${idDep}/pod/${idPod}/logs`,
     getServices: '/namespaces/:idName/services',
     getServicesLink: (idName: string) => `/namespaces/${idName}/services`,
     createService: '/namespace/:idName/createService',
@@ -68,6 +76,7 @@ module.exports = {
     resizeServiceLink: (idName: string, idSrv: string) =>
       `/namespace/${idName}/updateService/${idSrv}`,
     support: '/support',
+    successTicket: '/successTicket',
     account: '/account',
     billing: '/billing'
   }

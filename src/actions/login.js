@@ -42,7 +42,7 @@ export const fetchLogin = (
   const response = await axios.post(
     // `${URL}/api/login`,
     `${URL}/login`,
-    { username: email, password },
+    { login: email, password },
     {
       headers: {
         'User-Client': browser
@@ -50,17 +50,26 @@ export const fetchLogin = (
       validateStatus: status => status >= 200 && status <= 505
     }
   );
-  const { token } = response.data;
+  const {
+    token,
+    access_token: accessToken,
+    refresh_token: refreshToken
+  } = response.data;
   const { status } = response;
   switch (status) {
     case 200: {
       cookie.save('token', token, { path: '/' });
+      cookie.save('accessToken', accessToken, { path: '/' });
+      cookie.save('refreshToken', refreshToken, { path: '/' });
+      cookie.save('lastTimeToRefresh', Date.parse(new Date()), { path: '/' });
       dispatch(loginSuccess(token));
       dispatch(push('/dashboard'));
       break;
     }
     default: {
       cookie.remove('token', { path: '/' });
+      cookie.remove('accessToken', { path: '/' });
+      cookie.remove('refreshToken', { path: '/' });
       dispatch(loginFailure(response.data.message));
     }
   }

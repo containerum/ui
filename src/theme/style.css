@@ -925,7 +925,7 @@ h1{
 
 .card-block .content-block__info-item {
   display: block;
-  margin: 0 0 7px 0;
+  margin: 0;
 }
 
 .content-block__info-item.i-1 {
@@ -974,8 +974,9 @@ h1{
 }
 
 .content-block__more-panel-toogle {
-    color: #a7a7a7;
+  color: #a7a7a7;
   margin-top: 4px;
+  cursor: pointer;
 }
 
 .t-87 .content-block__more-panel-toogle {

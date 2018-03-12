@@ -4,7 +4,6 @@
 import type { Store as ReduxStore } from 'redux';
 
 import type { Reducers } from '../reducers';
-import {GET_NAMESPACE_INVALID} from "../constants/namespaceConstants/getNamespace";
 
 // Reducers
 export type Home = {

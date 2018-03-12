@@ -52,6 +52,9 @@ export const fetchDeleteAccount = (
     case 200: {
       dispatch(deleteAccountSuccess(data, status));
       cookie.remove('token', { path: '/' });
+      cookie.remove('accessToken', { path: '/' });
+      cookie.remove('refreshToken', { path: '/' });
+      cookie.remove('lastTimeToRefresh', { path: '/' });
       if (typeof window !== 'undefined') {
         window.location.replace('https://containerum.com/');
       }

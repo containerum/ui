@@ -1,17 +1,35 @@
 /* @flow */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash/fp';
+import { Scrollbars } from 'react-custom-scrollbars';
 
+import { routerLinks } from '../../../config';
 import r from '../../../images/r.png';
 import fullScreen from '../../../images/full-screen.svg';
 
 type Props = {
   data: Object,
-  handleDeletePod: (idPod: string) => void
+  logs: string,
+  errorMessage: string,
+  idName: string,
+  idDep: string,
+  handleDeletePod: (idPod: string) => void,
+  handleViewLogs: () => void,
+  isLogViewed: boolean
 };
 
-const PodInfo = ({ data, handleDeletePod }: Props) => {
+const PodInfo = ({
+  data,
+  logs,
+  errorMessage,
+  idName,
+  idDep,
+  handleDeletePod,
+  handleViewLogs,
+  isLogViewed
+}: Props) => {
   const handleClickDeleteDeployment = name => {
     handleDeletePod(name);
   };
@@ -88,41 +106,75 @@ const PodInfo = ({ data, handleDeletePod }: Props) => {
           <div className="content-block__info-name">
             Logs:{' '}
             <span className="full-screen-btn">
-              <div
-                data-toggle="collapse"
-                data-target="#collapseExample"
-                aria-expanded="true"
-                aria-controls="collapseExample"
-              >
+              <Link to={routerLinks.getPodLogsLink(idName, idDep, name)}>
                 Full Screen<img src={fullScreen} alt="full screen" />
-              </div>
+              </Link>
             </span>
           </div>
-          <div className="log-data">
-            error: Unable to update build status: resource name may not be empty<br />Registry
-            server Address:<br />Registry server User Name: serviceaccount<br />Registry
-            server Email: serviceaccount@example.org<br />Registry server
-            Password: non-empty<br />error: Unable to update build status:
-            resource name may not be empty resource name may not be empty
-            resource name may not be empty resource name mama<br />error: build
-            error: Failed to push image: unauthorized: authentication required<br />error:
-            Unable to update build status: resource name may not be empty<br />error:
-            build error: Failed to push image: unauthorized: authentication
-            required<br />error: Unable to update build status: resource name
-            may not be empty
-          </div>
+          <Scrollbars
+            universal
+            autoHide
+            style={{ width: '970px', height: '212px' }}
+            renderThumbVertical={({ style, ...props }) => (
+              <div
+                {...props}
+                style={{
+                  ...style,
+                  backgroundColor: 'rgba(246, 246, 246, 0.3)',
+                  borderRadius: '4px'
+                }}
+              />
+            )}
+            renderThumbHorizontal={({ style, ...props }) => (
+              <div
+                {...props}
+                style={{
+                  ...style,
+                  backgroundColor: 'rgba(246, 246, 246, 0.3)',
+                  borderRadius: '4px'
+                }}
+              />
+            )}
+            renderView={props => <div {...props} className="log-data" />}
+          >
+            <div>
+              {errorMessage ? (
+                <div>{errorMessage}</div>
+              ) : (
+                <div
+                  // eslint-disable-next-line react/no-danger
+                  dangerouslySetInnerHTML={{
+                    __html: logs
+                  }}
+                />
+              )}
+            </div>
+            <div id="endOfLogs" />
+          </Scrollbars>
         </div>
         <div className="content-block__more-panel">
           <div
             className="content-block__more-panel-toogle slide-down"
+            style={isLogViewed ? { display: 'none' } : {}}
             data-toggle="collapse"
             data-target="#collapseExample"
             aria-expanded="true"
             aria-controls="collapseExample"
+            onClick={handleViewLogs}
+            onKeyPress={handleViewLogs}
           >
             view logs<i className="content-block__more-panel-toogle-more ion-ios-arrow-down" />{' '}
           </div>
-          <div className="content-block__more-panel-toogle slide-up">
+          <div
+            className="content-block__more-panel-toogle slide-up"
+            style={isLogViewed ? { display: 'block' } : { display: 'none' }}
+            data-toggle="collapse"
+            data-target="#collapseExample"
+            aria-expanded="true"
+            aria-controls="collapseExample"
+            onClick={handleViewLogs}
+            onKeyPress={handleViewLogs}
+          >
             <i className="content-block__more-panel-toogle-more ion-ios-arrow-up" />{' '}
           </div>
         </div>

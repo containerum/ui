@@ -39,6 +39,9 @@ export const fetchGetNamespaces = (
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
   // console.log(token);
 
   dispatch(getNamespacesRequest());
@@ -47,10 +50,7 @@ export const fetchGetNamespaces = (
     headers: {
       Authorization: token,
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });

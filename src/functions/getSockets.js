@@ -1,22 +1,21 @@
-import WebSocket from 'ws';
-// import io from 'socket.io-client';
+import cookie from 'react-cookies';
 
-const initSocket = () => {
-  const ws = new WebSocket(
-    'ws://192.168.88.200:1214/namespaces/hosting/pods/kube-api-779bf59b6f-tkb69/log?follow=true',
-    {
-      perMessageDeflate: false,
-      headers: {
-        'X-User-Role': 'admin',
-        'Access-Control-Allow-Origin': '*'
-      }
-    }
-  );
-  // ws.on('open', res => console.log('open', res));
-  // ws.on('message', data => {
-  //   console.log(data);
-  // });
-  return ws;
+import { wsApi } from '../config';
+
+const initSocket = (idName, idPod) => {
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  // console.log(idName, idPod);
+  if (typeof window !== 'undefined' && window.WebSocket) {
+    return new WebSocket(
+      // `${wsApi}/namespaces/hosting/pods/kube-api-6b768f94d7-78hpz/log?follow=true&User-Token=${cookie.load(
+      //   'accessToken'
+      // )}&User-Client=${browser}`
+      `${wsApi}/namespaces/${idName}/pods/${idPod}/log?follow=true&User-Token=${cookie.load(
+        'accessToken'
+      )}&User-Client=${browser}`
+    );
+  }
+  return 'Your browser does not support WebSockets';
 };
 
 export default initSocket;
