@@ -56,7 +56,7 @@ export const fetchGetProfile = (
       break;
     }
     case 401: {
-      dispatch(getProfileFailure(data.message));
+      dispatch(getProfileRequest());
       dispatch(push('/login'));
       break;
     }

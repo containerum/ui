@@ -11,8 +11,8 @@ import type {
 } from '../../types/index';
 import {
   GET_NAMESPACES_REQUESTING,
-  GET_NAMESPACES_SUCCESS,
-  GET_NAMESPACES_FAILURE
+  GET_NAMESPACES_SUCCESS
+  // GET_NAMESPACES_FAILURE
 } from '../../constants/namespacesConstants/getNamespaces';
 import { webApi } from '../../config/index';
 
@@ -27,11 +27,11 @@ const getNamespacesSuccess = data => ({
   data
 });
 
-const getNamespacesFailure = err => ({
-  type: GET_NAMESPACES_FAILURE,
-  isFetching: false,
-  err
-});
+// const getNamespacesFailure = err => ({
+//   type: GET_NAMESPACES_FAILURE,
+//   isFetching: false,
+//   err
+// });
 
 export const fetchGetNamespaces = (
   axios: any,
@@ -65,7 +65,7 @@ export const fetchGetNamespaces = (
       break;
     }
     case 401: {
-      dispatch(getNamespacesFailure(data.message));
+      dispatch(getNamespacesRequest());
       dispatch(push('/login'));
       break;
     }

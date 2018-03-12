@@ -66,7 +66,7 @@ export const fetchGetVolumesTariffs = (
       break;
     }
     case 401: {
-      dispatch(getVolumesTariffsFailure(data.message));
+      dispatch(getVolumesTariffsRequest());
       dispatch(push('/login'));
       break;
     }
