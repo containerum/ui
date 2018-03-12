@@ -65,6 +65,9 @@ export const fetchConfirmSignUp = (
     }
     default: {
       cookie.remove('token', { path: '/' });
+      cookie.remove('accessToken', { path: '/' });
+      cookie.remove('refreshToken', { path: '/' });
+      cookie.remove('lastTimeToRefresh', { path: '/' });
       dispatch(confirmSignUpFailure('Hash is not valid'));
     }
   }

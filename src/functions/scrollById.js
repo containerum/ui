@@ -1,11 +1,13 @@
 const scrollById = id => {
   if (typeof window !== 'undefined' && typeof window.document !== 'undefined') {
     const idElement = document.getElementById(id);
-    idElement.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'start'
-    });
+    if (idElement) {
+      idElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start'
+      });
+    }
   }
 };
 

@@ -7,6 +7,7 @@ import type { Connector } from 'react-redux';
 import _ from 'lodash/fp';
 
 import imageLogo from '../../images/profilePlace.svg';
+import downloadLogs from '../../images/downloadLogs.svg';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import {
   GET_NAMESPACES_INVALID,
@@ -23,6 +24,7 @@ import type {
 type Props = {
   getNamespacesReducer: NamespacesType,
   fetchGetNamespacesIfNeeded: () => void,
+  handleDownloadLogs: () => void,
   idName: ?string,
   idDep: ?string,
   idPod: ?string,
@@ -238,6 +240,20 @@ export class NavigationHeader extends PureComponent<Props> {
                 {isIdService}
                 {isIdDep}
                 {idPodContent}
+                {this.props.handleDownloadLogs && (
+                  <img
+                    src={downloadLogs}
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      cursor: 'pointer'
+                    }}
+                    alt="download logs"
+                    onClick={this.props.handleDownloadLogs}
+                    onKeyPress={this.props.handleDownloadLogs}
+                    role="presentation"
+                  />
+                )}
               </ul>
             </div>
           </div>

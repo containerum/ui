@@ -50,6 +50,9 @@ export const fetchCheckHashPassword = (
     }
     default: {
       cookie.remove('token', { path: '/' });
+      cookie.remove('accessToken', { path: '/' });
+      cookie.remove('refreshToken', { path: '/' });
+      cookie.remove('lastTimeToRefresh', { path: '/' });
       dispatch(checkHashPasswordFailure(response.data.message));
     }
   }

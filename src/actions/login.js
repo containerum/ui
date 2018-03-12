@@ -9,7 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE
 } from '../constants/loginConstants';
-import { webApiLoginGroup } from '../config';
+import { webApiLogin } from '../config';
 
 const loginRequest = (email, password) => ({
   type: LOGIN_REQUESTING,
@@ -34,28 +34,42 @@ export const fetchLogin = (
   email: string,
   password: string,
   axios: any,
-  URL: string = webApiLoginGroup
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(loginRequest(email, password));
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
   const response = await axios.post(
-    `${URL}/api/login`,
-    { username: email, password },
+    // `${URL}/api/login`,
+    `${URL}/login`,
+    { login: email, password },
     {
+      headers: {
+        'User-Client': browser
+      },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
-  const { token } = response.data;
+  const {
+    token,
+    access_token: accessToken,
+    refresh_token: refreshToken
+  } = response.data;
   const { status } = response;
   switch (status) {
     case 200: {
       cookie.save('token', token, { path: '/' });
+      cookie.save('accessToken', accessToken, { path: '/' });
+      cookie.save('refreshToken', refreshToken, { path: '/' });
+      cookie.save('lastTimeToRefresh', Date.parse(new Date()), { path: '/' });
       dispatch(loginSuccess(token));
       dispatch(push('/dashboard'));
       break;
     }
     default: {
       cookie.remove('token', { path: '/' });
+      cookie.remove('accessToken', { path: '/' });
+      cookie.remove('refreshToken', { path: '/' });
       dispatch(loginFailure(response.data.message));
     }
   }

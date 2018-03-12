@@ -3,6 +3,7 @@
 import { push } from 'react-router-redux';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import { routerLinks } from '../../config';
 import {
   SEND_SUPPORT_TICKET_REQUESTING,
   SEND_SUPPORT_TICKET_SUCCESS,
@@ -59,7 +60,7 @@ export const fetchSendSupportTicket = (
       //     action: 'UI_support_submit'
       //   });
       // }
-      dispatch(push('/successTicket'));
+      dispatch(push(routerLinks.successTicket));
       break;
     }
     default: {

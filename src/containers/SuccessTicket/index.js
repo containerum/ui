@@ -1,59 +1,44 @@
 /* @flow */
 
 import React, { PureComponent } from 'react';
-// import ReactDOM from 'react-dom';
-import { NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import cookie from 'react-cookies';
 
 import { routerLinks } from '../../config';
+import { SEND_SUPPORT_TICKET_SUCCESS } from '../../constants/supportConstants/sendSupportTicketConstants';
+import supportCloud from '../../images/support-cloud.png';
+import supportMan from '../../images/support-man.png';
 
 type Props = {
-  forgotReducer: Object,
+  sendSupportTicketReducer: Object,
   history: Object
 };
 
-class CheckEmail extends PureComponent<Props> {
+class SuccessTicket extends PureComponent<Props> {
   componentDidMount() {
-    cookie.remove('token', { path: '/' });
-    if (this.props.forgotReducer.readyStatus !== 'FORGOT_SUCCESS') {
-      this.props.history.push('/login');
+    const { history, sendSupportTicketReducer } = this.props;
+    if (sendSupportTicketReducer.readyStatus !== SEND_SUPPORT_TICKET_SUCCESS) {
+      history.push(routerLinks.support);
     }
   }
   render() {
-    // console.log(this.state);
-    // const { email } = this.state;
-    const { email } = this.props.forgotReducer;
     return (
       <div>
-        <Helmet title="Check Email" />
-        <div className="window">
-          <div className="form">
-            <div className="login-block">
-              <NavLink activeClassName="active" to={routerLinks.signUp}>
-                Sign Up
-              </NavLink>
-              <span className="login-divider">or</span>
-              <NavLink activeClassName="active" to={routerLinks.login}>
-                Log In
-              </NavLink>
-            </div>
-            <div className="main-form">
-              <div className="form-header form-header-login">Check Email</div>
-              <div>
-                Check your inbox <strong>{email}</strong>. If you don`t receive
-                an email, and it`s not in your spam folder this could mean you
-                signed up with a different address.
+        <Helmet title="Success Ticket" />
+        <div className="support-feedback">
+          <div className="support-feedback-content">
+            <div className="support-feedback__cloud">
+              <img src={supportCloud} alt="" />
+              <div className="support-feedback__text">
+                Ok, we’ve received your message.
               </div>
-              <NavLink
-                activeClassName="active"
-                className="forg-pass"
-                to={routerLinks.login}
-              >
-                Go to login
-              </NavLink>
+              <div className="support-feedback__note">
+                * We`ll reach out to you by email in less than 24 hours.
+              </div>
+            </div>
+            <div className="support-feedback__man">
+              <img src={supportMan} alt="" />
             </div>
           </div>
         </div>
@@ -62,8 +47,10 @@ class CheckEmail extends PureComponent<Props> {
   }
 }
 
-const connector: Connector<{}, Props> = connect(({ forgotReducer }) => ({
-  forgotReducer
-}));
+const connector: Connector<{}, Props> = connect(
+  ({ sendSupportTicketReducer }) => ({
+    sendSupportTicketReducer
+  })
+);
 
-export default connector(CheckEmail);
+export default connector(SuccessTicket);

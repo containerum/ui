@@ -28,6 +28,7 @@ import CreateNamespacePage from './containers/CreateNamespace';
 import DeploymentsPage from './containers/Deployments';
 import PodsPage from './containers/Pods';
 import PodPage from './containers/Pod';
+import PodLogsPage from './containers/Pod/PodLogs';
 import ServicesPage from './containers/Services';
 import ServicePage from './containers/Service';
 import CreateServicePage from './containers/CreateService';
@@ -44,6 +45,7 @@ import RecoveryPassword from './containers/RecoveryPassword';
 import Forgot from './containers/Forgot';
 import CheckEmail from './containers/CheckEmail';
 import SupportPage from './containers/Support';
+import SuccessTicket from './containers/SuccessTicket';
 import AccountPage from './containers/Account';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
@@ -134,6 +136,11 @@ export default [
       Promise.all([dispatch(fetchGetPodIfNeeded(params.idName, params.idDep))])
   },
   {
+    path: routerLinks.getPodLogs,
+    component: PodLogsPage,
+    include: true
+  },
+  {
     path: routerLinks.getServices,
     exact: true,
     component: ServicesPage,
@@ -220,6 +227,12 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetSupportGroupsIfNeeded())])
+  },
+  {
+    path: routerLinks.successTicket,
+    exact: true,
+    component: SuccessTicket,
+    include: true
   },
   {
     path: routerLinks.login,
