@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 
+import { externalLinks } from '../../config';
 import type { ReduxState } from '../../types';
 import getPlatform from '../../functions/getPlatform';
 import arrows from '../../images/arrows.png';
@@ -46,7 +47,7 @@ const CLIInfo = ({ getReleasesGithubReducer }: Props) => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://github.com/containerum/chkit/releases/latest"
+            href={externalLinks.releasesChkit}
             className="block-item__download block-item__download_alt"
           >
             <span className="block-item__download-title">or</span>

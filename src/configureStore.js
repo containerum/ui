@@ -5,6 +5,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 import cookie from 'react-cookies';
+import { loadingBarMiddleware } from 'react-redux-loading-bar';
 
 import { webApiLogin } from './config';
 import type { Store } from './types';
@@ -81,7 +82,12 @@ export default (history: Object, initialState: Object = {}): Store => {
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
     compose;
   const enhancers = composeEnhancers(
-    applyMiddleware(...middlewares)
+    applyMiddleware(
+      ...middlewares,
+      loadingBarMiddleware({
+        promiseTypeSuffixes: ['REQUESTING', 'SUCCESS', 'FAILURE']
+      })
+    )
     // Other store enhancers if any
   );
   const store = createStore(rootReducer, initialState, enhancers);

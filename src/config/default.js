@@ -6,10 +6,10 @@ module.exports = {
   webApiLoginGroup:
     process.env.WEB_API_OTHER || 'https://web.api.containerum.io:5000',
   // webApiLoginGroup: process.env.WEB_API_OTHER || 'http://192.168.88.200:5000',
-  webApiLogin: process.env.WEB_API_LOGIN || 'https://94.130.209.147:8082',
+  webApiLogin: process.env.WEB_API_LOGIN || 'https://api.containerum.io:8082',
   // webApiLogin: process.env.WEB_API_LOGIN || 'https://192.168.88.200:8082',
   // webApiLogin: process.env.WEB_API_LOGIN || 'https://192.168.88.59:8082',
-  wsApi: process.env.WS_API || 'wss://94.130.209.147:8082',
+  wsApi: process.env.WS_API || 'wss://api.containerum.io:8082',
   // wsApi: process.env.WS_API || 'wss://192.168.88.200:8082',
   // wsApi: process.env.WS_API || 'wss://192.168.88.59:8082',
   appRecaptcha:
@@ -79,5 +79,16 @@ module.exports = {
     successTicket: '/successTicket',
     account: '/account',
     billing: '/billing'
+  },
+  externalLinks: {
+    documentation: 'https://containerum.com/docs/about',
+    fastDeploy: 'https://containerum.com/docs/about',
+    helloWorld: 'https://containerum.com/docs/about',
+    solutions: 'https://github.com/containerum',
+    blog: 'https://blog.containerum.com/',
+    startGuide: 'https://containerum.com/docs/start-guide',
+    releasesChkit: 'https://github.com/containerum/chkit/releases/latest',
+    termsOfService: 'https://containerum.com',
+    privacyPolicy: 'https://containerum.com'
   }
 };

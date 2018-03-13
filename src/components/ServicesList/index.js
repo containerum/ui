@@ -3,7 +3,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { routerLinks } from '../../config';
+import { externalLinks, routerLinks } from '../../config';
 // import { timeago } from '../../functions/timeago';
 import servicePng from '../../images/link.svg';
 
@@ -110,14 +110,14 @@ const ServicesList = ({
                       To create a new Service use our{' '}
                       <a
                         className="documentation-link"
-                        href="https://github.com/containerum/chkit/releases/latest"
+                        href={externalLinks.releasesChkit}
                       >
                         CLI Tool
                       </a>{' '}
                       and refer to our{' '}
                       <a
                         className="documentation-link"
-                        href="https://containerum.com/documentation/Start-Guide"
+                        href={externalLinks.startGuide}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
