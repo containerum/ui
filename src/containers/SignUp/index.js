@@ -10,7 +10,7 @@ import cookie from 'react-cookies';
 import isEmail from 'validator/lib/isEmail';
 import Recaptcha from 'react-google-recaptcha';
 
-import { appRecaptcha, routerLinks } from '../../config';
+import { appRecaptcha, externalLinks, routerLinks } from '../../config';
 import * as signUpLogin from '../../actions/signUp';
 import '../Login/Login.css';
 import InputEmail from '../../components/InputEmail';
@@ -198,7 +198,7 @@ class SignUp extends PureComponent<Props> {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://containerum.com/terms-of-service"
+                  href={externalLinks.termsOfService}
                 >
                   Terms Of Service
                 </a>{' '}
@@ -206,7 +206,7 @@ class SignUp extends PureComponent<Props> {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://containerum.com/privacy-policy"
+                  href={externalLinks.privacyPolicy}
                 >
                   Privacy Policy
                 </a>

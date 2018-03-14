@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { externalLinks } from '../../config';
+
 const DashboardBlockInfo = () => (
   <div className="col-md-3 col-info">
     <div className="block-container block-h">
@@ -9,7 +11,7 @@ const DashboardBlockInfo = () => (
       <div className="info-list">
         <a
           className="info-link"
-          href="https://containerum.com/documentation"
+          href={externalLinks.documentation}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -17,7 +19,7 @@ const DashboardBlockInfo = () => (
         </a>
         <a
           className="info-link"
-          href="https://containerum.com/fast-deploy"
+          href={externalLinks.fastDeploy}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -25,7 +27,7 @@ const DashboardBlockInfo = () => (
         </a>
         <a
           className="info-link"
-          href="https://github.com/containerum"
+          href={externalLinks.solutions}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -33,7 +35,7 @@ const DashboardBlockInfo = () => (
         </a>
         <a
           className="info-link"
-          href="https://blog.containerum.com/"
+          href={externalLinks.blog}
           target="_blank"
           rel="noopener noreferrer"
         >

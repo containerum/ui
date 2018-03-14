@@ -14,6 +14,7 @@ import {
   GET_RELEASES_FAILURE
 } from '../../constants/getReleasesGithubConstants';
 import arrows from '../../images/arrows.png';
+import { externalLinks } from '../../config';
 
 type Props = {
   getReleasesGithubReducer: Object,
@@ -44,14 +45,14 @@ export class Footer extends PureComponent<Props> {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer__download_cli"
-                href="https://github.com/containerum/chkit/releases"
+                href={externalLinks.releasesChkit}
               >
                 Download CLI <img src={arrows} alt="cli" />
               </a>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://containerum.com/documentation"
+                href={externalLinks.documentation}
                 className="footer__help"
               >
                 Docs
@@ -59,7 +60,7 @@ export class Footer extends PureComponent<Props> {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://containerum.com/fast-deploy/hello-world"
+                href={externalLinks.helloWorld}
                 className="footer__help"
               >
                 How To
@@ -92,7 +93,7 @@ export class Footer extends PureComponent<Props> {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://containerum.com/documentation"
+              href={externalLinks.documentation}
               className="footer__help"
               // onClick={() => this.handleClickAnaliticsDocsFooter()}
             >
@@ -101,7 +102,7 @@ export class Footer extends PureComponent<Props> {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://containerum.com/fast-deploy/hello-world"
+              href={externalLinks.helloWorld}
               className="footer__help"
               // onClick={() => this.handleClickAnaliticsHowToFooter()}
             >
