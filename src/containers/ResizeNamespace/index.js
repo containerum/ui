@@ -130,10 +130,12 @@ export class ResizeNamespace extends PureComponent<Props> {
       <TariffsNamespacesList
         data={this.props.getNamespacesTariffsReducer.data}
         NSTariffName={this.state.NSTariffName}
+        isFullDataOfProfile
         active={
           getNamespaceReducer.data ? getNamespaceReducer.data.tariff : null
         }
         handleSelectTariff={tariff => this.handleSelectTariff(tariff)}
+        handleClickSelectTariff={this.handleOpenCloseModal}
       />
     );
   };

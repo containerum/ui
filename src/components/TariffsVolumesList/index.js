@@ -64,6 +64,8 @@ const TariffsVolumesList = ({
                       price,
                       pricePerDay
                     });
+                  } else {
+                    console.log('Active');
                   }
                 } else {
                   handleClickSelectTariff();
@@ -81,6 +83,8 @@ const TariffsVolumesList = ({
                       price,
                       pricePerDay
                     });
+                  } else {
+                    console.log('Active');
                   }
                 } else {
                   handleClickSelectTariff();

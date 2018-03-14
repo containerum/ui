@@ -83,7 +83,7 @@ const CreateModal = ({
         </div>
         <div className="modal-body text-left">
           <h4 className="modal-title modal-title-volume" id="modalLabel">
-            New {type}
+            Resize {type}
           </h4>
           <div className="col-md-10 p-0">
             <div className="namespace-plan-block-container hover-action-new hover-always-new">

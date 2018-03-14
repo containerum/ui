@@ -66,7 +66,7 @@ export const fetchResizeNamespace = (
   switch (status) {
     case 202: {
       dispatch(resizeNamespaceSuccess(data, status, config.method, idName));
-      dispatch(push('/'));
+      dispatch(push('/namespaces'));
       break;
     }
     case 401: {

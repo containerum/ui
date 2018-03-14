@@ -114,6 +114,8 @@ export class ResizeVolume extends PureComponent<Props> {
         VolTariffName={this.state.VolTariffName}
         active={getVolumeReducer.data ? getVolumeReducer.data.tariff : null}
         handleSelectTariff={tariff => this.handleSelectTariff(tariff)}
+        handleClickSelectTariff={this.handleOpenCloseModal}
+        isFullDataOfProfile
       />
     );
   };

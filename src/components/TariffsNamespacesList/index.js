@@ -76,6 +76,8 @@ const TariffsNamespacesList = ({
                       price,
                       pricePerDay
                     });
+                  } else {
+                    console.log('Active');
                   }
                 } else {
                   handleClickSelectTariff();
@@ -95,6 +97,8 @@ const TariffsNamespacesList = ({
                       price,
                       pricePerDay
                     });
+                  } else {
+                    console.log('Active');
                   }
                 } else {
                   handleClickSelectTariff();
