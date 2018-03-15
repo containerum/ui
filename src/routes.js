@@ -47,6 +47,7 @@ import CheckEmail from './containers/CheckEmail';
 import SupportPage from './containers/Support';
 import SuccessTicket from './containers/SuccessTicket';
 import AccountPage from './containers/Account';
+import SettingsPage from './containers/Settings';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
 
@@ -211,6 +212,12 @@ export default [
     include: true
     // loadData: (dispatch: Dispatch) =>
     //   Promise.all([dispatch(fetchGetSupportGroupsIfNeeded())])
+  },
+  {
+    path: routerLinks.settings,
+    exact: true,
+    component: SettingsPage,
+    include: true
   },
   {
     path: routerLinks.billing,
