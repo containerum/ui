@@ -7,10 +7,11 @@ import InputControl from '../InputControl';
 import './Profile.css';
 
 type Props = {
-  email: string
+  email: string,
+  name: string
 };
 
-const ProfileInfo = ({ email }: Props) => (
+const ProfileInfo = ({ email, name }: Props) => (
   <div className="block-item" id="profile">
     <div className="block-item__title">Profile</div>
     <form>
@@ -22,6 +23,19 @@ const ProfileInfo = ({ email }: Props) => (
             </label>
           </div>
         </div>
+        {name && (
+          <div className="col-md-5">
+            <InputControl
+              value={name}
+              id="name"
+              type="text"
+              baseClassName="form-group__input-text form-control"
+              baseClassNameLabel="form-group__label form-group__label-always-onfocus"
+              labelText="Name"
+              disabled
+            />
+          </div>
+        )}
         <div className="col-md-5">
           <InputControl
             value={email}
@@ -30,8 +44,6 @@ const ProfileInfo = ({ email }: Props) => (
             baseClassName="form-group__input-text form-control"
             baseClassNameLabel="form-group__label form-group__label-always-onfocus"
             labelText="Email"
-            textHelper=" "
-            baseClassNameHelper="form-group__helper"
             disabled
           />
         </div>

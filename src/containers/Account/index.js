@@ -15,8 +15,6 @@ import type { ReduxState } from '../../types';
 import ProfileInfo from '../../components/ProfileInfo';
 import ProfileSidebar from '../../components/ProfileSidebar';
 import ProfilePassword from './Password';
-import ProfileWebHook from './WebHook';
-import CLIInfo from '../../components/CLIInfo';
 import DeleteAccountInfo from './DeleteAccount';
 import './Account.css';
 
@@ -49,10 +47,11 @@ export class Account extends PureComponent<Props> {
 
     return (
       <div className="content-block-container container container-fluid">
-        <ProfileInfo email={getProfileReducer.data.login} />
+        <ProfileInfo
+          email={getProfileReducer.data.login}
+          name={getProfileReducer.data.data.first_name}
+        />
         <ProfilePassword />
-        <ProfileWebHook />
-        <CLIInfo />
         <DeleteAccountInfo />
       </div>
     );

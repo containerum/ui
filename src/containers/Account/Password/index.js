@@ -134,7 +134,7 @@ export class Password extends PureComponent<Props> {
                       baseClassName="form-group__input-text form-control"
                       baseClassNameLabel={`form-group__label ${currentPassword &&
                         'form-group__label-always-onfocus'}`}
-                      labelText="Confirm new password"
+                      labelText="Current Password"
                       handleChangeInput={e =>
                         this.handleChangeCurrentPassword(e.target.value)
                       }
@@ -166,7 +166,7 @@ export class Password extends PureComponent<Props> {
                       baseClassName="form-group__input-text form-control"
                       baseClassNameLabel={`form-group__label ${repeatPassword &&
                         'form-group__label-always-onfocus'}`}
-                      labelText="Repeat password"
+                      labelText="Confirm new password"
                       handleChangeInput={e =>
                         this.handleChangeRepeatPassword(e.target.value)
                       }
