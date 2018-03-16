@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../types';
@@ -63,7 +63,9 @@ export const fetchLogin = (
       cookie.save('refreshToken', refreshToken, { path: '/' });
       cookie.save('lastTimeToRefresh', Date.parse(new Date()), { path: '/' });
       dispatch(loginSuccess(token));
-      dispatch(push('/dashboard'));
+      if (typeof window !== 'undefined') {
+        window.location.replace('/dashboard');
+      }
       break;
     }
     default: {

@@ -29,7 +29,6 @@ const getProfileFailure = err => ({
 });
 
 export const fetchGetProfile = (
-  idName: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
@@ -66,8 +65,8 @@ export const fetchGetProfile = (
   }
 };
 
-export const fetchGetProfileIfNeeded = (idName: string): ThunkAction => (
+export const fetchGetProfileIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetProfile(idName, axios));
+) => dispatch(fetchGetProfile(axios));

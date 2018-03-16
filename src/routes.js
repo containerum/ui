@@ -2,6 +2,7 @@
 
 import type { Dispatch } from './types';
 import { routerLinks } from './config';
+import { fetchGetProfileIfNeeded } from './actions/profileActions/getProfile';
 import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
 import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
 import { fetchGetNamespaceIfNeeded } from './actions/namespaceActions/getNamespace';
@@ -56,7 +57,9 @@ export default [
     path: routerLinks.index,
     exact: true,
     component: Main,
-    include: true
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.dashboard,
@@ -69,7 +72,8 @@ export default [
         dispatch(fetchGetSolutionsIfNeeded()),
         dispatch(fetchGetCountDeploymentsIfNeeded()),
         dispatch(fetchGetCountServicesIfNeeded()),
-        dispatch(fetchGetCountPodsIfNeeded())
+        dispatch(fetchGetCountPodsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
       ])
   },
   {
@@ -78,21 +82,30 @@ export default [
     component: NamespacesPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetNamespacesIfNeeded())])
+      Promise.all([
+        dispatch(fetchGetNamespacesIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.volumes,
     exact: true,
     component: VolumesPage,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetVolumesIfNeeded())])
+      Promise.all([
+        dispatch(fetchGetVolumesIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.namespace,
     component: NamespacePage,
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
-      Promise.all([dispatch(fetchGetNamespaceIfNeeded(params.idName))])
+      Promise.all([
+        dispatch(fetchGetNamespaceIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.getDeployments,
@@ -100,7 +113,10 @@ export default [
     component: DeploymentsPage,
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
-      Promise.all([dispatch(fetchGetDeploymentsIfNeeded(params.idName))])
+      Promise.all([
+        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.getDeployment,
@@ -109,37 +125,50 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
       Promise.all([
-        dispatch(fetchGetDeploymentIfNeeded(params.idName, params.idDep))
+        dispatch(fetchGetDeploymentIfNeeded(params.idName, params.idDep)),
+        dispatch(fetchGetProfileIfNeeded())
       ])
   },
   {
     path: routerLinks.createDeployment,
     component: CreateDeploymentPage,
-    include: true
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.resizeDeployment,
     component: UpdateDeploymentPage,
-    include: true
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.getPods,
     component: PodsPage,
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
-      Promise.all([dispatch(fetchGetPodsIfNeeded(params.idName, params.idDep))])
+      Promise.all([
+        dispatch(fetchGetPodsIfNeeded(params.idName, params.idDep)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.getPod,
     component: PodPage,
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
-      Promise.all([dispatch(fetchGetPodIfNeeded(params.idName, params.idDep))])
+      Promise.all([
+        dispatch(fetchGetPodIfNeeded(params.idName, params.idDep)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.getPodLogs,
     component: PodLogsPage,
-    include: true
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.getServices,
@@ -147,7 +176,10 @@ export default [
     component: ServicesPage,
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
-      Promise.all([dispatch(fetchGetServicesIfNeeded(params.idName))])
+      Promise.all([
+        dispatch(fetchGetServicesIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.getService,
@@ -156,13 +188,16 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
       Promise.all([
-        dispatch(fetchGetServiceIfNeeded(params.idName, params.idSrv))
+        dispatch(fetchGetServiceIfNeeded(params.idName, params.idSrv)),
+        dispatch(fetchGetProfileIfNeeded())
       ])
   },
   {
     path: routerLinks.createService,
     component: CreateServicePage,
-    include: true
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.resizeService,
@@ -170,7 +205,8 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
       Promise.all([
-        dispatch(fetchGetServiceIfNeeded(params.idName, params.idSrv))
+        dispatch(fetchGetServiceIfNeeded(params.idName, params.idSrv)),
+        dispatch(fetchGetProfileIfNeeded())
       ])
   },
   {
@@ -179,7 +215,10 @@ export default [
     component: CreateNamespacePage,
     include: true,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetNamespacesTariffsIfNeeded())])
+      Promise.all([
+        dispatch(fetchGetNamespacesTariffsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.resizeNamespace,
@@ -187,7 +226,10 @@ export default [
     component: ResizeNamespacePage,
     include: true,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetNamespacesTariffsIfNeeded())])
+      Promise.all([
+        dispatch(fetchGetNamespacesTariffsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.createVolume,
@@ -195,7 +237,10 @@ export default [
     component: CreateVolumePage,
     include: true,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetVolumesTariffsIfNeeded())])
+      Promise.all([
+        dispatch(fetchGetVolumesTariffsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.resizeVolume,
@@ -203,29 +248,34 @@ export default [
     component: ResizeVolumePage,
     include: true,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetVolumesTariffsIfNeeded())])
+      Promise.all([
+        dispatch(fetchGetVolumesTariffsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.account,
     exact: true,
     component: AccountPage,
-    include: true
-    // loadData: (dispatch: Dispatch) =>
-    //   Promise.all([dispatch(fetchGetSupportGroupsIfNeeded())])
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.settings,
     exact: true,
     component: SettingsPage,
-    include: true
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.billing,
     exact: true,
     component: BillingPage,
-    include: true
-    // loadData: (dispatch: Dispatch) =>
-    //   Promise.all([dispatch(fetchGetSupportGroupsIfNeeded())])
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.support,
@@ -233,13 +283,18 @@ export default [
     component: SupportPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetSupportGroupsIfNeeded())])
+      Promise.all([
+        dispatch(fetchGetSupportGroupsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.successTicket,
     exact: true,
     component: SuccessTicket,
-    include: true
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.login,
