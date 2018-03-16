@@ -29,6 +29,7 @@ module.exports = {
   routerLinks: {
     index: '/',
     dashboard: '/dashboard',
+    solutions: '/solutions',
     login: '/login',
     signUp: '/signUp',
     confirmEmail: '/confirmEmail',
@@ -83,13 +84,13 @@ module.exports = {
   },
   externalLinks: {
     documentation: 'https://containerum.com/docs/about',
-    fastDeploy: 'https://containerum.com/docs/about',
+    fastDeploy: 'https://containerum.com/how-to',
     helloWorld: 'https://containerum.com/docs/about',
     solutions: 'https://github.com/containerum',
     blog: 'https://blog.containerum.com/',
     startGuide: 'https://containerum.com/docs/start-guide',
     releasesChkit: 'https://github.com/containerum/chkit/releases/latest',
-    termsOfService: 'https://containerum.com',
-    privacyPolicy: 'https://containerum.com'
+    termsOfService: 'https://containerum.com/terms',
+    privacyPolicy: 'https://containerum.com/policy'
   }
 };
