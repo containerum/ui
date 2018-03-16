@@ -34,40 +34,45 @@ const createDomainFailure = (err, status, idSrv) => ({
 
 export const fetchCreateDomain = (
   idName: string,
-  dataSrv: Object,
+  dataDomain: Object,
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
+  const currentData = {
+    name: `${dataDomain.domainName}.containerum.io`,
+    owner: dataDomain.uid,
+    rules: [
+      {
+        host: `${dataDomain.domainName}.containerum.io`,
+        path: [
+          {
+            path: `/${dataDomain.domainPath}`,
+            service_name: dataDomain.currentService.name,
+            service_port: dataDomain.currentPort.port
+          }
+        ]
+      }
+    ]
+  };
+  if (dataDomain.isEnabledSSL) {
+    currentData.rules[0].tls_secret = dataDomain.currentService.name;
+  }
+  console.log(currentData);
   dispatch(createDomainRequest());
 
   let idSrv = idName;
   const response = await axios.post(
-    `${URL}/namespaces/${idName}/ingresses`,
-    {
-      name: 'myingress2',
-      owner: '0efff9af-bd0c-4811-9ba5-56bc520ff41f',
-      rules: [
-        {
-          host: 'my.containerum.io',
-          tls_secret: 'mysecret',
-          path: [
-            {
-              path: '/',
-              service_name: 'solution-pg-svc-stjjq',
-              service_port: 5432
-            }
-          ]
-        }
-      ]
-    },
+    `${URL}/namespaces/f954be5f-53c9-458f-a7b8-41ed00938546/ingresses`,
+    currentData,
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
-        'Access-Control-Allow-Origin': '*'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }

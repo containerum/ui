@@ -16,6 +16,7 @@ import {
   GET_SERVICES_SUCCESS
 } from '../../constants/servicesConstants/getServices';
 // import { CREATE_DOMAIN_SUCCESS } from '../../constants/serviceConstants/createDomain';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
 import CreateDomainCard from '../../components/CreateDomainCard';
@@ -27,6 +28,7 @@ import Notification from '../Notification';
 type Props = {
   getServicesReducer: Object,
   createDomainReducer: Object,
+  getProfileReducer: Object,
   match: Object,
   // history: Object,
   fetchGetServicesIfNeeded: (idName: string) => void,
@@ -38,8 +40,14 @@ export class CreateDomain extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      currentService: '',
-      serviceList: []
+      uid: null,
+      currentService: undefined,
+      servicesList: [],
+      currentPort: undefined,
+      portsList: [],
+      domainName: '',
+      domainPath: '',
+      isEnabledSSL: false
     };
   }
   componentDidMount() {
@@ -53,25 +61,78 @@ export class CreateDomain extends PureComponent<Props> {
       nextProps.getServicesReducer.readyStatus === GET_SERVICES_SUCCESS
     ) {
       if (nextProps.getServicesReducer.data[0]) {
+        const servicesList = nextProps.getServicesReducer.data.filter(
+          service =>
+            (service.labels.external === 'true' &&
+              (service.ports.length === 1 &&
+                service.ports[0].protocol !== 'UDP')) ||
+            (service.labels.external === 'true' &&
+              (service.ports.length >= 1 &&
+                service.ports[0].protocol === 'TCP'))
+        );
         this.setState({
           ...this.state,
-          currentService: nextProps.getServicesReducer.data[0].name,
-          serviceList: nextProps.getServicesReducer.data
+          currentService: servicesList[0],
+          currentPort: servicesList[0].ports[0],
+          portsList: servicesList[0].ports,
+          servicesList
         });
       }
     }
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        uid: nextProps.getProfileReducer.data.id
+      });
+    }
   }
+  handleChangeSelectService = value => {
+    const currentService = this.state.servicesList.filter(
+      service => service.name === value
+    );
+    this.setState({
+      ...this.state,
+      currentService: currentService[0],
+      currentPort: currentService[0].ports[0],
+      portsList: currentService[0].ports
+    });
+  };
+  handleChangeSelectPort = value => {
+    console.log(value);
+    // const currentPort = this.state.servicesList.filter(
+    //   service => service.name === value
+    // );
+    // this.setState({
+    //   ...this.state,
+    //   currentService: currentService[0],
+    //   currentPort: currentService[0].ports[0],
+    //   portsList: currentService[0].ports
+    // });
+    // this.setState({
+    //   ...this.state,
+    //   currentPort: value
+    // });
+  };
+  handleChangeInput = (value, type) => {
+    this.setState({
+      ...this.state,
+      [`${type}`]: value
+    });
+  };
+  handleChangeCheckBox = () => {
+    this.setState({
+      ...this.state,
+      isEnabledSSL: !this.state.isEnabledSSL
+    });
+  };
   handleSubmitCreateDomain = e => {
     e.preventDefault();
     const { fetchCreateDomainIfNeeded, match } = this.props;
-    console.log('Hi', match.params.idName, fetchCreateDomainIfNeeded);
-    // fetchCreateDomainIfNeeded(match.params.idName, this.state);
-  };
-  handleChange = e => {
-    this.setState({
-      ...this.state,
-      currentService: e.target.value
-    });
+    fetchCreateDomainIfNeeded(match.params.idName, this.state);
   };
   renderCreateDomain = () => {
     const { getServicesReducer } = this.props;
@@ -102,18 +163,36 @@ export class CreateDomain extends PureComponent<Props> {
       return <p>Oops, Failed to load data of Services!</p>;
     }
 
-    const { currentService, serviceList } = this.state;
+    const {
+      currentService,
+      servicesList,
+      currentPort,
+      portsList,
+      domainName,
+      domainPath,
+      isEnabledSSL
+    } = this.state;
     return (
       <CreateDomainCard
         currentService={currentService}
-        serviceList={serviceList}
+        servicesList={servicesList}
+        currentPort={currentPort}
+        portsList={portsList}
+        domainName={domainName}
+        domainPath={domainPath}
+        isEnabledSSL={isEnabledSSL}
+        handleChangeSelectService={value =>
+          this.handleChangeSelectService(value)
+        }
+        handleChangeSelectPort={value => this.handleChangeSelectPort(value)}
+        handleChangeInput={(value, type) => this.handleChangeInput(value, type)}
+        handleChangeCheckBox={this.handleChangeCheckBox}
       />
     );
   };
 
   render() {
     const { match, createDomainReducer } = this.props;
-    // console.log(this.state);
     return (
       <div>
         <Helmet title={`Create Domain in ${match.params.idSrv}`} />
@@ -139,10 +218,7 @@ export class CreateDomain extends PureComponent<Props> {
                   <LoadButton
                     type="submit"
                     buttonText="Create domain"
-                    isFetching={
-                      createDomainReducer.isFetching ||
-                      createDomainReducer.isFetching
-                    }
+                    isFetching={createDomainReducer.isFetching}
                     baseClassButton="btnDeployment btnService"
                   />
                 </form>
@@ -156,9 +232,14 @@ export class CreateDomain extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getServicesReducer, createDomainReducer }: ReduxState) => ({
+  ({
     getServicesReducer,
-    createDomainReducer
+    createDomainReducer,
+    getProfileReducer
+  }: ReduxState) => ({
+    getServicesReducer,
+    createDomainReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetServicesIfNeeded: (idName: string) =>

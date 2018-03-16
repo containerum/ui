@@ -1,16 +1,16 @@
 module.exports = {
   host: process.env.NODE_HOST || 'localhost', // Define your host from 'package.json'
   port: process.env.PORT,
-  webApi: process.env.WEB_API || 'https://web.api.containerum.io:5000',
-  // webApi: process.env.WEB_API || 'http://192.168.88.200:5000',
-  webApiLoginGroup:
-    process.env.WEB_API_OTHER || 'https://web.api.containerum.io:5000',
-  // webApiLoginGroup: process.env.WEB_API_OTHER || 'http://192.168.88.200:5000',
-  webApiLogin: process.env.WEB_API_LOGIN || 'https://api.containerum.io:8082',
-  // webApiLogin: process.env.WEB_API_LOGIN || 'https://192.168.88.200:8082',
+  // webApi: process.env.WEB_API || 'https://web.api.containerum.io:5000',
+  webApi: process.env.WEB_API || 'http://192.168.88.200:5000',
+  // webApiLoginGroup:
+  // process.env.WEB_API_OTHER || 'https://web.api.containerum.io:5000',
+  webApiLoginGroup: process.env.WEB_API_OTHER || 'http://192.168.88.200:5000',
+  // webApiLogin: process.env.WEB_API_LOGIN || 'https://api.containerum.io:8082',
+  webApiLogin: process.env.WEB_API_LOGIN || 'https://192.168.88.200:8082',
   // webApiLogin: process.env.WEB_API_LOGIN || 'https://192.168.88.59:8082',
-  wsApi: process.env.WS_API || 'wss://api.containerum.io:8082',
-  // wsApi: process.env.WS_API || 'wss://192.168.88.200:8082',
+  // wsApi: process.env.WS_API || 'wss://api.containerum.io:8082',
+  wsApi: process.env.WS_API || 'wss://192.168.88.200:8082',
   // wsApi: process.env.WS_API || 'wss://192.168.88.59:8082',
   appRecaptcha:
     process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS',

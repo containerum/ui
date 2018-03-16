@@ -526,13 +526,27 @@ body .tooltip > .tooltip-inner {
     padding-bottom: 4px;
 }
 
-.customAlwaysVisiblePlaceholder {
+.customInputDomain {
+  padding-right: 140px!important;
+}
+
+.customAlwaysVisiblePlaceholder:after {
   content: '.containerum.com';
   position: absolute;
-  right: -140px;
+  right: 5px;
   top: 27px;
   font-weight: 300;
-  color: #333333;
+  color: #a7a7a7;
+  font-size: 16px;
+}
+
+.customAlwaysVisibleInputPathPlaceholder:before {
+  content: '/';
+  position: absolute;
+  left: -10px;
+  top: 25px;
+  font-weight: 300;
+  color: #a7a7a7;
   font-size: 16px;
 }
 
@@ -678,6 +692,14 @@ body .tooltip > .tooltip-inner {
     -moz-appearance: none;
     appearance: none;
     outline: 0;
+}
+
+.selectCustom:hover {
+  cursor: pointer;
+}
+
+.selectCustom:disabled {
+  cursor: not-allowed;
 }
 
 .select-wrapper select::-ms-expand {
