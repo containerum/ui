@@ -526,6 +526,16 @@ body .tooltip > .tooltip-inner {
     padding-bottom: 4px;
 }
 
+.customAlwaysVisiblePlaceholder {
+  content: '.containerum.com';
+  position: absolute;
+  right: -140px;
+  top: 27px;
+  font-weight: 300;
+  color: #333333;
+  font-size: 16px;
+}
+
 .customInput:focus {
     border: none;
 }
@@ -720,7 +730,7 @@ body .tooltip > .tooltip-inner {
     top: 8.5px;
 }
 
-.btnDeployment {
+.btnDeployment, .btnTransparency {
     display: block;
     width: 100%;
     font-size: 20px;
@@ -736,11 +746,24 @@ body .tooltip > .tooltip-inner {
     text-transform: uppercase;
 }
 
-.btnDeployment:focus {
+.btnTransparency {
+  background-color: transparent;
+  border: 2px solid #29abe2;
+  color: #29abe2;
+  padding: 9px 0;
+}
+
+.btnDeployment:focus, .btnTransparency:focus {
     outline: 0;
 }
 
-.btnDeployment:active {
+.btnDeployment:hover, .btnTransparency:hover {
+  color: #fff;
+  background-color: #1d87b3;
+  border-color: #1d87b3;
+}
+
+.btnDeployment:active, .btnTransparency:focus {
     background-color: #1d87b3;
 }
 

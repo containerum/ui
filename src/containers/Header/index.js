@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
-// import _ from 'lodash/fp';
 
 import * as actionLogout from '../../actions/logout';
 import * as actionGetProfile from '../../actions/profileActions/getProfile';

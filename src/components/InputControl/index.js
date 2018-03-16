@@ -21,7 +21,8 @@ type Props = {
   placeholder: ?string,
   min: ?number,
   max: ?number,
-  subPath: ?boolean
+  subPath: ?boolean,
+  alwaysVisiblePlaceholder: ?string
 };
 const InputEmail = ({
   handleChangeInput,
@@ -42,7 +43,8 @@ const InputEmail = ({
   labelText,
   min,
   max,
-  subPath
+  subPath,
+  alwaysVisiblePlaceholder
 }: Props) => (
   <div className={`form-group ${!valid && 'has-error'}`}>
     {subPath && <span className="inputSubpathSign">/</span>}
@@ -60,6 +62,7 @@ const InputEmail = ({
       min={min}
       max={max}
     />
+    {alwaysVisiblePlaceholder && <span className={alwaysVisiblePlaceholder} />}
     {labelText && (
       <label className={baseClassNameLabel} htmlFor={id} id={labelId}>
         {labelText}

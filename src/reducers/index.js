@@ -32,6 +32,7 @@ import getServiceReducer from './serviceReducers/getService';
 import deleteServiceReducer from './serviceReducers/deleteService';
 import createInternalServiceReducer from './serviceReducers/createInternalService';
 import createExternalServiceReducer from './serviceReducers/createExternalService';
+import createDomainReducer from './serviceReducers/createDomain';
 import updateInternalServiceReducer from './serviceReducers/updateInternalService';
 import updateExternalServiceReducer from './serviceReducers/updateExternalService';
 import getReleasesGithubReducer from './getReleasesGithubReducer';
@@ -112,6 +113,7 @@ const reducers = {
   deleteAccountReducer,
   createInternalServiceReducer,
   createExternalServiceReducer,
+  createDomainReducer,
   updateInternalServiceReducer,
   updateExternalServiceReducer,
   getCountDeploymentsReducer,

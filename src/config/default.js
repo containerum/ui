@@ -63,7 +63,12 @@ module.exports = {
     getServices: '/namespaces/:idName/services',
     getServicesLink: (idName: string) => `/namespaces/${idName}/services`,
     createService: '/namespace/:idName/createService',
+    createDomain: '/namespace/:idName/service/:idSrv/createDomain',
     createServiceLink: (idName: string) => `/namespace/${idName}/createService`,
+    createdExternalServiceSuccessful:
+      '/namespace/:idName/createdService/:idSrv',
+    createdExternalServiceSuccessfulLink: (idName: string, idSrv: string) =>
+      `/namespace/${idName}/createdService/${idSrv}`,
     getService: '/namespace/:idName/services/:idSrv',
     getServiceLink: (idName: string, idSrv: string) =>
       `/namespace/${idName}/services/${idSrv}/ports`,
