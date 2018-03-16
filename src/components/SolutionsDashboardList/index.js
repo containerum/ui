@@ -6,7 +6,9 @@ import _ from 'lodash/fp';
 import redis from '../../images/redis_logo.png';
 import magento from '../../images/magento-logo.png';
 import mariadb from '../../images/mariadb.svg';
+import redmineMariadb from '../../images/redmine-mariadb.svg';
 import postgresql from '../../images/postgresql-logo.svg';
+import redminePG from '../../images/redmine-pg.svg';
 import grafana from '../../images/grafana.png';
 import rabbitmq from '../../images/rabbitmq-manager.png';
 import webpack from '../../images/webpack-logo.png';
@@ -20,10 +22,13 @@ const SolutionsDashboardList = ({ data }: Props) => (
     {data.map(solution => {
       const { Name: name, URL: url } = solution;
       let srcLogo = redis;
+      let logoMaxHeight = null;
       if (name.toLowerCase().indexOf('redmine-postgresql-solution') + 1) {
-        srcLogo = postgresql;
+        srcLogo = redminePG;
+        logoMaxHeight = '85px';
       } else if (name.toLowerCase().indexOf('redmine-mariadb-solution') + 1) {
-        srcLogo = mariadb;
+        srcLogo = redmineMariadb;
+        logoMaxHeight = '85px';
       } else if (name.toLowerCase().indexOf('magento-solution') + 1) {
         srcLogo = magento;
       } else if (name.toLowerCase().indexOf('mariadb-solution') + 1) {
@@ -43,7 +48,11 @@ const SolutionsDashboardList = ({ data }: Props) => (
           className="solution-container pre-solution-container"
         >
           <div className="solution-container-img-block pre-solution-container-img-block">
-            <img src={srcLogo} alt={name} />
+            <img
+              src={srcLogo}
+              alt={name}
+              style={{ maxHeight: logoMaxHeight }}
+            />
           </div>
           <div className="pre-solution-container-info">{name}</div>
           <a

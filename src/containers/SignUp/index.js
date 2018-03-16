@@ -107,7 +107,7 @@ class SignUp extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Sign Up" />
-        <div className="window">
+        <div className="window windowSignUp">
           <div className="form">
             <div className="login-block">
               <NavLink

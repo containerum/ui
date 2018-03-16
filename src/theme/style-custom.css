@@ -910,7 +910,7 @@ body .tooltip > .tooltip-inner {
 }
 
 .content-block-volume-header {
-  height: 109px;
+  height: 115px;
   border-bottom: 1px solid #eaeaea;
 }
 
@@ -926,7 +926,7 @@ body .tooltip > .tooltip-inner {
 }
 
 .volume-footer-header {
-  font-size: 20px;
+  font-size: 18px;
   text-align: left;
   text-transform: uppercase;
   margin-bottom: 7px;
