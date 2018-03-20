@@ -60,6 +60,7 @@ import getCountDeploymentsReducer from './statisticsReducers/getCountDeployments
 import getCountServicesReducer from './statisticsReducers/getCountServices';
 import getCountPodsReducer from './statisticsReducers/getCountPods';
 import getSolutionsReducer from './solutionsReducers/getSolutions';
+import getSolutionReducer from './solutionReducers/getSolution';
 
 const reducers = {
   home,
@@ -118,6 +119,7 @@ const reducers = {
   getCountServicesReducer,
   getCountPodsReducer,
   getSolutionsReducer,
+  getSolutionReducer,
   router,
   loadingBar: loadingBarReducer
 };

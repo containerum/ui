@@ -107,7 +107,7 @@ export class Dashboard extends PureComponent<Props> {
     );
   };
   renderSolutionsList = () => {
-    const { getSolutionsReducer } = this.props;
+    const { getSolutionsReducer, history } = this.props;
     if (
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
@@ -129,9 +129,14 @@ export class Dashboard extends PureComponent<Props> {
       );
     }
     if (getSolutionsReducer.readyStatus === GET_SOLUTIONS_FAILURE) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Solutions!</p>;
     }
-    return <SolutionsDashboardList data={getSolutionsReducer.data} />;
+    return (
+      <SolutionsDashboardList
+        data={getSolutionsReducer.data}
+        history={history}
+      />
+    );
   };
   renderCountDeploymentsInfo = () => {
     const { getCountDeploymentsReducer } = this.props;

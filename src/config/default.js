@@ -30,6 +30,8 @@ module.exports = {
     index: '/',
     dashboard: '/dashboard',
     solutions: '/solutions',
+    solution: '/solution/:idSol',
+    solutionLink: (idSol: string) => `/solution/${idSol}`,
     login: '/login',
     signUp: '/signUp',
     confirmEmail: '/confirmEmail',

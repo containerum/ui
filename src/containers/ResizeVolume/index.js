@@ -105,7 +105,7 @@ export class ResizeVolume extends PureComponent<Props> {
       getVolumesTariffsReducer.readyStatus === GET_VOLUMES_TARIFFS_FAILURE ||
       getVolumeReducer.readyStatus === GET_VOLUME_FAILURE
     ) {
-      return <p>Oops, Failed to load data of VOL!</p>;
+      return <p>Oops, Failed to load data of Volume!</p>;
     }
 
     return (

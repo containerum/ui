@@ -7,30 +7,67 @@ import type { Connector } from 'react-redux';
 // import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
 
-import type { Dispatch, ReduxState } from '../../types';
+import type {
+  Dispatch,
+  Namespaces as NamespacesType,
+  ReduxState
+} from '../../types';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
+import * as actionRunSolutions from '../../actions/solutionActions/runSolution';
+import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
   GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
+import { GET_NAMESPACES_SUCCESS } from '../../constants/namespacesConstants/getNamespaces';
 import SolutionsList from '../../components/SolutionsList';
 
 type Props = {
-  // history: Object,
+  history: Object,
   getSolutionsReducer: Object,
-  fetchGetSolutionsIfNeeded: () => void
+  fetchGetSolutionsIfNeeded: () => void,
+  getNamespacesReducer: NamespacesType,
+  fetchGetNamespacesIfNeeded: () => void
 };
 
 // Export this for unit testing more easily
 export class Solutions extends PureComponent<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      idName: null,
+      isOpened: false
+    };
+  }
   componentDidMount() {
-    const { fetchGetSolutionsIfNeeded } = this.props;
+    const {
+      fetchGetSolutionsIfNeeded,
+      fetchGetNamespacesIfNeeded,
+      getNamespacesReducer
+    } = this.props;
+    if (getNamespacesReducer.readyStatus !== GET_NAMESPACES_SUCCESS) {
+      fetchGetNamespacesIfNeeded();
+    }
     fetchGetSolutionsIfNeeded();
+  }
+  componentWillUpdate(nextProps) {
+    if (
+      this.props.getNamespacesReducer.readyStatus !==
+        nextProps.getNamespacesReducer.readyStatus &&
+      nextProps.getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        idName: nextProps.getNamespacesReducer.data.length
+          ? nextProps.getNamespacesReducer.data[0]
+          : null
+      });
+    }
   }
 
   renderSolutionsList = () => {
-    const { getSolutionsReducer } = this.props;
+    const { getSolutionsReducer, history } = this.props;
     if (
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
@@ -52,9 +89,9 @@ export class Solutions extends PureComponent<Props> {
       );
     }
     if (getSolutionsReducer.readyStatus === GET_SOLUTIONS_FAILURE) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Solutions!</p>;
     }
-    return <SolutionsList data={getSolutionsReducer.data} />;
+    return <SolutionsList data={getSolutionsReducer.data} history={history} />;
   };
 
   render() {
@@ -70,12 +107,17 @@ export class Solutions extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getSolutionsReducer }: ReduxState) => ({
-    getSolutionsReducer
+  ({ getSolutionsReducer, getNamespacesReducer }: ReduxState) => ({
+    getSolutionsReducer,
+    getNamespacesReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSolutionsIfNeeded: () =>
-      dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded())
+      dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
+    fetchRunSolutionsIfNeeded: (idName: string, idSol: string) =>
+      dispatch(actionRunSolutions.fetchRunSolutionsIfNeeded(idName, idSol)),
+    fetchGetNamespacesIfNeeded: () =>
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded())
   })
 );
 
