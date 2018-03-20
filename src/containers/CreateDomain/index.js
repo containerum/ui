@@ -102,20 +102,13 @@ export class CreateDomain extends PureComponent<Props> {
     });
   };
   handleChangeSelectPort = value => {
-    console.log(value);
-    // const currentPort = this.state.servicesList.filter(
-    //   service => service.name === value
-    // );
-    // this.setState({
-    //   ...this.state,
-    //   currentService: currentService[0],
-    //   currentPort: currentService[0].ports[0],
-    //   portsList: currentService[0].ports
-    // });
-    // this.setState({
-    //   ...this.state,
-    //   currentPort: value
-    // });
+    const currentPort = this.state.portsList.filter(
+      port => port.targetPort === parseInt(value, 10)
+    );
+    this.setState({
+      ...this.state,
+      currentPort: currentPort[0]
+    });
   };
   handleChangeInput = (value, type) => {
     this.setState({
@@ -193,6 +186,7 @@ export class CreateDomain extends PureComponent<Props> {
 
   render() {
     const { match, createDomainReducer } = this.props;
+    // console.log(this.state);
     return (
       <div>
         <Helmet title={`Create Domain in ${match.params.idSrv}`} />

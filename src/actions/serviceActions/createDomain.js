@@ -9,7 +9,7 @@ import {
   CREATE_DOMAIN_SUCCESS,
   CREATE_DOMAIN_FAILURE
 } from '../../constants/serviceConstants/createDomain';
-import { webApiLogin } from '../../config';
+import { webApiLogin, routerLinks } from '../../config';
 
 const createDomainRequest = () => ({
   type: CREATE_DOMAIN_REQUESTING,
@@ -53,7 +53,7 @@ export const fetchCreateDomain = (
           {
             path: `/${dataDomain.domainPath}`,
             service_name: dataDomain.currentService.name,
-            service_port: dataDomain.currentPort.port
+            service_port: dataDomain.currentPort.targetPort
           }
         ]
       }
@@ -62,12 +62,12 @@ export const fetchCreateDomain = (
   if (dataDomain.isEnabledSSL) {
     currentData.rules[0].tls_secret = dataDomain.currentService.name;
   }
-  console.log(currentData);
+  // console.log(currentData);
   dispatch(createDomainRequest());
 
   let idSrv = idName;
   const response = await axios.post(
-    `${URL}/namespaces/f954be5f-53c9-458f-a7b8-41ed00938546/ingresses`,
+    `${URL}/namespaces/${idName}/ingresses`,
     currentData,
     {
       headers: {
@@ -84,6 +84,7 @@ export const fetchCreateDomain = (
       // idSrv = `Domain ${data.name} for ${intObj.deployment_name}`;
       idSrv = 'Domain';
       dispatch(createDomainSuccess(data, status, idSrv));
+      dispatch(push(routerLinks.getServicesLink(idName)));
       break;
     }
     case 401: {

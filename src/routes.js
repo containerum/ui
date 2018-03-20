@@ -21,6 +21,7 @@ import { fetchGetCountPodsIfNeeded } from './actions/statisticsActions/getCountP
 import { fetchGetSolutionsIfNeeded } from './actions/solutionsActions/getSolutions';
 import Main from './containers/Main';
 import DashboardPage from './containers/Dashboard';
+import SolutionsPage from './containers/Solutions';
 import NamespacesPage from './containers/Namespaces';
 import VolumesPage from './containers/Volumes';
 import NamespacePage from './containers/Namespace';
@@ -50,6 +51,7 @@ import CheckEmail from './containers/CheckEmail';
 import SupportPage from './containers/Support';
 import SuccessTicket from './containers/SuccessTicket';
 import AccountPage from './containers/Account';
+import SettingsPage from './containers/Settings';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
 
@@ -74,6 +76,17 @@ export default [
         dispatch(fetchGetCountDeploymentsIfNeeded()),
         dispatch(fetchGetCountServicesIfNeeded()),
         dispatch(fetchGetCountPodsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  {
+    path: routerLinks.solutions,
+    exact: true,
+    component: SolutionsPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([
+        dispatch(fetchGetSolutionsIfNeeded()),
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
@@ -272,6 +285,14 @@ export default [
     path: routerLinks.account,
     exact: true,
     component: AccountPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.settings,
+    exact: true,
+    component: SettingsPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])

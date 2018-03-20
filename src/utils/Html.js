@@ -3,10 +3,84 @@ import type { Element } from 'react';
 import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 import _ from 'lodash/fp';
+import cookie from 'react-cookies';
 
 import type { Store } from '../types';
 
 type Props = { store: Store, htmlContent?: string };
+
+const getAnalytics = () =>
+  `
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-93921188-2', 'auto');
+      ga('send', 'pageview');
+      ga('require', 'linker');
+      ga('linker:autoLink', ['containerum.com']);
+    </script>
+    <!-- /End Google Analytics -->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+      (function (d, w, c) {
+      (w[c] = w[c] || []).push(function() {
+        try {
+          w.yaCounter44701450 = new Ya.Metrika({
+            id:44701450,
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+          });
+        } catch(e) { }
+      });
+
+      var n = d.getElementsByTagName("script")[0],
+      s = d.createElement("script"),
+      f = function () { n.parentNode.insertBefore(s, n); };
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+      if (w.opera == "[object Opera]") {
+      d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/44701450" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+  `;
+
+const emailObject = email =>
+  email ? `{ op: 'update_or_create', key: '$name', value: '${email}' }` : '';
+const getCarrotquest = (userClient, email) =>
+  `
+    <script type="text/javascript">
+      (function(){
+        function Build(name, args){return function(){window.carrotquestasync.push(name, arguments);} }
+        if (typeof carrotquest === 'undefined') {
+          var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;
+          s.src = '//cdn.carrotquest.io/api.min.js';
+          var x = document.getElementsByTagName('head')[0]; x.appendChild(s);
+          window.carrotquest = {}; window.carrotquestasync = []; carrotquest.settings = {};
+          var m = ['connect', 'track', 'identify', 'auth', 'open', 'onReady', 'addCallback', 'removeCallback', 'trackMessageInteraction'];
+          for (var i = 0; i < m.length; i++) carrotquest[m[i]] = Build(m[i]);
+        }
+      })();
+      carrotquest.connect('15308-9fb36e7c20baba83e4b25000f8');
+      carrotquest.identify([
+            {op: 'update_or_create', key: 'User-Client', value: "${userClient}"},
+            {op: 'update_or_create', key: 'User-Agent', value: window.navigator.userAgent},
+            {op: 'update_or_create', key: 'User-Browser', value: window.navigator.appCodeName},
+            {op: 'update_or_create', key: 'Platform', value: window.navigator.platform},
+            ${emailObject(email)}
+          ]);
+    </script>
+  `;
 
 const Html = ({ store, htmlContent }: Props): Element<'html'> => {
   // Should be declared after "renderToStaticMarkup()" of "../server.js" or it won't work
@@ -15,6 +89,9 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
   const { lang, ...rest } = attrs || {};
   const assets = webpackIsomorphicTools.assets();
 
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const getProfileReducer = store.getState().getProfileReducer.data;
+  const email = getProfileReducer ? getProfileReducer.login : null;
   return (
     <html {...rest} lang={lang || 'en'}>
       <head>
@@ -49,12 +126,10 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
           href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap-grid.min.css"
         />
         <script src="https://www.google.com/recaptcha/api.js" async defer />
-
         {head.title.toComponent()}
         {head.base.toComponent()}
         {head.meta.toComponent()}
         {head.link.toComponent()}
-
         {/* Styles will be presented in production with webpack extract text plugin */}
         {_.keys(assets.styles).map(style => (
           <link
@@ -86,6 +161,12 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
             }}
           />
         ) : null}
+        <div
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: email ? getCarrotquest(browser, email) : null
+          }}
+        />
       </head>
       <body>
         <div
@@ -116,6 +197,10 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
           src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
           integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
           crossOrigin="anonymous"
+        />
+        <div
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: getAnalytics() }}
         />
       </body>
     </html>

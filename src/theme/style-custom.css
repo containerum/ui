@@ -528,12 +528,13 @@ body .tooltip > .tooltip-inner {
 
 .customInputDomain {
   padding-right: 140px!important;
+  direction: rtl;
 }
 
 .customAlwaysVisiblePlaceholder:after {
   content: '.containerum.com';
   position: absolute;
-  right: 5px;
+  right: 8px;
   top: 27px;
   font-weight: 300;
   color: #a7a7a7;
@@ -955,7 +956,7 @@ body .tooltip > .tooltip-inner {
 }
 
 .content-block-volume-header {
-  height: 109px;
+  height: 115px;
   border-bottom: 1px solid #eaeaea;
 }
 
@@ -971,7 +972,7 @@ body .tooltip > .tooltip-inner {
 }
 
 .volume-footer-header {
-  font-size: 20px;
+  font-size: 18px;
   text-align: left;
   text-transform: uppercase;
   margin-bottom: 7px;
@@ -1650,6 +1651,39 @@ body .tooltip > .tooltip-inner {
   padding-left: 30px;
 }
 
+.dashboard-table .td-1-domains {
+  width: 60%;
+  padding-left: 0;
+}
+
+.dashboard-table .td-2-domains {
+  width: 15%;
+  padding-left: 0;
+}
+
+.dashboard-table .td-3-domains {
+  width: 18%;
+  padding-left: 0;
+}
+
+.dashboard-table .td-4-domains {
+  width: 7%;
+}
+
+.dashboard-table tbody .td-2-domains {
+  width: 15%;
+  padding-left: 7px;
+}
+
+.dashboard-table tbody .td-3-domains {
+  width: 18%;
+  padding-left: 7px;
+}
+
+.dashboard-table .domains{
+  color: #29abe2;
+}
+
 @-moz-document url-prefix() {
   .dashboard-table .td-2 {
     width: 333px;
@@ -1662,6 +1696,32 @@ body .tooltip > .tooltip-inner {
   }
   .dashboard-table .td-7 {
     padding-left: 70px;
+  }
+
+  .news-wrapper::-webkit-scrollbar-track,
+  .dashboard-table tbody::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    background-color: #FFF;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+
+  .news-wrapper::-webkit-scrollbar,
+  .dashboard-table tbody::-webkit-scrollbar {
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #fff;
+    width: 4px;
+  }
+
+  .news-wrapper::-webkit-scrollbar-thumb,
+  .dashboard-table tbody::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: 0 20px 32px rgba(13, 13, 54, 0.11);
+    box-shadow: 0 20px 32px rgba(13, 13, 54, 0.11);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #EAEAEA;
+    width: 3px;
   }
 }
 

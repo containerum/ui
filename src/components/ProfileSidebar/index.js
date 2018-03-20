@@ -15,7 +15,7 @@ const ProfileSidebar = ({ type }: Props) => (
     <li>
       <div className="nav-root-item">Account</div>
       <Scrollspy
-        items={['profile', 'password', 'webhooks', 'cli', 'delete-account']}
+        items={['profile', 'password', 'delete-account']}
         style={{
           padding: '20px 0 0 20px'
         }}
@@ -50,38 +50,6 @@ const ProfileSidebar = ({ type }: Props) => (
           ) : (
             <HashLink to="/account#password" className="nav-link">
               Password
-            </HashLink>
-          )}
-        </li>
-        <li className="nav-item">
-          {type === 'account' ? (
-            <div
-              className="nav-link"
-              onClick={() => scrollById('webhooks')}
-              onKeyPress={() => scrollById('webhooks')}
-              role="presentation"
-            >
-              WebHooks
-            </div>
-          ) : (
-            <HashLink to="/account#webhooks" className="nav-link">
-              WebHooks
-            </HashLink>
-          )}
-        </li>
-        <li className="nav-item">
-          {type === 'account' ? (
-            <div
-              className="nav-link"
-              onClick={() => scrollById('cli')}
-              onKeyPress={() => scrollById('cli')}
-              role="presentation"
-            >
-              CLI
-            </div>
-          ) : (
-            <HashLink to="/account#cli" className="nav-link">
-              CLI
             </HashLink>
           )}
         </li>
@@ -173,6 +141,65 @@ const ProfileSidebar = ({ type }: Props) => (
           ) : (
             <HashLink to="/billing#history" className="nav-link">
               History
+            </HashLink>
+          )}
+        </li>
+      </Scrollspy>
+    </li>
+    <li>
+      <div className="nav-root-item">Settings</div>
+      <Scrollspy
+        items={['webhooks', 'domains', 'cli']}
+        style={{
+          padding: '20px 0 0 20px'
+        }}
+        currentClassName="active"
+      >
+        <li className="nav-item">
+          {type === 'settings' ? (
+            <div
+              className="nav-link"
+              onClick={() => scrollById('webhooks')}
+              onKeyPress={() => scrollById('webhooks')}
+              role="presentation"
+            >
+              WebHooks
+            </div>
+          ) : (
+            <HashLink to="/settings#webhooks" className="nav-link">
+              WebHooks
+            </HashLink>
+          )}
+        </li>
+        <li className="nav-item">
+          {type === 'settings' ? (
+            <div
+              className="nav-link"
+              onClick={() => scrollById('domains')}
+              onKeyPress={() => scrollById('domains')}
+              role="presentation"
+            >
+              Domains
+            </div>
+          ) : (
+            <HashLink to="/settings#domains" className="nav-link">
+              Domains
+            </HashLink>
+          )}
+        </li>
+        <li className="nav-item">
+          {type === 'settings' ? (
+            <div
+              className="nav-link"
+              onClick={() => scrollById('cli')}
+              onKeyPress={() => scrollById('cli')}
+              role="presentation"
+            >
+              CLI
+            </div>
+          ) : (
+            <HashLink to="/settings#cli" className="nav-link">
+              CLI
             </HashLink>
           )}
         </li>

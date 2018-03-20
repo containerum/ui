@@ -25,27 +25,32 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background: #fff url('../../images/login.svg') 0 0 no-repeat;
+  background: #fff url('../../images/loginGroup/login.svg') 0 0 no-repeat;
   background-size: contain;
 }
 
+.windowSignUp {
+  background: #fff url('../../images/loginGroup/signup.svg') 0 0 no-repeat;
+  background-size: 452px 100%;
+}
+
 .windowResetPassword {
-  background: #fff url('../../images/resetPassword.png') 0 0 no-repeat;
+  background: #fff url('../../images/loginGroup/reset1.svg') 0 0 no-repeat;
   background-size: 452px 100%;
 }
 
 .windowResetPasswordTwo {
-  background: #fff url('../../images/resetPassword2.png') 0 0 no-repeat;
+  background: #fff url('../../images/loginGroup/reset2.svg') 0 0 no-repeat;
   background-size: 452px 100%;
 }
 
 .windowResetPasswordThree {
-  background: #fff url('../../images/resetPassword3.png') 0 0 no-repeat;
+  background: #fff url('../../images/loginGroup/reset3.svg') 0 0 no-repeat;
   background-size: 452px 100%;
 }
 
 .windowConfirmEmail {
-  background: #fff url('../../images/confirmEmail.png') 0 0 no-repeat;
+  background: #fff url('../../images/loginGroup/signup2.svg') 0 0 no-repeat;
   background-size: 452px 100%;
 }
 
