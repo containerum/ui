@@ -61,6 +61,7 @@ import getCountServicesReducer from './statisticsReducers/getCountServices';
 import getCountPodsReducer from './statisticsReducers/getCountPods';
 import getSolutionsReducer from './solutionsReducers/getSolutions';
 import getSolutionReducer from './solutionReducers/getSolution';
+import runSolutionReducer from './solutionReducers/runSolution';
 
 const reducers = {
   home,
@@ -120,6 +121,7 @@ const reducers = {
   getCountPodsReducer,
   getSolutionsReducer,
   getSolutionReducer,
+  runSolutionReducer,
   router,
   loadingBar: loadingBarReducer
 };

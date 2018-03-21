@@ -20,14 +20,23 @@ import {
   GET_SOLUTIONS_REQUESTING,
   GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
-import { GET_NAMESPACES_SUCCESS } from '../../constants/namespacesConstants/getNamespaces';
+import { RUN_SOLUTION_SUCCESS } from '../../constants/solutionConstants/runSolution';
+import {
+  GET_NAMESPACES_INVALID,
+  GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_REQUESTING,
+  GET_NAMESPACES_SUCCESS
+} from '../../constants/namespacesConstants/getNamespaces';
 import SolutionsList from '../../components/SolutionsList';
+import SelectNamespaceModal from '../../components/CustomerModal/CreateSolutionModals/SelectNamespaceModal';
 
 type Props = {
   history: Object,
   getSolutionsReducer: Object,
-  fetchGetSolutionsIfNeeded: () => void,
+  runSolutionReducer: Object,
   getNamespacesReducer: NamespacesType,
+  fetchGetSolutionsIfNeeded: () => void,
+  fetchRunSolutionsIfNeeded: (idName: string, idSol: string) => void,
   fetchGetNamespacesIfNeeded: () => void
 };
 
@@ -37,18 +46,17 @@ export class Solutions extends PureComponent<Props> {
     super(props);
     this.state = {
       idName: null,
-      isOpened: false
+      displayedNamespaces: [],
+      currentSolution: null,
+      isOpenedSelectNamespace: false
     };
   }
   componentDidMount() {
     const {
       fetchGetSolutionsIfNeeded,
-      fetchGetNamespacesIfNeeded,
-      getNamespacesReducer
+      fetchGetNamespacesIfNeeded
     } = this.props;
-    if (getNamespacesReducer.readyStatus !== GET_NAMESPACES_SUCCESS) {
-      fetchGetNamespacesIfNeeded();
-    }
+    fetchGetNamespacesIfNeeded();
     fetchGetSolutionsIfNeeded();
   }
   componentWillUpdate(nextProps) {
@@ -59,19 +67,64 @@ export class Solutions extends PureComponent<Props> {
     ) {
       this.setState({
         ...this.state,
+        displayedNamespaces: nextProps.getNamespacesReducer.data,
         idName: nextProps.getNamespacesReducer.data.length
           ? nextProps.getNamespacesReducer.data[0]
           : null
       });
     }
+    if (
+      this.props.runSolutionReducer.readyStatus !==
+        nextProps.runSolutionReducer.readyStatus &&
+      nextProps.runSolutionReducer.readyStatus === RUN_SOLUTION_SUCCESS
+    ) {
+      console.log('runSolutionReducer', nextProps.runSolutionReducer);
+    }
   }
+  handleClickRunSolution = solutionName => {
+    this.setState({
+      ...this.state,
+      currentSolution: solutionName,
+      isOpenedSelectNamespace: true
+    });
+  };
+  handleOpenCloseModal = () => {
+    this.setState({
+      ...this.state,
+      isOpenedSelectNamespace: !this.state.isOpenedSelectNamespace,
+      idName: this.state.displayedNamespaces.length
+        ? this.state.displayedNamespaces[0]
+        : null
+    });
+  };
+  handleCreate = () => {
+    const { idName, currentSolution } = this.state;
+    this.props.fetchRunSolutionsIfNeeded(idName.name, currentSolution);
+  };
+  handleSelectNamespace = value => {
+    const currentNamespace = this.state.displayedNamespaces.filter(
+      ns => ns.name === value
+    );
+    this.setState({
+      ...this.state,
+      idName: currentNamespace ? currentNamespace[0] : null
+    });
+  };
 
   renderSolutionsList = () => {
-    const { getSolutionsReducer, history } = this.props;
+    const {
+      getSolutionsReducer,
+      getNamespacesReducer,
+      runSolutionReducer,
+      history
+    } = this.props;
     if (
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
-      getSolutionsReducer.readyStatus === GET_SOLUTIONS_REQUESTING
+      getSolutionsReducer.readyStatus === GET_SOLUTIONS_REQUESTING ||
+      !getNamespacesReducer.readyStatus ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
     ) {
       return (
         <div className="solution-containers-wrapper mt-30">
@@ -88,13 +141,47 @@ export class Solutions extends PureComponent<Props> {
         </div>
       );
     }
-    if (getSolutionsReducer.readyStatus === GET_SOLUTIONS_FAILURE) {
+    if (
+      getSolutionsReducer.readyStatus === GET_SOLUTIONS_FAILURE ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Solutions!</p>;
     }
-    return <SolutionsList data={getSolutionsReducer.data} history={history} />;
+
+    const {
+      isOpenedSelectNamespace,
+      displayedNamespaces,
+      idName,
+      currentSolution
+    } = this.state;
+    return (
+      <div>
+        {isOpenedSelectNamespace && (
+          <SelectNamespaceModal
+            isOpened={isOpenedSelectNamespace}
+            namespaces={displayedNamespaces}
+            namespace={idName}
+            currentSolution={currentSolution}
+            handleSelectNamespace={this.handleSelectNamespace}
+            handleOpenCloseModal={this.handleOpenCloseModal}
+            isFetching={runSolutionReducer.isFetching}
+            readyStatus={runSolutionReducer.readyStatus}
+            onHandleCreate={this.handleCreate}
+          />
+        )}
+        <SolutionsList
+          data={getSolutionsReducer.data}
+          history={history}
+          handleClickRunSolution={solutionName =>
+            this.handleClickRunSolution(solutionName)
+          }
+        />
+      </div>
+    );
   };
 
   render() {
+    // console.log(this.state);
     return (
       <div>
         <Helmet title="Solutions" />
@@ -107,8 +194,13 @@ export class Solutions extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getSolutionsReducer, getNamespacesReducer }: ReduxState) => ({
+  ({
     getSolutionsReducer,
+    runSolutionReducer,
+    getNamespacesReducer
+  }: ReduxState) => ({
+    getSolutionsReducer,
+    runSolutionReducer,
     getNamespacesReducer
   }),
   (dispatch: Dispatch) => ({
