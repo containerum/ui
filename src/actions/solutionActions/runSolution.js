@@ -54,7 +54,7 @@ export const fetchRunSolutions = (
   );
   const { status, data } = response;
   switch (status) {
-    case 200: {
+    case 201: {
       dispatch(runSolutionsSuccess(data));
       break;
     }

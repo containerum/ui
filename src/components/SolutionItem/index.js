@@ -8,10 +8,11 @@ import github from '../../images/github.svg';
 
 type Props = {
   solution: Array<Object>,
-  text: string
+  text: string,
+  handleClickRunSolution: (name: string) => void
 };
 
-const SolutionItem = ({ solution, text }: Props) => {
+const SolutionItem = ({ solution, text, handleClickRunSolution }: Props) => {
   const { Name: name, URL: url, CPU: cpu, RAM: ram } = solution[0];
   const { srcLogo, logoHeight } = getSolutionImage(name, '100px');
   const regexpGif = /gif\//gi;
@@ -35,8 +36,7 @@ const SolutionItem = ({ solution, text }: Props) => {
         </div>
         <button
           className="left-side-btn"
-          data-toggle="modal"
-          data-target="#redis"
+          onClick={() => handleClickRunSolution(name)}
         >
           Deploy
         </button>

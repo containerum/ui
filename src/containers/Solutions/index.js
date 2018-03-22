@@ -13,30 +13,31 @@ import type {
   ReduxState
 } from '../../types';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
-import * as actionRunSolutions from '../../actions/solutionActions/runSolution';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
   GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
-import { RUN_SOLUTION_SUCCESS } from '../../constants/solutionConstants/runSolution';
 import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_FAILURE,
   GET_NAMESPACES_REQUESTING,
   GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
+import {
+  RUN_SOLUTION_INVALID,
+  RUN_SOLUTION_SUCCESS,
+  RUN_SOLUTION_FAILURE
+} from '../../constants/solutionConstants/runSolution';
 import SolutionsList from '../../components/SolutionsList';
-import SelectNamespaceModal from '../../components/CustomerModal/CreateSolutionModals/SelectNamespaceModal';
+import RunSolutionItem from '../RunSolution';
 
 type Props = {
   history: Object,
   getSolutionsReducer: Object,
-  runSolutionReducer: Object,
   getNamespacesReducer: NamespacesType,
   fetchGetSolutionsIfNeeded: () => void,
-  fetchRunSolutionsIfNeeded: (idName: string, idSol: string) => void,
   fetchGetNamespacesIfNeeded: () => void
 };
 
@@ -48,7 +49,8 @@ export class Solutions extends PureComponent<Props> {
       idName: null,
       displayedNamespaces: [],
       currentSolution: null,
-      isOpenedSelectNamespace: false
+      isOpenedSelectNamespace: false,
+      statusOfRunSolution: RUN_SOLUTION_INVALID
     };
   }
   componentDidMount() {
@@ -73,13 +75,6 @@ export class Solutions extends PureComponent<Props> {
           : null
       });
     }
-    if (
-      this.props.runSolutionReducer.readyStatus !==
-        nextProps.runSolutionReducer.readyStatus &&
-      nextProps.runSolutionReducer.readyStatus === RUN_SOLUTION_SUCCESS
-    ) {
-      console.log('runSolutionReducer', nextProps.runSolutionReducer);
-    }
   }
   handleClickRunSolution = solutionName => {
     this.setState({
@@ -94,12 +89,9 @@ export class Solutions extends PureComponent<Props> {
       isOpenedSelectNamespace: !this.state.isOpenedSelectNamespace,
       idName: this.state.displayedNamespaces.length
         ? this.state.displayedNamespaces[0]
-        : null
+        : null,
+      statusOfRunSolution: RUN_SOLUTION_INVALID
     });
-  };
-  handleCreate = () => {
-    const { idName, currentSolution } = this.state;
-    this.props.fetchRunSolutionsIfNeeded(idName.name, currentSolution);
   };
   handleSelectNamespace = value => {
     const currentNamespace = this.state.displayedNamespaces.filter(
@@ -110,14 +102,21 @@ export class Solutions extends PureComponent<Props> {
       idName: currentNamespace ? currentNamespace[0] : null
     });
   };
+  handleSolutionSuccess = () => {
+    this.setState({
+      ...this.state,
+      statusOfRunSolution: RUN_SOLUTION_SUCCESS
+    });
+  };
+  handleSolutionFailure = () => {
+    this.setState({
+      ...this.state,
+      statusOfRunSolution: RUN_SOLUTION_FAILURE
+    });
+  };
 
   renderSolutionsList = () => {
-    const {
-      getSolutionsReducer,
-      getNamespacesReducer,
-      runSolutionReducer,
-      history
-    } = this.props;
+    const { getSolutionsReducer, getNamespacesReducer, history } = this.props;
     if (
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
@@ -149,26 +148,25 @@ export class Solutions extends PureComponent<Props> {
     }
 
     const {
+      currentSolution,
       isOpenedSelectNamespace,
-      displayedNamespaces,
       idName,
-      currentSolution
+      displayedNamespaces,
+      statusOfRunSolution
     } = this.state;
     return (
       <div>
-        {isOpenedSelectNamespace && (
-          <SelectNamespaceModal
-            isOpened={isOpenedSelectNamespace}
-            namespaces={displayedNamespaces}
-            namespace={idName}
-            currentSolution={currentSolution}
-            handleSelectNamespace={this.handleSelectNamespace}
-            handleOpenCloseModal={this.handleOpenCloseModal}
-            isFetching={runSolutionReducer.isFetching}
-            readyStatus={runSolutionReducer.readyStatus}
-            onHandleCreate={this.handleCreate}
-          />
-        )}
+        <RunSolutionItem
+          idName={idName}
+          currentSolution={currentSolution}
+          displayedNamespaces={displayedNamespaces}
+          isOpenedSelectNamespace={isOpenedSelectNamespace}
+          statusOfRunSolution={statusOfRunSolution}
+          handleOpenCloseModal={this.handleOpenCloseModal}
+          handleSelectNamespace={value => this.handleSelectNamespace(value)}
+          handleSolutionFailure={this.handleSolutionFailure}
+          handleSolutionSuccess={this.handleSolutionSuccess}
+        />
         <SolutionsList
           data={getSolutionsReducer.data}
           history={history}
@@ -194,20 +192,13 @@ export class Solutions extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({
+  ({ getSolutionsReducer, getNamespacesReducer }: ReduxState) => ({
     getSolutionsReducer,
-    runSolutionReducer,
-    getNamespacesReducer
-  }: ReduxState) => ({
-    getSolutionsReducer,
-    runSolutionReducer,
     getNamespacesReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSolutionsIfNeeded: () =>
       dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
-    fetchRunSolutionsIfNeeded: (idName: string, idSol: string) =>
-      dispatch(actionRunSolutions.fetchRunSolutionsIfNeeded(idName, idSol)),
     fetchGetNamespacesIfNeeded: () =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded())
   })

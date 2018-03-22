@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash/fp';
 import 'rc-tooltip/assets/bootstrap_white.css';
 
-import getSolutionImage from '../../../functions/getSolutionImage';
+import getSolutionImage from '../../functions/getSolutionImage';
 import {
   RUN_SOLUTION_REQUESTING,
   RUN_SOLUTION_FAILURE,
   RUN_SOLUTION_SUCCESS
-} from '../../../constants/solutionConstants/runSolution';
+} from '../../constants/solutionConstants/runSolution';
 
 const customStyles = {
   overlay: {
@@ -227,7 +227,7 @@ const SelectNamespaceModal = ({
                 }}
               />
             </div>
-            <div>
+            <div style={{ textAlign: 'center' }}>
               <div
                 className="error-message"
                 style={{ margin: '20px 0 0', backgroundColor: '#fff' }}
@@ -284,53 +284,27 @@ const SelectNamespaceModal = ({
                 }}
               />
             </div>
-            <div>
-              <span className="modal-redis-text mt-4 mb-4">
-                RUN_SOLUTION_SUCCESS
-              </span>
-              <select
-                className="form-control custom-select"
-                id="namespaceSelect"
-                name="namespaces"
-                onChange={e => handleSelectNamespace(e.target.value)}
-                value={namespace.name}
-                required
+            <div style={{ textAlign: 'center' }}>
+              <div
+                className="success-message"
+                style={{ margin: '20px 0 0', backgroundColor: '#fff' }}
               >
-                {namespaces.map(ns => (
-                  <option key={_.uniqueId()} value={ns.name}>
-                    {ns.name}
-                  </option>
-                ))}
-              </select>
+                <span className="success-message-text">SUCCESS</span>
+              </div>
+              <span className="modal-redis-text">
+                {currentSolution} was successfully deployed
+              </span>
             </div>
           </div>
-          {namespace ? (
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn modal-footer-solution-cancel"
-                onClick={() => handleCloseModal()}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="btn modal-footer-solution-select"
-              >
-                Create
-              </button>
-            </div>
-          ) : (
-            <div className="modal-footer">
-              <Link
-                className="blue-btn depl-btn"
-                data-toggle="modal"
-                to="/createNamespace"
-              >
-                Create NAMESPACE
-              </Link>
-            </div>
-          )}
+          <div className="modal-footer">
+            <Link
+              className="blue-btn depl-btn"
+              data-toggle="modal"
+              to={`/namespaces/${namespace.name}/deployments`}
+            >
+              Open Namespace
+            </Link>
+          </div>
         </div>
       )}
     </Modal>
