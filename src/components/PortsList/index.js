@@ -4,7 +4,7 @@ import React from 'react';
 import _ from 'lodash/fp';
 
 // import { routerLinks } from '../../config';
-import deployPng from '../../images/deployments.svg';
+import portPng from '../../images/port.svg';
 
 type Props = {
   data: Object
@@ -36,7 +36,7 @@ const PortsList = ({ data }: Props) => {
           return (
             <tr className="tr-table-hover" key={_.uniqueId()}>
               <td className="td-1">
-                <img src={deployPng} alt="" />
+                <img src={portPng} alt="port" />
               </td>
               <td className="td-2">{name}</td>
               <td className="td-3">
