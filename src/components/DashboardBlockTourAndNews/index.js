@@ -62,7 +62,7 @@ const DashboardBlockTourAndNews = ({ linkToDeployment }: Props) => (
               to={
                 linkToDeployment
                   ? routerLinks.createDeploymentLink(linkToDeployment)
-                  : 'createNamespace'
+                  : '/createNamespace'
               }
             >
               Launch 1st Deployment
@@ -71,7 +71,7 @@ const DashboardBlockTourAndNews = ({ linkToDeployment }: Props) => (
               to={
                 linkToDeployment
                   ? routerLinks.createServiceLink(linkToDeployment)
-                  : 'createNamespace'
+                  : '/createNamespace'
               }
             >
               Launch 1st Service

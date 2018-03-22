@@ -117,7 +117,7 @@ export class Volumes extends PureComponent<Props> {
     }
 
     if (getVolumesReducer.readyStatus === GET_VOLUMES_FAILURE) {
-      return <p>Oops, Failed to load data of NS!</p>;
+      return <p>Oops, Failed to load data of Volumes!</p>;
     }
 
     return (

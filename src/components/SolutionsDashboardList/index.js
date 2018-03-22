@@ -3,66 +3,47 @@
 import React from 'react';
 import _ from 'lodash/fp';
 
-import redis from '../../images/redis_logo.png';
-import magento from '../../images/magento-logo.png';
-import mariadb from '../../images/mariadb.svg';
-import redmineMariadb from '../../images/redmine-mariadb.svg';
-import postgresql from '../../images/postgresql-logo.svg';
-import redminePG from '../../images/redmine-pg.svg';
-import grafana from '../../images/grafana.png';
-import rabbitmq from '../../images/rabbitmq-manager.png';
-import webpack from '../../images/webpack-logo.png';
+import { routerLinks } from '../../config';
+import getSolutionImage from '../../functions/getSolutionImage';
 
 type Props = {
-  data: Array<Object>
+  data: Array<Object>,
+  history: Object,
+  handleClickRunSolution: (name: string) => void
 };
 
-const SolutionsDashboardList = ({ data }: Props) => (
+const handleClose = e => {
+  e.stopPropagation();
+};
+
+const SolutionsDashboardList = ({
+  data,
+  history,
+  handleClickRunSolution
+}: Props) => (
   <div className="solution-containers-wrapper mt-30">
     {data.map(solution => {
-      const { Name: name, URL: url } = solution;
-      let srcLogo = redis;
-      let logoMaxHeight = null;
-      if (name.toLowerCase().indexOf('redmine-postgresql-solution') + 1) {
-        srcLogo = redminePG;
-        logoMaxHeight = '85px';
-      } else if (name.toLowerCase().indexOf('redmine-mariadb-solution') + 1) {
-        srcLogo = redmineMariadb;
-        logoMaxHeight = '85px';
-      } else if (name.toLowerCase().indexOf('magento-solution') + 1) {
-        srcLogo = magento;
-      } else if (name.toLowerCase().indexOf('mariadb-solution') + 1) {
-        srcLogo = mariadb;
-      } else if (name.toLowerCase().indexOf('postgresql-solution') + 1) {
-        srcLogo = postgresql;
-      } else if (name.toLowerCase().indexOf('grafana-xxl-solution') + 1) {
-        srcLogo = grafana;
-      } else if (name.toLowerCase().indexOf('rabbitmq-manager-solution') + 1) {
-        srcLogo = rabbitmq;
-      } else if (name.toLowerCase().indexOf('webpack-3.8-ssh-solution') + 1) {
-        srcLogo = webpack;
-      }
+      const { Name: name } = solution;
+      const { srcLogo, logoHeight } = getSolutionImage(name, '85px');
       return (
         <div
           key={_.uniqueId()}
           className="solution-container pre-solution-container"
+          onClick={() => history.push(routerLinks.solutionLink(name))}
+          style={{ cursor: 'pointer' }}
         >
           <div className="solution-container-img-block pre-solution-container-img-block">
-            <img
-              src={srcLogo}
-              alt={name}
-              style={{ maxHeight: logoMaxHeight }}
-            />
+            <img src={srcLogo} alt={name} style={{ maxHeight: logoHeight }} />
           </div>
           <div className="pre-solution-container-info">{name}</div>
-          <a
-            href={url}
-            className="button button_blue btn btn-outline-primary"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Deploy
-          </a>
+          <div onClick={e => handleClose(e)}>
+            <div
+              onClick={() => handleClickRunSolution(name)}
+              className="button button_blue btn btn-outline-primary"
+            >
+              Deploy
+            </div>
+          </div>
         </div>
       );
     })}

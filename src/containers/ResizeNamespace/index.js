@@ -123,7 +123,7 @@ export class ResizeNamespace extends PureComponent<Props> {
         GET_NAMESPACES_TARIFFS_FAILURE ||
       getNamespaceReducer.readyStatus === GET_NAMESPACE_FAILURE
     ) {
-      return <p>Oops, Failed to load data of NS!</p>;
+      return <p>Oops, Failed to load data of Namespace!</p>;
     }
 
     return (

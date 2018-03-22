@@ -16,7 +16,8 @@ import * as actionGetCountPods from '../../actions/statisticsActions/getCountPod
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
-  GET_SOLUTIONS_FAILURE
+  GET_SOLUTIONS_FAILURE,
+  GET_SOLUTIONS_SUCCESS
 } from '../../constants/solutionsConstants/getSolutions';
 import {
   GET_NAMESPACES_INVALID,
@@ -39,6 +40,11 @@ import {
   GET_COUNT_PODS_REQUESTING,
   GET_COUNT_PODS_FAILURE
 } from '../../constants/statisticsConstants/getCountPodsConstants';
+import {
+  RUN_SOLUTION_INVALID,
+  RUN_SOLUTION_SUCCESS,
+  RUN_SOLUTION_FAILURE
+} from '../../constants/solutionConstants/runSolution';
 import NamespacesDashboardList from '../../components/NamespacesDashboardList';
 import SolutionsDashboardList from '../../components/SolutionsDashboardList';
 import CountDeploymentsInfo from '../../components/CountDeploymentsInfo';
@@ -46,6 +52,7 @@ import CountServicesInfo from '../../components/CountServicesInfo';
 import CountPodsInfo from '../../components/CountPodsInfo';
 import DashboardBlockInfo from '../../components/DashboardBlockInfo';
 import DashboardBlockTourAndNews from '../../components/DashboardBlockTourAndNews';
+import RunSolutionItem from '../RunSolution';
 
 type Props = {
   history: Object,
@@ -63,6 +70,16 @@ type Props = {
 
 // Export this for unit testing more easily
 export class Dashboard extends PureComponent<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      idName: null,
+      displayedNamespaces: [],
+      currentSolution: null,
+      isOpenedSelectNamespace: false,
+      statusOfRunSolution: RUN_SOLUTION_INVALID
+    };
+  }
   componentDidMount() {
     const {
       fetchGetNamespacesIfNeeded,
@@ -77,6 +94,60 @@ export class Dashboard extends PureComponent<Props> {
     fetchGetCountServicesIfNeeded();
     fetchGetCountPodsIfNeeded();
   }
+  componentWillUpdate(nextProps) {
+    if (
+      this.props.getNamespacesReducer.readyStatus !==
+        nextProps.getNamespacesReducer.readyStatus &&
+      nextProps.getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        displayedNamespaces: nextProps.getNamespacesReducer.data,
+        idName: nextProps.getNamespacesReducer.data.length
+          ? nextProps.getNamespacesReducer.data[0]
+          : null
+      });
+    }
+  }
+
+  handleClickRunSolution = solutionName => {
+    this.setState({
+      ...this.state,
+      currentSolution: solutionName,
+      isOpenedSelectNamespace: true
+    });
+  };
+  handleOpenCloseModal = () => {
+    this.setState({
+      ...this.state,
+      isOpenedSelectNamespace: !this.state.isOpenedSelectNamespace,
+      idName: this.state.displayedNamespaces.length
+        ? this.state.displayedNamespaces[0]
+        : null,
+      statusOfRunSolution: RUN_SOLUTION_INVALID
+    });
+  };
+  handleSelectNamespace = value => {
+    const currentNamespace = this.state.displayedNamespaces.filter(
+      ns => ns.name === value
+    );
+    this.setState({
+      ...this.state,
+      idName: currentNamespace ? currentNamespace[0] : null
+    });
+  };
+  handleSolutionSuccess = () => {
+    this.setState({
+      ...this.state,
+      statusOfRunSolution: RUN_SOLUTION_SUCCESS
+    });
+  };
+  handleSolutionFailure = () => {
+    this.setState({
+      ...this.state,
+      statusOfRunSolution: RUN_SOLUTION_FAILURE
+    });
+  };
 
   renderNamespacesList = () => {
     const { getNamespacesReducer, history } = this.props;
@@ -107,7 +178,7 @@ export class Dashboard extends PureComponent<Props> {
     );
   };
   renderSolutionsList = () => {
-    const { getSolutionsReducer } = this.props;
+    const { getSolutionsReducer, history } = this.props;
     if (
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
@@ -129,9 +200,17 @@ export class Dashboard extends PureComponent<Props> {
       );
     }
     if (getSolutionsReducer.readyStatus === GET_SOLUTIONS_FAILURE) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Solutions!</p>;
     }
-    return <SolutionsDashboardList data={getSolutionsReducer.data} />;
+    return (
+      <SolutionsDashboardList
+        data={getSolutionsReducer.data}
+        history={history}
+        handleClickRunSolution={solutionName =>
+          this.handleClickRunSolution(solutionName)
+        }
+      />
+    );
   };
   renderCountDeploymentsInfo = () => {
     const { getCountDeploymentsReducer } = this.props;
@@ -220,12 +299,43 @@ export class Dashboard extends PureComponent<Props> {
     }
     return <CountPodsInfo count={getCountPodsReducer.data.count} />;
   };
+  renderRunSolutionModal = () => {
+    const { getNamespacesReducer, getSolutionsReducer } = this.props;
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS &&
+      getSolutionsReducer.readyStatus === GET_SOLUTIONS_SUCCESS
+    ) {
+      const {
+        currentSolution,
+        isOpenedSelectNamespace,
+        idName,
+        displayedNamespaces,
+        statusOfRunSolution
+      } = this.state;
+      return (
+        <RunSolutionItem
+          idName={idName}
+          currentSolution={currentSolution}
+          displayedNamespaces={displayedNamespaces}
+          isOpenedSelectNamespace={isOpenedSelectNamespace}
+          statusOfRunSolution={statusOfRunSolution}
+          handleOpenCloseModal={this.handleOpenCloseModal}
+          handleSelectNamespace={value => this.handleSelectNamespace(value)}
+          handleSolutionFailure={this.handleSolutionFailure}
+          handleSolutionSuccess={this.handleSolutionSuccess}
+        />
+      );
+    }
+    return null;
+  };
+
   render() {
     const { getNamespacesReducer } = this.props;
     return (
       <div>
         <div>
           <Helmet title="Dashboard" />
+          {this.renderRunSolutionModal()}
           <div className="container dashboard-wrap">
             <div className="row">
               <div className="col-md-9 pl-0">

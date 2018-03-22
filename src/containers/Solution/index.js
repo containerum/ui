@@ -4,45 +4,47 @@ import React, { PureComponent } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
-// import { NavLink } from 'react-router-dom';
-import _ from 'lodash/fp';
 
-import type {
-  Dispatch,
-  Namespaces as NamespacesType,
-  ReduxState
-} from '../../types';
-import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
+import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
+import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
+import * as actionGetSolution from '../../actions/solutionActions/getSolution';
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
   GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
 import {
-  GET_NAMESPACES_INVALID,
-  GET_NAMESPACES_FAILURE,
-  GET_NAMESPACES_REQUESTING,
-  GET_NAMESPACES_SUCCESS
-} from '../../constants/namespacesConstants/getNamespaces';
+  GET_SOLUTION_INVALID,
+  GET_SOLUTION_REQUESTING,
+  GET_SOLUTION_FAILURE
+} from '../../constants/solutionConstants/getSolution';
 import {
   RUN_SOLUTION_INVALID,
   RUN_SOLUTION_SUCCESS,
   RUN_SOLUTION_FAILURE
 } from '../../constants/solutionConstants/runSolution';
-import SolutionsList from '../../components/SolutionsList';
+import SolutionItem from '../../components/SolutionItem';
 import RunSolutionItem from '../RunSolution';
+import {
+  GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_INVALID,
+  GET_NAMESPACES_REQUESTING,
+  GET_NAMESPACES_SUCCESS
+} from '../../constants/namespacesConstants/getNamespaces';
 
 type Props = {
-  history: Object,
+  match: Object,
   getSolutionsReducer: Object,
-  getNamespacesReducer: NamespacesType,
+  getSolutionReducer: Object,
+  getNamespacesReducer: Object,
   fetchGetSolutionsIfNeeded: () => void,
-  fetchGetNamespacesIfNeeded: () => void
+  fetchGetNamespacesIfNeeded: () => void,
+  fetchGetSolutionIfNeeded: (idSol: string) => void
 };
 
 // Export this for unit testing more easily
-export class Solutions extends PureComponent<Props> {
+export class Solution extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,11 +57,14 @@ export class Solutions extends PureComponent<Props> {
   }
   componentDidMount() {
     const {
+      match,
       fetchGetSolutionsIfNeeded,
-      fetchGetNamespacesIfNeeded
+      fetchGetNamespacesIfNeeded,
+      fetchGetSolutionIfNeeded
     } = this.props;
     fetchGetNamespacesIfNeeded();
     fetchGetSolutionsIfNeeded();
+    fetchGetSolutionIfNeeded(match.params.idSol);
   }
   componentWillUpdate(nextProps) {
     if (
@@ -115,9 +120,17 @@ export class Solutions extends PureComponent<Props> {
     });
   };
 
-  renderSolutionsList = () => {
-    const { getSolutionsReducer, getNamespacesReducer, history } = this.props;
+  renderSolutionItem = () => {
+    const {
+      getSolutionReducer,
+      getSolutionsReducer,
+      getNamespacesReducer,
+      match
+    } = this.props;
     if (
+      !getSolutionReducer.readyStatus ||
+      getSolutionReducer.readyStatus === GET_SOLUTION_INVALID ||
+      getSolutionReducer.readyStatus === GET_SOLUTION_REQUESTING ||
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_REQUESTING ||
@@ -126,25 +139,30 @@ export class Solutions extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
     ) {
       return (
-        <div className="solution-containers-wrapper mt-30">
-          {new Array(6).fill().map(() => (
-            <div
-              key={_.uniqueId()}
-              className="col-md-4 solution-container"
-              style={{
-                height: '307px',
-                backgroundColor: '#f6f6f6'
-              }}
-            />
-          ))}
+        <div className="row page-wrapper">
+          <div
+            className="col-md-4 page-left-side"
+            style={{
+              height: '500px',
+              backgroundColor: '#f6f6f6'
+            }}
+          />
+          <div
+            className="col-md-8 page-right-side"
+            style={{
+              height: '700px',
+              backgroundColor: '#f6f6f6'
+            }}
+          />
         </div>
       );
     }
     if (
+      getSolutionReducer.readyStatus === GET_SOLUTION_FAILURE ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_FAILURE ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Solutions!</p>;
+      return <p>Oops, Failed to load data of Solution!</p>;
     }
 
     const {
@@ -167,9 +185,11 @@ export class Solutions extends PureComponent<Props> {
           handleSolutionFailure={this.handleSolutionFailure}
           handleSolutionSuccess={this.handleSolutionSuccess}
         />
-        <SolutionsList
-          data={getSolutionsReducer.data}
-          history={history}
+        <SolutionItem
+          text={getSolutionReducer.data}
+          solution={getSolutionsReducer.data.filter(
+            solution => solution.Name === match.params.idSol
+          )}
           handleClickRunSolution={solutionName =>
             this.handleClickRunSolution(solutionName)
           }
@@ -179,12 +199,12 @@ export class Solutions extends PureComponent<Props> {
   };
 
   render() {
-    // console.log(this.state);
+    const { match } = this.props;
     return (
       <div>
-        <Helmet title="Solutions" />
+        <Helmet title={`Solution ${match.params.idSol}`} />
         <div className="content-block">
-          <div className="container no-back">{this.renderSolutionsList()}</div>
+          <div className="container">{this.renderSolutionItem()}</div>
         </div>
       </div>
     );
@@ -192,16 +212,23 @@ export class Solutions extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getSolutionsReducer, getNamespacesReducer }: ReduxState) => ({
+  ({
+    getSolutionReducer,
+    getSolutionsReducer,
+    getNamespacesReducer
+  }: ReduxState) => ({
+    getSolutionReducer,
     getSolutionsReducer,
     getNamespacesReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSolutionsIfNeeded: () =>
       dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
+    fetchGetSolutionIfNeeded: (idSol: string) =>
+      dispatch(actionGetSolution.fetchGetSolutionIfNeeded(idSol)),
     fetchGetNamespacesIfNeeded: () =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded())
   })
 );
 
-export default connector(Solutions);
+export default connector(Solution);
