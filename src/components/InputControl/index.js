@@ -21,7 +21,8 @@ type Props = {
   placeholder: ?string,
   min: ?number,
   max: ?number,
-  subPath: ?boolean
+  subPath: ?boolean,
+  maxLength: number
 };
 const InputEmail = ({
   handleChangeInput,
@@ -42,7 +43,8 @@ const InputEmail = ({
   labelText,
   min,
   max,
-  subPath
+  subPath,
+  maxLength
 }: Props) => (
   <div className={`form-group ${!valid && 'has-error'}`}>
     {subPath && <span className="inputSubpathSign">/</span>}
@@ -59,6 +61,7 @@ const InputEmail = ({
       onChange={e => handleChangeInput(e)}
       min={min}
       max={max}
+      maxLength={maxLength || 25}
     />
     {labelText && (
       <label className={baseClassNameLabel} htmlFor={id} id={labelId}>
