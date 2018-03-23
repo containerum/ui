@@ -14,7 +14,7 @@ build-and-push-develop:
     - ui
   script:
     - docker login  ${DOCKER_REGISTRY} -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
-    - docker build --pull -t ${DOCKER_REGISTRY_IMAGE}:${TAG} .
+    - docker build --pull --no-cache -t ${DOCKER_REGISTRY_IMAGE}:${TAG} .
     - docker push "${DOCKER_REGISTRY_IMAGE}:${TAG}"
     - docker rmi ${DOCKER_REGISTRY_IMAGE}:${TAG}
   only:
