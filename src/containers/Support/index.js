@@ -32,6 +32,7 @@ export class Support extends PureComponent<Props> {
   constructor() {
     super();
     this.state = {
+      errorFormatFile: false,
       textArea: '',
       group: '',
       files: [],
@@ -85,8 +86,24 @@ export class Support extends PureComponent<Props> {
     const successFiles = [];
     const successBase64 = [];
     Object.keys(files.fileList).filter((item, index) => {
-      if (files.fileList[item].size >= 15728640) {
+      if (
+        files.fileList[item].size >= 15728640 ||
+        files.fileList[item].type !==
+          ('image/png' ||
+            'image/jpeg' ||
+            'image/gif' ||
+            'text/plain' ||
+            'application/pdf')
+      ) {
         errorFiles.push(files.fileList[item]);
+        this.setState({
+          errorFormatFile: true
+        });
+        setTimeout(() => {
+          this.setState({
+            errorFormatFile: false
+          });
+        }, 4000);
       } else {
         successFiles.push(files.fileList[item]);
         successBase64.push(files.base64[index]);
@@ -167,6 +184,7 @@ export class Support extends PureComponent<Props> {
         handleChangeTextArea={e => this.handleChangeTextArea(e)}
         handleDeleteImage={fileName => this.handleDeleteImage(fileName)}
         handleFiles={files => this.handleFiles(files)}
+        errorFormat={this.state.errorFormatFile}
       />
     );
   };
