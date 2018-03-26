@@ -152,7 +152,7 @@ export class Support extends PureComponent<Props> {
     }
 
     if (getSupportGroupsReducer.readyStatus === GET_SUPPORT_GROUPS_FAILURE) {
-      return <p>Oops, Failed to load data of NS!</p>;
+      return <p>Oops, Failed to load data of Support!</p>;
     }
 
     return (

@@ -76,7 +76,7 @@ export class NavigationHeader extends PureComponent<Props> {
     }
 
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
-      return <p>Oops, Failed to load data of NS!</p>;
+      return <p>Oops, Failed to load data of Namespace!</p>;
     }
 
     let mainContent = '';

@@ -98,7 +98,7 @@ export class Settings extends PureComponent<Props> {
     }
 
     if (getProfileReducer.readyStatus === GET_PROFILE_FAILURE) {
-      return <p>Oops, Failed to load data of NS!</p>;
+      return <p>Oops, Failed to load data of Settings!</p>;
     }
 
     return <ProfileSidebar type="settings" />;

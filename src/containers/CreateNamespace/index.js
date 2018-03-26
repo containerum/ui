@@ -223,7 +223,7 @@ export class CreateNamespace extends PureComponent<Props> {
     if (
       getNamespacesTariffsReducer.readyStatus === GET_NAMESPACES_TARIFFS_FAILURE
     ) {
-      return <p>Oops, Failed to load data of NS!</p>;
+      return <p>Oops, Failed to load data of Namespaces!</p>;
     }
 
     return (

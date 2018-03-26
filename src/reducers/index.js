@@ -61,6 +61,8 @@ import getCountDeploymentsReducer from './statisticsReducers/getCountDeployments
 import getCountServicesReducer from './statisticsReducers/getCountServices';
 import getCountPodsReducer from './statisticsReducers/getCountPods';
 import getSolutionsReducer from './solutionsReducers/getSolutions';
+import getSolutionReducer from './solutionReducers/getSolution';
+import runSolutionReducer from './solutionReducers/runSolution';
 import getDomainsReducer from './serviceReducers/getDomains';
 import deleteDomainReducer from './serviceReducers/deleteDomain';
 
@@ -122,6 +124,8 @@ const reducers = {
   getCountServicesReducer,
   getCountPodsReducer,
   getSolutionsReducer,
+  getSolutionReducer,
+  runSolutionReducer,
   getDomainsReducer,
   deleteDomainReducer,
   router,

@@ -230,7 +230,7 @@ export class CreateService extends PureComponent<Props> {
     }
 
     if (getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_FAILURE) {
-      return <p>Oops, Failed to load data of NS!</p>;
+      return <p>Oops, Failed to load data of Service!</p>;
     }
 
     return (

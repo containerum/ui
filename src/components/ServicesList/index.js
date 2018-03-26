@@ -43,8 +43,7 @@ const ServicesList = ({
           <tbody>
             {data.map(service => {
               const { labels, domain_hosts: domainHosts, name } = service;
-              const type =
-                `${labels.external}` === 'true' ? 'External' : 'Internal';
+              const type = labels.external === 'true' ? 'External' : 'Internal';
               const domain = domainHosts[0] ? domainHosts[0] : '-';
               const id = `service_${name}`;
               return (

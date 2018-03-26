@@ -91,7 +91,7 @@ export class Service extends PureComponent<Props> {
     }
 
     if (getServiceReducer.readyStatus === GET_SERVICE_FAILURE) {
-      return <p>Oops, Failed to load data of NS!</p>;
+      return <p>Oops, Failed to load data of Service!</p>;
     }
 
     return (

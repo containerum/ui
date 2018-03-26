@@ -4,7 +4,7 @@ import React from 'react';
 import _ from 'lodash/fp';
 
 // import { routerLinks } from '../../config';
-import deployPng from '../../images/deployments.svg';
+import portPng from '../../images/port.svg';
 
 type Props = {
   data: Object
@@ -31,12 +31,11 @@ const PortsList = ({ data }: Props) => {
       <tbody>
         {ports.map(currentPort => {
           const { name, port, targetPort, protocol } = currentPort;
-          const linkSrv = `http://p${port}.${firstDomainHost}`;
-          const viewLinkSrv = `p${port}.${firstDomainHost}`;
+          const linkSrv = `${firstDomainHost}:${port}`;
           return (
             <tr className="tr-table-hover" key={_.uniqueId()}>
               <td className="td-1">
-                <img src={deployPng} alt="" />
+                <img src={portPng} alt="port" />
               </td>
               <td className="td-2">{name}</td>
               <td className="td-3">
@@ -45,8 +44,8 @@ const PortsList = ({ data }: Props) => {
               <td className="td-4">{protocol}</td>
               {type && (
                 <td className="td-5">
-                  <a target="_blank" href={linkSrv}>
-                    {viewLinkSrv}
+                  <a target="_blank" href={`http://${linkSrv}`}>
+                    {linkSrv}
                   </a>
                 </td>
               )}

@@ -19,9 +19,11 @@ import { fetchGetCountDeploymentsIfNeeded } from './actions/statisticsActions/ge
 import { fetchGetCountServicesIfNeeded } from './actions/statisticsActions/getCountServices';
 import { fetchGetCountPodsIfNeeded } from './actions/statisticsActions/getCountPods';
 import { fetchGetSolutionsIfNeeded } from './actions/solutionsActions/getSolutions';
+import { fetchGetSolutionIfNeeded } from './actions/solutionActions/getSolution';
 import Main from './containers/Main';
 import DashboardPage from './containers/Dashboard';
 import SolutionsPage from './containers/Solutions';
+import SolutionPage from './containers/Solution';
 import NamespacesPage from './containers/Namespaces';
 import VolumesPage from './containers/Volumes';
 import NamespacePage from './containers/Namespace';
@@ -87,6 +89,17 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([
         dispatch(fetchGetSolutionsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  {
+    path: routerLinks.solution,
+    exact: true,
+    component: SolutionPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([
+        dispatch(fetchGetSolutionIfNeeded()),
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
