@@ -9,7 +9,7 @@ import {
   DELETE_DOMAIN_SUCCESS,
   DELETE_DOMAIN_FAILURE
 } from '../../constants/serviceConstants/deleteDomain';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const deleteDomainRequest = () => ({
   type: DELETE_DOMAIN_REQUESTING,
@@ -34,9 +34,10 @@ const deleteDomainFailure = (err, status, label) => ({
 });
 
 export const fetchDeleteDomain = (
+  idName: string,
   label: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -45,13 +46,16 @@ export const fetchDeleteDomain = (
 
   dispatch(deleteDomainRequest());
 
-  const response = await axios.delete(`${URL}/api/set_image_tokens/${label}`, {
-    headers: {
-      'User-Client': browser,
-      'User-Token': accessToken
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
+  const response = await axios.delete(
+    `${URL}/namespaces/${idName}/ingresses/${label}`,
+    {
+      headers: {
+        'User-Client': browser,
+        'User-Token': accessToken
+      },
+      validateStatus: status => status >= 200 && status <= 505
+    }
+  );
   const { status, data, config } = response;
   switch (status) {
     case 202: {
@@ -69,8 +73,8 @@ export const fetchDeleteDomain = (
   }
 };
 
-export const fetchDeleteDomainIfNeeded = (label: string): ThunkAction => (
-  dispatch: Dispatch,
-  getState: GetState,
-  axios: any
-) => dispatch(fetchDeleteDomain(label, axios));
+export const fetchDeleteDomainIfNeeded = (
+  idName: string,
+  label: string
+): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
+  dispatch(fetchDeleteDomain(idName, label, axios));

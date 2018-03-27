@@ -9,7 +9,7 @@ import {
   GET_DOMAINS_SUCCESS,
   GET_DOMAINS_FAILURE
 } from '../../constants/serviceConstants/getDomains';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getDomainsRequest = () => ({
   type: GET_DOMAINS_REQUESTING,
@@ -31,7 +31,7 @@ const getDomainsFailure = err => ({
 export const fetchGetDomains = (
   idName: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -40,14 +40,14 @@ export const fetchGetDomains = (
 
   dispatch(getDomainsRequest());
 
-  const response = await axios.get(`${URL}/namespaces/${idName}/ingresses`, {
+  const response = await axios.get(`${URL}/ingresses`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });
-  console.log(response);
+  // console.log(response);
   const { status, data } = response;
   switch (status) {
     case 200: {
@@ -57,10 +57,6 @@ export const fetchGetDomains = (
     case 401: {
       dispatch(getDomainsRequest());
       dispatch(push('/login'));
-      break;
-    }
-    case 404: {
-      dispatch(getDomainsSuccess([]));
       break;
     }
     default: {

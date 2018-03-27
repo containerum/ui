@@ -80,7 +80,7 @@ export const fetchCreateDomain = (
   const { status, data } = response;
   switch (status) {
     case 201: {
-      console.log(data);
+      // console.log(data);
       // idSrv = `Domain ${data.name} for ${intObj.deployment_name}`;
       idSrv = 'Domain';
       dispatch(createDomainSuccess(data, status, idSrv));
