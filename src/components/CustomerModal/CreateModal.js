@@ -187,7 +187,7 @@ const CreateModal = ({
               placeholder="Name"
               value={name}
               onChange={e => handleChangeNameOfType(e)}
-              maxLength={25}
+              maxLength={35}
             />
           </Tooltip>
         </div>

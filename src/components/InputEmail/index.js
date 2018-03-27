@@ -28,7 +28,7 @@ const InputEmail = ({
     onChange={e => handleChangeEmail(e.target.value)}
     value={value}
     placeholder={placeholder || 'Email'}
-    maxLength={maxLength || 25}
+    maxLength={maxLength || 40}
   />
 );
 

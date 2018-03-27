@@ -61,7 +61,7 @@ const InputEmail = ({
       onChange={e => handleChangeInput(e)}
       min={min}
       max={max}
-      maxLength={maxLength || 25}
+      maxLength={maxLength || 35}
     />
     {labelText && (
       <label className={baseClassNameLabel} htmlFor={id} id={labelId}>
