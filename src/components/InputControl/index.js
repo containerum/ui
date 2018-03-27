@@ -22,8 +22,7 @@ type Props = {
   min: ?number,
   max: ?number,
   subPath: ?boolean,
-  alwaysVisiblePlaceholder: ?string
-  subPath: ?boolean,
+  alwaysVisiblePlaceholder: ?string,
   maxLength: number
 };
 const InputControl = ({
@@ -46,8 +45,7 @@ const InputControl = ({
   min,
   max,
   subPath,
-  alwaysVisiblePlaceholder
-  subPath,
+  alwaysVisiblePlaceholder,
   maxLength
 }: Props) => (
   <div className={`form-group ${!valid && 'has-error'}`}>
