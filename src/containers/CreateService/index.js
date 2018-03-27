@@ -18,17 +18,21 @@ import {
   GET_DEPLOYMENTS_FAILURE,
   GET_DEPLOYMENTS_SUCCESS
 } from '../../constants/deploymentsConstants/getDeployments';
+import { CREATE_EXTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createExternalService';
+import { CREATE_INTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createInternalService';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
 import CreateServiceCardItem from './CreateServiceCard';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
+import { routerLinks } from '../../config';
 
 type Props = {
   getDeploymentsReducer: Object,
   createExternalServiceReducer: Object,
   createInternalServiceReducer: Object,
   match: Object,
+  history: Object,
   fetchGetDeploymentsIfNeeded: (idName: string) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void
@@ -50,6 +54,7 @@ export class CreateService extends PureComponent<Props> {
     fetchGetDeploymentsIfNeeded(match.params.idName);
   }
   componentWillUpdate(nextProps) {
+    const { match } = this.props;
     if (
       this.props.getDeploymentsReducer.readyStatus !==
         nextProps.getDeploymentsReducer.readyStatus &&
@@ -62,6 +67,48 @@ export class CreateService extends PureComponent<Props> {
           deploymentList: nextProps.getDeploymentsReducer.data
         });
       }
+    }
+    if (
+      this.props.createExternalServiceReducer.readyStatus !==
+        nextProps.createExternalServiceReducer.readyStatus &&
+      nextProps.createExternalServiceReducer.readyStatus ===
+        CREATE_EXTERNAL_SERVICE_SUCCESS &&
+      nextProps.createInternalServiceReducer.readyStatus !==
+        CREATE_INTERNAL_SERVICE_SUCCESS
+    ) {
+      this.props.history.push(
+        routerLinks.createdExternalServiceSuccessfulLink(
+          match.params.idName,
+          nextProps.createExternalServiceReducer.data.name
+        )
+      );
+    }
+    if (
+      this.props.createInternalServiceReducer.readyStatus !==
+        nextProps.createInternalServiceReducer.readyStatus &&
+      nextProps.createInternalServiceReducer.readyStatus ===
+        CREATE_INTERNAL_SERVICE_SUCCESS &&
+      nextProps.createExternalServiceReducer.readyStatus !==
+        CREATE_EXTERNAL_SERVICE_SUCCESS
+    ) {
+      this.props.history.push(routerLinks.namespaces);
+    }
+    if (
+      this.props.createInternalServiceReducer.readyStatus !==
+        nextProps.createInternalServiceReducer.readyStatus &&
+      nextProps.createInternalServiceReducer.readyStatus ===
+        CREATE_INTERNAL_SERVICE_SUCCESS &&
+      this.props.createExternalServiceReducer.readyStatus !==
+        nextProps.createExternalServiceReducer.readyStatus &&
+      nextProps.createExternalServiceReducer.readyStatus ===
+        CREATE_EXTERNAL_SERVICE_SUCCESS
+    ) {
+      this.props.history.push(
+        routerLinks.createdExternalServiceSuccessfulLink(
+          match.params.idName,
+          nextProps.createExternalServiceReducer.data.name
+        )
+      );
     }
   }
   handleSubmitCreateService = e => {
