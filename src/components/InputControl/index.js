@@ -23,6 +23,8 @@ type Props = {
   max: ?number,
   subPath: ?boolean,
   alwaysVisiblePlaceholder: ?string
+  subPath: ?boolean,
+  maxLength: number
 };
 const InputControl = ({
   handleChangeInput,
@@ -45,6 +47,8 @@ const InputControl = ({
   max,
   subPath,
   alwaysVisiblePlaceholder
+  subPath,
+  maxLength
 }: Props) => (
   <div className={`form-group ${!valid && 'has-error'}`}>
     {subPath && <span className="inputSubpathSign">/</span>}
@@ -61,6 +65,7 @@ const InputControl = ({
       onChange={e => handleChangeInput(e)}
       min={min}
       max={max}
+      maxLength={maxLength || 35}
     />
     {labelText && (
       <label className={baseClassNameLabel} htmlFor={id} id={labelId}>
