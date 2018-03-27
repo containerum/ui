@@ -149,7 +149,7 @@ const ProfileSidebar = ({ type }: Props) => (
     <li>
       <div className="nav-root-item">Settings</div>
       <Scrollspy
-        items={['webhooks', 'cli']}
+        items={['webhooks', 'domains', 'cli']}
         style={{
           padding: '20px 0 0 20px'
         }}
@@ -168,6 +168,22 @@ const ProfileSidebar = ({ type }: Props) => (
           ) : (
             <HashLink to="/settings#webhooks" className="nav-link">
               WebHooks
+            </HashLink>
+          )}
+        </li>
+        <li className="nav-item">
+          {type === 'settings' ? (
+            <div
+              className="nav-link"
+              onClick={() => scrollById('domains')}
+              onKeyPress={() => scrollById('domains')}
+              role="presentation"
+            >
+              Domains
+            </div>
+          ) : (
+            <HashLink to="/settings#domains" className="nav-link">
+              Domains
             </HashLink>
           )}
         </li>

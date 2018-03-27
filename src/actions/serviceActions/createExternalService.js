@@ -74,7 +74,6 @@ export const fetchCreateExternalService = (
     case 201: {
       idSrv = `External service ${data.name} for ${intObj.deployment_name}`;
       dispatch(createExternalServiceSuccess(data, status, idSrv));
-      dispatch(push('/namespaces'));
       break;
     }
     case 401: {

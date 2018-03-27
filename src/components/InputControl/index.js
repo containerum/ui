@@ -22,9 +22,11 @@ type Props = {
   min: ?number,
   max: ?number,
   subPath: ?boolean,
+  alwaysVisiblePlaceholder: ?string
+  subPath: ?boolean,
   maxLength: number
 };
-const InputEmail = ({
+const InputControl = ({
   handleChangeInput,
   value,
   placeholder,
@@ -43,6 +45,8 @@ const InputEmail = ({
   labelText,
   min,
   max,
+  subPath,
+  alwaysVisiblePlaceholder
   subPath,
   maxLength
 }: Props) => (
@@ -68,8 +72,9 @@ const InputEmail = ({
         {labelText}
       </label>
     )}
+    {alwaysVisiblePlaceholder && <span className={alwaysVisiblePlaceholder} />}
     {textHelper && <div className={baseClassNameHelper}>{textHelper}</div>}
   </div>
 );
 
-export default InputEmail;
+export default InputControl;

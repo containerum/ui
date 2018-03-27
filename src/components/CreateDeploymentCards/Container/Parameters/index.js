@@ -15,6 +15,9 @@ type Props = {
   ) => void
 };
 
+// const patternOne = new RegExp('^d+(.d+)?m$');
+// const patternTwo = new RegExp('/^0.d/');
+// const pattern = '/^(0.d|^d+(.d+)?m$)$';
 const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
   const { id, resources } = item;
   return (
@@ -36,7 +39,7 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           value={resources.cpu}
           id={`cpu${id}`}
           type="text"
-          pattern="^\d+(.\d+)?m$"
+          pattern="^0.[0-9]*$|^\d+(.\d+)?m$"
           required
           baseClassName="form-group__input-text form-control customInput"
           baseClassNameLabel={`form-group__label ${resources.cpu &&

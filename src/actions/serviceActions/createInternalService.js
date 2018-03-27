@@ -75,7 +75,6 @@ export const fetchCreateInternalService = (
     case 201: {
       idSrv = `Internal service ${data.name} for ${intObj.deployment_name}`;
       dispatch(createInternalServiceSuccess(data, status, idSrv));
-      dispatch(push('/namespaces'));
       break;
     }
     case 401: {

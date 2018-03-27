@@ -36,6 +36,8 @@ import PodLogsPage from './containers/Pod/PodLogs';
 import ServicesPage from './containers/Services';
 import ServicePage from './containers/Service';
 import CreateServicePage from './containers/CreateService';
+import CreateDomainPage from './containers/CreateDomain';
+import CreatedExternalServiceSuccessfulPage from './containers/CreatedExternalServiceSuccessful';
 import UpdateServicePage from './containers/UpdateService';
 import DeploymentPage from './containers/Deployment';
 import CreateDeploymentPage from './containers/CreateDeployment';
@@ -220,6 +222,20 @@ export default [
   {
     path: routerLinks.createService,
     component: CreateServicePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.createdExternalServiceSuccessful,
+    component: CreatedExternalServiceSuccessfulPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.createDomain,
+    component: CreateDomainPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])

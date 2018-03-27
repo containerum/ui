@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import InputControl from '../../../InputControl/index';
+import InputControl from '../../../InputControl';
 
 type Props = {
   item: Object,
