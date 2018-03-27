@@ -61,8 +61,3 @@
   cursor: pointer;
 }
 
-.support__errorMessage {
-  position: absolute;
-  top:360px;
-  left:900px;
-}

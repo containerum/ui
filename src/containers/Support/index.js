@@ -32,7 +32,6 @@ export class Support extends PureComponent<Props> {
   constructor() {
     super();
     this.state = {
-      errorFormatFile: false,
       textArea: '',
       group: '',
       files: [],
@@ -82,37 +81,40 @@ export class Support extends PureComponent<Props> {
     });
   };
   handleFiles = files => {
-    const errorFiles = [];
+    const errorFilesSize = [];
+    const errorFilesFormat = [];
     const successFiles = [];
     const successBase64 = [];
     Object.keys(files.fileList).filter((item, index) => {
-      if (
-        files.fileList[item].size >= 15728640 ||
+      if (files.fileList[item].size >= 15728640) {
+        errorFilesSize.push(files.fileList[item]);
+      } else if (
         files.fileList[item].type !==
-          ('image/png' ||
-            'image/jpeg' ||
-            'image/gif' ||
-            'text/plain' ||
-            'application/pdf')
+        ('image/png' ||
+          'image/jpeg' ||
+          'image/gif' ||
+          'text/plain' ||
+          'application/pdf')
       ) {
-        errorFiles.push(files.fileList[item]);
-        this.setState({
-          errorFormatFile: true
-        });
-        setTimeout(() => {
-          this.setState({
-            errorFormatFile: false
-          });
-        }, 4000);
+        errorFilesFormat.push(files.fileList[item]);
       } else {
         successFiles.push(files.fileList[item]);
         successBase64.push(files.base64[index]);
       }
       return null;
     });
-    if (errorFiles.length) {
+    if (errorFilesFormat.length) {
       toastr.error(
-        `<div>${errorFiles.map(
+        `<div>${errorFilesFormat.map(
+          file => `
+    ${file.name}`
+        )}</div>`,
+        `Invalid data format, please send files of acceptable formats`
+      );
+    }
+    if (errorFilesSize.length) {
+      toastr.error(
+        `<div>${errorFilesSize.map(
           file => `
     ${file.name}`
         )}</div>`,

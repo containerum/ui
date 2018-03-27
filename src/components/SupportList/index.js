@@ -15,8 +15,7 @@ type Props = {
   handleChangeTextArea: (e: Object) => void,
   handleChangeGroup: (e: Object) => void,
   handleDeleteImage: (fileName: string) => void,
-  handleFiles: (files: Array) => void,
-  errorFormat: boolean
+  handleFiles: (files: Array) => void
 };
 
 const SupportList = ({
@@ -29,18 +28,9 @@ const SupportList = ({
   handleChangeTextArea,
   handleChangeGroup,
   handleDeleteImage,
-  handleFiles,
-  errorFormat
+  handleFiles
 }: Props) => (
   <div className="content-block-content">
-    {errorFormat && (
-      <div className="support__errorMessage">
-        <button type="button" className="btn btn-danger">
-          Invalid file format <br />
-          Please attach an acceptable format file
-        </button>
-      </div>
-    )}
     <div className="feedback-form">
       <div className="feedback-form__title title">New support ticket</div>
       <div className="form-group">
