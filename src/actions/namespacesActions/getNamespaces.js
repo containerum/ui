@@ -14,7 +14,7 @@ import {
   GET_NAMESPACES_SUCCESS
   // GET_NAMESPACES_FAILURE
 } from '../../constants/namespacesConstants/getNamespaces';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getNamespacesRequest = () => ({
   type: GET_NAMESPACES_REQUESTING,
@@ -35,7 +35,7 @@ const getNamespacesSuccess = data => ({
 
 export const fetchGetNamespaces = (
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
@@ -46,7 +46,7 @@ export const fetchGetNamespaces = (
 
   dispatch(getNamespacesRequest());
 
-  const response = await axios.get(`${URL}/api/namespaces`, {
+  const response = await axios.get(`${URL}/namespaces`, {
     headers: {
       Authorization: token,
       'User-Client': browser,
@@ -57,7 +57,7 @@ export const fetchGetNamespaces = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getNamespacesSuccess(data));
+      dispatch(getNamespacesSuccess(data.namespaces));
       break;
     }
     case 404: {

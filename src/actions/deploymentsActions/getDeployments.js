@@ -9,7 +9,7 @@ import {
   GET_DEPLOYMENTS_SUCCESS,
   GET_DEPLOYMENTS_FAILURE
 } from '../../constants/deploymentsConstants/getDeployments';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getDeploymentsRequest = () => ({
   type: GET_DEPLOYMENTS_REQUESTING,
@@ -35,32 +35,28 @@ const getDeploymentsFailure = (err, status, idName) => ({
 export const fetchGetDeployments = (
   idName: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  // console.log(token);
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(getDeploymentsRequest());
 
-  const response = await axios.get(
-    `${URL}/api/namespaces/${idName}/deployments`,
-    {
-      headers: {
-        Authorization: token,
-        'User-Client': browser,
-        'Content-Type': 'application/x-www-form-urlencode',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
-      },
-      validateStatus: status => status >= 200 && status <= 505
-    }
-  );
+  const response = await axios.get(`${URL}/namespaces/${idName}/deployments`, {
+    headers: {
+      Authorization: token,
+      'User-Client': browser,
+      'User-Token': accessToken
+    },
+    validateStatus: status => status >= 200 && status <= 505
+  });
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getDeploymentsSuccess(data, status, idName));
+      dispatch(getDeploymentsSuccess(data.deployments, status, idName));
       break;
     }
     case 404: {

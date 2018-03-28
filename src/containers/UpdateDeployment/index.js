@@ -199,15 +199,7 @@ export class CreateDeployment extends PureComponent<Props> {
           }
         ],
         command: [],
-        volumeMounts: [
-          {
-            name: '',
-            mountPath: '',
-            subPath: '',
-            id: _.uniqueId(),
-            index: 0
-          }
-        ]
+        volumeMounts: []
       }
     ],
     volumes: [],
@@ -564,15 +556,7 @@ export class CreateDeployment extends PureComponent<Props> {
             }
           ],
           command: [],
-          volumeMounts: [
-            {
-              name: '',
-              mountPath: '',
-              subPath: '',
-              id: _.uniqueId(),
-              index: 0
-            }
-          ]
+          volumeMounts: []
         }
       ]
     });

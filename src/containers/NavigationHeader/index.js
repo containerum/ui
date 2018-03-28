@@ -100,9 +100,9 @@ export class NavigationHeader extends PureComponent<Props> {
                 <NavLink
                   key={_.uniqueId()}
                   className="dropdown-item"
-                  to={`/namespaces/${item.name}`}
+                  to={`/namespaces/${item.label}`}
                 >
-                  {item.name}
+                  {item.label}
                 </NavLink>
               ))}
             </ul>

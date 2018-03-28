@@ -95,7 +95,7 @@ export class Solutions extends PureComponent<Props> {
   };
   handleSelectNamespace = value => {
     const currentNamespace = this.state.displayedNamespaces.filter(
-      ns => ns.name === value
+      ns => ns.label === value
     );
     this.setState({
       ...this.state,
