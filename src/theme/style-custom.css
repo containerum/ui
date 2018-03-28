@@ -527,12 +527,12 @@ body .tooltip > .tooltip-inner {
 }
 
 .customInputDomain {
-  padding-right: 140px!important;
+  padding-right: 155px!important;
   direction: rtl;
 }
 
 .customAlwaysVisiblePlaceholder:after {
-  content: '.containerum.com';
+  content: '.hub.containerum.io';
   position: absolute;
   right: 8px;
   top: 27px;

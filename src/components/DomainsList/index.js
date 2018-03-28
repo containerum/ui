@@ -12,9 +12,9 @@ type Props = {
 };
 
 const DomainsList = ({ data, handleDeleteDomain }: Props) => {
-  const isEmptyData =
-    Object.keys(data).length >= 1 &&
-    Object.keys(data).map(() => Object.keys(data).ingresses);
+  const isEmptyData = Object.keys(data).find(
+    ingress => data[ingress].ingresses.length
+  );
   return (
     <div style={isEmptyData ? { height: '150px' } : {}}>
       {isEmptyData ? (
