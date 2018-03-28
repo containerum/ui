@@ -48,7 +48,7 @@ export const fetchCreateDomain = (
     owner: dataDomain.uid,
     rules: [
       {
-        host: `${dataDomain.domainName}.containerum.io`,
+        host: `${dataDomain.domainName}`,
         path: [
           {
             path: `/${dataDomain.domainPath}`,

@@ -70,11 +70,14 @@ export class CreateDomain extends PureComponent<Props> {
               (service.ports.length >= 1 &&
                 service.ports[0].protocol === 'TCP'))
         );
+        const currentService = servicesList.find(
+          service => service.name === this.props.match.params.idSrv
+        );
         this.setState({
           ...this.state,
-          currentService: servicesList[0],
-          currentPort: servicesList[0].ports[0],
-          portsList: servicesList[0].ports,
+          currentService,
+          currentPort: currentService ? currentService.ports[0] : undefined,
+          portsList: currentService.ports,
           servicesList
         });
       }
