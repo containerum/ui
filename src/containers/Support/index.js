@@ -86,20 +86,30 @@ export class Support extends PureComponent<Props> {
     const successFiles = [];
     const successBase64 = [];
     Object.keys(files.fileList).filter((item, index) => {
-      if (files.fileList[item].size >= 15728640) {
-        errorFilesSize.push(files.fileList[item]);
-      } else if (
-        files.fileList[item].type !==
-        ('image/png' ||
-          'image/jpeg' ||
-          'image/gif' ||
-          'text/plain' ||
-          'application/pdf')
+      if (
+        !(
+          files.fileList[item].type === 'image/png' ||
+          files.fileList[item].type === 'image/jpeg' ||
+          files.fileList[item].type === 'image/gif' ||
+          files.fileList[item].type === 'text/plain' ||
+          files.fileList[item].type === 'application/pdf'
+        )
       ) {
         errorFilesFormat.push(files.fileList[item]);
-      } else {
+      }
+
+      if (
+        files.fileList[item].type === 'image/png' ||
+        files.fileList[item].type === 'image/jpeg' ||
+        files.fileList[item].type === 'image/gif' ||
+        files.fileList[item].type === 'text/plain' ||
+        files.fileList[item].type === 'application/pdf'
+      ) {
         successFiles.push(files.fileList[item]);
         successBase64.push(files.base64[index]);
+      }
+      if (files.fileList[item].size >= 15728640) {
+        errorFilesSize.push(files.fileList[item]);
       }
       return null;
     });
