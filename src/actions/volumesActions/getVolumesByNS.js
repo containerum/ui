@@ -6,8 +6,7 @@ import cookie from 'react-cookies';
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
   GET_VOLUMES_BY_NS_REQUESTING,
-  GET_VOLUMES_BY_NS_SUCCESS,
-  GET_VOLUMES_BY_NS_FAILURE
+  GET_VOLUMES_BY_NS_SUCCESS
 } from '../../constants/volumesConstants/getVolumesByNS';
 import { webApi } from '../../config/index';
 
@@ -22,11 +21,11 @@ const getVolumesByNSSuccess = data => ({
   data
 });
 
-const getVolumesByNSFailure = err => ({
-  type: GET_VOLUMES_BY_NS_FAILURE,
-  isFetching: false,
-  err
-});
+// const getVolumesByNSFailure = err => ({
+//   type: GET_VOLUMES_BY_NS_FAILURE,
+//   isFetching: false,
+//   err
+// });
 
 export const fetchGetVolumesByNS = (
   idName: string,
@@ -66,8 +65,11 @@ export const fetchGetVolumesByNS = (
       break;
     }
     default: {
-      dispatch(getVolumesByNSFailure(data.message));
+      dispatch(getVolumesByNSSuccess([]));
     }
+    // default: {
+    //   dispatch(getVolumesByNSFailure(data.message));
+    // }
   }
 };
 

@@ -32,6 +32,7 @@ import getServiceReducer from './serviceReducers/getService';
 import deleteServiceReducer from './serviceReducers/deleteService';
 import createInternalServiceReducer from './serviceReducers/createInternalService';
 import createExternalServiceReducer from './serviceReducers/createExternalService';
+import createDomainReducer from './serviceReducers/createDomain';
 import updateInternalServiceReducer from './serviceReducers/updateInternalService';
 import updateExternalServiceReducer from './serviceReducers/updateExternalService';
 import getReleasesGithubReducer from './getReleasesGithubReducer';
@@ -62,6 +63,8 @@ import getCountPodsReducer from './statisticsReducers/getCountPods';
 import getSolutionsReducer from './solutionsReducers/getSolutions';
 import getSolutionReducer from './solutionReducers/getSolution';
 import runSolutionReducer from './solutionReducers/runSolution';
+import getDomainsReducer from './serviceReducers/getDomains';
+import deleteDomainReducer from './serviceReducers/deleteDomain';
 
 const reducers = {
   home,
@@ -114,6 +117,7 @@ const reducers = {
   deleteAccountReducer,
   createInternalServiceReducer,
   createExternalServiceReducer,
+  createDomainReducer,
   updateInternalServiceReducer,
   updateExternalServiceReducer,
   getCountDeploymentsReducer,
@@ -122,6 +126,8 @@ const reducers = {
   getSolutionsReducer,
   getSolutionReducer,
   runSolutionReducer,
+  getDomainsReducer,
+  deleteDomainReducer,
   router,
   loadingBar: loadingBarReducer
 };

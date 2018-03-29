@@ -84,8 +84,10 @@ export class Support extends PureComponent<Props> {
     const errorFiles = [];
     const successFiles = [];
     const successBase64 = [];
+    const successFilesFirstThree = [];
+    const successBase64FirstThree = [];
     Object.keys(files.fileList).filter((item, index) => {
-      if (files.fileList[item].size >= 15728640) {
+      if (files.fileList[item].size >= 10485760) {
         errorFiles.push(files.fileList[item]);
       } else {
         successFiles.push(files.fileList[item]);
@@ -93,19 +95,36 @@ export class Support extends PureComponent<Props> {
       }
       return null;
     });
+
     if (errorFiles.length) {
       toastr.error(
         `<div>${errorFiles.map(
           file => `
     ${file.name}`
         )}</div>`,
-        `The following files were not downloaded because the attachment size (15 MB maximum) was exceeded:`
+        `The following files were not downloaded because the attachment size (10 MB maximum) was exceeded:`
       );
     }
+
+    if (successFiles.length > 3) {
+      toastr.error(
+        `<div>${errorFiles.map(
+          file => `
+    ${file.name}`
+        )}</div>`,
+        `You can only upload 3 files at a time`
+      );
+    }
+
+    for (let i = 0; i < 3; i += 1) {
+      successFilesFirstThree.push(successFiles[i]);
+      successBase64FirstThree.push(successBase64[i]);
+    }
+
     this.setState({
       ...this.state,
-      files: successFiles,
-      base64: successBase64
+      files: successFilesFirstThree,
+      base64: successBase64FirstThree
     });
   };
   handleOnSubmit = e => {
