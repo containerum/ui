@@ -54,8 +54,8 @@ class ConfirmEmail extends PureComponent<Props> {
                   textTransform: 'initial'
                 }}
               >
-                Confirm your email by clicking the verification link we just
-                send to your inbox.
+                Confirm your email by clicking the verification link we`ve just
+                sent to your inbox.
               </div>
             </div>
           </div>

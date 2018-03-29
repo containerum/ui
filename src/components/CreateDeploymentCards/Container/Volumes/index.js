@@ -125,7 +125,7 @@ const Volumes = ({
                   value={mountPath}
                   id={`path${id}`}
                   type="text"
-                  pattern="[a-z0-9/]([-a-z0-9/]*[a-z0-9])?"
+                  pattern="[A-z0-9/]([-A-z0-9/]*[A-z0-9])?"
                   required
                   title="Example: data/mountPath"
                   baseClassName="form-group__input-text form-control customInput"

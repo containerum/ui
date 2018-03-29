@@ -371,7 +371,7 @@ export class Dashboard extends PureComponent<Props> {
               <div className="col-md-12 pl-0 pr-0">
                 <div className="block-container block-container-tabs">
                   <div className="block-container-tabs-header">
-                    Pre-Build Solutions
+                    PRE-BUILT SOLUTIONS
                   </div>
                   <ul
                     className="nav nav-pills mb-3"
