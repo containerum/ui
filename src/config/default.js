@@ -31,6 +31,7 @@ module.exports = {
     solution: '/solution/:idSol',
     solutionLink: (idSol: string) => `/solution/${idSol}`,
     login: '/login',
+    tools: '/tools',
     signUp: '/signUp',
     confirmEmail: '/confirmEmail',
     forgot: '/forgot',

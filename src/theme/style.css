@@ -49,6 +49,21 @@ h1{
 .container{
     background: #fff;
 }
+.container__tools {
+  display:flex;
+  padding: 0;
+}
+
+.tools__card{
+  padding-left: 0;
+}
+
+.tools__card_center {
+  padding-right: 45px;
+}
+.tools__card_right {
+  padding-right: 0;
+}
 
 .container-fluid{
     width:100% !important;
@@ -751,6 +766,11 @@ h1{
     height:32px;
     margin:0 0 10px 0;
 }
+.content-block-header-img__tools {
+  width: 50px;
+  height: 47px;
+  margin:0 0 10px 0;
+}
 
 .content-block-header-img img {
   max-width: 100%;
@@ -758,6 +778,20 @@ h1{
 
 .content-block-header-label {
   max-width: 800px;
+}
+.content-block-header-label__tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.content-block-header-label__text_center {
+  text-align: center;
 }
 
 .content-block-header-label__text {
@@ -875,7 +909,11 @@ h1{
     margin: 20px 0 0 0;
     padding: 0;
 }
-
+.content-block-content__tools{
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+  padding-top: 15px;
+}
 .content-block-content.card-block.card-block2dollars {
     margin: 30px 0 0 0;
 }
@@ -940,6 +978,11 @@ h1{
     color:#333;
     margin: -5px 0 5px 0;
     font-weight: 600;
+}
+.content-block__info-name_tools{
+  color:#333;
+  margin: -5px 0 5px 0;
+  font-weight: 300;
 }
 
 .content-block__info-text{

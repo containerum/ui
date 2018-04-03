@@ -65,6 +65,13 @@ input:invalid {
 .content-block-container {
     padding: 25px 30px 25px 30px;
 }
+.content-block-container__tools {
+  padding: 25px 0 25px 0;
+}
+
+.content-block-container__tools:hover {
+  outline: 2px solid #29abe2 !important;
+}
 
 .container-img {
     padding: 0;
@@ -89,6 +96,11 @@ input:invalid {
      min-height: unset;
 }
 
+
+.card-container__tools {
+  min-height: 260px !important;
+  min-width: 340px !important;
+}
 .add-new-block .action-vol {
     line-height: 185px;
 }

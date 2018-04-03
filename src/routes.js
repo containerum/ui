@@ -56,6 +56,7 @@ import AccountPage from './containers/Account';
 import SettingsPage from './containers/Settings';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
+import Tools from './containers/Tools';
 
 export default [
   {
@@ -336,6 +337,12 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.tools,
+    exact: true,
+    component: Tools,
+    include: true
   },
   {
     path: routerLinks.login,
