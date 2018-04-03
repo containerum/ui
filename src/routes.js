@@ -53,10 +53,11 @@ import CheckEmail from './containers/CheckEmail';
 import SupportPage from './containers/Support';
 import SuccessTicket from './containers/SuccessTicket';
 import AccountPage from './containers/Account';
-import SettingsPage from './containers/Settings';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
 import Tools from './containers/Tools';
+import WebHookInfo from './containers/Webhook';
+import DomainsInfo from './containers/Domains';
 
 export default [
   {
@@ -304,14 +305,6 @@ export default [
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
-    path: routerLinks.settings,
-    exact: true,
-    component: SettingsPage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetProfileIfNeeded())])
-  },
-  {
     path: routerLinks.billing,
     exact: true,
     component: BillingPage,
@@ -343,6 +336,14 @@ export default [
     exact: true,
     component: Tools,
     include: true
+  },
+  {
+    path: routerLinks.webhook,
+    component: WebHookInfo
+  },
+  {
+    path: routerLinks.domains,
+    component: DomainsInfo
   },
   {
     path: routerLinks.login,

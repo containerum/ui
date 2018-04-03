@@ -47,13 +47,6 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
             </NavLink>
             <NavLink
               activeClassName="active"
-              className="dropdown-item"
-              to="/settings"
-            >
-              Settings
-            </NavLink>
-            <NavLink
-              activeClassName="active"
               className="dropdown-item text-danger"
               to={routerLinks.login}
               onClick={() => handleLogout()}

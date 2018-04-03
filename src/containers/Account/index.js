@@ -16,6 +16,7 @@ import ProfileInfo from '../../components/ProfileInfo';
 import ProfileSidebar from '../../components/ProfileSidebar';
 import ProfilePassword from './Password';
 import DeleteAccountInfo from './DeleteAccount';
+import CLI from '../../components/CLIInfo';
 import './Account.css';
 
 type Props = {
@@ -52,6 +53,7 @@ export class Account extends PureComponent<Props> {
           name={getProfileReducer.data.data.first_name}
         />
         <ProfilePassword />
+        <CLI />
         <DeleteAccountInfo />
       </div>
     );

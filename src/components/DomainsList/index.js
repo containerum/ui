@@ -16,10 +16,10 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
     ingress => data[ingress].ingresses.length
   );
   return (
-    <div style={isEmptyData ? { height: '150px' } : {}}>
+    <div style={isEmptyData ? { height: 'auto' } : {}}>
       {isEmptyData ? (
         <table
-          className="content-block__table_domains dashboard-table table"
+          className="block-item__tokens-table content-block__table table"
           style={{
             tableLayout: 'fixed',
             width: '100%',
@@ -37,7 +37,7 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
               <td className="td-4-domains" />
             </tr>
           </thead>
-          <tbody className="domains">
+          <tbody className="domains" style={{ overflow: 'auto' }}>
             {Object.keys(data).map(ingressName => {
               const checkArrIngressess = data[ingressName];
               return Object.keys(checkArrIngressess).map(ingress =>

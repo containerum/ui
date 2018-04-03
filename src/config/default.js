@@ -32,6 +32,8 @@ module.exports = {
     solutionLink: (idSol: string) => `/solution/${idSol}`,
     login: '/login',
     tools: '/tools',
+    domains: '/domains',
+    webhook: '/webhook',
     signUp: '/signUp',
     confirmEmail: '/confirmEmail',
     forgot: '/forgot',
@@ -85,8 +87,7 @@ module.exports = {
     support: '/support',
     successTicket: '/successTicket',
     account: '/account',
-    billing: '/billing',
-    settings: '/settings'
+    billing: '/billing'
   },
   externalLinks: {
     documentation: 'https://containerum.com/docs/about',
