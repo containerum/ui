@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
+import Helmet from 'react-helmet';
 
 import HeaderPage from '../Header';
 import FooterPage from '../Footer';
@@ -156,6 +157,7 @@ export class WebHook extends PureComponent<Props> {
       : '{WEBHOOK_KEY}';
     return (
       <div>
+        <Helmet title="Webhook" />
         <HeaderPage />
         <div className="container  no-back">
           <div className="content-block">

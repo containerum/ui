@@ -34,6 +34,7 @@ module.exports = {
     tools: '/tools',
     domains: '/domains',
     webhook: '/webhook',
+    configmap: '/configmap',
     signUp: '/signUp',
     confirmEmail: '/confirmEmail',
     forgot: '/forgot',

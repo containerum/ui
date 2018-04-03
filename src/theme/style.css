@@ -385,6 +385,10 @@ h1{
     text-transform: uppercase;
     margin: 0 0 15px 0;
 }
+.block-item__title_configmap-block {
+  font-size: 15px;
+  padding-left: 15px;
+}
 
 .block-item__copy-string {
     width: 100%;

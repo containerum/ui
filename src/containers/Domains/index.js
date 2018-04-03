@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import HeaderPage from '../Header';
 import FooterPage from '../Footer';
@@ -106,6 +107,7 @@ export class Domains extends PureComponent<Props> {
   render() {
     return (
       <div>
+        <Helmet title="Domains" />
         <HeaderPage />
         <div className="container  no-back">
           <div className="content-block">

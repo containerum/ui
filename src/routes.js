@@ -58,6 +58,7 @@ import NotFoundPage from './containers/NotFound';
 import Tools from './containers/Tools';
 import WebHookInfo from './containers/Webhook';
 import DomainsInfo from './containers/Domains';
+import ConfigmapInfo from './containers/Configmap';
 
 export default [
   {
@@ -344,6 +345,10 @@ export default [
   {
     path: routerLinks.domains,
     component: DomainsInfo
+  },
+  {
+    path: routerLinks.configmap,
+    component: ConfigmapInfo
   },
   {
     path: routerLinks.login,
