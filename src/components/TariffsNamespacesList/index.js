@@ -39,12 +39,12 @@ const TariffsNamespacesList = ({
       const isActiveTariff = label === active;
       let {
         cpu_limit: cpuLimit,
-        memory_limit: memoryLimit,
-        volume_size: volumeSize
+        memory_limit: memoryLimit
+        // volume_size: volumeSize
       } = tariff;
       cpuLimit /= 1000;
       memoryLimit /= 1024;
-      volumeSize = volumeSize ? Math.ceil(volumeSize) : volumeSize;
+      // volumeSize = volumeSize ? Math.ceil(volumeSize) : volumeSize;
       const pricePerDay = `$${(price / 30).toFixed(2)} daily`;
       return (
         <div className="col-md-3" key={`$${price}`}>
@@ -74,7 +74,7 @@ const TariffsNamespacesList = ({
                       label,
                       cpuLimit,
                       memoryLimit,
-                      volumeSize,
+                      // volumeSize,
                       price,
                       pricePerDay
                     });
@@ -96,7 +96,7 @@ const TariffsNamespacesList = ({
                       label,
                       cpuLimit,
                       memoryLimit,
-                      volumeSize,
+                      // volumeSize,
                       price,
                       pricePerDay
                     });
@@ -112,11 +112,12 @@ const TariffsNamespacesList = ({
             >
               <div className="row">
                 <div
-                  className={
-                    `$${price}` === '$1'
-                      ? 'col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars'
-                      : 'col-md-6 namespace-plan-block-container-left'
-                  }
+                  // className={
+                  //   `$${price}` === '$1'
+                  //     ? 'col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars'
+                  //     : 'col-md-6 namespace-plan-block-container-left'
+                  // }
+                  className="col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars"
                 >
                   {isActiveTariff ? (
                     <div className="namespace-plan-block-price">Active</div>
@@ -134,11 +135,12 @@ const TariffsNamespacesList = ({
                 </div>
                 <div className="col-md-6 namespace-plan-block-container-right">
                   <div
-                    className={
-                      `$${price}` === '$1'
-                        ? 'content-block-content card-block card-block2dollars'
-                        : 'content-block-content card-block'
-                    }
+                    // className={
+                    //   `$${price}` === '$1'
+                    //     ? 'content-block-content card-block card-block2dollars'
+                    //     : 'content-block-content card-block'
+                    // }
+                    className="content-block-content card-block card-block2dollars"
                   >
                     <div className="content-block__info-item">
                       <div className="content-block__info-name inline">
@@ -156,18 +158,18 @@ const TariffsNamespacesList = ({
                         {cpuLimit}
                       </div>
                     </div>
-                    {`$${price}` !== '$1' ? (
-                      <div className="content-block__info-item">
-                        <div className="content-block__info-name inline">
-                          Volume :{' '}
-                        </div>
-                        <div className="content-block__info-text inline">
-                          {volumeSize} GB
-                        </div>
-                      </div>
-                    ) : (
-                      ''
-                    )}
+                    {/* {`$${price}` !== '$1' ? ( */}
+                    {/* <div className="content-block__info-item"> */}
+                    {/* <div className="content-block__info-name inline"> */}
+                    {/* Volume :{' '} */}
+                    {/* </div> */}
+                    {/* <div className="content-block__info-text inline"> */}
+                    {/* {volumeSize} GB */}
+                    {/* </div> */}
+                    {/* </div> */}
+                    {/* ) : ( */}
+                    {/* '' */}
+                    {/* )} */}
                   </div>
                 </div>
               </div>

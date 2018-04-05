@@ -74,7 +74,7 @@ export const fetchUpdateInternalService = (
     }
   );
   const { status, data, config } = response;
-  console.log(data);
+  // console.log(data);
   switch (status) {
     case 200: {
       dispatch(

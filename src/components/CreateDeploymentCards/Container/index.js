@@ -6,7 +6,7 @@ import icon from '../../../images/icon-create-dep.svg';
 import Common from './Common';
 import Parameters from './Parameters';
 // import ImagePorts from './ImagePorts';
-import Commands from './Commands';
+// import Commands from './Commands';
 import Environments from './Environments';
 import Volumes from './Volumes';
 
@@ -22,7 +22,7 @@ type Props = {
   // handleChangeInputImagePorts: () => void,
   // handleClickRemoveImagePort: () => void,
   // handleClickAddImagePort: () => void,
-  handleChangeInputCommands: () => void,
+  // handleChangeInputCommands: () => void,
   handleChangeInputEnvironment: () => void,
   handleClickRemoveEnvironment: () => void,
   handleClickAddEnvironment: () => void,
@@ -44,7 +44,7 @@ const Container = ({
   // handleChangeInputImagePorts,
   // handleClickRemoveImagePort,
   // handleClickAddImagePort,
-  handleChangeInputCommands,
+  // handleChangeInputCommands,
   handleChangeInputEnvironment,
   handleClickRemoveEnvironment,
   handleClickAddEnvironment,
@@ -98,11 +98,11 @@ const Container = ({
         {/* handleClickRemoveImagePort={handleClickRemoveImagePort} */}
         {/* handleClickAddImagePort={handleClickAddImagePort} */}
         {/* /> */}
-        <Commands
-          item={item}
-          index={index}
-          handleChangeInputCommands={handleChangeInputCommands}
-        />
+        {/* <Commands */}
+        {/* item={item} */}
+        {/* index={index} */}
+        {/* handleChangeInputCommands={handleChangeInputCommands} */}
+        {/* /> */}
         <Environments
           env={item.env}
           id={item.id}

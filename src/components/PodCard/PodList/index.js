@@ -14,7 +14,7 @@ const PodsList = ({ data }: Props) => {
   return (
     <div className="row double">
       {containers.map(container => {
-        console.log(container);
+        // console.log(container);
         const { name, image } = container;
         const { cpu, memory } = container.limits;
         return (

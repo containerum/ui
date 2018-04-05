@@ -69,7 +69,7 @@ export const fetchCreateNamespace = (
     }
   );
   const { status, data, config } = response;
-  console.log(data);
+  // console.log(data);
   switch (status) {
     case 200: {
       dispatch(createNamespaceSuccess(data, 201, config.method, idName));

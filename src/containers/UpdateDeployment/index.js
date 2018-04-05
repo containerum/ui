@@ -55,6 +55,10 @@ export class CreateDeployment extends PureComponent<Props> {
     super(props);
     this.state = this.initialState();
   }
+  componentWillMount() {
+    const { fetchGetDeploymentIfNeeded, match } = this.props;
+    fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
+  }
   componentDidMount() {
     const {
       // fetchGetVolumesByNSIfNeeded,
@@ -91,17 +95,17 @@ export class CreateDeployment extends PureComponent<Props> {
         nextProps.getDeploymentReducer.readyStatus &&
       nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS
     ) {
-      console.log(nextProps.getDeploymentReducer);
+      // console.log(nextProps.getDeploymentReducer);
       const { data } = nextProps.getDeploymentReducer;
       const { name, labels, replicas, containers } = data;
       // const containersArr = [];
-      const containersArr = containers.map((item, index) => {
+      const containersArr = containers.map(item => {
         const {
           image,
           name: imgName,
           limits,
           ports,
-          environments,
+          env,
           commands
           // volumes
         } = item;
@@ -112,8 +116,8 @@ export class CreateDeployment extends PureComponent<Props> {
         //     return null;
         //   });
         // }
-        // if (environments) {
-        //   environments.map(itemEnv => {
+        // if (env) {
+        //   env.map(itemEnv => {
         //     itemEnv.id = _.uniqueId();
         //     itemEnv.index = index + 1;
         //     return null;
@@ -134,55 +138,44 @@ export class CreateDeployment extends PureComponent<Props> {
             cpu: `${limits.cpu}`,
             memory: `${limits.memory}`
           },
-          ports: ports
-            ? ports.map(itemPorts => {
-                itemPorts.id = _.uniqueId();
-                itemPorts.index = index + 1;
-                return null;
-              })
-            : [
-                {
-                  containerPort: '',
-                  id: _.uniqueId(),
-                  index: 1
-                }
-              ],
-          env: environments
-            ? environments.map(itemEnv => {
-                itemEnv.id = _.uniqueId();
-                itemEnv.index = index + 1;
-                return null;
-              })
-            : [
-                {
-                  value: '',
-                  name: '',
-                  id: _.uniqueId(),
-                  index: 1
-                }
-              ],
+          ports: ports || [
+            {
+              containerPort: '',
+              id: _.uniqueId(),
+              index: 1
+            }
+          ],
+          env: env || [
+            {
+              value: '',
+              name: '',
+              id: _.uniqueId(),
+              index: 1
+            }
+          ],
           command: commands || [],
           volumeMounts: []
           // volumeMounts: volumes || []
         };
       });
-      console.log('containersArr', containersArr);
-      this.setState({
-        ...this.state,
-        name,
-        labels: labels
-          ? [labels]
-          : [
-              {
-                key: '',
-                label: '',
-                id: _.uniqueId()
-              }
-            ],
-        replicas,
-        containers: containersArr,
-        containersCount: containersArr.length
-      });
+      if (containers.length === containersArr.length) {
+        this.setState({
+          ...this.state,
+          name,
+          labels: labels
+            ? [labels]
+            : [
+                {
+                  key: '',
+                  label: '',
+                  id: _.uniqueId()
+                }
+              ],
+          replicas,
+          containers: containersArr,
+          containersCount: containersArr.length
+        });
+      }
     }
   }
   initialState = () => ({
@@ -1263,7 +1256,7 @@ export class CreateDeployment extends PureComponent<Props> {
 
   render() {
     const { match, updateDeploymentReducer } = this.props;
-    console.log('state', this.state);
+    // console.log('state', this.state);
     return (
       <div>
         <Helmet

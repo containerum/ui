@@ -54,7 +54,7 @@ export const fetchDeleteAccount = (
     }
   );
   const { status, data } = response;
-  console.log(data);
+  // console.log(data);
   switch (status) {
     case 202: {
       dispatch(deleteAccountSuccess(data, status));

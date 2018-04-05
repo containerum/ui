@@ -64,7 +64,7 @@ export class CreateNamespace extends PureComponent<Props> {
       NSTariffName: null,
       NSTariffCpu: null,
       NSTariffMemory: null,
-      NSTariffVolume: null,
+      // NSTariffVolume: null,
       NSTariffPrice: null,
       NSTariffPricePerDay: null,
       inputNameProfile: '',
@@ -175,7 +175,7 @@ export class CreateNamespace extends PureComponent<Props> {
       label,
       cpuLimit,
       memoryLimit,
-      volumeSize,
+      // volumeSize,
       price,
       pricePerDay
     } = tariff;
@@ -186,7 +186,7 @@ export class CreateNamespace extends PureComponent<Props> {
       NSTariffName: label,
       NSTariffCpu: cpuLimit,
       NSTariffMemory: memoryLimit,
-      NSTariffVolume: volumeSize,
+      // NSTariffVolume: volumeSize,
       NSTariffPrice: price,
       NSTariffPricePerDay: pricePerDay
     });
@@ -252,7 +252,7 @@ export class CreateNamespace extends PureComponent<Props> {
       Name,
       NSTariffCpu,
       NSTariffMemory,
-      NSTariffVolume,
+      // NSTariffVolume,
       NSTariffPrice,
       NSTariffPricePerDay,
       isOpened,
@@ -280,7 +280,7 @@ export class CreateNamespace extends PureComponent<Props> {
           data={{
             cpu: NSTariffCpu,
             memory: NSTariffMemory,
-            volume: NSTariffVolume,
+            // volume: NSTariffVolume,
             price: NSTariffPrice,
             pricePerDay: NSTariffPricePerDay
           }}

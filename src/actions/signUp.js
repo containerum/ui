@@ -49,8 +49,7 @@ export const fetchSignUp = (
     {
       login: email,
       password,
-      recaptcha:
-        '03AHhf_52156hcrzZpAgJse24k1JVDN4nGjujmnlYW7KTjV-JuxmNE13SUfJNfxEC1Rj4-.....'
+      recaptcha
     },
     {
       headers: {
@@ -60,7 +59,7 @@ export const fetchSignUp = (
     }
   );
   const { data, status } = response;
-  console.log(data);
+  // console.log(data);
   switch (status) {
     case 201: {
       // if (

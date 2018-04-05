@@ -59,7 +59,7 @@ export const fetchChangePassword = (
     }
   );
   const { status, data, config } = response;
-  console.log(data, status);
+  // console.log(data, status);
   const { access_token: newAccessToken, refresh_token: newRefreshToken } = data;
   switch (status) {
     case 202: {

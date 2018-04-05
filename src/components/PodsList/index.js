@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { routerLinks } from '../../config';
-import { timeago } from '../../functions/timeago';
+// import { timeago } from '../../functions/timeago';
 import podPng from '../../images/pod-3.png';
 
 type Props = {
@@ -24,8 +24,8 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
   const handleClose = e => {
     e.stopPropagation();
   };
-  const ta = timeago();
-  console.log(data);
+  // const ta = timeago();
+  // console.log(data);
   return (
     <div>
       {data.length >= 1 && (
@@ -37,7 +37,7 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
               <td className="td-3">Status</td>
               <td className="td-4">Restarts</td>
               <td className="td-5">Containers</td>
-              <td className="td-6">Age</td>
+              {/* <td className="td-6">Age</td> */}
               <td className="td-7" />
             </tr>
           </thead>
@@ -46,12 +46,12 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
               const {
                 name,
                 status,
-                containers,
-                created_at: createdAt
+                containers
+                // created_at: createdAt
               } = deploy;
-              const milliseconds = Date.parse(createdAt);
-              const dateHours = new Date(milliseconds);
-              const dateValue = ta.ago(dateHours, true);
+              // const milliseconds = Date.parse(createdAt);
+              // const dateHours = new Date(milliseconds);
+              // const dateValue = ta.ago(dateHours, true);
               const id = `pod_${name}`;
               return (
                 <tr
@@ -67,7 +67,7 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
                   <td className="td-3">{status.phase}</td>
                   <td className="td-4">{status.restart_count} restarts</td>
                   <td className="td-5">{containers.length}</td>
-                  <td className="td-6">{dateValue}</td>
+                  {/* <td className="td-6">{dateValue}</td> */}
                   <td className="td-7">
                     {/* <div className="warning"> </div> */}
                   </td>

@@ -126,7 +126,7 @@ export const fetchCreateDeployment = (
   switch (status) {
     case 200: {
       idSrv = `Deployment ${data.name} for ${idName}`;
-      dispatch(createDeploymentSuccess(data, status, config.method, idSrv));
+      dispatch(createDeploymentSuccess(data, 201, config.method, idSrv));
       dispatch(push('/namespaces'));
       break;
     }
