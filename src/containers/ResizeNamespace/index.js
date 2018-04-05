@@ -45,6 +45,7 @@ export class ResizeNamespace extends PureComponent<Props> {
     super();
     this.state = {
       isOpened: false,
+      NSTariffId: null,
       NSTariffName: null,
       NSTariffCpu: null,
       NSTariffMemory: null,
@@ -70,6 +71,7 @@ export class ResizeNamespace extends PureComponent<Props> {
   };
   handleSelectTariff = tariff => {
     const {
+      id,
       label,
       cpuLimit,
       memoryLimit,
@@ -80,6 +82,7 @@ export class ResizeNamespace extends PureComponent<Props> {
     this.setState({
       ...this.state,
       isOpened: true,
+      NSTariffId: id,
       NSTariffName: label,
       NSTariffCpu: cpuLimit,
       NSTariffMemory: memoryLimit,
@@ -147,6 +150,7 @@ export class ResizeNamespace extends PureComponent<Props> {
       match
     } = this.props;
     const {
+      NSTariffId,
       NSTariffName,
       NSTariffCpu,
       NSTariffMemory,
@@ -167,6 +171,7 @@ export class ResizeNamespace extends PureComponent<Props> {
         <ResizeModal
           type="Namespace"
           tariff={NSTariffName}
+          id={NSTariffId}
           name={match.params.idName}
           data={{
             cpu: NSTariffCpu,

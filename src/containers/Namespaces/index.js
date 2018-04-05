@@ -70,9 +70,8 @@ export class Namespaces extends PureComponent<Props> {
         nextProps.deleteNamespaceReducer.readyStatus &&
       nextProps.deleteNamespaceReducer.readyStatus === DELETE_NAMESPACE_SUCCESS
     ) {
-      // console.log(nextProps.deleteNamespaceReducer.idName);
       const displayedNS = this.state.displayedNamespaces.filter(
-        namespace => nextProps.deleteNamespaceReducer.idName !== namespace.name
+        namespace => nextProps.deleteNamespaceReducer.idName !== namespace.label
       );
       this.setState({
         ...this.state,

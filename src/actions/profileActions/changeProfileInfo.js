@@ -9,7 +9,7 @@ import {
   CHANGE_PROFILE_INFO_SUCCESS,
   CHANGE_PROFILE_INFO_FAILURE
 } from '../../constants/profileConstants/changeProfileInfo';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const changeProfileInfoRequest = () => ({
   type: CHANGE_PROFILE_INFO_REQUESTING,
@@ -36,15 +36,18 @@ export const fetchChangeProfileInfo = (
   countryCode: number,
   firstName: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(changeProfileInfoRequest());
 
   const response = await axios.put(
-    `${URL}/api/profile`,
+    `${URL}/user/info`,
     {
       country_code: countryCode,
       first_name: firstName
@@ -53,17 +56,15 @@ export const fetchChangeProfileInfo = (
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
+        // 'Content-Type': 'application/json'
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { status, data, config } = response;
   switch (status) {
-    case 202: {
+    case 200: {
       dispatch(changeProfileInfoSuccess(data, status, config.method));
       break;
     }

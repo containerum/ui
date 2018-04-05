@@ -148,7 +148,7 @@ export class Namespace extends PureComponent<Props> {
       <NamespaceInfo
         data={getNamespacesReducer.data.find(
           namespace =>
-            namespace.name === match.params.idName ? namespace : null
+            namespace.label === match.params.idName ? namespace : null
         )}
         handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
         idName={match.params.idName}

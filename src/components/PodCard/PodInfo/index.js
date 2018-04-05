@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import _ from 'lodash/fp';
+// import _ from 'lodash/fp';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import { routerLinks } from '../../../config';
@@ -33,8 +33,8 @@ const PodInfo = ({
   const handleClickDeleteDeployment = name => {
     handleDeletePod(name);
   };
-  const { name, labels, ram, cpu, status } = data;
-  const labelsToArray = Object.keys(labels);
+  const { name, total_cpu: cpu, total_memory: memory, status } = data;
+  // const labelsToArray = Object.keys(labels);
   return (
     <div className="content-block-container content-block_common-statistic container">
       <div className="content-block-header">
@@ -69,36 +69,36 @@ const PodInfo = ({
         </div>
         <div className="content-block__info-item">
           <div className="content-block__info-name">RAM ( Usage ) : </div>
-          <div className="content-block__info-text">{ram} MB</div>
+          <div className="content-block__info-text">{memory}</div>
         </div>
         <div className="content-block__info-item">
           <div className="content-block__info-name">CPU ( Usage ) : </div>
-          <div className="content-block__info-text">{cpu} m</div>
+          <div className="content-block__info-text">{cpu}</div>
         </div>
         <div className="content-block__info-item">
           <div className="content-block__info-name">Status: </div>
-          <div className="content-block__info-text">{status}</div>
+          <div className="content-block__info-text">{status.phase}</div>
         </div>
 
         <div className="clearfix mt-2" />
 
-        <div className="content-block__info-item i-1">
-          <div className="content-block__info-name">Labels: </div>
-          <div className="content-block__info-text">
-            {labelsToArray.map(
-              item =>
-                labelsToArray[labelsToArray.length - 1] === item ? (
-                  <span key={_.uniqueId()} className="padding">
-                    {item}: {labels[item]}
-                  </span>
-                ) : (
-                  <span key={_.uniqueId()} className="padding">
-                    {item}: {labels[item]},{' '}
-                  </span>
-                )
-            )}
-          </div>
-        </div>
+        {/* <div className="content-block__info-item i-1"> */}
+        {/* <div className="content-block__info-name">Labels: </div> */}
+        {/* <div className="content-block__info-text"> */}
+        {/* {labelsToArray.map( */}
+        {/* item => */}
+        {/* labelsToArray[labelsToArray.length - 1] === item ? ( */}
+        {/* <span key={_.uniqueId()} className="padding"> */}
+        {/* {item}: {labels[item]} */}
+        {/* </span> */}
+        {/* ) : ( */}
+        {/* <span key={_.uniqueId()} className="padding"> */}
+        {/* {item}: {labels[item]},{' '} */}
+        {/* </span> */}
+        {/* ) */}
+        {/* )} */}
+        {/* </div> */}
+        {/* </div> */}
         <div
           className="collapse content-block__info-logs log-block i-1"
           id="collapseExample"

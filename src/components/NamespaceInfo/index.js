@@ -13,15 +13,8 @@ type Props = {
 };
 
 const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
-  // console.log('NamespaceInfo', data);
-  const {
-    memory,
-    memory_limit: memoryLimit,
-    cpu,
-    cpu_limit: cpuLimit,
-    volume_size: volumeSize,
-    volume_used: volumeUsed
-  } = data;
+  const { memory, cpu } = data.resources.used;
+  const { memory: memoryLimit, cpu: cpuLimit } = data.resources.hard;
   return (
     <div className="content-block-container content-block_common-statistic container">
       <div className="content-block-header">
@@ -66,7 +59,7 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
             RAM ( Usage / Total ) :{' '}
           </div>
           <div className="content-block__info-text">
-            {memory} / {memoryLimit} MB
+            {memory} / {memoryLimit}
           </div>
         </div>
         <div className="content-block__info-item">
@@ -74,16 +67,14 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
             CPU ( Usage / Total ) :{' '}
           </div>
           <div className="content-block__info-text">
-            {cpu} / {cpuLimit} m
+            {cpu} / {cpuLimit}
           </div>
         </div>
         <div className="content-block__info-item">
           <div className="content-block__info-name">
             Volume ( Usage / Total ) :
           </div>
-          <div className="content-block__info-text">
-            {volumeUsed || '-'} / {volumeSize || '-'} {volumeSize ? 'GB' : ''}
-          </div>
+          <div className="content-block__info-text">- / -</div>
         </div>
       </div>
     </div>

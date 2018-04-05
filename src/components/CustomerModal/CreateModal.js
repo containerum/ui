@@ -33,6 +33,7 @@ const customStyles = {
 type Props = {
   type: string,
   tariff: string,
+  id: string,
   name: string,
   data: Object,
   // typeModal: string,
@@ -46,6 +47,7 @@ type Props = {
 const CreateModal = ({
   type,
   tariff,
+  id,
   name,
   data,
   isOpened,
@@ -61,7 +63,7 @@ const CreateModal = ({
     e.preventDefault();
     if (tariff && name.length >= 2 && name.search(regexp) !== -1) {
       handleOpenCloseModal();
-      onHandleCreate(name, tariff, data.price);
+      onHandleCreate(name, id, data.price);
     }
   };
   const handleChangeNameOfType = e => {
@@ -109,11 +111,12 @@ const CreateModal = ({
             <div className="namespace-plan-block-container hover-action-new hover-always-new">
               <div className="row">
                 <div
-                  className={
-                    `$${data.price}` === '$1'
-                      ? 'col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars'
-                      : 'col-md-6 namespace-plan-block-container-left'
-                  }
+                  // className={
+                  //   `$${data.price}` === '$1'
+                  //     ? 'col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars'
+                  //     : 'col-md-6 namespace-plan-block-container-left'
+                  // }
+                  className="col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars"
                 >
                   <div className="namespace-plan-block-price">
                     ${data.price}
@@ -127,11 +130,12 @@ const CreateModal = ({
                   data.cpu && (
                     <div className="col-md-6 namespace-plan-block-container-right">
                       <div
-                        className={
-                          data.price === '$1'
-                            ? 'content-block-content card-block card-block2dollars'
-                            : 'content-block-content card-block'
-                        }
+                        // className={
+                        //   data.price === '$1'
+                        //     ? 'content-block-content card-block card-block2dollars'
+                        //     : 'content-block-content card-block'
+                        // }
+                        className="content-block-content card-block card-block2dollars"
                       >
                         <div className="content-block__info-item ">
                           <div className="content-block__info-name inline">

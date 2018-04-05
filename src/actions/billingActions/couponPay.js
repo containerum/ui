@@ -41,25 +41,27 @@ export const fetchCouponPay = (
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(couponPayRequest());
 
   const response = await axios.post(
-    `${URL}/api/apply_coupon`,
+    `${URL}/coupon/create`,
     { code },
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
+        // 'Content-Type': 'application/json'
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { status, data, config } = response;
+  // console.log(data);
   switch (status) {
     case 200: {
       dispatch(couponPaySuccess(data, status, config.method, code));

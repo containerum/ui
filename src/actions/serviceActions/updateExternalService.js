@@ -9,7 +9,7 @@ import {
   UPDATE_EXTERNAL_SERVICE_SUCCESS,
   UPDATE_EXTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/updateExternalService';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const updateExternalServiceRequest = () => ({
   type: UPDATE_EXTERNAL_SERVICE_REQUESTING,
@@ -38,45 +38,49 @@ export const fetchUpdateExternalService = (
   idSrv: string,
   dataSrv: Object,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(updateExternalServiceRequest());
 
-  const intObj = {
-    deployment_name: dataSrv.currentDeployment,
-    ports: [],
-    external: 'true'
+  const extObj = {
+    deploy: dataSrv.currentDeployment,
+    ports: []
   };
   dataSrv.externalSrvObject.map(item => {
-    intObj.ports.push({
+    extObj.ports.push({
       name: item.externalSrvName,
-      targetPort: parseInt(item.externalSrvTargetPort, 10),
-      protocol: item.intServiceType
+      target_port: parseInt(item.externalSrvTargetPort, 10),
+      protocol: item.extServiceType
     });
     return null;
   });
+  // console.log(extObj);
   const response = await axios.put(
-    `${URL}/api/namespaces/${idName}/services/${idSrv}`,
-    intObj,
+    `${URL}/namespace/${idName}/service/${idSrv}`,
+    extObj,
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Access-Control-Allow-Origin': '*'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { status, data, config } = response;
+  // console.log(data);
   switch (status) {
-    case 202: {
+    case 200: {
       dispatch(
         updateExternalServiceSuccess(
           data,
-          status,
+          202,
           config.method,
           `External service ${response.data.name}`
         )

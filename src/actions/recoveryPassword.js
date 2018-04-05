@@ -1,6 +1,7 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
+import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../types';
 import {
@@ -8,7 +9,7 @@ import {
   RECOVERY_PASSWORD_SUCCESS,
   RECOVERY_PASSWORD_FAILURE
 } from '../constants/recoveryPasswordConstants';
-import { webApi } from '../config';
+import { webApiLogin } from '../config';
 
 const recoveryPasswordRequest = (hashParam, password) => ({
   type: RECOVERY_PASSWORD_REQUESTING,
@@ -33,22 +34,35 @@ export const fetchRecoveryPassword = (
   hashParam: string,
   password: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(recoveryPasswordRequest(hashParam, password));
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
   const response = await axios.post(
-    `${URL}/api/reseted_password_change/${hashParam}`,
-    { password },
+    `${URL}/password/restore`,
     {
+      link: hashParam,
+      new_password: password
+    },
+    {
+      headers: {
+        'User-Client': browser
+      },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { status, data } = response;
+  const { access_token: accessToken, refresh_token: refreshToken } = data;
   switch (status) {
     case 202: {
+      cookie.save('accessToken', accessToken, { path: '/' });
+      cookie.save('refreshToken', refreshToken, { path: '/' });
+      cookie.save('lastTimeToRefresh', Date.parse(new Date()), { path: '/' });
       dispatch(recoveryPasswordSuccess(data));
-      dispatch(push(`/login`));
+      if (typeof window !== 'undefined') {
+        window.location.replace('/dashboard');
+      }
       break;
     }
     default: {

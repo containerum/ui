@@ -13,7 +13,7 @@ import {
 } from '../../constants/profileConstants/getProfile';
 import type { ReduxState } from '../../types';
 import ProfileSidebar from '../../components/ProfileSidebar';
-import ProfileWebHook from './WebHook';
+// import ProfileWebHook from './WebHook';
 import ProfileDomains from './Domains';
 import CLIInfo from '../../components/CLIInfo';
 
@@ -47,7 +47,7 @@ export class Settings extends PureComponent<Props> {
 
     return (
       <div className="content-block-container container container-fluid">
-        <ProfileWebHook />
+        {/* <ProfileWebHook /> */}
         <ProfileDomains match={match} />
         <CLIInfo />
       </div>

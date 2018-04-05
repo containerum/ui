@@ -9,7 +9,7 @@ import {
   DELETE_SERVICE_SUCCESS,
   DELETE_SERVICE_FAILURE
 } from '../../constants/serviceConstants/deleteService';
-import { webApi } from '../../config';
+import { webApiLogin } from '../../config';
 
 const deleteServiceRequest = () => ({
   type: DELETE_SERVICE_REQUESTING,
@@ -37,31 +37,31 @@ export const fetchDeleteService = (
   idName: string,
   idSrv: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(deleteServiceRequest());
 
   const response = await axios.delete(
-    `${URL}/api/namespaces/${idName}/services/${idSrv}`,
+    `${URL}/namespace/${idName}/service/${idSrv}`,
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Content-Type': 'application/x-www-form-urlencode',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { data, status, config } = response;
   switch (status) {
-    case 202: {
-      dispatch(deleteServiceSuccess(data, status, config.method, idSrv));
+    case 200: {
+      dispatch(deleteServiceSuccess(data, 202, config.method, idSrv));
       break;
     }
     case 401: {

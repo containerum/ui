@@ -119,12 +119,12 @@ const SelectNamespaceModal = ({
                         id="namespaceSelect"
                         name="namespaces"
                         onChange={e => handleSelectNamespace(e.target.value)}
-                        value={namespace.name}
+                        value={namespace.label}
                         required
                       >
                         {namespaces.map(ns => (
-                          <option key={_.uniqueId()} value={ns.name}>
-                            {ns.name}
+                          <option key={_.uniqueId()} value={ns.label}>
+                            {ns.label}
                           </option>
                         ))}
                       </select>

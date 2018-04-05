@@ -8,11 +8,15 @@ import github from '../../images/github.svg';
 
 type Props = {
   solution: Array<Object>,
-  text: string,
-  handleClickRunSolution: (name: string) => void
+  text: string
+  // handleClickRunSolution: (name: string) => void
 };
 
-const SolutionItem = ({ solution, text, handleClickRunSolution }: Props) => {
+const SolutionItem = ({
+  solution,
+  text
+}: // handleClickRunSolution
+Props) => {
   const { Name: name, URL: url, CPU: cpu, RAM: ram } = solution[0];
   const { srcLogo, logoHeight } = getSolutionImage(name, '100px');
   const regexpGif = /gif\//gi;
@@ -34,12 +38,20 @@ const SolutionItem = ({ solution, text, handleClickRunSolution }: Props) => {
         <div className="block-img">
           <img src={srcLogo} alt={name} style={{ height: logoHeight }} />
         </div>
-        <button
-          className="left-side-btn"
-          onClick={() => handleClickRunSolution(name)}
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="feedback-form__submit btn"
         >
           Deploy
-        </button>
+        </a>
+        {/* <button */}
+        {/* className="left-side-btn" */}
+        {/* onClick={() => handleClickRunSolution(name)} */}
+        {/* > */}
+        {/* Deploy */}
+        {/* </button> */}
         {/* <div className="left-side-update-date">Last update: 12/12/17</div> */}
         <div className="resources-block">
           <div className="resources-title">Resources:</div>
