@@ -117,15 +117,15 @@ export class Header extends PureComponent<Props> {
                     Namespaces
                   </NavLink>
                 </li>
-                <li className="header-top-menu__li nav-item">
-                  <NavLink
-                    activeClassName="active"
-                    to={routerLinks.volumes}
-                    className="header-top-menu__link"
-                  >
-                    Volumes
-                  </NavLink>
-                </li>
+                {/* <li className="header-top-menu__li nav-item"> */}
+                {/* <NavLink */}
+                {/* activeClassName="active" */}
+                {/* to={routerLinks.volumes} */}
+                {/* className="header-top-menu__link" */}
+                {/* > */}
+                {/* Volumes */}
+                {/* </NavLink> */}
+                {/* </li> */}
                 <li className="header-top-menu__li nav-item">
                   <NavLink
                     activeClassName="active"

@@ -81,7 +81,7 @@ class SignUp extends PureComponent<Props> {
     e.preventDefault();
     if (
       isEmail(this.state.email) &&
-      this.state.recaptcha &&
+      // this.state.recaptcha &&
       this.state.password.length > 7
     ) {
       const { email, password, recaptcha } = this.state;

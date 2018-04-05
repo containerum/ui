@@ -21,6 +21,8 @@ export class CreateServiceCard extends PureComponent<Props> {
     this.state = {
       isActiveInternal: false,
       isActiveExternal: false,
+      externalSrvNameValue: '',
+      internalSrvNameValue: '',
       internalSrvObject: [
         {
           internalSrvName: '',
@@ -172,8 +174,16 @@ export class CreateServiceCard extends PureComponent<Props> {
       }
     );
   };
+  handleChangeServiceNameValue = (e, type) => {
+    this.setState({
+      ...this.state,
+      [type]: e.target.value
+    });
+  };
   render() {
     const {
+      externalSrvNameValue,
+      internalSrvNameValue,
       isActiveInternal,
       isActiveExternal,
       externalSrvObject,
@@ -228,6 +238,11 @@ export class CreateServiceCard extends PureComponent<Props> {
         handleClickAddExternalPort={() => this.handleClickAddExternalPort()}
         externalSrvObject={externalSrvObject}
         internalSrvObject={internalSrvObject}
+        handleChangeServiceNameValue={(e, type) =>
+          this.handleChangeServiceNameValue(e, type)
+        }
+        externalSrvNameValue={externalSrvNameValue}
+        internalSrvNameValue={internalSrvNameValue}
         isActiveInternal={isActiveInternal}
         isActiveExternal={isActiveExternal}
       />

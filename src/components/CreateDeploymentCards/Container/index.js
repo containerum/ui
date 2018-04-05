@@ -5,7 +5,7 @@ import React from 'react';
 import icon from '../../../images/icon-create-dep.svg';
 import Common from './Common';
 import Parameters from './Parameters';
-import ImagePorts from './ImagePorts';
+// import ImagePorts from './ImagePorts';
 import Commands from './Commands';
 import Environments from './Environments';
 import Volumes from './Volumes';
@@ -19,9 +19,9 @@ type Props = {
   handleClickContainerAdd: () => void,
   handleChangeInputCommon: () => void,
   handleChangeInputParameters: () => void,
-  handleChangeInputImagePorts: () => void,
-  handleClickRemoveImagePort: () => void,
-  handleClickAddImagePort: () => void,
+  // handleChangeInputImagePorts: () => void,
+  // handleClickRemoveImagePort: () => void,
+  // handleClickAddImagePort: () => void,
   handleChangeInputCommands: () => void,
   handleChangeInputEnvironment: () => void,
   handleClickRemoveEnvironment: () => void,
@@ -41,9 +41,9 @@ const Container = ({
   handleClickContainerAdd,
   handleChangeInputCommon,
   handleChangeInputParameters,
-  handleChangeInputImagePorts,
-  handleClickRemoveImagePort,
-  handleClickAddImagePort,
+  // handleChangeInputImagePorts,
+  // handleClickRemoveImagePort,
+  // handleClickAddImagePort,
   handleChangeInputCommands,
   handleChangeInputEnvironment,
   handleClickRemoveEnvironment,
@@ -90,14 +90,14 @@ const Container = ({
           index={index}
           handleChangeInputParameters={handleChangeInputParameters}
         />
-        <ImagePorts
-          ports={item.ports}
-          id={item.id}
-          index={index}
-          handleChangeInputImagePorts={handleChangeInputImagePorts}
-          handleClickRemoveImagePort={handleClickRemoveImagePort}
-          handleClickAddImagePort={handleClickAddImagePort}
-        />
+        {/* <ImagePorts */}
+        {/* ports={item.ports} */}
+        {/* id={item.id} */}
+        {/* index={index} */}
+        {/* handleChangeInputImagePorts={handleChangeInputImagePorts} */}
+        {/* handleClickRemoveImagePort={handleClickRemoveImagePort} */}
+        {/* handleClickAddImagePort={handleClickAddImagePort} */}
+        {/* /> */}
         <Commands
           item={item}
           index={index}

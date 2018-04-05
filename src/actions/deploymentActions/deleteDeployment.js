@@ -9,7 +9,7 @@ import {
   DELETE_DEPLOYMENT_SUCCESS,
   DELETE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/deleteDeployment';
-import { webApi } from '../../config';
+import { webApiLogin } from '../../config';
 
 const deleteDeploymentRequest = () => ({
   type: DELETE_DEPLOYMENT_REQUESTING,
@@ -37,31 +37,31 @@ export const fetchDeleteDeployment = (
   idName: string,
   idDep: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(deleteDeploymentRequest());
 
   const response = await axios.delete(
-    `${URL}/api/namespaces/${idName}/deployments/${idDep}`,
+    `${URL}/namespace/${idName}/deployment/${idDep}`,
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Content-Type': 'application/x-www-form-urlencode',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { data, status, config } = response;
   switch (status) {
-    case 202: {
-      dispatch(deleteDeploymentSuccess(data, status, config.method, idDep));
+    case 200: {
+      dispatch(deleteDeploymentSuccess(data, 202, config.method, idDep));
       break;
     }
     case 401: {

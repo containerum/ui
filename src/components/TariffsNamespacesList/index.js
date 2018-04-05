@@ -11,6 +11,7 @@ type Props = {
   tariffName: string,
   active: string,
   handleSelectTariff: ({
+    id: string,
     label: string,
     cpuLimit: number,
     memoryLimit: number,
@@ -34,7 +35,7 @@ const TariffsNamespacesList = ({
 }: Props) => (
   <div className="row">
     {data.map(tariff => {
-      const { label, price } = tariff;
+      const { label, price, id } = tariff;
       const isActiveTariff = label === active;
       let {
         cpu_limit: cpuLimit,
@@ -69,6 +70,7 @@ const TariffsNamespacesList = ({
                 ) {
                   if (!isActiveTariff) {
                     handleSelectTariff({
+                      id,
                       label,
                       cpuLimit,
                       memoryLimit,
@@ -90,6 +92,7 @@ const TariffsNamespacesList = ({
                 ) {
                   if (!isActiveTariff) {
                     handleSelectTariff({
+                      id,
                       label,
                       cpuLimit,
                       memoryLimit,

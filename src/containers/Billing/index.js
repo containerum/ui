@@ -46,7 +46,7 @@ import AddInformationModal from '../../components/CustomerModal/AddInformationMo
 import ProfileSidebar from '../../components/ProfileSidebar';
 import BillingInfo from '../../components/BillingInfo';
 import AddFunds from '../../components/AddFunds';
-import Coupon from '../../components/Coupon';
+// import Coupon from '../../components/Coupon';
 import HistoryFunds from '../../components/HistoryFunds';
 
 type Props = {
@@ -110,10 +110,9 @@ export class Billing extends PureComponent<Props> {
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      const {
-        country_code: countryCode,
-        first_name: firstName
-      } = nextProps.getProfileReducer.data.data;
+      const dataProfile = nextProps.getProfileReducer.data.data;
+      const countryCode = dataProfile ? dataProfile.country_code : null;
+      const firstName = dataProfile ? dataProfile.first_name : null;
       if (countryCode && firstName) {
         this.setState({
           ...this.state,
@@ -301,7 +300,10 @@ export class Billing extends PureComponent<Props> {
     const { is_active: isActive } = getProfileReducer.data;
     const { pages } = getProfileReportReducer.data;
     const { operations } = getProfileReportReducer.data;
-    const { payForReducer, couponPayReducer } = this.props;
+    const {
+      payForReducer
+      // couponPayReducer
+    } = this.props;
     const statusUser = isActive.toString() === 'true' ? 'Active' : 'Inactive';
     const balance = parseFloat(getBalanceReducer.data.balance);
     const monthUsage = parseFloat(getProfileTariffsReducer.data.monthly_cost);
@@ -333,12 +335,12 @@ export class Billing extends PureComponent<Props> {
           handleChangeInputFunds={value => this.handleChangeInputFunds(value)}
           handleSubmitPay={e => this.handleSubmitPay(e)}
         />
-        <Coupon
-          isFetching={couponPayReducer.isFetching}
-          inputCoupon={this.state.inputCoupon}
-          handleChangeInputCode={value => this.handleChangeInputCode(value)}
-          handleSubmitPayCoupon={e => this.handleSubmitPayCoupon(e)}
-        />
+        {/* <Coupon */}
+        {/* isFetching={couponPayReducer.isFetching} */}
+        {/* inputCoupon={this.state.inputCoupon} */}
+        {/* handleChangeInputCode={value => this.handleChangeInputCode(value)} */}
+        {/* handleSubmitPayCoupon={e => this.handleSubmitPayCoupon(e)} */}
+        {/* /> */}
         <HistoryFunds
           operations={operations}
           countPages={pages}

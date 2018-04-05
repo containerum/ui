@@ -1,7 +1,7 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
-import cookie from 'react-cookies';
+// import { push } from 'react-router-redux';
+// import cookie from 'react-cookies';
 
 import type {
   Dispatch,
@@ -11,10 +11,11 @@ import type {
 } from '../../types/index';
 import {
   GET_SOLUTIONS_REQUESTING,
-  GET_SOLUTIONS_SUCCESS
+  GET_SOLUTIONS_SUCCESS,
+  solutionsArray
   // GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
-import { webApi } from '../../config/index';
+// import { webApi } from '../../config/index';
 
 const getSolutionsRequest = () => ({
   type: GET_SOLUTIONS_REQUESTING,
@@ -33,49 +34,28 @@ const getSolutionsSuccess = data => ({
 //   err
 // });
 
-export const fetchGetSolutions = (
-  axios: any,
-  URL: string = webApi
-): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+export const fetchGetSolutions = (): // axios: any,
+// URL: string = webApi
+ThunkAction => async (dispatch: Dispatch) => {
+  // const token = cookie.load('token') ? cookie.load('token') : null;
+  // const browser = cookie.load('browser') ? cookie.load('browser') : null;
   // console.log(token);
 
   dispatch(getSolutionsRequest());
 
-  const response = await axios.get(`${URL}/api/solutions`, {
-    headers: {
-      Authorization: token,
-      'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
-  const { status, data } = response;
-  switch (status) {
-    case 200: {
-      dispatch(getSolutionsSuccess(data));
-      break;
-    }
-    case 404: {
-      dispatch(getSolutionsSuccess([]));
-      break;
-    }
-    case 401: {
-      dispatch(getSolutionsRequest());
-      dispatch(push('/login'));
-      break;
-    }
-    default: {
-      dispatch(getSolutionsSuccess([]));
-    }
-    // default: {
-    //   dispatch(getSolutionsFailure(data.message));
-    // }
-  }
+  // const response = await axios.get(`${URL}/api/solutions`, {
+  //   headers: {
+  //     Authorization: token,
+  //     'User-Client': browser,
+  //     'Content-Type': 'application/x-www-form-urlencode',
+  //     'Access-Control-Allow-Origin': '*',
+  //     'Cache-Control':
+  //       'no-cache, no-store, must-revalidate, max-age=-1, private'
+  //   },
+  //   validateStatus: status => status >= 200 && status <= 505
+  // });
+  // const { status, data } = response;
+  dispatch(getSolutionsSuccess(solutionsArray));
 };
 
 // Preventing dobule fetching data

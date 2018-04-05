@@ -33,6 +33,7 @@ const customStyles = {
 type Props = {
   type: string,
   tariff: string,
+  id: string,
   name: string,
   data: Object,
   // typeModal: string,
@@ -46,6 +47,7 @@ type Props = {
 const CreateModal = ({
   type,
   tariff,
+  id,
   name,
   data,
   isOpened,
@@ -61,7 +63,7 @@ const CreateModal = ({
     e.preventDefault();
     if (tariff && name.length >= 2 && name.search(regexp) !== -1) {
       handleOpenCloseModal();
-      onHandleCreate(name, tariff, data.price);
+      onHandleCreate(name, id, data.price);
     }
   };
   const handleChangeNameOfType = e => {

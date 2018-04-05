@@ -9,7 +9,7 @@ import {
   FORGOT_SUCCESS,
   FORGOT_FAILURE
 } from '../constants/forgotConstants';
-import { webApi } from '../config';
+import { webApiLogin } from '../config';
 
 const forgotRequest = email => ({
   type: FORGOT_REQUESTING,
@@ -32,14 +32,18 @@ const forgotFailure = err => ({
 export const fetchForgot = (
   email: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(forgotRequest(email));
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
   const response = await axios.post(
-    `${URL}/api/password_reset`,
-    { email },
+    `${URL}/password/reset`,
+    { login: email },
     {
+      headers: {
+        'User-Client': browser
+      },
       validateStatus: status => status >= 200 && status <= 505
     }
   );

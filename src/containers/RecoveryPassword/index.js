@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 // import ReactDOM from 'react-dom';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
@@ -11,19 +11,19 @@ import queryString from 'query-string';
 
 import { routerLinks } from '../../config';
 import * as actionRecoveryPassword from '../../actions/recoveryPassword';
-import * as actionCheckHashPassword from '../../actions/checkHashPassword';
+// import * as actionCheckHashPassword from '../../actions/checkHashPassword';
 import InputPassword from '../../components/InputPassword';
 import LoadButton from '../../components/LoadButton';
-import { CHECK_HASH_PASSWORD_FAILURE } from '../../constants/checkHashPasswordConstants';
+// import { CHECK_HASH_PASSWORD_FAILURE } from '../../constants/checkHashPasswordConstants';
 import { RECOVERY_PASSWORD_FAILURE } from '../../constants/recoveryPasswordConstants';
 
 type Props = {
   recoveryPasswordReducer: Object,
-  checkHashPasswordReducer: Object,
+  // checkHashPasswordReducer: Object,
   location: Object,
-  history: Object,
-  fetchRecoveryPasswordIfNeeded: (hashParam: string, password: string) => void,
-  fetchCheckHashPasswordIfNeeded: (hashParam: string) => void
+  // history: Object,
+  fetchRecoveryPasswordIfNeeded: (hashParam: string, password: string) => void
+  // fetchCheckHashPasswordIfNeeded: (hashParam: string) => void
 };
 
 class RecoveryPassword extends PureComponent<Props> {
@@ -37,15 +37,15 @@ class RecoveryPassword extends PureComponent<Props> {
       errorMessage: 'Password is not valid'
     };
   }
-  componentWillMount() {
-    const { location, history, fetchCheckHashPasswordIfNeeded } = this.props;
-    const { hashParam } = queryString.parse(location.search);
-    if (hashParam) {
-      fetchCheckHashPasswordIfNeeded(hashParam);
-    } else {
-      history.push('/forgot');
-    }
-  }
+  // componentWillMount() {
+  //   const { location, history, fetchCheckHashPasswordIfNeeded } = this.props;
+  //   const { hashParam } = queryString.parse(location.search);
+  //   if (hashParam) {
+  //     fetchCheckHashPasswordIfNeeded(hashParam);
+  //   } else {
+  //     history.push('/forgot');
+  //   }
+  // }
   componentDidMount() {
     cookie.remove('token', { path: '/' });
     cookie.remove('accessToken', { path: '/' });
@@ -59,36 +59,56 @@ class RecoveryPassword extends PureComponent<Props> {
       nextProps.recoveryPasswordReducer.readyStatus ===
         RECOVERY_PASSWORD_FAILURE
     ) {
-      this.setState({
-        ...this.state,
-        isValidPassword: false,
-        isValidRepeatPassword: false,
-        errorMessage: 'Password is not valid'
-      });
+      console.log(nextProps.recoveryPasswordReducer);
+      if (nextProps.recoveryPasswordReducer.err === 'Invalid link') {
+        this.setState({
+          ...this.state,
+          isValidPassword: false,
+          isValidRepeatPassword: false,
+          errorMessage: (
+            <span>
+              Link is invalid.{' '}
+              <Link
+                to={routerLinks.forgot}
+                style={{ color: '#333', textDecoration: 'underline' }}
+              >
+                Forgot your password?
+              </Link>
+            </span>
+          )
+        });
+      } else {
+        this.setState({
+          ...this.state,
+          isValidPassword: false,
+          isValidRepeatPassword: false,
+          errorMessage: 'Password is not valid'
+        });
+      }
     }
-    if (
-      this.props.checkHashPasswordReducer.readyStatus !==
-        nextProps.checkHashPasswordReducer.readyStatus &&
-      nextProps.checkHashPasswordReducer.readyStatus ===
-        CHECK_HASH_PASSWORD_FAILURE
-    ) {
-      this.setState({
-        ...this.state,
-        isValidPassword: false,
-        isValidRepeatPassword: false,
-        errorMessage: (
-          <span>
-            Link is invalid.{' '}
-            <Link
-              to={routerLinks.forgot}
-              style={{ color: '#333', textDecoration: 'underline' }}
-            >
-              Forgot your password?
-            </Link>
-          </span>
-        )
-      });
-    }
+    // if (
+    //   this.props.checkHashPasswordReducer.readyStatus !==
+    //     nextProps.checkHashPasswordReducer.readyStatus &&
+    //   nextProps.checkHashPasswordReducer.readyStatus ===
+    //     CHECK_HASH_PASSWORD_FAILURE
+    // ) {
+    //   this.setState({
+    //     ...this.state,
+    //     isValidPassword: false,
+    //     isValidRepeatPassword: false,
+    //     errorMessage: (
+    //       <span>
+    //         Link is invalid.{' '}
+    //         <Link
+    //           to={routerLinks.forgot}
+    //           style={{ color: '#333', textDecoration: 'underline' }}
+    //         >
+    //           Forgot your password?
+    //         </Link>
+    //       </span>
+    //     )
+    //   });
+    // }
   }
   handleChangePassword(password) {
     this.setState({
@@ -230,10 +250,10 @@ const connector: Connector<{}, Props> = connect(
     checkHashPasswordReducer
   }),
   dispatch => ({
-    fetchCheckHashPasswordIfNeeded: (hashParam: string) =>
-      dispatch(
-        actionCheckHashPassword.fetchCheckHashPasswordIfNeeded(hashParam)
-      ),
+    // fetchCheckHashPasswordIfNeeded: (hashParam: string) =>
+    //   dispatch(
+    //     actionCheckHashPassword.fetchCheckHashPasswordIfNeeded(hashParam)
+    //   ),
     fetchRecoveryPasswordIfNeeded: (hashParam: string, password: string) =>
       dispatch(
         actionRecoveryPassword.fetchRecoveryPasswordIfNeeded(

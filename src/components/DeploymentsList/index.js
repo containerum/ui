@@ -30,7 +30,7 @@ const DeploymentsList = ({
     e.stopPropagation();
   };
   const ta = timeago();
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       {data.length >= 1 && (
@@ -61,7 +61,6 @@ const DeploymentsList = ({
               const memory = deploy.containers
                 .map(container => parseInt(container.limits.memory, 10))
                 .reduce((a, b) => a + b, 0);
-              console.log(memory);
               const milliseconds = Date.parse(createdAt);
               const dateHours = new Date(milliseconds);
               const dateValue = ta.ago(dateHours, true);

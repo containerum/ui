@@ -9,7 +9,7 @@ import {
   GET_PROFILE_REPORT_SUCCESS,
   GET_PROFILE_REPORT_FAILURE
 } from '../../constants/profileConstants/getProfileReport';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getProfileReportRequest = () => ({
   type: GET_PROFILE_REPORT_REQUESTING,
@@ -31,21 +31,21 @@ const getProfileReportFailure = err => ({
 export const fetchGetProfileReport = (
   page: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(getProfileReportRequest());
 
-  const response = await axios.get(`${URL}/api/profile/report?page=${page}`, {
+  const response = await axios.get(`${URL}/isp/user/report?page=${page}`, {
     headers: {
       Authorization: token,
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });

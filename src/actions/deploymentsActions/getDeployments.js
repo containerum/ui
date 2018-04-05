@@ -63,11 +63,6 @@ export const fetchGetDeployments = (
       dispatch(getDeploymentsSuccess([], status, idName));
       break;
     }
-    case 400: {
-      dispatch(getDeploymentsFailure(data.message));
-      dispatch(push('/namespaces'));
-      break;
-    }
     case 401: {
       dispatch(getDeploymentsFailure(data.message));
       dispatch(push('/login'));
@@ -75,6 +70,7 @@ export const fetchGetDeployments = (
     }
     default: {
       dispatch(getDeploymentsFailure(data.message, status, idName));
+      dispatch(push('/namespaces'));
     }
   }
 };

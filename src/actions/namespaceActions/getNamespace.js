@@ -60,11 +60,6 @@ export const fetchGetNamespace = (
       dispatch(getNamespaceSuccess(data, status, idName));
       break;
     }
-    case 400: {
-      dispatch(getNamespaceFailure(data.message));
-      dispatch(push('/namespaces'));
-      break;
-    }
     case 401: {
       dispatch(getNamespaceRequest());
       dispatch(push('/login'));
@@ -72,6 +67,7 @@ export const fetchGetNamespace = (
     }
     default: {
       dispatch(getNamespaceFailure(data.message, status, idName));
+      dispatch(push('/namespaces'));
     }
   }
 };

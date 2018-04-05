@@ -10,7 +10,7 @@ import {
   CREATE_DEPLOYMENT_SUCCESS,
   CREATE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/createDeployment';
-import { webApi } from '../../config';
+import { webApiLogin } from '../../config';
 
 const createDeploymentRequest = () => ({
   type: CREATE_DEPLOYMENT_REQUESTING,
@@ -38,19 +38,22 @@ export const fetchCreateDeployment = (
   idName: string,
   dataObj: Object,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(createDeploymentRequest());
 
   const splitContainers = cloneDeep(dataObj.containers);
   splitContainers.map(item => {
     delete item.id;
-    item.resources.requests = Object.assign({}, item.resources);
-    delete item.resources.cpu;
-    delete item.resources.memory;
+    // item.limits.requests = Object.assign({}, item.limits);
+    // delete item.limits.cpu;
+    // delete item.limits.memory;
     if (item.ports[0].containerPort) {
       item.ports.map(includePorts => {
         delete includePorts.id;
@@ -102,7 +105,7 @@ export const fetchCreateDeployment = (
 
   let idSrv = dataObj.name;
   const response = await axios.post(
-    `${URL}/api/namespaces/${idName}/deployments`,
+    `${URL}/namespace/${idName}/deployment`,
     {
       name: dataObj.name,
       labels,
@@ -113,17 +116,15 @@ export const fetchCreateDeployment = (
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
+        // 'Content-Type': 'application/json'
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { data, status, config } = response;
   switch (status) {
-    case 201: {
+    case 200: {
       idSrv = `Deployment ${data.name} for ${idName}`;
       dispatch(createDeploymentSuccess(data, status, config.method, idSrv));
       dispatch(push('/namespaces'));

@@ -9,7 +9,7 @@ import {
   DELETE_POD_SUCCESS,
   DELETE_POD_FAILURE
 } from '../../constants/podConstants/deletePod';
-import { webApi } from '../../config';
+import { webApiLogin } from '../../config';
 
 const deletePodRequest = () => ({
   type: DELETE_POD_REQUESTING,
@@ -39,23 +39,23 @@ export const fetchDeletePod = (
   idName: string,
   idPod: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(deletePodRequest());
 
   const response = await axios.delete(
-    `${URL}/api/namespaces/${idName}/pods/${idPod}`,
+    `${URL}/namespaces/${idName}/pods/${idPod}`,
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Content-Type': 'application/x-www-form-urlencode',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }

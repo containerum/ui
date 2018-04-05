@@ -9,7 +9,7 @@ import {
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE
 } from '../../constants/profileConstants/getProfile';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getProfileRequest = () => ({
   type: GET_PROFILE_REQUESTING,
@@ -30,21 +30,21 @@ const getProfileFailure = err => ({
 
 export const fetchGetProfile = (
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(getProfileRequest());
 
-  const response = await axios.get(`${URL}/api/profile`, {
+  const response = await axios.get(`${URL}/user/info`, {
     headers: {
       Authorization: token,
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });

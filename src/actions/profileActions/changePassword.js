@@ -9,7 +9,7 @@ import {
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAILURE
 } from '../../constants/profileConstants/changePassword';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const changePasswordRequest = () => ({
   type: CHANGE_PASSWORD_REQUESTING,
@@ -35,30 +35,37 @@ export const fetchChangePassword = (
   currentPassword: string,
   newPassword: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(changePasswordRequest());
 
-  const response = await axios.post(
-    `${URL}/api/password_change`,
-    { password: currentPassword, new_password: newPassword },
+  const response = await axios.put(
+    `${URL}/password/change`,
+    { current_password: currentPassword, new_password: newPassword },
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Access-Control-Allow-Origin': '*'
+        'User-Token': accessToken
+        // 'Content-Type': 'application/json'
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { status, data, config } = response;
+  console.log(data, status);
+  const { access_token: newAccessToken, refresh_token: newRefreshToken } = data;
   switch (status) {
     case 202: {
       dispatch(changePasswordSuccess(data, status, config.method));
-      cookie.save('token', data.token, { path: '/' });
+      cookie.save('accessToken', newAccessToken, { path: '/' });
+      cookie.save('refreshToken', newRefreshToken, { path: '/' });
       break;
     }
     case 401: {

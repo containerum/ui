@@ -14,7 +14,9 @@ const PodsList = ({ data }: Props) => {
   return (
     <div className="row double">
       {containers.map(container => {
-        const { name, ram, cpu, image } = container;
+        console.log(container);
+        const { name, image } = container;
+        const { cpu, memory } = container.limits;
         return (
           <div className="col-md-6" key={_.uniqueId()}>
             <div className="content-block-container card-container hover-action mt-0">
@@ -34,14 +36,14 @@ const PodsList = ({ data }: Props) => {
                     RAM ( Usage ) :{' '}
                   </div>
                   <div className="content-block__info-text inline">
-                    {ram} MB
+                    {memory}
                   </div>
                 </div>
                 <div className="content-block__info-item">
                   <div className="content-block__info-name inline">
                     CPU ( Usage ) :{' '}
                   </div>
-                  <div className="content-block__info-text inline">{cpu} m</div>
+                  <div className="content-block__info-text inline">{cpu}</div>
                 </div>
                 <div className="content-block__info-item">
                   <div className="content-block__info-name inline">

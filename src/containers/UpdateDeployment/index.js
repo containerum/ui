@@ -9,16 +9,16 @@ import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
 
 import scrollById from '../../functions/scrollById';
-import * as actionGetVolumes from '../../actions/volumesActions/getVolumesByNS';
+// import * as actionGetVolumes from '../../actions/volumesActions/getVolumesByNS';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionUpdateDeployment from '../../actions/deploymentActions/updateDeployment';
 import * as actionGetDeployment from '../../actions/deploymentActions/getDeployment';
-import {
-  GET_VOLUMES_BY_NS_INVALID,
-  GET_VOLUMES_BY_NS_REQUESTING,
-  GET_VOLUMES_BY_NS_FAILURE,
-  GET_VOLUMES_BY_NS_SUCCESS
-} from '../../constants/volumesConstants/getVolumesByNS';
+// import {
+//   GET_VOLUMES_BY_NS_INVALID,
+//   GET_VOLUMES_BY_NS_REQUESTING,
+//   GET_VOLUMES_BY_NS_FAILURE,
+//   GET_VOLUMES_BY_NS_SUCCESS
+// } from '../../constants/volumesConstants/getVolumesByNS';
 import {
   GET_DEPLOYMENT_INVALID,
   GET_DEPLOYMENT_REQUESTING,
@@ -34,13 +34,13 @@ import Replicas from '../../components/CreateDeploymentCards/Replicas';
 import Container from '../../components/CreateDeploymentCards/Container';
 
 type Props = {
-  getVolumesByNSReducer: Object,
+  // getVolumesByNSReducer: Object,
   getNamespaceReducer: Object,
   updateDeploymentReducer: Object,
   getDeploymentReducer: Object,
   match: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
-  fetchGetVolumesByNSIfNeeded: (idName: string) => void,
+  // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchUpdateDeploymentIfNeeded: (
     idName: string,
     idDep: string,
@@ -57,107 +57,128 @@ export class CreateDeployment extends PureComponent<Props> {
   }
   componentDidMount() {
     const {
-      fetchGetVolumesByNSIfNeeded,
+      // fetchGetVolumesByNSIfNeeded,
       fetchGetNamespaceIfNeeded,
       fetchGetDeploymentIfNeeded,
       getNamespaceReducer,
       match
     } = this.props;
-    fetchGetVolumesByNSIfNeeded(match.params.idName);
+    // fetchGetVolumesByNSIfNeeded(match.params.idName);
     fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
     if (getNamespaceReducer.readyStatus !== GET_NAMESPACE_SUCCESS) {
       fetchGetNamespaceIfNeeded(match.params.idName);
     }
   }
   componentWillUpdate(nextProps) {
-    if (
-      this.props.getVolumesByNSReducer.readyStatus !==
-        nextProps.getVolumesByNSReducer.readyStatus &&
-      nextProps.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS
-    ) {
-      const nextState = Object.assign([], this.state.containers);
-      if (nextProps.getVolumesByNSReducer.data[0]) {
-        nextState[0].volumeMounts[0].name =
-          nextProps.getVolumesByNSReducer.data[0].name;
-        this.setState({
-          ...this.state,
-          volumes: nextProps.getVolumesByNSReducer.data,
-          containers: nextState
-        });
-      }
-    }
+    // if (
+    //   this.props.getVolumesByNSReducer.readyStatus !==
+    //     nextProps.getVolumesByNSReducer.readyStatus &&
+    //   nextProps.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS
+    // ) {
+    //   const nextState = Object.assign([], this.state.containers);
+    //   if (nextProps.getVolumesByNSReducer.data[0]) {
+    //     nextState[0].volumeMounts[0].name =
+    //       nextProps.getVolumesByNSReducer.data[0].name;
+    //     this.setState({
+    //       ...this.state,
+    //       volumes: nextProps.getVolumesByNSReducer.data,
+    //       containers: nextState
+    //     });
+    //   }
+    // }
     if (
       this.props.getDeploymentReducer.readyStatus !==
         nextProps.getDeploymentReducer.readyStatus &&
       nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS
     ) {
+      console.log(nextProps.getDeploymentReducer);
       const { data } = nextProps.getDeploymentReducer;
       const { name, labels, replicas, containers } = data;
-      const containersArr = [];
-      containers.map((item, index) => {
+      // const containersArr = [];
+      const containersArr = containers.map((item, index) => {
         const {
           image,
           name: imgName,
-          cpu,
-          ram: memory,
+          limits,
           ports,
           environments,
-          commands,
-          volumes
+          commands
+          // volumes
         } = item;
-        if (ports) {
-          ports.map(itemPorts => {
-            itemPorts.id = _.uniqueId();
-            itemPorts.index = index + 1;
-            return null;
-          });
-        }
-        if (environments) {
-          environments.map(itemEnv => {
-            itemEnv.id = _.uniqueId();
-            itemEnv.index = index + 1;
-            return null;
-          });
-        }
-        if (volumes) {
-          volumes.map(itemVolume => {
-            itemVolume.id = _.uniqueId();
-            itemVolume.index = index + 1;
-            return null;
-          });
-        }
-        containersArr.push({
+        // if (ports) {
+        //   ports.map(itemPorts => {
+        //     itemPorts.id = _.uniqueId();
+        //     itemPorts.index = index + 1;
+        //     return null;
+        //   });
+        // }
+        // if (environments) {
+        //   environments.map(itemEnv => {
+        //     itemEnv.id = _.uniqueId();
+        //     itemEnv.index = index + 1;
+        //     return null;
+        //   });
+        // }
+        // if (volumes) {
+        //   volumes.map(itemVolume => {
+        //     itemVolume.id = _.uniqueId();
+        //     itemVolume.index = index + 1;
+        //     return null;
+        //   });
+        // }
+        return {
           id: _.uniqueId(),
           image,
           name: imgName,
-          resources: {
-            cpu: `${cpu}m`,
-            memory: `${memory}Mi`
+          limits: {
+            cpu: `${limits.cpu}`,
+            memory: `${limits.memory}`
           },
-          ports: ports || [
-            {
-              containerPort: '',
-              id: _.uniqueId(),
-              index: 1
-            }
-          ],
-          env: environments || [
-            {
-              value: '',
-              name: '',
-              id: _.uniqueId(),
-              index: 1
-            }
-          ],
+          ports: ports
+            ? ports.map(itemPorts => {
+                itemPorts.id = _.uniqueId();
+                itemPorts.index = index + 1;
+                return null;
+              })
+            : [
+                {
+                  containerPort: '',
+                  id: _.uniqueId(),
+                  index: 1
+                }
+              ],
+          env: environments
+            ? environments.map(itemEnv => {
+                itemEnv.id = _.uniqueId();
+                itemEnv.index = index + 1;
+                return null;
+              })
+            : [
+                {
+                  value: '',
+                  name: '',
+                  id: _.uniqueId(),
+                  index: 1
+                }
+              ],
           command: commands || [],
-          volumeMounts: volumes || []
-        });
-        return null;
+          volumeMounts: []
+          // volumeMounts: volumes || []
+        };
       });
+      console.log('containersArr', containersArr);
       this.setState({
         ...this.state,
         name,
-        labels: [labels],
+        labels: labels
+          ? [labels]
+          : [
+              {
+                key: '',
+                label: '',
+                id: _.uniqueId()
+              }
+            ],
         replicas,
         containers: containersArr,
         containersCount: containersArr.length
@@ -179,7 +200,7 @@ export class CreateDeployment extends PureComponent<Props> {
         id: _.uniqueId(),
         image: '',
         name: '',
-        resources: {
+        limits: {
           cpu: '',
           memory: ''
         },
@@ -536,7 +557,7 @@ export class CreateDeployment extends PureComponent<Props> {
           id: _.uniqueId(),
           image: '',
           name: '',
-          resources: {
+          limits: {
             cpu: '',
             memory: ''
           },
@@ -580,8 +601,8 @@ export class CreateDeployment extends PureComponent<Props> {
     const match = Object.assign({}, this.state.containers[index]);
     const matchUpdated = {
       ...match,
-      resources: {
-        ...this.state.containers[index].resources,
+      limits: {
+        ...this.state.containers[index].limits,
         [`${type}`]: value
       }
     };
@@ -755,47 +776,47 @@ export class CreateDeployment extends PureComponent<Props> {
 
   // Render
   renderDeploymentSidebar = () => {
-    const { getVolumesByNSReducer } = this.props;
-    if (
-      !getVolumesByNSReducer.readyStatus ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING
-    ) {
-      return (
-        <div style={{ marginTop: '40px', width: '80%' }}>
-          {new Array(4)
-            .fill()
-            .map(() => (
-              <img
-                key={_.uniqueId()}
-                src={require('../../images/profile-sidebar-big.svg')}
-                style={{ width: '100%', marginBottom: '20px' }}
-                alt="sidebar"
-              />
-            ))}
-          {new Array(6)
-            .fill()
-            .map(() => (
-              <img
-                key={_.uniqueId()}
-                src={require('../../images/profile-sidebar-small.svg')}
-                style={{ marginBottom: '20px', float: 'right' }}
-                alt="sidebar"
-              />
-            ))}
-          {new Array(1)
-            .fill()
-            .map(() => (
-              <img
-                key={_.uniqueId()}
-                src={require('../../images/profile-sidebar-big.svg')}
-                style={{ width: '100%', marginBottom: '20px' }}
-                alt="sidebar"
-              />
-            ))}
-        </div>
-      );
-    }
+    // const { getVolumesByNSReducer } = this.props;
+    // if (
+    //   !getVolumesByNSReducer.readyStatus ||
+    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
+    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING
+    // ) {
+    //   return (
+    //     <div style={{ marginTop: '40px', width: '80%' }}>
+    //       {new Array(4)
+    //         .fill()
+    //         .map(() => (
+    //           <img
+    //             key={_.uniqueId()}
+    //             src={require('../../images/profile-sidebar-big.svg')}
+    //             style={{ width: '100%', marginBottom: '20px' }}
+    //             alt="sidebar"
+    //           />
+    //         ))}
+    //       {new Array(6)
+    //         .fill()
+    //         .map(() => (
+    //           <img
+    //             key={_.uniqueId()}
+    //             src={require('../../images/profile-sidebar-small.svg')}
+    //             style={{ marginBottom: '20px', float: 'right' }}
+    //             alt="sidebar"
+    //           />
+    //         ))}
+    //       {new Array(1)
+    //         .fill()
+    //         .map(() => (
+    //           <img
+    //             key={_.uniqueId()}
+    //             src={require('../../images/profile-sidebar-big.svg')}
+    //             style={{ width: '100%', marginBottom: '20px' }}
+    //             alt="sidebar"
+    //           />
+    //         ))}
+    //     </div>
+    //   );
+    // }
 
     const arrayOfContainersLinks = [
       'replicas',
@@ -1176,14 +1197,11 @@ export class CreateDeployment extends PureComponent<Props> {
     );
   };
   renderCreateDeployment = () => {
-    const { getVolumesByNSReducer, getDeploymentReducer, match } = this.props;
+    const { getDeploymentReducer, match } = this.props;
     if (
-      !getVolumesByNSReducer.readyStatus ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING ||
-      (!getDeploymentReducer.readyStatus ||
-        getVolumesByNSReducer.readyStatus === GET_DEPLOYMENT_INVALID ||
-        getVolumesByNSReducer.readyStatus === GET_DEPLOYMENT_REQUESTING)
+      !getDeploymentReducer.readyStatus ||
+      getDeploymentReducer.readyStatus === GET_DEPLOYMENT_INVALID ||
+      getDeploymentReducer.readyStatus === GET_DEPLOYMENT_REQUESTING
     ) {
       return (
         <div>
@@ -1203,10 +1221,7 @@ export class CreateDeployment extends PureComponent<Props> {
       );
     }
 
-    if (
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_FAILURE ||
-      getVolumesByNSReducer.readyStatus === GET_DEPLOYMENT_FAILURE
-    ) {
+    if (getDeploymentReducer.readyStatus === GET_DEPLOYMENT_FAILURE) {
       return <p>Oops, Failed to load data of Deployment!</p>;
     }
 
@@ -1248,6 +1263,7 @@ export class CreateDeployment extends PureComponent<Props> {
 
   render() {
     const { match, updateDeploymentReducer } = this.props;
+    console.log('state', this.state);
     return (
       <div>
         <Helmet
@@ -1297,19 +1313,19 @@ export class CreateDeployment extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
-    getVolumesByNSReducer,
+    // getVolumesByNSReducer,
     getNamespaceReducer,
     updateDeploymentReducer,
     getDeploymentReducer
   }: ReduxState) => ({
-    getVolumesByNSReducer,
+    // getVolumesByNSReducer,
     getNamespaceReducer,
     updateDeploymentReducer,
     getDeploymentReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetVolumesByNSIfNeeded: (idName: string) =>
-      dispatch(actionGetVolumes.fetchGetVolumesByNSIfNeeded(idName)),
+    // fetchGetVolumesByNSIfNeeded: (idName: string) =>
+    //   dispatch(actionGetVolumes.fetchGetVolumesByNSIfNeeded(idName)),
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
     fetchUpdateDeploymentIfNeeded: (

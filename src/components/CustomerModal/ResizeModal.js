@@ -32,6 +32,7 @@ const customStyles = {
 type Props = {
   type: string,
   tariff: string,
+  id: string,
   name: string,
   data: Object,
   isOpened: boolean,
@@ -42,6 +43,7 @@ type Props = {
 const CreateModal = ({
   type,
   tariff,
+  id,
   name,
   data,
   isOpened,
@@ -55,7 +57,7 @@ const CreateModal = ({
     e.preventDefault();
     if (tariff && name) {
       handleOpenCloseModal();
-      onHandleResize(name, tariff);
+      onHandleResize(name, id);
     }
   };
 

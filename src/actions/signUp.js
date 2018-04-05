@@ -9,7 +9,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE
 } from '../constants/signUpConstants';
-import { webApiLoginGroup } from '../config';
+import { webApiLogin } from '../config';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -39,18 +39,28 @@ export const fetchSignUp = (
   password: string,
   recaptcha: string,
   axios: any,
-  URL: string = webApiLoginGroup
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(signUpRequest(email, password, recaptcha));
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
   const response = await axios.post(
-    `${URL}/api/users`,
-    { username: email, password, recaptcha },
+    `${URL}/user/sign_up`,
     {
+      login: email,
+      password,
+      recaptcha:
+        '03AHhf_52156hcrzZpAgJse24k1JVDN4nGjujmnlYW7KTjV-JuxmNE13SUfJNfxEC1Rj4-.....'
+    },
+    {
+      headers: {
+        'User-Client': browser
+      },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { data, status } = response;
+  console.log(data);
   switch (status) {
     case 201: {
       // if (

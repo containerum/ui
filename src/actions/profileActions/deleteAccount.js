@@ -9,7 +9,7 @@ import {
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE
 } from '../../constants/profileConstants/deleteAccount';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const deleteAccountRequest = () => ({
   type: DELETE_ACCOUNT_REQUESTING,
@@ -32,24 +32,31 @@ const deleteAccountFailure = (err, status) => ({
 
 export const fetchDeleteAccount = (
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(deleteAccountRequest());
 
-  const response = await axios.delete(`${URL}/api/profile`, {
-    headers: {
-      Authorization: token,
-      'User-Client': browser,
-      'Access-Control-Allow-Origin': '*'
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
+  const response = await axios.post(
+    `${URL}/user/delete/partial`,
+    {},
+    {
+      headers: {
+        'User-Client': browser,
+        'User-Token': accessToken
+        // 'Content-Type': 'application/json'
+      },
+      validateStatus: status => status >= 200 && status <= 505
+    }
+  );
   const { status, data } = response;
+  console.log(data);
   switch (status) {
-    case 200: {
+    case 202: {
       dispatch(deleteAccountSuccess(data, status));
       cookie.remove('token', { path: '/' });
       cookie.remove('accessToken', { path: '/' });

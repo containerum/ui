@@ -78,10 +78,9 @@ export class CreateVolume extends PureComponent<Props> {
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      const {
-        country_code: countryCode,
-        first_name: firstName
-      } = nextProps.getProfileReducer.data.data;
+      const dataProfile = nextProps.getProfileReducer.data.data;
+      const countryCode = dataProfile ? dataProfile.country_code : null;
+      const firstName = dataProfile ? dataProfile.first_name : null;
       if (countryCode && firstName) {
         this.setState({
           ...this.state,

@@ -25,7 +25,7 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
     e.stopPropagation();
   };
   const ta = timeago();
-  // console.log(data);
+  console.log(data);
   return (
     <div>
       {data.length >= 1 && (
@@ -46,10 +46,8 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
               const {
                 name,
                 status,
-                restarts,
-                created_at: createdAt,
-                active_containers: activeContainers,
-                total_containers: totalContainers
+                containers,
+                created_at: createdAt
               } = deploy;
               const milliseconds = Date.parse(createdAt);
               const dateHours = new Date(milliseconds);
@@ -66,11 +64,9 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
                     <img src={podPng} alt="pod" />
                   </td>
                   <td className="td-2">{name}</td>
-                  <td className="td-3">{status}</td>
-                  <td className="td-4">{restarts} restarts</td>
-                  <td className="td-5">
-                    {activeContainers} / {totalContainers}
-                  </td>
+                  <td className="td-3">{status.phase}</td>
+                  <td className="td-4">{status.restart_count} restarts</td>
+                  <td className="td-5">{containers.length}</td>
                   <td className="td-6">{dateValue}</td>
                   <td className="td-7">
                     {/* <div className="warning"> </div> */}
