@@ -118,9 +118,10 @@ const CreateDomainCard = ({
             'form-group__label-always-onfocus'}`}
           labelText="Domain"
           baseClassNameHelper="form-group__helper"
-          handleChangeInput={e =>
-            handleChangeInput(e.target.value, 'domainName')
-          }
+          handleChangeInput={e => {
+            // e.target.setSelectionRange(-domainName.length, -domainName.length);
+            handleChangeInput(e.target.value, 'domainName');
+          }}
           alwaysVisiblePlaceholder="customAlwaysVisiblePlaceholder"
         />
         <InputControl
