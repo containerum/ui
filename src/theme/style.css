@@ -33,6 +33,9 @@ h1{
     font-weight: 300;
     color: #a7a7a7;
 }
+.light-text__configmap {
+  font-size: 12px;
+}
 
 .normal-text{
     font-weight: 300;
@@ -385,6 +388,10 @@ h1{
     text-transform: uppercase;
     margin: 0 0 15px 0;
 }
+.block-item__title_no-uppercase{
+  text-transform:none;
+}
+
 .block-item__title_configmap-block {
   font-size: 15px;
   padding-left: 15px;
@@ -554,7 +561,9 @@ h1{
     color: #29abe2;
 }
 
-
+.dropzone-item__configmap {
+  width: 392px;
+}
 
 .form-group{
     position: relative;
@@ -597,6 +606,10 @@ h1{
     text-transform: uppercase;
     color: #333333;
     margin-bottom: 0px;
+}
+.form-group__input-text_configmap {
+  max-width: 400px;
+  min-width: 400px;
 }
 
 .form-group__input-text.form-control{
@@ -911,6 +924,10 @@ h1{
 
 .deployed .content-block__more-panel .slide-up i:before {
     color: #007bff;
+}
+
+.configmap-add-btn {
+  width:190px;
 }
 
 .content-block-content.card-block{

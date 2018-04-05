@@ -1071,6 +1071,13 @@ body .tooltip > .tooltip-inner {
 .form-control:focus {
   border: solid 0.5px #a7a7a7;
 }
+.form-control__configmap {
+  min-width: 600px;
+}
+.form-control__configmap::placeholder {
+  font-size: 15px;
+  color: #a7a7a7;
+}
 
 .input-group {
   margin: 0 0 20px 0;

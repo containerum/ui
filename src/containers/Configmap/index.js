@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Helmet from 'react-helmet';
+import toastr from 'toastr';
 
 import HeaderPage from '../Header';
 import FooterPage from '../Footer';
@@ -10,16 +11,94 @@ class Configmap extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      textArea: '',
       name: '',
-      isValidName: false
+      fileName: '',
+      files: [],
+      base64: []
     };
   }
+
+  handleChangeTextArea = e => {
+    const textArea = e.target.value;
+    this.setState({
+      ...this.state,
+      textArea
+    });
+  };
 
   handleChangeName = value => {
     this.setState({
       ...this.state,
-      name: value,
-      isValidName: true
+      name: value
+    });
+  };
+
+  handleChangeFileName = value => {
+    this.setState({
+      ...this.state,
+      fileName: value
+    });
+  };
+
+  handleFiles = files => {
+    const errorFiles = [];
+    const successFiles = [];
+    const successBase64 = [];
+    // const successFilesFirstThree = [];
+    // const successBase64FirstThree = [];
+    Object.keys(files.fileList).filter((item, index) => {
+      if (files.fileList[item].size >= 10485760) {
+        errorFiles.push(files.fileList[item]);
+      } else {
+        successFiles.push(files.fileList[item]);
+        successBase64.push(files.base64[index]);
+      }
+      return null;
+    });
+
+    if (errorFiles.length) {
+      toastr.error(
+        `<div>${errorFiles.map(
+          file => `
+    ${file.name}`
+        )}</div>`,
+        `The following files were not downloaded because the attachment size (10 MB maximum) was exceeded:`
+      );
+    }
+
+    // if (successFiles.length > 3) {
+    //   toastr.error(
+    //     `<div>${errorFiles.map(
+    //       file => `
+    // ${file.name}`
+    //     )}</div>`,
+    //     `You can only upload 3 files at a time`
+    //   );
+    // }
+
+    // for (let i = 0; i < 3; i += 1) {
+    //   successFilesFirstThree.push(successFiles[i]);
+    //   successBase64FirstThree.push(successBase64[i]);
+    // }
+
+    this.setState({
+      ...this.state,
+      files: successFiles,
+      base64: successBase64
+    });
+  };
+
+  handleDeleteImage = imageName => {
+    const arrBase64 = [];
+    const newFiles = this.state.files.filter((file, index) => {
+      if (file.name !== imageName) arrBase64.push(this.state.base64[index]);
+      return file.name !== imageName;
+    });
+    this.setState({
+      ...this.state,
+      files: newFiles,
+      base64: arrBase64
     });
   };
 
@@ -61,8 +140,16 @@ class Configmap extends PureComponent {
                         <div className="container no-back">
                           <ConfigmapForm
                             onHandleChangeName={this.handleChangeName}
+                            onHandleChangeFileName={this.handleChangeFileName}
                             name={this.state.name}
-                            valid={this.state.isValidName}
+                            fileName={this.state.fileName}
+                            handleFiles={files => this.handleFiles(files)}
+                            files={this.state.files}
+                            textArea={this.state.textArea}
+                            handleChangeTextArea={this.handleChangeTextArea}
+                            handleDeleteImage={fileName =>
+                              this.handleDeleteImage(fileName)
+                            }
                           />
                         </div>
                       </div>
