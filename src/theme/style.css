@@ -52,6 +52,13 @@ h1{
 .container{
     background: #fff;
 }
+.container__cfm-add-file {
+  width: 280px;
+  margin-left: 0px;
+  margin-right: 150px;
+
+}
+
 .container__webhook {
   margin-top: 30px;
   padding-top: 40px;
@@ -743,6 +750,13 @@ h1{
 .row.double-2{
     margin-left: -15px;
     margin-right: -15px;
+}
+
+.row__cfm-add-file {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+
 }
 
 .ps>.ps__scrollbar-y-rail{

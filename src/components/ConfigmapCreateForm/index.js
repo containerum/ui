@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactFileReader from 'react-file-reader';
+import Tooltip from 'rc-tooltip';
 import InputControl from '../../components/InputControl';
 import AddConfigMapFileManualyView from '../../components/AddConfigmapFileManualy';
 
@@ -11,6 +12,9 @@ type Props = {
   handleFiles: (files: Array) => void,
   files: Array,
   textArea: string,
+  filesManualyCount: Number,
+  handleDeleteFilesManualy: () => void,
+  handleChangeFilesManualyCount: () => void,
   handleDeleteImage: (fileName: string) => void,
   handleChangeTextArea: (e: Object) => void
 };
@@ -22,9 +26,12 @@ const ConfigmapCreateForm = ({
   onHandleChangeFileName,
   handleFiles,
   files,
+  handleDeleteFilesManualy,
   textArea,
+  handleChangeFilesManualyCount,
   handleChangeTextArea,
-  handleDeleteImage
+  handleDeleteImage,
+  filesManualyCount
 }: Props) => (
   <form>
     <div className="row">
@@ -62,7 +69,14 @@ const ConfigmapCreateForm = ({
         multipleFiles
         handleFiles={arrFiles => handleFiles(arrFiles)}
       >
-        <button className="button_blue btn btn-outline-primary configmap-add-btn">
+        <button
+          className={
+            textArea || fileName
+              ? 'btn btn-secondary configmap-add-btn'
+              : 'button_blue btn btn-outline-primary configmap-add-btn'
+          }
+          disabled={textArea || fileName}
+        >
           Add File
         </button>
       </ReactFileReader>
@@ -106,23 +120,55 @@ const ConfigmapCreateForm = ({
     </div>
     <div className="row">
       <div className="container ">
-        <AddConfigMapFileManualyView
-          onHandleChangeFileName={onHandleChangeFileName}
-          fileName={fileName}
-          handleChangeTextArea={handleChangeTextArea}
-          textArea={textArea}
-        />
+        {new Array(filesManualyCount)
+          .fill()
+          .map(number => (
+            <AddConfigMapFileManualyView
+              key={number}
+              id={number}
+              files={files}
+              onHandleChangeFileName={onHandleChangeFileName}
+              fileName={fileName}
+              handleChangeTextArea={handleChangeTextArea}
+              textArea={textArea}
+              handleDeleteFilesManualy={handleDeleteFilesManualy}
+            />
+          ))}
       </div>
     </div>
     <div className="row">
       <div className="container">
-        <div
-          className="btn btn-link "
-          style={{ paddingLeft: '0', color: '#1baae4' }}
+        <Tooltip
+          placement="bottom"
+          trigger={files.length > 0 ? ['hover'] : ''}
+          overlay={
+            <span style={{ colo: 'black' }}>
+              You can use only one additing method
+            </span>
+          }
         >
-          <h5>+ FILE</h5>
-        </div>
+          <div
+            onClick={files.length > 0 ? '' : handleChangeFilesManualyCount}
+            className="btn btn-link "
+            style={{ paddingLeft: '0', color: '#1baae4' }}
+            disabled={files.length > 0}
+          >
+            <h5>+ FILE</h5>
+          </div>
+        </Tooltip>
       </div>
+    </div>
+    <div
+      className="row"
+      style={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        paddingRight: '90px'
+      }}
+    >
+      <button className="btn btn-primary" style={{ width: '212px' }}>
+        Create Config Map
+      </button>
     </div>
   </form>
 );

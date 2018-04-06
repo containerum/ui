@@ -11,13 +11,38 @@ class Configmap extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      filesM: [
+        {
+          name: '',
+          text: ''
+        }
+      ],
+      fileName: '',
       textArea: '',
       name: '',
-      fileName: '',
       files: [],
-      base64: []
+      base64: [],
+      filesManualyCount: 1
     };
   }
+
+  handleChangeFilesManualyCount = () => {
+    this.setState({
+      filesManualyCount: this.state.filesManualyCount + 1
+    });
+  };
+
+  handleDeleteFilesManualy = () => {
+    this.setState({
+      fileName: '',
+      textArea: ''
+    });
+    if (this.state.filesManualyCount > 1) {
+      this.setState({
+        filesManualyCount: this.state.filesManualyCount - 1
+      });
+    }
+  };
 
   handleChangeTextArea = e => {
     const textArea = e.target.value;
@@ -146,7 +171,15 @@ class Configmap extends PureComponent {
                             handleFiles={files => this.handleFiles(files)}
                             files={this.state.files}
                             textArea={this.state.textArea}
+                            handleChangeFilesManualyCount={
+                              this.handleChangeFilesManualyCount
+                            }
+                            handleDeleteFilesManualy={
+                              this.handleDeleteFilesManualy
+                            }
+                            filesM={this.state.filesM}
                             handleChangeTextArea={this.handleChangeTextArea}
+                            filesManualyCount={this.state.filesManualyCount}
                             handleDeleteImage={fileName =>
                               this.handleDeleteImage(fileName)
                             }
