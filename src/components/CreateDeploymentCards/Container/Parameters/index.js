@@ -45,8 +45,8 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           baseClassNameLabel={`form-group__label ${limits.cpu &&
             'form-group__label-always-onfocus'}`}
           labelText="CPU"
-          title="Example: 0,3 or 300m"
-          textHelper="Example: 0,3 or 300m"
+          title="Example: 0.3 or 300m"
+          textHelper="Example: 0.3 or 300m"
           baseClassNameHelper="form-group__helper"
           handleChangeInput={e =>
             handleChangeInputParameters(e.target.value, id, index, 'cpu')
@@ -65,8 +65,8 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           baseClassNameLabel={`form-group__label ${limits.memory &&
             'form-group__label-always-onfocus'}`}
           labelText="RAM"
-          title="Example 0,5Gi or 512Mi"
-          textHelper="Example 0,5Gi or 512Mi"
+          title="Example 0.5Gi or 512Mi"
+          textHelper="Example 0.5Gi or 512Mi"
           baseClassNameHelper="form-group__helper"
           handleChangeInput={e =>
             handleChangeInputParameters(e.target.value, id, index, 'memory')

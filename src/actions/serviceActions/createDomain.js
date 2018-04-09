@@ -72,7 +72,7 @@ export const fetchCreateDomain = (
       domain: dataDomain.domainName,
       type: dataDomain.isEnabledSSL ? 'https' : 'http',
       service: dataDomain.currentService.name,
-      service_port: dataDomain.currentPort.targetPort
+      service_port: dataDomain.currentPort.port
     },
     {
       headers: {
@@ -86,15 +86,16 @@ export const fetchCreateDomain = (
   switch (status) {
     case 201: {
       // console.log(data);
-      // idSrv = `Domain ${data.name} for ${intObj.deployment_name}`;
-      idSrv = 'Domain';
+      idSrv = `Domain ${dataDomain.domainName}`;
       dispatch(createDomainSuccess(data, status, idSrv));
       dispatch(push(routerLinks.getServicesLink(idName)));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(createDomainFailure(data.message, status, idSrv));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

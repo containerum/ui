@@ -39,7 +39,6 @@ export const fetchCreateImageToken = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
   dispatch(createImageTokenRequest());
@@ -52,7 +51,6 @@ export const fetchCreateImageToken = (
     },
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',

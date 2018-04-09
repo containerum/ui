@@ -39,7 +39,6 @@ export const fetchDeleteDeployment = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -51,7 +50,6 @@ export const fetchDeleteDeployment = (
     `${URL}/namespace/${idName}/deployment/${idDep}`,
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'User-Token': accessToken
       },
@@ -64,9 +62,11 @@ export const fetchDeleteDeployment = (
       dispatch(deleteDeploymentSuccess(data, 202, config.method, idDep));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(deleteDeploymentFailure(data.message, status, idDep));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

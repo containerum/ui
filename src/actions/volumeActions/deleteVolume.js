@@ -38,15 +38,12 @@ export const fetchDeleteVolume = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  // console.log(token);
 
   dispatch(deleteVolumeRequest());
 
   const response = await axios.delete(`${URL}/api/volumes/${idVol}`, {
     headers: {
-      Authorization: token,
       'User-Client': browser,
       'Content-Type': 'application/x-www-form-urlencode',
       'Access-Control-Allow-Origin': '*',

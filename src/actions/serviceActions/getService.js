@@ -40,7 +40,6 @@ export const fetchGetService = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -52,7 +51,6 @@ export const fetchGetService = (
     `${URL}/namespaces/${idName}/services/${idSrv}`,
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'User-Token': accessToken
       },
@@ -66,9 +64,11 @@ export const fetchGetService = (
       dispatch(getServiceSuccess(data, status, idName, idSrv));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(getServiceFailure(data.message, status, idName, idSrv));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

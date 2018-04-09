@@ -33,7 +33,6 @@ export const fetchGetBalance = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -43,7 +42,6 @@ export const fetchGetBalance = (
 
   const response = await axios.get(`${URL}/isp/user/balance`, {
     headers: {
-      Authorization: token,
       'User-Client': browser,
       'User-Token': accessToken
       // 'X-User-ID': '76603eda-d9e0-4ed7-91be-2d5cf6ff76b2',
@@ -57,9 +55,11 @@ export const fetchGetBalance = (
       dispatch(getBalanceSuccess(data));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(getBalanceRequest());
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

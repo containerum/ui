@@ -72,9 +72,11 @@ export const fetchGetSolution = (
         dispatch(getSolutionSuccess([]));
         break;
       }
-      case 401: {
+      case 400: {
         dispatch(getSolutionRequest());
-        dispatch(push('/login'));
+        if (data.message === 'invalid token received') {
+          dispatch(push('/login'));
+        }
         break;
       }
       default: {

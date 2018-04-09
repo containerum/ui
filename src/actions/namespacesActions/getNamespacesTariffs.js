@@ -37,7 +37,6 @@ export const fetchGetNamespacesTariffs = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -47,11 +46,8 @@ export const fetchGetNamespacesTariffs = (
 
   const response = await axios.get(`${URL}/tariffs/namespace`, {
     headers: {
-      Authorization: token,
       'User-Client': browser,
       'User-Token': accessToken
-      // 'X-User-ID': '76603eda-d9e0-4ed7-91be-2d5cf6ff76b2',
-      // 'X-User-Role': 'user'
     },
     validateStatus: status => status >= 200 && status <= 505
   });
@@ -60,6 +56,12 @@ export const fetchGetNamespacesTariffs = (
     case 200: {
       data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
       dispatch(getNamespacesTariffsSuccess(data));
+      break;
+    }
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     // case 401: {

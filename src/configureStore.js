@@ -16,7 +16,7 @@ axios.interceptors.response.use(response => {
   const lastTimeToRefresh = cookie.load('lastTimeToRefresh')
     ? parseInt(cookie.load('lastTimeToRefresh'), 10)
     : null;
-  const timeToRequest = 600000;
+  const timeToRequest = 600000; // default: 600000 (10 min)
   const dateNow = Date.parse(new Date());
   const differenceDate =
     lastTimeToRefresh + timeToRequest - dateNow > 0
@@ -57,7 +57,6 @@ axios.interceptors.response.use(response => {
             break;
           }
           default: {
-            cookie.remove('token', { path: '/' });
             cookie.remove('accessToken', { path: '/' });
             cookie.remove('refreshToken', { path: '/' });
           }

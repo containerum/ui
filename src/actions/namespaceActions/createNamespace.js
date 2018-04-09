@@ -44,7 +44,6 @@ export const fetchCreateNamespace = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -60,7 +59,6 @@ export const fetchCreateNamespace = (
     },
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'User-Token': accessToken
         // 'Content-Type': 'application/json'
@@ -85,9 +83,11 @@ export const fetchCreateNamespace = (
       dispatch(push('/namespaces'));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(createNamespaceFailure(data.message));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

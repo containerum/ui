@@ -41,7 +41,6 @@ export const fetchGetDeployment = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -53,7 +52,6 @@ export const fetchGetDeployment = (
     `${URL}/namespaces/${idName}/deployments/${idDep}`,
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'User-Token': accessToken
       },
@@ -66,9 +64,11 @@ export const fetchGetDeployment = (
       dispatch(getDeploymentSuccess(data, status, idName, idDep));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(getDeploymentFailure(data.message, status, idName, idDep));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

@@ -68,7 +68,6 @@ export const fetchLogin = (
       break;
     }
     default: {
-      cookie.remove('token', { path: '/' });
       cookie.remove('accessToken', { path: '/' });
       cookie.remove('refreshToken', { path: '/' });
       dispatch(loginFailure(response.data.message));

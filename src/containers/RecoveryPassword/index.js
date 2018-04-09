@@ -47,7 +47,6 @@ class RecoveryPassword extends PureComponent<Props> {
   //   }
   // }
   componentDidMount() {
-    cookie.remove('token', { path: '/' });
     cookie.remove('accessToken', { path: '/' });
     cookie.remove('refreshToken', { path: '/' });
     cookie.remove('lastTimeToRefresh', { path: '/' });

@@ -32,14 +32,12 @@ export const fetchGetImagesToken = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
   dispatch(getImagesTokenRequest());
 
   const response = await axios.get(`${URL}/api/set_image_tokens`, {
     headers: {
-      Authorization: token,
       'User-Client': browser,
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',

@@ -35,7 +35,6 @@ export const fetchPayFor = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
   dispatch(payForRequest());
@@ -45,7 +44,6 @@ export const fetchPayFor = (
     { amount },
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',

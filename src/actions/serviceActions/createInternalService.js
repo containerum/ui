@@ -5,11 +5,16 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
+  CREATE_INTERNAL_SERVICE_INVALID,
   CREATE_INTERNAL_SERVICE_REQUESTING,
   CREATE_INTERNAL_SERVICE_SUCCESS,
   CREATE_INTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/createInternalService';
 import { webApiLogin } from '../../config/index';
+
+const createInternalServiceInvalid = () => ({
+  type: CREATE_INTERNAL_SERVICE_INVALID
+});
 
 const createInternalServiceRequest = () => ({
   type: CREATE_INTERNAL_SERVICE_REQUESTING,
@@ -38,7 +43,6 @@ export const fetchCreateInternalService = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -66,7 +70,6 @@ export const fetchCreateInternalService = (
     intObj,
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'User-Token': accessToken
       },
@@ -76,19 +79,24 @@ export const fetchCreateInternalService = (
   const { status, data } = response;
   switch (status) {
     case 201: {
-      idSrv = `Internal service ${data.name} for ${intObj.deployment_name}`;
+      idSrv = `Internal service ${dataSrv.internalSrvNameValue} for ${
+        dataSrv.currentDeployment
+      }`;
       dispatch(createInternalServiceSuccess(data, status, idSrv));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(createInternalServiceFailure(data.message, status, idSrv));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {
       dispatch(createInternalServiceFailure(data.message, status, idSrv));
     }
   }
+  dispatch(createInternalServiceInvalid());
 };
 
 export const fetchCreateInternalServiceIfNeeded = (

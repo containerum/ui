@@ -13,7 +13,12 @@ import {
   GET_DEPLOYMENTS_FAILURE,
   GET_DEPLOYMENTS_SUCCESS
 } from '../../constants/deploymentsConstants/getDeployments';
-import { GET_SERVICE_SUCCESS } from '../../constants/serviceConstants/getService';
+import {
+  GET_SERVICE_INVALID,
+  GET_SERVICE_FAILURE,
+  GET_SERVICE_REQUESTING,
+  GET_SERVICE_SUCCESS
+} from '../../constants/serviceConstants/getService';
 import DeploymentsList from '../../components/DeploymentsList';
 
 type Props = {
@@ -56,19 +61,22 @@ export class Deployments extends PureComponent<Props> {
         ...this.state,
         displayedDeployments: this.state.displayedDeployments.filter(
           deployment =>
-            nextProps.getServiceReducer.data.deployment === deployment.name
+            nextProps.getServiceReducer.data.deploy === deployment.name
         )
       });
     }
   }
 
   renderDeploymentsList = () => {
-    const { getDeploymentsReducer, match } = this.props;
+    const { getDeploymentsReducer, getServiceReducer, match } = this.props;
 
     if (
       !getDeploymentsReducer.readyStatus ||
       getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_INVALID ||
-      getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_REQUESTING
+      getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_REQUESTING ||
+      !getServiceReducer.readyStatus ||
+      getServiceReducer.readyStatus === GET_SERVICE_INVALID ||
+      getServiceReducer.readyStatus === GET_SERVICE_REQUESTING
     ) {
       return (
         <div
@@ -82,7 +90,10 @@ export class Deployments extends PureComponent<Props> {
       );
     }
 
-    if (getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_FAILURE) {
+    if (
+      getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_FAILURE ||
+      getServiceReducer.readyStatus === GET_SERVICE_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Deployments!</p>;
     }
 

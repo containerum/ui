@@ -62,9 +62,11 @@ export const fetchDeleteDomain = (
       dispatch(deleteDomainSuccess(data, status, config.method, label));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(deleteDomainFailure(data.message, status, label));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

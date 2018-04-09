@@ -33,7 +33,6 @@ export const fetchGetProfileTariffs = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -45,7 +44,6 @@ export const fetchGetProfileTariffs = (
     `${URL}/isp/user/tariffs${monthly && `?monthly=${monthly}`}`,
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'User-Token': accessToken
       },
@@ -59,9 +57,11 @@ export const fetchGetProfileTariffs = (
       dispatch(getProfileTariffsSuccess(data));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(getProfileTariffsFailure(data.message));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

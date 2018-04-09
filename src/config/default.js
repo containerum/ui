@@ -88,12 +88,12 @@ module.exports = {
     settings: '/settings'
   },
   externalLinks: {
-    documentation: 'https://containerum.com/docs/about',
-    fastDeploy: 'https://containerum.com/how-to',
-    helloWorld: 'https://containerum.com/docs/about',
+    documentation: 'https://docs.containerum.com/docs/about',
+    fastDeploy: 'https://docs.containerum.com/how-to',
+    helloWorld: 'https://docs.containerum.com/docs/about',
     solutions: 'https://github.com/containerum',
-    blog: 'https://blog.containerum.com/',
-    startGuide: 'https://containerum.com/docs/start-guide',
+    blog: 'https://medium.com/@containerum',
+    startGuide: 'https://docs.containerum.com/docs/start-guide',
     releasesChkit: 'https://github.com/containerum/chkit/releases/latest',
     termsOfService: 'https://containerum.com/terms',
     privacyPolicy: 'https://containerum.com/policy'
