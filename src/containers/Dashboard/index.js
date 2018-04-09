@@ -10,9 +10,7 @@ import _ from 'lodash/fp';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
-import * as actionGetCountDeployments from '../../actions/statisticsActions/getCountDeployments';
-import * as actionGetCountServices from '../../actions/statisticsActions/getCountServices';
-import * as actionGetCountPods from '../../actions/statisticsActions/getCountPods';
+import * as actionGetResources from '../../actions/statisticsActions/getResources';
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
@@ -26,20 +24,10 @@ import {
   GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
 import {
-  GET_COUNT_DEPLOYMENTS_INVALID,
-  GET_COUNT_DEPLOYMENTS_REQUESTING,
-  GET_COUNT_DEPLOYMENTS_FAILURE
-} from '../../constants/statisticsConstants/getCountDeploymentsConstants';
-import {
-  GET_COUNT_SERVICES_INVALID,
-  GET_COUNT_SERVICES_REQUESTING,
-  GET_COUNT_SERVICES_FAILURE
-} from '../../constants/statisticsConstants/getCountServicesConstants';
-import {
-  GET_COUNT_PODS_INVALID,
-  GET_COUNT_PODS_REQUESTING,
-  GET_COUNT_PODS_FAILURE
-} from '../../constants/statisticsConstants/getCountPodsConstants';
+  GET_RESOURCES_INVALID,
+  GET_RESOURCES_REQUESTING,
+  GET_RESOURCES_FAILURE
+} from '../../constants/statisticsConstants/getResourcesConstants';
 import {
   RUN_SOLUTION_INVALID,
   RUN_SOLUTION_SUCCESS,
@@ -58,14 +46,10 @@ type Props = {
   history: Object,
   getNamespacesReducer: Object,
   getSolutionsReducer: Object,
-  getCountDeploymentsReducer: Object,
-  getCountServicesReducer: Object,
-  getCountPodsReducer: Object,
+  getResourcesReducer: Object,
   fetchGetNamespacesIfNeeded: () => void,
   fetchGetSolutionsIfNeeded: () => void,
-  fetchGetCountDeploymentsIfNeeded: () => void,
-  fetchGetCountServicesIfNeeded: () => void,
-  fetchGetCountPodsIfNeeded: () => void
+  fetchGetResourcesIfNeeded: () => void
 };
 
 // Export this for unit testing more easily
@@ -84,15 +68,11 @@ export class Dashboard extends PureComponent<Props> {
     const {
       fetchGetNamespacesIfNeeded,
       fetchGetSolutionsIfNeeded,
-      fetchGetCountDeploymentsIfNeeded,
-      fetchGetCountServicesIfNeeded,
-      fetchGetCountPodsIfNeeded
+      fetchGetResourcesIfNeeded
     } = this.props;
     fetchGetNamespacesIfNeeded();
     fetchGetSolutionsIfNeeded();
-    fetchGetCountDeploymentsIfNeeded();
-    fetchGetCountServicesIfNeeded();
-    fetchGetCountPodsIfNeeded();
+    fetchGetResourcesIfNeeded();
   }
   componentWillUpdate(nextProps) {
     if (
@@ -213,13 +193,11 @@ export class Dashboard extends PureComponent<Props> {
     );
   };
   renderCountDeploymentsInfo = () => {
-    const { getCountDeploymentsReducer } = this.props;
+    const { getResourcesReducer } = this.props;
     if (
-      !getCountDeploymentsReducer.readyStatus ||
-      getCountDeploymentsReducer.readyStatus ===
-        GET_COUNT_DEPLOYMENTS_INVALID ||
-      getCountDeploymentsReducer.readyStatus ===
-        GET_COUNT_DEPLOYMENTS_REQUESTING
+      !getResourcesReducer.readyStatus ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING
     ) {
       return (
         <div className="col-md-4">
@@ -236,21 +214,19 @@ export class Dashboard extends PureComponent<Props> {
         </div>
       );
     }
-    if (
-      getCountDeploymentsReducer.readyStatus === GET_COUNT_DEPLOYMENTS_FAILURE
-    ) {
+    if (getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE) {
       return <p>Oops, Failed to load data of Deployments!</p>;
     }
     return (
-      <CountDeploymentsInfo count={getCountDeploymentsReducer.data.count} />
+      <CountDeploymentsInfo count={getResourcesReducer.data.deployments} />
     );
   };
   renderCountServicesInfo = () => {
-    const { getCountServicesReducer } = this.props;
+    const { getResourcesReducer } = this.props;
     if (
-      !getCountServicesReducer.readyStatus ||
-      getCountServicesReducer.readyStatus === GET_COUNT_SERVICES_INVALID ||
-      getCountServicesReducer.readyStatus === GET_COUNT_SERVICES_REQUESTING
+      !getResourcesReducer.readyStatus ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING
     ) {
       return (
         <div className="col-md-4">
@@ -267,17 +243,26 @@ export class Dashboard extends PureComponent<Props> {
         </div>
       );
     }
-    if (getCountServicesReducer.readyStatus === GET_COUNT_SERVICES_FAILURE) {
+    if (getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE) {
       return <p>Oops, Failed to load data of Services!</p>;
     }
-    return <CountServicesInfo count={getCountServicesReducer.data.count} />;
+    return (
+      <CountServicesInfo
+        count={
+          Number.isInteger(getResourcesReducer.data.external_services)
+            ? getResourcesReducer.data.external_services +
+              getResourcesReducer.data.internal_services
+            : getResourcesReducer.data.external_services
+        }
+      />
+    );
   };
   renderCountPodsInfo = () => {
-    const { getCountPodsReducer } = this.props;
+    const { getResourcesReducer } = this.props;
     if (
-      !getCountPodsReducer.readyStatus ||
-      getCountPodsReducer.readyStatus === GET_COUNT_PODS_INVALID ||
-      getCountPodsReducer.readyStatus === GET_COUNT_PODS_REQUESTING
+      !getResourcesReducer.readyStatus ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING
     ) {
       return (
         <div className="col-md-4">
@@ -294,10 +279,10 @@ export class Dashboard extends PureComponent<Props> {
         </div>
       );
     }
-    if (getCountPodsReducer.readyStatus === GET_COUNT_PODS_FAILURE) {
+    if (getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE) {
       return <p>Oops, Failed to load data of Pods!</p>;
     }
-    return <CountPodsInfo count={getCountPodsReducer.data.count} />;
+    return <CountPodsInfo count={getResourcesReducer.data.pods} />;
   };
   renderRunSolutionModal = () => {
     const { getNamespacesReducer, getSolutionsReducer } = this.props;
@@ -417,27 +402,19 @@ const connector: Connector<{}, Props> = connect(
   ({
     getNamespacesReducer,
     getSolutionsReducer,
-    getCountDeploymentsReducer,
-    getCountServicesReducer,
-    getCountPodsReducer
+    getResourcesReducer
   }: ReduxState) => ({
     getNamespacesReducer,
     getSolutionsReducer,
-    getCountDeploymentsReducer,
-    getCountServicesReducer,
-    getCountPodsReducer
+    getResourcesReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: () =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded()),
     fetchGetSolutionsIfNeeded: () =>
       dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
-    fetchGetCountDeploymentsIfNeeded: () =>
-      dispatch(actionGetCountDeployments.fetchGetCountDeploymentsIfNeeded()),
-    fetchGetCountServicesIfNeeded: () =>
-      dispatch(actionGetCountServices.fetchGetCountServicesIfNeeded()),
-    fetchGetCountPodsIfNeeded: () =>
-      dispatch(actionGetCountPods.fetchGetCountPodsIfNeeded())
+    fetchGetResourcesIfNeeded: () =>
+      dispatch(actionGetResources.fetchGetResourcesIfNeeded())
   })
 );
 

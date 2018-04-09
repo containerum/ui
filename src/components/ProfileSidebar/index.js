@@ -90,7 +90,12 @@ const ProfileSidebar = ({ type }: Props) => (
     <li>
       <div className="nav-root-item">Billing</div>
       <Scrollspy
-        items={['information', 'add-funds', 'coupon', 'history']}
+        items={[
+          'information',
+          'add-funds',
+          // 'coupon',
+          'history'
+        ]}
         style={{
           padding: '20px 0 0 20px'
         }}
@@ -128,22 +133,22 @@ const ProfileSidebar = ({ type }: Props) => (
             </HashLink>
           )}
         </li>
-        <li className="nav-item">
-          {type === 'billing' ? (
-            <div
-              className="nav-link"
-              onClick={() => scrollById('coupon')}
-              onKeyPress={() => scrollById('coupon')}
-              role="presentation"
-            >
-              Promo code
-            </div>
-          ) : (
-            <HashLink to="/billing#coupon" className="nav-link">
-              Coupon
-            </HashLink>
-          )}
-        </li>
+        {/* <li className="nav-item"> */}
+        {/* {type === 'billing' ? ( */}
+        {/* <div */}
+        {/* className="nav-link" */}
+        {/* onClick={() => scrollById('coupon')} */}
+        {/* onKeyPress={() => scrollById('coupon')} */}
+        {/* role="presentation" */}
+        {/* > */}
+        {/* Promo code */}
+        {/* </div> */}
+        {/* ) : ( */}
+        {/* <HashLink to="/billing#coupon" className="nav-link"> */}
+        {/* Coupon */}
+        {/* </HashLink> */}
+        {/* )} */}
+        {/* </li> */}
         <li className="nav-item">
           {type === 'billing' ? (
             <div

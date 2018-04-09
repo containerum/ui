@@ -9,7 +9,7 @@ import {
   CONFIRM_SIGNUP_SUCCESS,
   CONFIRM_SIGNUP_FAILURE
 } from '../constants/confirmSignUpConstants';
-import { webApiLoginGroup } from '../config';
+import { webApiLogin } from '../config';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -35,32 +35,32 @@ const confirmSignUpFailure = err => ({
 export const fetchConfirmSignUp = (
   hashParam: string,
   axios: any,
-  URL: string = webApiLoginGroup
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(confirmSignUpRequest(hashParam));
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
 
-  const response = await axios.get(`${URL}/api/confirm/${hashParam}`, {
-    headers: {
-      // 'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*'
-      // 'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1, private'
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
+  const response = await axios.post(
+    `${URL}/user/activation`,
+    { link: hashParam },
+    {
+      headers: {
+        'User-Client': browser
+      },
+      validateStatus: status => status >= 200 && status <= 505
+    }
+  );
   const { data, status } = response;
-  // console.log(data, status);
+  const { access_token: accessToken, refresh_token: refreshToken } = data;
   switch (status) {
     case 200: {
-      // if (
-      //   typeof window !== 'undefined' &&
-      //   typeof window.navigator !== 'undefined'
-      // ) {
-      //   ReactGA.event({
-      //     category: 'UI',
-      //     action: 'UI_SUp_confirmed'
-      //   });
-      // }
+      cookie.save('accessToken', accessToken, { path: '/' });
+      cookie.save('refreshToken', refreshToken, { path: '/' });
+      cookie.save('lastTimeToRefresh', Date.parse(new Date()), { path: '/' });
       dispatch(confirmSignUpSuccess(data));
+      if (typeof window !== 'undefined') {
+        window.location.replace('/dashboard');
+      }
       break;
     }
     default: {

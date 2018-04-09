@@ -64,7 +64,7 @@ const ConfigmapCreateForm = ({
     </div>
     <div className="row" style={{ paddingLeft: '15px' }}>
       <ReactFileReader
-        fileTypes={['application/json', 'application/pdf']}
+        fileTypes={['*.*']}
         base64
         multipleFiles
         handleFiles={arrFiles => handleFiles(arrFiles)}

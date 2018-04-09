@@ -806,6 +806,44 @@ h1{
   height: 47px;
   margin:0 0 10px 0;
 }
+.content-block-header-img__tools_cfm {
+  background-image: url("../containers/Tools/images/configmapLogo.svg");
+  background-repeat: no-repeat;
+}
+
+.content-block-container__tools:hover .content-block-header-img__tools_cfm {
+  background-image: url("../containers/Tools/images/configmapLogoActive.svg");
+  background-repeat: no-repeat;
+  margin:0 0 10px 0;
+  width: 50px;
+  height: 47px;
+}
+
+.content-block-header-img__tools_webhooks {
+  background-image: url("../containers/Tools/images/webhooksLogo.svg");
+  background-repeat: no-repeat;
+}
+
+.content-block-container__tools:hover .content-block-header-img__tools_webhooks {
+  background-image: url("../containers/Tools/images/webhooksLogoActive.svg");
+  background-repeat: no-repeat;
+  margin:0 0 10px 0;
+  width: 50px;
+  height: 47px;
+}
+
+.content-block-header-img__tools_domains {
+  background-image: url("../containers/Tools/images/domainsLogo.svg");
+  background-repeat: no-repeat;
+}
+
+.content-block-container__tools:hover .content-block-header-img__tools_domains {
+  background-image: url("../containers/Tools/images/domainsLogoActive.svg");
+  background-repeat: no-repeat;
+  margin:0 0 10px 0;
+  width: 50px;
+  height: 47px;
+}
 
 .content-block-header-img img {
   max-width: 100%;

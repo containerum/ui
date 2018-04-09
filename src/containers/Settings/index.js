@@ -12,21 +12,20 @@ import {
   GET_PROFILE_FAILURE
 } from '../../constants/profileConstants/getProfile';
 import type { ReduxState } from '../../types';
-import ProfileInfo from '../../components/ProfileInfo';
 import ProfileSidebar from '../../components/ProfileSidebar';
-import ProfilePassword from './Password';
-import DeleteAccountInfo from './DeleteAccount';
-import CLI from '../../components/CLIInfo';
-import './Account.css';
+// import ProfileWebHook from './WebHook';
+import ProfileDomains from './Domains';
+import CLIInfo from '../../components/CLIInfo';
 
 type Props = {
-  getProfileReducer: Object
+  getProfileReducer: Object,
+  match: Object
 };
 
 // Export this for unit testing more easily
-export class Account extends PureComponent<Props> {
+export class Settings extends PureComponent<Props> {
   renderProfileInfo = () => {
-    const { getProfileReducer } = this.props;
+    const { getProfileReducer, match } = this.props;
 
     if (
       !getProfileReducer.readyStatus ||
@@ -43,15 +42,14 @@ export class Account extends PureComponent<Props> {
     }
 
     if (getProfileReducer.readyStatus === GET_PROFILE_FAILURE) {
-      return <p>Oops, Failed to load data of Account!</p>;
+      return <p>Oops, Failed to load data of Settings!</p>;
     }
 
     return (
       <div className="content-block-container container container-fluid">
-        <ProfileInfo data={getProfileReducer.data} />
-        <ProfilePassword />
-        <CLI />
-        <DeleteAccountInfo />
+        {/* <ProfileWebHook /> */}
+        <ProfileDomains match={match} />
+        <CLIInfo />
       </div>
     );
   };
@@ -100,16 +98,16 @@ export class Account extends PureComponent<Props> {
     }
 
     if (getProfileReducer.readyStatus === GET_PROFILE_FAILURE) {
-      return <p>Oops, Failed to load data of Account!</p>;
+      return <p>Oops, Failed to load data of Settings!</p>;
     }
 
-    return <ProfileSidebar type="account" />;
+    return <ProfileSidebar type="settings" />;
   };
 
   render() {
     return (
       <div>
-        <Helmet title="Account" />
+        <Helmet title="Settings" />
         <div className="content-block">
           <div className="container no-back">
             <div className="row double two-columns">
@@ -136,4 +134,4 @@ const connector: Connector<{}, Props> = connect(
   ({ getProfileReducer }: ReduxState) => ({ getProfileReducer })
 );
 
-export default connector(Account);
+export default connector(Settings);

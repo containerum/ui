@@ -7,6 +7,9 @@ import icon from '../../images/icon-create-dep.svg';
 import InputControl from '../InputControl';
 
 type Props = {
+  externalSrvNameValue: string,
+  internalSrvNameValue: string,
+  handleChangeServiceNameValue: (e: Object, type: string) => void,
   externalSrvObject: Array,
   internalSrvObject: Array,
   isActiveInternal: boolean,
@@ -28,6 +31,9 @@ type Props = {
 };
 
 const ServiceForm = ({
+  externalSrvNameValue,
+  internalSrvNameValue,
+  handleChangeServiceNameValue,
   internalSrvObject,
   externalSrvObject,
   isActiveInternal,
@@ -73,6 +79,27 @@ const ServiceForm = ({
       </div>
       {isActiveInternal && (
         <div className="serviceWrapper">
+          <div className="row rowLine">
+            <div className="col-md-6">
+              <div className="has-float-label marTop40">
+                <InputControl
+                  value={internalSrvNameValue}
+                  id="internalSrvNameValue"
+                  type="text"
+                  required
+                  baseClassName="form-group__input-text form-control customInput"
+                  baseClassNameLabel={`form-group__label ${internalSrvNameValue &&
+                    'form-group__label-always-onfocus'}`}
+                  labelText="Service Name"
+                  textHelper="Your Internal Name is the same as the name of Deployment"
+                  baseClassNameHelper="helperText"
+                  handleChangeInput={e =>
+                    handleChangeServiceNameValue(e, 'internalSrvNameValue')
+                  }
+                />
+              </div>
+            </div>
+          </div>
           <div className="row rowWithoutLine">
             <div className="col-md-12">
               <div className="containerTitle containerBlockTitle">
@@ -270,7 +297,27 @@ const ServiceForm = ({
       </div>
       {isActiveExternal && (
         <div className="serviceWrapper">
-          <div />
+          <div className="row rowLine">
+            <div className="col-md-6">
+              <div className="has-float-label marTop40">
+                <InputControl
+                  value={externalSrvNameValue}
+                  id="externalSrvNameValue"
+                  type="text"
+                  required
+                  baseClassName="form-group__input-text form-control customInput"
+                  baseClassNameLabel={`form-group__label ${externalSrvNameValue &&
+                    'form-group__label-always-onfocus'}`}
+                  labelText="Service Name"
+                  textHelper="Your External Name is the same as the name of Deployment"
+                  baseClassNameHelper="helperText"
+                  handleChangeInput={e =>
+                    handleChangeServiceNameValue(e, 'externalSrvNameValue')
+                  }
+                />
+              </div>
+            </div>
+          </div>
           <div className="row rowWithoutLine">
             <div className="col-md-12">
               <div className="containerTitle containerBlockTitle">

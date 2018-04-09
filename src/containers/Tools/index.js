@@ -2,10 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import configmapLogo from './images/configmapLogo.svg';
-import webhooksLogo from './images/webhooksLogo.svg';
-import domainsLogo from './images/domainsLogo.svg';
-
 const Tools = () => (
   <div>
     <Helmet title="Tools" />
@@ -19,9 +15,7 @@ const Tools = () => (
             <div className="content-block-header ">
               <div className="content-block-header-label
                                 content-block-header-label__tools">
-                <div className="content-block-header-img__tools">
-                  <img src={configmapLogo} alt="ns-icon" />
-                </div>
+                <div className="content-block-header-img__tools content-block-header-img__tools_cfm" />
                 <div className="content-block-header-label_main">CONFIGMAP</div>
               </div>
             </div>
@@ -49,9 +43,7 @@ const Tools = () => (
             <div className="content-block-header ">
               <div className="content-block-header-label
                          content-block-header-label__tools">
-                <div className="content-block-header-img__tools">
-                  <img src={webhooksLogo} alt="ns-icon" />
-                </div>
+                <div className="content-block-header-img__tools content-block-header-img__tools_webhooks" />
                 <div className="content-block-header-label_main">
                   CD WEBHOOK
                 </div>
@@ -82,9 +74,7 @@ const Tools = () => (
             <div className="content-block-header ">
               <div className="content-block-header-label
                          content-block-header-label__tools">
-                <div className="content-block-header-img__tools">
-                  <img src={domainsLogo} alt="ns-icon" />
-                </div>
+                <div className="content-block-header-img__tools content-block-header-img__tools_domains" />
                 <div className="content-block-header-label_main">DOMAINS</div>
               </div>
             </div>

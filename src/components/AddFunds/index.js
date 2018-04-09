@@ -25,7 +25,10 @@ const AddFunds = ({
   handleClickAddFunds,
   isFullDataOfProfile
 }: Props) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
   return (
     <div className="block-item" id="add-funds">
       <div>
@@ -45,7 +48,9 @@ const AddFunds = ({
               {changeProfile === CHANGE_PROFILE_INFO_SUCCESS ||
               isFullDataOfProfile ? (
                 <a
-                  href={`${config.webApi}/checkouts/new?auth_token=${token}`}
+                  href={`${
+                    config.webApiLogin
+                  }/checkouts/new?User-Client=${browser}&User-Token=${accessToken}`}
                   style={{ width: '200px', height: '40px' }}
                   className="feedback-form__submit btn"
                 >

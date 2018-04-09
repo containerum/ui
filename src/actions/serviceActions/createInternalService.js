@@ -9,7 +9,7 @@ import {
   CREATE_INTERNAL_SERVICE_SUCCESS,
   CREATE_INTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/createInternalService';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const createInternalServiceRequest = () => ({
   type: CREATE_INTERNAL_SERVICE_REQUESTING,
@@ -36,36 +36,39 @@ export const fetchCreateInternalService = (
   idName: string,
   dataSrv: Object,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(createInternalServiceRequest());
 
   let idSrv = idName;
   const intObj = {
-    deployment_name: dataSrv.currentDeployment,
-    ports: [],
-    external: 'false'
+    deploy: dataSrv.currentDeployment,
+    name: dataSrv.internalSrvNameValue,
+    ports: []
   };
   dataSrv.internalSrvObject.map(item => {
     intObj.ports.push({
       name: item.internalSrvName,
       port: parseInt(item.internalSrvPort, 10),
-      targetPort: parseInt(item.internalSrvTargetPort, 10),
+      target_port: parseInt(item.internalSrvTargetPort, 10),
       protocol: item.intServiceType
     });
     return null;
   });
   const response = await axios.post(
-    `${URL}/api/namespaces/${idName}/services`,
+    `${URL}/namespace/${idName}/service`,
     intObj,
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Access-Control-Allow-Origin': '*'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }

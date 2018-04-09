@@ -7,11 +7,10 @@ import InputControl from '../InputControl';
 import './Profile.css';
 
 type Props = {
-  email: string,
-  name: string
+  data: Object
 };
 
-const ProfileInfo = ({ email, name }: Props) => (
+const ProfileInfo = ({ data }: Props) => (
   <div className="block-item" id="profile">
     <div className="block-item__title">Profile</div>
     <form>
@@ -19,14 +18,14 @@ const ProfileInfo = ({ email, name }: Props) => (
         <div className="col-md-2">
           <div className="form-group pt-0">
             <label className="form-group__label-image" htmlFor="avatar">
-              <Blockies seed={email} size={9} scale={7} bgColor="#fff" />
+              <Blockies seed={data.login} size={9} scale={7} bgColor="#fff" />
             </label>
           </div>
         </div>
-        {name && (
+        {data.data && (
           <div className="col-md-5">
             <InputControl
-              value={name}
+              value={data.data.first_name}
               id="name"
               type="text"
               baseClassName="form-group__input-text form-control"
@@ -38,7 +37,7 @@ const ProfileInfo = ({ email, name }: Props) => (
         )}
         <div className="col-md-5">
           <InputControl
-            value={email}
+            value={data.login}
             id="email"
             type="text"
             baseClassName="form-group__input-text form-control"

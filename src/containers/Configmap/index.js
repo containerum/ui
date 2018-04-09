@@ -11,12 +11,6 @@ class Configmap extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      filesM: [
-        {
-          name: '',
-          text: ''
-        }
-      ],
       fileName: '',
       textArea: '',
       name: '',
@@ -70,8 +64,6 @@ class Configmap extends PureComponent {
     const errorFiles = [];
     const successFiles = [];
     const successBase64 = [];
-    // const successFilesFirstThree = [];
-    // const successBase64FirstThree = [];
     Object.keys(files.fileList).filter((item, index) => {
       if (files.fileList[item].size >= 10485760) {
         errorFiles.push(files.fileList[item]);
@@ -91,22 +83,6 @@ class Configmap extends PureComponent {
         `The following files were not downloaded because the attachment size (10 MB maximum) was exceeded:`
       );
     }
-
-    // if (successFiles.length > 3) {
-    //   toastr.error(
-    //     `<div>${errorFiles.map(
-    //       file => `
-    // ${file.name}`
-    //     )}</div>`,
-    //     `You can only upload 3 files at a time`
-    //   );
-    // }
-
-    // for (let i = 0; i < 3; i += 1) {
-    //   successFilesFirstThree.push(successFiles[i]);
-    //   successBase64FirstThree.push(successBase64[i]);
-    // }
-
     this.setState({
       ...this.state,
       files: successFiles,
@@ -177,7 +153,6 @@ class Configmap extends PureComponent {
                             handleDeleteFilesManualy={
                               this.handleDeleteFilesManualy
                             }
-                            filesM={this.state.filesM}
                             handleChangeTextArea={this.handleChangeTextArea}
                             filesManualyCount={this.state.filesManualyCount}
                             handleDeleteImage={fileName =>

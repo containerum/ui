@@ -42,60 +42,61 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
             </tr>
           </thead>
           <tbody>
-            {data.map(namespace => {
-              const {
-                name,
-                memory_limit: memoryLimit,
-                cpu_limit: cpuLimit
-              } = namespace;
-              const id = name;
-              return (
-                <tr
-                  id={id}
-                  key={id}
-                  onClick={() => handleClickGetNamespace(name)}
-                  onKeyPress={() => handleClickGetNamespace(name)}
-                  className="content-block-container card-container hover-action"
-                  role="link"
-                  tabIndex={0}
-                  style={{ margin: 0 }}
-                >
-                  <td
-                    className="td-1"
-                    // style={{ verticalAlign: 'top', width: '75%' }}
+            {data &&
+              data.map(namespace => {
+                const { label } = namespace;
+                const {
+                  memory: memoryLimit,
+                  cpu: cpuLimit
+                } = namespace.resources.hard;
+                const id = label;
+                return (
+                  <tr
+                    id={id}
+                    key={id}
+                    onClick={() => handleClickGetNamespace(label)}
+                    onKeyPress={() => handleClickGetNamespace(label)}
+                    className="content-block-container card-container hover-action"
+                    role="link"
+                    tabIndex={0}
+                    style={{ margin: 0 }}
                   >
-                    <img src={deployment} alt="deployment" />
-                  </td>
-                  <td className="td-2">{name}</td>
-                  <td className="td-3">{memoryLimit}</td>
-                  <td className="td-4">{cpuLimit}</td>
-                  <td
-                    className="td-7 dropdown no-arrow"
-                    onClick={e => handleClose(e)}
-                    onKeyPress={e => handleClose(e)}
-                    role="presentation"
-                  >
-                    <i
-                      className="content-block-table__more ion-more dropdown-toggle"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    />
-                    <ul
-                      className="dropdown-menu dropdown-menu-right"
-                      role="menu"
+                    <td
+                      className="td-1"
+                      // style={{ verticalAlign: 'top', width: '75%' }}
                     >
-                      <Link
-                        to={`/namespace/${name}/resize`}
-                        className="dropdown-item"
+                      <img src={deployment} alt="deployment" />
+                    </td>
+                    <td className="td-2">{label}</td>
+                    <td className="td-3">{memoryLimit}</td>
+                    <td className="td-4">{cpuLimit}</td>
+                    <td
+                      className="td-7 dropdown no-arrow"
+                      onClick={e => handleClose(e)}
+                      onKeyPress={e => handleClose(e)}
+                      role="presentation"
+                    >
+                      <i
+                        className="content-block-table__more ion-more dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      />
+                      <ul
+                        className="dropdown-menu dropdown-menu-right"
+                        role="menu"
                       >
-                        Resize
-                      </Link>
-                    </ul>
-                  </td>
-                </tr>
-              );
-            })}
+                        <Link
+                          to={`/namespace/${label}/resize`}
+                          className="dropdown-item"
+                        >
+                          Resize
+                        </Link>
+                      </ul>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       )}

@@ -41,7 +41,7 @@ export const fetchLogin = (
 
   const response = await axios.post(
     // `${URL}/api/login`,
-    `${URL}/login`,
+    `${URL}/login/basic`,
     { login: email, password },
     {
       headers: {
@@ -58,7 +58,6 @@ export const fetchLogin = (
   const { status } = response;
   switch (status) {
     case 200: {
-      cookie.save('token', token, { path: '/' });
       cookie.save('accessToken', accessToken, { path: '/' });
       cookie.save('refreshToken', refreshToken, { path: '/' });
       cookie.save('lastTimeToRefresh', Date.parse(new Date()), { path: '/' });

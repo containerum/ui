@@ -9,7 +9,7 @@ import {
   DELETE_NAMESPACE_SUCCESS,
   DELETE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/deleteNamespace';
-import { webApi } from '../../config';
+import { webApiLogin } from '../../config';
 
 const deleteNamespaceRequest = () => ({
   type: DELETE_NAMESPACE_REQUESTING,
@@ -36,29 +36,29 @@ const deleteNamespaceFailure = (err, status, idName) => ({
 export const fetchDeleteNamespace = (
   idName: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  // console.log(token);
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(deleteNamespaceRequest());
 
-  const response = await axios.delete(`${URL}/api/namespaces/${idName}`, {
+  const response = await axios.delete(`${URL}/namespace/${idName}`, {
     headers: {
       Authorization: token,
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });
   const { data, status, config } = response;
+  // console.log(data);
   switch (status) {
-    case 202: {
-      dispatch(deleteNamespaceSuccess(data, status, config.method, idName));
+    case 200: {
+      dispatch(deleteNamespaceSuccess(data, 202, config.method, idName));
       break;
     }
     case 401: {

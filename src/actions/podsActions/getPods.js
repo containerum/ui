@@ -9,7 +9,7 @@ import {
   GET_PODS_SUCCESS,
   GET_PODS_FAILURE
 } from '../../constants/podsConstants/getPods';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getPodsRequest = () => ({
   type: GET_PODS_REQUESTING,
@@ -36,30 +36,29 @@ export const fetchGetPods = (
   idName: string,
   idDep: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  // console.log(token);
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(getPodsRequest());
 
-  const response = await axios.get(`${URL}/api/namespaces/${idName}/pods`, {
+  const response = await axios.get(`${URL}/namespaces/${idName}/pods`, {
     headers: {
       Authorization: token,
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });
   const { status, data } = response;
   switch (status) {
     case 200: {
-      const filteredPods = response.data.filter(
-        item => item.deployment === idDep
+      const filteredPods = response.data.pods.filter(
+        item => item.deploy === idDep
       );
       dispatch(getPodsSuccess(filteredPods, status, idName));
       break;

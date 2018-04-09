@@ -57,7 +57,7 @@ const DashboardBlockTourAndNews = ({ linkToDeployment }: Props) => (
           <div className="tour-wrapper">
             <Link to="/billing">Top up your Balance or enter Promo code</Link>
             <Link to="/createNamespace">Create Namespace</Link>
-            <Link to="/createVolume">Create Volume</Link>
+            {/* <Link to="/createVolume">Create Volume</Link> */}
             <Link
               to={
                 linkToDeployment

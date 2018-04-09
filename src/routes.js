@@ -4,7 +4,7 @@ import type { Dispatch } from './types';
 import { routerLinks } from './config';
 import { fetchGetProfileIfNeeded } from './actions/profileActions/getProfile';
 import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
-import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
+// import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
 import { fetchGetNamespaceIfNeeded } from './actions/namespaceActions/getNamespace';
 import { fetchGetDeploymentsIfNeeded } from './actions/deploymentsActions/getDeployments';
 import { fetchGetDeploymentIfNeeded } from './actions/deploymentActions/getDeployment';
@@ -13,11 +13,9 @@ import { fetchGetPodIfNeeded } from './actions/podActions/getPod';
 import { fetchGetServicesIfNeeded } from './actions/servicesActions/getServices';
 import { fetchGetServiceIfNeeded } from './actions/serviceActions/getService';
 import { fetchGetNamespacesTariffsIfNeeded } from './actions/namespacesActions/getNamespacesTariffs';
-import { fetchGetVolumesTariffsIfNeeded } from './actions/volumesActions/getVolumesTariffs';
+// import { fetchGetVolumesTariffsIfNeeded } from './actions/volumesActions/getVolumesTariffs';
 import { fetchGetSupportGroupsIfNeeded } from './actions/supportActions/getSupportGroups';
-import { fetchGetCountDeploymentsIfNeeded } from './actions/statisticsActions/getCountDeployments';
-import { fetchGetCountServicesIfNeeded } from './actions/statisticsActions/getCountServices';
-import { fetchGetCountPodsIfNeeded } from './actions/statisticsActions/getCountPods';
+import { fetchGetResourcesIfNeeded } from './actions/statisticsActions/getResources';
 import { fetchGetSolutionsIfNeeded } from './actions/solutionsActions/getSolutions';
 import { fetchGetSolutionIfNeeded } from './actions/solutionActions/getSolution';
 import Main from './containers/Main';
@@ -25,7 +23,7 @@ import DashboardPage from './containers/Dashboard';
 import SolutionsPage from './containers/Solutions';
 import SolutionPage from './containers/Solution';
 import NamespacesPage from './containers/Namespaces';
-import VolumesPage from './containers/Volumes';
+// import VolumesPage from './containers/Volumes';
 import NamespacePage from './containers/Namespace';
 import ResizeNamespacePage from './containers/ResizeNamespace';
 import CreateNamespacePage from './containers/CreateNamespace';
@@ -42,8 +40,8 @@ import UpdateServicePage from './containers/UpdateService';
 import DeploymentPage from './containers/Deployment';
 import CreateDeploymentPage from './containers/CreateDeployment';
 import UpdateDeploymentPage from './containers/UpdateDeployment';
-import CreateVolumePage from './containers/CreateVolume';
-import ResizeVolumePage from './containers/ResizeVolume';
+// import CreateVolumePage from './containers/CreateVolume';
+// import ResizeVolumePage from './containers/ResizeVolume';
 import Login from './containers/Login';
 import SignUp from './containers/SignUp';
 import ConfirmEmail from './containers/ConfirmEmail';
@@ -78,9 +76,7 @@ export default [
       Promise.all([
         dispatch(fetchGetNamespacesIfNeeded()),
         dispatch(fetchGetSolutionsIfNeeded()),
-        dispatch(fetchGetCountDeploymentsIfNeeded()),
-        dispatch(fetchGetCountServicesIfNeeded()),
-        dispatch(fetchGetCountPodsIfNeeded()),
+        dispatch(fetchGetResourcesIfNeeded()),
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
@@ -117,16 +113,16 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  {
-    path: routerLinks.volumes,
-    exact: true,
-    component: VolumesPage,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetVolumesIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
+  // {
+  //   path: routerLinks.volumes,
+  //   exact: true,
+  //   component: VolumesPage,
+  //   loadData: (dispatch: Dispatch) =>
+  //     Promise.all([
+  //       dispatch(fetchGetVolumesIfNeeded()),
+  //       dispatch(fetchGetProfileIfNeeded())
+  //     ])
+  // },
   {
     path: routerLinks.namespace,
     component: NamespacePage,
@@ -275,28 +271,28 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  {
-    path: routerLinks.createVolume,
-    exact: true,
-    component: CreateVolumePage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetVolumesTariffsIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  {
-    path: routerLinks.resizeVolume,
-    exact: true,
-    component: ResizeVolumePage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetVolumesTariffsIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
+  // {
+  //   path: routerLinks.createVolume,
+  //   exact: true,
+  //   component: CreateVolumePage,
+  //   include: true,
+  //   loadData: (dispatch: Dispatch) =>
+  //     Promise.all([
+  //       dispatch(fetchGetVolumesTariffsIfNeeded()),
+  //       dispatch(fetchGetProfileIfNeeded())
+  //     ])
+  // },
+  // {
+  //   path: routerLinks.resizeVolume,
+  //   exact: true,
+  //   component: ResizeVolumePage,
+  //   include: true,
+  //   loadData: (dispatch: Dispatch) =>
+  //     Promise.all([
+  //       dispatch(fetchGetVolumesTariffsIfNeeded()),
+  //       dispatch(fetchGetProfileIfNeeded())
+  //     ])
+  // },
   {
     path: routerLinks.account,
     exact: true,

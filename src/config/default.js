@@ -1,10 +1,10 @@
 module.exports = {
   host: process.env.NODE_HOST || 'localhost', // Define your host from 'package.json'
   port: process.env.PORT,
-  webApi: process.env.WEB_API || 'https://web.api.containerum.io:5000',
+  webApi: process.env.WEB_API || 'https://api.containerum.io:8082',
   // webApi: process.env.WEB_API || 'http://192.168.88.200:5000',
   webApiLoginGroup:
-    process.env.WEB_API_OTHER || 'https://web.api.containerum.io:5000',
+    process.env.WEB_API_OTHER || 'https://api.containerum.io:8082',
   // webApiLoginGroup: process.env.WEB_API_OTHER || 'http://192.168.88.200:5000',
   webApiLogin: process.env.WEB_API_LOGIN || 'https://api.containerum.io:8082',
   // webApiLogin: process.env.WEB_API_LOGIN || 'https://192.168.88.200:8082',
@@ -46,7 +46,7 @@ module.exports = {
     createNamespace: '/createNamespace',
     resizeNamespace: '/namespace/:idName/resize',
     resizeNamespaceLink: (idName: string) => `/namespace/${idName}/resize`,
-    volumes: '/volumes',
+    // volumes: '/volumes',
     createVolume: '/createVolume',
     resizeVolume: '/volume/:idVol/resize',
     resizeVolumeLink: (idVol: string) => `/volume/${idVol}/resize`,

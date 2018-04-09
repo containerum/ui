@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { externalLinks, routerLinks } from '../../config';
 // import { timeago } from '../../functions/timeago';
 import servicePng from '../../images/link.svg';
+import { timeago } from '../../functions/timeago';
 
 type Props = {
   data: Object,
@@ -26,7 +27,7 @@ const ServicesList = ({
   const handleClose = e => {
     e.stopPropagation();
   };
-  // console.log(data);
+  const ta = timeago();
   return (
     <div>
       {data.length >= 1 && (
@@ -37,15 +38,18 @@ const ServicesList = ({
               <td className="td-2">Name</td>
               <td className="td-2">Type</td>
               <td className="td-2">Domain</td>
+              <td className="td-6">Age</td>
               <td className="td-7" />
             </tr>
           </thead>
           <tbody>
             {data.map(service => {
-              const { labels, domain_hosts: domainHosts, name } = service;
-              const type = labels.external === 'true' ? 'External' : 'Internal';
-              const domain = domainHosts[0] ? domainHosts[0] : '-';
+              const { name, domain, created_at: createdAt } = service;
+              const type = domain ? 'External' : 'Internal';
               const id = `service_${name}`;
+              const milliseconds = Date.parse(createdAt);
+              const dateHours = new Date(milliseconds);
+              const dateValue = ta.ago(dateHours, true);
               return (
                 <tr
                   key={id}
@@ -58,7 +62,8 @@ const ServicesList = ({
                   </td>
                   <td className="td-2">{name}</td>
                   <td className="td-2">{type}</td>
-                  <td className="td-2">{domain}</td>
+                  <td className="td-2">{domain || '-'}</td>
+                  <td className="td-2">{dateValue}</td>
                   <td
                     className="td-7 dropdown no-arrow"
                     onClick={e => handleClose(e)}
