@@ -81,24 +81,54 @@ export class Support extends PureComponent<Props> {
     });
   };
   handleFiles = files => {
-    const errorFiles = [];
+    const errorFilesSize = [];
+    const errorFilesFormat = [];
     const successFiles = [];
     const successBase64 = [];
     const successFilesFirstThree = [];
     const successBase64FirstThree = [];
     Object.keys(files.fileList).filter((item, index) => {
-      if (files.fileList[item].size >= 10485760) {
-        errorFiles.push(files.fileList[item]);
-      } else {
+      if (
+        !(
+          files.fileList[item].type === 'image/png' ||
+          files.fileList[item].type === 'image/jpeg' ||
+          files.fileList[item].type === 'image/gif' ||
+          files.fileList[item].type === 'text/plain' ||
+          files.fileList[item].type === 'application/pdf'
+        )
+      ) {
+        errorFilesFormat.push(files.fileList[item]);
+      }
+
+      if (
+        files.fileList[item].type === 'image/png' ||
+        files.fileList[item].type === 'image/jpeg' ||
+        files.fileList[item].type === 'image/gif' ||
+        files.fileList[item].type === 'text/plain' ||
+        files.fileList[item].type === 'application/pdf'
+      ) {
         successFiles.push(files.fileList[item]);
         successBase64.push(files.base64[index]);
+        console.log('F', successFiles);
+        console.log('64', successBase64);
+      }
+      if (files.fileList[item].size >= 10485760) {
+        errorFilesSize.push(files.fileList[item]);
       }
       return null;
     });
-
-    if (errorFiles.length) {
+    if (errorFilesFormat.length) {
       toastr.error(
-        `<div>${errorFiles.map(
+        `<div>${errorFilesFormat.map(
+          file => `
+    ${file.name}`
+        )}</div>`,
+        `Invalid data format, please send files of acceptable formats`
+      );
+    }
+    if (errorFilesSize.length) {
+      toastr.error(
+        `<div>${errorFilesSize.map(
           file => `
     ${file.name}`
         )}</div>`,
@@ -108,7 +138,7 @@ export class Support extends PureComponent<Props> {
 
     if (successFiles.length > 3) {
       toastr.error(
-        `<div>${errorFiles.map(
+        `<div>${errorFilesSize.map(
           file => `
     ${file.name}`
         )}</div>`,
@@ -116,37 +146,49 @@ export class Support extends PureComponent<Props> {
       );
     }
 
-    for (let i = 0; i < 3; i += 1) {
-      successFilesFirstThree.push(successFiles[i]);
-      successBase64FirstThree.push(successBase64[i]);
+    if (successFiles.length > 3) {
+      for (let i = 0; i < 3; i += 1) {
+        successFilesFirstThree.push(successFiles[i]);
+        successBase64FirstThree.push(successBase64[i]);
+      }
+      this.setState({
+        ...this.state,
+        files: successFilesFirstThree,
+        base64: successBase64FirstThree
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        files: successFiles,
+        base64: successBase64
+      });
     }
-
-    this.setState({
-      ...this.state,
-      files: successFilesFirstThree,
-      base64: successBase64FirstThree
-    });
+    console.log('files', this.state.files);
+    console.log('base', this.state.base64);
   };
   handleOnSubmit = e => {
     e.preventDefault();
     const { textArea, group, base64, files } = this.state;
     const { getProfileReducer, fetchSendSupportTicketIfNeeded } = this.props;
-    const userEmail = getProfileReducer.data.login;
-    const reqObj = {
-      case: {
-        user_email: userEmail,
-        subject: 'web-ui',
-        content: textArea,
-        group_id: group,
-        base64,
-        files
+    if (getProfileReducer.data) {
+      const userEmail = getProfileReducer.data.login;
+
+      const reqObj = {
+        case: {
+          user_email: userEmail,
+          subject: 'web-ui',
+          content: textArea,
+          group_id: group,
+          base64,
+          files
+        }
+      };
+      if (files.length) {
+        reqObj.case.files = files.map(item => item.name);
       }
-    };
-    if (files.length) {
-      reqObj.case.files = files.map(item => item.name);
+      // console.log(reqObj);
+      fetchSendSupportTicketIfNeeded(reqObj);
     }
-    // console.log(reqObj);
-    fetchSendSupportTicketIfNeeded(reqObj);
   };
 
   renderSupportList = () => {
@@ -186,6 +228,7 @@ export class Support extends PureComponent<Props> {
         handleChangeTextArea={e => this.handleChangeTextArea(e)}
         handleDeleteImage={fileName => this.handleDeleteImage(fileName)}
         handleFiles={files => this.handleFiles(files)}
+        errorFormat={this.state.errorFormatFile}
       />
     );
   };

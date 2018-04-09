@@ -92,11 +92,11 @@ const SupportList = ({
             ) : (
               <ReactFileReader
                 fileTypes={[
-                  'image/x-png',
-                  'image/gif',
+                  'image/png',
                   'image/jpeg',
-                  'application/pdf',
-                  'text/plain'
+                  'image/gif',
+                  'text/plain',
+                  'application/pdf'
                 ]}
                 base64
                 multipleFiles
