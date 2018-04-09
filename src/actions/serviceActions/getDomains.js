@@ -54,9 +54,11 @@ export const fetchGetDomains = (
       dispatch(getDomainsSuccess(data));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(getDomainsRequest());
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

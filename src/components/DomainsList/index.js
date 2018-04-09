@@ -42,11 +42,12 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
               const checkArrIngressess = data[ingressName];
               return Object.keys(checkArrIngressess).map(ingress =>
                 checkArrIngressess[ingress].map(ing => {
-                  const { name } = ing;
+                  const { name, type } = ing;
                   const srvName = ing.rules[0].path[0].service_name;
                   const { host } = ing.rules[0];
-                  const ssl = ing.rules[0].tls_secret;
-                  const linkDomain = ssl ? `https://${host}` : `http://${host}`;
+                  const linkDomain = type
+                    ? `https://${host}`
+                    : `http://${host}`;
                   return (
                     <tr
                       className="content-block-container card-container hover-action"

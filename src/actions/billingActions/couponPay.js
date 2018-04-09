@@ -39,7 +39,6 @@ export const fetchCouponPay = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -52,7 +51,6 @@ export const fetchCouponPay = (
     { code },
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'User-Token': accessToken
         // 'Content-Type': 'application/json'

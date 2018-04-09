@@ -58,7 +58,6 @@ export const fetchDeleteAccount = (
   switch (status) {
     case 202: {
       dispatch(deleteAccountSuccess(data, status));
-      cookie.remove('token', { path: '/' });
       cookie.remove('accessToken', { path: '/' });
       cookie.remove('refreshToken', { path: '/' });
       cookie.remove('lastTimeToRefresh', { path: '/' });
@@ -67,9 +66,11 @@ export const fetchDeleteAccount = (
       }
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(deleteAccountFailure(data.message, status));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

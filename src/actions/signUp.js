@@ -76,7 +76,6 @@ export const fetchSignUp = (
       break;
     }
     default: {
-      cookie.remove('token', { path: '/' });
       cookie.remove('accessToken', { path: '/' });
       cookie.remove('refreshToken', { path: '/' });
       cookie.remove('lastTimeToRefresh', { path: '/' });

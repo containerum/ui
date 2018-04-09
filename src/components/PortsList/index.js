@@ -28,7 +28,7 @@ const PortsList = ({ data }: Props) => {
       <tbody>
         {ports.map(currentPort => {
           const { name, port, target_port: targetPort, protocol } = currentPort;
-          const linkSrv = `${domain}:${targetPort}`;
+          const linkSrv = `${domain}:${port}`;
           return (
             <tr className="tr-table-hover" key={_.uniqueId()}>
               <td className="td-1">

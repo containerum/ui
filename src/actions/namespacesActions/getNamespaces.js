@@ -32,7 +32,6 @@ export const fetchGetNamespaces = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -42,7 +41,6 @@ export const fetchGetNamespaces = (
 
   const response = await axios.get(`${URL}/namespaces`, {
     headers: {
-      Authorization: token,
       'User-Client': browser,
       'User-Token': accessToken
     },
@@ -54,9 +52,11 @@ export const fetchGetNamespaces = (
       dispatch(getNamespacesSuccess(data.namespaces ? data.namespaces : []));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(getNamespacesRequest());
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     // default: {

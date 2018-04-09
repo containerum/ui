@@ -29,7 +29,6 @@ const logoutFailure = err => ({
 export const fetchLogout = (): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(logoutRequest());
   try {
-    cookie.remove('token', { path: '/' });
     cookie.remove('accessToken', { path: '/' });
     cookie.remove('refreshToken', { path: '/' });
     cookie.remove('lastTimeToRefresh', { path: '/' });

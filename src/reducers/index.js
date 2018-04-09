@@ -4,8 +4,6 @@ import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
 import { loadingBarReducer } from 'react-redux-loading-bar';
 
-import home from './home';
-import userInfo from './userInfo';
 import loginReducer from './loginReducer';
 import logoutReducer from './logoutReducer';
 import signUpReducer from './signUpReducer';
@@ -14,6 +12,7 @@ import forgotReducer from './forgotReducer';
 import checkHashPasswordReducer from './checkHashPasswordReducer';
 import recoveryPasswordReducer from './recoveryPasswordReducer';
 import getNamespacesReducer from './namespacesReducers/getNamespaces';
+import getNamespaceAccessReducer from './namespaceReducers/getNamespaceAccess';
 import getNamespaceReducer from './namespaceReducers/getNamespace';
 import deleteNamespaceReducer from './namespaceReducers/deleteNamespace';
 import getNamespacesTariffsReducer from './namespacesReducers/getNamespacesTariffs';
@@ -65,8 +64,6 @@ import getDomainsReducer from './serviceReducers/getDomains';
 import deleteDomainReducer from './serviceReducers/deleteDomain';
 
 const reducers = {
-  home,
-  userInfo,
   loginReducer,
   logoutReducer,
   signUpReducer,
@@ -75,6 +72,7 @@ const reducers = {
   checkHashPasswordReducer,
   recoveryPasswordReducer,
   getNamespacesReducer,
+  getNamespaceAccessReducer,
   getNamespaceReducer,
   deleteNamespaceReducer,
   getNamespacesTariffsReducer,

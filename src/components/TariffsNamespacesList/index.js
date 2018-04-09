@@ -36,7 +36,7 @@ const TariffsNamespacesList = ({
   <div className="row">
     {data.map(tariff => {
       const { label, price, id } = tariff;
-      const isActiveTariff = label === active;
+      const isActiveTariff = id === active;
       let {
         cpu_limit: cpuLimit,
         memory_limit: memoryLimit

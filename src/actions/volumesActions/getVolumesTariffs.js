@@ -37,15 +37,12 @@ export const fetchGetVolumesTariffs = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  // console.log('token', token, 'browser', browser);
 
   dispatch(getVolumesTariffsRequest());
 
   const response = await axios.get(`${URL}/api/volume_tariffs`, {
     headers: {
-      Authorization: token,
       'User-Client': browser,
       'Content-Type': 'application/x-www-form-urlencode',
       'Access-Control-Allow-Origin': '*',

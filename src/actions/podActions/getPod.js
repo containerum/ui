@@ -44,7 +44,6 @@ export const fetchGetPod = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -56,7 +55,6 @@ export const fetchGetPod = (
     `${URL}/namespaces/${idName}/pods/${idPod}`,
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'User-Token': accessToken
       },
@@ -72,12 +70,9 @@ export const fetchGetPod = (
     }
     case 400: {
       dispatch(getPodFailure(data.message, status, idName, idDep, idPod));
-      dispatch(push('/namespaces'));
-      break;
-    }
-    case 401: {
-      dispatch(getPodFailure(data.message, status, idName, idDep, idPod));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

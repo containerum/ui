@@ -34,9 +34,7 @@ export const fetchRunSolutions = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  // console.log(token);
 
   dispatch(runSolutionsRequest());
 
@@ -45,7 +43,6 @@ export const fetchRunSolutions = (
     { namespace: idName, label: idSol },
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'Content-Type': 'application/json'
       },
@@ -62,9 +59,11 @@ export const fetchRunSolutions = (
       dispatch(runSolutionsSuccess([]));
       break;
     }
-    case 401: {
-      dispatch(runSolutionsRequest());
-      dispatch(push('/login'));
+    case 400: {
+      dispatch(runSolutionsFailure(data.message));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

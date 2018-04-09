@@ -79,15 +79,15 @@ const CreateDomainCard = ({
             <select
               name="ports"
               className="selectCustom selectGreyColor"
-              value={currentPort && currentPort.targetPort}
+              value={currentPort && currentPort.port}
               onChange={e => handleChangeSelectPort(e.target.value)}
               required
             >
               {portsList.map(
                 port =>
                   port.protocol === 'TCP' && (
-                    <option key={port.targetPort} value={port.targetPort}>
-                      {port.targetPort}
+                    <option key={port.port} value={port.port}>
+                      {port.port}
                     </option>
                   )
               )}

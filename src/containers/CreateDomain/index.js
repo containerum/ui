@@ -63,10 +63,10 @@ export class CreateDomain extends PureComponent<Props> {
       if (nextProps.getServicesReducer.data[0]) {
         const servicesList = nextProps.getServicesReducer.data.filter(
           service =>
-            (service.labels.external === 'true' &&
+            (service.domain &&
               (service.ports.length === 1 &&
                 service.ports[0].protocol !== 'UDP')) ||
-            (service.labels.external === 'true' &&
+            (service.domain &&
               (service.ports.length >= 1 &&
                 service.ports[0].protocol === 'TCP'))
         );
@@ -106,7 +106,7 @@ export class CreateDomain extends PureComponent<Props> {
   };
   handleChangeSelectPort = value => {
     const currentPort = this.state.portsList.filter(
-      port => port.targetPort === parseInt(value, 10)
+      port => port.port === parseInt(value, 10)
     );
     this.setState({
       ...this.state,

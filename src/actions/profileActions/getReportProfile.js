@@ -33,7 +33,6 @@ export const fetchGetProfileReport = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -43,7 +42,6 @@ export const fetchGetProfileReport = (
 
   const response = await axios.get(`${URL}/isp/user/report?page=${page}`, {
     headers: {
-      Authorization: token,
       'User-Client': browser,
       'User-Token': accessToken
     },
@@ -55,9 +53,11 @@ export const fetchGetProfileReport = (
       dispatch(getProfileReportSuccess(data));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(getProfileReportRequest());
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     case 404: {

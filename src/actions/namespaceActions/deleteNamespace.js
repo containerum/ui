@@ -38,7 +38,6 @@ export const fetchDeleteNamespace = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -48,7 +47,6 @@ export const fetchDeleteNamespace = (
 
   const response = await axios.delete(`${URL}/namespace/${idName}`, {
     headers: {
-      Authorization: token,
       'User-Client': browser,
       'User-Token': accessToken
     },
@@ -61,9 +59,11 @@ export const fetchDeleteNamespace = (
       dispatch(deleteNamespaceSuccess(data, 202, config.method, idName));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(deleteNamespaceFailure(data.message, status, idName));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {

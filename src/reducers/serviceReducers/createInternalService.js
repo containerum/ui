@@ -48,6 +48,15 @@ export default (state = initialState, action: Action) => {
         idSrv: action.idSrv,
         err: action.err
       });
+    case CREATE_INTERNAL_SERVICE_INVALID:
+      return _.assign(state, {
+        readyStatus: CREATE_INTERNAL_SERVICE_INVALID,
+        isFetching: false,
+        data: null,
+        status: null,
+        idSrv: null,
+        err: null
+      });
     default:
       return state;
   }

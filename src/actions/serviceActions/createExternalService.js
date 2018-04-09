@@ -5,11 +5,16 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
+  CREATE_EXTERNAL_SERVICE_INVALID,
   CREATE_EXTERNAL_SERVICE_REQUESTING,
   CREATE_EXTERNAL_SERVICE_SUCCESS,
   CREATE_EXTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/createExternalService';
 import { webApiLogin } from '../../config/index';
+
+const createExternalServiceInvalid = () => ({
+  type: CREATE_EXTERNAL_SERVICE_INVALID
+});
 
 const createExternalServiceRequest = () => ({
   type: CREATE_EXTERNAL_SERVICE_REQUESTING,
@@ -38,7 +43,6 @@ export const fetchCreateExternalService = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
@@ -65,7 +69,6 @@ export const fetchCreateExternalService = (
     intObj,
     {
       headers: {
-        Authorization: token,
         'User-Client': browser,
         'User-Token': accessToken
       },
@@ -75,19 +78,24 @@ export const fetchCreateExternalService = (
   const { status, data } = response;
   switch (status) {
     case 201: {
-      idSrv = `External service ${data.name} for ${intObj.deployment_name}`;
+      idSrv = `External service ${dataSrv.externalSrvNameValue} for ${
+        dataSrv.currentDeployment
+      }`;
       dispatch(createExternalServiceSuccess(data, status, idSrv));
       break;
     }
-    case 401: {
+    case 400: {
       dispatch(createExternalServiceFailure(data.message, status, idSrv));
-      dispatch(push('/login'));
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
       break;
     }
     default: {
       dispatch(createExternalServiceFailure(data.message, status, idSrv));
     }
   }
+  dispatch(createExternalServiceInvalid());
 };
 
 export const fetchCreateExternalServiceIfNeeded = (

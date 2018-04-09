@@ -5,34 +5,35 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
-  GET_DEPLOYMENTS_REQUESTING,
-  GET_DEPLOYMENTS_SUCCESS,
-  GET_DEPLOYMENTS_FAILURE
-} from '../../constants/deploymentsConstants/getDeployments';
+  GET_NAMESPACE_ACCESS_REQUESTING,
+  GET_NAMESPACE_ACCESS_SUCCESS,
+  GET_NAMESPACE_ACCESS_FAILURE
+} from '../../constants/namespaceConstants/getNamespaceAccess';
+// import isTokenExist from '../functions/isTokenExist';
 import { webApiLogin } from '../../config/index';
 
-const getDeploymentsRequest = () => ({
-  type: GET_DEPLOYMENTS_REQUESTING,
+const getNamespaceAccessRequest = () => ({
+  type: GET_NAMESPACE_ACCESS_REQUESTING,
   isFetching: true
 });
 
-const getDeploymentsSuccess = (data, status, idName) => ({
-  type: GET_DEPLOYMENTS_SUCCESS,
+const getNamespaceAccessSuccess = (data, status, idName) => ({
+  type: GET_NAMESPACE_ACCESS_SUCCESS,
   isFetching: false,
   data,
   status,
   idName
 });
 
-const getDeploymentsFailure = (err, status, idName) => ({
-  type: GET_DEPLOYMENTS_FAILURE,
+const getNamespaceAccessFailure = (err, status, idName) => ({
+  type: GET_NAMESPACE_ACCESS_FAILURE,
   isFetching: false,
   err,
   status,
   idName
 });
 
-export const fetchGetDeployments = (
+export const fetchGetNamespaceAccess = (
   idName: string,
   axios: any,
   URL: string = webApiLogin
@@ -42,9 +43,9 @@ export const fetchGetDeployments = (
     ? cookie.load('accessToken')
     : null;
 
-  dispatch(getDeploymentsRequest());
+  dispatch(getNamespaceAccessRequest());
 
-  const response = await axios.get(`${URL}/namespaces/${idName}/deployments`, {
+  const response = await axios.get(`${URL}/namespace/${idName}/access`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken
@@ -54,29 +55,24 @@ export const fetchGetDeployments = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getDeploymentsSuccess(data.deployments, status, idName));
-      break;
-    }
-    case 404: {
-      dispatch(getDeploymentsSuccess([], status, idName));
+      dispatch(getNamespaceAccessSuccess(data, status, idName));
       break;
     }
     case 400: {
-      dispatch(getDeploymentsFailure(data.message));
+      dispatch(getNamespaceAccessRequest());
       if (data.message === 'invalid token received') {
         dispatch(push('/login'));
       }
       break;
     }
     default: {
-      dispatch(getDeploymentsFailure(data.message, status, idName));
+      dispatch(getNamespaceAccessFailure(data.message, status, idName));
       dispatch(push('/namespaces'));
     }
   }
 };
 
-export const fetchGetDeploymentsIfNeeded = (idName: string): ThunkAction => (
-  dispatch: Dispatch,
-  getState: GetState,
-  axios: any
-) => dispatch(fetchGetDeployments(idName, axios));
+export const fetchGetNamespaceAccessIfNeeded = (
+  idName: string
+): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
+  dispatch(fetchGetNamespaceAccess(idName, axios));

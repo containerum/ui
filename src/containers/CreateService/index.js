@@ -18,7 +18,10 @@ import {
   GET_DEPLOYMENTS_FAILURE,
   GET_DEPLOYMENTS_SUCCESS
 } from '../../constants/deploymentsConstants/getDeployments';
-import { CREATE_EXTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createExternalService';
+import {
+  CREATE_EXTERNAL_SERVICE_SUCCESS,
+  CREATE_EXTERNAL_SERVICE_REQUESTING
+} from '../../constants/serviceConstants/createExternalService';
 import { CREATE_INTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createInternalService';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
@@ -69,35 +72,15 @@ export class CreateService extends PureComponent<Props> {
       }
     }
     if (
-      this.props.createExternalServiceReducer.readyStatus !==
-        nextProps.createExternalServiceReducer.readyStatus &&
-      nextProps.createExternalServiceReducer.readyStatus ===
-        CREATE_EXTERNAL_SERVICE_SUCCESS &&
-      nextProps.createInternalServiceReducer.readyStatus !==
-        CREATE_INTERNAL_SERVICE_SUCCESS
-    ) {
-      this.props.history.push(
-        routerLinks.createdExternalServiceSuccessfulLink(
-          match.params.idName,
-          nextProps.createExternalServiceReducer.data.name
-        )
-      );
-    }
-    if (
       this.props.createInternalServiceReducer.readyStatus !==
         nextProps.createInternalServiceReducer.readyStatus &&
       nextProps.createInternalServiceReducer.readyStatus ===
         CREATE_INTERNAL_SERVICE_SUCCESS &&
       nextProps.createExternalServiceReducer.readyStatus !==
-        CREATE_EXTERNAL_SERVICE_SUCCESS
+        CREATE_EXTERNAL_SERVICE_REQUESTING
     ) {
       this.props.history.push(routerLinks.namespaces);
-    }
-    if (
-      this.props.createInternalServiceReducer.readyStatus !==
-        nextProps.createInternalServiceReducer.readyStatus &&
-      nextProps.createInternalServiceReducer.readyStatus ===
-        CREATE_INTERNAL_SERVICE_SUCCESS &&
+    } else if (
       this.props.createExternalServiceReducer.readyStatus !==
         nextProps.createExternalServiceReducer.readyStatus &&
       nextProps.createExternalServiceReducer.readyStatus ===
@@ -106,7 +89,7 @@ export class CreateService extends PureComponent<Props> {
       this.props.history.push(
         routerLinks.createdExternalServiceSuccessfulLink(
           match.params.idName,
-          nextProps.createExternalServiceReducer.data.name
+          this.state.externalSrvNameValue
         )
       );
     }
@@ -120,16 +103,16 @@ export class CreateService extends PureComponent<Props> {
       fetchCreateExternalServiceIfNeeded
     } = this.props;
     if (
-      serviceObject.internalSrvObject.length &&
-      serviceObject.internalSrvObject[0].internalSrvPort
-    ) {
-      fetchCreateInternalServiceIfNeeded(match.params.idName, serviceObject);
-    }
-    if (
       serviceObject.externalSrvObject.length &&
       serviceObject.externalSrvObject[0].externalSrvTargetPort
     ) {
       fetchCreateExternalServiceIfNeeded(match.params.idName, serviceObject);
+    }
+    if (
+      serviceObject.internalSrvObject.length &&
+      serviceObject.internalSrvObject[0].internalSrvPort
+    ) {
+      fetchCreateInternalServiceIfNeeded(match.params.idName, serviceObject);
     }
   };
   handleChange = e => {

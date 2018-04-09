@@ -37,15 +37,12 @@ const getSolutionsSuccess = data => ({
 export const fetchGetSolutions = (): // axios: any,
 // URL: string = webApi
 ThunkAction => async (dispatch: Dispatch) => {
-  // const token = cookie.load('token') ? cookie.load('token') : null;
   // const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  // console.log(token);
 
   dispatch(getSolutionsRequest());
 
   // const response = await axios.get(`${URL}/api/solutions`, {
   //   headers: {
-  //     Authorization: token,
   //     'User-Client': browser,
   //     'Content-Type': 'application/x-www-form-urlencode',
   //     'Access-Control-Allow-Origin': '*',
