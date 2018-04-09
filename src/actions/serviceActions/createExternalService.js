@@ -9,7 +9,7 @@ import {
   CREATE_EXTERNAL_SERVICE_SUCCESS,
   CREATE_EXTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/createExternalService';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const createExternalServiceRequest = () => ({
   type: CREATE_EXTERNAL_SERVICE_REQUESTING,
@@ -36,35 +36,38 @@ export const fetchCreateExternalService = (
   idName: string,
   dataSrv: Object,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(createExternalServiceRequest());
 
   let idSrv = idName;
   const intObj = {
-    deployment_name: dataSrv.currentDeployment,
-    ports: [],
-    external: 'true'
+    deploy: dataSrv.currentDeployment,
+    name: dataSrv.externalSrvNameValue,
+    ports: []
   };
   dataSrv.externalSrvObject.map(item => {
     intObj.ports.push({
       name: item.externalSrvName,
-      targetPort: parseInt(item.externalSrvTargetPort, 10),
+      target_port: parseInt(item.externalSrvTargetPort, 10),
       protocol: item.extServiceType
     });
     return null;
   });
   const response = await axios.post(
-    `${URL}/api/namespaces/${idName}/services`,
+    `${URL}/namespace/${idName}/service`,
     intObj,
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Access-Control-Allow-Origin': '*'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }
@@ -74,7 +77,6 @@ export const fetchCreateExternalService = (
     case 201: {
       idSrv = `External service ${data.name} for ${intObj.deployment_name}`;
       dispatch(createExternalServiceSuccess(data, status, idSrv));
-      dispatch(push('/namespaces'));
       break;
     }
     case 401: {

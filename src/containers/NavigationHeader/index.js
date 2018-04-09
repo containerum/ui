@@ -100,9 +100,9 @@ export class NavigationHeader extends PureComponent<Props> {
                 <NavLink
                   key={_.uniqueId()}
                   className="dropdown-item"
-                  to={`/namespaces/${item.name}`}
+                  to={`/namespaces/${item.label}`}
                 >
-                  {item.name}
+                  {item.label}
                 </NavLink>
               ))}
             </ul>
@@ -231,13 +231,23 @@ export class NavigationHeader extends PureComponent<Props> {
           </div>
         );
       }
-      if (idPod || idDep || idService) {
+      if (idPod || idDep || idService || IdCreate === 'domain') {
         mainContent = (
           <div className="header-bottom">
             <div className="header-bottom-container container">
               <ul className="breadcrumbs nav">
                 {isIdOutName}
                 {isIdService}
+                {IdCreate === 'domain' && (
+                  <div className="d-flex">
+                    <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
+                      /
+                    </li>
+                    <li className="breadcrumbs__li nav-item">
+                      <div className="breadcrumbs__link">Create Domain</div>
+                    </li>
+                  </div>
+                )}
                 {isIdDep}
                 {idPodContent}
                 {this.props.handleDownloadLogs && (

@@ -9,17 +9,17 @@ import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
 
 import scrollById from '../../functions/scrollById';
-import * as actionGetVolumes from '../../actions/volumesActions/getVolumesByNS';
+// import * as actionGetVolumes from '../../actions/volumesActions/getVolumesByNS';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionCreateDeployment from '../../actions/deploymentActions/createDeployment';
 import * as actionCreateInternalService from '../../actions/serviceActions/createInternalService';
 import * as actionCreateExternalService from '../../actions/serviceActions/createExternalService';
-import {
-  GET_VOLUMES_BY_NS_INVALID,
-  GET_VOLUMES_BY_NS_REQUESTING,
-  GET_VOLUMES_BY_NS_FAILURE,
-  GET_VOLUMES_BY_NS_SUCCESS
-} from '../../constants/volumesConstants/getVolumesByNS';
+// import {
+//   GET_VOLUMES_BY_NS_INVALID,
+//   GET_VOLUMES_BY_NS_REQUESTING,
+//   GET_VOLUMES_BY_NS_FAILURE,
+//   GET_VOLUMES_BY_NS_SUCCESS
+// } from '../../constants/volumesConstants/getVolumesByNS';
 import { GET_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/getNamespace';
 import { CREATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/createDeployment';
 import type { Dispatch, ReduxState } from '../../types';
@@ -33,12 +33,12 @@ import Container from '../../components/CreateDeploymentCards/Container';
 import CreateServiceCardItem from '../CreateService/CreateServiceCard';
 
 type Props = {
-  getVolumesByNSReducer: Object,
+  // getVolumesByNSReducer: Object,
   getNamespaceReducer: Object,
   createDeploymentReducer: Object,
   match: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
-  fetchGetVolumesByNSIfNeeded: (idName: string) => void,
+  // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchCreateDeploymentIfNeeded: (idName: string, data: Object) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void
@@ -52,29 +52,29 @@ export class CreateDeployment extends PureComponent<Props> {
   }
   componentDidMount() {
     const {
-      fetchGetVolumesByNSIfNeeded,
+      // fetchGetVolumesByNSIfNeeded,
       fetchGetNamespaceIfNeeded,
       getNamespaceReducer,
       match
     } = this.props;
-    fetchGetVolumesByNSIfNeeded(match.params.idName);
+    // fetchGetVolumesByNSIfNeeded(match.params.idName);
     if (getNamespaceReducer.readyStatus !== GET_NAMESPACE_SUCCESS) {
       fetchGetNamespaceIfNeeded(match.params.idName);
     }
   }
   componentWillUpdate(nextProps) {
-    if (
-      this.props.getVolumesByNSReducer.readyStatus !==
-        nextProps.getVolumesByNSReducer.readyStatus &&
-      nextProps.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS
-    ) {
-      if (nextProps.getVolumesByNSReducer.data[0]) {
-        this.setState({
-          ...this.state,
-          volumes: nextProps.getVolumesByNSReducer.data
-        });
-      }
-    }
+    // if (
+    //   this.props.getVolumesByNSReducer.readyStatus !==
+    //     nextProps.getVolumesByNSReducer.readyStatus &&
+    //   nextProps.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS
+    // ) {
+    //   if (nextProps.getVolumesByNSReducer.data[0]) {
+    //     this.setState({
+    //       ...this.state,
+    //       volumes: nextProps.getVolumesByNSReducer.data
+    //     });
+    //   }
+    // }
     if (
       this.props.createDeploymentReducer.readyStatus !==
         nextProps.createDeploymentReducer.readyStatus &&
@@ -116,7 +116,7 @@ export class CreateDeployment extends PureComponent<Props> {
         id: _.uniqueId(),
         image: '',
         name: '',
-        resources: {
+        limits: {
           cpu: '',
           memory: ''
         },
@@ -555,7 +555,7 @@ export class CreateDeployment extends PureComponent<Props> {
           id: _.uniqueId(),
           image: '',
           name: '',
-          resources: {
+          limits: {
             cpu: '',
             memory: ''
           },
@@ -599,8 +599,8 @@ export class CreateDeployment extends PureComponent<Props> {
     const match = Object.assign({}, this.state.containers[index]);
     const matchUpdated = {
       ...match,
-      resources: {
-        ...this.state.containers[index].resources,
+      limits: {
+        ...this.state.containers[index].limits,
         [`${type}`]: value
       }
     };
@@ -782,47 +782,47 @@ export class CreateDeployment extends PureComponent<Props> {
 
   // Render
   renderDeploymentSidebar = () => {
-    const { getVolumesByNSReducer } = this.props;
-    if (
-      !getVolumesByNSReducer.readyStatus ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING
-    ) {
-      return (
-        <div style={{ marginTop: '40px', width: '80%' }}>
-          {new Array(4)
-            .fill()
-            .map(() => (
-              <img
-                key={_.uniqueId()}
-                src={require('../../images/profile-sidebar-big.svg')}
-                style={{ width: '100%', marginBottom: '20px' }}
-                alt="sidebar"
-              />
-            ))}
-          {new Array(6)
-            .fill()
-            .map(() => (
-              <img
-                key={_.uniqueId()}
-                src={require('../../images/profile-sidebar-small.svg')}
-                style={{ marginBottom: '20px', float: 'right' }}
-                alt="sidebar"
-              />
-            ))}
-          {new Array(1)
-            .fill()
-            .map(() => (
-              <img
-                key={_.uniqueId()}
-                src={require('../../images/profile-sidebar-big.svg')}
-                style={{ width: '100%', marginBottom: '20px' }}
-                alt="sidebar"
-              />
-            ))}
-        </div>
-      );
-    }
+    // const { getVolumesByNSReducer } = this.props;
+    // if (
+    //   !getVolumesByNSReducer.readyStatus ||
+    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
+    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING
+    // ) {
+    //   return (
+    //     <div style={{ marginTop: '40px', width: '80%' }}>
+    //       {new Array(4)
+    //         .fill()
+    //         .map(() => (
+    //           <img
+    //             key={_.uniqueId()}
+    //             src={require('../../images/profile-sidebar-big.svg')}
+    //             style={{ width: '100%', marginBottom: '20px' }}
+    //             alt="sidebar"
+    //           />
+    //         ))}
+    //       {new Array(6)
+    //         .fill()
+    //         .map(() => (
+    //           <img
+    //             key={_.uniqueId()}
+    //             src={require('../../images/profile-sidebar-small.svg')}
+    //             style={{ marginBottom: '20px', float: 'right' }}
+    //             alt="sidebar"
+    //           />
+    //         ))}
+    //       {new Array(1)
+    //         .fill()
+    //         .map(() => (
+    //           <img
+    //             key={_.uniqueId()}
+    //             src={require('../../images/profile-sidebar-big.svg')}
+    //             style={{ width: '100%', marginBottom: '20px' }}
+    //             alt="sidebar"
+    //           />
+    //         ))}
+    //     </div>
+    //   );
+    // }
 
     const arrayOfContainersLinks = [
       'name',
@@ -1234,33 +1234,34 @@ export class CreateDeployment extends PureComponent<Props> {
     );
   };
   renderCreateDeployment = () => {
-    const { getVolumesByNSReducer, match } = this.props;
-    if (
-      !getVolumesByNSReducer.readyStatus ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING
-    ) {
-      return (
-        <div>
-          {new Array(9).fill().map(() => (
-            <img
-              key={_.uniqueId()}
-              src={require('../../images/create-dep-serv.svg')}
-              style={{
-                marginTop: '-2px',
-                marginBottom: '30px',
-                width: '100%'
-              }}
-              alt="create service"
-            />
-          ))}
-        </div>
-      );
-    }
-
-    if (getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_FAILURE) {
-      return <p>Oops, Failed to load data of Deployment!</p>;
-    }
+    const { match } = this.props;
+    // const { getVolumesByNSReducer, match } = this.props;
+    // if (
+    //   !getVolumesByNSReducer.readyStatus ||
+    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
+    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING
+    // ) {
+    //   return (
+    //     <div>
+    //       {new Array(9).fill().map(() => (
+    //         <img
+    //           key={_.uniqueId()}
+    //           src={require('../../images/create-dep-serv.svg')}
+    //           style={{
+    //             marginTop: '-2px',
+    //             marginBottom: '30px',
+    //             width: '100%'
+    //           }}
+    //           alt="create service"
+    //         />
+    //       ))}
+    //     </div>
+    //   );
+    // }
+    //
+    // if (getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_FAILURE) {
+    //   return <p>Oops, Failed to load data of Deployment!</p>;
+    // }
 
     const {
       name,
@@ -1419,21 +1420,21 @@ export class CreateDeployment extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
-    getVolumesByNSReducer,
+    // getVolumesByNSReducer,
     getNamespaceReducer,
     createDeploymentReducer,
     createExternalDeploymentReducer,
     createInternalDeploymentReducer
   }: ReduxState) => ({
-    getVolumesByNSReducer,
+    // getVolumesByNSReducer,
     getNamespaceReducer,
     createDeploymentReducer,
     createExternalDeploymentReducer,
     createInternalDeploymentReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetVolumesByNSIfNeeded: (idName: string) =>
-      dispatch(actionGetVolumes.fetchGetVolumesByNSIfNeeded(idName)),
+    // fetchGetVolumesByNSIfNeeded: (idName: string) =>
+    //   dispatch(actionGetVolumes.fetchGetVolumesByNSIfNeeded(idName)),
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
     fetchCreateDeploymentIfNeeded: (idName: string, data: Object) =>

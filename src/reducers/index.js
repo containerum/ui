@@ -32,6 +32,7 @@ import getServiceReducer from './serviceReducers/getService';
 import deleteServiceReducer from './serviceReducers/deleteService';
 import createInternalServiceReducer from './serviceReducers/createInternalService';
 import createExternalServiceReducer from './serviceReducers/createExternalService';
+import createDomainReducer from './serviceReducers/createDomain';
 import updateInternalServiceReducer from './serviceReducers/updateInternalService';
 import updateExternalServiceReducer from './serviceReducers/updateExternalService';
 import getReleasesGithubReducer from './getReleasesGithubReducer';
@@ -56,12 +57,12 @@ import deleteImageTokenReducer from './webHookReducers/deleteImageToken';
 import createImageTokenReducer from './webHookReducers/createImageToken';
 import deleteAccountReducer from './profileReducers/deleteAccount';
 import changeProfileInfoReducer from './profileReducers/changeProfileInfo';
-import getCountDeploymentsReducer from './statisticsReducers/getCountDeployments';
-import getCountServicesReducer from './statisticsReducers/getCountServices';
-import getCountPodsReducer from './statisticsReducers/getCountPods';
+import getResourcesReducer from './statisticsReducers/getResources';
 import getSolutionsReducer from './solutionsReducers/getSolutions';
 import getSolutionReducer from './solutionReducers/getSolution';
 import runSolutionReducer from './solutionReducers/runSolution';
+import getDomainsReducer from './serviceReducers/getDomains';
+import deleteDomainReducer from './serviceReducers/deleteDomain';
 
 const reducers = {
   home,
@@ -114,14 +115,15 @@ const reducers = {
   deleteAccountReducer,
   createInternalServiceReducer,
   createExternalServiceReducer,
+  createDomainReducer,
   updateInternalServiceReducer,
   updateExternalServiceReducer,
-  getCountDeploymentsReducer,
-  getCountServicesReducer,
-  getCountPodsReducer,
+  getResourcesReducer,
   getSolutionsReducer,
   getSolutionReducer,
   runSolutionReducer,
+  getDomainsReducer,
+  deleteDomainReducer,
   router,
   loadingBar: loadingBarReducer
 };

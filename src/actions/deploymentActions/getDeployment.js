@@ -10,7 +10,7 @@ import {
   GET_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/getDeployment';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getDeploymentRequest = () => ({
   type: GET_DEPLOYMENT_REQUESTING,
@@ -39,24 +39,23 @@ export const fetchGetDeployment = (
   idName: string,
   idDep: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  // console.log(token);
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(getDeploymentRequest());
 
   const response = await axios.get(
-    `${URL}/api/namespaces/${idName}/deployments/${idDep}`,
+    `${URL}/namespaces/${idName}/deployments/${idDep}`,
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Content-Type': 'application/x-www-form-urlencode',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }
@@ -67,11 +66,6 @@ export const fetchGetDeployment = (
       dispatch(getDeploymentSuccess(data, status, idName, idDep));
       break;
     }
-    case 400: {
-      dispatch(getDeploymentFailure(data.message, status, idName, idDep));
-      dispatch(push('/namespaces'));
-      break;
-    }
     case 401: {
       dispatch(getDeploymentFailure(data.message, status, idName, idDep));
       dispatch(push('/login'));
@@ -79,6 +73,7 @@ export const fetchGetDeployment = (
     }
     default: {
       dispatch(getDeploymentFailure(data.message, status, idName, idDep));
+      dispatch(push('/namespaces'));
     }
   }
 };

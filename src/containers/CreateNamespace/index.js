@@ -60,10 +60,11 @@ export class CreateNamespace extends PureComponent<Props> {
     this.state = {
       isOpened: false,
       Name: '',
+      NSTariffId: null,
       NSTariffName: null,
       NSTariffCpu: null,
       NSTariffMemory: null,
-      NSTariffVolume: null,
+      // NSTariffVolume: null,
       NSTariffPrice: null,
       NSTariffPricePerDay: null,
       inputNameProfile: '',
@@ -84,10 +85,9 @@ export class CreateNamespace extends PureComponent<Props> {
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      const {
-        country_code: countryCode,
-        first_name: firstName
-      } = nextProps.getProfileReducer.data.data;
+      const dataProfile = nextProps.getProfileReducer.data.data;
+      const countryCode = dataProfile ? dataProfile.country_code : null;
+      const firstName = dataProfile ? dataProfile.first_name : null;
       if (countryCode && firstName) {
         this.setState({
           ...this.state,
@@ -171,20 +171,22 @@ export class CreateNamespace extends PureComponent<Props> {
 
   handleSelectTariff = tariff => {
     const {
+      id,
       label,
       cpuLimit,
       memoryLimit,
-      volumeSize,
+      // volumeSize,
       price,
       pricePerDay
     } = tariff;
     this.setState({
       ...this.state,
       isOpened: true,
+      NSTariffId: id,
       NSTariffName: label,
       NSTariffCpu: cpuLimit,
       NSTariffMemory: memoryLimit,
-      NSTariffVolume: volumeSize,
+      // NSTariffVolume: volumeSize,
       NSTariffPrice: price,
       NSTariffPricePerDay: pricePerDay
     });
@@ -245,11 +247,12 @@ export class CreateNamespace extends PureComponent<Props> {
       changeProfileInfoReducer
     } = this.props;
     const {
+      NSTariffId,
       NSTariffName,
       Name,
       NSTariffCpu,
       NSTariffMemory,
-      NSTariffVolume,
+      // NSTariffVolume,
       NSTariffPrice,
       NSTariffPricePerDay,
       isOpened,
@@ -272,11 +275,12 @@ export class CreateNamespace extends PureComponent<Props> {
         <CreateModal
           type="Namespace"
           tariff={NSTariffName}
+          id={NSTariffId}
           name={Name}
           data={{
             cpu: NSTariffCpu,
             memory: NSTariffMemory,
-            volume: NSTariffVolume,
+            // volume: NSTariffVolume,
             price: NSTariffPrice,
             pricePerDay: NSTariffPricePerDay
           }}

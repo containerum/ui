@@ -3,18 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type {
-  Dispatch,
-  GetState,
-  ThunkAction
-  // ReduxState
-} from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
   GET_NAMESPACES_REQUESTING,
-  GET_NAMESPACES_SUCCESS
-  // GET_NAMESPACES_FAILURE
+  GET_NAMESPACES_SUCCESS,
+  GET_NAMESPACES_FAILURE
 } from '../../constants/namespacesConstants/getNamespaces';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getNamespacesRequest = () => ({
   type: GET_NAMESPACES_REQUESTING,
@@ -27,26 +22,25 @@ const getNamespacesSuccess = data => ({
   data
 });
 
-// const getNamespacesFailure = err => ({
-//   type: GET_NAMESPACES_FAILURE,
-//   isFetching: false,
-//   err
-// });
+const getNamespacesFailure = err => ({
+  type: GET_NAMESPACES_FAILURE,
+  isFetching: false,
+  err
+});
 
 export const fetchGetNamespaces = (
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
   const accessToken = cookie.load('accessToken')
     ? cookie.load('accessToken')
     : null;
-  // console.log(token);
 
   dispatch(getNamespacesRequest());
 
-  const response = await axios.get(`${URL}/api/namespaces`, {
+  const response = await axios.get(`${URL}/namespaces`, {
     headers: {
       Authorization: token,
       'User-Client': browser,
@@ -57,11 +51,7 @@ export const fetchGetNamespaces = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getNamespacesSuccess(data));
-      break;
-    }
-    case 404: {
-      dispatch(getNamespacesSuccess([]));
+      dispatch(getNamespacesSuccess(data.namespaces ? data.namespaces : []));
       break;
     }
     case 401: {
@@ -69,40 +59,19 @@ export const fetchGetNamespaces = (
       dispatch(push('/login'));
       break;
     }
-    default: {
-      dispatch(getNamespacesSuccess([]));
-    }
     // default: {
-    //   dispatch(getNamespacesFailure(data.message));
+    //   dispatch(getNamespacesSuccess([]));
+    //   dispatch(push('/login'));
     // }
+    default: {
+      dispatch(getNamespacesFailure(data.message));
+      dispatch(push('/login'));
+    }
   }
 };
 
-// Preventing dobule fetching data
-/* istanbul ignore next */
-// const shouldFetchGetNamespaces = (state: ReduxState): boolean => {
-//   // In development, we will allow action dispatching
-//   // or your reducer hot reloading won't updated on the view
-//   if (__DEV__) return true;
-//
-//   console.log(state);
-//   if (state.getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS)
-//     return false; // Preventing double fetching data
-//
-//   return true;
-// };
-
-/* istanbul ignore next */
 export const fetchGetNamespacesIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) =>
-  /* istanbul ignore next */
-  // if (shouldFetchGetNamespaces(getState())) {
-  /* istanbul ignore next */
-  dispatch(fetchGetNamespaces(axios));
-// }
-
-/* istanbul ignore next */
-// return null;
+) => dispatch(fetchGetNamespaces(axios));

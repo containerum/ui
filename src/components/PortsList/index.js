@@ -11,10 +11,7 @@ type Props = {
 };
 
 const PortsList = ({ data }: Props) => {
-  // console.log(data);
-  const { ports, labels, domain_hosts: domainHosts } = data;
-  const type = labels.external.toString() === 'true';
-  const firstDomainHost = domainHosts[0] ? domainHosts[0] : 'x1.containerum.io';
+  const { ports, domain } = data;
   return (
     <table className="content-block__table table" width="1170">
       <thead>
@@ -23,15 +20,15 @@ const PortsList = ({ data }: Props) => {
           <td className="td-2">Name</td>
           <td className="td-3">Port</td>
           <td className="td-4">Protocol</td>
-          {type && <td className="td-5">Link</td>}
+          {domain && <td className="td-5">Link</td>}
           <td className="td-7" />
           <td className="td-7" />
         </tr>
       </thead>
       <tbody>
         {ports.map(currentPort => {
-          const { name, port, targetPort, protocol } = currentPort;
-          const linkSrv = `${firstDomainHost}:${port}`;
+          const { name, port, target_port: targetPort, protocol } = currentPort;
+          const linkSrv = `${domain}:${targetPort}`;
           return (
             <tr className="tr-table-hover" key={_.uniqueId()}>
               <td className="td-1">
@@ -42,7 +39,7 @@ const PortsList = ({ data }: Props) => {
                 {port}:{targetPort}
               </td>
               <td className="td-4">{protocol}</td>
-              {type && (
+              {domain && (
                 <td className="td-5">
                   <a target="_blank" href={`http://${linkSrv}`}>
                     {linkSrv}

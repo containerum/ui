@@ -85,6 +85,8 @@ export class Support extends PureComponent<Props> {
     const errorFilesFormat = [];
     const successFiles = [];
     const successBase64 = [];
+    const successFilesFirstThree = [];
+    const successBase64FirstThree = [];
     Object.keys(files.fileList).filter((item, index) => {
       if (
         !(
@@ -107,8 +109,10 @@ export class Support extends PureComponent<Props> {
       ) {
         successFiles.push(files.fileList[item]);
         successBase64.push(files.base64[index]);
+        console.log('F', successFiles);
+        console.log('64', successBase64);
       }
-      if (files.fileList[item].size >= 15728640) {
+      if (files.fileList[item].size >= 10485760) {
         errorFilesSize.push(files.fileList[item]);
       }
       return null;
@@ -128,35 +132,63 @@ export class Support extends PureComponent<Props> {
           file => `
     ${file.name}`
         )}</div>`,
-        `The following files were not downloaded because the attachment size (15 MB maximum) was exceeded:`
+        `The following files were not downloaded because the attachment size (10 MB maximum) was exceeded:`
       );
     }
-    this.setState({
-      ...this.state,
-      files: successFiles,
-      base64: successBase64
-    });
+
+    if (successFiles.length > 3) {
+      toastr.error(
+        `<div>${errorFilesSize.map(
+          file => `
+    ${file.name}`
+        )}</div>`,
+        `You can only upload 3 files at a time`
+      );
+    }
+
+    if (successFiles.length > 3) {
+      for (let i = 0; i < 3; i += 1) {
+        successFilesFirstThree.push(successFiles[i]);
+        successBase64FirstThree.push(successBase64[i]);
+      }
+      this.setState({
+        ...this.state,
+        files: successFilesFirstThree,
+        base64: successBase64FirstThree
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        files: successFiles,
+        base64: successBase64
+      });
+    }
+    console.log('files', this.state.files);
+    console.log('base', this.state.base64);
   };
   handleOnSubmit = e => {
     e.preventDefault();
     const { textArea, group, base64, files } = this.state;
     const { getProfileReducer, fetchSendSupportTicketIfNeeded } = this.props;
-    const userEmail = getProfileReducer.data.login;
-    const reqObj = {
-      case: {
-        user_email: userEmail,
-        subject: 'web-ui',
-        content: textArea,
-        group_id: group,
-        base64,
-        files
+    if (getProfileReducer.data) {
+      const userEmail = getProfileReducer.data.login;
+
+      const reqObj = {
+        case: {
+          user_email: userEmail,
+          subject: 'web-ui',
+          content: textArea,
+          group_id: group,
+          base64,
+          files
+        }
+      };
+      if (files.length) {
+        reqObj.case.files = files.map(item => item.name);
       }
-    };
-    if (files.length) {
-      reqObj.case.files = files.map(item => item.name);
+      // console.log(reqObj);
+      fetchSendSupportTicketIfNeeded(reqObj);
     }
-    // console.log(reqObj);
-    fetchSendSupportTicketIfNeeded(reqObj);
   };
 
   renderSupportList = () => {

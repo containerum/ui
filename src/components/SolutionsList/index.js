@@ -10,15 +10,19 @@ import githubIcon from '../../images/githubIcon.svg';
 
 type Props = {
   data: Array<Object>,
-  history: Object,
-  handleClickRunSolution: (name: string) => void
+  history: Object
+  // handleClickRunSolution: (name: string) => void
 };
 
 const handleClose = e => {
   e.stopPropagation();
 };
 
-const SolutionsList = ({ data, history, handleClickRunSolution }: Props) => (
+const SolutionsList = ({
+  data,
+  history
+}: // handleClickRunSolution
+Props) => (
   <div className="row">
     {data.map(solution => {
       const { Name: name, URL: url, CPU: cpu, RAM: ram } = solution;
@@ -59,12 +63,20 @@ const SolutionsList = ({ data, history, handleClickRunSolution }: Props) => (
                 onClick={e => handleClose(e)}
               >
                 <div className="volume-footer-links-deploy">
-                  <div
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="footer-links-deploy-btn"
-                    onClick={() => handleClickRunSolution(name)}
                   >
-                    deploy
-                  </div>
+                    Deploy
+                  </a>
+                  {/* <div */}
+                  {/* className="footer-links-deploy-btn" */}
+                  {/* onClick={() => handleClickRunSolution(name)} */}
+                  {/* > */}
+                  {/* deploy */}
+                  {/* </div> */}
                 </div>
                 <div className="volume-footer-links-github">
                   <a

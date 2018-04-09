@@ -10,7 +10,7 @@ import {
   CREATE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/createNamespace';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -42,35 +42,37 @@ export const fetchCreateNamespace = (
   tariff: string,
   price: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(createNamespaceRequest());
 
   const response = await axios.post(
-    `${URL}/api/namespaces`,
+    `${URL}/namespace`,
     {
       label: idName,
-      tariff_label: tariff
+      tariff_id: tariff
     },
     {
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
+        // 'Content-Type': 'application/json'
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { status, data, config } = response;
+  // console.log(data);
   switch (status) {
-    case 201: {
-      dispatch(createNamespaceSuccess(data, status, config.method, idName));
+    case 200: {
+      dispatch(createNamespaceSuccess(data, 201, config.method, idName));
       // if (
       //   typeof window !== 'undefined' &&
       //   typeof window.navigator !== 'undefined'

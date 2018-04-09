@@ -15,9 +15,8 @@ type Props = {
 };
 
 const ServiceInfo = ({ data, idName, idSrv, handleDeleteService }: Props) => {
-  const { cluster_ip: clusterIp, domain_hosts: domainHosts, labels } = data;
-  const type = labels.external.toString() === 'true' ? 'External' : 'Internal';
-  const labelsToArray = Object.keys(labels);
+  const { domain, ips } = data;
+  const type = domain ? 'External' : 'Internal';
   return (
     <div className="content-block-container content-block_common-statistic container">
       <div className="content-block-header">
@@ -61,37 +60,31 @@ const ServiceInfo = ({ data, idName, idSrv, handleDeleteService }: Props) => {
           <div className="content-block__info-name">Type: </div>
           <div className="content-block__info-text">{type}</div>
         </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name">IP: </div>
-          <div className="content-block__info-text">{clusterIp}</div>
-        </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name">Domain:</div>
-          <div className="content-block__info-text">
-            {domainHosts.length
-              ? domainHosts.map(domain => (
-                  <span key={_.uniqueId()}>{domain}</span>
-                ))
-              : '-'}
+        {ips && (
+          <div className="content-block__info-item">
+            <div className="content-block__info-name">IP: </div>
+            <div className="content-block__info-text">
+              {ips &&
+                ips.map(
+                  ip =>
+                    ips[ips.length - 1] === ip ? (
+                      <span key={_.uniqueId()}>{ip}</span>
+                    ) : (
+                      <span key={_.uniqueId()}>
+                        <span>{ip},</span>
+                        <br />
+                      </span>
+                    )
+                )}
+            </div>
           </div>
-        </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name">Labels:</div>
-          <div className="content-block__info-text">
-            {labelsToArray.map(
-              label =>
-                labelsToArray[labelsToArray.length - 1] === label ? (
-                  <span key={_.uniqueId()} className="padding">
-                    {label}: {labels[label]}
-                  </span>
-                ) : (
-                  <span key={_.uniqueId()} className="padding">
-                    {label}: {labels[label]},{' '}
-                  </span>
-                )
-            )}
+        )}
+        {domain && (
+          <div className="content-block__info-item">
+            <div className="content-block__info-name">Domain:</div>
+            <div className="content-block__info-text">{domain}</div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

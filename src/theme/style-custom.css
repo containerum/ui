@@ -526,6 +526,31 @@ body .tooltip > .tooltip-inner {
     padding-bottom: 4px;
 }
 
+.customInputDomain {
+  padding-right: 155px!important;
+  direction: rtl;
+}
+
+.customAlwaysVisiblePlaceholder:after {
+  content: '.hub.containerum.io';
+  position: absolute;
+  right: 8px;
+  top: 27px;
+  font-weight: 300;
+  color: #a7a7a7;
+  font-size: 16px;
+}
+
+.customAlwaysVisibleInputPathPlaceholder:before {
+  content: '/';
+  position: absolute;
+  left: -10px;
+  top: 25px;
+  font-weight: 300;
+  color: #a7a7a7;
+  font-size: 16px;
+}
+
 .customInput:focus {
     border: none;
 }
@@ -670,6 +695,14 @@ body .tooltip > .tooltip-inner {
     outline: 0;
 }
 
+.selectCustom:hover {
+  cursor: pointer;
+}
+
+.selectCustom:disabled {
+  cursor: not-allowed;
+}
+
 .select-wrapper select::-ms-expand {
     display: none;             /* remove arrow IE     */
 }
@@ -720,7 +753,7 @@ body .tooltip > .tooltip-inner {
     top: 8.5px;
 }
 
-.btnDeployment {
+.btnDeployment, .btnTransparency {
     display: block;
     width: 100%;
     font-size: 20px;
@@ -736,11 +769,24 @@ body .tooltip > .tooltip-inner {
     text-transform: uppercase;
 }
 
-.btnDeployment:focus {
+.btnTransparency {
+  background-color: transparent;
+  border: 2px solid #29abe2;
+  color: #29abe2;
+  padding: 9px 0;
+}
+
+.btnDeployment:focus, .btnTransparency:focus {
     outline: 0;
 }
 
-.btnDeployment:active {
+.btnDeployment:hover, .btnTransparency:hover {
+  color: #fff;
+  background-color: #1d87b3;
+  border-color: #1d87b3;
+}
+
+.btnDeployment:active, .btnTransparency:focus {
     background-color: #1d87b3;
 }
 
@@ -1469,6 +1515,39 @@ body .tooltip > .tooltip-inner {
   padding-left: 30px;
 }
 
+.dashboard-table .td-1-domains {
+  width: 60%;
+  padding-left: 0;
+}
+
+.dashboard-table .td-2-domains {
+  width: 15%;
+  padding-left: 0;
+}
+
+.dashboard-table .td-3-domains {
+  width: 18%;
+  padding-left: 0;
+}
+
+.dashboard-table .td-4-domains {
+  width: 7%;
+}
+
+.dashboard-table tbody .td-2-domains {
+  width: 15%;
+  padding-left: 7px;
+}
+
+.dashboard-table tbody .td-3-domains {
+  width: 18%;
+  padding-left: 7px;
+}
+
+.dashboard-table .domains{
+  color: #29abe2;
+}
+
 @-moz-document url-prefix() {
   .dashboard-table .td-2 {
     width: 333px;
@@ -1481,6 +1560,32 @@ body .tooltip > .tooltip-inner {
   }
   .dashboard-table .td-7 {
     padding-left: 70px;
+  }
+
+  .news-wrapper::-webkit-scrollbar-track,
+  .dashboard-table tbody::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    background-color: #FFF;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+
+  .news-wrapper::-webkit-scrollbar,
+  .dashboard-table tbody::-webkit-scrollbar {
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #fff;
+    width: 4px;
+  }
+
+  .news-wrapper::-webkit-scrollbar-thumb,
+  .dashboard-table tbody::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: 0 20px 32px rgba(13, 13, 54, 0.11);
+    box-shadow: 0 20px 32px rgba(13, 13, 54, 0.11);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #EAEAEA;
+    width: 3px;
   }
 }
 
@@ -1905,7 +2010,7 @@ button:focus {
   margin-bottom: 25px;
 }
 .nav-link{
-  padding: 0 0 10px 0;
+  /*padding: 0 0 10px 0;*/
   margin-right: 38px;
 }
 .nav-pills .nav-link.active{

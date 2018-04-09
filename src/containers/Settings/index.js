@@ -13,17 +13,19 @@ import {
 } from '../../constants/profileConstants/getProfile';
 import type { ReduxState } from '../../types';
 import ProfileSidebar from '../../components/ProfileSidebar';
-import ProfileWebHook from './WebHook';
+// import ProfileWebHook from './WebHook';
+import ProfileDomains from './Domains';
 import CLIInfo from '../../components/CLIInfo';
 
 type Props = {
-  getProfileReducer: Object
+  getProfileReducer: Object,
+  match: Object
 };
 
 // Export this for unit testing more easily
 export class Settings extends PureComponent<Props> {
   renderProfileInfo = () => {
-    const { getProfileReducer } = this.props;
+    const { getProfileReducer, match } = this.props;
 
     if (
       !getProfileReducer.readyStatus ||
@@ -45,7 +47,8 @@ export class Settings extends PureComponent<Props> {
 
     return (
       <div className="content-block-container container container-fluid">
-        <ProfileWebHook />
+        {/* <ProfileWebHook /> */}
+        <ProfileDomains match={match} />
         <CLIInfo />
       </div>
     );

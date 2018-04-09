@@ -72,47 +72,48 @@ export class UpdateService extends PureComponent<Props> {
         nextProps.getServiceReducer.readyStatus &&
       nextProps.getServiceReducer.readyStatus === GET_SERVICE_SUCCESS
     ) {
-      // console.log(nextProps.getServiceReducer.data);
-      const { deployment, labels, ports } = nextProps.getServiceReducer.data;
-      const internalSrvObject =
-        String(labels.external) === 'false'
-          ? ports.map((item, index) => ({
-              internalSrvName: item.name,
-              internalSrvPort: item.port,
-              internalSrvTargetPort: item.targetPort,
-              intServiceType: item.protocol,
-              id: _.uniqueId(),
-              index
-            }))
-          : {
+      const { deploy, domain, ports } = nextProps.getServiceReducer.data;
+      const internalSrvObject = !domain
+        ? ports.map((item, index) => ({
+            internalSrvName: item.name,
+            internalSrvPort: item.port,
+            internalSrvTargetPort: item.target_port,
+            intServiceType: item.protocol,
+            id: _.uniqueId(),
+            index
+          }))
+        : [
+            {
               internalSrvName: '',
               internalSrvPort: '',
               internalSrvTargetPort: '',
               intServiceType: 'TCP',
               id: _.uniqueId(),
               index: 0
-            };
-      const externalSrvObject =
-        String(labels.external) === 'true'
-          ? ports.map((item, index) => ({
-              externalSrvName: item.name,
-              externalSrvTargetPort: item.targetPort,
-              intServiceType: item.protocol,
-              id: _.uniqueId(),
-              index
-            }))
-          : {
+            }
+          ];
+      const externalSrvObject = domain
+        ? ports.map((item, index) => ({
+            externalSrvName: item.name,
+            externalSrvTargetPort: item.target_port,
+            extServiceType: item.protocol,
+            id: _.uniqueId(),
+            index
+          }))
+        : [
+            {
               externalSrvName: '',
               externalSrvTargetPort: '',
               extServiceType: 'TCP',
               id: _.uniqueId(),
               index: 0
-            };
+            }
+          ];
       this.setState({
         ...this.state,
-        currentDeployment: deployment,
-        isActiveInternal: String(labels.external) === 'false',
-        isActiveExternal: String(labels.external) === 'true',
+        currentDeployment: deploy,
+        isActiveInternal: !domain,
+        isActiveExternal: domain,
         internalSrvObject,
         externalSrvObject
       });

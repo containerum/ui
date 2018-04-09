@@ -9,7 +9,7 @@ import {
   GET_BALANCE_SUCCESS,
   GET_BALANCE_FAILURE
 } from '../../constants/billingConstants/getBalance';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getBalanceRequest = () => ({
   type: GET_BALANCE_REQUESTING,
@@ -31,21 +31,23 @@ const getBalanceFailure = err => ({
 export const fetchGetBalance = (
   idName: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(getBalanceRequest());
 
-  const response = await axios.get(`${URL}/api/profile/balance`, {
+  const response = await axios.get(`${URL}/isp/user/balance`, {
     headers: {
       Authorization: token,
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
+      // 'X-User-ID': '76603eda-d9e0-4ed7-91be-2d5cf6ff76b2',
+      // 'X-User-Role': 'user'
     },
     validateStatus: status => status >= 200 && status <= 505
   });

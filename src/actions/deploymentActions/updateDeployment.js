@@ -10,7 +10,7 @@ import {
   UPDATE_DEPLOYMENT_SUCCESS,
   UPDATE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/updateDeployment';
-import { webApi } from '../../config';
+import { webApiLogin } from '../../config';
 
 const updateDeploymentRequest = () => ({
   type: UPDATE_DEPLOYMENT_REQUESTING,
@@ -39,19 +39,22 @@ export const fetchUpdateDeployment = (
   idDep: string,
   dataObj: Object,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(updateDeploymentRequest());
 
   const splitContainers = cloneDeep(dataObj.containers);
   splitContainers.map(item => {
     delete item.id;
-    item.resources.requests = Object.assign({}, item.resources);
-    delete item.resources.cpu;
-    delete item.resources.memory;
+    // item.resources.requests = Object.assign({}, item.resources);
+    // delete item.resources.cpu;
+    // delete item.resources.memory;
     if (item.ports[0].containerPort) {
       item.ports.map(includePorts => {
         delete includePorts.id;
@@ -103,7 +106,7 @@ export const fetchUpdateDeployment = (
 
   let idSrv = dataObj.name;
   const response = await axios.put(
-    `${URL}/api/namespaces/${idName}/deployments/${idDep}`,
+    `${URL}/namespace/${idName}/deployment/${dataObj.name}`,
     {
       name: dataObj.name,
       labels,
@@ -114,19 +117,17 @@ export const fetchUpdateDeployment = (
       headers: {
         Authorization: token,
         'User-Client': browser,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
+        // 'Content-Type': 'application/json'
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { data, status, config } = response;
   switch (status) {
-    case 202: {
+    case 200: {
       idSrv = `Deployment ${dataObj.name} for ${idName}`;
-      dispatch(updateDeploymentSuccess(data, status, config.method, idSrv));
+      dispatch(updateDeploymentSuccess(data, 202, config.method, idSrv));
       dispatch(push('/namespaces'));
       break;
     }

@@ -30,6 +30,7 @@ const DeploymentsList = ({
     e.stopPropagation();
   };
   const ta = timeago();
+  // console.log(data);
   return (
     <div>
       {data.length >= 1 && (
@@ -48,14 +49,18 @@ const DeploymentsList = ({
           </thead>
           <tbody>
             {data.map(deploy => {
+              const { name } = deploy;
               const {
-                cpu,
-                name,
-                pods_active: podsActive,
-                pods_limit: podsLimit,
-                created_at: createdAt,
-                ram
-              } = deploy;
+                available_replicas: podsActive,
+                replicas: podsLimit,
+                created_at: createdAt
+              } = deploy.status;
+              const cpu = deploy.containers
+                .map(container => parseInt(container.limits.cpu, 10))
+                .reduce((a, b) => a + b, 0);
+              const memory = deploy.containers
+                .map(container => parseInt(container.limits.memory, 10))
+                .reduce((a, b) => a + b, 0);
               const milliseconds = Date.parse(createdAt);
               const dateHours = new Date(milliseconds);
               const dateValue = ta.ago(dateHours, true);
@@ -74,7 +79,7 @@ const DeploymentsList = ({
                   <td className="td-3">
                     {podsActive} / {podsLimit}
                   </td>
-                  <td className="td-4">{ram}</td>
+                  <td className="td-4">{memory}</td>
                   <td className="td-5">{cpu}</td>
                   <td className="td-6">{dateValue}</td>
                   <td className="td-7">

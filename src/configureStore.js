@@ -16,7 +16,7 @@ axios.interceptors.response.use(response => {
   const lastTimeToRefresh = cookie.load('lastTimeToRefresh')
     ? parseInt(cookie.load('lastTimeToRefresh'), 10)
     : null;
-  const timeToRequest = 840000;
+  const timeToRequest = 600000;
   const dateNow = Date.parse(new Date());
   const differenceDate =
     lastTimeToRefresh + timeToRequest - dateNow > 0

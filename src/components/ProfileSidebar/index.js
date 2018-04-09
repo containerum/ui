@@ -74,7 +74,12 @@ const ProfileSidebar = ({ type }: Props) => (
     <li>
       <div className="nav-root-item">Billing</div>
       <Scrollspy
-        items={['information', 'add-funds', 'coupon', 'history']}
+        items={[
+          'information',
+          'add-funds',
+          // 'coupon',
+          'history'
+        ]}
         style={{
           padding: '20px 0 0 20px'
         }}
@@ -112,22 +117,22 @@ const ProfileSidebar = ({ type }: Props) => (
             </HashLink>
           )}
         </li>
-        <li className="nav-item">
-          {type === 'billing' ? (
-            <div
-              className="nav-link"
-              onClick={() => scrollById('coupon')}
-              onKeyPress={() => scrollById('coupon')}
-              role="presentation"
-            >
-              Promo code
-            </div>
-          ) : (
-            <HashLink to="/billing#coupon" className="nav-link">
-              Coupon
-            </HashLink>
-          )}
-        </li>
+        {/* <li className="nav-item"> */}
+        {/* {type === 'billing' ? ( */}
+        {/* <div */}
+        {/* className="nav-link" */}
+        {/* onClick={() => scrollById('coupon')} */}
+        {/* onKeyPress={() => scrollById('coupon')} */}
+        {/* role="presentation" */}
+        {/* > */}
+        {/* Promo code */}
+        {/* </div> */}
+        {/* ) : ( */}
+        {/* <HashLink to="/billing#coupon" className="nav-link"> */}
+        {/* Coupon */}
+        {/* </HashLink> */}
+        {/* )} */}
+        {/* </li> */}
         <li className="nav-item">
           {type === 'billing' ? (
             <div
@@ -149,25 +154,45 @@ const ProfileSidebar = ({ type }: Props) => (
     <li>
       <div className="nav-root-item">Settings</div>
       <Scrollspy
-        items={['webhooks', 'cli']}
+        items={[
+          // 'webhooks',
+          'domains',
+          'cli'
+        ]}
         style={{
           padding: '20px 0 0 20px'
         }}
         currentClassName="active"
       >
+        {/* <li className="nav-item"> */}
+        {/* {type === 'settings' ? ( */}
+        {/* <div */}
+        {/* className="nav-link" */}
+        {/* onClick={() => scrollById('webhooks')} */}
+        {/* onKeyPress={() => scrollById('webhooks')} */}
+        {/* role="presentation" */}
+        {/* > */}
+        {/* WebHooks */}
+        {/* </div> */}
+        {/* ) : ( */}
+        {/* <HashLink to="/settings#webhooks" className="nav-link"> */}
+        {/* WebHooks */}
+        {/* </HashLink> */}
+        {/* )} */}
+        {/* </li> */}
         <li className="nav-item">
           {type === 'settings' ? (
             <div
               className="nav-link"
-              onClick={() => scrollById('webhooks')}
-              onKeyPress={() => scrollById('webhooks')}
+              onClick={() => scrollById('domains')}
+              onKeyPress={() => scrollById('domains')}
               role="presentation"
             >
-              WebHooks
+              Domains
             </div>
           ) : (
-            <HashLink to="/settings#webhooks" className="nav-link">
-              WebHooks
+            <HashLink to="/settings#domains" className="nav-link">
+              Domains
             </HashLink>
           )}
         </li>

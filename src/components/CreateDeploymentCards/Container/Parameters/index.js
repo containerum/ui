@@ -15,8 +15,11 @@ type Props = {
   ) => void
 };
 
+// const patternOne = new RegExp('^d+(.d+)?m$');
+// const patternTwo = new RegExp('/^0.d/');
+// const pattern = '/^(0.d|^d+(.d+)?m$)$';
 const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
-  const { id, resources } = item;
+  const { id, limits } = item;
   return (
     <div className="row rowLine" id={`container${index + 1}-parameters`}>
       <div className="col-md-12">
@@ -33,13 +36,13 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
       </div>
       <div className="col-md-5 myColumn">
         <InputControl
-          value={resources.cpu}
+          value={limits.cpu}
           id={`cpu${id}`}
           type="text"
-          pattern="^\d+(.\d+)?m$"
+          pattern="^0.[0-9]*$|^\d+(.\d+)?m$"
           required
           baseClassName="form-group__input-text form-control customInput"
-          baseClassNameLabel={`form-group__label ${resources.cpu &&
+          baseClassNameLabel={`form-group__label ${limits.cpu &&
             'form-group__label-always-onfocus'}`}
           labelText="CPU"
           title="Example: 0,3 or 300m"
@@ -53,13 +56,13 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
 
       <div className="col-md-5 myColumn">
         <InputControl
-          value={resources.memory}
+          value={limits.memory}
           id={`ram${id}`}
           type="text"
           pattern="^\d+(.\d+)?(Mi|Gi)$"
           required
           baseClassName="form-group__input-text form-control customInput"
-          baseClassNameLabel={`form-group__label ${resources.memory &&
+          baseClassNameLabel={`form-group__label ${limits.memory &&
             'form-group__label-always-onfocus'}`}
           labelText="RAM"
           title="Example 0,5Gi or 512Mi"

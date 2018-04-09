@@ -14,7 +14,7 @@ import {
   GET_NAMESPACES_TARIFFS_SUCCESS,
   GET_NAMESPACES_TARIFFS_FAILURE
 } from '../../constants/namespacesConstants/getNamespacesTariffs';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const getNamespacesTariffsRequest = () => ({
   type: GET_NAMESPACES_TARIFFS_REQUESTING,
@@ -35,22 +35,23 @@ const getNamespacesTariffsFailure = err => ({
 
 export const fetchGetNamespacesTariffs = (
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  // console.log('token', token, 'browser', browser);
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
 
   dispatch(getNamespacesTariffsRequest());
 
-  const response = await axios.get(`${URL}/api/namespace_tariffs`, {
+  const response = await axios.get(`${URL}/tariffs/namespace`, {
     headers: {
       Authorization: token,
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
+      // 'X-User-ID': '76603eda-d9e0-4ed7-91be-2d5cf6ff76b2',
+      // 'X-User-Role': 'user'
     },
     validateStatus: status => status >= 200 && status <= 505
   });
@@ -61,55 +62,37 @@ export const fetchGetNamespacesTariffs = (
       dispatch(getNamespacesTariffsSuccess(data));
       break;
     }
-    case 404: {
-      dispatch(getNamespacesTariffsSuccess([]));
-      break;
-    }
-    case 401: {
-      dispatch(getNamespacesTariffsRequest());
-      dispatch(push('/login'));
-      break;
-    }
+    // case 401: {
+    //   dispatch(getNamespacesTariffsRequest());
+    //   dispatch(push('/login'));
+    //   break;
+    // }
     default: {
       dispatch(getNamespacesTariffsFailure(data.message));
+      dispatch(push('/login'));
     }
   }
 };
 
-// Preventing dobule fetching data
-/* istanbul ignore next */
 const shouldFetchGetNamespacesTariffs = (state: ReduxState): boolean => {
-  // In development, we will allow action dispatching
-  // or your reducer hot reloading won't updated on the view
   if (__DEV__) return true;
 
   if (
     state.getNamespacesTariffsReducer.readyStatus ===
     GET_NAMESPACES_TARIFFS_SUCCESS
   )
-    return false; // Preventing double fetching data
+    return false;
 
   return true;
 };
 
-// export const fetchGetNamespacesTariffsIfNeeded = (): ThunkAction => (
-//   dispatch: Dispatch,
-//   getState: GetState,
-//   axios: any
-// ) => dispatch(fetchGetNamespacesTariffs(axios));
-
-/* istanbul ignore next */
 export const fetchGetNamespacesTariffsIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
 ) => {
-  /* istanbul ignore next */
   if (shouldFetchGetNamespacesTariffs(getState())) {
-    /* istanbul ignore next */
     return dispatch(fetchGetNamespacesTariffs(axios));
   }
-
-  /* istanbul ignore next */
   return null;
 };

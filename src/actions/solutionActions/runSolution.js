@@ -9,7 +9,7 @@ import {
   RUN_SOLUTION_SUCCESS,
   RUN_SOLUTION_FAILURE
 } from '../../constants/solutionConstants/runSolution';
-import { webApi } from '../../config/index';
+import { webApiLogin } from '../../config/index';
 
 const runSolutionsRequest = () => ({
   type: RUN_SOLUTION_REQUESTING,
@@ -32,7 +32,7 @@ export const fetchRunSolutions = (
   idName: string,
   idSol: string,
   axios: any,
-  URL: string = webApi
+  URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   const token = cookie.load('token') ? cookie.load('token') : null;
   const browser = cookie.load('browser') ? cookie.load('browser') : null;
@@ -41,7 +41,7 @@ export const fetchRunSolutions = (
   dispatch(runSolutionsRequest());
 
   const response = await axios.post(
-    `${URL}/api/solutions/run`,
+    `${URL}/solutions/run`,
     { namespace: idName, label: idSol },
     {
       headers: {

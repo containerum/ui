@@ -86,17 +86,13 @@ class Login extends PureComponent<Props> {
         nextProps.confirmSignUpReducer.readyStatus &&
       nextProps.confirmSignUpReducer.readyStatus === CONFIRM_SIGNUP_FAILURE
     ) {
-      // console.log(
-      //   this.props.confirmSignUpReducer,
-      //   nextProps.confirmSignUpReducer
-      // );
-      // this.setState({
-      //   ...this.state,
-      //   successMessage: null,
-      //   isValidEmail: false,
-      //   isValidPassword: false,
-      //   errorMessage: nextProps.confirmSignUpReducer.err
-      // });
+      this.setState({
+        ...this.state,
+        successMessage: null,
+        isValidEmail: false,
+        isValidPassword: false,
+        errorMessage: nextProps.confirmSignUpReducer.err
+      });
     }
     if (
       this.props.loginReducer.readyStatus !==

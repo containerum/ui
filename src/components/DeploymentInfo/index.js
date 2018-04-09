@@ -20,7 +20,7 @@ const DeploymentInfo = ({
   handleDeleteDeployment
 }: Props) => {
   // console.log('DeploymentInfo', data);
-  const { ram, cpu, status } = data;
+  const { total_memory: memory, total_cpu: cpu, status } = data;
   return (
     <div className="content-block-container content-block_common-statistic container">
       <div className="content-block-header">
@@ -62,18 +62,18 @@ const DeploymentInfo = ({
         </div>
         <div className="content-block__info-item">
           <div className="content-block__info-name">RAM ( Usage ) : </div>
-          <div className="content-block__info-text">{ram} MB</div>
+          <div className="content-block__info-text">{memory}</div>
         </div>
         <div className="content-block__info-item">
           <div className="content-block__info-name">CPU ( Usage ) : </div>
-          <div className="content-block__info-text">{cpu} m</div>
+          <div className="content-block__info-text">{cpu}</div>
         </div>
         <div className="content-block__info-item">
           <div className="content-block__info-name">
             Status ( Available / Total ) :{' '}
           </div>
           <div className="content-block__info-text">
-            {status.available} / {status.total}
+            {status.available_replicas} / {status.replicas}
           </div>
         </div>
       </div>
