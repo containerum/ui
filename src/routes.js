@@ -40,6 +40,7 @@ import UpdateServicePage from './containers/UpdateService';
 import DeploymentPage from './containers/Deployment';
 import CreateDeploymentPage from './containers/CreateDeployment';
 import UpdateDeploymentPage from './containers/UpdateDeployment';
+
 // import CreateVolumePage from './containers/CreateVolume';
 // import ResizeVolumePage from './containers/ResizeVolume';
 import Login from './containers/Login';
@@ -54,6 +55,7 @@ import AccountPage from './containers/Account';
 import SettingsPage from './containers/Settings';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
+import ConfigmapView from './components/ConfigMapView';
 
 export default [
   {
@@ -340,6 +342,10 @@ export default [
   {
     path: routerLinks.signUp,
     component: SignUp
+  },
+  {
+    path: routerLinks.configmapView,
+    component: ConfigmapView
   },
   {
     path: routerLinks.recoveryPassword,

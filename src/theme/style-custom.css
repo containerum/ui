@@ -1152,6 +1152,14 @@ body .tooltip > .tooltip-inner {
   color: #ffffff;
   /*max-width: 100%;*/
 }
+.log-data__cfm {
+  padding: 7px;
+  border-radius: 4px;
+  background-color: #eaeaea;
+  border: solid 4px #eaeaea;
+  font-size: 15px;
+  color: #008080;
+}
 
 .full-screen-btn {
   float: right;

@@ -85,7 +85,8 @@ module.exports = {
     successTicket: '/successTicket',
     account: '/account',
     billing: '/billing',
-    settings: '/settings'
+    settings: '/settings',
+    configmapView: '/configmapView'
   },
   externalLinks: {
     documentation: 'https://containerum.com/docs/about',

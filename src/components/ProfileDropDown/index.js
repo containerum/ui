@@ -30,7 +30,11 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
           >
             {email}
           </a>
-          <ul className="dropdown-menu dropdown-menu-right" role="menu">
+          <ul
+            className="dropdown-menu dropdown-menu-right"
+            style={{ zIndex: '1000' }}
+            role="menu"
+          >
             <NavLink
               activeClassName="active"
               className="dropdown-item"
