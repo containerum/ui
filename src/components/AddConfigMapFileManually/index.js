@@ -26,7 +26,7 @@ const AddConfigMapFileManually = ({
         <div key={id}>
           <div className="row row__cfm-add-file">
             <Tooltip
-              placement="left"
+              placement="top"
               trigger={files.length > 0 ? ['hover'] : ''}
               overlay={<span>You can use only one additing method</span>}
             >
@@ -35,7 +35,8 @@ const AddConfigMapFileManually = ({
                   value={file.fileName}
                   id={`fileName${id}`}
                   type="text"
-                  // pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+                  pattern="^[-._a-zA-Z0-9]+$"
+                  title="Valid file name must consist of alphanumeric characters, '-', '_' or '.'"
                   required
                   baseClassName="form-group__input-text form-group__input-text_configmap form-control customInput"
                   baseClassNameLabel={`form-group__label ${file.fileName &&
@@ -69,7 +70,7 @@ const AddConfigMapFileManually = ({
             <div className="container no-back">
               <div className="input-group">
                 <Tooltip
-                  placement="topRight"
+                  placement="top"
                   trigger={files.length > 0 ? ['hover'] : ''}
                   overlay={<span>You can use only one additing method</span>}
                 >

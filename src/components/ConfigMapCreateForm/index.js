@@ -192,7 +192,7 @@ const ConfigMapCreateForm = ({
     <div className="row">
       <div className="container">
         <Tooltip
-          placement="bottom"
+          placement="top"
           trigger={['hover']}
           overlay={<span>You can use only one additing method</span>}
           overlayClassName={files.length > 0 ? '' : 'display-none'}

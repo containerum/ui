@@ -128,11 +128,15 @@ class ConfigMaps extends PureComponent<Props> {
     });
   };
   handleAddFiles = files => {
+    const regexp = /^[-._a-zA-Z0-9]+$/;
     const errorFiles = [];
     const successFiles = [];
     // console.log('files', files);
     Object.keys(files).filter(item => {
-      if (files[item].file.size >= 10485760) {
+      if (
+        files[item].file.size >= 2000000 ||
+        files[item].name.search(regexp) === -1
+      ) {
         errorFiles.push(files[item]);
       } else {
         successFiles.push(files[item]);
@@ -141,13 +145,35 @@ class ConfigMaps extends PureComponent<Props> {
     });
 
     if (errorFiles.length) {
-      toastr.error(
-        `<div>${errorFiles.map(
-          file => `
-    ${file.name}`
-        )}</div>`,
-        `The following files were not downloaded because the attachment size (10 MB maximum) was exceeded:`
-      );
+      const errorFilesByName = [];
+      const errorFilesBySize = [];
+      errorFiles.map(file => {
+        if (file.name.search(regexp) === -1) {
+          errorFilesByName.push(file);
+        } else {
+          errorFilesBySize.push(file);
+        }
+        return null;
+      });
+
+      if (errorFilesByName.length) {
+        toastr.error(
+          `<div>${errorFilesByName.map(
+            file => `
+      ${file.name}`
+          )}</div>`,
+          `The following files were not downloaded because the attachment file name must consist of alphanumeric characters, '-', '_' or '.':`
+        );
+      }
+      if (errorFilesBySize.length) {
+        toastr.error(
+          `<div>${errorFilesBySize.map(
+            file => `
+      ${file.name}`
+          )}</div>`,
+          `The following files were not downloaded because the attachment size (2 MB maximum) was exceeded:`
+        );
+      }
     }
     this.setState({
       ...this.state,
@@ -255,8 +281,9 @@ class ConfigMaps extends PureComponent<Props> {
       return (
         <div
           style={{
-            height: '100px',
-            margin: '20px 30px',
+            height: 120,
+            width: '100%',
+            margin: '20px 15px',
             borderRadius: '2px',
             backgroundColor: '#f6f6f6'
           }}
@@ -347,7 +374,7 @@ class ConfigMaps extends PureComponent<Props> {
     const isEqualCreatePath = path === '/namespace/:idName/createConfigMap';
     return (
       <div>
-        <Helmet title="ConfigMap" />
+        <Helmet title="ConfigMaps" />
         <Notification status={status} name={configMapName} errorMessage={err} />
         <Notification
           status={deleteStatus}

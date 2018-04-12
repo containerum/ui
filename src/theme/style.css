@@ -18,6 +18,12 @@ a:focus, a:hover {
     color: #333333;
 }
 
+.arrow-back {
+  width: 30px;
+  height: 30px;
+  margin-right: 7px;
+}
+
 a{
     color:#333;
 }
@@ -40,6 +46,13 @@ h1{
 .light-text__configmap {
   font-size: 12px;
 }
+.light-text__cfm {
+  font-weight: 300;
+  font-size: 20px;
+  padding-bottom: 30px;
+  /*padding-top: 15px;*/
+  color: #29abe2;
+}
 
 .normal-text{
     font-weight: 300;
@@ -52,6 +65,16 @@ h1{
 }
 
 
+.configmapView__list-item {
+  width: 145px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #a7a7a7;
+}
+.configmapView__list-item:hover {
+  color: #29abe2;
+}
 
 .container{
     background: #fff;
@@ -145,6 +168,7 @@ h1{
 
 .header-top-container{
     padding: 15px 0px 0 0px;
+    height: 100%;
 }
 
 .header-top-container:after, .header-bottom-container:after{
@@ -780,6 +804,9 @@ h1{
     padding: 25px 30px 21px 30px;
     margin-top: 30px;
     margin-bottom: 30px;
+}
+.content-block-container__configmap-view {
+  padding: 40px 50px 40px 50px !important;
 }
 
 .content-block-container.no-padding{

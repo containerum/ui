@@ -40,6 +40,7 @@ import UpdateServicePage from './containers/UpdateService';
 import DeploymentPage from './containers/Deployment';
 import CreateDeploymentPage from './containers/CreateDeployment';
 import UpdateDeploymentPage from './containers/UpdateDeployment';
+
 // import CreateVolumePage from './containers/CreateVolume';
 // import ResizeVolumePage from './containers/ResizeVolume';
 import Login from './containers/Login';
@@ -56,7 +57,7 @@ import NotFoundPage from './containers/NotFound';
 import Tools from './components/Tools';
 // import WebHookInfo from './containers/Webhook';
 import DomainsInfo from './containers/Domains';
-import ConfigMapInfo from './containers/ConfigMaps';
+import ConfigMapsInfo from './containers/ConfigMaps';
 import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 
 export default [
@@ -347,22 +348,22 @@ export default [
   {
     path: routerLinks.configmap,
     include: true,
-    component: ConfigMapInfo
+    component: ConfigMapsInfo
   },
   {
     path: routerLinks.getConfigMaps,
     include: true,
-    component: ConfigMapInfo
+    component: ConfigMapsInfo
   },
   {
     path: routerLinks.getConfigMaps,
     include: true,
-    component: ConfigMapInfo
+    component: ConfigMapsInfo
   },
   {
     path: routerLinks.createConfigMap,
     include: true,
-    component: ConfigMapInfo
+    component: ConfigMapsInfo
   },
   {
     path: routerLinks.viewConfigMapFiles,
