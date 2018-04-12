@@ -76,9 +76,10 @@ const DashboardBlockTourAndNews = ({ linkToDeployment }: Props) => (
             >
               Launch 1st Service
             </Link>
-            <Link to="/account">
-              Set up Web Hooks for Continuous Deployment
-            </Link>
+            <Link to="/configmap">Launch 1st ConfigMap</Link>
+            {/* <Link to="/account"> */}
+            {/* Set up Web Hooks for Continuous Deployment */}
+            {/* </Link> */}
           </div>
         </div>
         {/* <div */}

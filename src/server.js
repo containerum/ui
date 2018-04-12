@@ -127,7 +127,11 @@ app.get('*', (req, res) => {
       // Pass the route and initial state into html template
       res.status(status).send(renderHtml(store, htmlContent));
     } catch (err) {
-      res.status(404).send('Not Found :(');
+      res
+        .status(404)
+        .sendFile(
+          path.join(process.cwd(), './public/anyServerError/index.html')
+        );
 
       console.error(chalk.red(`==> 😭  Rendering routes error: ${err}`));
     }

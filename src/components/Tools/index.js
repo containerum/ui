@@ -26,20 +26,21 @@ const Tools = () => (
               content-block__info-name_tools
                content-block-header-label__text_center">
                   ConfigMaps allow you to decouple configuration artifacts from
-                  image content to keep containerized applications portable.
+                  image <br /> content to keep containerized applications
+                  portable.
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Link>
-      <Link to="/webhook">
+      <div>
+        {/* Link to="/webhook" */}
         <div className="col-md-4 tools__card_center">
-          <div className="content-block-container
-        content-block-container__tools
-        card-container
-        card-container__tools
-         hover-action">
+          <div
+            style={{ backgroundColor: '#fafafa' }}
+            className="content-block-container content-block-container__tools-hover-always card-container card-container__tools card-container__tools_not-active hover-action-always"
+          >
             <div className="content-block-header ">
               <div className="content-block-header-label
                          content-block-header-label__tools">
@@ -57,14 +58,17 @@ const Tools = () => (
                 <div className="content-block__info-name
               content-block__info-name_tools
                content-block-header-label__text_center">
-                  CCD Webhook allow you to automate updating images in
+                  CCD WebHook allow you to automate updating images in
                   containers.
+                  <br />
+                  <br />
+                  <span style={{ color: '#29abe2' }}>Coming soon</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </Link>
+      </div>
       <Link to="/domains">
         <div className="col-md-4 tools__card_right">
           <div className="content-block-container

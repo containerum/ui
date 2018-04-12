@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 
-import HeaderPage from '../Header';
-import FooterPage from '../Footer';
 import * as actionGetDomains from '../../actions/serviceActions/getDomains';
 import * as actionDeleteDomain from '../../actions/serviceActions/deleteDomain';
 import type { Dispatch, ReduxState } from '../../types/index';
@@ -108,7 +106,6 @@ export class Domains extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Domains" />
-        <HeaderPage />
         <div className="container  no-back">
           <div className="content-block">
             <div className="row double two-columns">
@@ -143,7 +140,6 @@ export class Domains extends PureComponent<Props> {
             </div>
           </div>
         </div>
-        <FooterPage />
       </div>
     );
   }

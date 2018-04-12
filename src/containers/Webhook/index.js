@@ -157,7 +157,7 @@ export class WebHook extends PureComponent<Props> {
       : '{WEBHOOK_KEY}';
     return (
       <div>
-        <Helmet title="Webhook" />
+        <Helmet title="WebHook" />
         <HeaderPage />
         <div className="container  no-back">
           <div className="content-block">
@@ -182,7 +182,7 @@ export class WebHook extends PureComponent<Props> {
                     <div className="row">
                       <div className="col-md-12">
                         <div className="light-text">
-                          Here you can configure a CD Webhook to automate
+                          Here you can configure a CD WebHook to automate
                           updating images in your containers.
                         </div>
                       </div>

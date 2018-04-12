@@ -63,6 +63,10 @@ import getSolutionReducer from './solutionReducers/getSolution';
 import runSolutionReducer from './solutionReducers/runSolution';
 import getDomainsReducer from './serviceReducers/getDomains';
 import deleteDomainReducer from './serviceReducers/deleteDomain';
+import getConfigMapsReducer from './configMapReducers/getConfigMaps';
+import getConfigMapReducer from './configMapReducers/getConfigMap';
+import createConfigMapReducer from './configMapReducers/createConfigMap';
+import deleteConfigMapReducer from './configMapReducers/deleteConfigMap';
 
 const reducers = {
   home,
@@ -124,6 +128,10 @@ const reducers = {
   runSolutionReducer,
   getDomainsReducer,
   deleteDomainReducer,
+  getConfigMapsReducer,
+  getConfigMapReducer,
+  createConfigMapReducer,
+  deleteConfigMapReducer,
   router,
   loadingBar: loadingBarReducer
 };

@@ -53,10 +53,11 @@ import SuccessTicket from './containers/SuccessTicket';
 import AccountPage from './containers/Account';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
-import Tools from './containers/Tools';
-import WebHookInfo from './containers/Webhook';
+import Tools from './components/Tools';
+// import WebHookInfo from './containers/Webhook';
 import DomainsInfo from './containers/Domains';
-import ConfigmapInfo from './containers/Configmap';
+import ConfigMapInfo from './containers/ConfigMaps';
+import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 
 export default [
   {
@@ -334,17 +335,39 @@ export default [
     component: Tools,
     include: true
   },
-  {
-    path: routerLinks.webhook,
-    component: WebHookInfo
-  },
+  // {
+  //   path: routerLinks.webhook,
+  //   component: WebHookInfo
+  // },
   {
     path: routerLinks.domains,
+    include: true,
     component: DomainsInfo
   },
   {
     path: routerLinks.configmap,
-    component: ConfigmapInfo
+    include: true,
+    component: ConfigMapInfo
+  },
+  {
+    path: routerLinks.getConfigMaps,
+    include: true,
+    component: ConfigMapInfo
+  },
+  {
+    path: routerLinks.getConfigMaps,
+    include: true,
+    component: ConfigMapInfo
+  },
+  {
+    path: routerLinks.createConfigMap,
+    include: true,
+    component: ConfigMapInfo
+  },
+  {
+    path: routerLinks.viewConfigMapFiles,
+    include: true,
+    component: ViewConfigMapsFilesInfo
   },
   {
     path: routerLinks.login,

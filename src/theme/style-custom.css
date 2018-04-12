@@ -66,7 +66,8 @@ input:invalid {
     padding: 25px 30px 25px 30px;
 }
 .content-block-container__tools {
-  padding: 25px 0 25px 0;
+  /*padding: 25px 0 25px 0;*/
+  padding: 25px 30px 25px 30px;
 }
 
 .content-block-container__tools:active {
@@ -100,6 +101,9 @@ input:invalid {
 .card-container__tools {
   min-height: 260px !important;
   min-width: 340px !important;
+}
+.card-container__tools_not-active:hover {
+  cursor: not-allowed !important;
 }
 .add-new-block .action-vol {
     line-height: 185px;
@@ -480,11 +484,16 @@ input:invalid {
     background-color: #a7a7a7;
 }
 
-.containerSubTitle {
+.containerSubTitle,
+.containerSubTitleBlack {
     font-weight: 300;
     color: #a7a7a7;
     margin-top: 15px;
     margin-bottom: 50px;
+}
+
+.containerSubTitleBlack {
+  color: #000;
 }
 
 .tooltip {
