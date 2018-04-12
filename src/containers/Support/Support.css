@@ -61,3 +61,8 @@
   cursor: pointer;
 }
 
+.membership-item i:hover {
+  color: #29abe2;
+  cursor: pointer;
+}
+

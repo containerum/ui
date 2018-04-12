@@ -54,6 +54,7 @@ import AccountPage from './containers/Account';
 import SettingsPage from './containers/Settings';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
+import MembershipInfo from './components/Membership';
 
 export default [
   {
@@ -356,6 +357,10 @@ export default [
   {
     path: routerLinks.checkEmail,
     component: CheckEmail
+  },
+  {
+    path: routerLinks.membership,
+    component: MembershipInfo
   },
   {
     path: '*',

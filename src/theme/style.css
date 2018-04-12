@@ -98,6 +98,8 @@ h1{
     color: #29abe2;
 }
 
+
+
 .header{
     /*box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);*/
     position: relative;
@@ -759,10 +761,17 @@ h1{
 .content-block-header-label {
   max-width: 800px;
 }
+.content-block-header-label__namspace-info {
+  display: flex;
+  align-items: flex-end;
+}
 
 .content-block-header-label__text {
     display: inline-block;
     font-size: 15px;
+}
+.content-block-header-label__text_namspace-info {
+  line-height: 100% !important;
 }
 
 .content-block-header-label_main {
@@ -774,6 +783,11 @@ h1{
     overflow: hidden;
     white-space: nowrap;
     position: relative;
+}
+
+.content-block-header-label_main__membership {
+  padding-bottom: 30px;
+  color: #29abe2;
 }
 
 .content-block-header-label_border {
@@ -807,6 +821,39 @@ h1{
     transition: height 0.3s ease-out 0.3s;
 }
 
+.content-block-content__namspaceinfo {
+  display: flex;
+  align-items: center;
+}
+
+.namspaceinfo-badge {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 120px;
+  height: 24px;
+  margin-left: 30px;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  /*line-height: normal;*/
+  letter-spacing: normal;
+  color: #ffffff;
+}
+
+.namspaceinfo-badge__write {
+  background-color: #03b5aa;
+}
+
+.namspaceinfo-badge__read{
+  background-color: #406f99;
+}
+
+.namspaceinfo-badge__admin{
+  background-color: #29abe2;
+}
 .content-block-content.pos-static {
     position: static;
 }
@@ -919,6 +966,14 @@ h1{
     vertical-align: top;
 }
 
+.content-block__info-item_namspaceinfo {
+  display: flex;
+  align-items: flex-end;
+  height: 44px;
+  margin-right: 0;
+  padding-left: 90px;
+}
+
 .content-block__info-logs {
     margin: 0 50px 0 50px;
 }
@@ -944,6 +999,15 @@ h1{
 
 .content-block__info-text{
     font-weight: 300;
+}
+
+.content-block__info-text_namspaceinfo {
+  font-size: 15px;
+  color: #29abe2;
+}
+
+.content-block__info-text_namspaceinfo:hover {
+  color: #3b5998;
 }
 
 .content-block__info-text span.padding{
@@ -992,6 +1056,38 @@ h1{
     margin-right: 40px;
 
 }
+
+.content-block-menu__li_membership {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+}
+
+/*.content-block-menu__li_membership:hover .no-border{*/
+  /*border-bottom:none;*/
+/*}*/
+.membership-btn {
+  width: 120px;
+  height: 30px;
+  border-radius: 2px;
+  background-color: #29abe2;
+  border: solid 1px #29abe2;
+  font-size: 15px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}
+.membership-btn-container {
+  display: flex;
+  align-items: center;
+}
+
 
 .content-block-menu__li a{
     display: block;
@@ -1052,8 +1148,25 @@ h1{
     width: 255px;
 }
 
+.content-block__table  .td-2__membership {
+  width: 350px;
+}
+
+
 .content-block__table  .td-3{
     width: 150px;
+}
+
+.td-3__no-paddingLeft {
+  padding-left: 0 !important;
+  padding-bottom: 12px !important;
+}
+
+.td-3-flex{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .content-block__table  .td-4{
