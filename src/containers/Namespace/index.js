@@ -31,6 +31,7 @@ import NavigationHeaderItem from '../NavigationHeader';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import DeploymentsPage from '../Deployments';
 import ServicesPage from '../Services';
+import ConfigMapsPage from '../ConfigMaps';
 import ns from '../../images/ns-1.svg';
 
 type Props = {
@@ -209,6 +210,15 @@ export class Namespace extends PureComponent<Props> {
                         Services
                       </NavLink>
                     </li>
+                    <li className="content-block-menu__li nav-item">
+                      <NavLink
+                        activeClassName="active"
+                        to={routerLinks.getConfigMapsLink(match.params.idName)}
+                        className="content-block-menu__link"
+                      >
+                        ConfigMaps
+                      </NavLink>
+                    </li>
                   </ul>
                 </div>
                 {history.location.pathname.indexOf('/services') + 1 ? (
@@ -241,6 +251,20 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
+                {history.location.pathname.indexOf('/configMaps') + 1 ? (
+                  <div className="content-block-header-extra-panel">
+                    <div className="content-block-header-extra-panel">
+                      <NavLink
+                        to={`/namespace/${match.params.idName}/createConfigMap`}
+                        className="button_blue btn btn-outline-primary"
+                      >
+                        Create
+                      </NavLink>
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
               </div>
               <Switch>
                 <Route
@@ -252,6 +276,11 @@ export class Namespace extends PureComponent<Props> {
                   path={`${match.path}/services`}
                   exact
                   component={ServicesPage}
+                />
+                <Route
+                  path={`${match.path}/configmaps`}
+                  exact
+                  component={ConfigMapsPage}
                 />
                 <Route
                   path={`${match.url}`}

@@ -3,18 +3,19 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
+import Helmet from 'react-helmet';
 
-import * as actionGetDomains from '../../../actions/serviceActions/getDomains';
-import * as actionDeleteDomain from '../../../actions/serviceActions/deleteDomain';
-import type { Dispatch, ReduxState } from '../../../types/index';
+import * as actionGetDomains from '../../actions/serviceActions/getDomains';
+import * as actionDeleteDomain from '../../actions/serviceActions/deleteDomain';
+import type { Dispatch, ReduxState } from '../../types/index';
 import {
   GET_DOMAINS_INVALID,
   GET_DOMAINS_REQUESTING,
   GET_DOMAINS_SUCCESS,
   GET_DOMAINS_FAILURE
-} from '../../../constants/serviceConstants/getDomains';
-import { DELETE_DOMAIN_SUCCESS } from '../../../constants/serviceConstants/deleteDomain';
-import DomainsList from '../../../components/DomainsList';
+} from '../../constants/serviceConstants/getDomains';
+import { DELETE_DOMAIN_SUCCESS } from '../../constants/serviceConstants/deleteDomain';
+import DomainsList from '../../components/DomainsList';
 // import Notification from '../../Notification';
 // import LoadButton from '../../../components/LoadButton';
 // import InputControl from '../../../components/InputControl';
@@ -80,7 +81,7 @@ export class Domains extends PureComponent<Props> {
           }}
         >
           <img
-            src={require('../../../images/ns-dep.svg')}
+            src={require('../../images/ns-dep.svg')}
             alt="ns-dep"
             style={{ width: '100%' }}
           />
@@ -103,19 +104,39 @@ export class Domains extends PureComponent<Props> {
   };
   render() {
     return (
-      <div className="block-item" id="domains">
-        <div className="block-item__title">Domains</div>
-        <div className="row">
-          <div className="col-md-8">
-            <div className="light-text">Your Domains</div>
-          </div>
+      <div>
+        <Helmet title="Domains" />
+        <div className="container  no-back">
           <div className="content-block">
-            <div className="container no-back">{this.renderDomainsList()}</div>
-          </div>
-          <div className="col-md-8">
-            <div className="light-text" style={{ marginTop: '10px' }}>
-              To add Domain, please visit Service creation page and add Domain
-              in the corresponding section (for External Service only)
+            <div className="row double two-columns">
+              <div className="col-md-3 col-lg-3 col-xl-2" />
+              <div className="col-md-9 col-lg-9 col-xl-10">
+                <div className="container container__webhook">
+                  <div className="block-item" id="domains">
+                    <div className="block-item__title">Domains</div>
+                    <div className="row">
+                      <div className="col-md-8">
+                        <div className="light-text">Your Domains</div>
+                      </div>
+                      <div className="content-block">
+                        <div className="container no-back">
+                          {this.renderDomainsList()}
+                        </div>
+                      </div>
+                      <div className="col-md-8">
+                        <div
+                          className="light-text"
+                          style={{ marginTop: '10px' }}
+                        >
+                          To add Domain, please visit Service creation page and
+                          add Domain in the corresponding section (for External
+                          Service only)
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

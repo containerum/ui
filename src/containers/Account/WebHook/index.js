@@ -170,7 +170,7 @@ export class WebHook extends PureComponent<Props> {
           <div className="row">
             <div className="col-md-12">
               <div className="light-text">
-                Here you can configure a CD Webhook to automate updating images
+                Here you can configure a CD WebHook to automate updating images
                 in your containers.
               </div>
             </div>

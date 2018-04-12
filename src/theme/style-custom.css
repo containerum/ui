@@ -65,6 +65,14 @@ input:invalid {
 .content-block-container {
     padding: 25px 30px 25px 30px;
 }
+.content-block-container__tools {
+  /*padding: 25px 0 25px 0;*/
+  padding: 25px 30px 25px 30px;
+}
+
+.content-block-container__tools:active {
+  outline: 2px solid #29abe2 !important;
+}
 
 .container-img {
     padding: 0;
@@ -89,6 +97,14 @@ input:invalid {
      min-height: unset;
 }
 
+
+.card-container__tools {
+  min-height: 260px !important;
+  min-width: 340px !important;
+}
+.card-container__tools_not-active:hover {
+  cursor: not-allowed !important;
+}
 .add-new-block .action-vol {
     line-height: 185px;
 }
@@ -468,11 +484,16 @@ input:invalid {
     background-color: #a7a7a7;
 }
 
-.containerSubTitle {
+.containerSubTitle,
+.containerSubTitleBlack {
     font-weight: 300;
     color: #a7a7a7;
     margin-top: 15px;
     margin-bottom: 50px;
+}
+
+.containerSubTitleBlack {
+  color: #000;
 }
 
 .tooltip {
@@ -1059,6 +1080,13 @@ body .tooltip > .tooltip-inner {
 .form-control:focus {
   border: solid 0.5px #a7a7a7;
 }
+.form-control__configmap {
+  min-width: 600px;
+}
+.form-control__configmap::placeholder {
+  font-size: 15px;
+  color: #a7a7a7;
+}
 
 .input-group {
   margin: 0 0 20px 0;
@@ -1151,6 +1179,14 @@ body .tooltip > .tooltip-inner {
   font-size: 13px;
   color: #ffffff;
   /*max-width: 100%;*/
+}
+.log-data__cfm {
+  padding: 7px;
+  border-radius: 4px;
+  background-color: #eaeaea;
+  border: solid 4px #eaeaea;
+  font-size: 15px;
+  color: #008080;
 }
 
 .full-screen-btn {
@@ -1449,6 +1485,9 @@ body .tooltip > .tooltip-inner {
   margin-bottom: 0;
 }
 
+.content-block__table_domains {
+  overflow: auto !important;
+}
 .dashboard-table thead td {
   padding-top: 3px;
   padding-bottom: 3px;

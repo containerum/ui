@@ -40,6 +40,7 @@ import UpdateServicePage from './containers/UpdateService';
 import DeploymentPage from './containers/Deployment';
 import CreateDeploymentPage from './containers/CreateDeployment';
 import UpdateDeploymentPage from './containers/UpdateDeployment';
+
 // import CreateVolumePage from './containers/CreateVolume';
 // import ResizeVolumePage from './containers/ResizeVolume';
 import Login from './containers/Login';
@@ -51,9 +52,13 @@ import CheckEmail from './containers/CheckEmail';
 import SupportPage from './containers/Support';
 import SuccessTicket from './containers/SuccessTicket';
 import AccountPage from './containers/Account';
-import SettingsPage from './containers/Settings';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
+import Tools from './components/Tools';
+// import WebHookInfo from './containers/Webhook';
+import DomainsInfo from './containers/Domains';
+import ConfigMapsInfo from './containers/ConfigMaps';
+import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 
 export default [
   {
@@ -299,14 +304,6 @@ export default [
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
-    path: routerLinks.settings,
-    exact: true,
-    component: SettingsPage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetProfileIfNeeded())])
-  },
-  {
     path: routerLinks.billing,
     exact: true,
     component: BillingPage,
@@ -332,6 +329,46 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.tools,
+    exact: true,
+    component: Tools,
+    include: true
+  },
+  // {
+  //   path: routerLinks.webhook,
+  //   component: WebHookInfo
+  // },
+  {
+    path: routerLinks.domains,
+    include: true,
+    component: DomainsInfo
+  },
+  {
+    path: routerLinks.configmap,
+    include: true,
+    component: ConfigMapsInfo
+  },
+  {
+    path: routerLinks.getConfigMaps,
+    include: true,
+    component: ConfigMapsInfo
+  },
+  {
+    path: routerLinks.getConfigMaps,
+    include: true,
+    component: ConfigMapsInfo
+  },
+  {
+    path: routerLinks.createConfigMap,
+    include: true,
+    component: ConfigMapsInfo
+  },
+  {
+    path: routerLinks.viewConfigMapFiles,
+    include: true,
+    component: ViewConfigMapsFilesInfo
   },
   {
     path: routerLinks.login,
