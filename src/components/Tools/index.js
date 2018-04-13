@@ -16,7 +16,7 @@ const Tools = () => (
               <div className="content-block-header-label
                                 content-block-header-label__tools">
                 <div className="content-block-header-img__tools content-block-header-img__tools_cfm" />
-                <div className="content-block-header-label_main">CONFIGMAP</div>
+                <div className="content-block-header-label_main">CONFIGMAPS</div>
               </div>
             </div>
             <div className="content-block-content
@@ -46,7 +46,7 @@ const Tools = () => (
                          content-block-header-label__tools">
                 <div className="content-block-header-img__tools content-block-header-img__tools_webhooks" />
                 <div className="content-block-header-label_main">
-                  CD WEBHOOK
+                  CD WEBHOOKS
                 </div>
               </div>
             </div>
@@ -58,7 +58,7 @@ const Tools = () => (
                 <div className="content-block__info-name
               content-block__info-name_tools
                content-block-header-label__text_center">
-                  CCD WebHook allow you to automate updating images in
+                  CCD WebHooks allow you to automate updating images in
                   containers.
                   <br />
                   <br />
@@ -90,7 +90,7 @@ const Tools = () => (
                 <div className="content-block__info-name
               content-block__info-name_tools
               content-block-header-label__text_center">
-                  Domain help you to manage external access to the services.
+                  Domains help you to manage external access to the services.
                 </div>
               </div>
             </div>
