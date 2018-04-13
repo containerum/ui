@@ -597,7 +597,9 @@ h1{
 }
 
 .dropzone-item__configmap {
-  width: 392px;
+  width: 392px !important;
+  display: flex;
+  justify-content: space-between;
 }
 
 .form-group{
@@ -858,6 +860,11 @@ h1{
   margin: 0 0 10px 0;
   width: 50px;
   height: 47px;
+}
+.content-block-container__tools {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+
 }
 
 .content-block-header-img__tools_webhooks {
@@ -1252,6 +1259,12 @@ h1{
   text-overflow: ellipsis;
 
 }
+
+.configmap-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 .content-block__table  .td-10{
   width: 45px;

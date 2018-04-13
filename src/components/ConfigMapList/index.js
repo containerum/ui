@@ -55,7 +55,7 @@ const ConfigMapList = ({
                         >
                           <td className="td-8">{configmap.name}</td>
                           <td className="td-9">
-                            <div>
+                            <div className="configmap-overflow">
                               {Object.keys(configmap.data).map(file => (
                                 <span key={file}>
                                   <Link
@@ -162,7 +162,7 @@ const ConfigMapList = ({
                       >
                         <td className="td-8">{configmap.name}</td>
                         <td className="td-9">
-                          <div>
+                          <div className="configmap-overflow">
                             {Object.keys(configmap.data).map(file => (
                               <span key={file}>
                                 <Link
