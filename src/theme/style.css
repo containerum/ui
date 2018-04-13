@@ -1217,6 +1217,8 @@ h1{
 
 .content-block__table  .td-3{
     width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .content-block__table  .td-4{
@@ -1233,6 +1235,28 @@ h1{
 
 .content-block__table  .td-7{
     width: 52px;
+}
+
+.content-block__table  .td-8{
+  width: 115px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.content-block__table  .td-9{
+  width: 280px;
+}
+.content-block__table  .td-9 span{
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.content-block__table  .td-10{
+  width: 45px;
+  vertical-align: top;
+  text-align: center !important;
 }
 
 .content-block__table tbody tr .td:last-of-type{
