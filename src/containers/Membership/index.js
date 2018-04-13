@@ -5,14 +5,19 @@ import { Link } from 'react-router-dom';
 import HeaderPage from '../Header/index';
 import FooterPage from '../Footer/index';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
+import AddUserInMembershipModal from '../../components/CustomerModal/AddUserInMembershipModal';
 
 class Membership extends PureComponent {
   constructor() {
     super();
     this.state = {
-      inputName: '',
+      inputEmailDelete: '',
+      inputEmailAdd: '',
       isOpen: false,
-      idDep: null
+      isOpenAdd: false,
+      idUser: null,
+      accessNewUser: 'Read or Write',
+      accessUser: 'Read'
     };
   }
 
@@ -20,11 +25,46 @@ class Membership extends PureComponent {
     console.log('azazaza');
   };
 
-  handleDeleteDMembers = idDep => {
+  choiceAccessNewUserRead = () => {
     this.setState({
       ...this.state,
-      idDep,
+      accessNewUser: 'Read'
+    });
+  };
+
+  choiceAccessNewUserWrite = () => {
+    this.setState({
+      ...this.state,
+      accessNewUser: 'Write'
+    });
+  };
+
+  changeAccessUserRead = () => {
+    this.setState({
+      ...this.state,
+      accessUser: 'Read'
+    });
+  };
+
+  changeAccessUserWrite = () => {
+    this.setState({
+      ...this.state,
+      accessUser: 'Write'
+    });
+  };
+
+  handleDeleteDMembers = idUser => {
+    this.setState({
+      ...this.state,
+      idUser,
       isOpen: true
+    });
+  };
+
+  handleAddMembersAdd = () => {
+    this.setState({
+      ...this.state,
+      isOpenAdd: true
     });
   };
 
@@ -32,31 +72,60 @@ class Membership extends PureComponent {
     this.setState({
       ...this.state,
       isOpen: !this.state.isOpen,
-      idDep: null
+      idUser: null
     });
   };
 
-  handleInputName = inputName => {
+  handleOpenCloseModalAdd = () => {
+    this.setState({
+      isOpenAdd: !this.state.isOpenAdd,
+      accessNewUser: 'Read or Write'
+    });
+  };
+
+  handleinputEmailDelete = inputEmailDelete => {
     this.setState({
       ...this.state,
-      inputName
+      inputEmailDelete
+    });
+  };
+
+  handleinputEmailAdd = inputEmailAdd => {
+    this.setState({
+      ...this.state,
+      inputEmailAdd
     });
   };
 
   render() {
-    const name = 'azaz';
+    // validating variables
+    const name1 = 'example@domain.com';
+    const name2 = 'exxxxxample@domain.com';
+    const name3 = 'exzzzample@domain.com';
+
     return (
       <div>
         <Helmet title="Membership [namspace]" />
         <HeaderPage />
         <DeleteModal
-          type="Membership"
-          name={this.state.inputName}
+          type="Delete USER ACCESS"
+          name={this.state.inputEmailDelete}
           isOpened={this.state.isOpen}
-          typeName={this.state.idDep}
-          handleInputName={this.handleInputName}
+          typeName={this.state.idUser}
+          handleinputEmailDelete={this.handleinputEmailDelete}
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleDelete={this.handleDeleteDMembers}
+        />
+        <AddUserInMembershipModal
+          type="Add USER"
+          name={this.state.inputEmailAdd}
+          isOpened={this.state.isOpenAdd}
+          handleinputEmailDelete={this.handleinputEmailAdd}
+          handleOpenCloseModal={this.handleOpenCloseModalAdd}
+          onHandleDelete={this.handleAddMembersAdd}
+          accessNewUser={this.state.accessNewUser}
+          choiceAccessNewUserRead={this.choiceAccessNewUserRead}
+          choiceAccessNewUserWrite={this.choiceAccessNewUserWrite}
         />
         <div className="content-block">
           <div className="container no-back">
@@ -90,11 +159,12 @@ class Membership extends PureComponent {
                             </Link>
                           </li>
                           <li className="membership-btn-container">
-                            <Link to="/dashboard">
-                              <button className="membership-btn">
-                                Add Users
-                              </button>
-                            </Link>
+                            <button
+                              className="membership-btn"
+                              onClick={this.handleAddMembersAdd}
+                            >
+                              Add Users
+                            </button>
                           </li>
                         </ul>
                       </div>
@@ -127,25 +197,29 @@ class Membership extends PureComponent {
                                   Email
                                 </td>
                                 <td className="td-3__no-paddingLeft td-3-flex">
-                                  <div>Pods</div>
+                                  <div>{this.state.accessUser}</div>
                                   <div style={{ paddingLeft: '50px' }}>
                                     <i
                                       className="content-block-table__more  dropdown-toggle"
                                       data-toggle="dropdown"
                                       aria-haspopup="true"
                                       aria-expanded="false"
+                                      style={{ cursor: 'pointer' }}
                                     />
                                     <ul
                                       className="dropdown-menu dropdown-menu-right"
                                       role="menu"
                                     >
-                                      <Link
+                                      <button
                                         className="dropdown-item"
-                                        to="/dashboard"
+                                        onClick={this.changeAccessUserWrite}
                                       >
                                         Write
-                                      </Link>
-                                      <button className="dropdown-item">
+                                      </button>
+                                      <button
+                                        className="dropdown-item"
+                                        onClick={this.changeAccessUserRead}
+                                      >
                                         Read
                                       </button>
                                     </ul>
@@ -154,7 +228,7 @@ class Membership extends PureComponent {
                                 <td
                                   className="td-1"
                                   onClick={() =>
-                                    this.handleDeleteDMembers(name)
+                                    this.handleDeleteDMembers(name1)
                                   }
                                 >
                                   <div className="membership-item">
@@ -175,7 +249,7 @@ class Membership extends PureComponent {
                                   Email
                                 </td>
                                 <td className="td-3__no-paddingLeft td-3-flex">
-                                  <div>Pods</div>
+                                  <div>{this.state.accessUser}</div>
                                   <div style={{ paddingLeft: '50px' }}>
                                     <i
                                       className="content-block-table__more  dropdown-toggle"
@@ -187,13 +261,16 @@ class Membership extends PureComponent {
                                       className="dropdown-menu dropdown-menu-right"
                                       role="menu"
                                     >
-                                      <Link
+                                      <button
                                         className="dropdown-item"
-                                        to="/dashboard"
+                                        onClick={this.changeAccessUserWrite}
                                       >
                                         Write
-                                      </Link>
-                                      <button className="dropdown-item">
+                                      </button>
+                                      <button
+                                        className="dropdown-item"
+                                        onClick={this.changeAccessUserRead}
+                                      >
                                         Read
                                       </button>
                                     </ul>
@@ -202,7 +279,7 @@ class Membership extends PureComponent {
                                 <td
                                   className="td-1"
                                   onClick={() =>
-                                    this.handleDeleteDMembers(name)
+                                    this.handleDeleteDMembers(name2)
                                   }
                                 >
                                   <div className="membership-item">
@@ -221,7 +298,7 @@ class Membership extends PureComponent {
                                   Name
                                 </td>
                                 <td className="td-3__no-paddingLeft td-3-flex">
-                                  <div>Pods</div>
+                                  <div>{this.state.accessUser}</div>
                                   <div style={{ paddingLeft: '50px' }}>
                                     <i
                                       className="content-block-table__more  dropdown-toggle"
@@ -233,13 +310,16 @@ class Membership extends PureComponent {
                                       className="dropdown-menu dropdown-menu-right"
                                       role="menu"
                                     >
-                                      <Link
+                                      <button
                                         className="dropdown-item"
-                                        to="/dashboard"
+                                        onClick={this.changeAccessUserWrite}
                                       >
                                         Write
-                                      </Link>
-                                      <button className="dropdown-item">
+                                      </button>
+                                      <button
+                                        className="dropdown-item"
+                                        onClick={this.changeAccessUserRead}
+                                      >
                                         Read
                                       </button>
                                     </ul>
@@ -248,7 +328,7 @@ class Membership extends PureComponent {
                                 <td
                                   className="td-1"
                                   onClick={() =>
-                                    this.handleDeleteDMembers(name)
+                                    this.handleDeleteDMembers(name3)
                                   }
                                 >
                                   <div className="membership-item">

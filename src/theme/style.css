@@ -1746,6 +1746,32 @@ select.form-control:not([size]):not([multiple]) {
     line-height: 1.67;
     margin-bottom: 15px;
 }
+.modal-redis-text_ligth {
+  font-size: 12px;
+  font-weight: 300;
+  color: #a7a7a7;
+}
+
+.membership-add-user-alert{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 370px;
+  height: 70px;
+  border-radius: 2px;
+  background-color: #f6f6f6;
+  border: solid 1px #f6f6f6;
+  padding: 15px;
+  margin-bottom: 30px;
+  margin-top: 15px;
+
+}
+
+.membership-add-user-alert-item {
+  margin-right: 15px;
+  color: #333333;
+}
 
 .custom-select{
     background: #fff url("../images/shape@3x.png") no-repeat right 19px center;
