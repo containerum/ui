@@ -37,10 +37,10 @@ const ConfigMapList = ({
               >
                 <thead style={{ height: '30px' }}>
                   <tr>
-                    <td className="td-1-domains">Name</td>
-                    <td className="td-2-domains">Filename</td>
-                    <td className="td-3-domains">Namespace</td>
-                    <td className="td-4-domains" />
+                    <td className="td-8">Name</td>
+                    <td className="td-9">Filename</td>
+                    <td className="td-3">Namespace</td>
+                    <td className="td-10" />
                   </tr>
                 </thead>
                 <tbody className="domains">
@@ -53,9 +53,9 @@ const ConfigMapList = ({
                           style={{ margin: 0 }}
                           key={configmap.name}
                         >
-                          <td className="td-1-domains">{configmap.name}</td>
-                          <td className="td-2-domains">
-                            <div>
+                          <td className="td-8">{configmap.name}</td>
+                          <td className="td-9">
+                            <div className="configmap-overflow">
                               {Object.keys(configmap.data).map(file => (
                                 <span key={file}>
                                   <Link
@@ -73,7 +73,7 @@ const ConfigMapList = ({
                               ))}
                             </div>
                           </td>
-                          <td className="td-3-domains">
+                          <td className="td-3">
                             <Link
                               style={{ color: '#29abe2' }}
                               to={`/namespaces/${idName}/deployments`}
@@ -81,7 +81,7 @@ const ConfigMapList = ({
                               {idName}
                             </Link>
                           </td>
-                          <td className="td-4-domains dropdown no-arrow">
+                          <td className="td-10 dropdown no-arrow">
                             <i
                               className="content-block-table__more ion-more dropdown-toggle"
                               data-toggle="dropdown"
@@ -123,7 +123,7 @@ const ConfigMapList = ({
               >
                 <thead>
                   <tr>
-                    <td className="td-1-domains">You don`t have ConfigMaps</td>
+                    <td className="td-2">You don`t have ConfigMaps</td>
                   </tr>
                 </thead>
               </table>
@@ -145,10 +145,10 @@ const ConfigMapList = ({
               >
                 <thead style={{ height: '30px' }}>
                   <tr>
-                    <td className="td-1-domains">Name</td>
-                    <td className="td-2-domains">Filename</td>
-                    <td className="td-3-domains">Namespace</td>
-                    <td className="td-4-domains" />
+                    <td className="td-8">Name</td>
+                    <td className="td-9">Filename</td>
+                    <td className="td-3">Namespace</td>
+                    <td className="td-10" />
                   </tr>
                 </thead>
                 <tbody className="domains">
@@ -160,9 +160,9 @@ const ConfigMapList = ({
                         style={{ margin: 0 }}
                         key={configmap.name}
                       >
-                        <td className="td-1-domains">{configmap.name}</td>
-                        <td className="td-2-domains">
-                          <div>
+                        <td className="td-8">{configmap.name}</td>
+                        <td className="td-9">
+                          <div className="configmap-overflow">
                             {Object.keys(configmap.data).map(file => (
                               <span key={file}>
                                 <Link
@@ -180,7 +180,7 @@ const ConfigMapList = ({
                             ))}
                           </div>
                         </td>
-                        <td className="td-3-domains">
+                        <td className="td-3">
                           <Link
                             style={{ color: '#29abe2' }}
                             to={`/namespaces/${idName}/deployments`}
@@ -188,7 +188,7 @@ const ConfigMapList = ({
                             {idName}
                           </Link>
                         </td>
-                        <td className="td-4-domains dropdown no-arrow">
+                        <td className="td-10 dropdown no-arrow">
                           <i
                             className="content-block-table__more ion-more dropdown-toggle"
                             data-toggle="dropdown"
@@ -228,7 +228,7 @@ const ConfigMapList = ({
               >
                 <thead>
                   <tr>
-                    <td className="td-1-domains">You don`t have ConfigMaps</td>
+                    <td className="td-2">You don`t have ConfigMaps</td>
                   </tr>
                 </thead>
               </table>

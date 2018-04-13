@@ -143,9 +143,12 @@ const ConfigMapCreateForm = ({
       )}
       <div style={{ marginLeft: '30px' }}>
         {files.length ? (
-          <aside className="dropzone-item__configmap">
+          <aside>
             {files.map(file => (
-              <div key={_.uniqueId()} className="dropzone-item ">
+              <div
+                key={_.uniqueId()}
+                className="dropzone-item dropzone-item__configmap configmap-overflow "
+              >
                 <span className="dropzone-item-span">{file.name}</span>
                 <i
                   onClick={() => handleDeleteFile(file.name)}
