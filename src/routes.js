@@ -54,7 +54,7 @@ import AccountPage from './containers/Account';
 import SettingsPage from './containers/Settings';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
-import MembershipInfo from './components/Membership';
+import MembershipInfo from './containers/Membership';
 
 export default [
   {

@@ -1052,6 +1052,11 @@ h1{
     margin: 2px 0 0 0;
 }
 
+.content-block-menu__membership {
+  display: flex;
+  justify-content: space-between;
+}
+
 .content-block-menu__li {
     margin-right: 40px;
 
@@ -1086,6 +1091,11 @@ h1{
 .membership-btn-container {
   display: flex;
   align-items: center;
+}
+
+.membership-item i:hover {
+  color: #29abe2;
+  cursor: pointer;
 }
 
 
