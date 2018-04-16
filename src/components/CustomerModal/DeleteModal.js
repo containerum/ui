@@ -93,16 +93,26 @@ const DeleteModal = ({
           <h4 className="modal-title modal-title-volume" id="modalLabel">
             {type}
           </h4>
-          <span className="modal-redis-text">
-            Deleting your {type} is irreversible.<br />
-            Enter your {type} name (<strong style={{ color: '#29abe2' }}>
-              {typeName}
-            </strong>) below to confirm you want to permanently delete it:
-          </span>
+          {type !== 'Delete USER ACCESS' && (
+            <span className="modal-redis-text">
+              Deleting your {type} is irreversible.<br />
+              Enter your {type} name (<strong style={{ color: '#29abe2' }}>
+                {typeName}
+              </strong>) below to confirm you want to permanently delete it:
+            </span>
+          )}
+          {type === 'Delete USER ACCESS' && (
+            <span className="modal-redis-text">
+              Enter user’s Email (<strong style={{ color: '#29abe2' }}>
+                example@domain.com
+              </strong>) below to<br />
+              confirm you want to permanently delete it:
+            </span>
+          )}
           <input
             type="text"
             className="form-control volume-form-input"
-            placeholder="Name"
+            placeholder={type === 'Delete USER ACCESS' ? 'Email' : 'Name'}
             value={name}
             onChange={e => handleChangeNameOfType(e)}
           />

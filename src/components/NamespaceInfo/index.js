@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import { routerLinks } from '../../config';
 import ns from '../../images/n.png';
@@ -18,11 +18,14 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
   return (
     <div className="content-block-container content-block_common-statistic container">
       <div className="content-block-header">
-        <div className="content-block-header-label">
-          <div className="content-block-header-label__text content-block-header-label_main">
+        <div className="content-block-header-label content-block-header-label__namspace-info">
+          <div className="content-block-header-label__text content-block-header-label_main content-block-header-label__text_namspace-info">
             {idName}
           </div>
           <div className="content-block-header-label__descript">namespace</div>
+          <div className="badge namspaceinfo-badge namspaceinfo-badge__admin">
+            access: admin
+          </div>
         </div>
         <div className="content-block-header-extra-panel">
           <div className="content-block-header-extra-panel dropdown no-arrow">
@@ -50,7 +53,7 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
           </div>
         </div>
       </div>
-      <div className="content-block-content">
+      <div className="content-block-content content-block-content__namspaceinfo">
         <div className="content-block__r-img">
           <img src={ns} alt="ns" />
         </div>
@@ -75,6 +78,13 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
             Volume ( Usage / Total ) :
           </div>
           <div className="content-block__info-text">- / -</div>
+        </div>
+        <div className="content-block__info-item content-block__info-item_namspaceinfo">
+          <Link to={routerLinks.membership}>
+            <div className="content-block__info-text content-block__info-text_namspaceinfo">
+              Manage Team
+            </div>
+          </Link>
         </div>
       </div>
     </div>

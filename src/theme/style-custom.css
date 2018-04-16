@@ -145,6 +145,11 @@ input:invalid {
 .dropdown-item:active {
     background-color: #29abe2;
 }
+.dropdown-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 /* Country selector*/
 .bfh-selectbox {
