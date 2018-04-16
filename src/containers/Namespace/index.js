@@ -10,6 +10,8 @@ import _ from 'lodash/fp';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionDeleteNamespace from '../../actions/namespaceActions/deleteNamespace';
+import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
+
 import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
@@ -40,6 +42,7 @@ type Props = {
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetNamespacesIfNeeded: () => void,
   fetchDeleteNamespaceIfNeeded: (idName: string) => void,
+  fetchGetNamespaceUsersAccessIfNeeded: (idName: string) => void,
   match: Object,
   history: Object
 };
@@ -58,10 +61,12 @@ export class Namespace extends PureComponent<Props> {
     const {
       fetchGetNamespaceIfNeeded,
       fetchGetNamespacesIfNeeded,
+      fetchGetNamespaceUsersAccessIfNeeded,
       match
     } = this.props;
     fetchGetNamespacesIfNeeded();
     fetchGetNamespaceIfNeeded(match.params.idName);
+    fetchGetNamespaceUsersAccessIfNeeded(match.params.idName);
   }
   componentWillUpdate(nextProps) {
     if (
@@ -300,11 +305,13 @@ const connector: Connector<{}, Props> = connect(
   ({
     getNamespaceReducer,
     getNamespacesReducer,
-    deleteNamespaceReducer
+    deleteNamespaceReducer,
+    getNamespaceUsersAccessReducer
   }: ReduxState) => ({
     getNamespaceReducer,
     getNamespacesReducer,
-    deleteNamespaceReducer
+    deleteNamespaceReducer,
+    getNamespaceUsersAccessReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: () =>
@@ -312,7 +319,13 @@ const connector: Connector<{}, Props> = connect(
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
     fetchDeleteNamespaceIfNeeded: (idName: string) =>
-      dispatch(actionDeleteNamespace.fetchDeleteNamespaceIfNeeded(idName))
+      dispatch(actionDeleteNamespace.fetchDeleteNamespaceIfNeeded(idName)),
+    fetchGetNamespaceUsersAccessIfNeeded: (idName: string) =>
+      dispatch(
+        actionGetNamespaceUsersAccess.fetchGetNamespaceUsersAccessIfNeeded(
+          idName
+        )
+      )
   })
 );
 
