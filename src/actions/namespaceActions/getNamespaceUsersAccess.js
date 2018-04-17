@@ -44,16 +44,15 @@ export const fetchGetNamespaceUsersAccess = (
     : null;
 
   dispatch(getNamespaceUsersAccessRequest());
-
-  const response = await axios.get(`${URL}/namespaces/${idName}/access`, {
-    header: {
+  const response = await axios.get(`${URL}/namespace/${idName}/access`, {
+    headers: {
       'User-Client': browser,
       'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });
   const { status, data } = response;
-  console.log(data);
+  console.log('data', data);
   switch (status) {
     case 200: {
       dispatch(getNamespaceUsersAccessSuccess(data, status, idName));
@@ -68,7 +67,6 @@ export const fetchGetNamespaceUsersAccess = (
     }
     default: {
       dispatch(getNamespaceUsersAccessFailure(data.message, status, idName));
-      dispatch(push('/namespaces'));
     }
   }
 };

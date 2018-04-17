@@ -35,6 +35,11 @@ import DeploymentsPage from '../Deployments';
 import ServicesPage from '../Services';
 import ConfigMapsPage from '../ConfigMaps';
 import ns from '../../images/ns-1.svg';
+import {
+  GET_NAMESPACE_USERS_ACCESS_FAILURE,
+  GET_NAMESPACE_USERS_ACCESS_INVALID,
+  GET_NAMESPACE_USERS_ACCESS_REQUESTING
+} from '../../constants/namespaceConstants/getNamespaceUsersAccess';
 
 type Props = {
   getNamespacesReducer: Object,
@@ -43,6 +48,7 @@ type Props = {
   fetchGetNamespacesIfNeeded: () => void,
   fetchDeleteNamespaceIfNeeded: (idName: string) => void,
   fetchGetNamespaceUsersAccessIfNeeded: (idName: string) => void,
+  getNamespaceUsersAccessReducer: Object,
   match: Object,
   history: Object
 };
@@ -100,12 +106,20 @@ export class Namespace extends PureComponent<Props> {
   };
 
   renderNamespaceInfo = () => {
-    const { getNamespacesReducer, deleteNamespaceReducer, match } = this.props;
-
+    const {
+      getNamespacesReducer,
+      deleteNamespaceReducer,
+      match,
+      getNamespaceUsersAccessReducer
+    } = this.props;
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+      getNamespaceUsersAccessReducer.readyStatus ===
+        GET_NAMESPACE_USERS_ACCESS_INVALID ||
+      getNamespaceUsersAccessReducer.readyStatus ===
+        GET_NAMESPACE_USERS_ACCESS_REQUESTING
     ) {
       return (
         <div
@@ -146,7 +160,11 @@ export class Namespace extends PureComponent<Props> {
       );
     }
 
-    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getNamespaceUsersAccessReducer.readyStatus ===
+        GET_NAMESPACE_USERS_ACCESS_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Namespace!</p>;
     }
 
@@ -158,6 +176,7 @@ export class Namespace extends PureComponent<Props> {
         )}
         handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
         idName={match.params.idName}
+        dataAccess={getNamespaceUsersAccessReducer.data}
       />
     );
   };

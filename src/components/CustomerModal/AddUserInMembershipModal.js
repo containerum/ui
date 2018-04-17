@@ -34,11 +34,13 @@ type Props = {
   name: string,
   accessNewUser: string,
   isOpened: boolean,
-  handleinputEmailDelete: () => void,
-  onHandleDelete: (name: string) => void,
+  handleInputEmailAdd: () => void,
+  onHandleAdd: (name: string) => void,
   handleOpenCloseModal: () => void,
   choiceAccessNewUserRead: () => void,
-  choiceAccessNewUserWrite: () => void
+  choiceAccessNewUserWrite: () => void,
+  addUserAccess: (idName: string, data: Object) => void,
+  namespaceId: string
 };
 
 const AddUserMembershipModal = ({
@@ -46,31 +48,36 @@ const AddUserMembershipModal = ({
   name,
   isOpened,
   accessNewUser,
-  handleinputEmailDelete,
+  addUserAccess,
+  handleInputEmailAdd,
   handleOpenCloseModal,
-  onHandleDelete,
+  onHandleAdd,
+  namespaceId,
   choiceAccessNewUserRead,
   choiceAccessNewUserWrite
 }: Props) => {
   const viewAlert = true;
-
   const handleCloseModal = () => {
     handleOpenCloseModal();
   };
-  const handleSubmitDeletingEssence = e => {
+  const handleSubmitAddingEssence = e => {
     e.preventDefault();
     if (name.length >= 2) {
       handleOpenCloseModal();
-      onHandleDelete(name);
+      onHandleAdd(name);
     }
   };
   const handleChangeNameOfType = e => {
     const inputValue = e.target.value.trim();
-    handleinputEmailDelete(inputValue);
+    handleInputEmailAdd(inputValue);
   };
 
   const styleSubmit = 'btn modal-footer-solution-select';
   const isDisabledSubmit = false;
+  const addData = {
+    username: name,
+    access: accessNewUser
+  };
   return (
     <Modal
       isOpen={isOpened}
@@ -81,7 +88,7 @@ const AddUserMembershipModal = ({
       className="modal-dialog modal-dialog2 modal-dialog-create"
     >
       <form
-        onSubmit={e => handleSubmitDeletingEssence(e)}
+        onSubmit={e => handleSubmitAddingEssence(e)}
         className="modal-content"
       >
         <div className="modal-header">
@@ -144,14 +151,14 @@ const AddUserMembershipModal = ({
                 type="button"
                 onClick={choiceAccessNewUserRead}
               >
-                Read
+                read
               </button>
               <button
                 className="dropdown-item"
                 type="button"
                 onClick={choiceAccessNewUserWrite}
               >
-                Write
+                write
               </button>
             </div>
             <div className="modal-redis-text_ligth">
@@ -175,6 +182,7 @@ const AddUserMembershipModal = ({
             type="submit"
             className={styleSubmit}
             disabled={isDisabledSubmit}
+            onClick={() => addUserAccess(namespaceId, addData)}
           >
             Create
           </button>

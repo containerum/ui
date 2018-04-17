@@ -9,6 +9,11 @@ import {
   GET_NAMESPACE_USERS_ACCESS_INVALID
 } from '../../constants/namespaceConstants/getNamespaceUsersAccess';
 
+import {
+  ADD_NAMESPACE_USER_ACCESS_SUCCESS,
+  ADD_NAMESPACE_USER_ACCESS_FAILURE
+} from '../../constants/namespaceConstants/addNamespaceAccess';
+
 import type { Action } from '../../types/index';
 
 const initialState = {
@@ -47,6 +52,19 @@ export default (state = initialState, action: Action) => {
         data: null,
         status: action.status,
         idName: action.idName,
+        err: action.err
+      });
+    case ADD_NAMESPACE_USER_ACCESS_SUCCESS:
+      return _.assign(state, {
+        readyStatus: ADD_NAMESPACE_USER_ACCESS_SUCCESS,
+        isFetching: action.isFetching,
+        data: action.data,
+        status: action.status,
+        idName: action.idName,
+        err: null
+      });
+    case ADD_NAMESPACE_USER_ACCESS_FAILURE:
+      return _.assign(state, {
         err: action.err
       });
     default:
