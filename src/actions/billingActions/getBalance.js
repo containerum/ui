@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -26,6 +26,10 @@ const getBalanceFailure = err => ({
   type: GET_BALANCE_FAILURE,
   isFetching: false,
   err
+});
+
+const getBalanceInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
 });
 
 export const fetchGetBalance = (
@@ -56,10 +60,9 @@ export const fetchGetBalance = (
       break;
     }
     case 400: {
-      dispatch(getBalanceRequest());
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(getBalanceInvalidToken());
+      } else dispatch(getBalanceFailure(data.message));
       break;
     }
     default: {

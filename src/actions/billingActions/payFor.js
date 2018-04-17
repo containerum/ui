@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -28,6 +28,10 @@ const payForFailure = (err, status) => ({
   isFetching: false,
   err,
   status
+});
+
+const payForInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
 });
 
 export const fetchPayFor = (
@@ -62,9 +66,10 @@ export const fetchPayFor = (
       }
       break;
     }
-    case 401: {
-      dispatch(payForFailure(data.message, status));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(payForInvalidToken());
+      } else dispatch(payForFailure(data.message));
       break;
     }
     default: {

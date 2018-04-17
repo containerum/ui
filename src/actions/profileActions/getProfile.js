@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -28,6 +28,10 @@ const getProfileFailure = err => ({
   err
 });
 
+const getProfileInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetProfile = (
   axios: any,
   URL: string = webApiLogin
@@ -53,10 +57,9 @@ export const fetchGetProfile = (
       break;
     }
     case 400: {
-      dispatch(getProfileRequest());
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(getProfileInvalidToken());
+      } else dispatch(getProfileFailure(data.message));
       break;
     }
     default: {

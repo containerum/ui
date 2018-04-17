@@ -30,15 +30,23 @@ type Props = {
   getBalanceReducer: Object,
   fetchGetBalanceIfNeeded: () => void,
   fetchGetProfileIfNeeded: () => void,
-  fetchLogoutIfNeeded: () => void
+  fetchLogoutIfNeeded: () => void,
+  requestInvalidToken: () => void
 };
 
 // Export this for unit testing more easily
 export class Header extends PureComponent<Props> {
   componentDidMount() {
-    const { fetchGetProfileIfNeeded, fetchGetBalanceIfNeeded } = this.props;
+    const {
+      fetchGetProfileIfNeeded,
+      fetchGetBalanceIfNeeded,
+      requestInvalidToken
+    } = this.props;
     fetchGetProfileIfNeeded();
     fetchGetBalanceIfNeeded();
+    setTimeout(() => {
+      requestInvalidToken();
+    }, 7000);
   }
 
   renderProfileDropDown = () => {
@@ -177,7 +185,8 @@ const connector: Connector<{}, Props> = connect(
       dispatch(actionGetProfile.fetchGetProfileIfNeeded()),
     fetchGetBalanceIfNeeded: () =>
       dispatch(actionGetBalance.fetchGetBalanceIfNeeded()),
-    fetchLogoutIfNeeded: () => dispatch(actionLogout.fetchLogoutIfNeeded())
+    fetchLogoutIfNeeded: () => dispatch(actionLogout.fetchLogoutIfNeeded()),
+    requestInvalidToken: () => dispatch({ type: 'GET_INVALID_TOKEN' })
   })
 );
 

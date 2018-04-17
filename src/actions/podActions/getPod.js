@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -37,6 +37,10 @@ const getPodFailure = (err, status, idName, idDep, idPod) => ({
   idPod
 });
 
+const getPodInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetPod = (
   idName: string,
   idDep: string,
@@ -69,10 +73,10 @@ export const fetchGetPod = (
       break;
     }
     case 400: {
-      dispatch(getPodFailure(data.message, status, idName, idDep, idPod));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(getPodInvalidToken());
+      } else
+        dispatch(getPodFailure(data.message, status, idName, idDep, idPod));
       break;
     }
     default: {

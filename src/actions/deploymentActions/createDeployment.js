@@ -34,6 +34,10 @@ const createDeploymentFailure = (err, status, idDep) => ({
   idDep
 });
 
+const createDeploymentInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchCreateDeployment = (
   idName: string,
   dataObj: Object,
@@ -129,10 +133,9 @@ export const fetchCreateDeployment = (
       break;
     }
     case 400: {
-      dispatch(createDeploymentFailure(data.message, status, data));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(createDeploymentInvalidToken());
+      } else dispatch(createDeploymentFailure(data.message, status, data));
       break;
     }
     default: {
