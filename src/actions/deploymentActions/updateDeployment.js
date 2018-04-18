@@ -108,10 +108,11 @@ export const fetchUpdateDeployment = (
   });
 
   let idSrv = dataObj.name;
+  console.log('dataObj.name', dataObj);
   const response = await axios.put(
-    `${URL}/namespace/${idName}/deployment/${dataObj.name}`,
+    `${URL}/namespace/${idName}/deployment/${idDep}`,
     {
-      name: dataObj.name,
+      name: idDep,
       labels,
       replicas: dataObj.replicas,
       containers: splitContainers
