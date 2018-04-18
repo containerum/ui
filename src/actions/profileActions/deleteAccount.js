@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -28,6 +28,10 @@ const deleteAccountFailure = (err, status) => ({
   isFetching: false,
   err,
   status
+});
+
+const deleteAccountInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
 });
 
 export const fetchDeleteAccount = (
@@ -67,10 +71,9 @@ export const fetchDeleteAccount = (
       break;
     }
     case 400: {
-      dispatch(deleteAccountFailure(data.message, status));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(deleteAccountInvalidToken());
+      } else dispatch(deleteAccountFailure(data.message, status));
       break;
     }
     default: {

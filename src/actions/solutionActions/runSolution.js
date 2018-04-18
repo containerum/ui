@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -26,6 +26,10 @@ const runSolutionsFailure = err => ({
   type: RUN_SOLUTION_FAILURE,
   isFetching: false,
   err
+});
+
+const runSolutionsInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
 });
 
 export const fetchRunSolutions = (
@@ -60,10 +64,9 @@ export const fetchRunSolutions = (
       break;
     }
     case 400: {
-      dispatch(runSolutionsFailure(data.message));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(runSolutionsInvalidToken());
+      } else dispatch(runSolutionsFailure(data.message));
       break;
     }
     default: {

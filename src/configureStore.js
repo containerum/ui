@@ -3,78 +3,21 @@
 import { routerMiddleware } from 'react-router-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import axios from 'axios';
-import cookie from 'react-cookies';
 import { loadingBarMiddleware } from 'react-redux-loading-bar';
 
-import { webApiLogin } from './config';
+import rootSaga from './sagas';
 import type { Store } from './types';
 import rootReducer from './reducers';
 
-const browser = cookie.load('browser') ? cookie.load('browser') : null;
-axios.interceptors.response.use(response => {
-  const lastTimeToRefresh = cookie.load('lastTimeToRefresh')
-    ? parseInt(cookie.load('lastTimeToRefresh'), 10)
-    : null;
-  const timeToRequest = 600000; // default: 600000 (10 min)
-  const dateNow = Date.parse(new Date());
-  const differenceDate =
-    lastTimeToRefresh + timeToRequest - dateNow > 0
-      ? lastTimeToRefresh + timeToRequest - dateNow > 0
-      : 0;
-
-  // console.log(response, 'BEFORE PUT', differenceDate);
-  if (
-    lastTimeToRefresh &&
-    lastTimeToRefresh + timeToRequest <= dateNow &&
-    differenceDate >= 0 &&
-    response.status === 200 &&
-    response.data.is_active
-  ) {
-    // console.log(response, 'AFTER PUT', differenceDate);
-    axios
-      .put(
-        `${webApiLogin}/token/${cookie.load('refreshToken')}`,
-        {},
-        {
-          headers: {
-            'User-Client': browser
-          },
-          validateStatus: status => status >= 200 && status <= 505
-        }
-      )
-      .then(res => {
-        const { status } = res;
-        switch (status) {
-          case 200: {
-            const {
-              access_token: newAccessToken,
-              refresh_token: newRefreshToken
-            } = res.data;
-            cookie.save('accessToken', newAccessToken, { path: '/' });
-            cookie.save('refreshToken', newRefreshToken, { path: '/' });
-            cookie.save('lastTimeToRefresh', dateNow, { path: '/' });
-            break;
-          }
-          default: {
-            cookie.remove('accessToken', { path: '/' });
-            cookie.remove('refreshToken', { path: '/' });
-          }
-        }
-        return res;
-      })
-      .catch(err => {
-        console.log(err);
-        return err;
-      });
-  }
-  return response;
-});
-
 export default (history: Object, initialState: Object = {}): Store => {
+  // create the saga middleware
+  const sagaMiddleware = createSagaMiddleware();
   const middlewares = [
     thunk.withExtraArgument(axios),
-    routerMiddleware(history)
+    routerMiddleware(history),
+    sagaMiddleware
   ];
   const composeEnhancers =
     (typeof window === 'object' &&
@@ -90,6 +33,9 @@ export default (history: Object, initialState: Object = {}): Store => {
     // Other store enhancers if any
   );
   const store = createStore(rootReducer, initialState, enhancers);
+
+  // then run the saga
+  sagaMiddleware.run(rootSaga);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

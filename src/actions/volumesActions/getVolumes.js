@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type {
@@ -11,8 +11,8 @@ import type {
 } from '../../types/index';
 import {
   GET_VOLUMES_REQUESTING,
-  GET_VOLUMES_SUCCESS
-  // GET_VOLUMES_FAILURE
+  GET_VOLUMES_SUCCESS,
+  GET_VOLUMES_FAILURE
 } from '../../constants/volumesConstants/getVolumes';
 import { webApi } from '../../config/index';
 
@@ -27,11 +27,15 @@ const getVolumesSuccess = data => ({
   data
 });
 
-// const getVolumesFailure = err => ({
-//   type: GET_VOLUMES_FAILURE,
-//   isFetching: false,
-//   err
-// });
+const getVolumesFailure = err => ({
+  type: GET_VOLUMES_FAILURE,
+  isFetching: false,
+  err
+});
+
+const getVolumesInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
 
 export const fetchGetVolumes = (
   axios: any,
@@ -57,54 +61,20 @@ export const fetchGetVolumes = (
       dispatch(getVolumesSuccess(data));
       break;
     }
-    case 404: {
-      dispatch(getVolumesSuccess([]));
-      break;
-    }
-    case 401: {
-      dispatch(getVolumesRequest());
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(getVolumesInvalidToken());
+      } else dispatch(getVolumesFailure(data.message));
       break;
     }
     default: {
-      dispatch(getVolumesSuccess([]));
+      dispatch(getVolumesFailure(data.message));
     }
-    // default: {
-    //   dispatch(getVolumesFailure(data.message));
-    // }
   }
 };
-
-// Preventing dobule fetching data
-/* istanbul ignore next */
-// const shouldFetchGetVolumes = (state: ReduxState): boolean => {
-//   // In development, we will allow action dispatching
-//   // or your reducer hot reloading won't updated on the view
-//   if (__DEV__) return true;
-//
-//   if (state.getVolumesReducer.readyStatus === GET_VOLUMES_SUCCESS) return false; // Preventing double fetching data
-//
-//   return true;
-// };
 
 export const fetchGetVolumesIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
 ) => dispatch(fetchGetVolumes(axios));
-
-/* istanbul ignore next */
-// export const fetchGetVolumesIfNeeded = (): ThunkAction => (
-//   dispatch: Dispatch,
-//   getState: GetState,
-//   axios: any
-// ) => {
-//   /* istanbul ignore next */
-//   if (shouldFetchGetVolumes(getState())) {
-//     /* istanbul ignore next */
-//     return dispatch(fetchGetVolumes(axios));
-//   }
-//
-//   /* istanbul ignore next */
-//   return null;
-// };

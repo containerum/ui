@@ -32,6 +32,10 @@ const getServicesFailure = (err, status, idName) => ({
   idName
 });
 
+const getServicesInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetServices = (
   idName: string,
   axios: any,
@@ -59,17 +63,11 @@ export const fetchGetServices = (
       break;
     }
     case 400: {
-      dispatch(getServicesFailure(data.message, status, idName));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(getServicesInvalidToken());
+      } else dispatch(getServicesFailure(data.message, status, idName));
       break;
     }
-    // case 401: {
-    //   dispatch(getServicesRequest());
-    //   dispatch(push('/login'));
-    //   break;
-    // }
     default: {
       dispatch(getServicesFailure(data.message, status, idName));
       dispatch(push('/namespaces'));

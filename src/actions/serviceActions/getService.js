@@ -34,6 +34,10 @@ const getServiceFailure = (err, status, idName, idSrv) => ({
   idSrv
 });
 
+const getServiceInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetService = (
   idName: string,
   idSrv: string,
@@ -65,10 +69,9 @@ export const fetchGetService = (
       break;
     }
     case 400: {
-      dispatch(getServiceFailure(data.message, status, idName, idSrv));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(getServiceInvalidToken());
+      } else dispatch(getServiceFailure(data.message, status, idName, idSrv));
       break;
     }
     default: {

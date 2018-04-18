@@ -32,6 +32,10 @@ const getDeploymentsFailure = (err, status, idName) => ({
   idName
 });
 
+const getDeploymentsInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetDeployments = (
   idName: string,
   axios: any,
@@ -62,10 +66,9 @@ export const fetchGetDeployments = (
       break;
     }
     case 400: {
-      dispatch(getDeploymentsFailure(data.message));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(getDeploymentsInvalidToken());
+      } else dispatch(getDeploymentsFailure(data.message));
       break;
     }
     default: {

@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -35,6 +35,10 @@ const deletePodFailure = (err, status, idPod, idName) => ({
   idPod
 });
 
+const deletePodInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeletePod = (
   idName: string,
   idPod: string,
@@ -65,10 +69,9 @@ export const fetchDeletePod = (
       break;
     }
     case 400: {
-      dispatch(deletePodFailure(data.message, status, idPod, idName));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(deletePodInvalidToken());
+      } else dispatch(deletePodFailure(data.message, status, idPod, idName));
       break;
     }
     default: {

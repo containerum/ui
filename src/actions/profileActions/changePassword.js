@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -29,6 +29,10 @@ const changePasswordFailure = (err, status) => ({
   isFetching: false,
   err,
   status
+});
+
+const changePasswordInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
 });
 
 export const fetchChangePassword = (
@@ -67,10 +71,9 @@ export const fetchChangePassword = (
       break;
     }
     case 400: {
-      dispatch(changePasswordFailure(data.message, status));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(changePasswordInvalidToken());
+      } else dispatch(changePasswordFailure(data.message, status));
       break;
     }
     default: {

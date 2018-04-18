@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -33,6 +33,10 @@ const deleteDomainFailure = (err, status, label) => ({
   label
 });
 
+const deleteDomainInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteDomain = (
   idName: string,
   label: string,
@@ -63,10 +67,9 @@ export const fetchDeleteDomain = (
       break;
     }
     case 400: {
-      dispatch(deleteDomainFailure(data.message, status, label));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(deleteDomainInvalidToken());
+      } else dispatch(deleteDomainFailure(data.message, status, label));
       break;
     }
     default: {

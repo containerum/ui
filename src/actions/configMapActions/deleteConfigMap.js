@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -41,6 +41,10 @@ const deleteConfigMapFailure = (err, status, configMapName, idName) => ({
   configMapName
 });
 
+const deleteConfigMapInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteConfigMap = (
   idName: string,
   configMapName: string,
@@ -73,12 +77,12 @@ export const fetchDeleteConfigMap = (
       break;
     }
     case 400: {
-      dispatch(
-        deleteConfigMapFailure(data.message, status, configMapName, idName)
-      );
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(deleteConfigMapInvalidToken());
+      } else
+        dispatch(
+          deleteConfigMapFailure(data.message, status, configMapName, idName)
+        );
       break;
     }
     default: {
