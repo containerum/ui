@@ -33,6 +33,10 @@ const getNamespacesTariffsFailure = err => ({
   err
 });
 
+const getNamespacesInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetNamespacesTariffs = (
   axios: any,
   URL: string = webApiLogin
@@ -60,15 +64,10 @@ export const fetchGetNamespacesTariffs = (
     }
     case 400: {
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(getNamespacesInvalidToken());
+      } else dispatch(getNamespacesTariffsFailure(data.message));
       break;
     }
-    // case 401: {
-    //   dispatch(getNamespacesTariffsRequest());
-    //   dispatch(push('/login'));
-    //   break;
-    // }
     default: {
       dispatch(getNamespacesTariffsFailure(data.message));
       dispatch(push('/login'));

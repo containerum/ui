@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -28,6 +28,10 @@ const getImagesTokenFailure = err => ({
   err
 });
 
+const getImagesTokenInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetImagesToken = (
   axios: any,
   URL: string = webApi
@@ -52,13 +56,10 @@ export const fetchGetImagesToken = (
       dispatch(getImagesTokenSuccess(data));
       break;
     }
-    case 401: {
-      dispatch(getImagesTokenRequest());
-      dispatch(push('/login'));
-      break;
-    }
-    case 404: {
-      dispatch(getImagesTokenSuccess([]));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(getImagesTokenInvalidToken());
+      } else dispatch(getImagesTokenFailure(data.message));
       break;
     }
     default: {

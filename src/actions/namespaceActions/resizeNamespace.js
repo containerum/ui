@@ -34,6 +34,10 @@ const resizeNamespaceFailure = (err, status, idName) => ({
   idName
 });
 
+const resizeNamespaceInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchResizeNamespace = (
   idName: string,
   tariff: string,
@@ -69,10 +73,9 @@ export const fetchResizeNamespace = (
       break;
     }
     case 400: {
-      dispatch(resizeNamespaceFailure(data.message));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(resizeNamespaceInvalidToken());
+      } else dispatch(resizeNamespaceFailure(data.message, status, idName));
       break;
     }
     default: {

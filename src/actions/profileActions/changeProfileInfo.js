@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -30,6 +30,10 @@ const changeProfileInfoFailure = (err, status, method) => ({
   err,
   status,
   method
+});
+
+const changeProfileInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
 });
 
 export const fetchChangeProfileInfo = (
@@ -67,10 +71,10 @@ export const fetchChangeProfileInfo = (
       break;
     }
     case 400: {
-      dispatch(changeProfileInfoFailure(data.message, status, config.method));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(changeProfileInvalidToken());
+      } else
+        dispatch(changeProfileInfoFailure(data.message, status, config.method));
       break;
     }
     default: {

@@ -31,6 +31,10 @@ const getConfigMapsFailure = (err, status) => ({
   status
 });
 
+const getConfigMapsInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetConfigMaps = (
   axios: any,
   URL: string = webApiLogin
@@ -70,10 +74,9 @@ export const fetchGetConfigMaps = (
       break;
     }
     case 400: {
-      dispatch(getConfigMapsFailure(data.message, status));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(getConfigMapsInvalidToken());
+      } else dispatch(getConfigMapsFailure(data.message, status));
       break;
     }
     default: {

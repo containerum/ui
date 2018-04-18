@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type {
@@ -33,6 +33,10 @@ const getVolumesTariffsFailure = err => ({
   err
 });
 
+const getVolumesTariffsInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetVolumesTariffs = (
   axios: any,
   URL: string = webApi
@@ -58,13 +62,10 @@ export const fetchGetVolumesTariffs = (
       dispatch(getVolumesTariffsSuccess(data));
       break;
     }
-    case 404: {
-      dispatch(getVolumesTariffsSuccess([]));
-      break;
-    }
-    case 401: {
-      dispatch(getVolumesTariffsRequest());
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(getVolumesTariffsInvalidToken());
+      } else dispatch(getVolumesTariffsFailure(data.message));
       break;
     }
     default: {

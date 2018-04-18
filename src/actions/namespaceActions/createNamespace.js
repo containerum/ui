@@ -37,6 +37,10 @@ const createNamespaceFailure = (err, status, idName) => ({
   idName
 });
 
+const createNamespaceInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchCreateNamespace = (
   idName: string,
   tariff: string,
@@ -84,10 +88,9 @@ export const fetchCreateNamespace = (
       break;
     }
     case 400: {
-      dispatch(createNamespaceFailure(data.message));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(createNamespaceInvalidToken());
+      } else dispatch(createNamespaceFailure(data.message));
       break;
     }
     default: {

@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -33,6 +33,10 @@ const deleteVolumeFailure = (err, status, idVol) => ({
   idVol
 });
 
+const deleteVolumeInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteVolume = (
   idVol: string,
   axios: any,
@@ -58,9 +62,10 @@ export const fetchDeleteVolume = (
       dispatch(deleteVolumeSuccess(data, status, config.method, idVol));
       break;
     }
-    case 401: {
-      dispatch(deleteVolumeFailure(data.message, status, idVol));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(deleteVolumeInvalidToken());
+      } else dispatch(deleteVolumeFailure(data.message, status, idVol));
       break;
     }
     default: {

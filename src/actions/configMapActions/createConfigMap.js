@@ -34,6 +34,10 @@ const createConfigMapFailure = (err, status, configMapName) => ({
   configMapName
 });
 
+const createConfigMapInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchCreateConfigMap = (
   idName: string,
   dataObj: Object,
@@ -66,10 +70,9 @@ export const fetchCreateConfigMap = (
       break;
     }
     case 400: {
-      dispatch(createConfigMapFailure(data.message, status));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(createConfigMapInvalidToken());
+      } else dispatch(createConfigMapFailure(data.message, status));
       break;
     }
     default: {

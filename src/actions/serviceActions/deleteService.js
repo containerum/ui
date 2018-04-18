@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -33,6 +33,10 @@ const deleteServiceFailure = (err, status, idSrv) => ({
   idSrv
 });
 
+const deleteServiceInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteService = (
   idName: string,
   idSrv: string,
@@ -63,10 +67,9 @@ export const fetchDeleteService = (
       break;
     }
     case 400: {
-      dispatch(deleteServiceFailure(data.message, status, idSrv));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(deleteServiceInvalidToken());
+      } else dispatch(deleteServiceFailure(data.message, status, idSrv));
       break;
     }
     default: {

@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -35,6 +35,10 @@ const createExternalServiceFailure = (err, status, idSrv) => ({
   err,
   status,
   idSrv
+});
+
+const createExternalInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
 });
 
 export const fetchCreateExternalService = (
@@ -85,10 +89,10 @@ export const fetchCreateExternalService = (
       break;
     }
     case 400: {
-      dispatch(createExternalServiceFailure(data.message, status, idSrv));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(createExternalInvalidToken());
+      } else
+        dispatch(createExternalServiceFailure(data.message, status, idSrv));
       break;
     }
     default: {
