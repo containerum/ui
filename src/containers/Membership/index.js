@@ -11,6 +11,8 @@ import AddUserInMembershipModal from '../../components/CustomerModal/AddUserInMe
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionAddNamespaceUserAccessIfNeeded from '../../actions/namespaceActions/addNamespaceUserAccess';
 import { ADD_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceConstants/addNamespaceAccess';
+import { GET_CONFIG_MAPS_SUCCESS } from '../../constants/configMapConstants/getConfigMaps';
+// import { DELETE_NAMESPACE_SUCCESS } from "../../constants/namespaceConstants/deleteNamespace";
 // import type { Namespace as NamespaceType } from "../../types";
 
 type Props = {
@@ -20,8 +22,8 @@ type Props = {
 };
 
 class Membership extends PureComponent<Props> {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       inputEmailDelete: '',
       inputEmailAdd: '',
@@ -29,8 +31,27 @@ class Membership extends PureComponent<Props> {
       isOpenAdd: false,
       idUser: null,
       accessNewUser: 'Read or Write',
-      accessUser: 'Read'
+      accessUser: 'Read',
+      membersList: []
     };
+  }
+
+  componentWillMount(nextProps) {
+    console.log(
+      'reducer',
+      this.props.getNamespaceUsersAccessReducer.readyStatus
+    );
+    if (
+      this.props.getNamespaceUsersAccessReducer.readyStatus !==
+        nextProps.getNamespaceUsersAccessReducer.readyStatus &&
+      nextProps.getNamespaceUsersAccessReducer.readyStatus ===
+        GET_CONFIG_MAPS_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        displayedConfigMaps: nextProps.getNamespaceUsersAccessReducer.data.users
+      });
+    }
   }
 
   onHandleAdd = () => {
@@ -111,7 +132,6 @@ class Membership extends PureComponent<Props> {
 
   renderSuccessUserAccess = () => {
     const { getNamespaceUsersAccessReducer } = this.props;
-
     if (
       getNamespaceUsersAccessReducer.readyStatus ===
       ADD_NAMESPACE_USER_ACCESS_SUCCESS
@@ -143,8 +163,6 @@ class Membership extends PureComponent<Props> {
       getNamespaceReducer,
       fetchAddNamespaceUserAccessIfNeeded
     } = this.props;
-    // const alert ={getNamespaceUsersAccessReducer.data.u}
-    console.log('aaaaaaaaaaaaaaaaa', getNamespaceReducer.idName);
     return (
       <div>
         {this.renderSuccessUserAccess()}
@@ -171,6 +189,7 @@ class Membership extends PureComponent<Props> {
           choiceAccessNewUserWrite={this.choiceAccessNewUserWrite}
           addUserAccess={fetchAddNamespaceUserAccessIfNeeded}
           namespaceId={getNamespaceReducer.idName}
+          err={getNamespaceUsersAccessReducer.err}
         />
         <div className="content-block">
           <div className="container no-back">
@@ -234,62 +253,61 @@ class Membership extends PureComponent<Props> {
                               </tr>
                             </thead>
                             <tbody>
-                              {getNamespaceUsersAccessReducer.data.users.map(
-                                user => (
-                                  <tr key={user.create_time}>
-                                    <td className="td-2__membership td-3__no-paddingLeft">
-                                      {user.login}
-                                    </td>
-                                    <td className="td-2__membership td-3__no-paddingLeft">
-                                      {user.login}
-                                    </td>
-                                    <td className="td-3__no-paddingLeft td-3-flex">
-                                      <div>{user.new_access_level}</div>
-                                      <div style={{ paddingLeft: '50px' }}>
-                                        <i
-                                          className="content-block-table__more  dropdown-toggle"
-                                          data-toggle="dropdown"
-                                          aria-haspopup="true"
-                                          aria-expanded="false"
-                                          style={{ cursor: 'pointer' }}
-                                        />
-                                        <ul
-                                          className="dropdown-menu dropdown-menu-right"
-                                          role="menu"
+                              {this.state.membersList.map(user => (
+                                <tr key={user.create_time}>
+                                  <td className="td-2__membership td-3__no-paddingLeft">
+                                    {user.login}
+                                  </td>
+                                  <td className="td-2__membership td-3__no-paddingLeft">
+                                    {user.login}
+                                  </td>
+                                  <td className="td-3__no-paddingLeft td-3-flex">
+                                    <div>{user.new_access_level}</div>
+                                    <div style={{ paddingLeft: '50px' }}>
+                                      <i
+                                        className="content-block-table__more  dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        style={{ cursor: 'pointer' }}
+                                      />
+                                      <ul
+                                        className="dropdown-menu dropdown-menu-right"
+                                        role="menu"
+                                      >
+                                        <button
+                                          className="dropdown-item"
+                                          onClick={this.changeAccessUserWrite}
                                         >
-                                          <button
-                                            className="dropdown-item"
-                                            onClick={this.changeAccessUserWrite}
-                                          >
-                                            Write
-                                          </button>
-                                          <button
-                                            className="dropdown-item"
-                                            onClick={this.changeAccessUserRead}
-                                          >
-                                            Read
-                                          </button>
-                                        </ul>
-                                      </div>
-                                    </td>
-                                    <td
-                                      className="td-1"
-                                      onClick={() =>
-                                        this.handleDeleteDMembers(user.login)
-                                      }
-                                    >
-                                      <div className="membership-item">
-                                        <i
-                                          className="material-icons"
-                                          role="presentation"
+                                          Write
+                                        </button>
+                                        <button
+                                          className="dropdown-item"
+                                          onClick={this.changeAccessUserRead}
                                         >
-                                          delete
-                                        </i>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                )
-                              )}
+                                          Read
+                                        </button>
+                                      </ul>
+                                    </div>
+                                  </td>
+                                  <td
+                                    className="td-1"
+                                    onClick={() =>
+                                      this.handleDeleteDMembers(user.login)
+                                    }
+                                  >
+                                    <div className="membership-item">
+                                      <i
+                                        className="material-icons"
+                                        role="presentation"
+                                      >
+                                        delete
+                                      </i>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
+                              -{' '}
                             </tbody>
                           </table>
                         </div>

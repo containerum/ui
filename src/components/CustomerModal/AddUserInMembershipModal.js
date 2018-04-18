@@ -40,7 +40,8 @@ type Props = {
   choiceAccessNewUserRead: () => void,
   choiceAccessNewUserWrite: () => void,
   addUserAccess: (idName: string, data: Object) => void,
-  namespaceId: string
+  namespaceId: string,
+  err: string
 };
 
 const AddUserMembershipModal = ({
@@ -53,10 +54,10 @@ const AddUserMembershipModal = ({
   handleOpenCloseModal,
   onHandleAdd,
   namespaceId,
+  err,
   choiceAccessNewUserRead,
   choiceAccessNewUserWrite
 }: Props) => {
-  const viewAlert = true;
   const handleCloseModal = () => {
     handleOpenCloseModal();
   };
@@ -107,7 +108,7 @@ const AddUserMembershipModal = ({
           <span className="modal-redis-text">
             Fill in the information below to add new user
           </span>
-          {viewAlert ? (
+          {err === "User with such credentials doesn't exist" ? (
             <div className="membership-add-user-alert">
               <div className="membership-add-user-alert-item">
                 <img src={alert} alt="alert" />

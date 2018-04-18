@@ -64,7 +64,8 @@ export const fetchAddNamespaceUserAccess = (
       validateStatus: status => status >= 200 && status <= 505
     }
   );
-  const { status, dataR } = response;
+  const { status, data: dataR } = response;
+  console.log('dataR', dataR);
   switch (status) {
     case 201: {
       dispatch(addNamespaceUserAccessSuccess(dataR, status));
