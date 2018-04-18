@@ -37,8 +37,7 @@ type Props = {
   fetchGetNamespacesIfNeeded: () => void,
   fetchDeleteNamespaceIfNeeded: (idName: string) => void,
   createExternalServiceReducer: Object,
-  createInternalServiceReducer: Object,
-  requestInvalidToken: () => void
+  createInternalServiceReducer: Object
 };
 
 // Export this for unit testing more easily
@@ -54,9 +53,6 @@ export class Namespaces extends PureComponent<Props> {
   }
   componentDidMount() {
     this.props.fetchGetNamespacesIfNeeded();
-    setTimeout(() => {
-      this.props.requestInvalidToken();
-    }, 7000);
   }
   componentWillUpdate(nextProps) {
     if (
@@ -205,8 +201,7 @@ const connector: Connector<{}, Props> = connect(
     fetchGetNamespacesIfNeeded: () =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded()),
     fetchDeleteNamespaceIfNeeded: (idName: string) =>
-      dispatch(actionDeleteNamespaces.fetchDeleteNamespaceIfNeeded(idName)),
-    requestInvalidToken: () => dispatch({ type: 'GET_INVALID_TOKEN' })
+      dispatch(actionDeleteNamespaces.fetchDeleteNamespaceIfNeeded(idName))
   })
 );
 

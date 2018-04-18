@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -31,6 +31,10 @@ const createImageTokenFailure = (err, status, label) => ({
   err,
   status,
   label
+});
+
+const createImageTokenInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
 });
 
 export const fetchCreateImageToken = (
@@ -66,9 +70,10 @@ export const fetchCreateImageToken = (
       dispatch(createImageTokenSuccess(data, status, config.method, label));
       break;
     }
-    case 401: {
-      dispatch(createImageTokenFailure(data.message, status, label));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(createImageTokenInvalidToken());
+      } else dispatch(createImageTokenFailure(data.message, status, label));
       break;
     }
     default: {

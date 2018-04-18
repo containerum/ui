@@ -1,6 +1,6 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
+// import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -26,6 +26,10 @@ const getDomainsFailure = err => ({
   type: GET_DOMAINS_FAILURE,
   isFetching: false,
   err
+});
+
+const getDomainsInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
 });
 
 export const fetchGetDomains = (
@@ -55,10 +59,9 @@ export const fetchGetDomains = (
       break;
     }
     case 400: {
-      dispatch(getDomainsRequest());
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(getDomainsInvalidToken());
+      } else dispatch(getDomainsFailure(data.message));
       break;
     }
     default: {

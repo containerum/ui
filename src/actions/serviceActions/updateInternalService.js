@@ -33,6 +33,10 @@ const updateInternalServiceFailure = (err, status, idSrv) => ({
   idSrv
 });
 
+const updateInternalInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchUpdateInternalService = (
   idName: string,
   idSrv: string,
@@ -87,10 +91,10 @@ export const fetchUpdateInternalService = (
       break;
     }
     case 400: {
-      dispatch(updateInternalServiceFailure(data.message, status, idSrv));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(updateInternalInvalidToken());
+      } else
+        dispatch(updateInternalServiceFailure(data.message, status, idSrv));
       break;
     }
     default: {

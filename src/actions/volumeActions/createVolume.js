@@ -37,6 +37,10 @@ const createVolumeFailure = (err, status, idVol) => ({
   idVol
 });
 
+const createVolumeInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchCreateVolume = (
   idVol: string,
   tariff: string,
@@ -81,9 +85,10 @@ export const fetchCreateVolume = (
       dispatch(push('/volumes'));
       break;
     }
-    case 401: {
-      dispatch(createVolumeFailure(data.message));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(createVolumeInvalidToken());
+      } else dispatch(createVolumeFailure(data.message, status, idVol));
       break;
     }
     default: {

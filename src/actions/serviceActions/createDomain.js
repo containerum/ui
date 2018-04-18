@@ -32,6 +32,10 @@ const createDomainFailure = (err, status, idSrv) => ({
   idSrv
 });
 
+const createDomainInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchCreateDomain = (
   idName: string,
   dataDomain: Object,
@@ -92,10 +96,9 @@ export const fetchCreateDomain = (
       break;
     }
     case 400: {
-      dispatch(createDomainFailure(data.message, status, idSrv));
       if (data.message === 'invalid token received') {
-        dispatch(push('/login'));
-      }
+        dispatch(createDomainInvalidToken());
+      } else dispatch(createDomainFailure(data.message, status, idSrv));
       break;
     }
     default: {
