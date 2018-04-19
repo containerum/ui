@@ -199,14 +199,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'block';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'block';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'block';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'block';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'block';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -222,14 +222,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'none';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'none';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'none';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'none';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'none';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -257,14 +257,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'block';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'block';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'block';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'block';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'block';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -280,14 +280,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'none';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'none';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'none';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'none';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'none';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -315,14 +315,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'block';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'block';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'block';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'block';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'block';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -338,14 +338,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'none';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'none';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'none';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'none';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'none';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -370,14 +370,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'block';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'block';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'block';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'block';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'block';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -393,14 +393,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'none';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'none';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'none';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'none';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'none';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -425,14 +425,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'block';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'block';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'block';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'block';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'block';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -448,14 +448,14 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-parameters-spy`
             ).style.display =
               'none';
-            document.getElementById(
-              `container${item}-image-ports-spy`
-            ).style.display =
-              'none';
-            document.getElementById(
-              `container${item}-commands-spy`
-            ).style.display =
-              'none';
+            // document.getElementById(
+            //   `container${item}-image-ports-spy`
+            // ).style.display =
+            //   'none';
+            // document.getElementById(
+            //   `container${item}-commands-spy`
+            // ).style.display =
+            //   'none';
             document.getElementById(
               `container${item}-environments-spy`
             ).style.display =
@@ -923,32 +923,32 @@ export class CreateDeployment extends PureComponent<Props> {
             Parameters
           </div>
         </div>
-        <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
-          id={`container${1}-image-ports-spy`}
-        >
-          <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
-            onClick={() => scrollById(`container${1}-image-ports`)}
-            onKeyPress={() => scrollById(`container${1}-image-ports`)}
-            role="presentation"
-          >
-            Image Ports
-          </div>
-        </div>
-        <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
-          id={`container${1}-commands-spy`}
-        >
-          <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
-            onClick={() => scrollById(`container${1}-commands`)}
-            onKeyPress={() => scrollById(`container${1}-commands`)}
-            role="presentation"
-          >
-            Commands
-          </div>
-        </div>
+        {/* <div */}
+        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* id={`container${1}-image-ports-spy`} */}
+        {/* > */}
+        {/* <div */}
+        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* onClick={() => scrollById(`container${1}-image-ports`)} */}
+        {/* onKeyPress={() => scrollById(`container${1}-image-ports`)} */}
+        {/* role="presentation" */}
+        {/* > */}
+        {/* Image Ports */}
+        {/* </div> */}
+        {/* </div> */}
+        {/* <div */}
+        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* id={`container${1}-commands-spy`} */}
+        {/* > */}
+        {/* <div */}
+        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* onClick={() => scrollById(`container${1}-commands`)} */}
+        {/* onKeyPress={() => scrollById(`container${1}-commands`)} */}
+        {/* role="presentation" */}
+        {/* > */}
+        {/* Commands */}
+        {/* </div> */}
+        {/* </div> */}
         <div
           className="sideMenuHeader sideMenuHeader-nomargin"
           id={`container${1}-environments-spy`}
@@ -1028,48 +1028,48 @@ export class CreateDeployment extends PureComponent<Props> {
             Parameters
           </div>
         </div>
-        <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
-          id={`container${2}-image-ports-spy`}
-          style={
-            containers.length === 1 ? { display: 'none' } : { display: 'block' }
-          }
-        >
-          <div
-            className="sideMenuHeader sideMenuHeader-nomargin"
-            id={`container${2}-image-ports-spy`}
-          >
-            <div
-              className="nav-link sideMenuItem sideMenuItem-transformInit"
-              onClick={() => scrollById(`container${2}-image-ports`)}
-              onKeyPress={() => scrollById(`container${2}-image-ports`)}
-              role="presentation"
-            >
-              Image Ports
-            </div>
-          </div>
-        </div>
-        <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
-          id={`container${2}-commands-spy`}
-          style={
-            containers.length === 1 ? { display: 'none' } : { display: 'block' }
-          }
-        >
-          <div
-            className="sideMenuHeader sideMenuHeader-nomargin"
-            id={`container${2}-commands-spy`}
-          >
-            <div
-              className="nav-link sideMenuItem sideMenuItem-transformInit"
-              onClick={() => scrollById(`container${2}-commands`)}
-              onKeyPress={() => scrollById(`container${2}-commands`)}
-              role="presentation"
-            >
-              Commands
-            </div>
-          </div>
-        </div>
+        {/* <div */}
+        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* id={`container${2}-image-ports-spy`} */}
+        {/* style={ */}
+        {/* containers.length === 1 ? { display: 'none' } : { display: 'block' } */}
+        {/* } */}
+        {/* > */}
+        {/* /!* <div *!/ */}
+        {/* /!* className="sideMenuHeader sideMenuHeader-nomargin" *!/ */}
+        {/* /!* id={`container${2}-image-ports-spy`} *!/ */}
+        {/* /!* > *!/ */}
+        {/* /!* <div *!/ */}
+        {/* /!* className="nav-link sideMenuItem sideMenuItem-transformInit" *!/ */}
+        {/* /!* onClick={() => scrollById(`container${2}-image-ports`)} *!/ */}
+        {/* /!* onKeyPress={() => scrollById(`container${2}-image-ports`)} *!/ */}
+        {/* /!* role="presentation" *!/ */}
+        {/* /!* > *!/ */}
+        {/* /!* Image Ports *!/ */}
+        {/* /!* </div> *!/ */}
+        {/* /!* </div> *!/ */}
+        {/* /!* </div> *!/ */}
+        {/* /!* <div *!/ */}
+        {/* /!* className="sideMenuHeader sideMenuHeader-nomargin" *!/ */}
+        {/* /!* id={`container${2}-commands-spy`} *!/ */}
+        {/* /!* style={ *!/ */}
+        {/* /!* containers.length === 1 ? { display: 'none' } : { display: 'block' } *!/ */}
+        {/* /!* } *!/ */}
+        {/* /!* > *!/ */}
+        {/* /!* <div *!/ */}
+        {/* /!* className="sideMenuHeader sideMenuHeader-nomargin" *!/ */}
+        {/* /!* id={`container${2}-commands-spy`} *!/ */}
+        {/* /!* > *!/ */}
+        {/* /!* <div *!/ */}
+        {/* /!* className="nav-link sideMenuItem sideMenuItem-transformInit" *!/ */}
+        {/* /!* onClick={() => scrollById(`container${2}-commands`)} *!/ */}
+        {/* /!* onKeyPress={() => scrollById(`container${2}-commands`)} *!/ */}
+        {/* /!* role="presentation" *!/ */}
+        {/* /!* > *!/ */}
+        {/* /!* Commands *!/ */}
+        {/* /!* </div> *!/ */}
+        {/* /!* </div> *!/ */}
+        {/* </div> */}
         <div
           className="sideMenuHeader sideMenuHeader-nomargin"
           id={`container${2}-environments-spy`}
@@ -1120,7 +1120,7 @@ export class CreateDeployment extends PureComponent<Props> {
             onKeyPress={() => scrollById(`container${3}`)}
             role="presentation"
           >
-            Container 2
+            Container 3
           </div>
         </div>
         <div
@@ -1155,38 +1155,38 @@ export class CreateDeployment extends PureComponent<Props> {
             Parameters
           </div>
         </div>
-        <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
-          id={`container${3}-image-ports-spy`}
-          style={
-            containers.length <= 2 ? { display: 'none' } : { display: 'block' }
-          }
-        >
-          <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
-            onClick={() => scrollById(`container${3}-image-ports`)}
-            onKeyPress={() => scrollById(`container${3}-image-ports`)}
-            role="presentation"
-          >
-            Image Ports
-          </div>
-        </div>
-        <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
-          id={`container${3}-commands-spy`}
-          style={
-            containers.length <= 2 ? { display: 'none' } : { display: 'block' }
-          }
-        >
-          <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
-            onClick={() => scrollById(`container${3}-commands`)}
-            onKeyPress={() => scrollById(`container${3}-commands`)}
-            role="presentation"
-          >
-            Commands
-          </div>
-        </div>
+        {/* <div */}
+        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* id={`container${3}-image-ports-spy`} */}
+        {/* style={ */}
+        {/* containers.length <= 2 ? { display: 'none' } : { display: 'block' } */}
+        {/* } */}
+        {/* > */}
+        {/* <div */}
+        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* onClick={() => scrollById(`container${3}-image-ports`)} */}
+        {/* onKeyPress={() => scrollById(`container${3}-image-ports`)} */}
+        {/* role="presentation" */}
+        {/* > */}
+        {/* Image Ports */}
+        {/* </div> */}
+        {/* </div> */}
+        {/* <div */}
+        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* id={`container${3}-commands-spy`} */}
+        {/* style={ */}
+        {/* containers.length <= 2 ? { display: 'none' } : { display: 'block' } */}
+        {/* } */}
+        {/* > */}
+        {/* <div */}
+        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* onClick={() => scrollById(`container${3}-commands`)} */}
+        {/* onKeyPress={() => scrollById(`container${3}-commands`)} */}
+        {/* role="presentation" */}
+        {/* > */}
+        {/* Commands */}
+        {/* </div> */}
+        {/* </div> */}
         <div
           className="sideMenuHeader sideMenuHeader-nomargin"
           id={`container${3}-environments-spy`}
