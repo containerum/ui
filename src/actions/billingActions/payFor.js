@@ -30,6 +30,10 @@ const payForFailure = (err, status) => ({
   status
 });
 
+const payForInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchPayFor = (
   amount: number,
   axios: any,
@@ -62,9 +66,12 @@ export const fetchPayFor = (
       }
       break;
     }
-    case 401: {
-      dispatch(payForFailure(data.message, status));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(payForInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
+      } else dispatch(payForFailure(data.message));
       break;
     }
     default: {

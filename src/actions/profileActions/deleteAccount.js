@@ -30,6 +30,10 @@ const deleteAccountFailure = (err, status) => ({
   status
 });
 
+const deleteAccountInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteAccount = (
   axios: any,
   URL: string = webApiLogin
@@ -67,10 +71,11 @@ export const fetchDeleteAccount = (
       break;
     }
     case 400: {
-      dispatch(deleteAccountFailure(data.message, status));
       if (data.message === 'invalid token received') {
+        dispatch(deleteAccountInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(deleteAccountFailure(data.message, status));
       break;
     }
     default: {

@@ -41,6 +41,10 @@ const deleteConfigMapFailure = (err, status, configMapName, idName) => ({
   configMapName
 });
 
+const deleteConfigMapInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteConfigMap = (
   idName: string,
   configMapName: string,
@@ -73,12 +77,14 @@ export const fetchDeleteConfigMap = (
       break;
     }
     case 400: {
-      dispatch(
-        deleteConfigMapFailure(data.message, status, configMapName, idName)
-      );
       if (data.message === 'invalid token received') {
+        dispatch(deleteConfigMapInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else
+        dispatch(
+          deleteConfigMapFailure(data.message, status, configMapName, idName)
+        );
       break;
     }
     default: {

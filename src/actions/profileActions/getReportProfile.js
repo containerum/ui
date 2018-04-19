@@ -28,6 +28,10 @@ const getProfileReportFailure = err => ({
   err
 });
 
+const getProfileInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetProfileReport = (
   page: string,
   axios: any,
@@ -54,10 +58,11 @@ export const fetchGetProfileReport = (
       break;
     }
     case 400: {
-      dispatch(getProfileReportRequest());
       if (data.message === 'invalid token received') {
+        dispatch(getProfileInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(getProfileReportFailure(data.message));
       break;
     }
     case 404: {

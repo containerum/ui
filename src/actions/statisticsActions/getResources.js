@@ -6,8 +6,8 @@ import cookie from 'react-cookies';
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
   GET_RESOURCES_REQUESTING,
-  GET_RESOURCES_SUCCESS
-  // GET_RESOURCES_FAILURE
+  GET_RESOURCES_SUCCESS,
+  GET_RESOURCES_FAILURE
 } from '../../constants/statisticsConstants/getResourcesConstants';
 import { webApiLogin } from '../../config/index';
 
@@ -22,11 +22,15 @@ const getResourcesSuccess = data => ({
   data
 });
 
-// const getResourcesFailure = err => ({
-//   type: GET_RESOURCES_FAILURE,
-//   isFetching: false,
-//   err
-// });
+const getResourcesFailure = err => ({
+  type: GET_RESOURCES_FAILURE,
+  isFetching: false,
+  err
+});
+
+const getResourcesInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
 
 export const fetchGetResources = (
   axios: any,
@@ -53,10 +57,11 @@ export const fetchGetResources = (
       break;
     }
     case 400: {
-      dispatch(getResourcesRequest());
       if (data.message === 'invalid token received') {
+        dispatch(getResourcesInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(getResourcesFailure(data.message));
       break;
     }
     default: {

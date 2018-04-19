@@ -28,6 +28,10 @@ const getProfileFailure = err => ({
   err
 });
 
+const getProfileInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetProfile = (
   axios: any,
   URL: string = webApiLogin
@@ -53,10 +57,11 @@ export const fetchGetProfile = (
       break;
     }
     case 400: {
-      dispatch(getProfileRequest());
       if (data.message === 'invalid token received') {
+        dispatch(getProfileInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(getProfileFailure(data.message));
       break;
     }
     default: {

@@ -33,6 +33,10 @@ const updateExternalServiceFailure = (err, status, idSrv) => ({
   idSrv
 });
 
+const updateExternalInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchUpdateExternalService = (
   idName: string,
   idSrv: string,
@@ -87,10 +91,12 @@ export const fetchUpdateExternalService = (
       break;
     }
     case 400: {
-      dispatch(updateExternalServiceFailure(data.message, status, idSrv));
       if (data.message === 'invalid token received') {
+        dispatch(updateExternalInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else
+        dispatch(updateExternalServiceFailure(data.message, status, idSrv));
       break;
     }
     default: {

@@ -33,6 +33,10 @@ const deleteServiceFailure = (err, status, idSrv) => ({
   idSrv
 });
 
+const deleteServiceInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteService = (
   idName: string,
   idSrv: string,
@@ -63,10 +67,11 @@ export const fetchDeleteService = (
       break;
     }
     case 400: {
-      dispatch(deleteServiceFailure(data.message, status, idSrv));
       if (data.message === 'invalid token received') {
+        dispatch(deleteServiceInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(deleteServiceFailure(data.message, status, idSrv));
       break;
     }
     default: {

@@ -28,6 +28,10 @@ const runSolutionsFailure = err => ({
   err
 });
 
+const runSolutionsInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchRunSolutions = (
   idName: string,
   idSol: string,
@@ -60,10 +64,11 @@ export const fetchRunSolutions = (
       break;
     }
     case 400: {
-      dispatch(runSolutionsFailure(data.message));
       if (data.message === 'invalid token received') {
+        dispatch(runSolutionsInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(runSolutionsFailure(data.message));
       break;
     }
     default: {

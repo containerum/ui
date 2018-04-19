@@ -35,6 +35,10 @@ const deletePodFailure = (err, status, idPod, idName) => ({
   idPod
 });
 
+const deletePodInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeletePod = (
   idName: string,
   idPod: string,
@@ -65,10 +69,11 @@ export const fetchDeletePod = (
       break;
     }
     case 400: {
-      dispatch(deletePodFailure(data.message, status, idPod, idName));
       if (data.message === 'invalid token received') {
+        dispatch(deletePodInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(deletePodFailure(data.message, status, idPod, idName));
       break;
     }
     default: {

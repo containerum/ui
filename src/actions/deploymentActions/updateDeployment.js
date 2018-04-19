@@ -34,6 +34,10 @@ const updateDeploymentFailure = (err, status, idDep) => ({
   idDep
 });
 
+const updateDeploymentInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchUpdateDeployment = (
   idName: string,
   idDep: string,
@@ -104,10 +108,11 @@ export const fetchUpdateDeployment = (
   });
 
   let idSrv = dataObj.name;
+  console.log('dataObj.name', dataObj);
   const response = await axios.put(
-    `${URL}/namespace/${idName}/deployment/${dataObj.name}`,
+    `${URL}/namespace/${idName}/deployment/${idDep}`,
     {
-      name: dataObj.name,
+      name: idDep,
       labels,
       replicas: dataObj.replicas,
       containers: splitContainers
@@ -130,10 +135,11 @@ export const fetchUpdateDeployment = (
       break;
     }
     case 400: {
-      dispatch(updateDeploymentFailure(data.message, status, data));
       if (data.message === 'invalid token received') {
+        dispatch(updateDeploymentInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(updateDeploymentFailure(data.message, status, data));
       break;
     }
     default: {

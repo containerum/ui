@@ -33,6 +33,10 @@ const deleteImageTokenFailure = (err, status, label) => ({
   label
 });
 
+const deleteImageTokenInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteImageToken = (
   label: string,
   axios: any,
@@ -58,9 +62,12 @@ export const fetchDeleteImageToken = (
       dispatch(deleteImageTokenSuccess(data, status, config.method, label));
       break;
     }
-    case 401: {
-      dispatch(deleteImageTokenFailure(data.message, status, label));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(deleteImageTokenInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
+      } else dispatch(deleteImageTokenFailure(data.message, status, label));
       break;
     }
     default: {

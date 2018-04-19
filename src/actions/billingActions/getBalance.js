@@ -28,6 +28,10 @@ const getBalanceFailure = err => ({
   err
 });
 
+const getBalanceInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetBalance = (
   idName: string,
   axios: any,
@@ -56,10 +60,11 @@ export const fetchGetBalance = (
       break;
     }
     case 400: {
-      dispatch(getBalanceRequest());
       if (data.message === 'invalid token received') {
+        dispatch(getBalanceInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(getBalanceFailure(data.message));
       break;
     }
     default: {

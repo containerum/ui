@@ -37,6 +37,10 @@ const getPodFailure = (err, status, idName, idDep, idPod) => ({
   idPod
 });
 
+const getPodInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetPod = (
   idName: string,
   idDep: string,
@@ -69,10 +73,12 @@ export const fetchGetPod = (
       break;
     }
     case 400: {
-      dispatch(getPodFailure(data.message, status, idName, idDep, idPod));
       if (data.message === 'invalid token received') {
+        dispatch(getPodInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else
+        dispatch(getPodFailure(data.message, status, idName, idDep, idPod));
       break;
     }
     default: {

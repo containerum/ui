@@ -33,6 +33,10 @@ const deleteDomainFailure = (err, status, label) => ({
   label
 });
 
+const deleteDomainInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteDomain = (
   idName: string,
   label: string,
@@ -63,10 +67,11 @@ export const fetchDeleteDomain = (
       break;
     }
     case 400: {
-      dispatch(deleteDomainFailure(data.message, status, label));
       if (data.message === 'invalid token received') {
+        dispatch(deleteDomainInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(deleteDomainFailure(data.message, status, label));
       break;
     }
     default: {

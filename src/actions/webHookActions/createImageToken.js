@@ -33,6 +33,10 @@ const createImageTokenFailure = (err, status, label) => ({
   label
 });
 
+const createImageTokenInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchCreateImageToken = (
   label: string,
   regexp: string,
@@ -66,9 +70,12 @@ export const fetchCreateImageToken = (
       dispatch(createImageTokenSuccess(data, status, config.method, label));
       break;
     }
-    case 401: {
-      dispatch(createImageTokenFailure(data.message, status, label));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(createImageTokenInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
+      } else dispatch(createImageTokenFailure(data.message, status, label));
       break;
     }
     default: {

@@ -34,6 +34,10 @@ const couponPayFailure = (err, status, method, code) => ({
   code
 });
 
+const couponPayInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchCouponPay = (
   code: string,
   axios: any,
@@ -65,9 +69,12 @@ export const fetchCouponPay = (
       dispatch(couponPaySuccess(data, status, config.method, code));
       break;
     }
-    case 401: {
-      dispatch(couponPayFailure(data.message, status, config.method, code));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(couponPayInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
+      } else dispatch(couponPayFailure(data.message));
       break;
     }
     default: {

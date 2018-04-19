@@ -6,7 +6,8 @@ import cookie from 'react-cookies';
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
   GET_VOLUMES_BY_NS_REQUESTING,
-  GET_VOLUMES_BY_NS_SUCCESS
+  GET_VOLUMES_BY_NS_SUCCESS,
+  GET_VOLUMES_BY_NS_FAILURE
 } from '../../constants/volumesConstants/getVolumesByNS';
 import { webApi } from '../../config/index';
 
@@ -21,11 +22,15 @@ const getVolumesByNSSuccess = data => ({
   data
 });
 
-// const getVolumesByNSFailure = err => ({
-//   type: GET_VOLUMES_BY_NS_FAILURE,
-//   isFetching: false,
-//   err
-// });
+const getVolumesByNSFailure = err => ({
+  type: GET_VOLUMES_BY_NS_FAILURE,
+  isFetching: false,
+  err
+});
+
+const getVolumesInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
 
 export const fetchGetVolumesByNS = (
   idName: string,
@@ -52,21 +57,17 @@ export const fetchGetVolumesByNS = (
       dispatch(getVolumesByNSSuccess(data));
       break;
     }
-    case 404: {
-      dispatch(getVolumesByNSSuccess([]));
-      break;
-    }
-    case 401: {
-      dispatch(getVolumesByNSRequest());
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(getVolumesInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
+      } else dispatch(getVolumesByNSFailure(data.message));
       break;
     }
     default: {
-      dispatch(getVolumesByNSSuccess([]));
+      dispatch(getVolumesByNSFailure(data.message));
     }
-    // default: {
-    //   dispatch(getVolumesByNSFailure(data.message));
-    // }
   }
 };
 

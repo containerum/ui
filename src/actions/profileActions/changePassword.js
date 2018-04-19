@@ -31,6 +31,10 @@ const changePasswordFailure = (err, status) => ({
   status
 });
 
+const changePasswordInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchChangePassword = (
   currentPassword: string,
   newPassword: string,
@@ -67,10 +71,11 @@ export const fetchChangePassword = (
       break;
     }
     case 400: {
-      dispatch(changePasswordFailure(data.message, status));
       if (data.message === 'invalid token received') {
+        dispatch(changePasswordInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(changePasswordFailure(data.message, status));
       break;
     }
     default: {

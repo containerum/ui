@@ -37,6 +37,10 @@ const createExternalServiceFailure = (err, status, idSrv) => ({
   idSrv
 });
 
+const createExternalInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchCreateExternalService = (
   idName: string,
   dataSrv: Object,
@@ -85,10 +89,12 @@ export const fetchCreateExternalService = (
       break;
     }
     case 400: {
-      dispatch(createExternalServiceFailure(data.message, status, idSrv));
       if (data.message === 'invalid token received') {
+        dispatch(createExternalInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else
+        dispatch(createExternalServiceFailure(data.message, status, idSrv));
       break;
     }
     default: {

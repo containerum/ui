@@ -33,6 +33,10 @@ const deleteNamespaceFailure = (err, status, idName) => ({
   idName
 });
 
+const deleteNamespaceInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteNamespace = (
   idName: string,
   axios: any,
@@ -60,10 +64,11 @@ export const fetchDeleteNamespace = (
       break;
     }
     case 400: {
-      dispatch(deleteNamespaceFailure(data.message, status, idName));
       if (data.message === 'invalid token received') {
+        dispatch(deleteNamespaceInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(deleteNamespaceFailure(data.message, status, idName));
       break;
     }
     default: {

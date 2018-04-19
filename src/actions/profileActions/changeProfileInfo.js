@@ -32,6 +32,10 @@ const changeProfileInfoFailure = (err, status, method) => ({
   method
 });
 
+const changeProfileInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchChangeProfileInfo = (
   countryCode: number,
   firstName: string,
@@ -67,10 +71,12 @@ export const fetchChangeProfileInfo = (
       break;
     }
     case 400: {
-      dispatch(changeProfileInfoFailure(data.message, status, config.method));
       if (data.message === 'invalid token received') {
+        dispatch(changeProfileInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else
+        dispatch(changeProfileInfoFailure(data.message, status, config.method));
       break;
     }
     default: {

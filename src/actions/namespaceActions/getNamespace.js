@@ -33,6 +33,10 @@ const getNamespaceFailure = (err, status, idName) => ({
   idName
 });
 
+const getNamespaceInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetNamespace = (
   idName: string,
   axios: any,
@@ -59,10 +63,11 @@ export const fetchGetNamespace = (
       break;
     }
     case 400: {
-      dispatch(getNamespaceRequest());
       if (data.message === 'invalid token received') {
+        dispatch(getNamespaceInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(getNamespaceFailure(data.message, status, idName));
       break;
     }
     default: {

@@ -33,6 +33,10 @@ const deleteDeploymentFailure = (err, status, idDep) => ({
   idDep
 });
 
+const deleteDeploymentInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteDeployment = (
   idName: string,
   idDep: string,
@@ -63,10 +67,11 @@ export const fetchDeleteDeployment = (
       break;
     }
     case 400: {
-      dispatch(deleteDeploymentFailure(data.message, status, idDep));
       if (data.message === 'invalid token received') {
+        dispatch(deleteDeploymentInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(deleteDeploymentFailure(data.message, status, idDep));
       break;
     }
     default: {

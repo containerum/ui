@@ -33,6 +33,10 @@ const deleteVolumeFailure = (err, status, idVol) => ({
   idVol
 });
 
+const deleteVolumeInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteVolume = (
   idVol: string,
   axios: any,
@@ -58,9 +62,12 @@ export const fetchDeleteVolume = (
       dispatch(deleteVolumeSuccess(data, status, config.method, idVol));
       break;
     }
-    case 401: {
-      dispatch(deleteVolumeFailure(data.message, status, idVol));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(deleteVolumeInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
+      } else dispatch(deleteVolumeFailure(data.message, status, idVol));
       break;
     }
     default: {

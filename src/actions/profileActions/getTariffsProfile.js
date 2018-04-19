@@ -28,6 +28,10 @@ const getProfileTariffsFailure = err => ({
   err
 });
 
+const getProfileTariffsInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetProfileTariffs = (
   monthly: ?string,
   axios: any,
@@ -58,10 +62,11 @@ export const fetchGetProfileTariffs = (
       break;
     }
     case 400: {
-      dispatch(getProfileTariffsFailure(data.message));
       if (data.message === 'invalid token received') {
+        dispatch(getProfileTariffsInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(getProfileTariffsFailure(data.message));
       break;
     }
     default: {

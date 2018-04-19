@@ -28,6 +28,10 @@ const getDomainsFailure = err => ({
   err
 });
 
+const getDomainsInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchGetDomains = (
   idName: string,
   axios: any,
@@ -55,10 +59,11 @@ export const fetchGetDomains = (
       break;
     }
     case 400: {
-      dispatch(getDomainsRequest());
       if (data.message === 'invalid token received') {
+        dispatch(getDomainsInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else dispatch(getDomainsFailure(data.message));
       break;
     }
     default: {

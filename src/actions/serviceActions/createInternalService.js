@@ -37,6 +37,10 @@ const createInternalServiceFailure = (err, status, idSrv) => ({
   idSrv
 });
 
+const createInternalInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchCreateInternalService = (
   idName: string,
   dataSrv: Object,
@@ -86,10 +90,12 @@ export const fetchCreateInternalService = (
       break;
     }
     case 400: {
-      dispatch(createInternalServiceFailure(data.message, status, idSrv));
       if (data.message === 'invalid token received') {
+        dispatch(createInternalInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else
+        dispatch(createInternalServiceFailure(data.message, status, idSrv));
       break;
     }
     default: {

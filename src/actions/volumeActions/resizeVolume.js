@@ -34,6 +34,10 @@ const resizeVolumeFailure = (err, status, idVol) => ({
   idVol
 });
 
+const resizeVolumeInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchResizeVolume = (
   idVol: string,
   tariff: string,
@@ -67,9 +71,12 @@ export const fetchResizeVolume = (
       dispatch(push('/volumes'));
       break;
     }
-    case 401: {
-      dispatch(resizeVolumeFailure(data.message));
-      dispatch(push('/login'));
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(resizeVolumeInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
+      } else dispatch(resizeVolumeFailure(data.message, status, idVol));
       break;
     }
     default: {
