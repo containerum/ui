@@ -1260,6 +1260,19 @@ h1{
 
 }
 
+.content-block__table  .td-1-domains{
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+.content-block__table  .td-2-domains{
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
 .configmap-overflow {
   overflow: hidden;
   text-overflow: ellipsis;
