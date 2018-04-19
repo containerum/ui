@@ -1,0 +1,91 @@
+import { push } from 'react-router-redux';
+import cookie from 'react-cookies';
+
+import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import {
+  DELETE_NAMESPACE_USER_ACCESS_INVALID,
+  DELETE_NAMESPACE_USER_ACCESS_REQUESTING,
+  DELETE_NAMESPACE_USER_ACCESS_SUCCESS,
+  DELETE_NAMESPACE_USER_ACCESS_FAILURE
+} from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
+import { webApiLogin } from '../../config/index';
+
+const deleteNamespaceUserAccessInvalid = () => ({
+  type: DELETE_NAMESPACE_USER_ACCESS_INVALID
+});
+
+const deleteNamespaceUserAccessRequest = () => ({
+  type: DELETE_NAMESPACE_USER_ACCESS_REQUESTING,
+  isFetching: true
+});
+
+const deleteNamespaceUserAccessSuccess = (data, status, method, idName) => ({
+  type: DELETE_NAMESPACE_USER_ACCESS_SUCCESS,
+  isFetching: false,
+  data,
+  status,
+  method,
+  idName
+});
+
+const deleteNamespaceUserAccessFailure = (err, status, idName) => ({
+  type: DELETE_NAMESPACE_USER_ACCESS_FAILURE,
+  isFetching: false,
+  err,
+  status,
+  idName
+});
+
+export const fetchDeleteNamespaceUserAccess = (
+  idName: string,
+  username: string,
+  axios: any,
+  URL: string = webApiLogin
+): ThunkAction => async (dispatch: Dispatch) => {
+  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken')
+    ? cookie.load('accessToken')
+    : null;
+
+  dispatch(deleteNamespaceUserAccessRequest());
+  const response = await axios.delete(`${URL}/namespace/${idName}/access`, {
+    data: { username },
+    headers: {
+      'User-Client': browser,
+      'User-Token': accessToken
+    },
+    validateStatus: status => status >= 200 && status <= 505
+  });
+
+  const { status, data, config } = response;
+  // console.log('deleteNamespaceUserAccess', data);
+  switch (status) {
+    case 200: {
+      dispatch(
+        deleteNamespaceUserAccessSuccess(data, 202, config.method, username)
+      );
+      break;
+    }
+    case 400: {
+      dispatch(
+        deleteNamespaceUserAccessFailure(data.message, status, username)
+      );
+      if (data.message === 'invalid token received') {
+        dispatch(push('/login'));
+      }
+      break;
+    }
+    default: {
+      dispatch(
+        deleteNamespaceUserAccessFailure(data.message, status, username)
+      );
+    }
+  }
+  dispatch(deleteNamespaceUserAccessInvalid());
+};
+
+export const fetchDeleteNamespaceUserAccessIfNeeded = (
+  idName: string,
+  username: string
+): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
+  dispatch(fetchDeleteNamespaceUserAccess(idName, username, axios));

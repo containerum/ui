@@ -66,6 +66,9 @@ import getConfigMapsReducer from './configMapReducers/getConfigMaps';
 import getConfigMapReducer from './configMapReducers/getConfigMap';
 import createConfigMapReducer from './configMapReducers/createConfigMap';
 import deleteConfigMapReducer from './configMapReducers/deleteConfigMap';
+import getNamespaceUsersAccessReducer from './namespaceReducers/getNamespaceUsersAccess';
+import addNamespaceUserAccessReducer from './namespaceReducers/addNamespaceUserAccess';
+import deleteNamespaceUserAccessReducer from './namespaceReducers/deleteNamespaceUserAccess';
 
 const reducers = {
   loginReducer,
@@ -130,6 +133,9 @@ const reducers = {
   getConfigMapReducer,
   createConfigMapReducer,
   deleteConfigMapReducer,
+  getNamespaceUsersAccessReducer,
+  deleteNamespaceUserAccessReducer,
+  addNamespaceUserAccessReducer,
   router,
   loadingBar: loadingBarReducer
 };
