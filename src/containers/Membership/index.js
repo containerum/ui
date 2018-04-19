@@ -26,6 +26,7 @@ import {
   ADD_NAMESPACE_USER_ACCESS_SUCCESS
 } from '../../constants/namespaceConstants/addNamespaceUserAccess';
 import { DELETE_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 type Props = {
   match: Object,
@@ -33,6 +34,7 @@ type Props = {
   getNamespaceUsersAccessReducer: Object,
   addNamespaceUserAccessReducer: Object,
   deleteNamespaceUserAccessReducer: Object,
+  getProfileReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetNamespaceUsersAccessIfNeeded: (idName: string) => void,
   fetchAddNamespaceUserAccessIfNeeded: (idName: string, data: Object) => void,
@@ -67,22 +69,26 @@ class Membership extends PureComponent<Props> {
     fetchGetNamespaceUsersAccessIfNeeded(match.params.idName);
   }
   componentWillUpdate(nextProps) {
-    const { fetchGetNamespaceUsersAccessIfNeeded, match } = this.props;
+    const {
+      fetchGetNamespaceUsersAccessIfNeeded,
+      getProfileReducer,
+      match
+    } = this.props;
     if (
       this.props.getNamespaceUsersAccessReducer.readyStatus !==
         nextProps.getNamespaceUsersAccessReducer.readyStatus &&
       nextProps.getNamespaceUsersAccessReducer.readyStatus ===
-        GET_NAMESPACE_USERS_ACCESS_SUCCESS
+        GET_NAMESPACE_USERS_ACCESS_SUCCESS &&
+      getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
       if (nextProps.getNamespaceUsersAccessReducer.data.users) {
         const {
-          login,
           new_access_level: newAccessLevel
         } = nextProps.getNamespaceUsersAccessReducer.data;
         const users = nextProps.getNamespaceUsersAccessReducer.data.users.concat(
           [
             {
-              login,
+              login: nextProps.getProfileReducer.data.login,
               new_access_level: newAccessLevel
             }
           ]
@@ -356,12 +362,14 @@ const connector: Connector<{}, Props> = connect(
     getNamespaceUsersAccessReducer,
     getNamespaceReducer,
     addNamespaceUserAccessReducer,
-    deleteNamespaceUserAccessReducer
+    deleteNamespaceUserAccessReducer,
+    getProfileReducer
   }: ReduxState) => ({
     getNamespaceUsersAccessReducer,
     getNamespaceReducer,
     addNamespaceUserAccessReducer,
-    deleteNamespaceUserAccessReducer
+    deleteNamespaceUserAccessReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespaceIfNeeded: (idName: string) =>
