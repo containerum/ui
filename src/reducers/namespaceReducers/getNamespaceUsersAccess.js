@@ -12,7 +12,7 @@ import {
 import {
   ADD_NAMESPACE_USER_ACCESS_SUCCESS,
   ADD_NAMESPACE_USER_ACCESS_FAILURE
-} from '../../constants/namespaceConstants/addNamespaceAccess';
+} from '../../constants/namespaceConstants/addNamespaceUserAccess';
 
 import type { Action } from '../../types/index';
 

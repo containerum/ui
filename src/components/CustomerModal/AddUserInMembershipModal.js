@@ -1,5 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
+
+import LoadButton from '../../components/LoadButton';
 import alert from '../../images/alertAddUserMembership.svg';
 
 const customStyles = {
@@ -34,12 +36,11 @@ type Props = {
   name: string,
   accessNewUser: string,
   isOpened: boolean,
+  isFetchingAdd: boolean,
   handleInputEmailAdd: () => void,
-  onHandleAdd: (name: string) => void,
+  onHandleAdd: (idName: string, data: Object) => void,
   handleOpenCloseModal: () => void,
-  choiceAccessNewUserRead: () => void,
-  choiceAccessNewUserWrite: () => void,
-  addUserAccess: (idName: string, data: Object) => void,
+  choiceAccessNewUser: (access: string) => void,
   namespaceId: string,
   err: string
 };
@@ -48,15 +49,14 @@ const AddUserMembershipModal = ({
   type,
   name,
   isOpened,
+  isFetchingAdd,
   accessNewUser,
-  addUserAccess,
   handleInputEmailAdd,
   handleOpenCloseModal,
   onHandleAdd,
   namespaceId,
   err,
-  choiceAccessNewUserRead,
-  choiceAccessNewUserWrite
+  choiceAccessNewUser
 }: Props) => {
   const handleCloseModal = () => {
     handleOpenCloseModal();
@@ -64,8 +64,11 @@ const AddUserMembershipModal = ({
   const handleSubmitAddingEssence = e => {
     e.preventDefault();
     if (name.length >= 2) {
-      handleOpenCloseModal();
-      onHandleAdd(name);
+      const addData = {
+        username: name,
+        access: accessNewUser
+      };
+      onHandleAdd(namespaceId, addData);
     }
   };
   const handleChangeNameOfType = e => {
@@ -73,12 +76,6 @@ const AddUserMembershipModal = ({
     handleInputEmailAdd(inputValue);
   };
 
-  const styleSubmit = 'btn modal-footer-solution-select';
-  const isDisabledSubmit = false;
-  const addData = {
-    username: name,
-    access: accessNewUser
-  };
   return (
     <Modal
       isOpen={isOpened}
@@ -108,22 +105,19 @@ const AddUserMembershipModal = ({
           <span className="modal-redis-text">
             Fill in the information below to add new user
           </span>
-          {err === "User with such credentials doesn't exist" ? (
+          {err ? (
             <div className="membership-add-user-alert">
               <div className="membership-add-user-alert-item">
                 <img src={alert} alt="alert" />
               </div>
-              <div>
-                This user does not exist. User must be registered on the
-                Containerum platform.
-              </div>
+              <div>{err}</div>
             </div>
           ) : (
             ''
           )}
-          <span className="modal-redis-text">User Email adress</span>
+          <span className="modal-redis-text">User Email address</span>
           <input
-            type="text"
+            type="email"
             className="form-control volume-form-input"
             placeholder="Email"
             value={name}
@@ -150,23 +144,23 @@ const AddUserMembershipModal = ({
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={choiceAccessNewUserRead}
+                onClick={() => choiceAccessNewUser('read')}
               >
-                read
+                Read
               </button>
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={choiceAccessNewUserWrite}
+                onClick={() => choiceAccessNewUser('write')}
               >
-                write
+                Write
               </button>
             </div>
-            <div className="modal-redis-text_ligth">
-              Read - user can fully manage all Namespace objects
+            <div className="modal-redis-text_ligth" style={{ marginTop: 5 }}>
+              Read - user can only see all Namespace objects
             </div>
             <div className="modal-redis-text_ligth">
-              Write - user can only see all Namespace objects
+              Write - user can fully manage all Namespace objects
             </div>
           </div>
         </div>
@@ -179,14 +173,16 @@ const AddUserMembershipModal = ({
           >
             Cancel
           </button>
-          <button
+          <LoadButton
+            style={{
+              width: '200px',
+              height: '40px'
+            }}
             type="submit"
-            className={styleSubmit}
-            disabled={isDisabledSubmit}
-            onClick={() => addUserAccess(namespaceId, addData)}
-          >
-            Create
-          </button>
+            buttonText="Create"
+            isFetching={isFetchingAdd}
+            baseClassButton="btn modal-footer-solution-select"
+          />
         </div>
       </form>
     </Modal>

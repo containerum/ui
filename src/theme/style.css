@@ -1004,13 +1004,22 @@ h1{
   background-color: #03b5aa;
 }
 
-.namspaceinfo-badge__read{
+.namspaceinfo-badge__read {
   background-color: #406f99;
 }
 
-.namspaceinfo-badge__admin{
+.namspaceinfo-badge__owner {
   background-color: #29abe2;
 }
+
+.namspaceinfo-badge__none {
+  background-color: #ff2e2e;
+}
+
+.namspaceinfo-badge__readdelete {
+  background-color: #008080;
+}
+
 .content-block-content.pos-static {
     position: static;
 }

@@ -55,6 +55,8 @@ module.exports = {
     getDeployment: '/namespace/:idName/deployments/:idDep',
     getDeploymentLink: (idName: string, idDep: string) =>
       `/namespace/${idName}/deployments/${idDep}/pods`,
+    getMembership: '/namespace/:idName/membership',
+    getMembershipLink: (idName: string) => `/namespace/${idName}/membership`,
     createDeployment: '/namespace/:idName/createDeployment',
     createDeploymentLink: (idName: string) =>
       `/namespace/${idName}/createDeployment`,
@@ -95,8 +97,7 @@ module.exports = {
     successTicket: '/successTicket',
     account: '/account',
     billing: '/billing',
-    settings: '/settings',
-    membership: '/membership'
+    settings: '/settings'
   },
   externalLinks: {
     documentation: 'https://docs.containerum.com/docs/about',

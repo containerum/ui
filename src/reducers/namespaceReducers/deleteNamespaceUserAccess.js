@@ -3,15 +3,15 @@
 import _ from 'lodash/fp';
 
 import {
-  ADD_NAMESPACE_USER_ACCESS_INVALID,
-  ADD_NAMESPACE_USER_ACCESS_REQUESTING,
-  ADD_NAMESPACE_USER_ACCESS_SUCCESS,
-  ADD_NAMESPACE_USER_ACCESS_FAILURE
-} from '../../constants/namespaceConstants/addNamespaceUserAccess';
+  DELETE_NAMESPACE_USER_ACCESS_INVALID,
+  DELETE_NAMESPACE_USER_ACCESS_REQUESTING,
+  DELETE_NAMESPACE_USER_ACCESS_SUCCESS,
+  DELETE_NAMESPACE_USER_ACCESS_FAILURE
+} from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
 import type { Action } from '../../types/index';
 
 const initialState = {
-  readyStatus: ADD_NAMESPACE_USER_ACCESS_INVALID,
+  readyStatus: DELETE_NAMESPACE_USER_ACCESS_INVALID,
   isFetching: false,
   data: null,
   status: null,
@@ -22,9 +22,9 @@ const initialState = {
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
-    case ADD_NAMESPACE_USER_ACCESS_REQUESTING:
+    case DELETE_NAMESPACE_USER_ACCESS_REQUESTING:
       return _.assign(state, {
-        readyStatus: ADD_NAMESPACE_USER_ACCESS_REQUESTING,
+        readyStatus: DELETE_NAMESPACE_USER_ACCESS_REQUESTING,
         isFetching: action.isFetching,
         data: null,
         status: null,
@@ -32,9 +32,9 @@ export default (state = initialState, action: Action) => {
         idName: null,
         err: null
       });
-    case ADD_NAMESPACE_USER_ACCESS_SUCCESS:
+    case DELETE_NAMESPACE_USER_ACCESS_SUCCESS:
       return _.assign(state, {
-        readyStatus: ADD_NAMESPACE_USER_ACCESS_SUCCESS,
+        readyStatus: DELETE_NAMESPACE_USER_ACCESS_SUCCESS,
         isFetching: action.isFetching,
         data: action.data,
         status: action.status,
@@ -42,9 +42,9 @@ export default (state = initialState, action: Action) => {
         idName: action.idName,
         err: null
       });
-    case ADD_NAMESPACE_USER_ACCESS_FAILURE:
+    case DELETE_NAMESPACE_USER_ACCESS_FAILURE:
       return _.assign(state, {
-        readyStatus: ADD_NAMESPACE_USER_ACCESS_FAILURE,
+        readyStatus: DELETE_NAMESPACE_USER_ACCESS_FAILURE,
         isFetching: action.isFetching,
         data: null,
         status: action.status,

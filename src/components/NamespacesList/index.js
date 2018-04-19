@@ -26,7 +26,7 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
     <div className="row double">
       {data &&
         data.map(namespace => {
-          const { label } = namespace;
+          const { label, access } = namespace;
           const { memory, cpu } = namespace.resources.used;
           const {
             memory: memoryLimit,
@@ -44,10 +44,22 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
               >
                 <div className="content-block-header">
                   <div className="content-block-header-label">
-                    <div className="content-block-header-img">
+                    <div
+                      style={{ display: 'inline-block' }}
+                      className="content-block-header-img"
+                    >
                       <img src={deployment} alt="ns-icon" />
                     </div>
-                    <div className="content-block-header-label__text content-block-header-label_main">
+                    <div
+                      style={{ display: 'inline-block', maxWidth: 70 }}
+                      className={`badge namspaceinfo-badge namspaceinfo-badge__${access}`}
+                    >
+                      {access}
+                    </div>
+                    <div
+                      style={{ display: 'block' }}
+                      className="content-block-header-label__text content-block-header-label_main"
+                    >
                       {label}
                     </div>
                   </div>

@@ -7,7 +7,7 @@ import {
   ADD_NAMESPACE_USER_ACCESS_REQUESTING,
   ADD_NAMESPACE_USER_ACCESS_SUCCESS,
   ADD_NAMESPACE_USER_ACCESS_FAILURE
-} from '../../constants/namespaceConstants/addNamespaceAccess';
+} from '../../constants/namespaceConstants/addNamespaceUserAccess';
 import { webApiLogin } from '../../config/index';
 
 const addNamespaceUserAccessInvalid = () => ({
@@ -19,11 +19,12 @@ const addNamespaceUserAccessRequest = () => ({
   isFetching: true
 });
 
-const addNamespaceUserAccessSuccess = (data, status, idName) => ({
+const addNamespaceUserAccessSuccess = (data, status, method, idName) => ({
   type: ADD_NAMESPACE_USER_ACCESS_SUCCESS,
   isFetching: false,
   data,
   status,
+  method,
   idName
 });
 
@@ -37,7 +38,8 @@ const addNamespaceUserAccessFailure = (err, status, idName) => ({
 
 export const fetchAddNamespaceUserAccess = (
   idName: string,
-  data: Object,
+  dataObj: Object,
+  access: string,
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
@@ -47,10 +49,9 @@ export const fetchAddNamespaceUserAccess = (
     : null;
 
   dispatch(addNamespaceUserAccessRequest());
-  console.log('username', data.username);
   const userNeedAdd = {
-    username: data.username,
-    access: data.access
+    username: dataObj.username,
+    access: dataObj.access
   };
 
   const response = await axios.put(
@@ -64,22 +65,30 @@ export const fetchAddNamespaceUserAccess = (
       validateStatus: status => status >= 200 && status <= 505
     }
   );
-  const { status, data: dataR } = response;
-  console.log('dataR', dataR);
+  const { status, data } = response;
   switch (status) {
-    case 201: {
-      dispatch(addNamespaceUserAccessSuccess(dataR, status));
+    case 200: {
+      dispatch(
+        addNamespaceUserAccessSuccess(
+          data,
+          access === 'change' ? 202 : 201,
+          access === 'change' ? 'put' : 'delete',
+          dataObj.username
+        )
+      );
       break;
     }
     case 400: {
-      dispatch(addNamespaceUserAccessFailure(dataR.message, status));
+      dispatch(addNamespaceUserAccessFailure(data.message, status));
       if (data.message === 'invalid token received') {
         dispatch(push('/login'));
       }
       break;
     }
     default: {
-      dispatch(addNamespaceUserAccessFailure(dataR.message, status));
+      dispatch(
+        addNamespaceUserAccessFailure(data.message, status, dataObj.username)
+      );
     }
   }
   dispatch(addNamespaceUserAccessInvalid());
@@ -87,6 +96,7 @@ export const fetchAddNamespaceUserAccess = (
 
 export const fetchAddNamespaceUserAccessIfNeeded = (
   idName: string,
-  data: Object
+  dataObj: Object,
+  access: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchAddNamespaceUserAccess(idName, data, axios));
+  dispatch(fetchAddNamespaceUserAccess(idName, dataObj, access, axios));

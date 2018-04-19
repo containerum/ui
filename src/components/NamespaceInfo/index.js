@@ -5,30 +5,18 @@ import { NavLink, Link } from 'react-router-dom';
 
 import { routerLinks } from '../../config';
 import ns from '../../images/n.png';
-// import type { ReduxState } from '../../types';
-// import * as actionDeleteNamespace from '../../actions/namespaceActions/deleteNamespace';
-// import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
-// import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
-// import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 
 type Props = {
   data: Object,
   idName: string,
-  dataAccess: Object,
   handleDeleteNamespace: (idName: string) => void
 };
 
-const NamespaceInfo = ({
-  data,
-  idName,
-  handleDeleteNamespace,
-  dataAccess
-}: Props) => {
+const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
   const { memory, cpu } = data.resources.used;
   const { memory: memoryLimit, cpu: cpuLimit } = data.resources.hard;
-  const owner = 'owner';
-  const read = 'read';
-  const write = 'write';
+  const newAccessLevel = data.access;
+  const ownerPermissions = newAccessLevel === 'owner';
   return (
     <div className="content-block-container content-block_common-statistic container">
       <div className="content-block-header">
@@ -37,24 +25,12 @@ const NamespaceInfo = ({
             {idName}
           </div>
           <div className="content-block-header-label__descript">namespace</div>
-
-          {dataAccess.new_access_level === owner && (
-            <div className="badge namspaceinfo-badge namspaceinfo-badge__admin">
-              access: {dataAccess.new_access_level}
-            </div>
-          )}
-
-          {dataAccess.new_access_level === read && (
-            <div className="badge namspaceinfo-badge namspaceinfo-badge__read">
-              access: {dataAccess.new_access_level}
-            </div>
-          )}
-
-          {dataAccess.new_access_level === write && (
-            <div className="badge namspaceinfo-badge namspaceinfo-badge__write">
-              access: {dataAccess.new_access_level}
-            </div>
-          )}
+          <div
+            style={{ display: 'inline-block' }}
+            className={`badge namspaceinfo-badge namspaceinfo-badge__${newAccessLevel}`}
+          >
+            access: {newAccessLevel}
+          </div>
         </div>
         <div className="content-block-header-extra-panel">
           <div className="content-block-header-extra-panel dropdown no-arrow">
@@ -108,9 +84,9 @@ const NamespaceInfo = ({
           </div>
           <div className="content-block__info-text">- / -</div>
         </div>
-        {dataAccess.new_access_level === owner && (
+        {ownerPermissions && (
           <div className="content-block__info-item content-block__info-item_namspaceinfo">
-            <Link to={routerLinks.membership}>
+            <Link to={routerLinks.getMembershipLink(idName)}>
               <div className="content-block__info-text content-block__info-text_namspaceinfo">
                 Manage Team
               </div>

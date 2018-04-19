@@ -1,24 +1,45 @@
 import React, { PureComponent } from 'react';
 import Helmet from 'react-helmet';
-import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-import HeaderPage from '../Header/index';
-import FooterPage from '../Footer/index';
-import DeleteModal from '../../components/CustomerModal/DeleteModal';
+import { routerLinks } from '../../config';
+import Notification from '../Notification';
+import DeleteUserMembershipModal from '../../components/CustomerModal/DeleteUserMembershipModal';
 import AddUserInMembershipModal from '../../components/CustomerModal/AddUserInMembershipModal';
+import MembershipList from '../../components/MembershipList';
 import type { Dispatch, ReduxState } from '../../types';
+import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
+import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
 import * as actionAddNamespaceUserAccessIfNeeded from '../../actions/namespaceActions/addNamespaceUserAccess';
-import { ADD_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceConstants/addNamespaceAccess';
-import { GET_CONFIG_MAPS_SUCCESS } from '../../constants/configMapConstants/getConfigMaps';
-// import { DELETE_NAMESPACE_SUCCESS } from "../../constants/namespaceConstants/deleteNamespace";
-// import type { Namespace as NamespaceType } from "../../types";
+import * as actionDeleteNamespaceUserAccessIfNeeded from '../../actions/namespaceActions/deleteNamespaceUserAccess';
+// import { ADD_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceConstants/addNamespaceAccess';
+import {
+  GET_NAMESPACE_USERS_ACCESS_INVALID,
+  GET_NAMESPACE_USERS_ACCESS_FAILURE,
+  GET_NAMESPACE_USERS_ACCESS_REQUESTING,
+  GET_NAMESPACE_USERS_ACCESS_SUCCESS
+} from '../../constants/namespaceConstants/getNamespaceUsersAccess';
+import {
+  ADD_NAMESPACE_USER_ACCESS_FAILURE,
+  ADD_NAMESPACE_USER_ACCESS_SUCCESS
+} from '../../constants/namespaceConstants/addNamespaceUserAccess';
+import { DELETE_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
 
 type Props = {
+  match: Object,
+  history: Object,
   getNamespaceUsersAccessReducer: Object,
-  getNamespaceReducer: Object,
-  fetchAddNamespaceUserAccessIfNeeded: (idName: string, data: Object) => void
+  addNamespaceUserAccessReducer: Object,
+  deleteNamespaceUserAccessReducer: Object,
+  fetchGetNamespaceIfNeeded: (idName: string) => void,
+  fetchGetNamespaceUsersAccessIfNeeded: (idName: string) => void,
+  fetchAddNamespaceUserAccessIfNeeded: (idName: string, data: Object) => void,
+  fetchDeleteNamespaceUserAccessIfNeeded: (
+    idName: string,
+    username: string
+  ) => void
 };
 
 class Membership extends PureComponent<Props> {
@@ -30,62 +51,117 @@ class Membership extends PureComponent<Props> {
       isOpen: false,
       isOpenAdd: false,
       idUser: null,
-      accessNewUser: 'Read or Write',
-      accessUser: 'Read',
-      membersList: []
+      accessNewUser: 'read',
+      accessUser: 'read',
+      membersList: [],
+      errAdd: null
     };
   }
-
-  componentWillMount(nextProps) {
-    console.log(
-      'reducer',
-      this.props.getNamespaceUsersAccessReducer.readyStatus
-    );
+  componentDidMount() {
+    const {
+      fetchGetNamespaceIfNeeded,
+      fetchGetNamespaceUsersAccessIfNeeded,
+      match
+    } = this.props;
+    fetchGetNamespaceIfNeeded(match.params.idName);
+    fetchGetNamespaceUsersAccessIfNeeded(match.params.idName);
+  }
+  componentWillUpdate(nextProps) {
+    const { fetchGetNamespaceUsersAccessIfNeeded, match } = this.props;
     if (
       this.props.getNamespaceUsersAccessReducer.readyStatus !==
         nextProps.getNamespaceUsersAccessReducer.readyStatus &&
       nextProps.getNamespaceUsersAccessReducer.readyStatus ===
-        GET_CONFIG_MAPS_SUCCESS
+        GET_NAMESPACE_USERS_ACCESS_SUCCESS
+    ) {
+      if (nextProps.getNamespaceUsersAccessReducer.data.users) {
+        const {
+          login,
+          new_access_level: newAccessLevel
+        } = nextProps.getNamespaceUsersAccessReducer.data;
+        const users = nextProps.getNamespaceUsersAccessReducer.data.users.concat(
+          [
+            {
+              login,
+              new_access_level: newAccessLevel
+            }
+          ]
+        );
+        this.setState({
+          ...this.state,
+          membersList: users.sort(
+            (a, b) =>
+              a.new_access_level === 'owner' || b.new_access_level === 'owner'
+          )
+        });
+      } else {
+        this.props.history.push(
+          routerLinks.namespaceLink(this.props.match.params.idName)
+        );
+      }
+    }
+    if (
+      (this.props.addNamespaceUserAccessReducer.readyStatus !==
+        nextProps.addNamespaceUserAccessReducer.readyStatus &&
+        nextProps.addNamespaceUserAccessReducer.readyStatus ===
+          ADD_NAMESPACE_USER_ACCESS_SUCCESS) ||
+      (this.props.deleteNamespaceUserAccessReducer.readyStatus !==
+        nextProps.deleteNamespaceUserAccessReducer.readyStatus &&
+        nextProps.deleteNamespaceUserAccessReducer.readyStatus ===
+          DELETE_NAMESPACE_USER_ACCESS_SUCCESS)
     ) {
       this.setState({
         ...this.state,
-        displayedConfigMaps: nextProps.getNamespaceUsersAccessReducer.data.users
+        isOpen: false,
+        idUser: null,
+        inputEmailDelete: '',
+        isOpenAdd: false,
+        inputEmailAdd: '',
+        errAdd: null
+      });
+      fetchGetNamespaceUsersAccessIfNeeded(match.params.idName);
+    }
+    if (
+      this.props.addNamespaceUserAccessReducer.readyStatus !==
+        nextProps.addNamespaceUserAccessReducer.readyStatus &&
+      nextProps.addNamespaceUserAccessReducer.readyStatus ===
+        ADD_NAMESPACE_USER_ACCESS_FAILURE
+    ) {
+      const { err: errAdd } = nextProps.addNamespaceUserAccessReducer;
+      this.setState({
+        errAdd
       });
     }
   }
-
-  onHandleAdd = () => {
-    console.log('azazaza');
-  };
-
-  choiceAccessNewUserRead = () => {
+  choiceAccessNewUser = access => {
     this.setState({
       ...this.state,
-      accessNewUser: 'read'
+      accessNewUser: access
     });
   };
-
-  choiceAccessNewUserWrite = () => {
-    this.setState({
-      ...this.state,
-      accessNewUser: 'write'
-    });
+  changeAccessUser = (login, access) => {
+    const { fetchAddNamespaceUserAccessIfNeeded, match } = this.props;
+    const user = this.state.membersList.find(member => member.login === login);
+    const { new_access_level: newAccessLevel } = user;
+    if (access !== newAccessLevel) {
+      this.setState(
+        {
+          ...this.state,
+          accessUser: access
+        },
+        () => {
+          fetchAddNamespaceUserAccessIfNeeded(
+            match.params.idName,
+            {
+              username: login,
+              access
+            },
+            'change'
+          );
+        }
+      );
+    }
   };
-
-  changeAccessUserRead = () => {
-    this.setState({
-      ...this.state,
-      accessUser: 'read'
-    });
-  };
-
-  changeAccessUserWrite = () => {
-    this.setState({
-      ...this.state,
-      accessUser: 'write'
-    });
-  };
-
   handleDeleteDMembers = idUser => {
     this.setState({
       ...this.state,
@@ -93,36 +169,34 @@ class Membership extends PureComponent<Props> {
       isOpen: true
     });
   };
-
   handleAddMembersAdd = () => {
     this.setState({
       ...this.state,
       isOpenAdd: true
     });
   };
-
   handleOpenCloseModal = () => {
     this.setState({
       ...this.state,
       isOpen: !this.state.isOpen,
-      idUser: null
+      idUser: null,
+      inputEmailDelete: ''
     });
   };
-
   handleOpenCloseModalAdd = () => {
     this.setState({
       isOpenAdd: !this.state.isOpenAdd,
-      accessNewUser: 'Read or Write'
+      accessNewUser: 'read',
+      inputEmailAdd: '',
+      errAdd: null
     });
   };
-
   handleInputEmailDelete = inputEmailDelete => {
     this.setState({
       ...this.state,
       inputEmailDelete
     });
   };
-
   handleInputEmailAdd = inputEmailAdd => {
     this.setState({
       ...this.state,
@@ -130,66 +204,95 @@ class Membership extends PureComponent<Props> {
     });
   };
 
-  renderSuccessUserAccess = () => {
-    const { getNamespaceUsersAccessReducer } = this.props;
+  renderMembershipList = () => {
+    const { getNamespaceUsersAccessReducer, match } = this.props;
     if (
+      !getNamespaceUsersAccessReducer.readyStatus ||
       getNamespaceUsersAccessReducer.readyStatus ===
-      ADD_NAMESPACE_USER_ACCESS_SUCCESS
+        GET_NAMESPACE_USERS_ACCESS_INVALID ||
+      getNamespaceUsersAccessReducer.readyStatus ===
+        GET_NAMESPACE_USERS_ACCESS_REQUESTING
     ) {
       return (
         <div
-          className="container"
           style={{
-            padding: '0',
-            marginTop: '17px',
-            marginBottom: '30px',
-            backgroundColor: 'transparent'
+            height: '200px',
+            margin: '10px 0',
+            borderRadius: '2px',
+            backgroundColor: '#f6f6f6'
           }}
-        >
-          <img
-            src={require('../../images/alertAddUserMembership.svg')}
-            alt="ns-dep"
-            style={{ width: '100%' }}
-          />
-        </div>
+        />
       );
     }
-    return null;
+
+    if (
+      getNamespaceUsersAccessReducer.readyStatus ===
+      GET_NAMESPACE_USERS_ACCESS_FAILURE
+    ) {
+      return <p>Oops, Failed to load data of Namespaces!</p>;
+    }
+
+    return (
+      <MembershipList
+        idName={match.params.idName}
+        membersList={this.state.membersList}
+        changeAccessUser={this.changeAccessUser}
+        handleDeleteDMembers={this.handleDeleteDMembers}
+      />
+    );
   };
 
   render() {
     const {
-      getNamespaceUsersAccessReducer,
-      getNamespaceReducer,
-      fetchAddNamespaceUserAccessIfNeeded
+      match,
+      deleteNamespaceUserAccessReducer,
+      addNamespaceUserAccessReducer,
+      fetchAddNamespaceUserAccessIfNeeded,
+      fetchDeleteNamespaceUserAccessIfNeeded
     } = this.props;
+    const {
+      status: statusAdd,
+      idName: idNameAdd,
+      isFetching: isFetchingAdd,
+      method: methodAdd
+    } = addNamespaceUserAccessReducer;
+    const {
+      status: statusDelete,
+      idName: idNameDelete,
+      err: errDelete
+    } = deleteNamespaceUserAccessReducer;
+    const { idName } = match.params;
     return (
       <div>
-        {this.renderSuccessUserAccess()}
-        <Helmet title="Membership [namspace]" />
-        <HeaderPage />
-        <DeleteModal
-          type="Delete USER ACCESS"
+        <Helmet title={`Membership of ${idName}`} />
+        <Notification
+          status={statusDelete}
+          name={idNameDelete}
+          errorMessage={errDelete}
+        />
+        <Notification status={statusAdd} name={idNameAdd} method={methodAdd} />
+        <DeleteUserMembershipModal
+          type="Delete User access"
           name={this.state.inputEmailDelete}
           isOpened={this.state.isOpen}
           typeName={this.state.idUser}
+          idName={idName}
           handleInputEmailDelete={this.handleInputEmailDelete}
           handleOpenCloseModal={this.handleOpenCloseModal}
-          onHandleAdd={this.handleDeleteDMembers}
+          onHandleDelete={fetchDeleteNamespaceUserAccessIfNeeded}
         />
         <AddUserInMembershipModal
-          type="Add USER"
+          type="Add User"
           name={this.state.inputEmailAdd}
           isOpened={this.state.isOpenAdd}
           handleInputEmailAdd={this.handleInputEmailAdd}
           handleOpenCloseModal={this.handleOpenCloseModalAdd}
-          onHandleAdd={this.onHandleAdd}
+          onHandleAdd={fetchAddNamespaceUserAccessIfNeeded}
+          isFetchingAdd={isFetchingAdd}
           accessNewUser={this.state.accessNewUser}
-          choiceAccessNewUserRead={this.choiceAccessNewUserRead}
-          choiceAccessNewUserWrite={this.choiceAccessNewUserWrite}
-          addUserAccess={fetchAddNamespaceUserAccessIfNeeded}
-          namespaceId={getNamespaceReducer.idName}
-          err={getNamespaceUsersAccessReducer.err}
+          choiceAccessNewUser={this.choiceAccessNewUser}
+          namespaceId={match.params.idName}
+          err={this.state.errAdd}
         />
         <div className="content-block">
           <div className="container no-back">
@@ -203,9 +306,12 @@ class Membership extends PureComponent<Props> {
                   >
                     <div className="content-block-header">
                       <div className="content-block-header-label__text content-block-header-label_main__membership content-block-header-label_main content-block-header-label__text_namspace-info">
-                        {getNamespaceReducer.idName}
+                        {idName}
                       </div>
-                      <div className="content-block-header-nav">
+                      <div
+                        className="content-block-header-nav"
+                        style={{ marginBottom: 20 }}
+                      >
                         <ul
                           className="content-block-menu nav nav-pills content-block-menu__membership"
                           role="tablist"
@@ -215,12 +321,12 @@ class Membership extends PureComponent<Props> {
                             className="content-block-menu__li content-block-menu__li_membership nav-item"
                             style={{ width: 'auto' }}
                           >
-                            <Link
-                              to="/dashboard"
+                            <NavLink
+                              to={routerLinks.getMembershipLink(idName)}
                               className="content-block-menu__link"
                             >
                               Users
-                            </Link>
+                            </NavLink>
                           </li>
                           <li className="membership-btn-container">
                             <button
@@ -232,86 +338,7 @@ class Membership extends PureComponent<Props> {
                           </li>
                         </ul>
                       </div>
-                      <div className="tab-content">
-                        <div className="tab-pane deployments active">
-                          <table
-                            className="content-block__table table"
-                            width="1170"
-                          >
-                            <thead>
-                              <tr>
-                                <td className="td-2__membership td-3__no-paddingLeft">
-                                  Name
-                                </td>
-                                <td className="td-2__membership td-3__no-paddingLeft">
-                                  Email
-                                </td>
-                                <td className="td-3__no-paddingLeft">
-                                  Permission
-                                </td>
-                                <td className="td-1" />
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {this.state.membersList.map(user => (
-                                <tr key={user.create_time}>
-                                  <td className="td-2__membership td-3__no-paddingLeft">
-                                    {user.login}
-                                  </td>
-                                  <td className="td-2__membership td-3__no-paddingLeft">
-                                    {user.login}
-                                  </td>
-                                  <td className="td-3__no-paddingLeft td-3-flex">
-                                    <div>{user.new_access_level}</div>
-                                    <div style={{ paddingLeft: '50px' }}>
-                                      <i
-                                        className="content-block-table__more  dropdown-toggle"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                        style={{ cursor: 'pointer' }}
-                                      />
-                                      <ul
-                                        className="dropdown-menu dropdown-menu-right"
-                                        role="menu"
-                                      >
-                                        <button
-                                          className="dropdown-item"
-                                          onClick={this.changeAccessUserWrite}
-                                        >
-                                          Write
-                                        </button>
-                                        <button
-                                          className="dropdown-item"
-                                          onClick={this.changeAccessUserRead}
-                                        >
-                                          Read
-                                        </button>
-                                      </ul>
-                                    </div>
-                                  </td>
-                                  <td
-                                    className="td-1"
-                                    onClick={() =>
-                                      this.handleDeleteDMembers(user.login)
-                                    }
-                                  >
-                                    <div className="membership-item">
-                                      <i
-                                        className="material-icons"
-                                        role="presentation"
-                                      >
-                                        delete
-                                      </i>
-                                    </div>
-                                  </td>
-                                </tr>
-                              ))}
-                              -{' '}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
+                      {this.renderMembershipList()}
                     </div>
                   </div>
                 </div>
@@ -319,23 +346,52 @@ class Membership extends PureComponent<Props> {
             </div>
           </div>
         </div>
-        <FooterPage />
       </div>
     );
   }
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getNamespaceUsersAccessReducer, getNamespaceReducer }: ReduxState) => ({
+  ({
     getNamespaceUsersAccessReducer,
-    getNamespaceReducer
+    getNamespaceReducer,
+    addNamespaceUserAccessReducer,
+    deleteNamespaceUserAccessReducer
+  }: ReduxState) => ({
+    getNamespaceUsersAccessReducer,
+    getNamespaceReducer,
+    addNamespaceUserAccessReducer,
+    deleteNamespaceUserAccessReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchAddNamespaceUserAccessIfNeeded: (idName: string, date: Object) =>
+    fetchGetNamespaceIfNeeded: (idName: string) =>
+      dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
+    fetchGetNamespaceUsersAccessIfNeeded: (idName: string) =>
+      dispatch(
+        actionGetNamespaceUsersAccess.fetchGetNamespaceUsersAccessIfNeeded(
+          idName
+        )
+      ),
+    fetchAddNamespaceUserAccessIfNeeded: (
+      idName: string,
+      date: Object,
+      access: string
+    ) =>
       dispatch(
         actionAddNamespaceUserAccessIfNeeded.fetchAddNamespaceUserAccessIfNeeded(
           idName,
-          date
+          date,
+          access
+        )
+      ),
+    fetchDeleteNamespaceUserAccessIfNeeded: (
+      idName: string,
+      username: string
+    ) =>
+      dispatch(
+        actionDeleteNamespaceUserAccessIfNeeded.fetchDeleteNamespaceUserAccessIfNeeded(
+          idName,
+          username
         )
       )
   })

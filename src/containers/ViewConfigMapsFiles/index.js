@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 // import { Base64 } from 'js-base64';
 
 import type { Dispatch, ReduxState } from '../../types';
+import { routerLinks } from '../../config';
 import * as actionGetConfigMap from '../../actions/configMapActions/getConfigMap';
 import ConfigMapFile from '../../components/ConfigMapFile';
 import {
@@ -19,7 +21,6 @@ import arrow from '../../images/arrowBack.svg';
 type Props = {
   getConfigMapReducer: Object,
   fetchGetConfigMapIfNeeded: (idName: string, idCnf: string) => void,
-  history: Object,
   match: Object
 };
 
@@ -126,8 +127,8 @@ class ConfigMaps extends PureComponent<Props> {
             match.params.idName
           }`}
         />
-        <div
-          onClick={() => this.props.history.goBack()}
+        <Link
+          to={routerLinks.getConfigMapsLink(match.params.idName)}
           style={{
             cursor: 'pointer'
           }}
@@ -149,7 +150,7 @@ class ConfigMaps extends PureComponent<Props> {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
         <div className="content-block">
           <div className="container no-back">
             <div className="row double two-columns">

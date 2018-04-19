@@ -52,7 +52,6 @@ export const fetchGetNamespaceUsersAccess = (
     validateStatus: status => status >= 200 && status <= 505
   });
   const { status, data } = response;
-  console.log('data', data);
   switch (status) {
     case 200: {
       dispatch(getNamespaceUsersAccessSuccess(data, status, idName));

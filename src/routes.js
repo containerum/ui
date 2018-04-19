@@ -372,6 +372,11 @@ export default [
     component: ViewConfigMapsFilesInfo
   },
   {
+    path: routerLinks.getMembership,
+    include: true,
+    component: MembershipInfo
+  },
+  {
     path: routerLinks.login,
     component: Login
   },
@@ -394,10 +399,6 @@ export default [
   {
     path: routerLinks.checkEmail,
     component: CheckEmail
-  },
-  {
-    path: routerLinks.membership,
-    component: MembershipInfo
   },
   {
     path: '*',
