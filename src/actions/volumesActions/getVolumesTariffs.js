@@ -1,6 +1,6 @@
 /* @flow */
 
-// import { push } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type {
@@ -65,6 +65,8 @@ export const fetchGetVolumesTariffs = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(getVolumesTariffsInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(getVolumesTariffsFailure(data.message));
       break;
     }

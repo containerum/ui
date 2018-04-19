@@ -90,6 +90,8 @@ export const fetchCreateNamespace = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(createNamespaceInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(createNamespaceFailure(data.message));
       break;
     }

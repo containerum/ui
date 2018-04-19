@@ -32,9 +32,9 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
           <thead style={{ height: '30px' }}>
             <tr>
               <td className="td-1-domains">Domain</td>
-              <td className="td-2-domains">Service</td>
-              <td className="td-3-domains">Namespace</td>
-              <td className="td-4-domains" />
+              <td className="td-1-domains">Service</td>
+              <td className="td-2-domains">Namespace</td>
+              <td className="td-10" />
             </tr>
           </thead>
           <tbody className="domains" style={{ overflow: 'auto' }}>
@@ -64,7 +64,7 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
                           {host}
                         </a>
                       </td>
-                      <td className="td-2-domains">
+                      <td className="td-1-domains">
                         <Link
                           style={{ color: '#29abe2' }}
                           to={routerLinks.getServiceLink(ingressName, srvName)}
@@ -72,7 +72,7 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
                           {srvName}
                         </Link>
                       </td>
-                      <td className="td-3-domains">
+                      <td className="td-2-domains">
                         <Link
                           style={{ color: '#29abe2' }}
                           to={routerLinks.namespaceLink(ingressName)}

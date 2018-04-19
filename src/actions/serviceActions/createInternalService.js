@@ -1,6 +1,6 @@
 /* @flow */
 
-// import { push } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -92,6 +92,8 @@ export const fetchCreateInternalService = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(createInternalInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else
         dispatch(createInternalServiceFailure(data.message, status, idSrv));
       break;

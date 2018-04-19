@@ -88,6 +88,8 @@ export const fetchCreateVolume = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(createVolumeInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(createVolumeFailure(data.message, status, idVol));
       break;
     }

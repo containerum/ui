@@ -1,6 +1,6 @@
 /* @flow */
 
-// import { push } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -73,6 +73,8 @@ export const fetchChangeProfileInfo = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(changeProfileInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else
         dispatch(changeProfileInfoFailure(data.message, status, config.method));
       break;

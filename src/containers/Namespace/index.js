@@ -10,6 +10,7 @@ import _ from 'lodash/fp';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionDeleteNamespace from '../../actions/namespaceActions/deleteNamespace';
+
 import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
@@ -96,7 +97,6 @@ export class Namespace extends PureComponent<Props> {
 
   renderNamespaceInfo = () => {
     const { getNamespacesReducer, deleteNamespaceReducer, match } = this.props;
-
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||

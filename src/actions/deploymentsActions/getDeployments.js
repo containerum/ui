@@ -68,6 +68,8 @@ export const fetchGetDeployments = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(getDeploymentsInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(getDeploymentsFailure(data.message));
       break;
     }

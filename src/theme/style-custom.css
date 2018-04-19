@@ -65,10 +65,10 @@ input:invalid {
 .content-block-container {
     padding: 25px 30px 25px 30px;
 }
-.content-block-container__tools {
-  /*padding: 25px 0 25px 0;*/
-  padding: 25px 30px 25px 30px;
-}
+/*.content-block-container__tools {*/
+  /*!*padding: 25px 0 25px 0;*!*/
+  /*padding: 25px 30px 25px 30px;*/
+/*}*/
 
 .content-block-container__tools:active {
   outline: 2px solid #29abe2 !important;
@@ -100,7 +100,7 @@ input:invalid {
 
 .card-container__tools {
   min-height: 260px !important;
-  min-width: 340px !important;
+  max-width: 370px !important;
 }
 .card-container__tools_not-active:hover {
   cursor: not-allowed !important;
@@ -144,6 +144,11 @@ input:invalid {
 .dropdown-item.active,
 .dropdown-item:active {
     background-color: #29abe2;
+}
+.dropdown-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Country selector*/

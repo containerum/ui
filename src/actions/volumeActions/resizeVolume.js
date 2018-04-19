@@ -74,6 +74,8 @@ export const fetchResizeVolume = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(resizeVolumeInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(resizeVolumeFailure(data.message, status, idVol));
       break;
     }
