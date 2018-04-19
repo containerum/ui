@@ -1,6 +1,6 @@
 /* @flow */
 
-// import { push } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
@@ -73,6 +73,8 @@ export const fetchDeleteAccount = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(deleteAccountInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(deleteAccountFailure(data.message, status));
       break;
     }

@@ -65,6 +65,8 @@ export const fetchDeleteImageToken = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(deleteImageTokenInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(deleteImageTokenFailure(data.message, status, label));
       break;
     }

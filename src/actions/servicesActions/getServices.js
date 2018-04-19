@@ -65,6 +65,8 @@ export const fetchGetServices = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(getServicesInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(getServicesFailure(data.message, status, idName));
       break;
     }

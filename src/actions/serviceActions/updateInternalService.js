@@ -93,6 +93,8 @@ export const fetchUpdateInternalService = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(updateInternalInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else
         dispatch(updateInternalServiceFailure(data.message, status, idSrv));
       break;

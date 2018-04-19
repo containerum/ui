@@ -36,6 +36,10 @@ const deleteNamespaceUserAccessFailure = (err, status, idName) => ({
   idName
 });
 
+const deleteNamespaceUserAccessInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
 export const fetchDeleteNamespaceUserAccess = (
   idName: string,
   username: string,
@@ -67,12 +71,14 @@ export const fetchDeleteNamespaceUserAccess = (
       break;
     }
     case 400: {
-      dispatch(
-        deleteNamespaceUserAccessFailure(data.message, status, username)
-      );
       if (data.message === 'invalid token received') {
+        dispatch(deleteNamespaceUserAccessInvalidToken());
+      } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      }
+      } else
+        dispatch(
+          deleteNamespaceUserAccessFailure(data.message, status, username)
+        );
       break;
     }
     default: {

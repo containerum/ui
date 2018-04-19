@@ -98,6 +98,8 @@ export const fetchCreateDomain = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(createDomainInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(createDomainFailure(data.message, status, idSrv));
       break;
     }

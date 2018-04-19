@@ -137,6 +137,8 @@ export const fetchUpdateDeployment = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(updateDeploymentInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(updateDeploymentFailure(data.message, status, data));
       break;
     }

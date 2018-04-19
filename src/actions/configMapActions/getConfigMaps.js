@@ -76,6 +76,8 @@ export const fetchGetConfigMaps = (
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(getConfigMapsInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push('/login'));
       } else dispatch(getConfigMapsFailure(data.message, status));
       break;
     }
