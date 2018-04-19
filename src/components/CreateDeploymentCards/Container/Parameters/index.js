@@ -38,19 +38,25 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
         <InputControl
           value={limits.cpu}
           id={`cpu${id}`}
-          type="text"
-          pattern="^0.[0-9]*$|^\d+(.\d+)?m$"
+          type="number"
+          pattern="(3000|[12][0-9]{3}|[1-9][0-9]{1,2})"
           required
           baseClassName="form-group__input-text form-control customInput"
           baseClassNameLabel={`form-group__label ${limits.cpu &&
             'form-group__label-always-onfocus'}`}
           labelText="CPU"
-          title="Example: 0.3 or 300m"
-          textHelper="Example: 0.3 or 300m"
+          title="Range: 10 - 3000"
+          textHelper="Range: 10 - 3000"
           baseClassNameHelper="form-group__helper"
-          handleChangeInput={e =>
-            handleChangeInputParameters(e.target.value, id, index, 'cpu')
-          }
+          handleChangeInput={e => {
+            const cpuValue = parseInt(e.target.value, 10);
+            handleChangeInputParameters(
+              Number.isInteger(cpuValue) ? cpuValue : '',
+              id,
+              index,
+              'cpu'
+            );
+          }}
         />
       </div>
 
@@ -58,19 +64,25 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
         <InputControl
           value={limits.memory}
           id={`ram${id}`}
-          type="text"
-          pattern="^\d+(.\d+)?(Mi|Gi)$"
+          type="number"
+          pattern="(8000|[1-7][0-9]{3}|[1-9][0-9]{1,2})"
           required
           baseClassName="form-group__input-text form-control customInput"
           baseClassNameLabel={`form-group__label ${limits.memory &&
             'form-group__label-always-onfocus'}`}
           labelText="RAM"
-          title="Example 0.5Gi or 512Mi"
-          textHelper="Example 0.5Gi or 512Mi"
+          title="Range: 10 - 8000"
+          textHelper="Range: 10 - 8000"
           baseClassNameHelper="form-group__helper"
-          handleChangeInput={e =>
-            handleChangeInputParameters(e.target.value, id, index, 'memory')
-          }
+          handleChangeInput={e => {
+            const cpuValue = parseInt(e.target.value, 10);
+            handleChangeInputParameters(
+              Number.isInteger(cpuValue) ? cpuValue : '',
+              id,
+              index,
+              'memory'
+            );
+          }}
         />
       </div>
     </div>

@@ -97,6 +97,8 @@ h1{
 
 .tools__card{
   padding-left: 0;
+  padding-right: 30px;
+
 }
 
 .tools__card_center {
@@ -1093,8 +1095,8 @@ h1{
     padding: 0;
 }
 .content-block-content__tools {
-  padding-left: 13px !important;
-  padding-right: 13px !important;
+  /*padding-left: 13px !important;*/
+  /*padding-right: 13px !important;*/
   padding-top: 15px;
 }
 .content-block-content.card-block.card-block2dollars {
@@ -1174,6 +1176,11 @@ h1{
   color:#333;
   margin: -5px 0 5px 0;
   font-weight: 300;
+  padding: 0 45px 0 45px;
+}
+
+.content-block__info-name_tools-wb{
+  padding: 0 40px 0 40px !important;
 }
 
 .content-block__info-text{
@@ -1387,6 +1394,19 @@ h1{
   width: 280px;
 }
 .content-block__table  .td-9 span{
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.content-block__table  .td-1-domains{
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+.content-block__table  .td-2-domains{
+  width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
 
