@@ -175,7 +175,6 @@ const AddUserMembershipModal = ({
           </button>
           <LoadButton
             style={{
-              width: '200px',
               height: '40px'
             }}
             type="submit"
