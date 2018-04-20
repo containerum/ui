@@ -41,9 +41,14 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           type="number"
           pattern="(3000|[12][0-9]{3}|[1-9][0-9]{1,2})"
           required
+          min="10"
+          max="3000"
           baseClassName="form-group__input-text form-control customInput"
-          baseClassNameLabel={`form-group__label ${limits.cpu &&
-            'form-group__label-always-onfocus'}`}
+          baseClassNameLabel={`form-group__label ${
+            limits.cpu || limits.cpu === 0
+              ? 'form-group__label-always-onfocus'
+              : ''
+          }`}
           labelText="CPU"
           title="Range: 10 - 3000"
           textHelper="Range: 10 - 3000"
@@ -67,9 +72,14 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           type="number"
           pattern="(8000|[1-7][0-9]{3}|[1-9][0-9]{1,2})"
           required
+          min="10"
+          max="8000"
           baseClassName="form-group__input-text form-control customInput"
-          baseClassNameLabel={`form-group__label ${limits.memory &&
-            'form-group__label-always-onfocus'}`}
+          baseClassNameLabel={`form-group__label ${
+            limits.memory || limits.memory === 0
+              ? 'form-group__label-always-onfocus'
+              : ''
+          }`}
           labelText="RAM"
           title="Range: 10 - 8000"
           textHelper="Range: 10 - 8000"
