@@ -5,7 +5,7 @@ export const GET_SOLUTIONS_FAILURE = 'GET_SOLUTIONS_FAILURE';
 
 export const solutionsArray = [
   {
-    URL: 'https://github.com/containerum/redmine-postgresql-solution%20',
+    URL: 'https://github.com/containerum/redmine-postgresql-solution',
     CPU: '300m',
     Images: 'redmine;postgres',
     RAM: '256Mi',

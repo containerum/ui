@@ -36,22 +36,22 @@ class Notification extends PureComponent<Props> {
       nextProps.name !== this.props.name
     ) {
       if (nextProps.method === 'put') {
-        toastr.success(`${nextProps.name} was updated`, 'Updated Success');
+        toastr.success(`${nextProps.name} was updated`, 'Successfully updated');
       } else {
-        toastr.success(`${nextProps.name} was deleted`, 'Deleted Success');
+        toastr.success(`${nextProps.name} was deleted`, 'Successfully deleted');
       }
     } else if (
       nextProps.status === 202 &&
       nextProps.name === 'Password' &&
       this.props.token !== nextProps.token
     ) {
-      toastr.success(`${nextProps.name} was updated`, 'Updated Success');
+      toastr.success(`${nextProps.name} was updated`, 'Successfully updated');
     } else if (
       nextProps.status === 201 &&
       nextProps.name &&
       nextProps.name !== this.props.name
     ) {
-      toastr.success(`${nextProps.name} was created`, 'Created Success');
+      toastr.success(`${nextProps.name} was created`, 'Successfully created');
     } else if (
       nextProps.status === 200 &&
       this.props.name !== nextProps.name &&

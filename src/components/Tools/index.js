@@ -87,7 +87,7 @@ const Tools = () => (
                 <div className="content-block__info-name
               content-block__info-name_tools content-block__info-name_tools-wb
                content-block-header-label__text_center">
-                  CCD WebHooks allow you to automate updating images in
+                  CD WebHooks allow you to automate updating images in
                   containers.
                   <br />
                   <br />

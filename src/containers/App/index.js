@@ -22,8 +22,12 @@ const App = () => {
     typeof window !== 'undefined' &&
     typeof window.navigator !== 'undefined'
   ) {
+    const options = {
+      excludeWebGL: true,
+      excludeWebGLVendorAndRenderer: true
+    };
     const Fingerprint2 = require('fingerprintjs2');
-    new Fingerprint2().get(print => {
+    new Fingerprint2(options).get(print => {
       cookie.save('browser', print, { path: '/' });
     });
   }
