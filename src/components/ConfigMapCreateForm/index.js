@@ -26,7 +26,8 @@ type Props = {
     type: string
   ) => void,
   handleSubmitCreateConfigMap: (e: string) => void,
-  createConfigMapReducer: Object
+  createConfigMapReducer: Object,
+  match: Object
 };
 
 const ConfigMapCreateForm = ({
@@ -43,7 +44,8 @@ const ConfigMapCreateForm = ({
   handleDeleteFileManually,
   handleChangeInputFileManually,
   handleSubmitCreateConfigMap,
-  createConfigMapReducer
+  createConfigMapReducer,
+  match
 }: Props) => (
   <form onSubmit={handleSubmitCreateConfigMap}>
     <div className="row">
@@ -75,8 +77,12 @@ const ConfigMapCreateForm = ({
               <select
                 name="services"
                 className="selectCustom selectGreyColor"
-                value={currentNamespace.label}
                 onChange={e => handleSelectNamespace(e.target.value)}
+                defaultValue={
+                  match.params.idName
+                    ? match.params.idName
+                    : currentNamespace.label
+                }
                 required
               >
                 {namespacesData.map(ns => (

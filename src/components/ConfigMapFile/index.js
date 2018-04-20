@@ -12,7 +12,8 @@ const ConfigMapFile = ({ configMapsFileData, currentFile }: Props) => {
       <div className="light-text__cfm">{currentFile}</div>
       <Scrollbars
         universal
-        autoHide
+        // autoHide
+        hideTracksWhenNotNeeded
         style={{ width: '100%', height: '281px' }}
         renderThumbVertical={({ style, ...props }) => (
           <div
@@ -38,7 +39,8 @@ const ConfigMapFile = ({ configMapsFileData, currentFile }: Props) => {
       >
         <pre
           style={{
-            color: '#008080'
+            color: '#008080',
+            overflow: 'visible'
           }}
         >
           {text}

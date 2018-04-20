@@ -42,7 +42,8 @@ type Props = {
   createConfigMapReducer: Object,
   fetchCreateConfigMapIfNeeded: (idName: string, data: Object) => void,
   // history: Object,
-  match: Object
+  match: Object,
+  getNamespaceReducer: Object
 };
 
 class ConfigMaps extends PureComponent<Props> {
@@ -135,7 +136,7 @@ class ConfigMaps extends PureComponent<Props> {
     //   const clonedStateFiles = JSON.parse(JSON.stringify(this.state.files));
     //   successFiles = clonedStateFiles;
     // }
-    console.log('filesS', successFiles);
+    // console.log('filesS', successFiles);
     Object.keys(files).filter(item => {
       if (
         files[item].file.size >= 2000000 ||
@@ -321,7 +322,7 @@ class ConfigMaps extends PureComponent<Props> {
     );
   };
   renderConfigMapForm = () => {
-    const { getNamespacesReducer } = this.props;
+    const { getNamespacesReducer, getNamespaceReducer, match } = this.props;
 
     if (
       !getNamespacesReducer.readyStatus ||
@@ -365,6 +366,8 @@ class ConfigMaps extends PureComponent<Props> {
             handleAddFiles={fls => this.handleAddFiles(fls)}
             handleDeleteFile={fileName => this.handleDeleteFile(fileName)}
             filesManually={filesManually}
+            match={match}
+            getNamespaceReducer={getNamespaceReducer}
             handleAddFileManually={this.handleAddFileManually}
             handleDeleteFileManually={id => this.handleDeleteFileManually(id)}
             handleChangeInputFileManually={(index, value, type) =>
@@ -465,13 +468,15 @@ const connector: Connector<{}, Props> = connect(
     getNamespacesReducer,
     getConfigMapsReducer,
     createConfigMapReducer,
-    deleteConfigMapReducer
+    deleteConfigMapReducer,
+    getNamespaceReducer
   }: ReduxState) => ({
     getProfileReducer,
     getNamespacesReducer,
     getConfigMapsReducer,
     createConfigMapReducer,
-    deleteConfigMapReducer
+    deleteConfigMapReducer,
+    getNamespaceReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: () =>

@@ -51,6 +51,8 @@ h1{
   font-size: 20px;
   padding-bottom: 30px;
   /*padding-top: 15px;*/
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: #29abe2;
 }
 
@@ -370,6 +372,8 @@ h1{
     font-weight: 300;
     margin: 20px 0 0 0;
     display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .account-menu .sub-navbar{

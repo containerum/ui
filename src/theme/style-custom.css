@@ -1186,6 +1186,8 @@ body .tooltip > .tooltip-inner {
   /*max-width: 100%;*/
 }
 .log-data__cfm {
+  /*min-height: 270px;*/
+  /*min-width: 823px;*/
   padding: 7px;
   border-radius: 4px;
   background-color: #eaeaea;
