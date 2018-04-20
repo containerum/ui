@@ -68,7 +68,7 @@ const Tools = () => (
         <div className="col-md-12 tools__card">
           <div
             style={{ backgroundColor: '#fafafa' }}
-            className="content-block-container content-block-container__tools content-block-container__tools-hover-always card-container card-container__tools card-container__tools_not-active hover-action-always"
+            className="content-block-container content-block-container__tools content-block-container__tools-hover-always card-container card-container__tools card-container__tools_not-active "
           >
             <div className="content-block-header ">
               <div className="content-block-header-label

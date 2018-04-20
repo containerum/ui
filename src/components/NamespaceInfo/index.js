@@ -63,15 +63,15 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
           <img src={ns} alt="ns" />
         </div>
         <div className="content-block__info-item">
-          <div className="content-block__info-name">
+          <div className="content-block__info-name content-block__info-name_namespace">
             RAM ( Usage / Total ) :{' '}
           </div>
-          <div className="content-block__info-text">
+          <div className="content-block__info-text ">
             {memory} / {memoryLimit}
           </div>
         </div>
         <div className="content-block__info-item">
-          <div className="content-block__info-name">
+          <div className="content-block__info-name content-block__info-name_namespace">
             CPU ( Usage / Total ) :{' '}
           </div>
           <div className="content-block__info-text">
@@ -79,7 +79,7 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
           </div>
         </div>
         <div className="content-block__info-item">
-          <div className="content-block__info-name">
+          <div className="content-block__info-name content-block__info-name_namespace">
             Volume ( Usage / Total ) :
           </div>
           <div className="content-block__info-text">- / -</div>
