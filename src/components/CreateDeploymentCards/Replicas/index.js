@@ -42,8 +42,11 @@ const CreateDeploymentReplicas = ({
         min="1"
         max="15"
         baseClassName="form-group__input-text form-control customInput"
-        baseClassNameLabel={`form-group__label ${inputReplicas &&
-          'form-group__label-always-onfocus'}`}
+        baseClassNameLabel={`form-group__label ${
+          inputReplicas || inputReplicas === 0
+            ? 'form-group__label-always-onfocus'
+            : ''
+        }`}
         labelText="Count"
         handleChangeInput={e => {
           const countReplicas = parseInt(e.target.value, 10);
