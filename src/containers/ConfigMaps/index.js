@@ -42,7 +42,8 @@ type Props = {
   createConfigMapReducer: Object,
   fetchCreateConfigMapIfNeeded: (idName: string, data: Object) => void,
   // history: Object,
-  match: Object
+  match: Object,
+  getNamespaceReducer: Object
 };
 
 class ConfigMaps extends PureComponent<Props> {
@@ -130,8 +131,12 @@ class ConfigMaps extends PureComponent<Props> {
   handleAddFiles = files => {
     const regexp = /^[-._a-zA-Z0-9]+$/;
     const errorFiles = [];
-    const successFiles = [];
-    // console.log('files', files);
+    const successFiles = Object.assign([], this.state.files);
+    // if (this.state.files.length > 0) {
+    //   const clonedStateFiles = JSON.parse(JSON.stringify(this.state.files));
+    //   successFiles = clonedStateFiles;
+    // }
+    // console.log('filesS', successFiles);
     Object.keys(files).filter(item => {
       if (
         files[item].file.size >= 2000000 ||
@@ -139,7 +144,17 @@ class ConfigMaps extends PureComponent<Props> {
       ) {
         errorFiles.push(files[item]);
       } else {
-        successFiles.push(files[item]);
+        if (successFiles.length) {
+          const alreadyUploadedFile = successFiles.filter(
+            file => file.name === files[item].name
+          );
+          if (!alreadyUploadedFile.length) {
+            successFiles.push(files[item]);
+          }
+        } else {
+          successFiles.push(files[item]);
+        }
+        return null;
       }
       return null;
     });
@@ -307,7 +322,7 @@ class ConfigMaps extends PureComponent<Props> {
     );
   };
   renderConfigMapForm = () => {
-    const { getNamespacesReducer } = this.props;
+    const { getNamespacesReducer, getNamespaceReducer, match } = this.props;
 
     if (
       !getNamespacesReducer.readyStatus ||
@@ -351,6 +366,8 @@ class ConfigMaps extends PureComponent<Props> {
             handleAddFiles={fls => this.handleAddFiles(fls)}
             handleDeleteFile={fileName => this.handleDeleteFile(fileName)}
             filesManually={filesManually}
+            match={match}
+            getNamespaceReducer={getNamespaceReducer}
             handleAddFileManually={this.handleAddFileManually}
             handleDeleteFileManually={id => this.handleDeleteFileManually(id)}
             handleChangeInputFileManually={(index, value, type) =>
@@ -451,13 +468,15 @@ const connector: Connector<{}, Props> = connect(
     getNamespacesReducer,
     getConfigMapsReducer,
     createConfigMapReducer,
-    deleteConfigMapReducer
+    deleteConfigMapReducer,
+    getNamespaceReducer
   }: ReduxState) => ({
     getProfileReducer,
     getNamespacesReducer,
     getConfigMapsReducer,
     createConfigMapReducer,
-    deleteConfigMapReducer
+    deleteConfigMapReducer,
+    getNamespaceReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: () =>
