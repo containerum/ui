@@ -26,8 +26,6 @@ export default function* loadRefreshToken() {
       break;
     }
     default: {
-      cookie.remove('accessToken', { path: '/' });
-      cookie.remove('refreshToken', { path: '/' });
       yield put(push('/login'));
     }
   }

@@ -38,7 +38,7 @@ export const fetchRunSolutions = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
 
   dispatch(runSolutionsRequest());
 

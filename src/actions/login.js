@@ -37,7 +37,7 @@ export const fetchLogin = (
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(loginRequest(email, password));
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
 
   const response = await axios.post(
     // `${URL}/api/login`,
@@ -60,7 +60,6 @@ export const fetchLogin = (
     case 200: {
       cookie.save('accessToken', accessToken, { path: '/' });
       cookie.save('refreshToken', refreshToken, { path: '/' });
-      cookie.save('lastTimeToRefresh', Date.parse(new Date()), { path: '/' });
       dispatch(loginSuccess(token));
       if (typeof window !== 'undefined') {
         window.location.replace('/dashboard');
@@ -68,8 +67,6 @@ export const fetchLogin = (
       break;
     }
     default: {
-      cookie.remove('accessToken', { path: '/' });
-      cookie.remove('refreshToken', { path: '/' });
       dispatch(loginFailure(response.data.message));
     }
   }

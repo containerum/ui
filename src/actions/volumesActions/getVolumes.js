@@ -41,7 +41,7 @@ export const fetchGetVolumes = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
 
   dispatch(getVolumesRequest());
 

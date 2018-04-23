@@ -89,7 +89,7 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
   const { lang, ...rest } = attrs || {};
   const assets = webpackIsomorphicTools.assets();
 
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
   const getProfileReducer = store.getState().getProfileReducer.data;
   const email = getProfileReducer ? getProfileReducer.login : null;
   return (

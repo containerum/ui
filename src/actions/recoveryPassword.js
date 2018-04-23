@@ -37,7 +37,7 @@ export const fetchRecoveryPassword = (
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(recoveryPasswordRequest(hashParam, password));
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
 
   const response = await axios.post(
     `${URL}/password/restore`,
@@ -58,7 +58,6 @@ export const fetchRecoveryPassword = (
     case 202: {
       cookie.save('accessToken', accessToken, { path: '/' });
       cookie.save('refreshToken', refreshToken, { path: '/' });
-      cookie.save('lastTimeToRefresh', Date.parse(new Date()), { path: '/' });
       dispatch(recoveryPasswordSuccess(data));
       if (typeof window !== 'undefined') {
         window.location.replace('/dashboard');

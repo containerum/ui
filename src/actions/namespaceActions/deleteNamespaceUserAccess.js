@@ -46,10 +46,8 @@ export const fetchDeleteNamespaceUserAccess = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  const accessToken = cookie.load('accessToken')
-    ? cookie.load('accessToken')
-    : null;
+  const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(deleteNamespaceUserAccessRequest());
   const response = await axios.delete(`${URL}/namespace/${idName}/access`, {

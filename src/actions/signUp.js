@@ -42,7 +42,7 @@ export const fetchSignUp = (
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(signUpRequest(email, password, recaptcha));
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
 
   const response = await axios.post(
     `${URL}/user/sign_up`,
@@ -76,9 +76,6 @@ export const fetchSignUp = (
       break;
     }
     default: {
-      cookie.remove('accessToken', { path: '/' });
-      cookie.remove('refreshToken', { path: '/' });
-      cookie.remove('lastTimeToRefresh', { path: '/' });
       dispatch(signUpFailure(response.data.message));
     }
   }

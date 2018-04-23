@@ -25,10 +25,8 @@ const AddFunds = ({
   handleClickAddFunds,
   isFullDataOfProfile
 }: Props) => {
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  const accessToken = cookie.load('accessToken')
-    ? cookie.load('accessToken')
-    : null;
+  const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
   return (
     <div className="block-item" id="add-funds">
       <div>

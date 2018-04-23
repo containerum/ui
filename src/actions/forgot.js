@@ -35,7 +35,7 @@ export const fetchForgot = (
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(forgotRequest(email));
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
 
   const response = await axios.post(
     `${URL}/password/reset`,
@@ -55,9 +55,6 @@ export const fetchForgot = (
       break;
     }
     default: {
-      cookie.remove('accessToken', { path: '/' });
-      cookie.remove('refreshToken', { path: '/' });
-      cookie.remove('lastTimeToRefresh', { path: '/' });
       dispatch(forgotFailure(response.data.message));
     }
   }

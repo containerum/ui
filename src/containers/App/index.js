@@ -23,11 +23,15 @@ const App = () => {
     typeof window.navigator !== 'undefined'
   ) {
     const options = {
+      excludeScreenResolution: true,
+      excludeAvailableScreenResolution: true,
+      excludeCanvas: true,
       excludeWebGL: true,
       excludeWebGLVendorAndRenderer: true
     };
     const Fingerprint2 = require('fingerprintjs2');
     new Fingerprint2(options).get(print => {
+      // console.log(print, JSON.stringify(obj), obj);
       cookie.save('browser', print, { path: '/' });
     });
   }
