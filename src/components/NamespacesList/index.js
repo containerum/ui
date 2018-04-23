@@ -2,6 +2,9 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import classNames from 'classnames/bind';
+
+import styles from '../../containers/Namespaces/index.scss';
 
 import { routerLinks } from '../../config';
 import deployment from '../../images/deployment.png';
@@ -22,6 +25,26 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
   const handleClose = e => {
     e.stopPropagation();
   };
+  const styleNamespaces = classNames.bind(styles);
+  const classNameContainer = styleNamespaces(
+    'contentBlockContainer',
+    'containerCard',
+    'hoverAction'
+  );
+  const classNameContainerHeader = styleNamespaces(
+    'contentBlockHeaderLabelText',
+    'contentBlockHeaderLabelMain'
+  );
+  const classNameCardBlock = styleNamespaces(
+    'contentBlockContent',
+    'contentBlockContentCardBlock'
+  );
+  const addNewBlockClassName = styleNamespaces(
+    'hoverAction',
+    'contentBlockContent',
+    'containerCard'
+  );
+  const ellipsisClassName = styleNamespaces('contentBlockHeaderEllipsis');
   return (
     <div className="row double">
       {data &&
@@ -33,54 +56,61 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
             cpu: cpuLimit
           } = namespace.resources.hard;
           const id = label;
+          const accessStyleName = access[0].toUpperCase() + access.slice(1);
+          const classNameBadge = styleNamespaces({
+            [`namespaceInfoBadge${accessStyleName}`]: true
+          });
           return (
             <div className="col-md-4" id={id} key={id}>
               <div
                 onClick={() => handleClickGetNamespace(label)}
                 onKeyPress={() => handleClickGetNamespace(label)}
-                className="content-block-container card-container hover-action"
+                className={classNameContainer}
                 role="link"
                 tabIndex={0}
               >
-                <div className="content-block-header">
-                  <div className="content-block-header-label">
+                <div className={styles.contentBlockHeader}>
+                  <div className={styles.contentBlockHeaderLabel}>
                     <div
                       style={{ display: 'inline-block' }}
-                      className="content-block-header-img"
+                      className={styles.contentBlockHeaderImg}
                     >
                       <img src={deployment} alt="ns-icon" />
                     </div>
                     <div
                       style={{ display: 'inline-block', maxWidth: 70 }}
-                      className={`badge namspaceinfo-badge namspaceinfo-badge__${access}`}
+                      className={`badge ${
+                        styles.namespaceInfoBadge
+                      } ${classNameBadge}`}
                     >
                       {access}
                     </div>
                     <div
                       style={{ display: 'block' }}
-                      className="content-block-header-label__text content-block-header-label_main"
+                      className={classNameContainerHeader}
                     >
                       {label}
                     </div>
                   </div>
                   <div
-                    className="content-block-header-extra-panel"
+                    className={styles.contentBlockHeaderExtraPanel}
                     onClick={e => handleClose(e)}
                     onKeyPress={e => handleClose(e)}
                     role="menuitem"
                     tabIndex={0}
                   >
-                    <div className="content-block-header-extra-panel dropdown no-arrow">
+                    <div
+                      className={`${
+                        styles.contentBlockHeaderExtraPanel
+                      } dropdown no-arrow`}
+                    >
                       <i
-                        className="content-block-header__more ion-more dropdown-toggle"
+                        className={`${ellipsisClassName} ion-more dropdown-toggle`}
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       />
-                      <ul
-                        className="dropdown-menu dropdown-menu-right"
-                        role="menu"
-                      >
+                      <ul className="dropdown-menu" role="menu">
                         <NavLink
                           activeClassName="active"
                           className="dropdown-item"
@@ -100,28 +130,30 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                   </div>
                 </div>
 
-                <div className="content-block-content card-block">
-                  <div className="content-block__info-item ">
-                    <div className="content-block__info-name inline">
+                <div className={classNameCardBlock}>
+                  <div className={styles.contentBlockInfoItem}>
+                    <div className={`${styles.contentBlockInfoName} inline`}>
                       RAM ( Usage / Total ) :&nbsp;
                     </div>
-                    <div className="content-block__info-text inline">
+                    <div className={`${styles.contentBlockInfoText} inline`}>
                       {memory} / {memoryLimit}
                     </div>
                   </div>
-                  <div className="content-block__info-item">
-                    <div className="content-block__info-name inline">
+                  <div className={styles.contentBlockInfoItem}>
+                    <div className={`${styles.contentBlockInfoName} inline`}>
                       CPU ( Usage / Total ) :&nbsp;
                     </div>
-                    <div className="content-block__info-text inline">
+                    <div className={`${styles.contentBlockInfoText} inline`}>
                       {cpu} / {cpuLimit}
                     </div>
                   </div>
-                  <div className="content-block__info-item">
-                    <div className="content-block__info-name inline">
+                  <div className={styles.contentBlockInfoItem}>
+                    <div className={`${styles.contentBlockInfoName} inline`}>
                       Volume ( Usage / Total ) :&nbsp;
                     </div>
-                    <div className="content-block__info-text inline">- / -</div>
+                    <div className={`${styles.contentBlockInfoText} inline`}>
+                      - / -
+                    </div>
                   </div>
                 </div>
               </div>
@@ -132,7 +164,7 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
         <NavLink
           activeClassName="active"
           to={routerLinks.createNamespace}
-          className="add-new-block content-block-content card-container hover-action"
+          className={`${addNewBlockClassName} add-new-block`}
         >
           <div className="action">
             <i>+</i> Add a namespace

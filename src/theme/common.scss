@@ -1,0 +1,91 @@
+
+.hoverAction {
+  cursor: pointer;
+}
+
+.contentBlock {
+  padding-right: 0;
+
+  &:last-child {
+    margin-bottom: 40px;
+  }
+
+
+  &Container {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+    padding: 25px 30px 25px 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    .hoverAction:hover {
+      box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &InfoItem {
+    margin: 0 50px 0 50px;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &InfoName {
+    color:#333;
+    margin: -5px 0 5px 0;
+    font-weight: 600;
+
+    .inline {
+      display: inline;
+    }
+  }
+
+  &InfoText {
+    font-weight: 300;
+
+    .inline{
+      display: inline-block;
+    }
+  }
+
+  &Header {
+    position: relative;
+  }
+
+  &Content {
+    margin: 30px 0 0 0;
+    position: relative;
+    transition: height 0.3s ease-out 0.3s;
+
+    &CardBlock {
+      margin: 20px 0 0 0;
+      padding: 0;
+    }
+  }
+}
+
+.card-block {
+  .contentBlockInfoItem {
+    display: block;
+    margin: 0;
+  }
+}
+
+
+.container{
+  &NoBackground {
+    background: none;
+    box-shadow: none;
+  }
+
+  &Card {
+    min-height: unset;
+  }
+}
+
+.doubleRow {
+  margin: 0 -30px 30px -30px;
+}
+
+
+

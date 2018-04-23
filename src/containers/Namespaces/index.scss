@@ -1,0 +1,236 @@
+@import '../../theme/variables.scss';
+
+.hoverAction {
+  cursor: pointer;
+
+  &:hover{
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+  }
+}
+
+.contentBlock {
+  padding-right: 0;
+
+  &:last-child {
+    margin-bottom: 40px;
+  }
+
+  &Container {
+    background: $color-white;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+    padding: 25px 30px 25px 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    &Img {
+      margin-top: 30px;
+      margin-bottom: 30px;
+      padding: 0;
+      width: 100%;
+    }
+  }
+
+  &InfoItem {
+    //margin: 0 50px 0 50px;
+    display: flex;
+    //vertical-align: top;
+    align-items: flex-start;
+    //display: block;
+    margin: 0;
+  }
+
+  &InfoName {
+    color:#333;
+    margin: 0 0 5px 0;
+    font-weight: 600;
+
+    .inline {
+      display: inline-block;
+    }
+  }
+
+  &InfoText {
+    font-weight: 300;
+
+    .inline{
+      display: inline-block;
+    }
+  }
+
+  &Header {
+    position: relative;
+
+    &Ellipsis {
+      color: $main-color;
+    }
+
+    &Label {
+      max-width: 800px;
+
+      &Text {
+        display: inline-block;
+        font-size: 15px;
+      }
+
+      &Main {
+        text-transform: uppercase;
+        color:#333;
+        font-size: 20px;
+        max-width: 322px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+      }
+    }
+
+    &Img {
+      width:28px;
+      height:32px;
+      margin:0 0 10px 0;
+    }
+
+    &ExtraPanel {
+      position: absolute;
+      right: 0;
+      top: 0;
+      text-align: right;
+    }
+  }
+
+  &Content {
+    margin: 30px 0 0 0;
+    position: relative;
+    transition: height 0.3s ease-out 0.3s;
+
+    &CardBlock {
+      margin: 20px 0 0 0;
+      padding: 0;
+    }
+  }
+}
+
+.card-block {
+  .contentBlockInfoItem {
+    display: block;
+    margin: 0;
+  }
+}
+
+
+.container{
+  &NoBackground {
+    background: none !important;
+    box-shadow: none;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  &Card {
+    min-height: 220px;
+  }
+}
+
+.doubleRow {
+  margin: 0 -30px 30px -30px;
+}
+
+.namespaceInfo {
+  &Badge {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 120px;
+    height: 24px;
+    margin-left: 30px;
+    border-radius: 3px;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    color: #fff;
+
+    &Write{
+      background-color: $write-access-color;
+    }
+
+    &Read{
+      background-color: $read-access-color;
+    }
+
+    &Owner {
+      background-color: $owner-access-color;
+    }
+
+    &None {
+      background-color: $none-access-color;
+    }
+
+    &ReadDelete {
+      background-color: $read-delete-access-color;
+    }
+  }
+}
+
+.ellipsisRoleMore{
+  &::before {
+    font-size: 29px;
+    line-height: 29px;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+
+  &:hover {
+    &::before{
+      color: $main-color;
+    }
+  }
+}
+
+.dropdown{
+  &Menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: $color-white;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+  }
+
+  &Toggle {
+    &::after {
+      border-top-color: $main-color;
+      margin: 4px 0 5px 12px;
+    }
+  }
+
+
+  .dropdownToggle {
+    &::after {
+      display: none;
+    }
+  }
+
+  &-item:active{
+    background-color: $main-color;
+  }
+
+
+}
+
+
