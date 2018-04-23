@@ -43,10 +43,8 @@ export const fetchDeleteDomain = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const accessToken = cookie.load('accessToken')
-    ? cookie.load('accessToken')
-    : null;
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const accessToken = cookie.load('accessToken');
+  const browser = cookie.load('browser');
 
   dispatch(deleteDomainRequest());
 

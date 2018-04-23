@@ -49,9 +49,6 @@ export const fetchCheckHashPassword = (
       break;
     }
     default: {
-      cookie.remove('accessToken', { path: '/' });
-      cookie.remove('refreshToken', { path: '/' });
-      cookie.remove('lastTimeToRefresh', { path: '/' });
       dispatch(checkHashPasswordFailure(response.data.message));
     }
   }

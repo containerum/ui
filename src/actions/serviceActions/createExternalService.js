@@ -47,10 +47,8 @@ export const fetchCreateExternalService = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  const accessToken = cookie.load('accessToken')
-    ? cookie.load('accessToken')
-    : null;
+  const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(createExternalServiceRequest());
 

@@ -39,17 +39,13 @@ export const fetchGetConfigMaps = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const token = cookie.load('token') ? cookie.load('token') : null;
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  const accessToken = cookie.load('accessToken')
-    ? cookie.load('accessToken')
-    : null;
+  const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(getConfigMapsRequest());
 
   const response = await axios.get(`${URL}/configmaps`, {
     headers: {
-      Authorization: token,
       'User-Client': browser,
       'User-Token': accessToken
     },

@@ -3,7 +3,7 @@ import cookie from 'react-cookies';
 import { wsApi } from '../config';
 
 const initSocket = (idName, idPod) => {
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
   // console.log(idName, idPod);
   if (typeof window !== 'undefined' && window.WebSocket) {
     return new WebSocket(

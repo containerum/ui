@@ -61,7 +61,6 @@ class Login extends PureComponent<Props> {
   componentDidMount() {
     cookie.remove('accessToken', { path: '/' });
     cookie.remove('refreshToken', { path: '/' });
-    cookie.remove('lastTimeToRefresh', { path: '/' });
   }
   componentWillUpdate(nextProps) {
     if (

@@ -6,7 +6,7 @@ import axios from 'axios';
 import { webApiLogin } from '../config';
 
 function* fetchRefreshToken() {
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
   return yield axios.put(
     `${webApiLogin}/token/${cookie.load('refreshToken')}`,
     {},

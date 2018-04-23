@@ -38,7 +38,7 @@ export const fetchConfirmSignUp = (
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(confirmSignUpRequest(hashParam));
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
+  const browser = cookie.load('browser');
 
   const response = await axios.post(
     `${URL}/user/activation`,
@@ -56,7 +56,6 @@ export const fetchConfirmSignUp = (
     case 200: {
       cookie.save('accessToken', accessToken, { path: '/' });
       cookie.save('refreshToken', refreshToken, { path: '/' });
-      cookie.save('lastTimeToRefresh', Date.parse(new Date()), { path: '/' });
       dispatch(confirmSignUpSuccess(data));
       if (typeof window !== 'undefined') {
         window.location.replace('/dashboard');
@@ -64,9 +63,6 @@ export const fetchConfirmSignUp = (
       break;
     }
     default: {
-      cookie.remove('accessToken', { path: '/' });
-      cookie.remove('refreshToken', { path: '/' });
-      cookie.remove('lastTimeToRefresh', { path: '/' });
       dispatch(confirmSignUpFailure('Hash is not valid'));
     }
   }

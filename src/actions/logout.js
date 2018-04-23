@@ -31,7 +31,6 @@ export const fetchLogout = (): ThunkAction => async (dispatch: Dispatch) => {
   try {
     cookie.remove('accessToken', { path: '/' });
     cookie.remove('refreshToken', { path: '/' });
-    cookie.remove('lastTimeToRefresh', { path: '/' });
     dispatch(logoutSuccess());
   } catch (e) {
     dispatch(logoutFailure(e));

@@ -19,7 +19,6 @@ class CheckEmail extends PureComponent<Props> {
   componentDidMount() {
     cookie.remove('accessToken', { path: '/' });
     cookie.remove('refreshToken', { path: '/' });
-    cookie.remove('lastTimeToRefresh', { path: '/' });
     if (this.props.forgotReducer.readyStatus !== 'FORGOT_SUCCESS') {
       this.props.history.push('/login');
     }

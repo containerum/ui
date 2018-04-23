@@ -38,10 +38,8 @@ export const fetchDeleteAccount = (
   axios: any,
   URL: string = webApiLogin
 ): ThunkAction => async (dispatch: Dispatch) => {
-  const browser = cookie.load('browser') ? cookie.load('browser') : null;
-  const accessToken = cookie.load('accessToken')
-    ? cookie.load('accessToken')
-    : null;
+  const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(deleteAccountRequest());
 
@@ -62,9 +60,6 @@ export const fetchDeleteAccount = (
   switch (status) {
     case 202: {
       dispatch(deleteAccountSuccess(data, status));
-      cookie.remove('accessToken', { path: '/' });
-      cookie.remove('refreshToken', { path: '/' });
-      cookie.remove('lastTimeToRefresh', { path: '/' });
       if (typeof window !== 'undefined') {
         window.location.replace('https://containerum.com/');
       }
