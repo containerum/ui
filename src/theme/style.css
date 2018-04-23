@@ -2085,6 +2085,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .modal-footer-solution-cancel{
+    height: 40px;
     font-weight: 300;
     text-align: center;
     color: #a7a7a7;
@@ -2096,6 +2097,8 @@ select.form-control:not([size]):not([multiple]) {
     outline: none;
     cursor: pointer;
 }
+
+
 
 .modal-footer-solution-cancel:hover{
     background-color: #29abe2;
