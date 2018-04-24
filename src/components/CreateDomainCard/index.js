@@ -148,7 +148,7 @@ const CreateDomainCard = ({
             <CheckBoxControl
               id="ssl"
               value={isEnabledSSL}
-              labelText="Enabled SSL Security"
+              labelText="Enable SSL Security"
               labelClassName="customLabel"
               handleChangeCheckBox={handleChangeCheckBox}
             />
