@@ -1544,21 +1544,48 @@ body .tooltip > .tooltip-inner {
   padding-left: 35px;
 }
 
+.dashboard-table .td-1-new{
+  width:95px;
+  padding-left: 31px;
+}
+
 .dashboard-table .td-2 {
   width: 225px;
+}
+
+.dashboard-table .td-2-new{
+  width:195px;
+  padding-left: 0!important;
 }
 
 .dashboard-table .td-3 {
   width: 158px;
 }
 
+.dashboard-table .td-3-new{
+  width:100px;
+  padding-left: 0!important;
+
+}
+
 .dashboard-table .td-4 {
   width: 224px;
+}
+
+.dashboard-table .td-4-new{
+  width:100px;
+  padding-left: 0!important;
+
 }
 
 .dashboard-table .td-7 {
   width: 123px;
   padding-left: 30px;
+}
+
+.dashboard-table .td-7-new{
+  width:80px;
+  padding-left: 20px;
 }
 
 .dashboard-table .td-1-domains {
