@@ -129,8 +129,9 @@ h1{
 }
 
 .dropdown-toggle::after{
-    border-top-color: #29abe2;
+    border-top-color: #eaeaea;
     margin: 4px 0 5px 12px;
+    margin-left: 38px;
 }
 
 
@@ -1277,17 +1278,16 @@ h1{
 .membership-btn {
   width: 120px;
   height: 30px;
-  border-radius: 2px;
-  background-color: #29abe2;
-  border: solid 1px #29abe2;
-  font-size: 15px;
+  /*font-size: 15px;*/
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
   text-align: center;
-  color: #ffffff;
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+
 }
 .membership-btn-container {
   display: flex;
@@ -1363,6 +1363,24 @@ h1{
   width: 350px;
 }
 
+.td-padding-membership {
+  height: 51px;
+  padding-top: 9px !important;
+  padding-bottom: 12px !important;
+}
+
+.membership-tr {
+  height: 51px;
+  /*vertical-align: central;*/
+}
+
+.membership-tr:hover .material-icons-membership{
+  color: #29abe2;
+}
+
+.membership-tr:hover .dropdown-toggle::after{
+  border-top-color: #29abe2;
+}
 
 .content-block__table  .td-3{
     width: 150px;
@@ -2098,6 +2116,14 @@ select.form-control:not([size]):not([multiple]) {
     cursor: pointer;
 }
 
+.modal-footer-solution-cancel_membership {
+  padding-bottom: 0 !important;
+  padding-top: 0;
+  height: 30px !important;
+
+}
+
+
 
 
 .modal-footer-solution-cancel:hover{
@@ -2172,6 +2198,10 @@ select.form-control:not([size]):not([multiple]) {
 
 .form-control:focus{
     border: solid 0.5px #a7a7a7;
+}
+
+.form-control {
+  border-radius: 0.25rem !important;
 }
 
 

@@ -168,7 +168,7 @@ const AddUserMembershipModal = ({
         <div className="modal-footer">
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className=" modal-footer-solution-cancel modal-footer-solution-cancel_membership"
             onClick={() => handleCloseModal()}
           >
             Cancel
@@ -180,7 +180,7 @@ const AddUserMembershipModal = ({
             type="submit"
             buttonText="Create"
             isFetching={isFetchingAdd}
-            baseClassButton="btn modal-footer-solution-select"
+            baseClassButton=" modal-footer-solution-select modal-footer-solution-cancel_membership"
           />
         </div>
       </form>

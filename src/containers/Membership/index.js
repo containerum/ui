@@ -306,10 +306,7 @@ class Membership extends PureComponent<Props> {
               <div className="col-md-3 col-lg-3 col-xl-2" />
               <div className="col-md-9 col-lg-9 col-xl-10">
                 <div className="content-block">
-                  <div
-                    className="content-block-container container"
-                    style={{ paddingTop: '40px' }}
-                  >
+                  <div className=" content-block-container-membership content-block-container container">
                     <div className="content-block-header">
                       <div className="content-block-header-label__text content-block-header-label_main__membership content-block-header-label_main content-block-header-label__text_namspace-info">
                         {idName}
@@ -336,7 +333,7 @@ class Membership extends PureComponent<Props> {
                           </li>
                           <li className="membership-btn-container">
                             <button
-                              className="membership-btn"
+                              className="membership-btn button_blue btn btn-outline-primary fancybox"
                               onClick={this.handleAddMembersAdd}
                             >
                               Add Users
