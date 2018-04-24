@@ -85,7 +85,7 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
           <div className="content-block__info-text">- / -</div>
         </div>
         {ownerPermissions && (
-          <div className="content-block__info-item content-block__info-item_namspaceinfo">
+          <div className="content-block__info-item">
             <Link to={routerLinks.getMembershipLink(idName)}>
               <div className="content-block__info-text content-block__info-text_namspaceinfo">
                 Manage Team

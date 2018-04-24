@@ -3,9 +3,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// import { routerLinks } from '../../config';
-import deployment from '../../images/deployment.png';
 import { routerLinks } from '../../config';
+import deployment from '../../images/deployment.png';
 
 type Props = {
   data: Array<Object>,
@@ -28,23 +27,24 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
             tableLayout: 'fixed',
             width: '100%',
             border: 0,
-            cellspacing: 0,
-            cellpadding: 0
+            cellSpacing: 0,
+            cellPadding: 0
           }}
         >
           <thead style={{ height: '30px' }}>
             <tr>
-              <td className="td-1" />
-              <td className="td-2 pleft">Name</td>
-              <td className="td-3 pleft">RAM</td>
-              <td className="td-4 pleft">CPU</td>
-              <td className="td-7" />
+              <td className="td-1-new" />
+              <td className="td-2-new pleft">Name</td>
+              <td className="td-3-new pleft">RAM</td>
+              <td className="td-4-new pleft">CPU</td>
+              <td className="td-4-new pleft">Permission</td>
+              <td className="td-7-new" />
             </tr>
           </thead>
           <tbody>
             {data &&
               data.map(namespace => {
-                const { label } = namespace;
+                const { label, access } = namespace;
                 const {
                   memory: memoryLimit,
                   cpu: cpuLimit
@@ -62,16 +62,17 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
                     style={{ margin: 0 }}
                   >
                     <td
-                      className="td-1"
+                      className="td-1-new"
                       // style={{ verticalAlign: 'top', width: '75%' }}
                     >
                       <img src={deployment} alt="deployment" />
                     </td>
-                    <td className="td-2">{label}</td>
-                    <td className="td-3">{memoryLimit}</td>
-                    <td className="td-4">{cpuLimit}</td>
+                    <td className="td-2-new">{label}</td>
+                    <td className="td-3-new">{memoryLimit}</td>
+                    <td className="td-4-new">{cpuLimit}</td>
+                    <td className="td-4-new">{access}</td>
                     <td
-                      className="td-7 dropdown no-arrow"
+                      className="td-7-new dropdown no-arrow"
                       onClick={e => handleClose(e)}
                       onKeyPress={e => handleClose(e)}
                       role="presentation"
