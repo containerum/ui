@@ -283,7 +283,7 @@ export class UpdateService extends PureComponent<Props> {
       updateExternalServiceReducer,
       updateInternalServiceReducer
     } = this.props;
-    // console.log(this.state);
+    // console.log(this.props);
     return (
       <div>
         <Helmet
@@ -309,7 +309,7 @@ export class UpdateService extends PureComponent<Props> {
         <Notification
           status={updateExternalServiceReducer.status}
           name={updateExternalServiceReducer.idSrv}
-          method={updateInternalServiceReducer.method}
+          method={updateExternalServiceReducer.method}
           errorMessage={updateExternalServiceReducer.err}
         />
         <div className="content-block">
