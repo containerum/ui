@@ -93,7 +93,7 @@ const AddInformationModal = ({
             Add information
           </h4>
           <span className="modal-redis-text mt-0">
-            For tax calculation, pleese, fill the information below:
+            For tax calculation, please, fill in the information below:
           </span>
           {isFailed && (
             <div className="error-message">
@@ -121,7 +121,7 @@ const AddInformationModal = ({
           </div>
           <div className="form-group" style={{ paddingTop: 0 }}>
             <label htmlFor="nameProfile" className="modal-redis-text mt-2">
-              Please, enter the name to continue
+              Please, enter your name to continue:
             </label>
             <input
               type="text"

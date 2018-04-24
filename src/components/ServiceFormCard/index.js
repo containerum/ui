@@ -379,7 +379,7 @@ const ServiceForm = ({
                         baseClassName="form-group__input-text form-control customInput"
                         baseClassNameLabel={`form-group__label ${externalSrvTargetPort &&
                           'form-group__label-always-onfocus'}`}
-                        labelText="Port"
+                        labelText="Target Port"
                         textHelper={
                           index === 0 && 'The target port into your Container'
                         }

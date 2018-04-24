@@ -129,7 +129,7 @@ const ConfigMapCreateForm = ({
     </div>
     <div className="row">
       <div className="block-item__title block-item__title_configmap-block block-item__title_no-uppercase">
-        1. Add ConfigMap file via Download
+        1. Upload ConfigMap file
       </div>
     </div>
     <div className="row" style={{ paddingLeft: '15px' }}>
@@ -185,7 +185,7 @@ const ConfigMapCreateForm = ({
     </div>
     <div className="row" style={{ paddingTop: '40px' }}>
       <div className="block-item__title block-item__title_configmap-block block-item__title_no-uppercase">
-        2. Or Add file manually
+        2. Or add file manually
       </div>
     </div>
     <div className="row">
