@@ -580,7 +580,7 @@ h1{
 
 .billing-information-status-info{
     display: inline-block;
-    font-weight: 300;
+    font-weight: 500;
     color: #03b5aa;
     text-transform: uppercase;
 }
