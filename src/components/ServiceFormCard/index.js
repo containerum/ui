@@ -352,7 +352,7 @@ const ServiceForm = ({
                           'form-group__label-always-onfocus'}`}
                         labelText="Name"
                         textHelper={
-                          index === 0 && 'The port name of Internal Service'
+                          index === 0 && 'The port name of External Service'
                         }
                         baseClassNameHelper="helperText"
                         handleChangeInput={e =>

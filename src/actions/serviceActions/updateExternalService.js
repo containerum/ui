@@ -82,7 +82,7 @@ export const fetchUpdateExternalService = (
           data,
           202,
           config.method,
-          `External service ${response.data.name}`
+          `External service ${idSrv}`
         )
       );
       dispatch(push('/namespaces'));

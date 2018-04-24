@@ -40,6 +40,7 @@ export default (state = initialState, action: Action) => {
         status: action.status,
         idName: action.idName,
         idSrv: action.idSrv,
+        method: action.method,
         err: null
       });
     case UPDATE_EXTERNAL_SERVICE_FAILURE:
