@@ -28,53 +28,65 @@ const MembershipList = ({
             {membersList.map(user => {
               const { login, new_access_level: newAccessLevel } = user;
               return (
-                <tr key={_.uniqueId()}>
-                  <td className="td-2__membership td-3__no-paddingLeft">
+                <tr key={_.uniqueId()} className="membership-tr">
+                  <td
+                    className="td-2__membership  td-padding-membership"
+                    style={{ paddingLeft: '2px' }}
+                  >
                     {login}
                   </td>
-                  <td className="td-2__membership td-3__no-paddingLeft">
+                  <td className="td-2__membership td-3__no-paddingLeft td-padding-membership">
                     {login}
                   </td>
-                  <td className="td-3__no-paddingLeft td-3-flex">
-                    <div>{newAccessLevel}</div>
-                    {newAccessLevel !== 'owner' && (
-                      <div style={{ paddingLeft: '50px' }}>
-                        <i
-                          className="content-block-table__more  dropdown-toggle"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                          style={{ cursor: 'pointer' }}
-                        />
-                        <ul
-                          className="dropdown-menu dropdown-menu-right"
-                          role="menu"
-                        >
-                          <button
-                            className="dropdown-item"
-                            onClick={() => changeAccessUser(login, 'write')}
+                  <td className="td-3__no-paddingLeft td-3-flex td-padding-membership">
+                    <div>
+                      {newAccessLevel !== 'owner' ? (
+                        <div style={{ display: 'inline' }}>
+                          <i
+                            className="content-block-table__more  dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            style={{ cursor: 'pointer', fontStyle: 'normal' }}
                           >
-                            Write
-                          </button>
-                          <button
-                            className="dropdown-item"
-                            onClick={() => changeAccessUser(login, 'read')}
+                            {' '}
+                            {newAccessLevel}
+                          </i>
+                          <ul
+                            className="dropdown-menu dropdown-menu-right"
+                            role="menu"
                           >
-                            Read
-                          </button>
-                        </ul>
-                      </div>
-                    )}
+                            <button
+                              className="dropdown-item"
+                              onClick={() => changeAccessUser(login, 'write')}
+                            >
+                              Write
+                            </button>
+                            <button
+                              className="dropdown-item"
+                              onClick={() => changeAccessUser(login, 'read')}
+                            >
+                              Read
+                            </button>
+                          </ul>
+                        </div>
+                      ) : (
+                        'owner'
+                      )}
+                    </div>
                   </td>
                   <td
-                    className="td-1"
+                    className="td-1 td-padding-membership"
                     onClick={() =>
                       newAccessLevel !== 'owner' && handleDeleteDMembers(login)
                     }
                   >
                     {newAccessLevel !== 'owner' && (
                       <div className="membership-item">
-                        <i className="material-icons" role="presentation">
+                        <i
+                          className="material-icons material-icons-membership"
+                          role="presentation"
+                        >
                           delete
                         </i>
                       </div>

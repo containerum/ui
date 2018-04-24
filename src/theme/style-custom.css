@@ -65,6 +65,14 @@ input:invalid {
 .content-block-container {
     padding: 25px 30px 25px 30px;
 }
+
+.content-block-container-membership {
+  padding: 40px 50px 40px 50px
+}
+
+.material-icons-membership {
+  color: #eaeaea;
+}
 /*.content-block-container__tools {*/
   /*!*padding: 25px 0 25px 0;*!*/
   /*padding: 25px 30px 25px 30px;*/
