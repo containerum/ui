@@ -91,7 +91,7 @@ const ServiceForm = ({
                   baseClassNameLabel={`form-group__label ${internalSrvNameValue &&
                     'form-group__label-always-onfocus'}`}
                   labelText="Service Name"
-                  textHelper="Your Internal Name is the same as the name of Deployment"
+                  textHelper=""
                   baseClassNameHelper="helperText"
                   handleChangeInput={e =>
                     handleChangeServiceNameValue(e, 'internalSrvNameValue')
@@ -309,7 +309,7 @@ const ServiceForm = ({
                   baseClassNameLabel={`form-group__label ${externalSrvNameValue &&
                     'form-group__label-always-onfocus'}`}
                   labelText="Service Name"
-                  textHelper="Your External Name is the same as the name of Deployment"
+                  textHelper=""
                   baseClassNameHelper="helperText"
                   handleChangeInput={e =>
                     handleChangeServiceNameValue(e, 'externalSrvNameValue')
