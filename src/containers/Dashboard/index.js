@@ -349,6 +349,14 @@ export class Dashboard extends PureComponent<Props> {
                     ? getNamespacesReducer.data[0].name
                     : ''
                 }
+                linkToManageTeam={
+                  getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS &&
+                  getNamespacesReducer.data.length
+                    ? getNamespacesReducer.data.find(
+                        ns => (ns.access === 'owner' ? ns.access : '')
+                      )
+                    : ''
+                }
               />
             </div>
 

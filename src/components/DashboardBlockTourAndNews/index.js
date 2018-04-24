@@ -6,10 +6,14 @@ import { Link } from 'react-router-dom';
 import { routerLinks } from '../../config';
 
 type Props = {
-  linkToDeployment: string
+  linkToDeployment: string,
+  linkToManageTeam: string
 };
 
-const DashboardBlockTourAndNews = ({ linkToDeployment }: Props) => (
+const DashboardBlockTourAndNews = ({
+  linkToDeployment,
+  linkToManageTeam
+}: Props) => (
   <div className="col-md-3 pr-0">
     <div className="block-container block-h-tabs">
       <div className="top-block-header pb-0">
@@ -80,6 +84,20 @@ const DashboardBlockTourAndNews = ({ linkToDeployment }: Props) => (
             {/* <Link to="/account"> */}
             {/* Set up Web Hooks for Continuous Deployment */}
             {/* </Link> */}
+            <Link
+              to={
+                linkToManageTeam
+                  ? routerLinks.getMembershipLink(linkToManageTeam.label)
+                  : '/'
+              }
+              style={
+                linkToManageTeam
+                  ? {}
+                  : { color: '#cecece', cursor: 'not-allowed' }
+              }
+            >
+              Share Namespace with your team
+            </Link>
           </div>
         </div>
         {/* <div */}

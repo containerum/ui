@@ -3,9 +3,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// import { routerLinks } from '../../config';
-import deployment from '../../images/deployment.png';
 import { routerLinks } from '../../config';
+import deployment from '../../images/deployment.png';
 
 type Props = {
   data: Array<Object>,
@@ -28,8 +27,8 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
             tableLayout: 'fixed',
             width: '100%',
             border: 0,
-            cellspacing: 0,
-            cellpadding: 0
+            cellSpacing: 0,
+            cellPadding: 0
           }}
         >
           <thead style={{ height: '30px' }}>
@@ -38,13 +37,14 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
               <td className="td-2 pleft">Name</td>
               <td className="td-3 pleft">RAM</td>
               <td className="td-4 pleft">CPU</td>
+              <td className="td-6 pleft">Permission</td>
               <td className="td-7" />
             </tr>
           </thead>
           <tbody>
             {data &&
               data.map(namespace => {
-                const { label } = namespace;
+                const { label, access } = namespace;
                 const {
                   memory: memoryLimit,
                   cpu: cpuLimit
@@ -70,6 +70,7 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
                     <td className="td-2">{label}</td>
                     <td className="td-3">{memoryLimit}</td>
                     <td className="td-4">{cpuLimit}</td>
+                    <td className="td-4">{access}</td>
                     <td
                       className="td-7 dropdown no-arrow"
                       onClick={e => handleClose(e)}
