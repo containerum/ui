@@ -109,8 +109,6 @@ export class Support extends PureComponent<Props> {
       ) {
         successFiles.push(files.fileList[item]);
         successBase64.push(files.base64[index]);
-        console.log('F', successFiles);
-        console.log('64', successBase64);
       }
       if (files.fileList[item].size >= 10485760) {
         errorFilesSize.push(files.fileList[item]);
@@ -163,8 +161,6 @@ export class Support extends PureComponent<Props> {
         base64: successBase64
       });
     }
-    console.log('files', this.state.files);
-    console.log('base', this.state.base64);
   };
   handleOnSubmit = e => {
     e.preventDefault();

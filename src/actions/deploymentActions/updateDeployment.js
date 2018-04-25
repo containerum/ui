@@ -106,7 +106,6 @@ export const fetchUpdateDeployment = (
   });
 
   let idSrv = dataObj.name;
-  console.log('dataObj.name', dataObj);
   const response = await axios.put(
     `${URL}/namespace/${idName}/deployment/${idDep}`,
     {

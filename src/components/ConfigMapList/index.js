@@ -50,7 +50,10 @@ const ConfigMapList = ({
                       return (
                         <tr
                           className="content-block-container card-container hover-action"
-                          style={{ margin: 0 }}
+                          style={{
+                            margin: 0,
+                            boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
+                          }}
                           key={configmap.name}
                         >
                           <td className="td-8">{configmap.name}</td>
@@ -157,7 +160,10 @@ const ConfigMapList = ({
                     return (
                       <tr
                         className="content-block-container card-container hover-action"
-                        style={{ margin: 0 }}
+                        style={{
+                          margin: 0,
+                          boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
+                        }}
                         key={configmap.name}
                       >
                         <td className="td-8">{configmap.name}</td>

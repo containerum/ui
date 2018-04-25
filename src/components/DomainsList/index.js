@@ -52,7 +52,10 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
                     <tr
                       className="content-block-container card-container hover-action"
                       key={_.uniqueId()}
-                      style={{ margin: 0 }}
+                      style={{
+                        margin: 0,
+                        boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
+                      }}
                     >
                       <td className="td-1-domains">
                         <a
@@ -80,7 +83,7 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
                           {ingressName}
                         </Link>
                       </td>
-                      <td className="td-4-domains dropdown no-arrow">
+                      <td className="td-10 dropdown no-arrow">
                         <i
                           className="content-block-table__more ion-more dropdown-toggle"
                           data-toggle="dropdown"

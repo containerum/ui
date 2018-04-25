@@ -287,7 +287,7 @@ const ServiceForm = ({
                           'form-group__label-always-onfocus'}`}
                         labelText="Name"
                         textHelper={
-                          index === 0 && 'The port name of Internal Service'
+                          index === 0 && 'The port name of External Service'
                         }
                         baseClassNameHelper="helperText"
                         handleChangeInput={e =>
@@ -314,7 +314,7 @@ const ServiceForm = ({
                         baseClassName="form-group__input-text form-control customInput"
                         baseClassNameLabel={`form-group__label ${externalSrvTargetPort &&
                           'form-group__label-always-onfocus'}`}
-                        labelText="Port"
+                        labelText="Target Port"
                         textHelper={
                           index === 0 && 'The target port into your Container'
                         }
