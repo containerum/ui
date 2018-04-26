@@ -49,7 +49,6 @@ export const fetchUpdateDeployment = (
   const accessToken = cookie.load('accessToken');
 
   dispatch(updateDeploymentRequest());
-
   const splitContainers = cloneDeep(dataObj.containers);
   splitContainers.map(item => {
     delete item.id;
@@ -106,7 +105,6 @@ export const fetchUpdateDeployment = (
   });
 
   let idSrv = dataObj.name;
-  console.log('dataObj.name', dataObj);
   const response = await axios.put(
     `${URL}/namespace/${idName}/deployment/${idDep}`,
     {

@@ -109,6 +109,7 @@ export class CreateDeployment extends PureComponent<Props> {
           commands
           // volumes
         } = item;
+
         // if (ports) {
         //   ports.map(itemPorts => {
         //     itemPorts.id = _.uniqueId();
@@ -135,8 +136,8 @@ export class CreateDeployment extends PureComponent<Props> {
           image,
           name: imgName,
           limits: {
-            cpu: `${limits.cpu}`,
-            memory: `${limits.memory}`
+            cpu: limits.cpu,
+            memory: limits.memory
           },
           ports: ports || [
             {
