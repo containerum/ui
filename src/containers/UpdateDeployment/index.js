@@ -99,7 +99,7 @@ export class CreateDeployment extends PureComponent<Props> {
       const { data } = nextProps.getDeploymentReducer;
       const { name, labels, replicas, containers } = data;
       // const containersArr = [];
-      const containersArr = containers.map(item => {
+      const containersArr = containers.map((item, index) => {
         const {
           image,
           name: imgName,
@@ -109,21 +109,20 @@ export class CreateDeployment extends PureComponent<Props> {
           commands
           // volumes
         } = item;
-
-        // if (ports) {
-        //   ports.map(itemPorts => {
-        //     itemPorts.id = _.uniqueId();
-        //     itemPorts.index = index + 1;
-        //     return null;
-        //   });
-        // }
-        // if (env) {
-        //   env.map(itemEnv => {
-        //     itemEnv.id = _.uniqueId();
-        //     itemEnv.index = index + 1;
-        //     return null;
-        //   });
-        // }
+        if (ports) {
+          ports.map(itemPorts => {
+            itemPorts.id = _.uniqueId();
+            itemPorts.index = index + 1;
+            return null;
+          });
+        }
+        if (env) {
+          env.map(itemEnv => {
+            itemEnv.id = _.uniqueId();
+            itemEnv.index = index + 1;
+            return null;
+          });
+        }
         // if (volumes) {
         //   volumes.map(itemVolume => {
         //     itemVolume.id = _.uniqueId();
@@ -1219,40 +1218,47 @@ export class CreateDeployment extends PureComponent<Props> {
       return <p>Oops, Failed to load data of Deployment!</p>;
     }
 
-    const { replicas, containers, containersCount, volumes } = this.state;
-    return (
-      <div>
-        <Replicas
-          inputReplicas={replicas}
-          idDep={match.params.idDep}
-          handleChangeInputReplicasName={this.handleChangeInputReplicasName}
-        />
-        {containers.map((item, index) => (
-          <Container
-            key={item.id}
-            item={item}
-            index={index}
-            volumes={volumes}
-            containersCount={containersCount}
-            handleClickContainerRemove={this.handleClickContainerRemove}
-            handleClickContainerAdd={this.handleClickContainerAdd}
-            handleChangeInputCommon={this.handleChangeInputCommon}
-            handleChangeInputParameters={this.handleChangeInputParameters}
-            handleChangeInputImagePorts={this.handleChangeInputImagePorts}
-            handleClickRemoveImagePort={this.handleClickRemoveImagePort}
-            handleClickAddImagePort={this.handleClickAddImagePort}
-            handleChangeInputCommands={this.handleChangeInputCommands}
-            handleChangeInputEnvironment={this.handleChangeInputEnvironment}
-            handleClickRemoveEnvironment={this.handleClickRemoveEnvironment}
-            handleClickAddEnvironment={this.handleClickAddEnvironment}
-            handleChangeVolumeSelect={this.handleChangeVolumeSelect}
-            handleChangeInputVolumePath={this.handleChangeInputVolumePath}
-            handleClickRemoveVolume={this.handleClickRemoveVolume}
-            handleClickAddVolume={this.handleClickAddVolume}
+    if (
+      getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS &&
+      this.state.containers[0].name
+    ) {
+      const { replicas, containers, containersCount, volumes } = this.state;
+      return (
+        <div>
+          <Replicas
+            inputReplicas={replicas}
+            idDep={match.params.idDep}
+            handleChangeInputReplicasName={this.handleChangeInputReplicasName}
           />
-        ))}
-      </div>
-    );
+          {containers.map((item, index) => (
+            <Container
+              key={item.id}
+              item={item}
+              index={index}
+              volumes={volumes}
+              containersCount={containersCount}
+              handleClickContainerRemove={this.handleClickContainerRemove}
+              handleClickContainerAdd={this.handleClickContainerAdd}
+              handleChangeInputCommon={this.handleChangeInputCommon}
+              handleChangeInputParameters={this.handleChangeInputParameters}
+              handleChangeInputImagePorts={this.handleChangeInputImagePorts}
+              handleClickRemoveImagePort={this.handleClickRemoveImagePort}
+              handleClickAddImagePort={this.handleClickAddImagePort}
+              handleChangeInputCommands={this.handleChangeInputCommands}
+              handleChangeInputEnvironment={this.handleChangeInputEnvironment}
+              handleClickRemoveEnvironment={this.handleClickRemoveEnvironment}
+              handleClickAddEnvironment={this.handleClickAddEnvironment}
+              handleChangeVolumeSelect={this.handleChangeVolumeSelect}
+              handleChangeInputVolumePath={this.handleChangeInputVolumePath}
+              handleClickRemoveVolume={this.handleClickRemoveVolume}
+              handleClickAddVolume={this.handleClickAddVolume}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    return null;
   };
 
   render() {
