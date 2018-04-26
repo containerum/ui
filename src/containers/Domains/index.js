@@ -14,11 +14,12 @@ import {
   GET_DOMAINS_SUCCESS,
   GET_DOMAINS_FAILURE
 } from '../../constants/serviceConstants/getDomains';
-import { DELETE_DOMAIN_SUCCESS } from '../../constants/serviceConstants/deleteDomain';
+import {
+  DELETE_DOMAIN_SUCCESS,
+  DELETE_DOMAIN_REQUESTING
+} from '../../constants/serviceConstants/deleteDomain';
 import DomainsList from '../../components/DomainsList';
-// import Notification from '../../Notification';
-// import LoadButton from '../../../components/LoadButton';
-// import InputControl from '../../../components/InputControl';
+import Notification from '../Notification';
 
 type Props = {
   getDomainsReducer: Object,
@@ -63,12 +64,13 @@ export class Domains extends PureComponent<Props> {
   };
 
   renderDomainsList = () => {
-    const { getDomainsReducer } = this.props;
+    const { getDomainsReducer, deleteDomainReducer } = this.props;
 
     if (
       !getDomainsReducer.readyStatus ||
       getDomainsReducer.readyStatus === GET_DOMAINS_INVALID ||
-      getDomainsReducer.readyStatus === GET_DOMAINS_REQUESTING
+      getDomainsReducer.readyStatus === GET_DOMAINS_REQUESTING ||
+      deleteDomainReducer.readyStatus === DELETE_DOMAIN_REQUESTING
     ) {
       return (
         <div
@@ -103,9 +105,16 @@ export class Domains extends PureComponent<Props> {
     );
   };
   render() {
+    const { status, method, label, err } = this.props.deleteDomainReducer;
     return (
       <div>
         <Helmet title="Domains" />
+        <Notification
+          status={status}
+          name={label}
+          method={method}
+          errorMessage={err}
+        />
         <div className="container  no-back">
           <div className="content-block">
             <div className="row double two-columns">
@@ -126,7 +135,7 @@ export class Domains extends PureComponent<Props> {
                       <div className="col-md-8">
                         <div
                           className="light-text"
-                          style={{ marginTop: '10px' }}
+                          style={{ margin: '20px 0' }}
                         >
                           To add Domain, please visit Service creation page and
                           add Domain in the corresponding section (for External

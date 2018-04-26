@@ -60,8 +60,8 @@ export const fetchDeleteDomain = (
   );
   const { status, data, config } = response;
   switch (status) {
-    case 202: {
-      dispatch(deleteDomainSuccess(data, status, config.method, label));
+    case 200: {
+      dispatch(deleteDomainSuccess(data, 202, config.method, label));
       break;
     }
     case 400: {
