@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import toastr from 'toastr';
+import queryString from 'query-string';
+import decodeUriComponent from 'decode-uri-component';
 
 import * as actionSendSupportTicket from '../../actions/supportActions/sendSupportTicket';
 import * as actionGetSupportGroups from '../../actions/supportActions/getSupportGroups';
@@ -20,6 +22,7 @@ import SupportList from '../../components/SupportList';
 import './Support.css';
 
 type Props = {
+  location: Object,
   sendSupportTicketReducer: Object,
   getSupportGroupsReducer: Object,
   getProfileReducer: Object,
@@ -39,8 +42,15 @@ export class Support extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    const { fetchGetSupportGroupsIfNeeded } = this.props;
+    const { fetchGetSupportGroupsIfNeeded, location } = this.props;
     fetchGetSupportGroupsIfNeeded();
+    const { report } = queryString.parse(location.search);
+    if (report) {
+      this.setState({
+        ...this.state,
+        textArea: decodeUriComponent(report)
+      });
+    }
   }
   componentWillUpdate(nextProps) {
     if (
