@@ -1,0 +1,112 @@
+
+@import '../../theme/variables.scss';
+@import '../../theme/global.scss';
+
+.solutionContainer {
+  display: flex;
+  align-items: flex-start;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 31.5%;
+  padding: 15px;
+  border-radius: 4px;
+  background-color: $color-white;
+  border: solid 1px $color-white;
+  margin: 0 0 30px 0;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  &Wrapper {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+}
+
+.volume {
+  &HeaderImg {
+    display: block;
+    width: auto;
+    height: 71px;
+    margin: 0 auto;
+  }
+
+  &Footer {
+    &Links {
+      &Deploy {
+        float: left;
+
+        &Btn {
+          text-align: center;
+          color: #29abe2;
+          text-transform: uppercase;
+          border-radius: 2px;
+          border: solid 1px #29abe2;
+          padding: 3px 40px;
+          transition: all 0.3s ease;
+          outline: none;
+          line-height: 27px;
+
+          &:hover {
+            background-color: #29abe2;
+            color: #fff;
+          }
+        }
+      }
+
+      &Github {
+        float: right;
+        position: relative;
+
+        &Text {
+          font-weight: 300;
+          line-height: 1.33;
+          color: #a7a7a7;
+          transition: all 0.3s ease
+        }
+
+        &:hover {
+          .iconGitHub {
+            fill: #333;
+          }
+
+          .volumeFooterLinksGithubText {
+            color: $color-dark-gray;
+          }
+        }
+      }
+    }
+
+    &Header {
+      font-size: 18px;
+      text-align: left;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+      max-height: 30px !important;
+    }
+
+    &Info {
+      font-weight: 300;
+      line-height: 1.67;
+      text-align: left;
+      margin-bottom: 27px;
+
+      &Item {
+        display: inline-block;
+        margin-right: 15px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

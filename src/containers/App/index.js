@@ -16,6 +16,7 @@ import '../../theme/style.css';
 import '../../theme/style-custom.css';
 import '../../theme/custom.css';
 import '../../theme/individual.css';
+import '../../theme/common.scss';
 
 const App = () => {
   if (

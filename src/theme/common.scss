@@ -1,0 +1,10 @@
+@import './variables';
+
+*, *:focus {
+  outline: none !important;
+}
+
+a:focus, a:hover {
+  text-decoration: none;
+  color: $color-dark-gray;
+}
