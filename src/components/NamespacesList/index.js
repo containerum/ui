@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import styles from '../../containers/Namespaces/index.scss';
+import globalStyles from '../../theme/global.scss';
 
 import { routerLinks } from '../../config';
 import deployment from '../../images/deployment.png';
@@ -26,25 +27,25 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
     e.stopPropagation();
   };
   const styleNamespaces = classNames.bind(styles);
-  const classNameContainer = styleNamespaces(
+  const globalStyleNamespaces = classNames.bind(globalStyles);
+  const classNameContainer = globalStyleNamespaces(
     'contentBlockContainer',
     'containerCard',
     'hoverAction'
   );
-  const classNameContainerHeader = styleNamespaces(
+  const classNameContainerHeader = globalStyleNamespaces(
     'contentBlockHeaderLabelText',
     'contentBlockHeaderLabelMain'
   );
-  const classNameCardBlock = styleNamespaces(
+  const classNameCardBlock = globalStyleNamespaces(
     'contentBlockContent',
     'contentBlockContentCardBlock'
   );
-  const addNewBlockClassName = styleNamespaces(
+  const addNewBlockClassName = globalStyleNamespaces(
     'hoverAction',
     'contentBlockContent',
     'containerCard'
   );
-  const ellipsisClassName = styleNamespaces('contentBlockHeaderEllipsis');
   return (
     <div className="row double">
       {data &&
@@ -69,11 +70,11 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                 role="link"
                 tabIndex={0}
               >
-                <div className={styles.contentBlockHeader}>
-                  <div className={styles.contentBlockHeaderLabel}>
+                <div className={globalStyles.contentBlockHeader}>
+                  <div className={globalStyles.contentBlockHeaderLabel}>
                     <div
                       style={{ display: 'inline-block' }}
-                      className={styles.contentBlockHeaderImg}
+                      className={globalStyles.contentBlockHeaderImg}
                     >
                       <img src={deployment} alt="ns-icon" />
                     </div>
@@ -93,7 +94,7 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                     </div>
                   </div>
                   <div
-                    className={styles.contentBlockHeaderExtraPanel}
+                    className={globalStyles.contentBlockHeaderExtraPanel}
                     onClick={e => handleClose(e)}
                     onKeyPress={e => handleClose(e)}
                     role="menuitem"
@@ -101,25 +102,37 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                   >
                     <div
                       className={`${
-                        styles.contentBlockHeaderExtraPanel
+                        globalStyles.contentBlockHeaderExtraPanel
                       } dropdown no-arrow`}
                     >
                       <i
-                        className={`${ellipsisClassName} ion-more dropdown-toggle`}
+                        className={`${
+                          globalStyles.contentBlockHeaderEllipsis
+                        } ${globalStyles.dropdownToggle}
+                          ${styles.ellipsisRoleMore} ion-more `}
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       />
-                      <ul className="dropdown-menu" role="menu">
+                      <ul
+                        className={` dropdown-menu dropdown-menu-right ${
+                          globalStyles.dropdownMenu
+                        }`}
+                        role="menu"
+                      >
                         <NavLink
                           activeClassName="active"
-                          className="dropdown-item"
+                          className={`dropdown-item ${
+                            globalStyles.dropdownItem
+                          }`}
                           to={routerLinks.resizeNamespaceLink(label)}
                         >
                           Resize
                         </NavLink>
                         <button
-                          className="dropdown-item text-danger"
+                          className={`dropdown-item ${
+                            globalStyles.dropdownItem
+                          } text-danger`}
                           onClick={() => handleClickDeleteNamespace(label)}
                           onKeyPress={() => handleClickDeleteNamespace(label)}
                         >
@@ -131,27 +144,39 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                 </div>
 
                 <div className={classNameCardBlock}>
-                  <div className={styles.contentBlockInfoItem}>
-                    <div className={`${styles.contentBlockInfoName} inline`}>
+                  <div className={globalStyles.contentBlockInfoItem}>
+                    <div
+                      className={`${globalStyles.contentBlockInfoName} inline`}
+                    >
                       RAM ( Usage / Total ) :&nbsp;
                     </div>
-                    <div className={`${styles.contentBlockInfoText} inline`}>
+                    <div
+                      className={`${globalStyles.contentBlockInfoText} inline`}
+                    >
                       {memory} / {memoryLimit}
                     </div>
                   </div>
-                  <div className={styles.contentBlockInfoItem}>
-                    <div className={`${styles.contentBlockInfoName} inline`}>
+                  <div className={globalStyles.contentBlockInfoItem}>
+                    <div
+                      className={`${globalStyles.contentBlockInfoName} inline`}
+                    >
                       CPU ( Usage / Total ) :&nbsp;
                     </div>
-                    <div className={`${styles.contentBlockInfoText} inline`}>
+                    <div
+                      className={`${globalStyles.contentBlockInfoText} inline`}
+                    >
                       {cpu} / {cpuLimit}
                     </div>
                   </div>
-                  <div className={styles.contentBlockInfoItem}>
-                    <div className={`${styles.contentBlockInfoName} inline`}>
+                  <div className={globalStyles.contentBlockInfoItem}>
+                    <div
+                      className={`${globalStyles.contentBlockInfoName} inline`}
+                    >
                       Volume ( Usage / Total ) :&nbsp;
                     </div>
-                    <div className={`${styles.contentBlockInfoText} inline`}>
+                    <div
+                      className={`${globalStyles.contentBlockInfoText} inline`}
+                    >
                       - / -
                     </div>
                   </div>
@@ -164,9 +189,9 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
         <NavLink
           activeClassName="active"
           to={routerLinks.createNamespace}
-          className={`${addNewBlockClassName} add-new-block`}
+          className={`${addNewBlockClassName} ${styles.addNewBlock}`}
         >
-          <div className="action">
+          <div className={styles.action}>
             <i>+</i> Add a namespace
           </div>
         </NavLink>
