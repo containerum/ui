@@ -49,7 +49,6 @@ export const fetchUpdateDeployment = (
   const accessToken = cookie.load('accessToken');
 
   dispatch(updateDeploymentRequest());
-
   const splitContainers = cloneDeep(dataObj.containers);
   splitContainers.map(item => {
     delete item.id;
