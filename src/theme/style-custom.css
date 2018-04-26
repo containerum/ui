@@ -66,6 +66,18 @@ input:invalid {
     padding: 25px 30px 25px 30px;
 }
 
+/*.content-block-container:hover .dropdown-menu {*/
+  /*background-color: red;*/
+/*}*/
+
+.card-container.hover-action:hover .dropdown-toggle::after {
+  border-top-color: #29abe2;
+}
+
+.card-container.hover-action:hover .material-icons.material-icons-membership {
+  color: #29abe2;
+}
+
 .content-block-container-membership {
   padding: 40px 50px 40px 50px
 }

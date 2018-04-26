@@ -128,9 +128,13 @@ h1{
     padding-right: 15px;
 }
 
-.dropdown-toggle::after{
+.dropdown-toggle:after {
+  border-top-color: #29abe2;
+  margin: 4px 0 5px 12px;
+}
+
+.dropdown-toggle-membership.dropdown-toggle::after {
     border-top-color: #eaeaea;
-    margin: 4px 0 5px 12px;
     margin-left: 38px;
 }
 
@@ -1439,7 +1443,7 @@ h1{
 
 }
 .content-block__table  .td-2-domains{
-  width: 200px;
+  width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
 

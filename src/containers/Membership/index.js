@@ -341,6 +341,7 @@ class Membership extends PureComponent<Props> {
                           </li>
                         </ul>
                       </div>
+
                       {this.renderMembershipList()}
                     </div>
                   </div>

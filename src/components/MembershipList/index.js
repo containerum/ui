@@ -12,97 +12,110 @@ const MembershipList = ({
   changeAccessUser,
   handleDeleteDMembers
 }: Props) => (
-  <div className="tab-content">
-    <div className="tab-pane deployments active">
-      {membersList.length ? (
-        <table className="content-block__table table" width="1170">
-          <thead>
-            <tr>
-              <td className="td-2__membership td-3__no-paddingLeft">Name</td>
-              <td className="td-2__membership td-3__no-paddingLeft">Email</td>
-              <td className="td-3__no-paddingLeft">Permission</td>
-              <td className="td-1" />
-            </tr>
-          </thead>
-          <tbody>
-            {membersList.map(user => {
-              const { login, new_access_level: newAccessLevel } = user;
-              return (
-                <tr key={_.uniqueId()} className="membership-tr">
-                  <td
-                    className="td-2__membership  td-padding-membership"
-                    style={{ paddingLeft: '2px' }}
-                  >
-                    {login}
-                  </td>
-                  <td className="td-2__membership td-3__no-paddingLeft td-padding-membership">
-                    {login}
-                  </td>
-                  <td className="td-3__no-paddingLeft td-3-flex td-padding-membership">
-                    <div>
-                      {newAccessLevel !== 'owner' ? (
-                        <div style={{ display: 'inline' }}>
-                          <i
-                            className="content-block-table__more  dropdown-toggle"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                            style={{ cursor: 'pointer', fontStyle: 'normal' }}
-                          >
-                            {' '}
-                            {newAccessLevel}
-                          </i>
-                          <ul
-                            className="dropdown-menu dropdown-menu-right"
-                            role="menu"
-                          >
-                            <button
-                              className="dropdown-item"
-                              onClick={() => changeAccessUser(login, 'write')}
-                            >
-                              Write
-                            </button>
-                            <button
-                              className="dropdown-item"
-                              onClick={() => changeAccessUser(login, 'read')}
-                            >
-                              Read
-                            </button>
-                          </ul>
-                        </div>
-                      ) : (
-                        'owner'
-                      )}
-                    </div>
-                  </td>
-                  <td
-                    className="td-1 td-padding-membership"
-                    onClick={() =>
-                      newAccessLevel !== 'owner' && handleDeleteDMembers(login)
-                    }
-                  >
-                    {newAccessLevel !== 'owner' && (
-                      <div className="membership-item">
+  <div>
+    {membersList.length ? (
+      <table
+        className="block-item__tokens-table content-block__table table"
+        style={{
+          tableLayout: 'fixed',
+          width: '100%',
+          border: 0,
+          cellspacing: 0,
+          cellpadding: 0,
+          marginTop: '30px'
+        }}
+      >
+        <thead style={{ height: '30px' }}>
+          <tr>
+            <td style={{ width: 300 }}>Name</td>
+            <td style={{ width: 320 }}>Email</td>
+            <td>Permission</td>
+            <td className="td-1" />
+          </tr>
+        </thead>
+        <tbody className="domains">
+          {membersList.map(user => {
+            const { login, new_access_level: newAccessLevel } = user;
+            return (
+              <tr
+                className="content-block-container card-container hover-action"
+                style={{
+                  margin: 0,
+                  height: 43,
+                  boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
+                }}
+                key={_.uniqueId()}
+              >
+                <td className="td-8">{login}</td>
+                <td className="td-9">
+                  <div className="configmap-overflow">{login}</div>
+                </td>
+                <td className="td-3" style={{ overflow: 'initial' }}>
+                  <span>
+                    {newAccessLevel !== 'owner' ? (
+                      <span style={{ display: 'inline' }}>
                         <i
-                          className="material-icons material-icons-membership"
-                          role="presentation"
+                          className="content-block-table__more dropdown-toggle-membership dropdown-toggle"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                          style={{ cursor: 'pointer', fontStyle: 'normal' }}
                         >
-                          delete
+                          {' '}
+                          {newAccessLevel}
                         </i>
-                      </div>
+                        <ul
+                          className="dropdown-menu dropdown-menu-right"
+                          style={{ width: 160 }}
+                          role="menu"
+                        >
+                          <button
+                            className="dropdown-item"
+                            onClick={() => changeAccessUser(login, 'write')}
+                          >
+                            Write
+                          </button>
+                          <button
+                            className="dropdown-item"
+                            onClick={() => changeAccessUser(login, 'read')}
+                          >
+                            Read
+                          </button>
+                        </ul>
+                      </span>
+                    ) : (
+                      'owner'
                     )}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      ) : (
-        <div className="content-block__table table" width="1170">
-          You don`t have any users
-        </div>
-      )}
-    </div>
+                  </span>
+                </td>
+                <td
+                  className="td-10 dropdown no-arrow"
+                  onClick={() =>
+                    newAccessLevel !== 'owner' && handleDeleteDMembers(login)
+                  }
+                >
+                  {newAccessLevel !== 'owner' && (
+                    <div className="membership-item">
+                      <i
+                        style={{ verticalAlign: 'middle', paddingRight: 30 }}
+                        className="material-icons material-icons-membership"
+                        role="presentation"
+                      >
+                        delete
+                      </i>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    ) : (
+      <div className="content-block__table table" width="1170">
+        You don`t have any users
+      </div>
+    )}
   </div>
 );
 

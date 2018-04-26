@@ -168,7 +168,7 @@ const AddUserMembershipModal = ({
         <div className="modal-footer">
           <button
             type="button"
-            className=" modal-footer-solution-cancel modal-footer-solution-cancel_membership"
+            className="btn modal-footer-solution-cancel"
             onClick={() => handleCloseModal()}
           >
             Cancel
@@ -178,9 +178,9 @@ const AddUserMembershipModal = ({
               height: '40px'
             }}
             type="submit"
-            buttonText="Create"
+            buttonText="Add"
             isFetching={isFetchingAdd}
-            baseClassButton=" modal-footer-solution-select modal-footer-solution-cancel_membership"
+            baseClassButton="btn modal-footer-solution-select"
           />
         </div>
       </form>

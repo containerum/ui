@@ -346,7 +346,7 @@ export class Dashboard extends PureComponent<Props> {
                 linkToDeployment={
                   getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS &&
                   getNamespacesReducer.data.length
-                    ? getNamespacesReducer.data[0].name
+                    ? getNamespacesReducer.data[0].label
                     : ''
                 }
                 linkToManageTeam={
