@@ -1,0 +1,6 @@
+env:
+  WEB_API: "https://api.containerum.io:8082"
+  WEB_API_OTHER: "https://api.containerum.io:8082"
+  WEB_API_LOGIN: "https://api.containerum.io:8082"
+  WS_API: "wss://api.containerum.io:8082"
+  COUNTRY: "US"

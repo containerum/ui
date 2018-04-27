@@ -1,0 +1,6 @@
+env:
+  WEB_API: "http://192.168.88.200:5000"
+  WEB_API_OTHER: "http://192.168.88.200:5000"
+  WEB_API_LOGIN: "http://192.168.88.200:8082"
+  WS_API: "ws://192.168.88.200:8082"
+  COUNTRY: "US"
