@@ -1,0 +1,118 @@
+@import '../../theme/variables';
+
+.header {
+  position: relative;
+  z-index: 10;
+
+  &Logo {
+    width:158px;
+    height: 30px;
+    display: block;
+    float: left;
+    margin-top: 0;
+
+    img {
+      width:auto;
+      height: 30px;
+    }
+  }
+
+  &Top {
+    height: 60px;
+    background:$color-white;
+    border-bottom: 1px solid $color-white2;
+
+    &Menu {
+      width:510px;
+      height: 30px;
+      float: left;
+      margin: 2px 0 0 70px;
+
+      &Link {
+        text-transform: uppercase;
+      }
+
+      &Li {
+        margin-right: 45px;
+        padding: 0;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        a {
+          display: block;
+          padding: 0 0 18px 0;
+          border-bottom: 3px solid transparent;
+        }
+
+        &:hover {
+          a {
+            color: $color-dark-gray;
+            border-color: $main-color;
+          }
+        }
+      }
+    }
+
+    &Container {
+      padding: 15px 0 0 0;
+      height: 100%;
+
+      &::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+    }
+
+    &Account {
+      width: unset;
+      float: right;
+
+      &Info {
+        height: 28px;
+        float: left;
+        margin: -2px 0 0 15px;
+      }
+
+      &Avatar {
+        width: 28px;
+        height: 28px;
+        float: left;
+      }
+
+      &Name {
+        font-weight: 300;
+        line-height: 16px;
+        width: unset;
+        height: 20px;
+
+        a.dropdown-toggle {
+          width: unset;
+          max-width: 200px;
+          display: block;
+          height: 18px;
+          padding-right: 20px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          position: relative;
+        }
+
+        .dropdown-toggle::after {
+          border-top-color: $main-color;
+          top: 5px;
+          right: 0;
+          position: absolute;
+        }
+      }
+
+      &Deposit {
+        font-weight: bold;
+        line-height: 1.33;
+        font-size: 12px;
+      }
+    }
+  }
+}

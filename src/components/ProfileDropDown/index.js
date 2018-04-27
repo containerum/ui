@@ -7,6 +7,9 @@ import Blockies from 'react-blockies';
 import { routerLinks } from '../../config';
 // import deployment from '../../images/deployment.png';
 
+import styles from '../../containers/Header/index.scss';
+import globalStyles from '../../theme/global.scss';
+
 type Props = {
   email: string,
   balance: string,
@@ -15,12 +18,12 @@ type Props = {
 
 const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
   <div>
-    <div className="header-top-account">
-      <div className="header-top-account__avatar">
+    <div className={styles.headerTopAccount}>
+      <div className={styles.headerTopAccountAvatar}>
         <Blockies seed={email} size={9} scale={3} bgColor="#fff" />
       </div>
-      <div className="header-top-account__info">
-        <div className="header-top-account__name dropdown">
+      <div className={styles.headerTopAccountInfo}>
+        <div className={`${styles.headerTopAccountName} dropdown`}>
           <a
             href="##"
             className="dropdown-toggle"
@@ -31,7 +34,9 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
             {email}
           </a>
           <ul
-            className="dropdown-menu dropdown-menu-right"
+            className={`${
+              globalStyles.dropdownMenu
+            } dropdown-menu dropdown-menu-right`}
             style={{ zIndex: '1000' }}
             role="menu"
           >
@@ -59,7 +64,7 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
             </NavLink>
           </ul>
         </div>
-        <div className="header-top-account__deposit">
+        <div className={styles.headerTopAccountDeposit}>
           {balance ? parseFloat(balance).toFixed(2) : 0}$
         </div>
       </div>

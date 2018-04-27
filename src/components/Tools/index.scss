@@ -17,6 +17,7 @@
     &Container {
       min-height: 260px !important;
       max-width: 370px !important;
+      height: 275px;
 
       &NotActive {
         cursor: not-allowed !important;
