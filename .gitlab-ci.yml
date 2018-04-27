@@ -74,7 +74,7 @@ dev deploy:
   <<: *dev-before
   script:
     - cd deploy
-    - helm upgrade --install  --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set image.tag=develop --set recaptcha=${RECAPCHA} --values values.yaml --values env/develop.yaml .
+    - helm upgrade --install  --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set image.tag=${CI_COMMIT_SHA:0:8} --set recaptcha=${RECAPCHA} --values values.yaml --values env/develop.yaml .
   only:
     - develop
   when: always
