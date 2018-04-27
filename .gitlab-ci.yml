@@ -24,7 +24,6 @@ test lint:
     - develop
     - master
     - tags
-    - 85-add-lint-test-in-pipeline
 
 
 .dev-before: &dev-before
@@ -78,5 +77,4 @@ dev deploy:
     - helm upgrade --install  --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set image.tag=develop --set recaptcha=${RECAPCHA} --values values.yaml --values env/develop.yaml .
   only:
     - develop
-    - 85-add-lint-test-in-pipeline
   when: always
