@@ -1,4 +1,5 @@
 stages:
+  - test
   - build
   - helm-status
   - deploy
@@ -23,6 +24,7 @@ test lint:
     - develop
     - master
     - tags
+    - 85-add-lint-test-in-pipeline
 
 
 .dev-before: &dev-before
