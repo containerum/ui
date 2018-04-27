@@ -669,7 +669,7 @@ h1{
     border: none ;
     border-bottom: 1.5px solid #eaeaea;
     padding: 7px 0 8px 0;
-    border-radius: 0;
+    border-radius: 0 !important;
 }
 
 
@@ -2101,6 +2101,17 @@ select.form-control:not([size]):not([multiple]) {
     border: solid 0.5px #a7a7a7;
 }
 
+.btn{
+  padding: 8px 19px 8px 19px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.btn:focus, .btn:active{
+  outline: none;
+  box-shadow: none;
+}
+
 .modal-footer{
     justify-content: center;
     padding: 30px;
@@ -2143,6 +2154,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .modal-footer-solution-select{
+    padding: 9px 19px !important;
     font-weight: 300;
     text-align: center;
     color: #fff;
@@ -2212,17 +2224,6 @@ select.form-control:not([size]):not([multiple]) {
 .input-group{
     margin: 0 0 20px 0;
     position: relative;
-}
-
-.btn{
-    padding: 8px 19px 8px 19px;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.btn:focus, .btn:active{
-    outline: none;
-    box-shadow: none;
 }
 
 .button_blue{
