@@ -22,4 +22,6 @@ service:
       externalPort: 3001
       internalPort: 3001
 
+recaptcha: hash
+
 resources: {}
