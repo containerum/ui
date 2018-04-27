@@ -3,10 +3,15 @@
 import React from 'react';
 // import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
+import classNames from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import getSolutionImage from '../../functions/getSolutionImage';
 import githubIcon from '../../images/githubIcon.svg';
+
+import styles from '../../containers/Solutions/index.scss';
+import globalStyles from '../../theme/global.scss';
+import '../../theme/common.scss';
 
 type Props = {
   data: Array<Object>,
@@ -18,6 +23,8 @@ const handleClose = e => {
   e.stopPropagation();
 };
 
+const styleSolutions = classNames.bind(styles);
+const iconClassName = styleSolutions('icon', 'iconGitHub');
 const SolutionsList = ({
   data,
   history
@@ -34,40 +41,29 @@ Props) => (
           onClick={() => history.push(routerLinks.solutionLink(name))}
           style={{ cursor: 'pointer' }}
         >
-          <div className="content-block-container-solution">
-            <div className="content-block-volume-header">
+          <div className={globalStyles.contentBlockContainerSolution}>
+            <div className={globalStyles.contentBlockVolumeHeader}>
               <img
-                className="volume-header-img"
+                className={styles.volumeHeaderImg}
                 src={srcLogo}
                 alt={name}
                 style={{ height: logoHeight }}
               />
             </div>
-            <div
-              className="content-block-volume-footer"
-              style={{ padding: '25px' }}
-            >
-              <div
-                className="volume-footer-header"
-                style={{ maxHeight: '30px' }}
-              >
-                {name}
-              </div>
-              <div className="volume-footer-info">
-                <span className="volume-footer-info-item">CPU: {cpu}</span>
-                <span className="volume-footer-info-item">RAM: {ram}</span>
+            <div className={globalStyles.contentBlockVolumeFooter}>
+              <div className={styles.volumeFooterHeader}>{name}</div>
+              <div className={styles.volumeFooterInfo}>
+                <span className={styles.volumeFooterInfoItem}>CPU: {cpu}</span>
+                <span className={styles.volumeFooterInfoItem}>RAM: {ram}</span>
               </div>
 
-              <div
-                className="volume-footer-links-wrap"
-                onClick={e => handleClose(e)}
-              >
-                <div className="volume-footer-links-deploy">
+              <div onClick={e => handleClose(e)}>
+                <div className={styles.volumeFooterLinksDeploy}>
                   <a
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="footer-links-deploy-btn"
+                    className={styles.volumeFooterLinksDeployBtn}
                   >
                     Deploy
                   </a>
@@ -78,15 +74,15 @@ Props) => (
                   {/* deploy */}
                   {/* </div> */}
                 </div>
-                <div className="volume-footer-links-github">
+                <div className={styles.volumeFooterLinksGithub}>
                   <a
-                    className="footer-links-github-text"
+                    className={styles.volumeFooterLinksGithubText}
                     href={url}
                     target="_blank"
                   >
                     Look on GitHub
                     <img
-                      className="icon icons8-GitHub"
+                      className={iconClassName}
                       src={githubIcon}
                       alt="githubIcon"
                     />
