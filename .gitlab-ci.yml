@@ -1,12 +1,13 @@
 stages:
   - test
   - build
+  - helm-status
   - deploy
 
 
 variables:
   CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}
-  NAMESPACE: hosting
+  NAMESPACE: web
 
 
 test lint:
