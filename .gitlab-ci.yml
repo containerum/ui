@@ -1,37 +1,78 @@
 stages:
+  - test
   - build
   - deploy
 
-.create_tag: &create_tag
-  before_script:
-    - export TAG="${CI_COMMIT_SHA:0:8}"-${CI_PIPELINE_ID}
 
-build-and-push-develop:
-  <<: *create_tag
+variables:
+  CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+  NAMESPACE: hosting
+
+
+test lint:
+  services:
+  image: node:alpine
+  stage: test
+  tags:
+    - build
+  script:
+    - npm install yarn -g
+    - yarn
+    - yarn lint
+  except:
+    - develop
+    - master
+    - tags
+
+
+.dev-before: &dev-before
+  before_script:
+    - mkdir -p /etc/deploy/
+    - echo ${SANDBOX_KUBE_CONFIG} | base64 -d > ${KUBECONFIG}
+    - helm init --client-only
+    - helm repo update
+
+
+dev docker build:
   image: docker:latest
   stage: build
   tags:
-    - ui
+    - build
   script:
-    - docker login  ${DOCKER_REGISTRY} -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD"
-    - docker build --pull --no-cache -t ${DOCKER_REGISTRY_IMAGE}:${TAG} .
-    - docker push "${DOCKER_REGISTRY_IMAGE}:${TAG}"
-    - docker rmi ${DOCKER_REGISTRY_IMAGE}:${TAG}
+    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}  .
+    - docker tag ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} ${CONTAINER_IMAGE}:develop
+    - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+    - docker push ${CONTAINER_IMAGE}:develop
+    - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
   only:
     - develop
 
-deploy-to-kubernetes-develop:
-  <<: *create_tag
-  image: mastanggt/kubectl:latest
-  stage: deploy
-  environment:
-    name: sandbox
+dev deploy status:
+  image: exon/helm
+  stage: helm-status
   tags:
-    - deploy
+    - develop
+  environment:
+    name: develop
+  <<: *dev-before
   script:
-    - export IMAGE="$DOCKER_REGISTRY_IMAGE:${TAG}"
-    - echo $SANDBOX_KUBE_CONFIG | base64 -d > admin.conf
-    - cat deploy-template.yaml | envsubst > deploy.yaml
-    - kubectl --kubeconfig=admin.conf replace -f deploy.yaml
+    - helm status ${CI_PROJECT_NAME}
   only:
     - develop
+  allow_failure: true
+
+
+dev deploy:
+  image: exon/helm
+  stage: deploy
+  tags:
+    - develop
+  environment:
+    name: develop
+  <<: *dev-before
+  script:
+    - cd deploy
+  only:
+    - develop
+  when: always

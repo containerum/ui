@@ -1,0 +1,7 @@
+env:
+  WEB_API: "https://api.containerum.io:8082"
+  WEB_API_OTHER: "https://api.containerum.io:8082"
+  WS_API: "wss://api.containerum.io:8082"
+  COUNTRY: "US"
+  RECAPTCHA: "6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS"
+  NODE_TLS_REJECT_UNAUTHORIZED: 0

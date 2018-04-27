@@ -1,0 +1,25 @@
+replicaCount: 1
+strategy:
+  type: RollingUpdate
+  maxSurge: 1
+  maxUnavailable: 1
+
+name: ui
+
+image:
+  secret: gitlab-registry
+  repository: registry.containerum.net/ch/ui
+  tag: latest
+  pullPolicy: Always
+
+service:
+  externalIP: 192.168.88.210
+  ports:
+    - name: ui
+      externalPort: 4999
+      internalPort: 3000
+    - name: support
+      externalPort: 3001
+      internalPort: 3001
+
+resources: {}
