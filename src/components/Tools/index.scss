@@ -1,0 +1,121 @@
+@import '../../theme/variables';
+
+//import {configmapLogo} from './images/configmapLogo.svg';
+
+.container {
+  &Tools {
+    display:flex;
+    padding: 0;
+  }
+}
+
+.tools {
+  &Card {
+    padding-left: 0;
+    padding-right: 30px;
+
+    &Container {
+      min-height: 260px !important;
+      max-width: 370px !important;
+
+      &NotActive {
+        cursor: not-allowed !important;
+      }
+    }
+  }
+}
+
+.contentBlock {
+  &Info {
+    &Name {
+      &Tools {
+        color: $color-dark-gray;
+        margin: -5px 0 5px 0 !important;
+        font-weight: 300 !important;
+        padding: 0 45px 0 45px !important;
+
+        &Webhook {
+          padding: 0 40px 0 40px !important;
+        }
+      }
+    }
+  }
+
+  &Header {
+    &Label {
+      &Tools {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid $color-white2;
+      }
+    }
+
+    &Img {
+      &Tools {
+        width: 50px;
+        height: 47px;
+        margin:0 0 10px 0;
+
+        &Configmap {
+          background-image: url('./images/configmapLogo.svg');
+          background-repeat: no-repeat;
+        }
+
+        &Domains {
+          background-image: url('./images/domainsLogo.svg');
+          background-repeat: no-repeat;
+        }
+
+        &Webhooks {
+          background-image: url('./images/webhookDisabled.svg');
+          background-repeat: no-repeat;
+          background-size: 50px;
+        }
+      }
+    }
+  }
+
+  &Content {
+    &Tools {
+      padding-top: 15px;
+    }
+  }
+
+  &Container {
+    &Tools {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+
+      &:hover {
+        .contentBlockHeaderImgToolsConfigmap {
+          background-image: url('./images/configmapLogoActive.svg');
+          background-repeat: no-repeat;
+          margin:0 0 10px 0;
+          width: 50px;
+          height: 47px;
+        }
+
+        .contentBlockHeaderImgToolsDomains {
+          background-image: url('./images/domainsLogoActive.svg');
+          background-repeat: no-repeat;
+          margin:0 0 10px 0;
+          width: 50px;
+          height: 47px;
+        }
+
+        .contentBlockHeaderImgToolsWebhooks {
+          background-image: url('./images/webhooksLogoActive.svg');
+          background-repeat: no-repeat;
+          margin:0 0 10px 0;
+          width: 50px;
+          height: 47px;
+        }
+      }
+    }
+  }
+}
