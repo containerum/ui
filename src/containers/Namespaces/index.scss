@@ -1,0 +1,99 @@
+@import '../../theme/variables.scss';
+
+.card-block {
+  .contentBlockInfoItem {
+    display: block;
+    margin: 0;
+  }
+}
+
+.doubleRow {
+  margin: 0 -30px 30px -30px;
+}
+
+.namespaceInfo {
+  &Badge {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 120px;
+    height: 24px;
+    margin-left: 30px;
+    border-radius: 3px;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    color: #fff;
+
+    &Write{
+      background-color: $write-access-color;
+    }
+
+    &Read{
+      background-color: $read-access-color;
+    }
+
+    &Owner {
+      background-color: $owner-access-color;
+    }
+
+    &None {
+      background-color: $none-access-color;
+    }
+
+    &ReadDelete {
+      background-color: $read-delete-access-color;
+    }
+  }
+}
+
+.ellipsisRoleMore{
+  &::before {
+    font-size: 29px;
+    line-height: 29px;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+
+  &:hover {
+    &::before{
+      color: $main-color;
+    }
+  }
+}
+
+.addNewBlock {
+  display: block;
+  border-radius: 4px;
+  border: solid 1px #29abe2;
+  font-size: 20px;
+  text-align: center;
+  color: #29abe2;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #1d87b3;
+    color:#1d87b3;
+  }
+
+  .action {
+    line-height: 208px;
+
+    i {
+      font-size: 40px;
+      font-style: normal;
+      font-weight: 300;
+      vertical-align: top;
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+}
+
+
+
+
+
