@@ -49,7 +49,6 @@ dev docker build:
     - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
   only:
     - develop
-    - 85-add-lint-test-in-pipeline
 
 dev deploy status:
   image: exon/helm
@@ -63,7 +62,6 @@ dev deploy status:
     - helm status ${CI_PROJECT_NAME}
   only:
     - develop
-    - 85-add-lint-test-in-pipeline
   allow_failure: true
 
 
@@ -77,7 +75,8 @@ dev deploy:
   <<: *dev-before
   script:
     - cd deploy
-    - helm upgrade --install  --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set image.tag=${CI_COMMIT_SHA:0:8} --set recaptcha=${RECAPCHA} --values values.yaml --values env/develop.yaml .
+    - #helm upgrade --install  --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set image.tag=${CI_COMMIT_SHA:0:8} --set recaptcha=${RECAPCHA} --values values.yaml --values env/develop.yaml .
+    - helm upgrade --install  --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set image.tag=develop --set recaptcha=${RECAPCHA} --values values.yaml --values env/develop.yaml .
   only:
     - develop
     - 85-add-lint-test-in-pipeline

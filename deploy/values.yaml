@@ -14,6 +14,7 @@ image:
 
 service:
   externalIP: 192.168.88.210
+  name: ui
   ports:
     - name: ui
       externalPort: 4999
