@@ -17,7 +17,7 @@ test lint:
   tags:
     - build
   script:
-    - npm install yarn -g
+    - npm install yarn
     - yarn
     - yarn lint
   except:
