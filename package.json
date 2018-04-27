@@ -45,6 +45,7 @@
       "command": "node ./index.js",
       "env": {
         "NODE_PATH": "./src",
+        "NODE_HOST": "0.0.0.0",
         "NODE_ENV": "production",
         "PORT": 8080
       }
