@@ -2,9 +2,13 @@
 
 import React from 'react';
 import _ from 'lodash/fp';
+import classNames from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import getSolutionImage from '../../functions/getSolutionImage';
+
+import solutionStyles from '../../containers/Solutions/index.scss';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   data: Array<Object>,
@@ -16,32 +20,51 @@ const handleClose = e => {
   e.stopPropagation();
 };
 
+const solutionClassName = classNames.bind(solutionStyles);
+const globalClassName = classNames.bind(globalStyles);
+
+const solutionContainer = solutionClassName(
+  'solutionContainer',
+  'preSolutionContainer'
+);
+
+const solutionImg = solutionClassName(
+  'solutionContainerImgBlock',
+  'preSolutionContainerImgBlock'
+);
+
+const solutionBtn = globalClassName('button', 'buttonBlue', 'btn');
+
 const SolutionsDashboardList = ({
   data,
   history
 }: // handleClickRunSolution
 Props) => (
-  <div className="solution-containers-wrapper mt-30">
+  <div
+    className={`${solutionStyles.solutionContainerWrapper} ${
+      globalStyles.marginTop30
+    }`}
+  >
     {data.map(solution => {
       const { Name: name, URL: url } = solution;
       const { srcLogo, logoHeight } = getSolutionImage(name, '85px');
       return (
         <div
           key={_.uniqueId()}
-          className="solution-container pre-solution-container"
+          className={solutionContainer}
           onClick={() => history.push(routerLinks.solutionLink(name))}
           style={{ cursor: 'pointer' }}
         >
-          <div className="solution-container-img-block pre-solution-container-img-block">
+          <div className={solutionImg}>
             <img src={srcLogo} alt={name} style={{ maxHeight: logoHeight }} />
           </div>
-          <div className="pre-solution-container-info">{name}</div>
+          <div className={solutionStyles.preSolutionContainerInfo}>{name}</div>
           <div onClick={e => handleClose(e)}>
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="button button_blue btn btn-outline-primary"
+              className={`${solutionBtn} btn btn-outline-primary`}
             >
               Deploy
             </a>

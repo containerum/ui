@@ -1,0 +1,201 @@
+@import '../../theme/variables';
+
+.block {
+  &H {
+    height: 213px
+  }
+
+  &Container {
+    border-radius: 4px;
+    background-color: $color-white;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+
+    &Tabs {
+      padding: 25px 25px 10px 25px;
+      margin-top: 30px;
+      margin-bottom: 40px;
+
+      .nav-link {
+        padding: 0 0 10px 0;
+        margin-right: 38px;
+      }
+
+      .nav-item a {
+        text-transform: uppercase;
+      }
+
+      .nav-pills .nav-link.active {
+        color: #333;
+        border-bottom: 3px solid #29abe2;
+        border-radius: 0;
+        background-color: transparent;
+      }
+
+      &Header {
+        font-size: 20px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+.topBlock {
+  padding: 14px 15px 14px 35px;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+
+  &Header {
+    display: block;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 15px 0 15px 25px;
+    border-bottom: 1px solid $very-light-gray;
+  }
+
+  &Icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 30px;
+  }
+
+  &Title {
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+
+  &Quantity {
+    font-size: 30px;
+  }
+}
+
+.dashboard {
+  &Wrap {
+    margin-top: 30px;
+  }
+
+  &DeploymentIcon {
+    background: url('../../images/deployments.svg') 0 0 no-repeat;
+    background-size: 100%;
+  }
+
+  &ServicesIcon {
+    background: url('../../images/link.svg') 0 0 no-repeat;
+    background-size: 100%;
+  }
+
+  &PodsIcon {
+    background: url('../../images/combined-shape-blue.svg') 0 0 no-repeat;
+    background-size: 100%;
+  }
+
+  &Table {
+    width: 100%;
+    table-layout:fixed;
+    height: 210px;
+    margin-bottom: 0;
+
+    thead td {
+      padding-top: 3px;
+      padding-bottom: 3px;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    tbody td {
+      padding: 4px 0 4px 10px;
+      max-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:last-child {
+        overflow: initial;
+      }
+    }
+
+    tbody {
+      overflow-y: scroll;
+      height: 123px;
+      width: 95.7%;
+      margin-top: 0;
+      position: absolute;
+
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+        background-color: $color-white;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar {
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        background-color: $color-white;
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: 0 20px 32px rgba(13, 13, 54, 0.11);
+        box-shadow: 0 20px 32px rgba(13, 13, 54, 0.11);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background-color: $very-light-gray;
+        width: 3px;
+      }
+    }
+
+    tr {
+      width: 100%;
+      display: inline-table;
+    }
+  }
+}
+
+.info {
+  &List {
+    padding: 15px 20px 15px 30px;
+  }
+
+  &Link {
+    display: block;
+    font-weight: 300;
+    line-height: 1;
+    color: $color-gray-2;
+    margin-bottom: 15px;
+  }
+}
+
+.td_ {
+  &1_Dashboard {
+    width: 95px;
+    padding-left: 31px !important;
+  }
+
+  &2_Dashboard {
+    width: 195px;
+    padding-left: 0 !important;
+  }
+
+  &3_Dashboard {
+    width: 100px;
+    padding-left: 0 !important;
+  }
+
+  &4_Dashboard {
+    width: 100px;
+    padding-left: 0 !important;
+  }
+
+  &7_Dashboard {
+    width: 80px;
+    padding-left: 20px;
+  }
+}

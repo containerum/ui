@@ -8,6 +8,12 @@
   }
 }
 
+.table {
+  tbody td {
+    border-top: 1px solid $color-white3 !important;
+  }
+}
+
 .contentBlock {
   padding-right: 0;
 
@@ -131,11 +137,45 @@
   &Volume {
     &Header {
       height: 109px;
-      border-bottom: 1px solid $color-white2;
+      border-bottom: 1px solid $color-white;
     }
 
     &Footer {
       padding: 25px 30px 25px 30px !important;
+    }
+  }
+
+  &Table {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+
+    &More {
+      &::before {
+        color:$very-light-gray;
+      }
+    }
+
+    thead td {
+      font-weight: 600;
+      border-top:none;
+      color: $color-dark-gray;
+      padding: 11px 0 11px 10px;
+    }
+
+    tbody td {
+      font-weight: 300;
+      padding: 5px 0 5px 10px;
+      vertical-align: middle;
+      position:relative;
+    }
+
+    tbody tr .td:last-of-type {
+      padding-right: 40px;
+    }
+
+    tbody tr:hover td {
+      background: $color-white2;
     }
   }
 
@@ -218,3 +258,127 @@
 
 }
 
+.button {
+  cursor: pointer;
+
+  &Blue {
+    border-color: $main-color;
+    color: $main-color;
+
+    &:hover {
+      background: $main-color;
+      border-color: $main-color;
+    }
+
+    &:active {
+      background: $btn-active-color;
+      border-color: $btn-active-color;
+      outline: none;
+      box-shadow: none;
+      color: $color-white;
+    }
+
+    &:focus {
+      background: $btn-active-color;
+      border-color: $btn-active-color;
+      outline: none;
+      box-shadow: none;
+      color: $color-white;
+    }
+  }
+}
+
+.btn {
+  padding: 8px 19px 8px 19px;
+  border-radius: 2px;
+  cursor: pointer;
+
+  &Blue {
+    border-radius: 2px;
+    background-color: $main-color;
+    color: $color-white;
+    border: none;
+    cursor: pointer;
+  }
+
+  &Depl {
+    display: block;
+    padding: 10px 16px;
+    margin: 15px auto 0;
+    text-transform: uppercase;
+
+    &:hover {
+      color: $color-white;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.col {
+  &Namespaces {
+    -ms-flex: 0 0 77.633333%;
+    flex: 0 0 77.633333%;
+    max-width: 877.633333%;
+  }
+
+  &Info {
+    -ms-flex: 0 0 22.3%;
+    flex: 0 0 22.3%;
+    max-width: 22.3%;
+  }
+}
+
+.ellipsisRoleMore{
+  &::before {
+    font-size: 29px;
+    line-height: 29px;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+
+  &:hover {
+    &::before{
+      color: $main-color;
+    }
+  }
+}
+
+.createDeploymentWrapper {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 151px;
+}
+
+.noCreatedPodMessage {
+  max-width: 350px;
+  text-align: center;
+  font-weight: 300;
+  margin: 0 auto;
+}

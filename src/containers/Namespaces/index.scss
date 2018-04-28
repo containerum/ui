@@ -49,20 +49,6 @@
   }
 }
 
-.ellipsisRoleMore{
-  &::before {
-    font-size: 29px;
-    line-height: 29px;
-    margin-top: 2px;
-    cursor: pointer;
-  }
-
-  &:hover {
-    &::before{
-      color: $main-color;
-    }
-  }
-}
 
 .addNewBlock {
   display: block;

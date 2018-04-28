@@ -109,7 +109,7 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                         className={`${
                           globalStyles.contentBlockHeaderEllipsis
                         } ${globalStyles.dropdownToggle}
-                          ${styles.ellipsisRoleMore} ion-more `}
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"

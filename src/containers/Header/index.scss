@@ -20,7 +20,7 @@
   &Top {
     height: 60px;
     background:$color-white;
-    border-bottom: 1px solid $color-white2;
+    border-bottom: 1px solid $very-light-gray;
 
     &Menu {
       width:510px;
@@ -30,6 +30,7 @@
 
       &Link {
         text-transform: uppercase;
+
       }
 
       &Li {
@@ -43,13 +44,18 @@
         a {
           display: block;
           padding: 0 0 18px 0;
-          border-bottom: 3px solid transparent;
+
+          &.active {
+            color: $color-dark-gray;
+            border-bottom: 3px solid $main-color;
+          }
+
         }
 
         &:hover {
           a {
             color: $color-dark-gray;
-            border-color: $main-color;
+            border-bottom: 3px solid $main-color;
           }
         }
       }
@@ -115,4 +121,8 @@
       }
     }
   }
+}
+
+a.headerTopMenuLink.active {
+  border-bottom: 3px solid $main-color;
 }

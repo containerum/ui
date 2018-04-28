@@ -1,6 +1,18 @@
 /* @flow */
 
 import React from 'react';
+import classNames from 'classnames/bind';
+
+import dashboardStyles from '../../containers/Dashboard/index.scss';
+
+const dashboardClassName = classNames.bind(dashboardStyles);
+
+const topBlock = dashboardClassName('blockContainer', 'topBlock');
+
+const topBlockIcon = dashboardClassName(
+  'topBlockIcon',
+  'dashboardDeploymentIcon'
+);
 
 type Props = {
   count: Object
@@ -8,11 +20,11 @@ type Props = {
 
 const CountDeploymentsInfo = ({ count }: Props) => (
   <div className="col-md-4">
-    <div className="block-container top-block">
-      <div className="top-block-icon deployments-icon" />
-      <div className="top-block-info">
-        <div className="top-block-title">Deployments</div>
-        <div className="top-block-quantity">{count}</div>
+    <div className={topBlock}>
+      <div className={topBlockIcon} />
+      <div>
+        <div className={dashboardStyles.topBlockTitle}>Deployments</div>
+        <div className={dashboardStyles.topBlockQuantity}>{count}</div>
       </div>
     </div>
   </div>
