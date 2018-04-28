@@ -8,6 +8,7 @@
     margin-bottom: 40px;
   }
 
+
   &Container {
     background: $color-white;
     border-radius: 4px;
@@ -128,6 +129,32 @@
     }
   }
 
+  // Drop Zone
+  .dropZoneItem {
+    background: #eaeaea;
+    margin: 0 0 10px;
+    padding: 6px 10px;
+    color: #333;
+    border-radius: 2px;
+    font-weight: lighter;
+
+    span {
+      max-width: 550px;
+      overflow: hidden;
+      display: inline-block;
+      max-height: 21px;
+      text-overflow: ellipsis;
+    }
+
+    i {
+      float: right;
+    }
+
+    i:hover {
+      color: #29abe2;
+      cursor: pointer;
+    }
+  }
 }
 
 .marginTop30 {

@@ -24,6 +24,7 @@ import Notification from '../Notification';
 import NavigationHeaderItem from '../NavigationHeader';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import PodsPage from '../Pods';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   getDeploymentReducer: Object,
@@ -150,7 +151,7 @@ export class Deployment extends PureComponent<Props> {
         {this.renderDeploymentInfo()}
         {deleteDeploymentReducer.readyStatus !==
           DELETE_DEPLOYMENT_REQUESTING && (
-          <div className="content-block">
+          <div className={globalStyles.contentBlock}>
             <div className="content-block-container container">
               <div className="content-block-header">
                 <div className="content-block-header-nav">

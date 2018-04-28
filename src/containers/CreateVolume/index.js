@@ -27,6 +27,7 @@ import AddInformationModal from '../../components/CustomerModal/AddInformationMo
 import Notification from '../Notification';
 import config from '../../config';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   getVolumesTariffsReducer: VolumesType,
@@ -278,7 +279,7 @@ export class CreateVolume extends PureComponent<Props> {
           errorMessage={errorMessage}
         />
         <Helmet title="Create Volume" />
-        <div className="content-block">
+        <div className={globalStyles.contentBlock}>
           <div className="content-block-container container no-back mt-0 no-padding">
             <div className="content-block-content mt-0">
               <div className="namespace-plan mt-0">

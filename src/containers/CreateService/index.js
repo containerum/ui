@@ -29,6 +29,7 @@ import CreateServiceCardItem from './CreateServiceCard';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import { routerLinks } from '../../config';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   getDeploymentsReducer: Object,
@@ -289,8 +290,8 @@ export class CreateService extends PureComponent<Props> {
           name={createExternalServiceReducer.idSrv}
           errorMessage={createExternalServiceReducer.err}
         />
-        <div className="content-block">
-          <div className="container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row pageWidth">
               <div
                 className="col-md-3 sideMenu"

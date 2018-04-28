@@ -156,7 +156,6 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
                 require('../theme/style.css')._style +
                 require('../theme/style-custom.css')._style +
                 require('../theme/common.scss')._style +
-                require('../containers/Support/Support.css')._style +
                 require('../components/ProfileInfo/Profile.css')._style +
                 require('../containers/Account/Account.css')._style
             }}
