@@ -9,7 +9,7 @@ import {
   FORGOT_SUCCESS,
   FORGOT_FAILURE
 } from '../constants/forgotConstants';
-import { webApiLogin } from '../config';
+import { webApi } from '../config';
 
 const forgotRequest = email => ({
   type: FORGOT_REQUESTING,
@@ -32,7 +32,7 @@ const forgotFailure = err => ({
 export const fetchForgot = (
   email: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(forgotRequest(email));
   const browser = cookie.load('browser');

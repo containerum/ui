@@ -9,7 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE
 } from '../constants/loginConstants';
-import { webApiLogin } from '../config';
+import { webApi } from '../config';
 
 const loginRequest = (email, password) => ({
   type: LOGIN_REQUESTING,
@@ -34,7 +34,7 @@ export const fetchLogin = (
   email: string,
   password: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(loginRequest(email, password));
   const browser = cookie.load('browser');

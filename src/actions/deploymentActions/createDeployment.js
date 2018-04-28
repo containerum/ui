@@ -10,7 +10,7 @@ import {
   CREATE_DEPLOYMENT_SUCCESS,
   CREATE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/createDeployment';
-import { webApiLogin } from '../../config';
+import { webApi } from '../../config';
 
 const createDeploymentRequest = () => ({
   type: CREATE_DEPLOYMENT_REQUESTING,
@@ -42,7 +42,7 @@ export const fetchCreateDeployment = (
   idName: string,
   dataObj: Object,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

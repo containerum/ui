@@ -9,7 +9,7 @@ import {
   GET_PROFILE_TARIFFS_SUCCESS,
   GET_PROFILE_TARIFFS_FAILURE
 } from '../../constants/profileConstants/getProfileTariffs';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getProfileTariffsRequest = () => ({
   type: GET_PROFILE_TARIFFS_REQUESTING,
@@ -35,7 +35,7 @@ const getProfileTariffsInvalidToken = () => ({
 export const fetchGetProfileTariffs = (
   monthly: ?string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

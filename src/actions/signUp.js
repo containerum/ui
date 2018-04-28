@@ -9,7 +9,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE
 } from '../constants/signUpConstants';
-import { webApiLogin } from '../config';
+import { webApi } from '../config';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -39,7 +39,7 @@ export const fetchSignUp = (
   password: string,
   recaptcha: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(signUpRequest(email, password, recaptcha));
   const browser = cookie.load('browser');

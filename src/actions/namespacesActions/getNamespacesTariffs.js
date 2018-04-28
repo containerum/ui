@@ -14,7 +14,7 @@ import {
   GET_NAMESPACES_TARIFFS_SUCCESS,
   GET_NAMESPACES_TARIFFS_FAILURE
 } from '../../constants/namespacesConstants/getNamespacesTariffs';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getNamespacesTariffsRequest = () => ({
   type: GET_NAMESPACES_TARIFFS_REQUESTING,
@@ -39,7 +39,7 @@ const getNamespacesInvalidToken = () => ({
 
 export const fetchGetNamespacesTariffs = (
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

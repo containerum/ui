@@ -9,7 +9,7 @@ import {
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE
 } from '../../constants/profileConstants/deleteAccount';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const deleteAccountRequest = () => ({
   type: DELETE_ACCOUNT_REQUESTING,
@@ -36,7 +36,7 @@ const deleteAccountInvalidToken = () => ({
 
 export const fetchDeleteAccount = (
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

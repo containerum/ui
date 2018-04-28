@@ -10,7 +10,7 @@ import {
   GET_CONFIG_MAPS_FAILURE
 } from '../../constants/configMapConstants/getConfigMaps';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getConfigMapsRequest = () => ({
   type: GET_CONFIG_MAPS_REQUESTING,
@@ -37,7 +37,7 @@ const getConfigMapsInvalidToken = () => ({
 
 export const fetchGetConfigMaps = (
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
