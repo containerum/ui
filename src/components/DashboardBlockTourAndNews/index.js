@@ -6,11 +6,17 @@ import { Link } from 'react-router-dom';
 import { routerLinks } from '../../config';
 
 type Props = {
+  resources: Object,
+  balance: string,
+  namespaces: Object,
   linkToDeployment: string,
   linkToManageTeam: string
 };
 
 const DashboardBlockTourAndNews = ({
+  resources,
+  balance,
+  namespaces,
   linkToDeployment,
   linkToManageTeam
 }: Props) => (
@@ -59,10 +65,23 @@ const DashboardBlockTourAndNews = ({
           aria-labelledby="first-tab"
         >
           <div className="tour-wrapper">
-            <Link to="/billing">Top up your Balance or enter Promo code</Link>
-            <Link to="/createNamespace">Create Namespace</Link>
+            <Link
+              className={balance !== 0 ? 'tour-link-disabled' : ''}
+              to="/billing"
+            >
+              Top up your Balance or enter Promo code
+            </Link>
+            <Link
+              className={namespaces.length ? 'tour-link-disabled' : ''}
+              to="/createNamespace"
+            >
+              Create Namespace
+            </Link>
             {/* <Link to="/createVolume">Create Volume</Link> */}
             <Link
+              className={
+                resources.deployments !== 0 ? 'tour-link-disabled' : ''
+              }
               to={
                 linkToDeployment
                   ? routerLinks.createDeploymentLink(linkToDeployment)
@@ -72,6 +91,12 @@ const DashboardBlockTourAndNews = ({
               Launch 1st Deployment
             </Link>
             <Link
+              className={
+                resources.external_services !== 0 ||
+                resources.internal_services !== 0
+                  ? 'tour-link-disabled'
+                  : ''
+              }
               to={
                 linkToDeployment
                   ? routerLinks.createServiceLink(linkToDeployment)
