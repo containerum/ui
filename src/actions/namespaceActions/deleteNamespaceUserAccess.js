@@ -8,7 +8,7 @@ import {
   DELETE_NAMESPACE_USER_ACCESS_SUCCESS,
   DELETE_NAMESPACE_USER_ACCESS_FAILURE
 } from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const deleteNamespaceUserAccessInvalid = () => ({
   type: DELETE_NAMESPACE_USER_ACCESS_INVALID
@@ -44,7 +44,7 @@ export const fetchDeleteNamespaceUserAccess = (
   idName: string,
   username: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

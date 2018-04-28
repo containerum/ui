@@ -9,7 +9,7 @@ import {
   PAY_FOR_SUCCESS,
   PAY_FOR_FAILURE
 } from '../../constants/billingConstants/payFor';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const payForRequest = () => ({
   type: PAY_FOR_REQUESTING,
@@ -37,7 +37,7 @@ const payForInvalidToken = () => ({
 export const fetchPayFor = (
   amount: number,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
 

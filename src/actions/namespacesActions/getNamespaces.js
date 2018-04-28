@@ -9,7 +9,7 @@ import {
   GET_NAMESPACES_SUCCESS,
   GET_NAMESPACES_FAILURE
 } from '../../constants/namespacesConstants/getNamespaces';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getNamespacesRequest = () => ({
   type: GET_NAMESPACES_REQUESTING,
@@ -34,7 +34,7 @@ const getNamespacesInvalidToken = () => ({
 
 export const fetchGetNamespaces = (
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

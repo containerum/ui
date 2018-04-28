@@ -9,7 +9,7 @@ import {
   CHANGE_PROFILE_INFO_SUCCESS,
   CHANGE_PROFILE_INFO_FAILURE
 } from '../../constants/profileConstants/changeProfileInfo';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const changeProfileInfoRequest = () => ({
   type: CHANGE_PROFILE_INFO_REQUESTING,
@@ -40,7 +40,7 @@ export const fetchChangeProfileInfo = (
   countryCode: number,
   firstName: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

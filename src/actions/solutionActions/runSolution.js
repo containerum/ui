@@ -9,7 +9,7 @@ import {
   RUN_SOLUTION_SUCCESS,
   RUN_SOLUTION_FAILURE
 } from '../../constants/solutionConstants/runSolution';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const runSolutionsRequest = () => ({
   type: RUN_SOLUTION_REQUESTING,
@@ -36,7 +36,7 @@ export const fetchRunSolutions = (
   idName: string,
   idSol: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
 

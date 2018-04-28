@@ -10,7 +10,7 @@ import {
   UPDATE_DEPLOYMENT_SUCCESS,
   UPDATE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/updateDeployment';
-import { webApiLogin } from '../../config';
+import { webApi } from '../../config';
 
 const updateDeploymentRequest = () => ({
   type: UPDATE_DEPLOYMENT_REQUESTING,
@@ -43,7 +43,7 @@ export const fetchUpdateDeployment = (
   idDep: string,
   dataObj: Object,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

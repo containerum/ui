@@ -9,7 +9,7 @@ import {
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAILURE
 } from '../../constants/profileConstants/changePassword';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const changePasswordRequest = () => ({
   type: CHANGE_PASSWORD_REQUESTING,
@@ -39,7 +39,7 @@ export const fetchChangePassword = (
   currentPassword: string,
   newPassword: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

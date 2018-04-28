@@ -10,7 +10,7 @@ import {
   CREATE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/createNamespace';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -46,7 +46,7 @@ export const fetchCreateNamespace = (
   tariff: string,
   price: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

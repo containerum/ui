@@ -9,14 +9,11 @@ RUN npm install -g -s --no-progress yarn node-gyp && \
     npm rebuild node-sass --force
 
 ENV WEB_API="https://api.containerum.io:8082" \
-    WEB_API_OTHER="https://api.containerum.io:8082" \
-    WEB_API_LOGIN="https://api.containerum.io:8082" \
     WS_API="wss://api.containerum.io:8082" \
     COUNTRY="US" \
     RECAPTCHA="6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS" \
     NODE_TLS_REJECT_UNAUTHORIZED=0
 
-
 EXPOSE 3000
 
-CMD yarn start:production:docker & yarn start:omnidesk
+CMD yarn start:production:docker

@@ -1,6 +1,7 @@
 /* @flow */
 
 import { push } from 'react-router-redux';
+import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import { routerLinks } from '../../config';
@@ -35,10 +36,14 @@ export const fetchSendSupportTicket = (
   axios: any,
   URL: string = 'https://web.containerum.io'
 ): ThunkAction => async (dispatch: Dispatch) => {
+  const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
   dispatch(sendSupportTicketRequest());
 
   const response = await axios.post(`${URL}/omnidesk`, data, {
     headers: {
+      'User-Client': browser,
+      'User-Token': accessToken,
       Accept: '*/*',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',

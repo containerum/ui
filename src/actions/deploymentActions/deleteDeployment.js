@@ -9,7 +9,7 @@ import {
   DELETE_DEPLOYMENT_SUCCESS,
   DELETE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/deleteDeployment';
-import { webApiLogin } from '../../config';
+import { webApi } from '../../config';
 
 const deleteDeploymentRequest = () => ({
   type: DELETE_DEPLOYMENT_REQUESTING,
@@ -41,7 +41,7 @@ export const fetchDeleteDeployment = (
   idName: string,
   idDep: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
