@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { routerLinks } from '../../config/default';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   configMapsData: Array<Object>,
@@ -19,8 +20,8 @@ const ConfigMapList = ({
     cnf => isEqualGetPath && currentIdName === cnf.idName
   );
   return (
-    <div className="content-block">
-      <div className="container no-back">
+    <div className={globalStyles.contentBlock}>
+      <div className={`container ${globalStyles.containerNoBackground}`}>
         {isEqualGetPath ? (
           <div>
             {configMapsData.length >= 1 && mainConfigMapsData ? (

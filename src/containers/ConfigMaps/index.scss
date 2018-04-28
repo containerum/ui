@@ -1,0 +1,9 @@
+@import '../../theme/variables.scss';
+
+.dropZoneItemConfig {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

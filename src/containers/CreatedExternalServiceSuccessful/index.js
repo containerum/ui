@@ -16,6 +16,7 @@ import {
   GET_SERVICE_INVALID,
   GET_SERVICE_REQUESTING
 } from '../../constants/serviceConstants/getService';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   match: Object,
@@ -143,8 +144,8 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
             IdCreate="service"
           />
         </div>
-        <div className="content-block">
-          <div className="container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row pageWidth">
               <div className="col-md-3 sideMenu" />
               <div className="col-md-9 pageContent">

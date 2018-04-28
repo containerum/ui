@@ -1,7 +1,7 @@
 /* @flow */
 
 // import { push } from 'react-router-redux';
-import cookie from 'react-cookies';
+// import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../types';
 import {
