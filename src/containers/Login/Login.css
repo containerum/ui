@@ -1,104 +1,12 @@
 /* stylelint-disable */
-body {
-  font-family: 'Open Sans', Arial, Tahoma, sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  background: #f6f6f6;
-  color: #333;
-}
 
-.window {
-  overflow: hidden;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 935px;
-  height: 650px;
-  border-radius: 4px;
-  box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  background: #fff url('../../images/loginGroup/login.svg') 0 0 no-repeat;
-  background-size: contain;
-}
-
-.windowSignUp {
-  background: #fff url('../../images/loginGroup/signup.svg') 0 0 no-repeat;
-  background-size: 452px 100%;
-}
-
-.windowResetPassword {
-  background: #fff url('../../images/loginGroup/reset1.svg') 0 0 no-repeat;
-  background-size: 452px 100%;
-}
-
-.windowResetPasswordTwo {
-  background: #fff url('../../images/loginGroup/reset2.svg') 0 0 no-repeat;
-  background-size: 452px 100%;
-}
-
-.windowResetPasswordThree {
-  background: #fff url('../../images/loginGroup/reset3.svg') 0 0 no-repeat;
-  background-size: 452px 100%;
-}
-
-.windowConfirmEmail {
-  background: #fff url('../../images/loginGroup/signup2.svg') 0 0 no-repeat;
-  background-size: 452px 100%;
-}
-
-.form {
-  width: 485px;
-  background-color: #fff;
-  height: 100%;
-}
-
-.login-block {
-  padding: 15px 25px 0;
-  font-size: 12px;
-  font-weight: 300;
-  color: #a7a7a7;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.login-block a {
-  font-size: 12px;
-  font-weight: 300;
-  color: #a7a7a7;
-}
-
-/*.footer a,*/
-/*.login-panel a {*/
-  /*color: #29abe2;*/
-  /*text-decoration: underline;*/
+/*.login-divider {*/
+  /*margin: 0 18px;*/
 /*}*/
 
-.login-block .active,
-.login-block a:hover {
-  color: #29abe2;
-  text-decoration: none;
-  font-weight: 400;
-}
-
-.login-divider {
-  margin: 0 18px;
-}
-
-.main-form {
-  padding: 0 65px 20px 65px;
-}
+/*.main-form {*/
+  /*padding: 0 65px 20px 65px;*/
+/*}*/
 
 .form-header {
   font-size: 25px;
@@ -109,13 +17,9 @@ body {
   margin-bottom: 20px;
 }
 
-.form-header-login {
-  margin-top: 110px;
-}
-
-.form-header-login-invalid {
-  margin-top: 110px;
-}
+/*.form-header-login {*/
+  /*margin-top: 110px;*/
+/*}*/
 
 .form-header-reset {
   margin-top: 200px;
@@ -235,57 +139,57 @@ body {
   color: #29abe2;
 }
 
-.error-message {
-  height: auto;
-  line-height: 22px;
-  border-radius: 2px;
-  background-color: #f6f6f6;
-  font-weight: 300;
-  text-align: center;
-  margin-bottom: 30px;
-  padding: 20px 20px 20px 40px;
-}
+/*.error-message {*/
+  /*height: auto;*/
+  /*line-height: 22px;*/
+  /*border-radius: 2px;*/
+  /*background-color: #f6f6f6;*/
+  /*font-weight: 300;*/
+  /*text-align: center;*/
+  /*margin-bottom: 30px;*/
+  /*padding: 20px 20px 20px 40px;*/
+/*}*/
 
-.error-message-text {
-  position: relative;
-}
+/*.error-message-text {*/
+  /*position: relative;*/
+/*}*/
 
-.error-message-text::before {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  background: url('../../images/warning.svg') 0 0 no-repeat;
-  width: 23px;
-  height: 20px;
-  top: 0;
-  left: -36px;
-}
+/*.error-message-text::before {*/
+  /*content: '';*/
+  /*display: inline-block;*/
+  /*position: absolute;*/
+  /*background: url('../../images/warning.svg') 0 0 no-repeat;*/
+  /*width: 23px;*/
+  /*height: 20px;*/
+  /*top: 0;*/
+  /*left: -36px;*/
+/*}*/
 
-.success-message {
-  height: auto;
-  line-height: 22px;
-  border-radius: 2px;
-  background-color: #f6f6f6;
-  font-weight: 300;
-  text-align: center;
-  margin-bottom: 30px;
-  padding: 20px 20px 20px 40px;
-}
+/*.success-message {*/
+  /*height: auto;*/
+  /*line-height: 22px;*/
+  /*border-radius: 2px;*/
+  /*background-color: #f6f6f6;*/
+  /*font-weight: 300;*/
+  /*text-align: center;*/
+  /*margin-bottom: 30px;*/
+  /*padding: 20px 20px 20px 40px;*/
+/*}*/
 
-.success-message-text {
-  position: relative;
-}
+/*.success-message-text {*/
+  /*position: relative;*/
+/*}*/
 
-.success-message-text::before {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  background: url('../../images/success.svg') 0 0 no-repeat;
-  width: 23px;
-  height: 20px;
-  top: 0;
-  left: -36px;
-}
+/*.success-message-text::before {*/
+  /*content: '';*/
+  /*display: inline-block;*/
+  /*position: absolute;*/
+  /*background: url('../../images/success.svg') 0 0 no-repeat;*/
+  /*width: 23px;*/
+  /*height: 20px;*/
+  /*top: 0;*/
+  /*left: -36px;*/
+/*}*/
 
 .login-panel {
   font-weight: 300;
@@ -318,7 +222,6 @@ body {
   }
 
   .form-header-reset,
-  .form-header-login-invalid,
   .form-header-login {
     margin-top: 60px;
   }

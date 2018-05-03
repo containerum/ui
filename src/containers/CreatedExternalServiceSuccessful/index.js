@@ -71,7 +71,7 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
             }}
           >
             <div
-              className="success-message-text"
+              className={globalStyles.successMessageText}
               style={{ color: '#333', textTransform: 'uppercase' }}
             >
               Success

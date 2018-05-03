@@ -11,6 +11,7 @@ import config from '../../config';
 import RouteWithSubRoutes from '../../components/RouteWithSubRoutes';
 import routes from '../../routes';
 // Import your global styles here
+import globalStyles from '../../theme/global.scss';
 import '../../theme/normalize.css';
 import '../../theme/style.css';
 import '../../theme/style-custom.css';
@@ -40,7 +41,7 @@ const App = () => {
   return (
     <div>
       <Helmet {...config.app} />
-      <div className="wrapper">
+      <div className={globalStyles.wrapper}>
         <Switch>{routes.map(route => RouteWithSubRoutes(route))}</Switch>
       </div>
     </div>

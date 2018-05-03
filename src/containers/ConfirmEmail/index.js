@@ -8,6 +8,8 @@ import { NavLink } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
 import { routerLinks } from '../../config';
+import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
 
 type Props = {
   signUpReducer: Object,
@@ -23,21 +25,30 @@ class ConfirmEmail extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Confirm Email" />
-        <div className="window windowConfirmEmail">
-          <div className="form">
-            <div className="login-block">
-              <NavLink activeClassName="active" to={routerLinks.signUp}>
+        <div className={`${globalStyles.window} ${styles.windowConfirmEmail}`}>
+          <div className={globalStyles.windowForm}>
+            <div className={globalStyles.authBlock}>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.signUp}
+              >
                 Sign Up
               </NavLink>
-              <span className="login-divider">or</span>
-              <NavLink activeClassName="active" to={routerLinks.login}>
+              <span className={globalStyles.authDivider}>or</span>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.login}
+              >
                 Log In
               </NavLink>
             </div>
 
-            <div className="main-form" style={{ marginTop: '200px' }}>
+            <div
+              className={globalStyles.mainForm}
+              style={{ marginTop: '200px' }}
+            >
               <div
-                className="form-header"
+                className={globalStyles.formHeader}
                 style={{
                   fontSize: '20px',
                   textTransform: 'initial'
@@ -47,7 +58,7 @@ class ConfirmEmail extends PureComponent<Props> {
                 {signUpReducer.email}
               </div>
               <div
-                className="form-header"
+                className={globalStyles.formHeader}
                 style={{
                   textAlign: 'center',
                   fontSize: '18px',

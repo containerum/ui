@@ -23,6 +23,8 @@ import InputPassword from '../../components/InputPassword';
 import LoadButton from '../../components/LoadButton';
 import { LOGIN_FAILURE, LOGIN_SUCCESS } from '../../constants/loginConstants';
 import { RECOVERY_PASSWORD_SUCCESS } from '../../constants/recoveryPasswordConstants';
+import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
 
 type Props = {
   loginReducer: Object,
@@ -156,27 +158,43 @@ class Login extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Login" />
-        <div className="window">
-          <div className="form">
-            <div className="login-block">
-              <NavLink activeClassName="active" to={routerLinks.signUp}>
+        <div className={`${globalStyles.window} ${styles.windowLogin}`}>
+          <div className={globalStyles.windowForm}>
+            <div className={globalStyles.authBlock}>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.signUp}
+              >
                 Sign Up
               </NavLink>
-              <span className="login-divider">or</span>
-              <NavLink activeClassName="active" to={routerLinks.login}>
+              <span className={globalStyles.authDivider}>or</span>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.login}
+              >
                 Log In
               </NavLink>
             </div>
-            <div className="main-form">
-              <div className="form-header form-header-login">Log In</div>
+            <div className={globalStyles.mainForm}>
+              <div
+                className={`${globalStyles.formHeader} ${
+                  globalStyles.formHeaderLogin
+                }`}
+              >
+                Log In
+              </div>
               {(!isValidEmail || !isValidPassword) && (
-                <div className="error-message">
-                  <span className="error-message-text">{errorMessage}</span>
+                <div className={globalStyles.errorMessage}>
+                  <span className={globalStyles.errorMessageText}>
+                    {errorMessage}
+                  </span>
                 </div>
               )}
               {successMessage && (
-                <div className="success-message">
-                  <span className="success-message-text">{successMessage}</span>
+                <div className={globalStyles.successMessage}>
+                  <span className={globalStyles.successMessageText}>
+                    {successMessage}
+                  </span>
                 </div>
               )}
               <form onSubmit={e => this.handleSubmitLoginAction(e)}>

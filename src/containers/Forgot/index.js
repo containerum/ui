@@ -14,6 +14,8 @@ import * as actionForgot from '../../actions/forgot';
 import InputEmail from '../../components/InputEmail';
 import LoadButton from '../../components/LoadButton';
 import { FORGOT_FAILURE } from '../../constants/forgotConstants';
+import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
 
 type Props = {
   forgotReducer: Object,
@@ -74,24 +76,36 @@ class Forgot extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Forgot" />
-        <div className="window windowResetPassword">
-          <div className="form">
-            <div className="login-block">
-              <NavLink activeClassName="active" to={routerLinks.signUp}>
+        <div className={`${globalStyles.window} ${styles.windowResetPassword}`}>
+          <div className={globalStyles.windowForm}>
+            <div className={globalStyles.authBlock}>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.signUp}
+              >
                 Sign Up
               </NavLink>
-              <span className="login-divider">or</span>
-              <NavLink activeClassName="active" to={routerLinks.login}>
+              <span className={globalStyles.authDivider}>or</span>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.login}
+              >
                 Log In
               </NavLink>
             </div>
-            <div className="main-form">
-              <div className="form-header form-header-login">
+            <div className={globalStyles.mainForm}>
+              <div
+                className={`${globalStyles.formHeader} ${
+                  globalStyles.formHeaderLogin
+                }`}
+              >
                 Reset Password
               </div>
               {!isValidEmail && (
-                <div className="error-message">
-                  <span className="error-message-text">{errorMessage}</span>
+                <div className={globalStyles.errorMessage}>
+                  <span className={globalStyles.errorMessageText}>
+                    {errorMessage}
+                  </span>
                 </div>
               )}
               <form onSubmit={e => this.handleSubmitForgotAction(e)}>
