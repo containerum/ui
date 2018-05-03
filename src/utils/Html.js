@@ -149,6 +149,7 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
               __html:
                 require('../theme/normalize.css')._style +
                 require('../containers/Login/Login.css')._style +
+                require('../containers/Footer/styles.scss')._style +
                 require('../containers/NotFound/styles.scss')._style +
                 require('../components/MiniSpinner/MiniSpinner.css')._style +
                 require('../theme/custom.css')._style +
