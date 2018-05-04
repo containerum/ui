@@ -1,5 +1,14 @@
 @import './variables';
 
+body{
+  font-family:Open Sans,  Arial, Tahoma, sans-serif;
+  font-weight: 400;
+  font-size:15px;
+  background:#f6f6f6;
+  color:#333;
+}
+
+
 *, *:focus {
   outline: none !important;
 }

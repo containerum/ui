@@ -13,11 +13,17 @@ const dashboardClassName = className.bind(dashboardStyles);
 const blockClassName = dashboardClassName('blockContainer', 'blockHTabs');
 
 type Props = {
+  resources: Object,
+  balance: string,
+  namespaces: Object,
   linkToDeployment: string,
   linkToManageTeam: string
 };
 
 const DashboardBlockTourAndNews = ({
+  resources,
+  balance,
+  namespaces,
   linkToDeployment,
   linkToManageTeam
 }: Props) => (
@@ -66,17 +72,16 @@ const DashboardBlockTourAndNews = ({
           aria-labelledby="first-tab"
         >
           <div className={dashboardStyles.tourWrapper}>
-            <Link to="/billing">Top up your Balance or enter Promo code</Link>
-            <Link to="/createNamespace">Create Namespace</Link>
-          <div className="tour-wrapper">
             <Link
-              className={balance !== 0 ? 'tour-link-disabled' : ''}
+              className={balance !== 0 ? dashboardStyles.tourLinkDisabled : ''}
               to="/billing"
             >
               Top up your Balance or enter Promo code
             </Link>
             <Link
-              className={namespaces.length ? 'tour-link-disabled' : ''}
+              className={
+                namespaces.length ? dashboardStyles.tourLinkDisabled : ''
+              }
               to="/createNamespace"
             >
               Create Namespace
@@ -84,7 +89,9 @@ const DashboardBlockTourAndNews = ({
             {/* <Link to="/createVolume">Create Volume</Link> */}
             <Link
               className={
-                resources.deployments !== 0 ? 'tour-link-disabled' : ''
+                resources.deployments !== 0
+                  ? dashboardStyles.tourLinkDisabled
+                  : ''
               }
               to={
                 linkToDeployment
@@ -98,7 +105,7 @@ const DashboardBlockTourAndNews = ({
               className={
                 resources.external_services !== 0 ||
                 resources.internal_services !== 0
-                  ? 'tour-link-disabled'
+                  ? dashboardStyles.tourLinkDisabled
                   : ''
               }
               to={
@@ -128,44 +135,45 @@ const DashboardBlockTourAndNews = ({
               Share Namespace with your team
             </Link>
           </div>
+
+          {/* <div */}
+          {/* className="tab-pane fade" */}
+          {/* id="news" */}
+          {/* role="tabpanel" */}
+          {/* aria-labelledby="second-tab" */}
+          {/* > */}
+          {/* <div className="news-wrapper"> */}
+          {/* <div className="release"> */}
+          {/* <span className="overflow-wrapper"> */}
+          {/* New CLI tool v.2.14.62 ready to use. Downlad it from the{' '} */}
+          {/* <a href="##">CLI Page to complete experience</a> test test */}
+          {/* test */}
+          {/* </span> */}
+          {/* </div> */}
+          {/* <div className="news"> */}
+          {/* <span className="overflow-wrapper"> */}
+          {/* New CLI tool v.2.14.62 ready to use. Downlad it from the{' '} */}
+          {/* <a href="##">CLI</a> */}
+          {/* </span> */}
+          {/* </div> */}
+          {/* <div className="news"> */}
+          {/* <span className="overflow-wrapper">Happy New Year!</span> */}
+          {/* </div> */}
+          {/* <div className="release"> */}
+          {/* <span className="overflow-wrapper"> */}
+          {/* New CLI tool v.2.14.62 ready to use. Downlad it from the{' '} */}
+          {/* <a href="##">CLI Page to complete experience</a> */}
+          {/* </span> */}
+          {/* </div> */}
+          {/* <div className="release"> */}
+          {/* <span className="overflow-wrapper"> */}
+          {/* New CLI tool v.2.14.62 ready to use. Downlad it from the{' '} */}
+          {/* <a href="##">CLI Page to complete experience</a> */}
+          {/* </span> */}
+          {/* </div> */}
+          {/* </div> */}
+          {/* </div> */}
         </div>
-        {/* <div */}
-        {/* className="tab-pane fade" */}
-        {/* id="news" */}
-        {/* role="tabpanel" */}
-        {/* aria-labelledby="second-tab" */}
-        {/* > */}
-        {/* <div className="news-wrapper"> */}
-        {/* <div className="release"> */}
-        {/* <span className="overflow-wrapper"> */}
-        {/* New CLI tool v.2.14.62 ready to use. Downlad it from the{' '} */}
-        {/* <a href="##">CLI Page to complete experience</a> test test */}
-        {/* test */}
-        {/* </span> */}
-        {/* </div> */}
-        {/* <div className="news"> */}
-        {/* <span className="overflow-wrapper"> */}
-        {/* New CLI tool v.2.14.62 ready to use. Downlad it from the{' '} */}
-        {/* <a href="##">CLI</a> */}
-        {/* </span> */}
-        {/* </div> */}
-        {/* <div className="news"> */}
-        {/* <span className="overflow-wrapper">Happy New Year!</span> */}
-        {/* </div> */}
-        {/* <div className="release"> */}
-        {/* <span className="overflow-wrapper"> */}
-        {/* New CLI tool v.2.14.62 ready to use. Downlad it from the{' '} */}
-        {/* <a href="##">CLI Page to complete experience</a> */}
-        {/* </span> */}
-        {/* </div> */}
-        {/* <div className="release"> */}
-        {/* <span className="overflow-wrapper"> */}
-        {/* New CLI tool v.2.14.62 ready to use. Downlad it from the{' '} */}
-        {/* <a href="##">CLI Page to complete experience</a> */}
-        {/* </span> */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* </div> */}
       </div>
     </div>
   </div>

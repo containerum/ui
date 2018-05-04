@@ -2,6 +2,10 @@
 
 
 .tour{
+  &LinkDisabled {
+    background: transparent;
+  }
+
   &Wrapper {
     padding: 40px 20px 0 30px;
 
@@ -11,21 +15,25 @@
       line-height: 1;
       margin-bottom: 21px;
     }
+
+    .tourLinkDisabled {
+      color: #cecece;
+    }
+
+    .tourLinkDisabled::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      background-image: url(../../images/checkSuccess.svg);
+      height: 10px;
+      margin-top: 3px;
+      width: 10px;
+      padding: 0 38px 0;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
   }
 }
-
-
-//.navLink{
-//  margin-right: 38px !important;
-//}
-//
-//.navPills .navLink.active{
-//  color: #3c3c3c !important;
-//  border-bottom: none !important;
-//  border-radius: 0 !important;
-//  font-weight: 400 !important;
-//  background-color: #fff !important;
-//}
 
 .block {
   &H {
@@ -47,21 +55,6 @@
       margin-top: 30px;
       margin-bottom: 40px;
 
-      //.navLink {
-      //  padding: 0 0 10px 0;
-      //  margin-right: 38px;
-      //}
-      //
-      //.nav-item a {
-      //  text-transform: uppercase;
-      //}
-      //
-      //.navPills .navLink.active {
-      //  color: #333;
-      //  border-bottom: 3px solid #29abe2 !important;
-      //  border-radius: 0;
-      //  background-color: transparent;
-      //}
 
       &Header {
         font-size: 20px;

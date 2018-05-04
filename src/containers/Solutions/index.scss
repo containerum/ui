@@ -1,5 +1,17 @@
 @import '../../theme/variables.scss';
 
+
+.iconGitHub {
+  fill: #a7a7a7;
+  width: 25px;
+  height: 24px;
+  position: absolute;
+  top: 0;
+  left: -25px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
 .solutionContainer {
   display: flex;
   align-items: flex-start;
@@ -156,3 +168,6 @@
     }
   }
 }
+
+
+

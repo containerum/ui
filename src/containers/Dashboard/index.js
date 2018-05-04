@@ -414,7 +414,7 @@ export class Dashboard extends PureComponent<Props> {
   };
 
   render() {
-    const { getNamespacesReducer } = this.props;
+    // const { getNamespacesReducer } = this.props;
 
     const blockContainer = dashboardClassName('blockContainer', 'blockH');
 
