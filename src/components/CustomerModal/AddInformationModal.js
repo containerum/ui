@@ -5,6 +5,7 @@ import 'rc-tooltip/assets/bootstrap_white.css';
 import _ from 'lodash/fp';
 
 import LoadButton from '../LoadButton';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   data: Array<Object>,
@@ -96,8 +97,10 @@ const AddInformationModal = ({
             For tax calculation, please, fill in the information below:
           </span>
           {isFailed && (
-            <div className="error-message">
-              <span className="error-message-text">{errorMessage}</span>
+            <div className={globalStyles.errorMessage}>
+              <span className={globalStyles.errorMessageText}>
+                {errorMessage}
+              </span>
             </div>
           )}
           <div className="form-group" style={{ paddingTop: 0 }}>

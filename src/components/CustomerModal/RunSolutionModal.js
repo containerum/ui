@@ -10,6 +10,7 @@ import {
   RUN_SOLUTION_FAILURE,
   RUN_SOLUTION_SUCCESS
 } from '../../constants/solutionConstants/runSolution';
+import globalStyles from '../../theme/global.scss';
 
 const customStyles = {
   overlay: {
@@ -131,10 +132,10 @@ const SelectNamespaceModal = ({
                     </div>
                   ) : (
                     <div
-                      className="error-message"
+                      className={globalStyles.errorMessage}
                       style={{ margin: '20px 0 0' }}
                     >
-                      <span className="error-message-text">
+                      <span className={globalStyles.errorMessageText}>
                         You have no Namespace yet
                       </span>
                     </div>
@@ -229,10 +230,10 @@ const SelectNamespaceModal = ({
             </div>
             <div style={{ textAlign: 'center' }}>
               <div
-                className="error-message"
+                className={globalStyles.errorMessage}
                 style={{ margin: '20px 0 0', backgroundColor: '#fff' }}
               >
-                <span className="error-message-text">ERROR</span>
+                <span className={globalStyles.errorMessageText}>ERROR</span>
               </div>
               <span className="modal-redis-text">
                 Please, contact the engineers for support and you will <br />
@@ -286,10 +287,10 @@ const SelectNamespaceModal = ({
             </div>
             <div style={{ textAlign: 'center' }}>
               <div
-                className="success-message"
+                className={globalStyles.successMessage}
                 style={{ margin: '20px 0 0', backgroundColor: '#fff' }}
               >
-                <span className="success-message-text">SUCCESS</span>
+                <span className={globalStyles.successMessageText}>SUCCESS</span>
               </div>
               <span className="modal-redis-text">
                 {currentSolution} was successfully deployed
