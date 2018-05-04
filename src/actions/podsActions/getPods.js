@@ -9,7 +9,7 @@ import {
   GET_PODS_SUCCESS,
   GET_PODS_FAILURE
 } from '../../constants/podsConstants/getPods';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getPodsRequest = () => ({
   type: GET_PODS_REQUESTING,
@@ -40,7 +40,7 @@ export const fetchGetPods = (
   idName: string,
   idDep: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

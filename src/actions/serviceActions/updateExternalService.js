@@ -9,7 +9,7 @@ import {
   UPDATE_EXTERNAL_SERVICE_SUCCESS,
   UPDATE_EXTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/updateExternalService';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const updateExternalServiceRequest = () => ({
   type: UPDATE_EXTERNAL_SERVICE_REQUESTING,
@@ -42,7 +42,7 @@ export const fetchUpdateExternalService = (
   idSrv: string,
   dataSrv: Object,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

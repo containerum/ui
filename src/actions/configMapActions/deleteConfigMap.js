@@ -9,7 +9,7 @@ import {
   DELETE_CONFIG_MAP_SUCCESS,
   DELETE_CONFIG_MAP_FAILURE
 } from '../../constants/configMapConstants/deleteConfigMap';
-import { webApiLogin } from '../../config';
+import { webApi } from '../../config';
 
 const deleteConfigMapRequest = () => ({
   type: DELETE_CONFIG_MAP_REQUESTING,
@@ -49,7 +49,7 @@ export const fetchDeleteConfigMap = (
   idName: string,
   configMapName: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

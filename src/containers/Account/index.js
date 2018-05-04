@@ -17,6 +17,7 @@ import ProfileSidebar from '../../components/ProfileSidebar';
 import ProfilePassword from './Password';
 import DeleteAccountInfo from './DeleteAccount';
 import CLI from '../../components/CLIInfo';
+import globalStyles from '../../theme/global.scss';
 import './Account.css';
 
 type Props = {
@@ -110,8 +111,8 @@ export class Account extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Account" />
-        <div className="content-block">
-          <div className="container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">
               <div className="col-md-3 col-lg-3 col-xl-2">
                 <div className="content-block account-info">

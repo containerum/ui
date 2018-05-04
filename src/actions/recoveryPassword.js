@@ -9,7 +9,7 @@ import {
   RECOVERY_PASSWORD_SUCCESS,
   RECOVERY_PASSWORD_FAILURE
 } from '../constants/recoveryPasswordConstants';
-import { webApiLogin } from '../config';
+import { webApi } from '../config';
 
 const recoveryPasswordRequest = (hashParam, password) => ({
   type: RECOVERY_PASSWORD_REQUESTING,
@@ -34,7 +34,7 @@ export const fetchRecoveryPassword = (
   hashParam: string,
   password: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(recoveryPasswordRequest(hashParam, password));
   const browser = cookie.load('browser');

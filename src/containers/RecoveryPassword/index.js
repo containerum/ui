@@ -16,6 +16,8 @@ import InputPassword from '../../components/InputPassword';
 import LoadButton from '../../components/LoadButton';
 // import { CHECK_HASH_PASSWORD_FAILURE } from '../../constants/checkHashPasswordConstants';
 import { RECOVERY_PASSWORD_FAILURE } from '../../constants/recoveryPasswordConstants';
+import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
 
 type Props = {
   recoveryPasswordReducer: Object,
@@ -153,24 +155,40 @@ class RecoveryPassword extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Recovery Password" />
-        <div className="window windowResetPasswordThree">
-          <div className="form">
-            <div className="login-block">
-              <NavLink activeClassName="active" to={routerLinks.signUp}>
+        <div
+          className={`${globalStyles.window} ${
+            styles.windowResetPasswordThree
+          }`}
+        >
+          <div className={globalStyles.windowForm}>
+            <div className={globalStyles.authBlock}>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.signUp}
+              >
                 Sign Up
               </NavLink>
-              <span className="login-divider">or</span>
-              <NavLink activeClassName="active" to={routerLinks.login}>
+              <span className={globalStyles.authDivider}>or</span>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.login}
+              >
                 Log In
               </NavLink>
             </div>
-            <div className="main-form">
-              <div className="form-header form-header-login">
+            <div className={globalStyles.mainForm}>
+              <div
+                className={`${globalStyles.formHeader} ${
+                  globalStyles.formHeaderLogin
+                }`}
+              >
                 Type new password
               </div>
               {(!isValidPassword || !isValidRepeatPassword) && (
-                <div className="error-message">
-                  <span className="error-message-text">{errorMessage}</span>
+                <div className={globalStyles.errorMessage}>
+                  <span className={globalStyles.errorMessageText}>
+                    {errorMessage}
+                  </span>
                 </div>
               )}
               <form onSubmit={e => this.handleSubmitRecoveryPasswordAction(e)}>
@@ -207,11 +225,11 @@ class RecoveryPassword extends PureComponent<Props> {
               <div>
                 {false && (
                   <div>
-                    <span className="or-divider">or</span>
-                    <div className="social-title">
+                    <span className={globalStyles.orDivider}>or</span>
+                    <div className={globalStyles.socialTitle}>
                       Sign up with your favourite social profile
                     </div>
-                    <div className="social-wrapper">
+                    <div className={globalStyles.socialWrapper}>
                       <a href="https://github.com/">
                         <img
                           src={require('../../images/github.svg')}
@@ -220,7 +238,7 @@ class RecoveryPassword extends PureComponent<Props> {
                       </a>
                       <a
                         href="https://google.com/"
-                        className="social-center-icon"
+                        className={globalStyles.socialCenterIcon}
                       >
                         <img
                           src={require('../../images/google.svg')}

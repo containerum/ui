@@ -1,6 +1,6 @@
 /* @flow */
 
-// import { push } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../types';
@@ -9,7 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE
 } from '../constants/loginConstants';
-import { webApiLogin } from '../config';
+import { webApi } from '../config';
 
 const loginRequest = (email, password) => ({
   type: LOGIN_REQUESTING,
@@ -34,7 +34,7 @@ export const fetchLogin = (
   email: string,
   password: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(loginRequest(email, password));
   const browser = cookie.load('browser');
@@ -61,9 +61,10 @@ export const fetchLogin = (
       cookie.save('accessToken', accessToken, { path: '/' });
       cookie.save('refreshToken', refreshToken, { path: '/' });
       dispatch(loginSuccess(token));
-      if (typeof window !== 'undefined') {
-        window.location.replace('/dashboard');
-      }
+      // if (typeof window !== 'undefined') {
+      //   window.location.replace('/dashboard');
+      // }
+      dispatch(push('/dashboard'));
       break;
     }
     default: {

@@ -7,6 +7,7 @@ import MiniSpinner from '../MiniSpinner';
 type Props = {
   isFetching: boolean,
   buttonText: string,
+  typeMiniSpinner: ?string,
   style: ?Object,
   baseClassButton: string,
   type: string,
@@ -16,12 +17,17 @@ type Props = {
 const LoadButton = ({
   isFetching,
   buttonText,
+  typeMiniSpinner,
   style,
   baseClassButton,
   type,
   disabled
 }: Props) => {
-  const currentButtonText = isFetching ? <MiniSpinner /> : buttonText;
+  const currentButtonText = isFetching ? (
+    <MiniSpinner type={typeMiniSpinner} />
+  ) : (
+    buttonText
+  );
   const currentBaseClassButton = isFetching
     ? `${baseClassButton} disabled`
     : baseClassButton;

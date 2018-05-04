@@ -9,7 +9,7 @@ import {
   DELETE_DOMAIN_SUCCESS,
   DELETE_DOMAIN_FAILURE
 } from '../../constants/serviceConstants/deleteDomain';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const deleteDomainRequest = () => ({
   type: DELETE_DOMAIN_REQUESTING,
@@ -41,7 +41,7 @@ export const fetchDeleteDomain = (
   idName: string,
   label: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const accessToken = cookie.load('accessToken');
   const browser = cookie.load('browser');

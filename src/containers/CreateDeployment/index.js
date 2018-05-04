@@ -31,6 +31,7 @@ import Label from '../../components/CreateDeploymentCards/Label';
 import Replicas from '../../components/CreateDeploymentCards/Replicas';
 import Container from '../../components/CreateDeploymentCards/Container';
 import CreateServiceCardItem from '../CreateService/CreateServiceCard';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   // getVolumesByNSReducer: Object,
@@ -1390,8 +1391,8 @@ export class CreateDeployment extends PureComponent<Props> {
           method={createDeploymentReducer.method}
           errorMessage={createDeploymentReducer.err}
         />
-        <div className="content-block">
-          <div className="container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row pageWidth">
               <div
                 className="col-md-3 sideMenu"

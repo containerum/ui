@@ -1,0 +1,38 @@
+@import './variables.scss';
+
+.buttonUI {
+  padding: 9px 0;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-bottom: 20px;
+
+  &Primary,
+  &Primary:focus {
+    background-color: $button-ui-primary;
+    border: solid 1px $button-ui-primary;
+    color: #fff;
+  }
+
+  &Primary:hover {
+    background-color: $button-ui-primary-hover;
+    border: solid 1px $button-ui-primary-hover;
+    color: #fff;
+  }
+
+  &Primary:active,
+  &Primary:visited {
+    background-color: $button-ui-primary-active;
+    border: solid 1px $button-ui-primary-active;
+    color: #fff;
+  }
+
+  &Primary:disabled {
+    background-color: #fff;
+    border: solid 1px $button-ui-primary-disabled;
+    color: #a7a7a7;
+    cursor: not-allowed;
+  }
+}

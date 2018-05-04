@@ -24,6 +24,7 @@ import LoadButton from '../../components/LoadButton';
 // import InputControl from '../../components/InputControl';
 import Notification from '../Notification';
 // import { routerLinks } from '../../config';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   getServicesReducer: Object,
@@ -205,8 +206,8 @@ export class CreateDomain extends PureComponent<Props> {
           name={createDomainReducer.idSrv}
           errorMessage={createDomainReducer.err}
         />
-        <div className="content-block">
-          <div className="container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row pageWidth">
               <div className="col-md-3 sideMenu" />
               <div className="col-md-9 pageContent">

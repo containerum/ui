@@ -19,6 +19,11 @@ import {
   GET_SOLUTIONS_SUCCESS
 } from '../../constants/solutionsConstants/getSolutions';
 import {
+  GET_BALANCE_INVALID,
+  GET_BALANCE_FAILURE,
+  GET_BALANCE_REQUESTING
+} from '../../constants/billingConstants/getBalance';
+import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
   GET_NAMESPACES_FAILURE,
@@ -50,6 +55,7 @@ import solutionStyles from '../Solutions/index.scss';
 type Props = {
   history: Object,
   getNamespacesReducer: Object,
+  getBalanceReducer: Object,
   getSolutionsReducer: Object,
   getResourcesReducer: Object,
   fetchGetNamespacesIfNeeded: () => void,
@@ -310,6 +316,70 @@ export class Dashboard extends PureComponent<Props> {
     }
     return <CountPodsInfo count={getResourcesReducer.data.pods} />;
   };
+  renderDashboardBlockTourAndNews = () => {
+    const {
+      getResourcesReducer,
+      getBalanceReducer,
+      getNamespacesReducer
+    } = this.props;
+    if (
+      !getNamespacesReducer.readyStatus ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+      !getBalanceReducer.readyStatus ||
+      getBalanceReducer.readyStatus === GET_BALANCE_INVALID ||
+      getBalanceReducer.readyStatus === GET_BALANCE_REQUESTING ||
+      !getResourcesReducer.readyStatus ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING
+    ) {
+      return (
+        <div className="col-md-3 pr-0">
+          <div
+            className="block-container"
+            style={{
+              padding: 23
+            }}
+          >
+            <div
+              style={{
+                height: 298,
+                width: '100%',
+                borderRadius: '2px',
+                backgroundColor: 'rgb(246, 246, 246)'
+              }}
+            />
+          </div>
+        </div>
+      );
+    }
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getBalanceReducer.readyStatus === GET_BALANCE_FAILURE ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE
+    ) {
+      return <p>Oops, Failed to load data of Tour!</p>;
+    }
+    return (
+      <DashboardBlockTourAndNews
+        resources={getResourcesReducer.data}
+        balance={getBalanceReducer.data.balance}
+        namespaces={getNamespacesReducer.data}
+        linkToDeployment={
+          getNamespacesReducer.data.length
+            ? getNamespacesReducer.data[0].label
+            : ''
+        }
+        linkToManageTeam={
+          getNamespacesReducer.data.length
+            ? getNamespacesReducer.data.find(
+                ns => (ns.access === 'owner' ? ns.access : '')
+              )
+            : ''
+        }
+      />
+    );
+  };
 
   renderRunSolutionModal = () => {
     const { getNamespacesReducer, getSolutionsReducer } = this.props;
@@ -382,22 +452,7 @@ export class Dashboard extends PureComponent<Props> {
                 </div>
               </div>
 
-              <DashboardBlockTourAndNews
-                linkToDeployment={
-                  getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS &&
-                  getNamespacesReducer.data.length
-                    ? getNamespacesReducer.data[0].label
-                    : ''
-                }
-                linkToManageTeam={
-                  getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS &&
-                  getNamespacesReducer.data.length
-                    ? getNamespacesReducer.data.find(
-                        ns => (ns.access === 'owner' ? ns.access : '')
-                      )
-                    : ''
-                }
-              />
+              {this.renderDashboardBlockTourAndNews()}
             </div>
 
             <div className="row">
@@ -449,10 +504,12 @@ export class Dashboard extends PureComponent<Props> {
 const connector: Connector<{}, Props> = connect(
   ({
     getNamespacesReducer,
+    getBalanceReducer,
     getSolutionsReducer,
     getResourcesReducer
   }: ReduxState) => ({
     getNamespacesReducer,
+    getBalanceReducer,
     getSolutionsReducer,
     getResourcesReducer
   }),

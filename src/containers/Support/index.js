@@ -19,7 +19,7 @@ import {
 } from '../../constants/supportConstants/getSupportGroupsConstants';
 import type { Dispatch, ReduxState } from '../../types';
 import SupportList from '../../components/SupportList';
-import './Support.css';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   location: Object,
@@ -243,8 +243,8 @@ export class Support extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Support" />
-        <div className="content-block">
-          <div className="content-block-container container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
             {this.renderSupportList()}
           </div>
         </div>

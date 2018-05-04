@@ -48,6 +48,7 @@ import BillingInfo from '../../components/BillingInfo';
 import AddFunds from '../../components/AddFunds';
 // import Coupon from '../../components/Coupon';
 import HistoryFunds from '../../components/HistoryFunds';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   getProfileTariffsReducer: Object,
@@ -389,8 +390,8 @@ export class Billing extends PureComponent<Props> {
           isFailed={isFailed}
           errorMessage={errorMessage}
         />
-        <div className="content-block">
-          <div className="container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">
               <div className="col-md-3 col-lg-3 col-xl-2">
                 <div className="content-block account-info">

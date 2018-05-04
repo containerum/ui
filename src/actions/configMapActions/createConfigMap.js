@@ -10,7 +10,7 @@ import {
   CREATE_CONFIG_MAP_SUCCESS,
   CREATE_CONFIG_MAP_FAILURE
 } from '../../constants/configMapConstants/createConfigMap';
-import { webApiLogin } from '../../config';
+import { webApi } from '../../config';
 
 const createConfigMapRequest = () => ({
   type: CREATE_CONFIG_MAP_REQUESTING,
@@ -42,7 +42,7 @@ export const fetchCreateConfigMap = (
   idName: string,
   dataObj: Object,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

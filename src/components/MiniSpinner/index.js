@@ -2,8 +2,17 @@ import React from 'react';
 
 import './MiniSpinner.css';
 
-const MiniSpinner = () => (
-  <span id="mini-spinner" className="mini-spinner">
+type Props = {
+  type: ?string
+};
+
+const MiniSpinner = ({ type }: Props) => (
+  <span
+    id="mini-spinner"
+    className={
+      type === 'transparency' ? 'mini-spinner-transparency' : 'mini-spinner'
+    }
+  >
     Loading&#8230;
   </span>
 );

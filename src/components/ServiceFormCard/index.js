@@ -91,7 +91,7 @@ const ServiceForm = ({
                   baseClassNameLabel={`form-group__label ${internalSrvNameValue &&
                     'form-group__label-always-onfocus'}`}
                   labelText="Service Name"
-                  textHelper=""
+                  textHelper="Service name can only contain letters, numbers and characters"
                   baseClassNameHelper="helperText"
                   handleChangeInput={e =>
                     handleChangeServiceNameValue(e, 'internalSrvNameValue')
@@ -309,7 +309,7 @@ const ServiceForm = ({
                   baseClassNameLabel={`form-group__label ${externalSrvNameValue &&
                     'form-group__label-always-onfocus'}`}
                   labelText="Service Name"
-                  textHelper=""
+                  textHelper="Service name can only contain letters, numbers and characters"
                   baseClassNameHelper="helperText"
                   handleChangeInput={e =>
                     handleChangeServiceNameValue(e, 'externalSrvNameValue')

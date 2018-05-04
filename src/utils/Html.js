@@ -148,7 +148,16 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
             dangerouslySetInnerHTML={{
               __html:
                 require('../theme/normalize.css')._style +
+                require('../theme/common.scss')._style +
+                require('../theme/global.scss')._style +
+                require('../theme/buttons.scss')._style +
                 require('../containers/Login/Login.css')._style +
+                require('../containers/Login/index.scss')._style +
+                require('../containers/SignUp/index.scss')._style +
+                require('../containers/Forgot/index.scss')._style +
+                require('../containers/ConfirmEmail/index.scss')._style +
+                require('../containers/CheckEmail/index.scss')._style +
+                require('../containers/RecoveryPassword/index.scss')._style +
                 require('../containers/NotFound/styles.scss')._style +
                 require('../components/MiniSpinner/MiniSpinner.css')._style +
                 require('../theme/custom.css')._style +
@@ -156,7 +165,6 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
                 require('../theme/style.css')._style +
                 require('../theme/style-custom.css')._style +
                 require('../theme/common.scss')._style +
-                require('../containers/Support/Support.css')._style +
                 require('../components/ProfileInfo/Profile.css')._style +
                 require('../containers/Account/Account.css')._style
             }}

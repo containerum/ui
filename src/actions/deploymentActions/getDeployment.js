@@ -10,7 +10,7 @@ import {
   GET_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/getDeployment';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getDeploymentRequest = () => ({
   type: GET_DEPLOYMENT_REQUESTING,
@@ -43,7 +43,7 @@ export const fetchGetDeployment = (
   idName: string,
   idDep: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

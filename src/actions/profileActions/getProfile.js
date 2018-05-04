@@ -9,7 +9,7 @@ import {
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE
 } from '../../constants/profileConstants/getProfile';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getProfileRequest = () => ({
   type: GET_PROFILE_REQUESTING,
@@ -34,7 +34,7 @@ const getProfileInvalidToken = () => ({
 
 export const fetchGetProfile = (
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

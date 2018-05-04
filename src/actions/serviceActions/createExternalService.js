@@ -10,7 +10,7 @@ import {
   CREATE_EXTERNAL_SERVICE_SUCCESS,
   CREATE_EXTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/createExternalService';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const createExternalServiceInvalid = () => ({
   type: CREATE_EXTERNAL_SERVICE_INVALID
@@ -45,7 +45,7 @@ export const fetchCreateExternalService = (
   idName: string,
   dataSrv: Object,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

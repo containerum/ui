@@ -10,7 +10,7 @@ import {
   RESIZE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/resizeNamespace';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const resizeNamespaceRequest = () => ({
   type: RESIZE_NAMESPACE_REQUESTING,
@@ -42,7 +42,7 @@ export const fetchResizeNamespace = (
   idName: string,
   tariff: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

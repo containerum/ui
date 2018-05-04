@@ -1,4 +1,10 @@
+
 @import './variables.scss';
+
+.wrapper {
+  min-height: 100%;
+  padding-bottom: 1px;
+}
 
 .hoverAction {
   cursor: pointer;
@@ -17,14 +23,10 @@
 .contentBlock {
   padding-right: 0;
 
-  .nav-link {
-    padding: 0 0 10px 0;
-    margin-right: 38px;
-  }
-
   &:last-child {
     margin-bottom: 40px;
   }
+
 
   &Container {
     background: $color-white;
@@ -184,6 +186,32 @@
     }
   }
 
+  // Drop Zone
+  .dropZoneItem {
+    background: #eaeaea;
+    margin: 0 0 10px;
+    padding: 6px 10px;
+    color: #333;
+    border-radius: 2px;
+    font-weight: lighter;
+
+    span {
+      max-width: 550px;
+      overflow: hidden;
+      display: inline-block;
+      max-height: 21px;
+      text-overflow: ellipsis;
+    }
+
+    i {
+      float: right;
+    }
+
+    i:hover {
+      color: #29abe2;
+      cursor: pointer;
+    }
+  }
 }
 
 .marginTop30 {
@@ -201,7 +229,6 @@
   &Card {
     min-height: 220px;
   }
-
 }
 
 .icon {
@@ -218,6 +245,192 @@
   }
 }
 
+.window {
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 935px;
+  height: 650px;
+  border-radius: 4px;
+  box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: #fff;
+  background-size: contain;
+
+  &Form {
+    width: 485px;
+    background-color: #fff;
+    height: 100%;
+  }
+
+  .authBlock {
+    padding: 15px 25px 0;
+    font-size: 12px;
+    font-weight: 300;
+    color: #a7a7a7;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: flex-end;
+
+    a {
+      font-size: 12px;
+      font-weight: 300;
+      color: #a7a7a7;
+    }
+
+    &ActiveLink,
+    a:hover {
+      color: #29abe2 !important;
+      text-decoration: none;
+      font-weight: 400 !important;
+    }
+  }
+
+  .authDivider {
+    margin: 0 18px;
+  }
+
+  .mainForm {
+    padding: 0 65px 20px 65px;
+  }
+
+  .formHeader {
+    font-size: 25px;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+
+  .formHeaderLogin {
+    margin-top: 110px;
+  }
+
+  .forgetPass {
+    display: block;
+    color: #a7a7a7;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .forgetPass:hover {
+    color: #29abe2;
+  }
+}
+
+.errorMessage {
+  height: auto;
+  line-height: 22px;
+  border-radius: 2px;
+  background-color: #f6f6f6;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 20px 20px 40px;
+
+  &Text {
+    position: relative;
+  }
+
+  &Text::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    background: url('../images/warning.svg') 0 0 no-repeat;
+    width: 23px;
+    height: 20px;
+    top: 0;
+    left: -36px;
+  }
+}
+
+.successMessage {
+  height: auto;
+  line-height: 22px;
+  border-radius: 2px;
+  background-color: #f6f6f6;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 20px 20px 40px;
+
+  &Text {
+    position: relative;
+  }
+
+  &Text::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    background: url('../images/success.svg') 0 0 no-repeat;
+    width: 23px;
+    height: 20px;
+    top: 0;
+    left: -36px;
+  }
+}
+
+.orDivider {
+  display: block;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-align: center;
+  color: #a7a7a7;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.orDivider::before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 11px;
+  height: 1px;
+  width: 40%;
+  background-color: #eaeaea;
+}
+
+.orDivider::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 11px;
+  height: 1px;
+  width: 40%;
+  background-color: #eaeaea;
+}
+
+.socialTitle {
+  color: #a7a7a7;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.socialWrapper {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.socialCenterIcon {
+  margin-left: 18px;
+  margin-right: 21px;
+}
 .dropdown{
   &Menu {
     position: absolute;

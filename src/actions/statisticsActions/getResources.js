@@ -9,7 +9,7 @@ import {
   GET_RESOURCES_SUCCESS,
   GET_RESOURCES_FAILURE
 } from '../../constants/statisticsConstants/getResourcesConstants';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getResourcesRequest = () => ({
   type: GET_RESOURCES_REQUESTING,
@@ -34,7 +34,7 @@ const getResourcesInvalidToken = () => ({
 
 export const fetchGetResources = (
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

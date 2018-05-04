@@ -1,0 +1,4 @@
+env:
+  WEB_API: "https://api.containerum.io:8082"
+  WS_API: "wss://api.containerum.io:8082"
+  COUNTRY: "US"
