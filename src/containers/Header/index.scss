@@ -1,5 +1,9 @@
 @import '../../theme/variables';
 
+.active {
+  border-color: $main-color !important;
+}
+
 .header {
   position: relative;
   z-index: 10;
@@ -44,12 +48,13 @@
         a {
           display: block;
           padding: 0 0 18px 0;
+          border-bottom: 3px solid transparent;
 
-          &.active {
-            color: $color-dark-gray;
-            border-bottom: 3px solid $main-color;
-          }
+        }
 
+        a.active {
+          color:#333;
+          border-color: #29abe2;
         }
 
         &:hover {
@@ -94,23 +99,24 @@
         width: unset;
         height: 20px;
 
-        a.dropdown-toggle {
+        .customDropdownToggle {
+          padding-right: 20px !important;
           width: unset;
           max-width: 200px;
           display: block;
           height: 18px;
-          padding-right: 20px;
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
           position: relative;
-        }
 
-        .dropdown-toggle::after {
-          border-top-color: $main-color;
-          top: 5px;
-          right: 0;
-          position: absolute;
+          &::after {
+            border-top-color: $main-color !important;
+            top: 5px !important;
+            right: 0 !important;
+            position: absolute !important;
+            margin: 4px 0 5px 12px !important;
+          }
         }
       }
 
@@ -123,6 +129,4 @@
   }
 }
 
-a.headerTopMenuLink.active {
-  border-bottom: 3px solid $main-color;
-}
+

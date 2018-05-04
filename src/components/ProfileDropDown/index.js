@@ -26,7 +26,7 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
         <div className={`${styles.headerTopAccountName} dropdown`}>
           <a
             href="##"
-            className="dropdown-toggle"
+            className={`${styles.customDropdownToggle} dropdown-toggle`}
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"

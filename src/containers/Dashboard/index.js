@@ -413,7 +413,7 @@ export class Dashboard extends PureComponent<Props> {
                   >
                     <li className="nav-item">
                       <NavLink
-                        className="nav-link"
+                        className={`${styles.customSolutionNavLink} nav-link`}
                         id="first-tab"
                         data-toggle="pill"
                         to="/dashboard"

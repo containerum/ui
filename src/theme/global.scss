@@ -17,6 +17,11 @@
 .contentBlock {
   padding-right: 0;
 
+  .nav-link {
+    padding: 0 0 10px 0;
+    margin-right: 38px;
+  }
+
   &:last-child {
     margin-bottom: 40px;
   }

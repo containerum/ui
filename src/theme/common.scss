@@ -4,8 +4,16 @@
   outline: none !important;
 }
 
-a:focus, a:hover {
+a {
+  color: #333;
+}
+
+a:focus{
   text-decoration: none;
   color: $color-dark-gray;
 }
 
+a:hover {
+  text-decoration: none;
+  color: $main-color;
+}

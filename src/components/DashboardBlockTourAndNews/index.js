@@ -2,8 +2,15 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
+
+import dashboardStyles from '../../containers/Dashboard/index.scss';
+
+const dashboardClassName = className.bind(dashboardStyles);
+
+const blockClassName = dashboardClassName('blockContainer', 'blockHTabs');
 
 type Props = {
   linkToDeployment: string,
@@ -15,17 +22,17 @@ const DashboardBlockTourAndNews = ({
   linkToManageTeam
 }: Props) => (
   <div className="col-md-3 pr-0">
-    <div className="block-container block-h-tabs">
-      <div className="top-block-header pb-0">
+    <div className={blockClassName}>
+      <div className={`${dashboardStyles.topBlockHeader} pb-0`}>
         <ul
-          className="nav nav-pills"
+          className="nav nav-pills mb-0 "
           id="pills-tab"
           role="tablist"
           style={{ marginBottom: '10px' }}
         >
           <li className="nav-item">
             <div
-              className="nav-link active"
+              className={`nav-link ${dashboardStyles.customNavLink} active `}
               id="tour-tab"
               data-toggle="pill"
               role="tab"
@@ -58,7 +65,7 @@ const DashboardBlockTourAndNews = ({
           role="tabpanel"
           aria-labelledby="first-tab"
         >
-          <div className="tour-wrapper">
+          <div className={dashboardStyles.tourWrapper}>
             <Link to="/billing">Top up your Balance or enter Promo code</Link>
             <Link to="/createNamespace">Create Namespace</Link>
             {/* <Link to="/createVolume">Create Volume</Link> */}

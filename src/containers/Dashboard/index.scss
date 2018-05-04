@@ -1,8 +1,40 @@
 @import '../../theme/variables';
 
+
+.tour{
+  &Wrapper {
+    padding: 40px 20px 0 30px;
+
+    a {
+      display: block;
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 21px;
+    }
+  }
+}
+
+
+//.navLink{
+//  margin-right: 38px !important;
+//}
+//
+//.navPills .navLink.active{
+//  color: #3c3c3c !important;
+//  border-bottom: none !important;
+//  border-radius: 0 !important;
+//  font-weight: 400 !important;
+//  background-color: #fff !important;
+//}
+
 .block {
   &H {
-    height: 213px
+    height: 213px;
+
+    &Tabs {
+      height: 338px;
+
+    }
   }
 
   &Container {
@@ -15,21 +47,21 @@
       margin-top: 30px;
       margin-bottom: 40px;
 
-      .nav-link {
-        padding: 0 0 10px 0;
-        margin-right: 38px;
-      }
-
-      .nav-item a {
-        text-transform: uppercase;
-      }
-
-      .nav-pills .nav-link.active {
-        color: #333;
-        border-bottom: 3px solid #29abe2;
-        border-radius: 0;
-        background-color: transparent;
-      }
+      //.navLink {
+      //  padding: 0 0 10px 0;
+      //  margin-right: 38px;
+      //}
+      //
+      //.nav-item a {
+      //  text-transform: uppercase;
+      //}
+      //
+      //.navPills .navLink.active {
+      //  color: #333;
+      //  border-bottom: 3px solid #29abe2 !important;
+      //  border-radius: 0;
+      //  background-color: transparent;
+      //}
 
       &Header {
         font-size: 20px;
@@ -196,6 +228,29 @@
 
   &7_Dashboard {
     width: 80px;
-    padding-left: 20px;
+    padding-left: 20px !important;
   }
 }
+
+.customNavLink {
+  border-bottom: 2px solid $main-color !important;
+  padding: 0 0 10px 0 !important;
+  color: black !important;
+  cursor: pointer !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+
+.customSolutionNavLink {
+  border-bottom: 3px solid $main-color !important;
+  padding: 0 0 10px 0 !important;
+  color: black !important;
+  cursor: pointer !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  text-transform: uppercase !important;
+}
+
+
+
+
