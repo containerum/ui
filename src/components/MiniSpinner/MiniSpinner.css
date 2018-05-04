@@ -1,18 +1,19 @@
 /* stylelint-disable */
-.mini-spinner {
+.mini-spinner,
+.mini-spinner-transparency {
     display: inline-block;
     vertical-align: middle;
 }
-
-.mini-spinner:not(:required) {
+.mini-spinner:not(:required),
+.mini-spinner-transparency:not(:required) {
     font: 0/0 a;
     color: transparent;
     text-shadow: none;
     background-color: transparent;
     border: 0;
 }
-
-.mini-spinner:not(:required):after {
+.mini-spinner:not(:required):after,
+.mini-spinner-transparency:not(:required):after {
     content: '';
     display: inline-block;
     font-size: 7px;
@@ -24,8 +25,11 @@
     -o-animation: spinner 1500ms infinite linear;
     animation: spinner 1500ms infinite linear;
     border-radius: 0.5em;
-    -webkit-box-shadow: rgba(255, 255, 255, 0.9) 1.5em 0 0 0, rgba(255, 255, 255, 0.9) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.9) 0 1.5em 0 0, rgba(255, 255, 255, 0.9) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.5) -1.5em 0 0 0, rgba(255, 255, 255, 0.5) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.9) 0 -1.5em 0 0, rgba(255, 255, 255, 0.9) 1.1em -1.1em 0 0;
     box-shadow: rgba(255, 255, 255, 0.9) 1.5em 0 0 0, rgba(255, 255, 255, 0.9) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.9) 0 1.5em 0 0, rgba(255, 255, 255, 0.9) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.9) -1.5em 0 0 0, rgba(255, 255, 255, 0.9) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.9) 0 -1.5em 0 0, rgba(255, 255, 255, 0.9) 1.1em -1.1em 0 0;
+}
+
+.mini-spinner-transparency:not(:required):after {
+    box-shadow: rgba(167, 167, 167, 0.9) 1.5em 0 0 0, rgba(167, 167, 167, 0.9) 1.1em 1.1em 0 0, rgba(167, 167, 167, 0.9) 0 1.5em 0 0, rgba(167, 167, 167, 0.9) -1.1em 1.1em 0 0, rgba(167, 167, 167, 0.9) -1.5em 0 0 0, rgba(167, 167, 167, 0.9) -1.1em -1.1em 0 0, rgba(167, 167, 167, 0.9) 0 -1.5em 0 0, rgba(167, 167, 167, 0.9) 1.1em -1.1em 0 0;
 }
 
 /* Animation */

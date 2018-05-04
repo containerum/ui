@@ -7,6 +7,8 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 
+import globalStyles from '../../theme/global.scss';
+
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionDeleteNamespaces from '../../actions/namespaceActions/deleteNamespace';
 import {
@@ -114,7 +116,11 @@ export class Namespaces extends PureComponent<Props> {
         <div className="row double">
           {new Array(3).fill().map(() => (
             <div key={_.uniqueId()} className="col-md-4 align-middle">
-              <img className="content-block-container-img" src={ns} alt="ns" />
+              <img
+                className={globalStyles.contentBlockContainerImg}
+                src={ns}
+                alt="ns"
+              />
             </div>
           ))}
         </div>
@@ -177,8 +183,10 @@ export class Namespaces extends PureComponent<Props> {
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleDelete={fetchDeleteNamespaceIfNeeded}
         />
-        <div className="content-block">
-          <div className="container no-back">{this.renderNamespacesList()}</div>
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
+            {this.renderNamespacesList()}
+          </div>
         </div>
       </div>
     );

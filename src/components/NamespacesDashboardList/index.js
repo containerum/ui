@@ -2,14 +2,24 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import deployment from '../../images/deployment.png';
+
+import globalStyles from '../../theme/global.scss';
+import dashboardStyles from '../../containers/Dashboard/index.scss';
 
 type Props = {
   data: Array<Object>,
   history: Object
 };
+
+const globalClassName = classNames.bind(globalStyles);
+
+const tableClassName = globalClassName('contentBlockTable', 'table');
+
+const btnClassName = globalClassName('btnBlue', 'btnDepl');
 
 const NamespacesDashboardList = ({ data, history }: Props) => {
   const handleClickGetNamespace = idName => {
@@ -22,7 +32,7 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
     <div>
       {data.length >= 1 && (
         <table
-          className="content-block__table dashboard-table table"
+          className={`${tableClassName} ${dashboardStyles.dashboardTable}`}
           style={{
             tableLayout: 'fixed',
             width: '100%',
@@ -33,12 +43,12 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
         >
           <thead style={{ height: '30px' }}>
             <tr>
-              <td className="td-1-new" />
-              <td className="td-2-new pleft">Name</td>
-              <td className="td-3-new pleft">RAM</td>
-              <td className="td-4-new pleft">CPU</td>
-              <td className="td-4-new pleft">Permission</td>
-              <td className="td-7-new" />
+              <td className={dashboardStyles.td_1_Dashboard} />
+              <td className={dashboardStyles.td_2_Dashboard}>Name</td>
+              <td className={dashboardStyles.td_3_Dashboard}>RAM</td>
+              <td className={dashboardStyles.td_4_Dashboard}>CPU</td>
+              <td className={dashboardStyles.td_4_Dashboard}>Permission</td>
+              <td className={dashboardStyles.td_7_Dashboard} />
             </tr>
           </thead>
           <tbody>
@@ -62,34 +72,47 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
                     style={{ margin: 0 }}
                   >
                     <td
-                      className="td-1-new"
+                      className={dashboardStyles.td_1_Dashboard}
                       // style={{ verticalAlign: 'top', width: '75%' }}
                     >
                       <img src={deployment} alt="deployment" />
                     </td>
-                    <td className="td-2-new">{label}</td>
-                    <td className="td-3-new">{memoryLimit}</td>
-                    <td className="td-4-new">{cpuLimit}</td>
-                    <td className="td-4-new">{access}</td>
+                    <td className={dashboardStyles.td_2_Dashboard}>{label}</td>
+                    <td className={dashboardStyles.td_3_Dashboard}>
+                      {memoryLimit}
+                    </td>
+                    <td className={dashboardStyles.td_4_Dashboard}>
+                      {cpuLimit}
+                    </td>
+                    <td className={dashboardStyles.td_4_Dashboard}>{access}</td>
                     <td
-                      className="td-7-new dropdown no-arrow"
+                      className={`${
+                        dashboardStyles.td_7_Dashboard
+                      } dropdown no-arrow`}
                       onClick={e => handleClose(e)}
                       onKeyPress={e => handleClose(e)}
                       role="presentation"
                     >
                       <i
-                        className="content-block-table__more ion-more dropdown-toggle"
+                        className={`${globalStyles.contentBlockTableMore} ${
+                          globalStyles.dropdownToggle
+                        }
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       />
                       <ul
-                        className="dropdown-menu dropdown-menu-right"
+                        className={` dropdown-menu dropdown-menu-right ${
+                          globalStyles.dropdownMenu
+                        }`}
                         role="menu"
                       >
                         <Link
                           to={`/namespace/${label}/resize`}
-                          className="dropdown-item"
+                          className={`dropdown-item ${
+                            globalStyles.dropdownItem
+                          }`}
                         >
                           Resize
                         </Link>
@@ -102,12 +125,12 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
         </table>
       )}
       {!data.length && (
-        <div className="create-depl-wrapper">
-          <div className="nocreated-pod-message">
+        <div className={globalStyles.createDeploymentWrapper}>
+          <div className={globalStyles.noCreatedPodMessage}>
             You have no active Namespace yet.
           </div>
           <Link
-            className="blue-btn depl-btn"
+            className={btnClassName}
             data-toggle="modal"
             to="/createNamespace"
           >

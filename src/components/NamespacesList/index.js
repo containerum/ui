@@ -2,6 +2,10 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import classNames from 'classnames/bind';
+
+import styles from '../../containers/Namespaces/index.scss';
+import globalStyles from '../../theme/global.scss';
 
 import { routerLinks } from '../../config';
 import deployment from '../../images/deployment.png';
@@ -22,6 +26,26 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
   const handleClose = e => {
     e.stopPropagation();
   };
+  const styleNamespaces = classNames.bind(styles);
+  const globalStyleNamespaces = classNames.bind(globalStyles);
+  const classNameContainer = globalStyleNamespaces(
+    'contentBlockContainer',
+    'containerCard',
+    'hoverAction'
+  );
+  const classNameContainerHeader = globalStyleNamespaces(
+    'contentBlockHeaderLabelText',
+    'contentBlockHeaderLabelMain'
+  );
+  const classNameCardBlock = globalStyleNamespaces(
+    'contentBlockContent',
+    'contentBlockContentCardBlock'
+  );
+  const addNewBlockClassName = globalStyleNamespaces(
+    'hoverAction',
+    'contentBlockContent',
+    'containerCard'
+  );
   return (
     <div className="row double">
       {data &&
@@ -33,63 +57,82 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
             cpu: cpuLimit
           } = namespace.resources.hard;
           const id = label;
+          const accessStyleName = access[0].toUpperCase() + access.slice(1);
+          const classNameBadge = styleNamespaces({
+            [`namespaceInfoBadge${accessStyleName}`]: true
+          });
           return (
             <div className="col-md-4" id={id} key={id}>
               <div
                 onClick={() => handleClickGetNamespace(label)}
                 onKeyPress={() => handleClickGetNamespace(label)}
-                className="content-block-container card-container hover-action"
+                className={classNameContainer}
                 role="link"
                 tabIndex={0}
               >
-                <div className="content-block-header">
-                  <div className="content-block-header-label">
+                <div className={globalStyles.contentBlockHeader}>
+                  <div className={globalStyles.contentBlockHeaderLabel}>
                     <div
                       style={{ display: 'inline-block' }}
-                      className="content-block-header-img"
+                      className={globalStyles.contentBlockHeaderImg}
                     >
                       <img src={deployment} alt="ns-icon" />
                     </div>
                     <div
                       style={{ display: 'inline-block', maxWidth: 70 }}
-                      className={`badge namspaceinfo-badge namspaceinfo-badge__${access}`}
+                      className={`badge ${
+                        styles.namespaceInfoBadge
+                      } ${classNameBadge}`}
                     >
                       {access}
                     </div>
                     <div
                       style={{ display: 'block' }}
-                      className="content-block-header-label__text content-block-header-label_main"
+                      className={classNameContainerHeader}
                     >
                       {label}
                     </div>
                   </div>
                   <div
-                    className="content-block-header-extra-panel"
+                    className={globalStyles.contentBlockHeaderExtraPanel}
                     onClick={e => handleClose(e)}
                     onKeyPress={e => handleClose(e)}
                     role="menuitem"
                     tabIndex={0}
                   >
-                    <div className="content-block-header-extra-panel dropdown no-arrow">
+                    <div
+                      className={`${
+                        globalStyles.contentBlockHeaderExtraPanel
+                      } dropdown no-arrow`}
+                    >
                       <i
-                        className="content-block-header__more ion-more dropdown-toggle"
+                        className={`${
+                          globalStyles.contentBlockHeaderEllipsis
+                        } ${globalStyles.dropdownToggle}
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       />
                       <ul
-                        className="dropdown-menu dropdown-menu-right"
+                        className={` dropdown-menu dropdown-menu-right ${
+                          globalStyles.dropdownMenu
+                        }`}
                         role="menu"
                       >
                         <NavLink
                           activeClassName="active"
-                          className="dropdown-item"
+                          className={`dropdown-item ${
+                            globalStyles.dropdownItem
+                          }`}
                           to={routerLinks.resizeNamespaceLink(label)}
                         >
                           Resize
                         </NavLink>
                         <button
-                          className="dropdown-item text-danger"
+                          className={`dropdown-item ${
+                            globalStyles.dropdownItem
+                          } text-danger`}
                           onClick={() => handleClickDeleteNamespace(label)}
                           onKeyPress={() => handleClickDeleteNamespace(label)}
                         >
@@ -100,28 +143,42 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                   </div>
                 </div>
 
-                <div className="content-block-content card-block">
-                  <div className="content-block__info-item ">
-                    <div className="content-block__info-name inline">
+                <div className={classNameCardBlock}>
+                  <div className={globalStyles.contentBlockInfoItem}>
+                    <div
+                      className={`${globalStyles.contentBlockInfoName} inline`}
+                    >
                       RAM ( Usage / Total ) :&nbsp;
                     </div>
-                    <div className="content-block__info-text inline">
+                    <div
+                      className={`${globalStyles.contentBlockInfoText} inline`}
+                    >
                       {memory} / {memoryLimit}
                     </div>
                   </div>
-                  <div className="content-block__info-item">
-                    <div className="content-block__info-name inline">
+                  <div className={globalStyles.contentBlockInfoItem}>
+                    <div
+                      className={`${globalStyles.contentBlockInfoName} inline`}
+                    >
                       CPU ( Usage / Total ) :&nbsp;
                     </div>
-                    <div className="content-block__info-text inline">
+                    <div
+                      className={`${globalStyles.contentBlockInfoText} inline`}
+                    >
                       {cpu} / {cpuLimit}
                     </div>
                   </div>
-                  <div className="content-block__info-item">
-                    <div className="content-block__info-name inline">
+                  <div className={globalStyles.contentBlockInfoItem}>
+                    <div
+                      className={`${globalStyles.contentBlockInfoName} inline`}
+                    >
                       Volume ( Usage / Total ) :&nbsp;
                     </div>
-                    <div className="content-block__info-text inline">- / -</div>
+                    <div
+                      className={`${globalStyles.contentBlockInfoText} inline`}
+                    >
+                      - / -
+                    </div>
                   </div>
                 </div>
               </div>
@@ -132,9 +189,9 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
         <NavLink
           activeClassName="active"
           to={routerLinks.createNamespace}
-          className="add-new-block content-block-content card-container hover-action"
+          className={`${addNewBlockClassName} ${styles.addNewBlock}`}
         >
-          <div className="action">
+          <div className={styles.action}>
             <i>+</i> Add a namespace
           </div>
         </NavLink>

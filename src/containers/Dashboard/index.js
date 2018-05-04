@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
+import classNames from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
@@ -47,6 +48,10 @@ import DashboardBlockInfo from '../../components/DashboardBlockInfo';
 import DashboardBlockTourAndNews from '../../components/DashboardBlockTourAndNews';
 import RunSolutionItem from '../RunSolution';
 
+import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
+import solutionStyles from '../Solutions/index.scss';
+
 type Props = {
   history: Object,
   getNamespacesReducer: Object,
@@ -59,6 +64,8 @@ type Props = {
 };
 
 // Export this for unit testing more easily
+const dashboardClassName = classNames.bind(styles);
+
 export class Dashboard extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -165,17 +172,26 @@ export class Dashboard extends PureComponent<Props> {
   };
   renderSolutionsList = () => {
     const { getSolutionsReducer, history } = this.props;
+    const solutionClassName = classNames.bind(solutionStyles);
+    const solutionContainer = solutionClassName(
+      'solutionContainer',
+      'preSolutionContainer'
+    );
     if (
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_REQUESTING
     ) {
       return (
-        <div className="solution-containers-wrapper mt-30">
+        <div
+          className={`${solutionStyles.solutionContainerWrapper} ${
+            globalStyles.marginTop30
+          }`}
+        >
           {new Array(8).fill().map(() => (
             <div
               key={_.uniqueId()}
-              className="solution-container pre-solution-container"
+              className={solutionContainer}
               style={{
                 height: '240px',
                 backgroundColor: '#f6f6f6'
@@ -200,6 +216,10 @@ export class Dashboard extends PureComponent<Props> {
   };
   renderCountDeploymentsInfo = () => {
     const { getResourcesReducer } = this.props;
+
+    const className = classNames.bind(styles);
+
+    const topBlock = className('blockContainer', 'topBlock');
     if (
       !getResourcesReducer.readyStatus ||
       getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
@@ -207,7 +227,7 @@ export class Dashboard extends PureComponent<Props> {
     ) {
       return (
         <div className="col-md-4">
-          <div className="block-container top-block">
+          <div className={topBlock}>
             <div
               style={{
                 height: '67px',
@@ -229,6 +249,9 @@ export class Dashboard extends PureComponent<Props> {
   };
   renderCountServicesInfo = () => {
     const { getResourcesReducer } = this.props;
+    const className = classNames.bind(styles);
+
+    const topBlock = className('blockContainer', 'topBlock');
     if (
       !getResourcesReducer.readyStatus ||
       getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
@@ -236,7 +259,7 @@ export class Dashboard extends PureComponent<Props> {
     ) {
       return (
         <div className="col-md-4">
-          <div className="block-container top-block">
+          <div className={topBlock}>
             <div
               style={{
                 height: '67px',
@@ -265,6 +288,9 @@ export class Dashboard extends PureComponent<Props> {
   };
   renderCountPodsInfo = () => {
     const { getResourcesReducer } = this.props;
+    const className = classNames.bind(styles);
+
+    const topBlock = className('blockContainer', 'topBlock');
     if (
       !getResourcesReducer.readyStatus ||
       getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
@@ -272,7 +298,7 @@ export class Dashboard extends PureComponent<Props> {
     ) {
       return (
         <div className="col-md-4">
-          <div className="block-container top-block">
+          <div className={topBlock}>
             <div
               style={{
                 height: '67px',
@@ -354,8 +380,10 @@ export class Dashboard extends PureComponent<Props> {
       />
     );
   };
+
   renderRunSolutionModal = () => {
     const { getNamespacesReducer, getSolutionsReducer } = this.props;
+
     if (
       getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS &&
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_SUCCESS
@@ -367,6 +395,7 @@ export class Dashboard extends PureComponent<Props> {
         displayedNamespaces,
         statusOfRunSolution
       } = this.state;
+
       return (
         <RunSolutionItem
           idName={idName}
@@ -385,12 +414,24 @@ export class Dashboard extends PureComponent<Props> {
   };
 
   render() {
+    // const { getNamespacesReducer } = this.props;
+
+    const blockContainer = dashboardClassName('blockContainer', 'blockH');
+
+    const blockContainerTabs = dashboardClassName(
+      'blockContainer',
+      'blockContainerTabs'
+    );
+
     return (
       <div>
         <div>
           <Helmet title="Dashboard" />
           {this.renderRunSolutionModal()}
-          <div className="container dashboard-wrap">
+          <div
+            className={`container ${styles.dashboardWrap}`}
+            style={{ background: 'none !important', boxShadow: 'none' }}
+          >
             <div className="row">
               <div className="col-md-9 pl-0">
                 <div className="row">
@@ -402,9 +443,9 @@ export class Dashboard extends PureComponent<Props> {
 
                   <DashboardBlockInfo />
 
-                  <div className="col-md-10 col-namespaces">
-                    <div className="block-container block-h">
-                      <div className="top-block-header">Namespaces</div>
+                  <div className={`col-md-10 ${globalStyles.colNamespaces}`}>
+                    <div className={blockContainer}>
+                      <div className={styles.topBlockHeader}>Namespaces</div>
                       {this.renderNamespacesList()}
                     </div>
                   </div>
@@ -416,8 +457,8 @@ export class Dashboard extends PureComponent<Props> {
 
             <div className="row">
               <div className="col-md-12 pl-0 pr-0">
-                <div className="block-container block-container-tabs">
-                  <div className="block-container-tabs-header">
+                <div className={blockContainerTabs}>
+                  <div className={styles.blockContainerTabsHeader}>
                     PRE-BUILT SOLUTIONS
                   </div>
                   <ul
@@ -427,7 +468,7 @@ export class Dashboard extends PureComponent<Props> {
                   >
                     <li className="nav-item">
                       <NavLink
-                        className="nav-link"
+                        className={`${styles.customSolutionNavLink} nav-link`}
                         id="first-tab"
                         data-toggle="pill"
                         to="/dashboard"
