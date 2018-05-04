@@ -79,7 +79,7 @@ h1{
 }
 
 .container{
-    background: #fff;
+    /*background: #fff;*/
 }
 .container__cfm-add-file {
   width: 280px;

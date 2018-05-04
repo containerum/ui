@@ -80,12 +80,12 @@ Props) => (
                     href={url}
                     target="_blank"
                   >
-                    Look on GitHub
                     <img
                       className={iconClassName}
                       src={githubIcon}
                       alt="githubIcon"
                     />
+                    Look on GitHub
                   </a>
                 </div>
               </div>

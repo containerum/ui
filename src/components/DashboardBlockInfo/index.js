@@ -1,16 +1,24 @@
 /* @flow */
 
 import React from 'react';
+import classNames from 'classnames/bind';
+
+import globalStyles from '../../theme/global.scss';
+import dashboardStyles from '../../containers/Dashboard/index.scss';
 
 import { externalLinks } from '../../config';
 
+const infoClassName = classNames.bind(dashboardStyles);
+
+const block = infoClassName('blockContainer', 'blockH');
+
 const DashboardBlockInfo = () => (
-  <div className="col-md-3 col-info">
-    <div className="block-container block-h">
-      <div className="top-block-header">INFO</div>
-      <div className="info-list">
+  <div className={`col-md-3 ${globalStyles.colInfo}`}>
+    <div className={block}>
+      <div className={dashboardStyles.topBlockHeader}>INFO</div>
+      <div className={dashboardStyles.infoList}>
         <a
-          className="info-link"
+          className={dashboardStyles.infoLink}
           href={externalLinks.documentation}
           target="_blank"
           rel="noopener noreferrer"
@@ -18,7 +26,7 @@ const DashboardBlockInfo = () => (
           - Documentation
         </a>
         <a
-          className="info-link"
+          className={dashboardStyles.infoLink}
           href={externalLinks.fastDeploy}
           target="_blank"
           rel="noopener noreferrer"
@@ -26,7 +34,7 @@ const DashboardBlockInfo = () => (
           - How To
         </a>
         <a
-          className="info-link"
+          className={dashboardStyles.infoLink}
           href={externalLinks.solutions}
           target="_blank"
           rel="noopener noreferrer"
@@ -34,7 +42,7 @@ const DashboardBlockInfo = () => (
           - Solutions
         </a>
         <a
-          className="info-link"
+          className={dashboardStyles.infoLink}
           href={externalLinks.blog}
           target="_blank"
           rel="noopener noreferrer"
