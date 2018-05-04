@@ -15,6 +15,7 @@ import {
 } from '../../constants/getReleasesGithubConstants';
 import arrows from '../../images/arrows.png';
 import { externalLinks } from '../../config';
+import styles from './styles.scss';
 
 type Props = {
   getReleasesGithubReducer: Object,
@@ -34,26 +35,29 @@ export class Footer extends PureComponent<Props> {
     if (
       !getReleasesGithubReducer.readyStatus ||
       getReleasesGithubReducer.readyStatus === GET_RELEASES_INVALID ||
-      getReleasesGithubReducer.readyStatus === GET_RELEASES_REQUESTING
+      getReleasesGithubReducer.readyStatus === GET_RELEASES_REQUESTING ||
+      getReleasesGithubReducer.readyStatus === GET_RELEASES_FAILURE
     ) {
       return (
-        <footer className="footer">
-          <div className="footer-wrapper">
-            <div className="footer-container container">
-              <div className="footer__logo">Created by Exon Lab</div>
+        <footer className={styles.footer}>
+          <div className={styles.footerWrapper}>
+            <div className={`${styles.footerContainer} container`}>
+              <div className={styles.footerLogo}>Created by Exon Lab</div>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                className="footer__download_cli"
                 href={externalLinks.releasesChkit}
+                className={styles.footerDownloadCli}
+                // onClick={() => this.handleClickAnaliticsDownloadCLIFooter()}
               >
-                Download CLI <img src={arrows} alt="cli" />
+                Download CLI <img src={arrows} alt="" />
               </a>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 href={externalLinks.documentation}
-                className="footer__help"
+                className={styles.footerHelp}
+                // onClick={() => this.handleClickAnaliticsDocsFooter()}
               >
                 Docs
               </a>
@@ -61,7 +65,8 @@ export class Footer extends PureComponent<Props> {
                 target="_blank"
                 rel="noopener noreferrer"
                 href={externalLinks.helloWorld}
-                className="footer__help"
+                className={styles.footerHelp}
+                // onClick={() => this.handleClickAnaliticsHowToFooter()}
               >
                 How To
               </a>
@@ -77,15 +82,15 @@ export class Footer extends PureComponent<Props> {
 
     const { linkPlatform } = getPlatform(getReleasesGithubReducer.data);
     return (
-      <footer className="footer">
-        <div className="footer-wrapper">
-          <div className="footer-container container">
-            <div className="footer__logo">Created by Exon Lab</div>
+      <footer className={styles.footer}>
+        <div className={styles.footerWrapper}>
+          <div className={`${styles.footerContainer} container`}>
+            <div className={styles.footerLogo}>Created by Exon Lab</div>
             <a
               target="_blank"
               rel="noopener noreferrer"
               href={linkPlatform}
-              className="footer__download_cli"
+              className={styles.footerDownloadCli}
               // onClick={() => this.handleClickAnaliticsDownloadCLIFooter()}
             >
               Download CLI <img src={arrows} alt="" />
@@ -94,7 +99,7 @@ export class Footer extends PureComponent<Props> {
               target="_blank"
               rel="noopener noreferrer"
               href={externalLinks.documentation}
-              className="footer__help"
+              className={styles.footerHelp}
               // onClick={() => this.handleClickAnaliticsDocsFooter()}
             >
               Docs
@@ -103,7 +108,7 @@ export class Footer extends PureComponent<Props> {
               target="_blank"
               rel="noopener noreferrer"
               href={externalLinks.helloWorld}
-              className="footer__help"
+              className={styles.footerHelp}
               // onClick={() => this.handleClickAnaliticsHowToFooter()}
             >
               How To

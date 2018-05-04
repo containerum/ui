@@ -158,6 +158,7 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
                 require('../containers/ConfirmEmail/index.scss')._style +
                 require('../containers/CheckEmail/index.scss')._style +
                 require('../containers/RecoveryPassword/index.scss')._style +
+                require('../containers/Footer/styles.scss')._style +
                 require('../containers/NotFound/styles.scss')._style +
                 require('../components/MiniSpinner/MiniSpinner.css')._style +
                 require('../theme/custom.css')._style +

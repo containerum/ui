@@ -130,14 +130,14 @@ export class Solutions extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
     ) {
       return (
-        <div
-          className={`${styles.solutionContainer} ${globalStyles.marginTop30}`}
-        >
+        <div className="row">
           {new Array(6).fill().map(() => (
             <div
               key={_.uniqueId()}
               className={`col-md-4 ${styles.solutionContainer}`}
               style={{
+                display: 'inline-block',
+                marginTop: 30,
                 height: '307px',
                 backgroundColor: '#f6f6f6'
               }}
