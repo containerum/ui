@@ -10,7 +10,7 @@ import {
   GET_POD_FAILURE
 } from '../../constants/podConstants/getPod';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getPodRequest = () => ({
   type: GET_POD_REQUESTING,
@@ -46,7 +46,7 @@ export const fetchGetPod = (
   idDep: string,
   idPod: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

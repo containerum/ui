@@ -4,6 +4,8 @@ import React from 'react';
 import ReactFileReader from 'react-file-reader';
 
 import LoadButton from '../LoadButton';
+import styles from '../../containers/Support/index.scss';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   data: Array<Object>,
@@ -30,10 +32,10 @@ const SupportList = ({
   handleDeleteImage,
   handleFiles
 }: Props) => (
-  <div className="content-block-content">
-    <div className="feedback-form">
-      <div className="feedback-form__title title">New support ticket</div>
-      <div className="form-group">
+  <div className={globalStyles.contentBlockContent}>
+    <div className={styles.feedbackForm}>
+      <div className={styles.feedbackFormTitle}>New support ticket</div>
+      <div className={globalStyles.formGroup}>
         <form onSubmit={e => handleOnSubmit(e)}>
           <div className="input-group select">
             <select
@@ -76,8 +78,8 @@ const SupportList = ({
             {files.length ? (
               <aside>
                 {files.map(file => (
-                  <div key={file.name} className="dropzone-item">
-                    <span className="dropzone-item-span">{file.name}</span>
+                  <div key={file.name} className={globalStyles.dropZoneItem}>
+                    <span>{file.name}</span>
                     <i
                       onClick={() => handleDeleteImage(file.name)}
                       onKeyPress={() => handleDeleteImage(file.name)}
@@ -102,8 +104,8 @@ const SupportList = ({
                 multipleFiles
                 handleFiles={arrFiles => handleFiles(arrFiles)}
               >
-                <div className="dropzone">
-                  <p className="dropzone-p">
+                <div className={styles.dropZone}>
+                  <p>
                     <i className="material-icons">cloud_upload</i>Click here to
                     upload file (.png, .gif, .jpeg, .pdf or .txt)
                   </p>

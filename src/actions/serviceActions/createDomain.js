@@ -9,7 +9,7 @@ import {
   CREATE_DOMAIN_SUCCESS,
   CREATE_DOMAIN_FAILURE
 } from '../../constants/serviceConstants/createDomain';
-import { webApiLogin, routerLinks } from '../../config';
+import { webApi, routerLinks } from '../../config';
 
 const createDomainRequest = () => ({
   type: CREATE_DOMAIN_REQUESTING,
@@ -40,7 +40,7 @@ export const fetchCreateDomain = (
   idName: string,
   dataDomain: Object,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const accessToken = cookie.load('accessToken');
   const browser = cookie.load('browser');

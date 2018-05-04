@@ -7,6 +7,10 @@ import type { Connector } from 'react-redux';
 // import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
 
+import styles from './index.scss';
+import '../../theme/common.scss';
+import globalStyles from '../../theme/global.scss';
+
 import type {
   Dispatch,
   Namespaces as NamespacesType,
@@ -126,11 +130,13 @@ export class Solutions extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
     ) {
       return (
-        <div className="solution-containers-wrapper mt-30">
+        <div
+          className={`${styles.solutionContainer} ${globalStyles.marginTop30}`}
+        >
           {new Array(6).fill().map(() => (
             <div
               key={_.uniqueId()}
-              className="col-md-4 solution-container"
+              className={`col-md-4 ${styles.solutionContainer}`}
               style={{
                 height: '307px',
                 backgroundColor: '#f6f6f6'
@@ -183,8 +189,10 @@ export class Solutions extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Solutions" />
-        <div className="content-block">
-          <div className="container no-back">{this.renderSolutionsList()}</div>
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
+            {this.renderSolutionsList()}
+          </div>
         </div>
       </div>
     );

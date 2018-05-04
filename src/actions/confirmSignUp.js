@@ -9,7 +9,7 @@ import {
   CONFIRM_SIGNUP_SUCCESS,
   CONFIRM_SIGNUP_FAILURE
 } from '../constants/confirmSignUpConstants';
-import { webApiLogin } from '../config';
+import { webApi } from '../config';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -35,7 +35,7 @@ const confirmSignUpFailure = err => ({
 export const fetchConfirmSignUp = (
   hashParam: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(confirmSignUpRequest(hashParam));
   const browser = cookie.load('browser');

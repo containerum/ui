@@ -15,10 +15,8 @@
     "start:prod": "better-npm-run start:prod",
     "start:production:docker": "yarn build && yarn start:prod:docker",
     "start:prod:docker": "better-npm-run start:prod:docker",
-    "start:omnidesk": "better-npm-run start:omnidesk",
     "build": "yarn clean:build && better-npm-run build",
     "build:stats": "yarn clean:build && better-npm-run build:stats",
-    "start-omnidesk": "node server/omnideskServer.js",
     "lint": "yarn lint:js && yarn lint:style",
     "lint:js": "better-npm-run lint:js",
     "lint:style": "better-npm-run lint:style",
@@ -45,6 +43,7 @@
       "command": "node ./index.js",
       "env": {
         "NODE_PATH": "./src",
+        "NODE_HOST": "0.0.0.0",
         "NODE_ENV": "production",
         "PORT": 8080
       }
@@ -58,13 +57,6 @@
         "SUPRESS_BROWSER_LAUNCH": true,
         "DOCKER": true,
         "PORT": 3000
-      }
-    },
-    "start:omnidesk": {
-      "command": "node ./omnideskserver/index.js",
-      "env": {
-        "NODE_ENV": "production",
-        "PORT": 3001
       }
     },
     "build": {
@@ -264,7 +256,6 @@
     "clone-deep": "^3.0.1",
     "compression": "1.7.1",
     "cookie-parser": "^1.4.3",
-    "cors": "^2.8.4",
     "dateformat": "^3.0.3",
     "decode-uri-component": "^0.2.0",
     "express": "4.16.2",

@@ -9,7 +9,7 @@ import {
   DELETE_SERVICE_SUCCESS,
   DELETE_SERVICE_FAILURE
 } from '../../constants/serviceConstants/deleteService';
-import { webApiLogin } from '../../config';
+import { webApi } from '../../config';
 
 const deleteServiceRequest = () => ({
   type: DELETE_SERVICE_REQUESTING,
@@ -41,7 +41,7 @@ export const fetchDeleteService = (
   idName: string,
   idSrv: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

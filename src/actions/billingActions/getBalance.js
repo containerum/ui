@@ -9,7 +9,7 @@ import {
   GET_BALANCE_SUCCESS,
   GET_BALANCE_FAILURE
 } from '../../constants/billingConstants/getBalance';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getBalanceRequest = () => ({
   type: GET_BALANCE_REQUESTING,
@@ -35,7 +35,7 @@ const getBalanceInvalidToken = () => ({
 export const fetchGetBalance = (
   idName: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

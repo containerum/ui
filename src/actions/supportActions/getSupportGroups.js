@@ -1,5 +1,7 @@
 /* @flow */
 
+import cookie from 'react-cookies';
+
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
   GET_SUPPORT_GROUPS_REQUESTING,
@@ -28,10 +30,14 @@ export const fetchGetSupportGroups = (
   axios: any,
   URL: string = 'https://web.containerum.io'
 ): ThunkAction => async (dispatch: Dispatch) => {
+  const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
   dispatch(getSupportGroupsRequest());
 
   const response = await axios.get(`${URL}/group_omnidesk`, {
     headers: {
+      'User-Client': browser,
+      'User-Token': accessToken,
       Accept: '*/*',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'X-Requested-With'

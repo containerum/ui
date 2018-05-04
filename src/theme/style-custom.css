@@ -1966,7 +1966,7 @@ button:focus {
 }
 
 .tour-wrapper {
-  padding: 40px 20px 0 30px;
+  padding: 40px 20px 0 35px;
 }
 
 .tour-wrapper a {
@@ -1974,6 +1974,23 @@ button:focus {
   font-weight: 300;
   line-height: 1;
   margin-bottom: 21px;
+}
+
+.tour-wrapper a.tour-link-disabled {
+  color: #cecece;
+}
+
+.tour-wrapper a.tour-link-disabled::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  background-image: url(../images/checkSuccess.svg);
+  height: 10px;
+  margin-top: 3px;
+  width: 10px;
+  padding: 0 38px 0;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .news-wrapper {

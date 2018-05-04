@@ -9,7 +9,7 @@ import {
   GET_NAMESPACE_USERS_ACCESS_FAILURE
 } from '../../constants/namespaceConstants/getNamespaceUsersAccess';
 
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 import type { Dispatch, GetState, ThunkAction } from '../../types';
 
 const getNamespaceUsersAccessRequest = () => ({
@@ -40,7 +40,7 @@ const getNamespaceUsersAccessInvalidToken = () => ({
 export const fetchGetNamespaceUsersAccess = (
   idName: String,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

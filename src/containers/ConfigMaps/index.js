@@ -30,6 +30,7 @@ import {
   DELETE_CONFIG_MAP_REQUESTING,
   DELETE_CONFIG_MAP_SUCCESS
 } from '../../constants/configMapConstants/deleteConfigMap';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   getProfileReducer: Object,
@@ -352,8 +353,8 @@ class ConfigMaps extends PureComponent<Props> {
       currentNamespace
     } = this.state;
     return (
-      <div className="content-block">
-        <div className="container no-back">
+      <div className={globalStyles.contentBlock}>
+        <div className={`container ${globalStyles.containerNoBackground}`}>
           <ConfigMapForm
             namespacesData={this.props.getNamespacesReducer.data}
             currentNamespace={currentNamespace}

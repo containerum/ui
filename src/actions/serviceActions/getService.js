@@ -9,7 +9,7 @@ import {
   GET_SERVICE_SUCCESS,
   GET_SERVICE_FAILURE
 } from '../../constants/serviceConstants/getService';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getServiceRequest = () => ({
   type: GET_SERVICE_REQUESTING,
@@ -42,7 +42,7 @@ export const fetchGetService = (
   idName: string,
   idSrv: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

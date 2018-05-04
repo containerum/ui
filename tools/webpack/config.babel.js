@@ -69,14 +69,8 @@ const getPlugins = () => {
       __SERVER__: false,
       __DEV__: isDev,
       'process.env': {
-        WEB_API_OTHER: process.env.WEB_API_OTHER
-          ? `"${process.env.WEB_API_OTHER}"`
-          : undefined,
-        WEB_API_LOGIN: process.env.WEB_API_LOGIN
-          ? `"${process.env.WEB_API_LOGIN}"`
-          : undefined,
-        WS_API: process.env.WS_API ? `"${process.env.WS_API}"` : undefined,
         WEB_API: process.env.WEB_API ? `"${process.env.WEB_API}"` : undefined,
+        WS_API: process.env.WS_API ? `"${process.env.WS_API}"` : undefined,
         RECAPTCHA: process.env.RECAPTCHA
           ? `"${process.env.RECAPTCHA}"`
           : undefined,

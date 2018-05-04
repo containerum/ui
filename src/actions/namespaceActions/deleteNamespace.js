@@ -9,7 +9,7 @@ import {
   DELETE_NAMESPACE_SUCCESS,
   DELETE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/deleteNamespace';
-import { webApiLogin } from '../../config';
+import { webApi } from '../../config';
 
 const deleteNamespaceRequest = () => ({
   type: DELETE_NAMESPACE_REQUESTING,
@@ -40,7 +40,7 @@ const deleteNamespaceInvalidToken = () => ({
 export const fetchDeleteNamespace = (
   idName: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');

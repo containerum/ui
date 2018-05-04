@@ -3,12 +3,12 @@
 import cookie from 'react-cookies';
 import axios from 'axios';
 
-import { webApiLogin } from '../config';
+import { webApi } from '../config';
 
 function* fetchRefreshToken() {
   const browser = cookie.load('browser');
   return yield axios.put(
-    `${webApiLogin}/token/${cookie.load('refreshToken')}`,
+    `${webApi}/token/${cookie.load('refreshToken')}`,
     {},
     {
       headers: {

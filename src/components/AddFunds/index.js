@@ -47,7 +47,7 @@ const AddFunds = ({
               isFullDataOfProfile ? (
                 <a
                   href={`${
-                    config.webApiLogin
+                    config.webApi
                   }/checkouts/new?User-Client=${browser}&User-Token=${accessToken}`}
                   style={{ width: '200px', height: '40px' }}
                   className="feedback-form__submit btn"

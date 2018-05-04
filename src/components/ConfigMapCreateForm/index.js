@@ -7,6 +7,8 @@ import _ from 'lodash/fp';
 import LoadButton from '../../components/LoadButton';
 import InputControl from '../../components/InputControl';
 import AddConfigMapFileManuallyView from '../../components/AddConfigMapFileManually';
+import styles from '../../containers/ConfigMaps/index.scss';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   namespacesData: Array<Object>,
@@ -153,9 +155,11 @@ const ConfigMapCreateForm = ({
             {files.map(file => (
               <div
                 key={_.uniqueId()}
-                className="dropzone-item dropzone-item__configmap configmap-overflow "
+                className={`${globalStyles.dropZoneItem} ${
+                  styles.dropZoneItemConfig
+                }`}
               >
-                <span className="dropzone-item-span">{file.name}</span>
+                <span>{file.name}</span>
                 <i
                   onClick={() => handleDeleteFile(file.name)}
                   onKeyPress={() => handleDeleteFile(file.name)}

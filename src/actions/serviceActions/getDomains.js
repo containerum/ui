@@ -9,7 +9,7 @@ import {
   GET_DOMAINS_SUCCESS,
   GET_DOMAINS_FAILURE
 } from '../../constants/serviceConstants/getDomains';
-import { webApiLogin } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const getDomainsRequest = () => ({
   type: GET_DOMAINS_REQUESTING,
@@ -35,7 +35,7 @@ const getDomainsInvalidToken = () => ({
 export const fetchGetDomains = (
   idName: string,
   axios: any,
-  URL: string = webApiLogin
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const accessToken = cookie.load('accessToken');
   const browser = cookie.load('browser');

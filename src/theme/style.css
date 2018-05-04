@@ -669,7 +669,7 @@ h1{
     border: none ;
     border-bottom: 1.5px solid #eaeaea;
     padding: 7px 0 8px 0;
-    border-radius: 0;
+    border-radius: 0 !important;
 }
 
 
@@ -1650,50 +1650,6 @@ h1{
     font-size: 20px;
     margin: 0 0 50px 0;
 }
-
-.feedback-form select{
-    font-size: 16px;
-    border:1px solid #a7a7a7;
-    border-radius: 2px;
-    height: calc(2.25rem + 4px) !important;
-    padding: 7px 28px 7px 12px;
-}
-
-.feedback-form .select:before{
-    content: "";
-    display: block;
-    position: absolute;
-    width:13px;
-    height: 13px;
-    background: #fff;
-    z-index: 10;
-    top: 8px;
-    right: 6px;
-}
-
-/*.feedback-form .select label{
-    display: block;
-    position: absolute;
-    width:10px;
-    height: 10px;
-    background: #fff;
-    border: 1px solid #a7a7a7;
-    border-left: none;
-    border-top: none;
-    top: 12px;
-    right: 20px;
-    z-index: 11;
-    transform: rotate(45deg);
-}*/
-
-.feedback-form textarea{
-    min-height:200px;
-    font-size: 16px;
-    border:1px solid #a7a7a7;
-    border-radius: 2px;
-    font-weight: 300;
-}
-
 .feedback-form__buttons{
     margin: 40px 0 0 0;
 }
@@ -2101,6 +2057,17 @@ select.form-control:not([size]):not([multiple]) {
     border: solid 0.5px #a7a7a7;
 }
 
+.btn{
+  padding: 8px 19px 8px 19px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.btn:focus, .btn:active{
+  outline: none;
+  box-shadow: none;
+}
+
 .modal-footer{
     justify-content: center;
     padding: 30px;
@@ -2143,6 +2110,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .modal-footer-solution-select{
+    padding: 9px 19px !important;
     font-weight: 300;
     text-align: center;
     color: #fff;
@@ -2212,17 +2180,6 @@ select.form-control:not([size]):not([multiple]) {
 .input-group{
     margin: 0 0 20px 0;
     position: relative;
-}
-
-.btn{
-    padding: 8px 19px 8px 19px;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.btn:focus, .btn:active{
-    outline: none;
-    box-shadow: none;
 }
 
 .button_blue{

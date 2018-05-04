@@ -77,25 +77,26 @@ For production mode app should be running at [http://localhost:8080/](http://loc
 
 I use [better-npm-run](https://github.com/benoror/better-npm-run) to manage the scripts in a better way, which also provides the compatibility of cross-platform. All of the scripts are listed as following:
 
-| `yarn <script>`           | Description                                                                                |
-| ------------------------- | ------------------------------------------------------------------------------------------ |
-| `start`                   | Run your app on the development server at `localhost:3001`. HMR will be enabled.           |
-| `start:production`        | Bundle files to `./public/assets` and run it on the production server at `localhost:8080`. |
-| `start:prod`              | Run your app on the production server only at `localhost:8080`.                            |
-| `start:production:docker` | Run your app on the production server in container at `localhost:3000`.                    |
-| `start:start:omnidesk`    | Run omnidesk server on production at `localhost:3001`.                                     |
-| `build`                   | Remove the previous bundled files and bundle it to `./public/assets`.                      |
-| `build:stats`             | Viusalize the contents of all your bundles.                                                |
-| `lint`                    | Lint all `.js` and `.scss` files.                                                          |
-| `lint:js`                 | Lint all `.js` files (Use `--fix` to auto fix eslint errors).                              |
-| `lint:style`              | Lint all `.scss` files (Use `--fix` to auto fix stylelint errors).                         |
-| `flow`                    | Run type checking for `.js` files.                                                         |
-| `flow:stop`               | Stop type checking.                                                                        |
-| `test`                    | Run testing once (with code coverage reports).                                             |
-| `test:watch`              | Run testing on every test file change.                                                     |
-| `clean:all`               | Remove the client/server bundled stuff and the coverage report.                            |
-| `clean:build`             | Remove the `./public/assets` folder to clean the client bundled files.                     |
-| `clean:test`              | Remove the `./coverage` folder to clean the code coverage report.                          |
+| `yarn <script>`           | Description                                                                                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------- |
+| `start`                   | Run your app on the development server at `localhost:3001`. HMR will be enabled.                  |
+| `start:production`        | Bundle files to `./public/assets` and run it on the production server at `localhost:8080`.        |
+| `start:prod`              | Run your app on the production server only at `localhost:8080`.                                   |
+| `start:production:docker` | Bundle files to `./public/assets` and run app on the production in container at `localhost:3000`. |
+| `start:prod:docker`       | Run your app on the production server in container at `localhost:3000`.                           |
+| `build`                   | Remove the previous bundled files and bundle it to `./public/assets`.                             |
+| `build:stats`             | Visualize the contents of all your bundles.                                                       |
+| `lint`                    | Lint all `.js` and `.scss` files.                                                                 |
+| `lint:js`                 | Lint all `.js` files (Use `--fix` to auto fix eslint errors).                                     |
+| `lint:style`              | Lint all `.scss` files (Use `--fix` to auto fix stylelint errors).                                |
+| `flow`                    | Run type checking for `.js` files.                                                                |
+| `flow:stop`               | Stop type checking.                                                                               |
+| `test`                    | Run testing once (with code coverage reports).                                                    |
+| `test:watch`              | Run testing on every test file change.                                                            |
+| `clean:all`               | Remove the client/server bundled stuff and the coverage report.                                   |
+| `clean:build`             | Remove the `./public/assets` folder to clean the client bundled files.                            |
+| `clean:test`              | Remove the `./coverage` folder to clean the code coverage report.                                 |
+| ------------------------- | ------------------------------------------------------------------------------------------------- |
 
 ## App Structure
 
