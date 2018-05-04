@@ -1,6 +1,6 @@
 /* @flow */
 
-// import { push } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../types';
@@ -61,9 +61,10 @@ export const fetchLogin = (
       cookie.save('accessToken', accessToken, { path: '/' });
       cookie.save('refreshToken', refreshToken, { path: '/' });
       dispatch(loginSuccess(token));
-      if (typeof window !== 'undefined') {
-        window.location.replace('/dashboard');
-      }
+      // if (typeof window !== 'undefined') {
+      //   window.location.replace('/dashboard');
+      // }
+      dispatch(push('/dashboard'));
       break;
     }
     default: {

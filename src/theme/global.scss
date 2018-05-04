@@ -1,4 +1,3 @@
-
 @import './variables.scss';
 
 .wrapper {
@@ -266,6 +265,17 @@
   .formHeaderLogin {
     margin-top: 110px;
   }
+
+  .forgetPass {
+    display: block;
+    color: #a7a7a7;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .forgetPass:hover {
+    color: #29abe2;
+  }
 }
 
 .errorMessage {
@@ -318,4 +328,53 @@
     top: 0;
     left: -36px;
   }
+}
+
+.orDivider {
+  display: block;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-align: center;
+  color: #a7a7a7;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.orDivider::before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 11px;
+  height: 1px;
+  width: 40%;
+  background-color: #eaeaea;
+}
+
+.orDivider::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 11px;
+  height: 1px;
+  width: 40%;
+  background-color: #eaeaea;
+}
+
+.socialTitle {
+  color: #a7a7a7;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.socialWrapper {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.socialCenterIcon {
+  margin-left: 18px;
+  margin-right: 21px;
 }

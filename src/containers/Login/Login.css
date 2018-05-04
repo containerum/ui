@@ -1,13 +1,5 @@
 /* stylelint-disable */
 
-/*.login-divider {*/
-  /*margin: 0 18px;*/
-/*}*/
-
-/*.main-form {*/
-  /*padding: 0 65px 20px 65px;*/
-/*}*/
-
 .form-header {
   font-size: 25px;
   font-weight: 300;
@@ -16,10 +8,6 @@
   margin-top: 50px;
   margin-bottom: 20px;
 }
-
-/*.form-header-login {*/
-  /*margin-top: 110px;*/
-/*}*/
 
 .form-header-reset {
   margin-top: 200px;
@@ -68,55 +56,6 @@
   margin-bottom: 20px;
 }
 
-.or-divider {
-  display: block;
-  font-weight: 300;
-  text-transform: uppercase;
-  text-align: center;
-  color: #a7a7a7;
-  position: relative;
-  margin-bottom: 10px;
-}
-
-.or-divider::before {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  top: 11px;
-  height: 1px;
-  width: 40%;
-  background-color: #eaeaea;
-}
-
-.or-divider::after {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  right: 0;
-  top: 11px;
-  height: 1px;
-  width: 40%;
-  background-color: #eaeaea;
-}
-
-.social-title {
-  color: #a7a7a7;
-  font-weight: 300;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.social-wrapper {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-.social-center-icon {
-  margin-left: 18px;
-  margin-right: 21px;
-}
-
 .footerSignUp {
   color: #a7a7a7;
   text-align: center;
@@ -127,69 +66,6 @@
 .login-btn {
   margin-bottom: 15px;
 }
-
-.forg-pass {
-  display: block;
-  color: #a7a7a7;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.forg-pass:hover {
-  color: #29abe2;
-}
-
-/*.error-message {*/
-  /*height: auto;*/
-  /*line-height: 22px;*/
-  /*border-radius: 2px;*/
-  /*background-color: #f6f6f6;*/
-  /*font-weight: 300;*/
-  /*text-align: center;*/
-  /*margin-bottom: 30px;*/
-  /*padding: 20px 20px 20px 40px;*/
-/*}*/
-
-/*.error-message-text {*/
-  /*position: relative;*/
-/*}*/
-
-/*.error-message-text::before {*/
-  /*content: '';*/
-  /*display: inline-block;*/
-  /*position: absolute;*/
-  /*background: url('../../images/warning.svg') 0 0 no-repeat;*/
-  /*width: 23px;*/
-  /*height: 20px;*/
-  /*top: 0;*/
-  /*left: -36px;*/
-/*}*/
-
-/*.success-message {*/
-  /*height: auto;*/
-  /*line-height: 22px;*/
-  /*border-radius: 2px;*/
-  /*background-color: #f6f6f6;*/
-  /*font-weight: 300;*/
-  /*text-align: center;*/
-  /*margin-bottom: 30px;*/
-  /*padding: 20px 20px 20px 40px;*/
-/*}*/
-
-/*.success-message-text {*/
-  /*position: relative;*/
-/*}*/
-
-/*.success-message-text::before {*/
-  /*content: '';*/
-  /*display: inline-block;*/
-  /*position: absolute;*/
-  /*background: url('../../images/success.svg') 0 0 no-repeat;*/
-  /*width: 23px;*/
-  /*height: 20px;*/
-  /*top: 0;*/
-  /*left: -36px;*/
-/*}*/
 
 .login-panel {
   font-weight: 300;

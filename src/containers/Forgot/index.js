@@ -124,7 +124,7 @@ class Forgot extends PureComponent<Props> {
               </form>
               <NavLink
                 activeClassName="active"
-                className="forg-pass"
+                className={globalStyles.forgetPass}
                 to={routerLinks.login}
               >
                 Go to login
@@ -132,11 +132,11 @@ class Forgot extends PureComponent<Props> {
               <div>
                 {false && (
                   <div>
-                    <span className="or-divider">or</span>
-                    <div className="social-title">
+                    <span className={globalStyles.orDivider}>or</span>
+                    <div className={globalStyles.socialTitle}>
                       Sign up with your favourite social profile
                     </div>
-                    <div className="social-wrapper">
+                    <div className={globalStyles.socialWrapper}>
                       <a href="https://github.com/">
                         <img
                           src={require('../../images/github.svg')}
@@ -145,7 +145,7 @@ class Forgot extends PureComponent<Props> {
                       </a>
                       <a
                         href="https://google.com/"
-                        className="social-center-icon"
+                        className={globalStyles.socialCenterIcon}
                       >
                         <img
                           src={require('../../images/google.svg')}

@@ -148,8 +148,9 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
             dangerouslySetInnerHTML={{
               __html:
                 require('../theme/normalize.css')._style +
-                require('../theme/global.scss')._style +
                 require('../theme/common.scss')._style +
+                require('../theme/global.scss')._style +
+                require('../theme/buttons.scss')._style +
                 require('../containers/Login/Login.css')._style +
                 require('../containers/Login/index.scss')._style +
                 require('../containers/SignUp/index.scss')._style +
