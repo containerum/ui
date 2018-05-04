@@ -49,7 +49,7 @@
       }
     },
     "start:prod:docker": {
-      "command": "node ./index.js",
+      "command": "node ./rebuild.production.js && node ./index.js",
       "env": {
         "NODE_PATH": "./src",
         "NODE_HOST": "0.0.0.0",
@@ -254,6 +254,7 @@
     "chalk": "2.3.0",
     "classnames": "^2.2.5",
     "clone-deep": "^3.0.1",
+    "compressing": "^1.2.3",
     "compression": "1.7.1",
     "cookie-parser": "^1.4.3",
     "dateformat": "^3.0.3",
@@ -295,6 +296,7 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
+    "replace": "^0.3.0",
     "serialize-javascript": "^1.4.0",
     "serve-favicon": "2.4.5",
     "toastr": "^2.1.4",

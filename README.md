@@ -301,7 +301,7 @@ render() {
 Without CSS modules (you need to turn off CSS modules from `./tools/webpack/config.babel.js`):
 
 ```javascript
-import './styles.scss';
+import index.scss;
 
 // ...
 
@@ -319,7 +319,7 @@ By the way, if you want to use your based style or a vendor CSS framework, just 
 
 ```javascript
 import '../../theme/normalize.css'; // Import a vendor stylesheet here
-import styles from './styles.scss'; // Import your based stylesheet here
+import styles from index.scss; // Import your based stylesheet here
 
 export default routes => {
   // ...

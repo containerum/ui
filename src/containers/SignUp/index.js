@@ -16,6 +16,8 @@ import '../Login/Login.css';
 import InputEmail from '../../components/InputEmail';
 import InputPassword from '../../components/InputPassword';
 import LoadButton from '../../components/LoadButton';
+import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
 
 type Props = {
   signUpReducer: Object,
@@ -105,27 +107,38 @@ class SignUp extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Sign Up" />
-        <div className="window windowSignUp">
-          <div className="form">
-            <div className="login-block">
+        <div className={`${globalStyles.window} ${styles.windowSignUp}`}>
+          <div className={globalStyles.windowForm}>
+            <div className={globalStyles.authBlock}>
               <NavLink
-                activeClassName="active"
+                activeClassName={globalStyles.authBlockActiveLink}
                 to={routerLinks.signUp}
                 className="active"
               >
                 Sign Up
               </NavLink>
-              <span className="login-divider">or</span>
-              <NavLink activeClassName="active" to={routerLinks.login}>
+              <span className={globalStyles.authDivider}>or</span>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.login}
+              >
                 Log In
               </NavLink>
             </div>
 
-            <div className="main-form">
-              <div className="form-header form-header-login">Sign Up</div>
+            <div className={globalStyles.mainForm}>
+              <div
+                className={`${globalStyles.formHeader} ${
+                  globalStyles.formHeaderLogin
+                }`}
+              >
+                Sign Up
+              </div>
               {(!isValidEmail || !isValidPassword) && (
-                <div className="error-message">
-                  <span className="error-message-text">{errorMessage}</span>
+                <div className={globalStyles.errorMessage}>
+                  <span className={globalStyles.errorMessageText}>
+                    {errorMessage}
+                  </span>
                 </div>
               )}
               <form onSubmit={e => this.handleSubmitSignUpAction(e)}>
@@ -164,11 +177,11 @@ class SignUp extends PureComponent<Props> {
 
               {false && (
                 <div>
-                  <span className="or-divider">or</span>
-                  <div className="social-title">
+                  <span className={globalStyles.orDivider}>or</span>
+                  <div className={globalStyles.socialTitle}>
                     Sign up with your favourite social profile
                   </div>
-                  <div className="social-wrapper">
+                  <div className={globalStyles.socialWrapper}>
                     <a href="https://github.com/">
                       <img
                         src={require('../../images/github.svg')}
@@ -177,7 +190,7 @@ class SignUp extends PureComponent<Props> {
                     </a>
                     <a
                       href="https://google.com/"
-                      className="social-center-icon"
+                      className={globalStyles.socialCenterIcon}
                     >
                       <img
                         src={require('../../images/google.svg')}

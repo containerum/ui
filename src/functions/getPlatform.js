@@ -31,19 +31,19 @@ const getPlatform = ReleasesGithubReducerData => {
             if (currentLowerItem.indexOf('linux_arm') + 1) {
               objBrowserDownloadUrl.linuxArm.url = browserDownloadUrl;
               objBrowserDownloadUrl.linuxArm.size = item.size;
-            } else if (currentLowerItem.indexOf('linux_x64') + 1) {
+            } else if (currentLowerItem.indexOf('linux_amd64') + 1) {
               objBrowserDownloadUrl.linuxX64.url = browserDownloadUrl;
               objBrowserDownloadUrl.linuxX64.size = item.size;
-            } else if (currentLowerItem.indexOf('linux_x86') + 1) {
+            } else if (currentLowerItem.indexOf('linux_386') + 1) {
               objBrowserDownloadUrl.linuxX86.url = browserDownloadUrl;
               objBrowserDownloadUrl.linuxX86.size = item.size;
-            } else if (currentLowerItem.indexOf('mac_x64') + 1) {
+            } else if (currentLowerItem.indexOf('darwin_amd64') + 1) {
               objBrowserDownloadUrl.macX64.url = browserDownloadUrl;
               objBrowserDownloadUrl.macX64.size = item.size;
-            } else if (currentLowerItem.indexOf('windows_x64') + 1) {
+            } else if (currentLowerItem.indexOf('windows_amd64') + 1) {
               objBrowserDownloadUrl.winX64.url = browserDownloadUrl;
               objBrowserDownloadUrl.winX64.size = item.size;
-            } else if (currentLowerItem.indexOf('windows_x86') + 1) {
+            } else if (currentLowerItem.indexOf('windows_386') + 1) {
               objBrowserDownloadUrl.winX86.url = browserDownloadUrl;
               objBrowserDownloadUrl.winX86.size = item.size;
             }

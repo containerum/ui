@@ -7,6 +7,8 @@ import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import cookie from 'react-cookies';
+import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
 
 import { routerLinks } from '../../config';
 
@@ -30,20 +32,31 @@ class CheckEmail extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Check Email" />
-        <div className="window windowResetPasswordTwo">
-          <div className="form">
-            <div className="login-block">
-              <NavLink activeClassName="active" to={routerLinks.signUp}>
+        <div
+          className={`${globalStyles.window} ${styles.windowResetPasswordTwo}`}
+        >
+          <div className={globalStyles.windowForm}>
+            <div className={globalStyles.authBlock}>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.signUp}
+              >
                 Sign Up
               </NavLink>
-              <span className="login-divider">or</span>
-              <NavLink activeClassName="active" to={routerLinks.login}>
+              <span className={globalStyles.authDivider}>or</span>
+              <NavLink
+                activeClassName={globalStyles.authBlockActiveLink}
+                to={routerLinks.login}
+              >
                 Log In
               </NavLink>
             </div>
-            <div className="main-form" style={{ marginTop: '200px' }}>
+            <div
+              className={globalStyles.mainForm}
+              style={{ marginTop: '200px' }}
+            >
               <div
-                className="form-header"
+                className={globalStyles.formHeader}
                 style={{
                   fontSize: '20px',
                   textTransform: 'initial'
@@ -65,7 +78,7 @@ class CheckEmail extends PureComponent<Props> {
                 this could mean you signed up with a different address.
               </div>
               {/* <NavLink */}
-              {/* activeClassName="active" */}
+              {/* activeClassName={globalStyles.authBlockActiveLink} */}
               {/* className="forg-pass" */}
               {/* to={routerLinks.login} */}
               {/* > */}

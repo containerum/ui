@@ -354,7 +354,7 @@ class ConfigMaps extends PureComponent<Props> {
     } = this.state;
     return (
       <div className={globalStyles.contentBlock}>
-        <div className={`container ${globalStyles.containerNoBackground}`}>
+        <div className="container no-back">
           <ConfigMapForm
             namespacesData={this.props.getNamespacesReducer.data}
             currentNamespace={currentNamespace}

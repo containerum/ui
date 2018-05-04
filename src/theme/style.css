@@ -61,10 +61,10 @@ h1{
     color: #333333;
 }
 
-.wrapper{
-    min-height: 100%;
-    padding-bottom: 1px;
-}
+/*.wrapper{*/
+    /*min-height: 100%;*/
+    /*padding-bottom: 1px;*/
+/*}*/
 
 
 .configmapView__list-item {
@@ -79,7 +79,7 @@ h1{
 }
 
 .container{
-    background: #fff;
+    /*background: #fff;*/
 }
 .container__cfm-add-file {
   width: 280px;
@@ -2240,69 +2240,69 @@ select.form-control:not([size]):not([multiple]) {
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
-.footer{
+/*.footer{*/
+    /*!*padding: 0px 0 0 0;*!*/
+    /*!*margin: -45px 0 0 0;*!*/
+
+    /*!*display:none;*!*/
+    /*!*position: absolute;*/
+    /*bottom: 0px;*/
+    /*left:0px;*/
+    /*width: 100%;*!*/
+    /*z-index: 10;*/
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*width: 100%;*/
+    /*height: 45px;*/
+    /*line-height: 22px;*/
+/*}*/
+
+/*body.footer-absolute .footer{*/
+    /*position:absolute;*/
+    /*margin: 0px 0 0 0;*/
+    /*bottom:0px;*/
+    /*width:100%;*/
+/*}*/
+
+/*.support-feedback-static.footer-absolute .footer{*/
     /*padding: 0px 0 0 0;*/
-    /*margin: -45px 0 0 0;*/
+    /*margin: -13px 0 0 0;*/
+    /*position: relative;*/
+/*}*/
 
-    /*display:none;*/
-    /*position: absolute;
-    bottom: 0px;
-    left:0px;
-    width: 100%;*/
-    z-index: 10;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 45px;
-    line-height: 22px;
-}
+/*.footer-wrapper{*/
+    /*background: #fff;*/
+    /*height: 44px;*/
+    /*width: 100%;*/
+/*}*/
+/*.footer-container{*/
+    /*padding: 12px 0 0px 0;*/
+    /*font-weight: 300;*/
+/*}*/
 
-body.footer-absolute .footer{
-    position:absolute;
-    margin: 0px 0 0 0;
-    bottom:0px;
-    width:100%;
-}
+/*.footer__logo{*/
+    /*color: #a7a7a7;*/
+    /*display: inline-block;*/
+    /*float: left;*/
+/*}*/
 
-.support-feedback-static.footer-absolute .footer{
-    padding: 0px 0 0 0;
-    margin: -13px 0 0 0;
-    position: relative;
-}
+/*.footer__download_cli,*/
+/*.footer__help {*/
+    /*font-weight: 300;*/
+    /*color: #333333;*/
+    /*display: inline-block;*/
+    /*float: right;*/
+/*}*/
 
-.footer-wrapper{
-    background: #fff;
-    height: 44px;
-    width: 100%;
-}
-.footer-container{
-    padding: 12px 0 0px 0;
-    font-weight: 300;
-}
+/*.footer__help {*/
+    /*margin-right: 50px;*/
+/*}*/
 
-.footer__logo{
-    color: #a7a7a7;
-    display: inline-block;
-    float: left;
-}
-
-.footer__download_cli,
-.footer__help {
-    font-weight: 300;
-    color: #333333;
-    display: inline-block;
-    float: right;
-}
-
-.footer__help {
-    margin-right: 50px;
-}
-
-.footer__download_cli img{
-    display: inline-block;
-    margin: 4px 0 0 10px;
-    vertical-align: top;
-}
+/*.footer__download_cli img{*/
+    /*display: inline-block;*/
+    /*margin: 4px 0 0 10px;*/
+    /*vertical-align: top;*/
+/*}*/
 
 
 @media (max-height: 449px){

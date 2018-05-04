@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 
+import styles from './index.scss';
+
 import * as actionLogout from '../../actions/logout';
 import * as actionGetProfile from '../../actions/profileActions/getProfile';
 import * as actionGetBalance from '../../actions/billingActions/getBalance';
@@ -58,8 +60,8 @@ export class Header extends PureComponent<Props> {
     ) {
       return (
         <div>
-          <div className="header-top-account">
-            <div className="header-top-account__avatar">
+          <div className={styles.headerTopAccount}>
+            <div className={styles.headerTopAccountAvatar}>
               <img src={imageLogo} alt="ava" />
             </div>
             <span style={{ marginLeft: '10px' }}>
@@ -90,29 +92,29 @@ export class Header extends PureComponent<Props> {
   render() {
     return (
       <div>
-        <header className="header">
-          <div className="header-top">
-            <div className="header-top-container container">
-              <div className="header__logo">
+        <header className={styles.header}>
+          <div className={styles.headerTop}>
+            <div className={`container ${styles.headerTopContainer}`}>
+              <div className={styles.headerLogo}>
                 <NavLink activeClassName="active" to={routerLinks.dashboard}>
                   <img src={logo} alt="logo" />
                 </NavLink>
               </div>
-              <ul className="header-top-menu nav">
-                <li className="header-top-menu__li nav-item">
+              <ul className={`${styles.headerTopMenu} nav`}>
+                <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
                     activeClassName="active"
                     to={routerLinks.dashboard}
-                    className="header-top-menu__link"
+                    className={styles.headerTopMenuLink}
                   >
                     Dashboard
                   </NavLink>
                 </li>
-                <li className="header-top-menu__li nav-item">
+                <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
                     activeClassName="active"
                     to={routerLinks.namespaces}
-                    className="header-top-menu__link"
+                    className={styles.headerTopMenuLink}
                   >
                     Namespaces
                   </NavLink>
@@ -126,29 +128,29 @@ export class Header extends PureComponent<Props> {
                 {/* Volumes */}
                 {/* </NavLink> */}
                 {/* </li> */}
-                <li className="header-top-menu__li nav-item">
+                <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
                     activeClassName="active"
                     to={routerLinks.solutions}
-                    className="header-top-menu__link"
+                    className={styles.headerTopMenuLink}
                   >
                     Solutions
                   </NavLink>
                 </li>
-                <li className="header-top-menu__li nav-item">
+                <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
                     activeClassName="active"
                     to={routerLinks.tools}
-                    className="header-top-menu__link"
+                    className={styles.headerTopMenuLink}
                   >
                     Tools
                   </NavLink>
                 </li>
-                <li className="header-top-menu__li header-top-menu__li_last nav-item">
+                <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
                     activeClassName="active"
                     to={routerLinks.support}
-                    className="header-top-menu__link"
+                    className={styles.headerTopMenuLink}
                   >
                     Support
                   </NavLink>
