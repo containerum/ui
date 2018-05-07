@@ -1,0 +1,28 @@
+@import '../../theme/variables';
+
+.billing {
+  &ContentText {
+    display: inline-block;
+    font-weight: 300;
+    color: $ligth-gray-color;
+  }
+
+  &Information {
+    &StatusInfo {
+      display: inline-block;
+      font-weight: 500;
+      color: $write-access-color;
+      text-transform: uppercase;
+    }
+
+    &Data {
+      white-space: nowrap;
+      font-weight: 300;
+      margin-bottom: 7px;
+    }
+  }
+
+  &TableTdPadding {
+    padding: 12px 12px 12px 5px !important;
+  }
+}

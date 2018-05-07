@@ -691,6 +691,27 @@
     &Buttons {
       margin: 30px 0 0 0;
     }
+
+    &History {
+      &Table {
+        width: 100%;
+
+        tbody {
+          tr:first-child {
+            td {
+              border-top-color: transparent;
+            }
+          }
+        }
+
+        &.contentBlockTable {
+          td.dropdown {
+            text-align: right;
+            padding-right: 5px;
+          }
+        }
+      }
+    }
   }
 }
 
