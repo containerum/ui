@@ -32,7 +32,6 @@ Technologies used:
 * No other view engines, just javascript based HTML rendering component.
 * Shared app config between development and production.
 * 404 error page and redirect handling.
-* Integrate [Jest](https://facebook.github.io/jest/) with [enzyme](https://github.com/airbnb/enzyme) as the solution for writing unit tests with code coverage support.
 * [Yarn](https://yarnpkg.com/lang/en/) as the package manager.
 
 ## Requirements
@@ -91,11 +90,8 @@ I use [better-npm-run](https://github.com/benoror/better-npm-run) to manage the 
 | `lint:style`              | Lint all `.scss` files (Use `--fix` to auto fix stylelint errors).                                |
 | `flow`                    | Run type checking for `.js` files.                                                                |
 | `flow:stop`               | Stop type checking.                                                                               |
-| `test`                    | Run testing once (with code coverage reports).                                                    |
-| `test:watch`              | Run testing on every test file change.                                                            |
 | `clean:all`               | Remove the client/server bundled stuff and the coverage report.                                   |
 | `clean:build`             | Remove the `./public/assets` folder to clean the client bundled files.                            |
-| `clean:test`              | Remove the `./coverage` folder to clean the code coverage report.                                 |
 | ------------------------- | ------------------------------------------------------------------------------------------------- |
 
 ## App Structure
@@ -111,10 +107,10 @@ Here is the structure of the app, which serves as generally accepted guidelines 
 │   │   ├── default.js              # Default settings
 │   │   ├── index.js                # Configuration entry point
 │   │   └── prod.js                 # Production settings (overrides the default settings)
-│   ├── components                  # Reusable components (including scss/testing files)
-│   ├── containers                  # Container components (including scss/testing files)
-│   ├── actions                     # Redux actions (including testing files)
-│   ├── reducers                    # Redux reducers (including testing files)
+│   ├── components                  # Reusable components (including scss files)
+│   ├── containers                  # Container components (including scss files)
+│   ├── actions                     # Redux actions
+│   ├── reducers                    # Redux reducers
 │   ├── utils                       # App-wide utils (e.g. HTML component)  
 │   ├── theme                       # App-wide style and vendor CSS framework
 │   ├── types                       # Flow types for reducer, action, state, store
@@ -122,7 +118,7 @@ Here is the structure of the app, which serves as generally accepted guidelines 
 │   ├── client.js                   # App bootstrap and rendering (webpack entry)
 │   ├── routes.js                   # Routes configuration for both client and server side
 │   └── server.js                   # Express server (with webpack dev/hot middlewares)
-├── tools                           # Project related configurations (testing/build etc.)
+├── tools                           # Project related configurations (build etc.)
 │   ├── flow                        # Flow types, interface, module aliasing definitions
 │   ├── openBrowser                 # Utility for opening Google Chrome
 │   ├── jest                        # Jest CSS modules and assets mocks settings
@@ -451,35 +447,6 @@ const stylelint = true;
 // ...
 ```
 
-### Unit Tests
-
-The starter use [Jest](https://facebook.github.io/jest/) as the testing engine. It runs in a Node environment, so you won't have access to the DOM. In addition, Jest support the feature of [snapshot testing](http://facebook.github.io/jest/docs/snapshot-testing.html#content), which is very powerful for testing React component. Give it a try, you'll be impressed.
-
-I also use [enzyme](https://github.com/airbnb/enzyme) as the testing utility for React, which makes it easier to assert, manipulate, and traverse your React Components' output. The unit tests focus on three parts as below:
-
-* React Components
-* Actions
-* Reducers
-
-By the way, Jest built-in code coverage reports, the report files are generated in `./coverage` folder. You can configure `./package.json` to define which files that you want to cover. For example:
-
-```
-{
-  // ...
-
-  "jest": {
-    "collectCoverageFrom": [
-      "src/containers/**/*.js",   // Define the files, which want to be covered
-      "src/components/**/*.js",
-      "!src/**/__tests__"         // The files will be ignored by code coverage
-    ],
-    // Other configurations
-  },
-
-  // ...
-}
-```
-
 You can also use [istanbul's ignore hints](https://github.com/gotwarlost/istanbul/blob/master/ignoring-code-for-coverage.md#ignoring-code-for-coverage-purposes) to specify specific lines of code in a javascript file to skip code coverage.
 
 ## Troubleshooting
@@ -528,11 +495,3 @@ So it will look like:
       "global-require": 0,
 // ...
 ```
-
-## Todo...
-
-There're some features (or updates) which will be included in this starter in the near future:
-
-* [ ] Dynamic routing & async reducer - Loading a route and its redux store only when need.
-* [ ] Upgrade to [Babel 7](https://babeljs.io/blog/2017/03/01/upgrade-to-babel-7) as soon as the stable version released.
-* [ ] Upgrade to [Webpack 4](https://github.com/webpack/webpack/milestone/15) as soon as the stable version released.

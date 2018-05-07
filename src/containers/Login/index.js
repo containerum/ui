@@ -17,7 +17,6 @@ import {
   CONFIRM_SIGNUP_SUCCESS,
   CONFIRM_SIGNUP_FAILURE
 } from '../../constants/confirmSignUpConstants';
-import './Login.css';
 import InputEmail from '../../components/InputEmail';
 import InputPassword from '../../components/InputPassword';
 import LoadButton from '../../components/LoadButton';
@@ -220,7 +219,7 @@ class Login extends PureComponent<Props> {
                   isFetching={this.props.loginReducer.isFetching}
                   baseClassButton={`${buttonStyles.buttonUI} ${
                     buttonStyles.buttonUIPrimary
-                  } ${styles.loginBtn}`}
+                  } ${globalStyles.authBtnMargin}`}
                 />
               </form>
               <NavLink

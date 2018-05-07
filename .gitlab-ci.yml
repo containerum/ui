@@ -12,13 +12,14 @@ variables:
 
 test lint:
   services:
-  image: node:alpine
+  image: node:9.2.1
   stage: test
   tags:
     - build
   script:
-    - npm install yarn
+    - npm install -g -s --no-progress yarn node-gyp
     - yarn
+    - npm rebuild node-sass --force
     - yarn lint
   except:
     - develop
