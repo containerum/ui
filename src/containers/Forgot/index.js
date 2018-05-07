@@ -15,6 +15,7 @@ import InputEmail from '../../components/InputEmail';
 import LoadButton from '../../components/LoadButton';
 import { FORGOT_FAILURE } from '../../constants/forgotConstants';
 import globalStyles from '../../theme/global.scss';
+import buttonStyles from '../../theme/buttons.scss';
 import styles from './index.scss';
 
 type Props = {
@@ -118,12 +119,15 @@ class Forgot extends PureComponent<Props> {
                 <LoadButton
                   type="submit"
                   buttonText="Submit"
+                  typeMiniSpinner="transparency"
                   isFetching={this.props.forgotReducer.isFetching}
-                  baseClassButton="input-btn login-btn"
+                  baseClassButton={`${buttonStyles.buttonUI} ${
+                    buttonStyles.buttonUIPrimary
+                  } ${globalStyles.authBtnMargin}`}
                 />
               </form>
               <NavLink
-                activeClassName="active"
+                activeClassName={globalStyles.authBlockActiveLink}
                 className={globalStyles.forgetPass}
                 to={routerLinks.login}
               >

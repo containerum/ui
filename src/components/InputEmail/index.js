@@ -1,9 +1,8 @@
 /* @flow */
 
 import React from 'react';
-// import classNames from 'classnames';
 
-// import styles from './index.scss';
+import styles from './styles.scss';
 
 type Props = {
   handleChangeEmail: Function,
@@ -22,8 +21,7 @@ const InputEmail = ({
 }: Props) => (
   <input
     type="email"
-    // className={classNames(styles.formControl, styles.customInput)}
-    className="form-control custom-input"
+    className={`form-control ${styles.formControl} ${styles.customInput}`}
     id={id}
     onChange={e => handleChangeEmail(e.target.value)}
     value={value}

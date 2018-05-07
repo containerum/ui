@@ -12,11 +12,11 @@ import Recaptcha from 'react-google-recaptcha';
 
 import { appRecaptcha, externalLinks, routerLinks } from '../../config';
 import * as signUpLogin from '../../actions/signUp';
-import '../Login/Login.css';
 import InputEmail from '../../components/InputEmail';
 import InputPassword from '../../components/InputPassword';
 import LoadButton from '../../components/LoadButton';
 import globalStyles from '../../theme/global.scss';
+import buttonStyles from '../../theme/buttons.scss';
 import styles from './index.scss';
 
 type Props = {
@@ -113,7 +113,6 @@ class SignUp extends PureComponent<Props> {
               <NavLink
                 activeClassName={globalStyles.authBlockActiveLink}
                 to={routerLinks.signUp}
-                className="active"
               >
                 Sign Up
               </NavLink>
@@ -170,8 +169,11 @@ class SignUp extends PureComponent<Props> {
                 <LoadButton
                   type="submit"
                   buttonText="Create account"
+                  typeMiniSpinner="transparency"
                   isFetching={this.props.signUpReducer.isFetching}
-                  baseClassButton="input-btn login-btn"
+                  baseClassButton={`${buttonStyles.buttonUI} ${
+                    buttonStyles.buttonUIPrimary
+                  } ${globalStyles.authBtnMargin}`}
                 />
               </form>
 
@@ -204,7 +206,7 @@ class SignUp extends PureComponent<Props> {
                 </div>
               )}
 
-              <div className="footerSignUp">
+              <div className={styles.SignUpFooter}>
                 By signing up, you agree to the{' '}
                 <a
                   target="_blank"

@@ -1,4 +1,3 @@
-
 @import './variables.scss';
 
 .wrapper {
@@ -733,4 +732,8 @@
     font-weight: 300;
     color: $ligth-gray-color;
   }
+}
+
+.authBtnMargin {
+  margin-bottom: 15px;
 }

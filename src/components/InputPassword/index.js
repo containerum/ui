@@ -3,7 +3,7 @@
 import React from 'react';
 // import classNames from 'classnames';
 
-// import styles from './index.scss';
+import styles from '../InputEmail/styles.scss';
 
 type Props = {
   handleChangePassword: Function,
@@ -22,8 +22,7 @@ const InputPassword = ({
 }: Props) => (
   <input
     type="password"
-    // className={classNames(styles.formControl, styles.customInput)}
-    className="form-control custom-input"
+    className={`form-control ${styles.formControl} ${styles.customInput}`}
     id={id}
     onChange={e => handleChangePassword(e.target.value)}
     value={value}
