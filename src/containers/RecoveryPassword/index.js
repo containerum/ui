@@ -17,6 +17,7 @@ import LoadButton from '../../components/LoadButton';
 // import { CHECK_HASH_PASSWORD_FAILURE } from '../../constants/checkHashPasswordConstants';
 import { RECOVERY_PASSWORD_FAILURE } from '../../constants/recoveryPasswordConstants';
 import globalStyles from '../../theme/global.scss';
+import buttonStyles from '../../theme/buttons.scss';
 import styles from './index.scss';
 
 type Props = {
@@ -211,8 +212,11 @@ class RecoveryPassword extends PureComponent<Props> {
                 <LoadButton
                   type="submit"
                   buttonText="Submit"
+                  typeMiniSpinner="transparency"
                   isFetching={isFetching}
-                  baseClassButton="input-btn login-btn"
+                  baseClassButton={`${buttonStyles.buttonUI} ${
+                    buttonStyles.buttonUIPrimary
+                  } ${globalStyles.authBtnMargin}`}
                 />
               </form>
               {/* <NavLink */}
