@@ -222,8 +222,13 @@
   &NoBackground {
     background: none !important;
     box-shadow: none;
-    padding-right: 0;
-    padding-left: 0;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  &Fluid {
+    width:100% !important;
+    min-width: 0 !important;
   }
 
   &Card {
@@ -600,4 +605,132 @@
   text-align: center;
   font-weight: 300;
   margin: 0 auto;
+}
+
+
+.block {
+  &Item {
+    margin: 0 30px 0 30px;
+    padding: 0 0 40px 0;
+
+    &::after {
+      content: ' ';
+      display: block;
+      border-bottom: 1px solid $color-gray;
+      margin: 40px -30px 0 -30px;
+    }
+
+    &:last-of-type {
+      margin: 0 30px 0 30px;
+      padding: 0 0 20px 0;
+      border-bottom: none;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    &Title {
+      color:$color-dark-gray;
+      font-weight: 300;
+      font-size: 20px;
+      text-transform: uppercase;
+      margin: 0 0 15px 0;
+    }
+
+    &SubTitle {
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    &Download {
+      border-radius: 5px;
+      border: solid 1px $very-light-gray;
+      padding: 14px 16px 14px 16px;
+      font-weight: 300;
+      display: block;
+      position: relative;
+      margin: 15px 0 0 0;
+
+      &:hover {
+        color:inherit;
+        border-color: $main-color;
+      }
+
+      &Note {
+        display: block;
+        color: $ligth-gray-color;
+        font-size: 12px;
+      }
+
+      &Arrow {
+        position: absolute;
+        right:17px;
+        top:17px;
+      }
+
+      &Alt {
+        border-color: transparent;
+        color: $ligth-gray-color;
+        padding: 0 16px 0 16px;
+
+        .blockItemDownloadNote {
+          font-size: 15px;
+        }
+
+        &:hover {
+          border-color: transparent;
+          color: $main-color;
+
+          .blockItemDownloadNote {
+            color:$main-color;
+          }
+        }
+      }
+    }
+
+    &Buttons {
+      margin: 30px 0 0 0;
+    }
+  }
+}
+
+
+//////////form styles/////////////////
+
+.form {
+  &Control {
+    border-radius: 0.25rem !important;
+
+    &:focus {
+      border: solid 0.5px #a7a7a7;
+    }
+  }
+
+  &Group {
+    position: relative;
+    padding: 22px 0 0 0;
+
+    &Label {
+      &Image {
+        cursor: pointer;
+        height: 70px;
+
+        svg {
+          height: 70px;
+          width: 64px;
+        }
+      }
+    }
+  }
+}
+
+
+/////////////text decoration styles///////////////////
+
+.text {
+  &Light {
+    font-weight: 300;
+    color: $ligth-gray-color;
+  }
 }

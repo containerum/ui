@@ -41,6 +41,11 @@
         margin-right: 45px;
         padding: 0;
 
+        &Active {
+          color:$color-dark-gray;
+          border-bottom: 3px solid $main-color;
+        }
+
         &:last-child {
           margin-right: 0;
         }
@@ -48,13 +53,6 @@
         a {
           display: block;
           padding: 0 0 18px 0;
-          border-bottom: 3px solid transparent;
-
-        }
-
-        a.active {
-          color:#333;
-          border-color: #29abe2;
         }
 
         &:hover {

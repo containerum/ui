@@ -13,6 +13,8 @@ import Notification from '../../Notification';
 import LoadButton from '../../../components/LoadButton';
 import InputControl from '../../../components/InputControl';
 
+import globalStyles from '../../../theme/global.scss';
+
 type Props = {
   changePasswordReducer: Object,
   fetchChangePasswordIfNeeded: (
@@ -119,8 +121,8 @@ export class Password extends PureComponent<Props> {
           name="Password"
           errorMessage={changePasswordReducer.err}
         />
-        <div className="block-item" id="password">
-          <div className="block-item__title">Password</div>
+        <div className={globalStyles.blockItem} id="password">
+          <div className={globalStyles.blockItemTitle}>Password</div>
           <form onSubmit={e => this.submitUpdatePasswordData(e)}>
             <div className="row">
               <div className="col-md-10">
@@ -175,7 +177,7 @@ export class Password extends PureComponent<Props> {
                 </div>
               </div>
               <div className="col-md-2">
-                <div className="form-group pt-0 text-right">
+                <div className={`${globalStyles.formGroup} pt-0 text-right`}>
                   <LoadButton
                     style={{ width: '75px' }}
                     type="submit"

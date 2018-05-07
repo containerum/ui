@@ -103,7 +103,7 @@ export class Header extends PureComponent<Props> {
               <ul className={`${styles.headerTopMenu} nav`}>
                 <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
-                    activeClassName="active"
+                    activeClassName={styles.headerTopMenuLiActive}
                     to={routerLinks.dashboard}
                     className={styles.headerTopMenuLink}
                   >
@@ -112,7 +112,7 @@ export class Header extends PureComponent<Props> {
                 </li>
                 <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
-                    activeClassName="active"
+                    activeClassName={styles.headerTopMenuLiActive}
                     to={routerLinks.namespaces}
                     className={styles.headerTopMenuLink}
                   >
@@ -130,7 +130,7 @@ export class Header extends PureComponent<Props> {
                 {/* </li> */}
                 <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
-                    activeClassName="active"
+                    activeClassName={styles.headerTopMenuLiActive}
                     to={routerLinks.solutions}
                     className={styles.headerTopMenuLink}
                   >
@@ -139,7 +139,7 @@ export class Header extends PureComponent<Props> {
                 </li>
                 <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
-                    activeClassName="active"
+                    activeClassName={styles.headerTopMenuLiActive}
                     to={routerLinks.tools}
                     className={styles.headerTopMenuLink}
                   >
@@ -148,7 +148,7 @@ export class Header extends PureComponent<Props> {
                 </li>
                 <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
-                    activeClassName="active"
+                    activeClassName={styles.headerTopMenuLiActive}
                     to={routerLinks.support}
                     className={styles.headerTopMenuLink}
                   >
