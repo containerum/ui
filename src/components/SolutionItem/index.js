@@ -2,15 +2,26 @@
 
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import className from 'classnames/bind';
 
 import getSolutionImage from '../../functions/getSolutionImage';
 import github from '../../images/github.svg';
+
+import solutionPageStyles from '../../containers/Solution/index.scss';
+import dashboardStyle from '../../containers/Dashboard/index.scss';
 
 type Props = {
   solution: Array<Object>,
   text: string
   // handleClickRunSolution: (name: string) => void
 };
+
+const solutionClassName = className.bind(solutionPageStyles);
+
+const navLinksClass = solutionClassName(
+  'solutionNavLink',
+  'solutionNavLinkActive'
+);
 
 const SolutionItem = ({
   solution,
@@ -33,9 +44,9 @@ Props) => {
     )
     .replace(regexpWithoutSlash, 'https');
   return (
-    <div className="row page-wrapper">
-      <div className="col-md-4 page-left-side">
-        <div className="block-img">
+    <div className={`${solutionPageStyles.solutionPageWrapper} row`}>
+      <div className={`${solutionPageStyles.solutionPageLeftSide} col-md-4`}>
+        <div className={solutionPageStyles.solutionPageBlockImg}>
           <img src={srcLogo} alt={name} style={{ height: logoHeight }} />
         </div>
         <a
@@ -53,12 +64,18 @@ Props) => {
         {/* Deploy */}
         {/* </button> */}
         {/* <div className="left-side-update-date">Last update: 12/12/17</div> */}
-        <div className="resources-block">
-          <div className="resources-title">Resources:</div>
-          <div className="resource">CPU: {cpu}</div>
-          <div className="resource">RAM: {ram}</div>
+        <div className={solutionPageStyles.solutionPageResourses}>
+          <div className={solutionPageStyles.solutionPageResoursesTitle}>
+            Resources:
+          </div>
+          <div className={solutionPageStyles.solutionPageResourse}>
+            CPU: {cpu}
+          </div>
+          <div className={solutionPageStyles.solutionPageResourse}>
+            RAM: {ram}
+          </div>
         </div>
-        <div className="left-side-links">
+        <div className={solutionPageStyles.solutionPageLeftSideLinks}>
           <a href={url} target="_blank" rel="noopener noreferrer">
             {url}
             <img src={github} alt="github" />
@@ -72,18 +89,20 @@ Props) => {
         </div>
       </div>
 
-      <div className="col-md-8 page-right-side">
-        <div className="page-right-side-title">{name}</div>
-        <div className="block-h-tabs" style={{ height: 'auto' }}>
+      <div className={`${solutionPageStyles.solutionPageRightSide} col-md-8`}>
+        <div className={solutionPageStyles.solutionPageRightSideTitle}>
+          {name}
+        </div>
+        <div className={dashboardStyle.blockHTabs} style={{ height: 'auto' }}>
           <ul
-            className="nav nav-pills"
+            className={`${solutionPageStyles.solutionNavPills} nav nav-pills`}
             id="pills-tab"
             role="tablist"
             style={{ marginBottom: '0' }}
           >
             <li className="nav-item">
               <div
-                className="nav-link active"
+                className={`${navLinksClass} nav-link active`}
                 style={{ fontSize: '18px' }}
                 id="tour-tab"
                 data-toggle="pill"
@@ -98,7 +117,7 @@ Props) => {
           <div
             className="tab-content"
             id="pills-tabContent"
-            style={{ marginTop: '40px' }}
+            style={{ marginTop: '29px' }}
           >
             <div
               className="tab-pane fade show active"
@@ -106,7 +125,7 @@ Props) => {
               role="tabpanel"
               aria-labelledby="infoe-tab"
             >
-              <div className="info-text">
+              <div className={solutionPageStyles.solutionInfoText}>
                 {<ReactMarkdown source={textWithImages} />}
               </div>
             </div>

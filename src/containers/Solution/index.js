@@ -33,6 +33,9 @@ import {
   GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
 
+import styles from './index.scss';
+import globalStyles from '../../theme/global.scss';
+
 type Props = {
   match: Object,
   getSolutionsReducer: Object,
@@ -139,16 +142,16 @@ export class Solution extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
     ) {
       return (
-        <div className="row page-wrapper">
+        <div className={`${styles.solutionPageWrapper} row`}>
           <div
-            className="col-md-4 page-left-side"
+            className={`${styles.solutionPageLeftSide} col-md-4`}
             style={{
               height: '500px',
               backgroundColor: '#f6f6f6'
             }}
           />
           <div
-            className="col-md-8 page-right-side"
+            className={`${styles.solutionPageRightSide} col-md-8`}
             style={{
               height: '700px',
               backgroundColor: '#f6f6f6'
@@ -203,8 +206,8 @@ export class Solution extends PureComponent<Props> {
     return (
       <div>
         <Helmet title={`Solution ${match.params.idSol}`} />
-        <div className="content-block">
-          <div className="container">{this.renderSolutionItem()}</div>
+        <div className={globalStyles.contentBlock}>
+          <div className="container pr-0 pl-0">{this.renderSolutionItem()}</div>
         </div>
       </div>
     );

@@ -120,7 +120,7 @@ export class Footer extends PureComponent<Props> {
   };
 
   render() {
-    return <div>{this.renderFooterInfo()}</div>;
+    return <div style={{ position: 'static' }}>{this.renderFooterInfo()}</div>;
   }
 }
 

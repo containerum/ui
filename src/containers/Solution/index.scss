@@ -1,0 +1,131 @@
+@import '../../theme/variables';
+
+.solution {
+  &InfoText {
+    font-weight: 300;
+    line-height: 2;
+    color: $color-dark-gray;
+    margin-bottom: 30px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    img {
+      margin-left: -20%;
+      margin-bottom: 10px;
+      max-width: 120%;
+    }
+  }
+
+  &Nav {
+    &Link {
+      margin-right: 38px;
+      padding: 0 0 9px 0 !important;
+    }
+
+    &Pills {
+      .solutionNavLinkActive {
+        color: $color-gray3 !important;
+        //border-bottom: none;
+        border-bottom: 1.5px solid $main-color !important;
+        border-radius: 0;
+        font-weight: 400;
+        background-color: $color-white !important;
+      }
+    }
+  }
+
+  &Page {
+    &Wrapper {
+      flex-wrap: nowrap;
+      padding: 40px;
+      margin: 30px 0 0 0;
+      border-radius: 4px;
+      background-color: $color-white;
+    }
+
+    &BlockImg {
+      position: relative;
+      max-width: 328px;
+      padding-bottom: 88%;
+      border-radius: 4px;
+      background-color: $color-gray;
+      border: solid 2px $color-gray;
+      margin-bottom: 20px;
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        max-height: 78px;
+      }
+    }
+
+    &LeftSide {
+      margin-right: 40px;
+
+      &Links {
+        margin-left: 40px;
+
+        a {
+          display: block;
+          position: relative;
+          font-weight: 300;
+          color: $ligth-gray-color;
+          word-wrap: break-word;
+          margin-bottom: 20px;
+
+          &:hover {
+            color: $main-color;
+            text-decoration: underline;
+          }
+
+          img {
+            position: absolute;
+            left: -43px;
+            top: -6px;
+            width: 32px;
+            height: 32px;
+          }
+        }
+      }
+    }
+
+    &RightSide {
+      -ms-flex: 0 0 62.3%;
+      flex: 0 0 62.3%;
+      max-width: 62.3%;
+
+      &Title {
+        font-size: 35px;
+        font-weight: 300;
+        color: $color-dark-gray;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+      }
+    }
+
+
+    &Resourses {
+      margin-bottom: 30px;
+      color: $color-dark-gray;
+      line-height: 2;
+
+      &Title {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 2;
+        text-transform: uppercase;
+      }
+    }
+
+    &Resourse {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 2;
+      text-transform: uppercase;
+    }
+  }
+}
