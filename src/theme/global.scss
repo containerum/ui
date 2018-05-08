@@ -218,6 +218,13 @@
 }
 
 .container{
+  background-color: $color-white;
+
+  &ToolsPages {
+    margin-top: 30px;
+    padding-top: 40px;
+  }
+
   &NoBackground {
     background: none !important;
     box-shadow: none;
@@ -232,6 +239,19 @@
 
   &Card {
     min-height: 220px;
+  }
+
+  &SubTitle {
+    font-weight: 300;
+    color: $subtitle-color;
+    margin-top: 15px;
+    margin-bottom: 50px;
+  }
+
+  &ConfigmapAddFile {
+    width: 280px;
+    margin-left: 0;
+    margin-right: 150px;
   }
 }
 
@@ -441,7 +461,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 1000;
+    z-index: 10000;
     display: none;
     float: left;
     min-width: 160px;
@@ -635,6 +655,15 @@
       font-size: 20px;
       text-transform: uppercase;
       margin: 0 0 15px 0;
+
+      &Configmap {
+        font-size: 15px;
+        padding-left: 15px;
+      }
+
+      &NoUppercase {
+        text-transform: none;
+      }
     }
 
     &SubTitle {
@@ -692,6 +721,20 @@
       margin: 30px 0 0 0;
     }
 
+    &TokensTable {
+      width: 100%;
+      height: auto;
+
+      td.dropdown {
+        text-align: right;
+        padding-right: 5px;
+      }
+
+      tbody tr:first-child td{
+        border-top-color: transparent;
+      }
+    }
+
     &History {
       &Table {
         width: 100%;
@@ -725,6 +768,15 @@
     &:focus {
       border: solid 0.5px #a7a7a7;
     }
+
+    &Configmap {
+      min-width: 600px;
+
+      &::placeholder {
+        font-size: 15px;
+        color: $ligth-gray-color;
+      }
+    }
   }
 
   &Group {
@@ -752,9 +804,87 @@
   &Light {
     font-weight: 300;
     color: $ligth-gray-color;
+
+    &Configmap {
+      font-size: 12px;
+    }
   }
 }
 
 .authBtnMargin {
   margin-bottom: 15px;
+}
+
+
+//////////////////select styles////////////////////
+
+.select {
+  &GreyColor {
+    color: $ligth-gray-color !important;
+  }
+
+  &Wrapper {
+    position: relative;
+  }
+
+  &Arrow {
+    position: absolute;
+    border: 8px solid transparent;
+    border-bottom: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+
+    &:nth-child(1) {
+      top: 10px;
+      border-top-color: $main-color;
+    }
+
+    &:nth-child(2) {
+      top: 9px;
+      border-top-color: $color-white;
+    }
+  }
+
+  &Custom {
+    position: relative;
+    width: 100%;
+    font-weight: 300;
+    color: $color-dark-gray;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1.5px solid $very-light-gray;
+    border-radius: 0;
+    padding: 2px 0 8px;
+    margin-bottom: 7px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+//////row custom////////////
+
+.row {
+  &ConfigmapAddFile {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.input {
+  &Group {
+    margin: 0 0 20px 0;
+    position: relative;
+  }
 }
