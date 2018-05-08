@@ -2,8 +2,20 @@
 
 import React from 'react';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import Paginator from '../Paginator';
+
+import globalStyles from '../../theme/global.scss';
+import billingStyles from '../../containers/Billing/index.scss';
+
+const globalClassName = className.bind(globalStyles);
+
+const historyClassName = globalClassName(
+  'contentBlockTable',
+  'table',
+  'blockItemHistoryTable'
+);
 
 type Props = {
   operations: Array<Object>,
@@ -12,25 +24,37 @@ type Props = {
 };
 
 const HistoryFunds = ({ operations, countPages, currentPage }: Props) => (
-  <div className="block-item" id="history">
-    <div className="block-item__title">History</div>
+  <div className={globalStyles.blockItem} id="history">
+    <div className={globalStyles.blockItemTitle}>History</div>
     <div className="row">
-      <div className="block-item__history col-md-12">
-        <table className="block-item__history-table content-block__table table">
+      <div className="col-md-12">
+        <table className={`${historyClassName} table`}>
           <tbody>
             {operations.length ? (
               operations.map(operation => {
                 const { amount, date, info } = operation;
                 return (
                   <tr key={_.uniqueId()}>
-                    <td className="w-25 table-border">{date}</td>
-                    <td className="w-50 table-border">{info}</td>
-                    <td className="w-25 table-border">{amount}</td>
+                    <td
+                      className={`${billingStyles.billingTableTdPadding} w-25`}
+                    >
+                      {date}
+                    </td>
+                    <td
+                      className={`${billingStyles.billingTableTdPadding} w-50`}
+                    >
+                      {info}
+                    </td>
+                    <td
+                      className={`${billingStyles.billingTableTdPadding} w-25`}
+                    >
+                      {amount}
+                    </td>
                   </tr>
                 );
               })
             ) : (
-              <tr className="light-text">
+              <tr className={globalStyles.textLight}>
                 <td>Your billing history will be displayed here</td>
               </tr>
             )}

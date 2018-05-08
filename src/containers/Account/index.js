@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
+import classNames from 'classnames/bind';
 
 import {
   GET_PROFILE_INVALID,
@@ -19,16 +20,29 @@ import DeleteAccountInfo from './DeleteAccount';
 import CLI from '../../components/CLIInfo';
 import globalStyles from '../../theme/global.scss';
 import './Account.css';
+import styles from './index.scss';
+
+// import globalStyles from '../../theme/global.scss';
 
 type Props = {
   getProfileReducer: Object
 };
 
+const globalClass = classNames.bind(globalStyles);
+const containerClassNameSidebar = globalClass(
+  'contentBlockContainer',
+  'containerFluid',
+  'containerNoBackground'
+);
+
 // Export this for unit testing more easily
 export class Account extends PureComponent<Props> {
   renderProfileInfo = () => {
     const { getProfileReducer } = this.props;
-
+    const containerClassName = globalClass(
+      'contentBlockContainer',
+      'containerFluid'
+    );
     if (
       !getProfileReducer.readyStatus ||
       getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
@@ -48,7 +62,7 @@ export class Account extends PureComponent<Props> {
     }
 
     return (
-      <div className="content-block-container container container-fluid">
+      <div className={`${containerClassName} container`}>
         <ProfileInfo data={getProfileReducer.data} />
         <ProfilePassword />
         <CLI />
@@ -58,7 +72,6 @@ export class Account extends PureComponent<Props> {
   };
   renderProfileSideBar = () => {
     const { getProfileReducer } = this.props;
-
     if (
       !getProfileReducer.readyStatus ||
       getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
@@ -115,14 +128,22 @@ export class Account extends PureComponent<Props> {
           <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">
               <div className="col-md-3 col-lg-3 col-xl-2">
-                <div className="content-block account-info">
-                  <div className="content-block-container container no-back pl-0 pr-0 container-fluid">
+                <div
+                  className={`${globalStyles.contentBlock} ${
+                    styles.accountInfo
+                  }`}
+                >
+                  <div
+                    className={`${containerClassNameSidebar} container pl-0 pr-0`}
+                  >
                     {this.renderProfileSideBar()}
                   </div>
                 </div>
               </div>
               <div className="col-md-9 col-lg-9 col-xl-10">
-                <div className="content-block">{this.renderProfileInfo()}</div>
+                <div className={globalStyles.contentBlock}>
+                  {this.renderProfileInfo()}
+                </div>
               </div>
               <div className="clearfix" />
             </div>

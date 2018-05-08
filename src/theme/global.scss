@@ -142,12 +142,12 @@
 
   &Volume {
     &Header {
-      height: 109px;
-      border-bottom: 1px solid $color-white;
+      height: 115px;
+      border-bottom: 1px solid $very-light-gray;
     }
 
     &Footer {
-      padding: 25px 30px 25px 30px !important;
+      padding: 25px 25px 25px 25px !important;
     }
   }
 
@@ -218,15 +218,40 @@
 }
 
 .container{
+  background-color: $color-white;
+
+  &ToolsPages {
+    margin-top: 30px;
+    padding-top: 40px;
+  }
+
   &NoBackground {
     background: none !important;
     box-shadow: none;
-    padding-right: 0;
-    padding-left: 0;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  &Fluid {
+    width:100% !important;
+    min-width: 0 !important;
   }
 
   &Card {
     min-height: 220px;
+  }
+
+  &SubTitle {
+    font-weight: 300;
+    color: $subtitle-color;
+    margin-top: 15px;
+    margin-bottom: 50px;
+  }
+
+  &ConfigmapAddFile {
+    width: 280px;
+    margin-left: 0;
+    margin-right: 150px;
   }
 }
 
@@ -436,7 +461,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 1000;
+    z-index: 10000;
     display: none;
     float: left;
     min-width: 160px;
@@ -601,6 +626,265 @@
   margin: 0 auto;
 }
 
+
+.block {
+  &Item {
+    margin: 0 30px 0 30px;
+    padding: 0 0 40px 0;
+
+    &::after {
+      content: ' ';
+      display: block;
+      border-bottom: 1px solid $color-gray;
+      margin: 40px -30px 0 -30px;
+    }
+
+    &:last-of-type {
+      margin: 0 30px 0 30px;
+      padding: 0 0 20px 0;
+      border-bottom: none;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    &Title {
+      color:$color-dark-gray;
+      font-weight: 300;
+      font-size: 20px;
+      text-transform: uppercase;
+      margin: 0 0 15px 0;
+
+      &Configmap {
+        font-size: 15px;
+        padding-left: 15px;
+      }
+
+      &NoUppercase {
+        text-transform: none;
+      }
+    }
+
+    &SubTitle {
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    &Download {
+      border-radius: 5px;
+      border: solid 1px $very-light-gray;
+      padding: 14px 16px 14px 16px;
+      font-weight: 300;
+      display: block;
+      position: relative;
+      margin: 15px 0 0 0;
+
+      &:hover {
+        color:inherit;
+        border-color: $main-color;
+      }
+
+      &Note {
+        display: block;
+        color: $ligth-gray-color;
+        font-size: 12px;
+      }
+
+      &Arrow {
+        position: absolute;
+        right:17px;
+        top:17px;
+      }
+
+      &Alt {
+        border-color: transparent;
+        color: $ligth-gray-color;
+        padding: 0 16px 0 16px;
+
+        .blockItemDownloadNote {
+          font-size: 15px;
+        }
+
+        &:hover {
+          border-color: transparent;
+          color: $main-color;
+
+          .blockItemDownloadNote {
+            color:$main-color;
+          }
+        }
+      }
+    }
+
+    &Buttons {
+      margin: 30px 0 0 0;
+    }
+
+    &TokensTable {
+      width: 100%;
+      height: auto;
+
+      td.dropdown {
+        text-align: right;
+        padding-right: 5px;
+      }
+
+      tbody tr:first-child td{
+        border-top-color: transparent;
+      }
+    }
+
+    &History {
+      &Table {
+        width: 100%;
+
+        tbody {
+          tr:first-child {
+            td {
+              border-top-color: transparent;
+            }
+          }
+        }
+
+        &.contentBlockTable {
+          td.dropdown {
+            text-align: right;
+            padding-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+//////////form styles/////////////////
+
+.form {
+  &Control {
+    border-radius: 0.25rem !important;
+
+    &:focus {
+      border: solid 0.5px #a7a7a7;
+    }
+
+    &Configmap {
+      min-width: 600px;
+
+      &::placeholder {
+        font-size: 15px;
+        color: $ligth-gray-color;
+      }
+    }
+  }
+
+  &Group {
+    position: relative;
+    padding: 22px 0 0 0;
+
+    &Label {
+      &Image {
+        cursor: pointer;
+        height: 70px;
+
+        svg {
+          height: 70px;
+          width: 64px;
+        }
+      }
+    }
+  }
+}
+
+
+/////////////text decoration styles///////////////////
+
+.text {
+  &Light {
+    font-weight: 300;
+    color: $ligth-gray-color;
+
+    &Configmap {
+      font-size: 12px;
+    }
+  }
+}
+
 .authBtnMargin {
   margin-bottom: 15px;
+}
+
+
+//////////////////select styles////////////////////
+
+.select {
+  &GreyColor {
+    color: $ligth-gray-color !important;
+  }
+
+  &Wrapper {
+    position: relative;
+  }
+
+  &Arrow {
+    position: absolute;
+    border: 8px solid transparent;
+    border-bottom: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+
+    &:nth-child(1) {
+      top: 10px;
+      border-top-color: $main-color;
+    }
+
+    &:nth-child(2) {
+      top: 9px;
+      border-top-color: $color-white;
+    }
+  }
+
+  &Custom {
+    position: relative;
+    width: 100%;
+    font-weight: 300;
+    color: $color-dark-gray;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1.5px solid $very-light-gray;
+    border-radius: 0;
+    padding: 2px 0 8px;
+    margin-bottom: 7px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+//////row custom////////////
+
+.row {
+  &ConfigmapAddFile {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.input {
+  &Group {
+    margin: 0 0 20px 0;
+    position: relative;
+  }
 }

@@ -1,6 +1,10 @@
 import React from 'react';
 import Tooltip from 'rc-tooltip';
+import className from 'classnames/bind';
+
 import InputControl from '../../components/InputControl';
+
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   files: Array,
@@ -13,6 +17,16 @@ type Props = {
   ) => void
 };
 
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'container',
+  'containerNoBackground',
+  'containerConfigmpAddFile'
+);
+const container2ClassName = globalClass('container', 'containerNoBackground');
+const formClassName = globalClass('formControl', 'formControlConfigmap');
+
 const AddConfigMapFileManually = ({
   filesManually,
   handleChangeInputFileManually,
@@ -24,13 +38,13 @@ const AddConfigMapFileManually = ({
       const { id } = file;
       return (
         <div key={id}>
-          <div className="row row__cfm-add-file">
+          <div className={`${globalStyles.rowConfigmapAddFile} row`}>
             <Tooltip
               placement="top"
               trigger={files.length > 0 ? ['hover'] : ''}
               overlay={<span>You can use only one additing method</span>}
             >
-              <div className="container no-back container__cfm-add-file">
+              <div className={`${containerClassName} container`}>
                 <InputControl
                   value={file.fileName}
                   id={`fileName${id}`}
@@ -67,8 +81,8 @@ const AddConfigMapFileManually = ({
             )}
           </div>
           <div className="row" style={{ paddingTop: '30px' }}>
-            <div className="container no-back">
-              <div className="input-group">
+            <div className={`${container2ClassName} container`}>
+              <div className={globalStyles.inputGroup}>
                 <Tooltip
                   placement="top"
                   trigger={files.length > 0 ? ['hover'] : ''}
@@ -77,7 +91,7 @@ const AddConfigMapFileManually = ({
                   <textarea
                     id={`textArea${id}`}
                     name="textArea"
-                    className="form-control form-control__configmap"
+                    className={`${formClassName} form-control`}
                     value={file.textArea}
                     onChange={e =>
                       handleChangeInputFileManually(

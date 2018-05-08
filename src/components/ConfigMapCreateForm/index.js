@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import FileBase64 from 'react-file-base64';
 import Tooltip from 'rc-tooltip';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import LoadButton from '../../components/LoadButton';
 import InputControl from '../../components/InputControl';
@@ -32,6 +33,20 @@ type Props = {
   match: Object
 };
 
+const globalClass = className.bind(globalStyles);
+
+const selectCustomClassNames = globalClass('selectCustom', 'selectGreyColor');
+const itemTitleClassName = globalClass(
+  'blockItemTitle',
+  'blockItemTitleConfigmap'
+);
+const itemClassName = globalClass(
+  'blockItemTitle',
+  'blockItemTitleConfigmap',
+  'blockItemTitleNoUppercase'
+);
+const lightText = globalClass('textLight', 'textLightConfigmap');
+
 const ConfigMapCreateForm = ({
   namespacesData,
   configMapName,
@@ -52,14 +67,14 @@ const ConfigMapCreateForm = ({
   <form onSubmit={handleSubmitCreateConfigMap}>
     <div className="row">
       <div
-        className="container no-back"
+        className={`${globalStyles.containerNoBackground} container`}
         style={{
           marginBottom: 20
         }}
       >
         {namespacesData.length ? (
           <div
-            className="col-md-8 form-group"
+            className={`${globalStyles.formGroup} col-md-8`}
             style={{
               display: 'inline-block',
               paddingLeft: 0,
@@ -69,16 +84,16 @@ const ConfigMapCreateForm = ({
           >
             <div
               style={{ margin: '10px 0px 15px' }}
-              className="containerSubTitleBlack"
+              className={globalStyles.containerSubTitle}
             >
               Namespace Name
             </div>
-            <div className="select-wrapper">
-              <div className="select-arrow-3" />
-              <div className="select-arrow-3" />
+            <div className={globalStyles.selectWrapper}>
+              <div className={globalStyles.selectArrow} />
+              <div className={globalStyles.selectArrow} />
               <select
                 name="services"
-                className="selectCustom selectGreyColor"
+                className={selectCustomClassNames}
                 onChange={e => handleSelectNamespace(e.target.value)}
                 defaultValue={
                   match.params.idName
@@ -125,14 +140,10 @@ const ConfigMapCreateForm = ({
       </div>
     </div>
     <div className="row">
-      <div className="block-item__title block-item__title_configmap-block">
-        ADD FILE
-      </div>
+      <div className={itemTitleClassName}>ADD FILE</div>
     </div>
     <div className="row">
-      <div className="block-item__title block-item__title_configmap-block block-item__title_no-uppercase">
-        1. Upload ConfigMap file
-      </div>
+      <div className={itemClassName}>1. Upload ConfigMap file</div>
     </div>
     <div className="row" style={{ paddingLeft: '15px' }}>
       {filesManually[0].textArea || filesManually[0].fileName ? (
@@ -144,8 +155,8 @@ const ConfigMapCreateForm = ({
           Add File
         </button>
       ) : (
-        <div className="fileform">
-          <div className="selectbutton">Add File</div>
+        <div className={styles.fileForm}>
+          <div className={styles.selectBtn}>Add File</div>
           <FileBase64 multiple onDone={arrFiles => handleAddFiles(arrFiles)} />
         </div>
       )}
@@ -178,22 +189,18 @@ const ConfigMapCreateForm = ({
     </div>
     <div className="row" style={{ paddingTop: '6px' }}>
       {!files.length ? (
-        <div className="container">
-          <div className="light-text light-text__configmap">
-            Any number of files you want
-          </div>
+        <div className={`${globalStyles.container} container`}>
+          <div className={lightText}>Any number of files you want</div>
         </div>
       ) : (
         ''
       )}
     </div>
     <div className="row" style={{ paddingTop: '40px' }}>
-      <div className="block-item__title block-item__title_configmap-block block-item__title_no-uppercase">
-        2. Or add file manually
-      </div>
+      <div className={itemClassName}>2. Or add file manually</div>
     </div>
     <div className="row">
-      <div className="container ">
+      <div className={`${globalStyles.container} container`}>
         <AddConfigMapFileManuallyView
           files={files}
           filesManually={filesManually}
@@ -203,7 +210,7 @@ const ConfigMapCreateForm = ({
       </div>
     </div>
     <div className="row">
-      <div className="container">
+      <div className={`${globalStyles.container} container`}>
         <Tooltip
           placement="top"
           trigger={['hover']}

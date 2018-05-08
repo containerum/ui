@@ -10,6 +10,8 @@ import paypal from '../../images/paypal.svg';
 import creditCard from '../../images/credit-card.svg';
 import { CHANGE_PROFILE_INFO_SUCCESS } from '../../constants/profileConstants/changeProfileInfo';
 
+import globalStyles from '../../theme/global.scss';
+
 type Props = {
   // isFetching: boolean,
   // inputFunds: string,
@@ -28,9 +30,9 @@ const AddFunds = ({
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
   return (
-    <div className="block-item" id="add-funds">
+    <div className={globalStyles.blockItem} id="add-funds">
       <div>
-        <div className="block-item__title">Add funds</div>
+        <div className={globalStyles.blockItemTitle}>Add funds</div>
         <div>
           {/* <form onSubmit={handleSubmitPay}> */}
           <div className="row">

@@ -10,6 +10,8 @@ import type { Dispatch, ReduxState } from '../../../types/index';
 import Notification from '../../Notification';
 import DeleteModal from '../../../components/CustomerModal/DeleteModal';
 
+import globalStyles from '../../../theme/global.scss';
+
 type Props = {
   getProfileReducer: Object,
   deleteAccountReducer: Object,
@@ -65,12 +67,12 @@ export class DeleteAccount extends PureComponent<Props> {
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleDelete={() => this.onHandleDelete()}
         />
-        <div className="block-item" id="delete-account">
-          <div className="block-item__title">Delete Account</div>
-          <div className="light-text">
+        <div className={globalStyles.blockItem} id="delete-account">
+          <div className={globalStyles.blockItemTitle}>Delete Account</div>
+          <div className={globalStyles.textLight}>
             This action will delete your Apps and Data
           </div>
-          <div className="block-item__buttons">
+          <div className={globalStyles.blockItemButtons}>
             <button
               className="button_red btn btn-outline-primary"
               onClick={() => this.handleClickDeleteAccount()}

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import className from 'classnames/bind';
 
 import { routerLinks } from '../../config/default';
 import globalStyles from '../../theme/global.scss';
+import configmapStyles from '../../containers/ConfigMaps/index.scss';
 
 type Props = {
   configMapsData: Array<Object>,
@@ -10,6 +12,20 @@ type Props = {
   isEqualGetPath: boolean,
   currentIdName: string
 };
+
+const globalClass = className.bind(globalStyles);
+
+const itemClassName = globalClass(
+  'blockItemTokensTable',
+  'contentBlockTable',
+  'table'
+);
+const containerClassName = globalClass(
+  'contentBlcokContainer',
+  'containerCard',
+  'hoverAction'
+);
+
 const ConfigMapList = ({
   configMapsData,
   handleDeleteConfigMap,
@@ -26,7 +42,7 @@ const ConfigMapList = ({
           <div>
             {configMapsData.length >= 1 && mainConfigMapsData ? (
               <table
-                className="block-item__tokens-table content-block__table table"
+                className={itemClassName}
                 style={{
                   tableLayout: 'fixed',
                   width: '100%',
@@ -38,28 +54,32 @@ const ConfigMapList = ({
               >
                 <thead style={{ height: '30px' }}>
                   <tr>
-                    <td className="td-8">Name</td>
-                    <td className="td-9">Filename</td>
-                    <td className="td-3">Namespace</td>
-                    <td className="td-10" />
+                    <td className={configmapStyles.td_1_Configmap}>Name</td>
+                    <td className={configmapStyles.td_2_Configmap}>Filename</td>
+                    <td className={configmapStyles.td_3_Configmap}>
+                      Namespace
+                    </td>
+                    <td className={configmapStyles.td_4_Configmap} />
                   </tr>
                 </thead>
-                <tbody className="domains">
+                <tbody>
                   {configMapsData.map(config => {
                     const { idName, configmap } = config;
                     if (isEqualGetPath && currentIdName === idName) {
                       return (
                         <tr
-                          className="content-block-container card-container hover-action"
+                          className={containerClassName}
                           style={{
                             margin: 0,
                             boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
                           }}
                           key={configmap.name}
                         >
-                          <td className="td-8">{configmap.name}</td>
-                          <td className="td-9">
-                            <div className="configmap-overflow">
+                          <td className={configmapStyles.td_1_Configmap}>
+                            {configmap.name}
+                          </td>
+                          <td className={configmapStyles.td_2_Configmap}>
+                            <div className={configmapStyles.configmapOverflow}>
                               {Object.keys(configmap.data).map(file => (
                                 <span key={file}>
                                   <Link
@@ -77,7 +97,7 @@ const ConfigMapList = ({
                               ))}
                             </div>
                           </td>
-                          <td className="td-3">
+                          <td className={configmapStyles.td_3_Configmap}>
                             <Link
                               style={{ color: '#29abe2' }}
                               to={`/namespaces/${idName}/deployments`}
@@ -85,22 +105,33 @@ const ConfigMapList = ({
                               {idName}
                             </Link>
                           </td>
-                          <td className="td-10 dropdown no-arrow">
+                          <td
+                            className={`${
+                              configmapStyles.td_4_Configmap
+                            }  dropdown no-arrow`}
+                          >
                             <i
-                              className="content-block-table__more ion-more dropdown-toggle"
+                              className={`${
+                                globalStyles.contentBlockTableMore
+                              } ${globalStyles.dropdownToggle}
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
                               data-toggle="dropdown"
                               aria-haspopup="true"
                               aria-expanded="false"
                             />
                             <ul
-                              className="dropdown-menu dropdown-menu-right"
+                              className={` dropdown-menu dropdown-menu-right ${
+                                globalStyles.dropdownMenu
+                              }`}
                               role="menu"
                             >
                               <button
                                 onClick={() =>
                                   handleDeleteConfigMap(idName, configmap.name)
                                 }
-                                className="dropdown-item text-danger"
+                                className={`dropdown-item text-danger ${
+                                  globalStyles.dropdownItem
+                                }`}
                               >
                                 Delete
                               </button>
@@ -115,7 +146,7 @@ const ConfigMapList = ({
               </table>
             ) : (
               <table
-                className="content-block__table_domains dashboard-table table"
+                className={itemClassName}
                 style={{
                   tableLayout: 'fixed',
                   width: '100%',
@@ -127,7 +158,9 @@ const ConfigMapList = ({
               >
                 <thead>
                   <tr>
-                    <td className="td-2">You don`t have ConfigMaps</td>
+                    <td className={configmapStyles.td_5_Configmap}>
+                      You don`t have ConfigMaps
+                    </td>
                   </tr>
                 </thead>
               </table>
@@ -137,7 +170,7 @@ const ConfigMapList = ({
           <div>
             {configMapsData.length >= 1 ? (
               <table
-                className="block-item__tokens-table content-block__table table"
+                className={itemClassName}
                 style={{
                   tableLayout: 'fixed',
                   width: '100%',
@@ -149,27 +182,31 @@ const ConfigMapList = ({
               >
                 <thead style={{ height: '30px' }}>
                   <tr>
-                    <td className="td-8">Name</td>
-                    <td className="td-9">Filename</td>
-                    <td className="td-3">Namespace</td>
-                    <td className="td-10" />
+                    <td className={configmapStyles.td_1_Configmap}>Name</td>
+                    <td className={configmapStyles.td_2_Configmap}>Filename</td>
+                    <td className={configmapStyles.td_3_Configmap}>
+                      Namespace
+                    </td>
+                    <td className={configmapStyles.td_4_Configmap} />
                   </tr>
                 </thead>
-                <tbody className="domains">
+                <tbody>
                   {configMapsData.map(config => {
                     const { idName, configmap } = config;
                     return (
                       <tr
-                        className="content-block-container card-container hover-action"
+                        className={containerClassName}
                         style={{
                           margin: 0,
                           boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
                         }}
                         key={configmap.name}
                       >
-                        <td className="td-8">{configmap.name}</td>
-                        <td className="td-9">
-                          <div className="configmap-overflow">
+                        <td className={configmapStyles.td_1_Configmap}>
+                          {configmap.name}
+                        </td>
+                        <td className={configmapStyles.td_2_Configmap}>
+                          <div className={configmapStyles.configmapOverflow}>
                             {Object.keys(configmap.data).map(file => (
                               <span key={file}>
                                 <Link
@@ -187,7 +224,7 @@ const ConfigMapList = ({
                             ))}
                           </div>
                         </td>
-                        <td className="td-3">
+                        <td className={configmapStyles.td_3_Configmap}>
                           <Link
                             style={{ color: '#29abe2' }}
                             to={`/namespaces/${idName}/deployments`}
@@ -195,22 +232,33 @@ const ConfigMapList = ({
                             {idName}
                           </Link>
                         </td>
-                        <td className="td-10 dropdown no-arrow">
+                        <td
+                          className={`${
+                            configmapStyles.td_4_Configmap
+                          } dopdown no-arrow`}
+                        >
                           <i
-                            className="content-block-table__more ion-more dropdown-toggle"
+                            className={`${globalStyles.contentBlockTableMore} ${
+                              globalStyles.dropdownToggle
+                            }
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
                           />
                           <ul
-                            className="dropdown-menu dropdown-menu-right"
+                            className={` dropdown-menu dropdown-menu-right ${
+                              globalStyles.dropdownMenu
+                            }`}
                             role="menu"
                           >
                             <button
                               onClick={() =>
                                 handleDeleteConfigMap(idName, configmap.name)
                               }
-                              className="dropdown-item text-danger"
+                              className={`dropdown-item  text-danger ${
+                                globalStyles.dropdownItem
+                              }`}
                             >
                               Delete
                             </button>
@@ -223,7 +271,7 @@ const ConfigMapList = ({
               </table>
             ) : (
               <table
-                className="content-block__table_domains dashboard-table table"
+                className={itemClassName}
                 style={{
                   tableLayout: 'fixed',
                   width: '100%',
@@ -235,7 +283,9 @@ const ConfigMapList = ({
               >
                 <thead>
                   <tr>
-                    <td className="td-2">You don`t have ConfigMaps</td>
+                    <td className={configmapStyles.td_5_Configmap}>
+                      You don`t have ConfigMaps
+                    </td>
                   </tr>
                 </thead>
               </table>

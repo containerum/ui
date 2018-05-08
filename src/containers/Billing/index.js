@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
+import classNames from 'classnames/bind';
 import _ from 'lodash/fp';
 import queryString from 'query-string';
 import dateFormat from 'dateformat';
@@ -49,6 +50,7 @@ import AddFunds from '../../components/AddFunds';
 // import Coupon from '../../components/Coupon';
 import HistoryFunds from '../../components/HistoryFunds';
 import globalStyles from '../../theme/global.scss';
+import accountStyles from '../Account/index.scss';
 
 type Props = {
   getProfileTariffsReducer: Object,
@@ -69,6 +71,8 @@ type Props = {
   ) => void
 };
 
+const globalClassName = classNames.bind(globalStyles);
+
 // Export this for unit testing more easily
 export class Billing extends PureComponent<Props> {
   constructor(props) {
@@ -88,6 +92,7 @@ export class Billing extends PureComponent<Props> {
       selectedCountry: defaultCountry[0]
     };
   }
+
   componentDidMount() {
     const {
       location,
@@ -256,6 +261,7 @@ export class Billing extends PureComponent<Props> {
 
     return <ProfileSidebar type="billing" />;
   };
+
   renderProfileInfo = () => {
     const {
       getProfileTariffsReducer,
@@ -318,8 +324,14 @@ export class Billing extends PureComponent<Props> {
         formatDateToActive = dateFormat(dateNow, 'dd/mm/yyyy');
       }
     }
+
+    const containerClassName = globalClassName(
+      'contentBlockContainer',
+      'containerFluid'
+    );
+
     return (
-      <div className="content-block-container container container-fluid">
+      <div className={`${containerClassName} container`}>
         <BillingInfo
           statusUser={statusUser}
           balance={balance}
@@ -364,6 +376,13 @@ export class Billing extends PureComponent<Props> {
       isFailed,
       errorMessage
     } = this.state;
+
+    const containerClassNameSidebar = globalClassName(
+      'contentBlockContainer',
+      'containerFluid',
+      'containerNoBackground'
+    );
+
     return (
       <div>
         <Helmet title="Billing" />
@@ -391,17 +410,29 @@ export class Billing extends PureComponent<Props> {
           errorMessage={errorMessage}
         />
         <div className={globalStyles.contentBlock}>
-          <div className={`container ${globalStyles.containerNoBackground}`}>
+          <div
+            className={`container ${
+              globalStyles.containerNoBackground
+            } pl-0 pr-0`}
+          >
             <div className="row double two-columns">
               <div className="col-md-3 col-lg-3 col-xl-2">
-                <div className="content-block account-info">
-                  <div className="content-block-container container no-back pl-0 pr-0 container-fluid">
+                <div
+                  className={`${globalStyles.contentBlock} ${
+                    accountStyles.accountInfo
+                  }`}
+                >
+                  <div
+                    className={`${containerClassNameSidebar} container pl-0 pr-0`}
+                  >
                     {this.renderProfileSideBar()}
                   </div>
                 </div>
               </div>
               <div className="col-md-9 col-lg-9 col-xl-10">
-                <div className="content-block">{this.renderProfileInfo()}</div>
+                <div className={globalStyles.contentBlock}>
+                  {this.renderProfileInfo()}
+                </div>
               </div>
               <div className="clearfix" />
             </div>

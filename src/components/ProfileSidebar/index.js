@@ -6,25 +6,33 @@ import Scrollspy from 'react-scrollspy';
 import { HashLink } from 'react-router-hash-link';
 import scrollById from '../../functions/scrollById';
 
+import accountStyles from '../../containers/Account/index.scss';
+
 type Props = {
   type: string
 };
 
 const ProfileSidebar = ({ type }: Props) => (
-  <ul className="account-menu nav nav-list">
+  <ul
+    className={`${accountStyles.accountMenu} ${
+      accountStyles.accountMenuNav
+    } nav nav-list`}
+  >
     <li>
-      <div className="nav-root-item">Account</div>
+      <div className={`${accountStyles.navRootItem} nav-root-item`}>
+        Account
+      </div>
       <Scrollspy
         items={['profile', 'password', 'delete-account']}
         style={{
           padding: '20px 0 0 20px'
         }}
-        currentClassName="active"
+        currentClassName={accountStyles.accountMenuNavActive}
       >
-        <li className="nav-item">
+        <li className={`${accountStyles.navItem} nav-item`}>
           {type === 'account' ? (
             <div
-              className="nav-link"
+              className={`${accountStyles.navLink} nav-link`}
               onClick={() => scrollById('profile')}
               onKeyPress={() => scrollById('profile')}
               role="presentation"
@@ -32,15 +40,18 @@ const ProfileSidebar = ({ type }: Props) => (
               Profile
             </div>
           ) : (
-            <HashLink to="/account#profile" className="nav-link">
+            <HashLink
+              to="/account#profile"
+              className={`${accountStyles.navLink} nav-link`}
+            >
               Profile
             </HashLink>
           )}
         </li>
-        <li className="nav-item">
+        <li className={`${accountStyles.navItem} nav-item`}>
           {type === 'account' ? (
             <div
-              className="nav-link"
+              className={`${accountStyles.navLink} nav-link`}
               onClick={() => scrollById('password')}
               onKeyPress={() => scrollById('password')}
               role="presentation"
@@ -48,15 +59,18 @@ const ProfileSidebar = ({ type }: Props) => (
               Password
             </div>
           ) : (
-            <HashLink to="/account#password" className="nav-link">
+            <HashLink
+              to="/account#password"
+              className={`${accountStyles.navLink} nav-link`}
+            >
               Password
             </HashLink>
           )}
         </li>
-        <li className="nav-item">
+        <li className={`${accountStyles.navItem} nav-item`}>
           {type === 'account' ? (
             <div
-              className="nav-link"
+              className={`${accountStyles.navLink} nav-link`}
               onClick={() => scrollById('cli')}
               onKeyPress={() => scrollById('cli')}
               role="presentation"
@@ -64,15 +78,18 @@ const ProfileSidebar = ({ type }: Props) => (
               CLI
             </div>
           ) : (
-            <HashLink to="/account#cli" className="nav-link">
+            <HashLink
+              to="/account#cli"
+              className={`${accountStyles.navLink} nav-link`}
+            >
               CLI
             </HashLink>
           )}
         </li>
-        <li className="nav-item">
+        <li className={`${accountStyles.navItem} nav-item`}>
           {type === 'account' ? (
             <div
-              className="nav-link"
+              className={`${accountStyles.navLink} nav-link`}
               onClick={() => scrollById('delete-account')}
               onKeyPress={() => scrollById('delete-account')}
               role="presentation"
@@ -80,7 +97,10 @@ const ProfileSidebar = ({ type }: Props) => (
               Delete Account
             </div>
           ) : (
-            <HashLink to="/account#delete-account" className="nav-link">
+            <HashLink
+              to="/account#delete-account"
+              className={`${accountStyles.navLink} nav-link`}
+            >
               Delete Account
             </HashLink>
           )}
@@ -88,7 +108,9 @@ const ProfileSidebar = ({ type }: Props) => (
       </Scrollspy>
     </li>
     <li>
-      <div className="nav-root-item">Billing</div>
+      <div className={`${accountStyles.navRootItem} nav-root-item`}>
+        Billing
+      </div>
       <Scrollspy
         items={[
           'information',
@@ -99,12 +121,12 @@ const ProfileSidebar = ({ type }: Props) => (
         style={{
           padding: '20px 0 0 20px'
         }}
-        currentClassName="active"
+        currentClassName={accountStyles.accountMenuNavActive}
       >
-        <li className="nav-item">
+        <li className={`${accountStyles.navItem} nav-item`}>
           {type === 'billing' ? (
             <div
-              className="nav-link"
+              className={`${accountStyles.navLink} nav-link`}
               onClick={() => scrollById('information')}
               onKeyPress={() => scrollById('information')}
               role="presentation"
@@ -112,15 +134,18 @@ const ProfileSidebar = ({ type }: Props) => (
               Information
             </div>
           ) : (
-            <HashLink to="/billing#information" className="nav-link">
+            <HashLink
+              to="/billing#information"
+              className={`${accountStyles.navLink} nav-link`}
+            >
               Information
             </HashLink>
           )}
         </li>
-        <li className="nav-item">
+        <li className={`${accountStyles.navItem} nav-item`}>
           {type === 'billing' ? (
             <div
-              className="nav-link"
+              className={`${accountStyles.navLink} nav-link`}
               onClick={() => scrollById('add-funds')}
               onKeyPress={() => scrollById('add-funds')}
               role="presentation"
@@ -128,7 +153,10 @@ const ProfileSidebar = ({ type }: Props) => (
               Payment method
             </div>
           ) : (
-            <HashLink to="/billing#add-funds" className="nav-link">
+            <HashLink
+              to="/billing#add-funds"
+              className={`${accountStyles.navLink} nav-link`}
+            >
               Payment method
             </HashLink>
           )}
@@ -149,10 +177,10 @@ const ProfileSidebar = ({ type }: Props) => (
         {/* </HashLink> */}
         {/* )} */}
         {/* </li> */}
-        <li className="nav-item">
+        <li className={`${accountStyles.navItem} nav-item`}>
           {type === 'billing' ? (
             <div
-              className="nav-link"
+              className={`${accountStyles.navLink} nav-link`}
               onClick={() => scrollById('history')}
               onKeyPress={() => scrollById('history')}
               role="presentation"
@@ -160,7 +188,10 @@ const ProfileSidebar = ({ type }: Props) => (
               History
             </div>
           ) : (
-            <HashLink to="/billing#history" className="nav-link">
+            <HashLink
+              to="/billing#history"
+              className={`${accountStyles.navLink} nav-link`}
+            >
               History
             </HashLink>
           )}

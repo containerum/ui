@@ -6,6 +6,7 @@ body{
   font-size:15px;
   background:#f6f6f6;
   color:#333;
+
 }
 
 
@@ -25,4 +26,10 @@ a:focus{
 a:hover {
   text-decoration: none;
   color: $main-color;
+}
+
+h1 {
+  font-size: 20px !important;
+  text-transform: uppercase;
+  font-weight: 400;
 }

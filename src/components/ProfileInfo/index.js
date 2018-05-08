@@ -6,18 +6,23 @@ import Blockies from 'react-blockies';
 import InputControl from '../InputControl';
 import './Profile.css';
 
+import globalStyles from '../../theme/global.scss';
+
 type Props = {
   data: Object
 };
 
 const ProfileInfo = ({ data }: Props) => (
-  <div className="block-item" id="profile">
-    <div className="block-item__title">Profile</div>
+  <div className={globalStyles.blockItem} id="profile">
+    <div className={globalStyles.blockItemTitle}>Profile</div>
     <form>
       <div className="row">
         <div className="col-md-2">
-          <div className="form-group pt-0">
-            <label className="form-group__label-image" htmlFor="avatar">
+          <div className={`${globalStyles.formGroup} pt-0`}>
+            <label
+              className={globalStyles.formGroupLabelImage}
+              htmlFor="avatar"
+            >
               <Blockies seed={data.login} size={9} scale={7} bgColor="#fff" />
             </label>
           </div>

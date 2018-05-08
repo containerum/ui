@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import toastr from 'toastr';
 import { Base64 } from 'js-base64';
+import className from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
@@ -31,6 +32,12 @@ import {
   DELETE_CONFIG_MAP_SUCCESS
 } from '../../constants/configMapConstants/deleteConfigMap';
 import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass('container', 'containerToolsPages');
+
+const titleClassName = globalClass('blockItemTitle', 'blockItemTitleConfigmap');
 
 type Props = {
   getProfileReducer: Object,
@@ -354,7 +361,7 @@ class ConfigMaps extends PureComponent<Props> {
     } = this.state;
     return (
       <div className={globalStyles.contentBlock}>
-        <div className="container no-back">
+        <div className={`${globalStyles.containerNoBackground} container`}>
           <ConfigMapForm
             namespacesData={this.props.getNamespacesReducer.data}
             currentNamespace={currentNamespace}
@@ -399,8 +406,10 @@ class ConfigMaps extends PureComponent<Props> {
           name={deleteConfigMapName}
           errorMessage={deleteErr}
         />
-        <div className={!isEqualGetPath ? 'container no-back' : undefined}>
-          <div className={!isEqualGetPath ? 'content-block' : undefined}>
+        <div className={!isEqualGetPath ? `container` : undefined}>
+          <div
+            className={!isEqualGetPath ? globalStyles.contentBlock : undefined}
+          >
             <div
               className={!isEqualGetPath ? 'row double two-columns' : undefined}
             >
@@ -416,19 +425,25 @@ class ConfigMaps extends PureComponent<Props> {
               >
                 <div
                   className={
-                    !isEqualGetPath ? 'container container__webhook' : undefined
+                    !isEqualGetPath
+                      ? `${containerClassName} container`
+                      : undefined
                   }
                 >
-                  <div className={!isEqualGetPath ? 'block-item' : undefined}>
+                  <div
+                    className={
+                      !isEqualGetPath ? globalStyles.blockItem : undefined
+                    }
+                  >
                     {!isEqualGetPath && (
                       <div>
-                        <div className="block-item__title">
+                        <div className={globalStyles.blockItemTitle}>
                           {isEqualCreatePath ? 'Add ConfigMap' : 'ConfigMap'}
                         </div>
                         {!isEqualCreatePath && (
                           <div className="row">
                             <div className="col-md-10">
-                              <div className="light-text">
+                              <div className={globalStyles.textLight}>
                                 Here you can configure a ConfigMap to decouple
                                 configuration artifacts from image content
                               </div>
@@ -444,9 +459,7 @@ class ConfigMaps extends PureComponent<Props> {
                       <div>
                         <div className="row">
                           {!isEqualCreatePath && (
-                            <div className="block-item__title block-item__title_configmap-block">
-                              Add configMap
-                            </div>
+                            <div className={titleClassName}>Add configMap</div>
                           )}
                         </div>
                         <div className="row">{this.renderConfigMapForm()}</div>
