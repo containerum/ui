@@ -87,7 +87,7 @@
     //display: block;
     margin: 0;
 
-    &Namespace {
+    &Margin50 {
       margin: 0 50px;
       display: inline-block;
       vertical-align: top;
@@ -217,9 +217,14 @@
       padding: 0;
     }
 
-    &NamespaceInfo {
+    &Flex {
       display: flex;
       align-items: center;
+
+      &Service {
+        display: flex;
+        align-items: top;
+      }
     }
   }
 

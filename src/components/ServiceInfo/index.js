@@ -3,9 +3,31 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import s from '../../images/s.png';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'contentBlockStatistic',
+  'contentBlockContainer'
+);
+const textLabelClassName = globalClass(
+  'contentBlockHeaderLabelText',
+  'contentBlockHeaderLabelMain'
+);
+const headerLabelClassName = globalClass(
+  'contentBlockHeaderLabel',
+  'contentBlockHeaderLabelDeploymentInfo'
+);
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFlexService'
+);
 
 type Props = {
   data: Object,
@@ -18,32 +40,45 @@ const ServiceInfo = ({ data, idName, idSrv, handleDeleteService }: Props) => {
   const { domain, ips } = data;
   const type = domain ? 'External' : 'Internal';
   return (
-    <div className="content-block-container content-block_common-statistic container">
-      <div className="content-block-header">
-        <div className="content-block-header-label">
-          <div className="content-block-header-label__text content-block-header-label_main">
-            {idSrv}
+    <div className={`${containerClassName} container`}>
+      <div className={globalStyles.contentBlockHeader}>
+        <div className={headerLabelClassName}>
+          <div className={textLabelClassName}>{idSrv}</div>
+          <div className={globalStyles.contentBlockHeaderLabelDescript}>
+            service
           </div>
-          <div className="content-block-header-label__descript">service</div>
         </div>
-        <div className="content-block-header-extra-panel">
-          <div className="content-block-header-extra-panel dropdown no-arrow">
+        <div className={globalStyles.contentBlockHeaderExtraPanel}>
+          <div
+            className={`${
+              globalStyles.contentBlockHeaderExtraPanel
+            } dropdown no-arrow`}
+          >
             <i
-              className="content-block-header__more ion-more dropdown-toggle"
+              className={`${globalStyles.contentBlockHeaderEllipsis} ${
+                globalStyles.dropdownToggle
+              } ${globalStyles.ellipsisRoleMore} ion-more `}
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             />
-            <ul className="dropdown-menu dropdown-menu-right" role="menu">
+            <ul
+              className={` dropdown-menu dropdown-menu-right ${
+                globalStyles.dropdownMenu
+              }`}
+              role="menu"
+            >
               <NavLink
                 activeClassName="active"
-                className="dropdown-item"
+                className={`dropdown-item ${globalStyles.dropdownItem}`}
                 to={routerLinks.resizeServiceLink(idName, idSrv)}
               >
                 Update
               </NavLink>
               <button
-                className="dropdown-item text-danger"
+                className={`dropdown-item ${
+                  globalStyles.dropdownItem
+                } text-danger`}
                 onClick={() => handleDeleteService(idSrv)}
               >
                 Delete
@@ -52,18 +87,18 @@ const ServiceInfo = ({ data, idName, idSrv, handleDeleteService }: Props) => {
           </div>
         </div>
       </div>
-      <div className="content-block-content">
-        <div className="content-block__r-img">
+      <div className={contentClassName}>
+        <div className={globalStyles.contentClockIcon}>
           <img src={s} alt="service" />
         </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name">Type: </div>
-          <div className="content-block__info-text">{type}</div>
+        <div className={globalStyles.contentBlockInfoItemMargin50}>
+          <div className={globalStyles.contentBlockInfoName}>Type: </div>
+          <div className={globalStyles.contentBlockInfoText}>{type}</div>
         </div>
         {ips && (
-          <div className="content-block__info-item">
-            <div className="content-block__info-name">IP: </div>
-            <div className="content-block__info-text">
+          <div className={globalStyles.contentBlockInfoItemMargin50}>
+            <div className={globalStyles.contentBlockInfoName}>IP: </div>
+            <div className={globalStyles.contentBlockInfoText}>
               {ips &&
                 ips.map(
                   ip =>
@@ -80,9 +115,9 @@ const ServiceInfo = ({ data, idName, idSrv, handleDeleteService }: Props) => {
           </div>
         )}
         {domain && (
-          <div className="content-block__info-item">
-            <div className="content-block__info-name">Domain:</div>
-            <div className="content-block__info-text">{domain}</div>
+          <div className={globalStyles.contentBlockInfoItemMargin50}>
+            <div className={globalStyles.contentBlockInfoName}>Domain:</div>
+            <div className={globalStyles.contentBlockInfoText}>{domain}</div>
           </div>
         )}
       </div>
