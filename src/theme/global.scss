@@ -173,6 +173,11 @@
         align-items: flex-end;
       }
 
+      &DeploymentInfo {
+        display: flex;
+        align-items: center;
+      }
+
       &Descript {
         display: inline-block;
         font-size: 15px;
@@ -201,6 +206,11 @@
     margin: 30px 0 0 0;
     position: relative;
     transition: height 0.3s ease-out 0.3s;
+
+    &Collapsed {
+      height: 84px;
+      overflow: hidden;
+    }
 
     &CardBlock {
       margin: 20px 0 0 0;

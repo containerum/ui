@@ -40,7 +40,7 @@ type Props = {
 
 const globalClass = className.bind(globalStyles);
 
-const breadcumbsClassName = globalClass('breadcumbsLi', 'breadcumbsLiSpacer');
+const breadcumbsClassName = globalClass('breadcrumbsLi', 'breadcrumbsLiSpacer');
 
 // Export this for unit testing more easily
 export class NavigationHeader extends PureComponent<Props> {
@@ -132,7 +132,7 @@ export class NavigationHeader extends PureComponent<Props> {
       let isIdService = '';
       if (idService) {
         isIdService = (
-          <div>
+          <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
               <NavLink to={`/namespace/${idName}/services/${idService}`}>
@@ -145,7 +145,7 @@ export class NavigationHeader extends PureComponent<Props> {
       let isIdDep = '';
       if (idDep && !idPod) {
         isIdDep = (
-          <div>
+          <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
               <NavLink to={`/namespace/${idName}/deployments/${idDep}`}>
@@ -158,7 +158,7 @@ export class NavigationHeader extends PureComponent<Props> {
       let idPodContent = '';
       if (idPod) {
         idPodContent = (
-          <div>
+          <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
               <NavLink to={`/namespace/${idName}/deployments/${idDep}`}>
@@ -179,7 +179,7 @@ export class NavigationHeader extends PureComponent<Props> {
       let IdCreateContent = '';
       if (IdCreate === 'service') {
         IdCreateContent = (
-          <div>
+          <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
               <div>Create Service</div>
@@ -188,7 +188,7 @@ export class NavigationHeader extends PureComponent<Props> {
         );
       } else if (IdCreate === 'deployment') {
         IdCreateContent = (
-          <div>
+          <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
               <div>Create Deployment</div>
@@ -199,7 +199,7 @@ export class NavigationHeader extends PureComponent<Props> {
       let IdUpdateContent = '';
       if (IdUpdate === 'service') {
         IdUpdateContent = (
-          <div>
+          <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
               <div>Update {typeOfUpdateService} Service</div>
@@ -208,7 +208,7 @@ export class NavigationHeader extends PureComponent<Props> {
         );
       } else if (IdUpdate === 'deployment') {
         IdUpdateContent = (
-          <div>
+          <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
               <div>Update Deployment</div>
@@ -228,7 +228,7 @@ export class NavigationHeader extends PureComponent<Props> {
                 {isIdOutName}
                 {isIdService}
                 {IdCreate === 'domain' && (
-                  <div>
+                  <div style={{ display: 'flex' }}>
                     <li className={`${breadcumbsClassName} nav-item`}>/</li>
                     <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
                       <div>Create Domain</div>

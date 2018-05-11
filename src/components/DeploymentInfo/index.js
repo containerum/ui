@@ -2,9 +2,37 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import r from '../../images/r.png';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+// const namespaceClass = className.bind(namespaceStyles);
+
+const containerClassName = globalClass(
+  'contentBlockStatistic',
+  'contentBlockContainer'
+);
+const textLabelClassName = globalClass(
+  'contentBlockHeaderLabelText',
+  'contentBlockHeaderLabelMain'
+);
+// const contentClassName = globalClass(
+//   'contentBlockContent',
+//   'contentBlockContentCollapsed'
+// );
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentNamespaceInfo',
+  'contentBlockContentCollapsed'
+);
+const headerLabelClassName = globalClass(
+  'contentBlockHeaderLabel',
+  'contentBlockHeaderLabelDeploymentInfo'
+);
 
 type Props = {
   data: Object,
@@ -22,32 +50,45 @@ const DeploymentInfo = ({
   // console.log('DeploymentInfo', data);
   const { total_memory: memory, total_cpu: cpu, status } = data;
   return (
-    <div className="content-block-container content-block_common-statistic container">
-      <div className="content-block-header">
-        <div className="content-block-header-label">
-          <div className="content-block-header-label__text content-block-header-label_main">
-            {idDep}
+    <div className={`${containerClassName} container`}>
+      <div className={globalStyles.contentBlockHeader}>
+        <div className={headerLabelClassName}>
+          <div className={textLabelClassName}>{idDep}</div>
+          <div className={globalStyles.contentBlockHeaderLabelDescript}>
+            deploy
           </div>
-          <div className="content-block-header-label__descript">deploy</div>
         </div>
-        <div className="content-block-header-extra-panel">
-          <div className="content-block-header-extra-panel dropdown no-arrow">
+        <div className={globalStyles.contentBlockHeaderExtraPanel}>
+          <div
+            className={`${
+              globalStyles.contentBlockHeaderExtraPanel
+            } dropdown no-arrow`}
+          >
             <i
-              className="content-block-header__more ion-more dropdown-toggle"
+              className={`${globalStyles.contentBlockHeaderEllipsis} ${
+                globalStyles.dropdownToggle
+              } ${globalStyles.ellipsisRoleMore} ion-more `}
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             />
-            <ul className="dropdown-menu dropdown-menu-right" role="menu">
+            <ul
+              className={` dropdown-menu dropdown-menu-right ${
+                globalStyles.dropdownMenu
+              }`}
+              role="menu"
+            >
               <NavLink
                 activeClassName="active"
-                className="dropdown-item"
+                className={`dropdown-item ${globalStyles.dropdownItem}`}
                 to={routerLinks.resizeDeploymentLink(idName, idDep)}
               >
                 Update
               </NavLink>
               <button
-                className="dropdown-item text-danger"
+                className={`dropdown-item ${
+                  globalStyles.dropdownItem
+                } text-danger`}
                 onClick={() => handleDeleteDeployment(idDep)}
               >
                 Delete
@@ -56,23 +97,27 @@ const DeploymentInfo = ({
           </div>
         </div>
       </div>
-      <div className="content-block-content collapsed">
-        <div className="content-block__r-img">
+      <div className={contentClassName}>
+        <div className={globalStyles.contentClockIcon}>
           <img src={r} alt="r" />
         </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name">RAM ( Usage ) : </div>
-          <div className="content-block__info-text">{memory}</div>
+        <div className={globalStyles.contentBlockInfoItemNamespace}>
+          <div className={globalStyles.contentBlockInfoName}>
+            RAM ( Usage ) :{' '}
+          </div>
+          <div className={globalStyles.contentBlockInfoText}>{memory}</div>
         </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name">CPU ( Usage ) : </div>
-          <div className="content-block__info-text">{cpu}</div>
+        <div className={globalStyles.contentBlockInfoItemNamespace}>
+          <div className={globalStyles.contentBlockInfoName}>
+            CPU ( Usage ) :{' '}
+          </div>
+          <div className={globalStyles.contentBlockInfoText}>{cpu}</div>
         </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name">
+        <div className={globalStyles.contentBlockInfoItemNamespace}>
+          <div className={globalStyles.contentBlockInfoName}>
             Status ( Available / Total ) :{' '}
           </div>
-          <div className="content-block__info-text">
+          <div className={globalStyles.contentBlockInfoText}>
             {status.available_replicas} / {status.replicas}
           </div>
         </div>
