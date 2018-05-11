@@ -26,7 +26,7 @@ const textLabelClassName = globalClass(
 // );
 const contentClassName = globalClass(
   'contentBlockContent',
-  'contentBlockContentNamespaceInfo',
+  'contentBlockContentFlex',
   'contentBlockContentCollapsed'
 );
 const headerLabelClassName = globalClass(
@@ -101,19 +101,19 @@ const DeploymentInfo = ({
         <div className={globalStyles.contentClockIcon}>
           <img src={r} alt="r" />
         </div>
-        <div className={globalStyles.contentBlockInfoItemNamespace}>
+        <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={globalStyles.contentBlockInfoName}>
             RAM ( Usage ) :{' '}
           </div>
           <div className={globalStyles.contentBlockInfoText}>{memory}</div>
         </div>
-        <div className={globalStyles.contentBlockInfoItemNamespace}>
+        <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={globalStyles.contentBlockInfoName}>
             CPU ( Usage ) :{' '}
           </div>
           <div className={globalStyles.contentBlockInfoText}>{cpu}</div>
         </div>
-        <div className={globalStyles.contentBlockInfoItemNamespace}>
+        <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={globalStyles.contentBlockInfoName}>
             Status ( Available / Total ) :{' '}
           </div>

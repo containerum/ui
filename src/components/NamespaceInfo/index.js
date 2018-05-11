@@ -19,11 +19,11 @@ const containerClassName = globalClass(
 );
 const contentClassName = globalClass(
   'contentBlockContent',
-  'contentBlockContentNamespaceInfo'
+  'contentBlockContentFlex'
 );
 const manageTeamClassName = globalClass(
-  'contentBlockInfoItemNamespace',
-  'contentBlockInfoItemNamespaceTeam'
+  'contentBlockInfoItemMargin50',
+  'contentBlockInfoItemMargin50Team'
 );
 const headerLabelClassName = globalClass(
   'contentBlockHeaderLabel',
@@ -119,19 +119,19 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
         <div className={globalStyles.contentClockIcon}>
           <img src={ns} alt="ns" />
         </div>
-        <div className={globalStyles.contentBlockInfoItemNamespace}>
+        <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={infoNameClassName}>RAM ( Usage / Total ) : </div>
           <div className={globalStyles.contentBlockInfoText}>
             {memory} / {memoryLimit}
           </div>
         </div>
-        <div className={globalStyles.contentBlockInfoItemNamespace}>
+        <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={infoNameClassName}>CPU ( Usage / Total ) : </div>
           <div className={globalStyles.contentBlockInfoText}>
             {cpu} / {cpuLimit}
           </div>
         </div>
-        <div className={globalStyles.contentBlockInfoItemNamespace}>
+        <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={infoNameClassName}>Volume ( Usage / Total ) :</div>
           <div className={globalStyles.contentBlockInfoText}>- / -</div>
         </div>
