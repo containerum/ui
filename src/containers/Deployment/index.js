@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
+import className from 'classnames/bind';
 
 import * as actionGetDeployment from '../../actions/deploymentActions/getDeployment';
 import * as actionDeleteDeployment from '../../actions/deploymentActions/deleteDeployment';
@@ -34,6 +35,10 @@ type Props = {
   match: Object,
   history: Object
 };
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass('contentBlockContainer', 'container');
 
 // Export this for unit testing more easily
 export class Deployment extends PureComponent<Props> {
@@ -96,7 +101,7 @@ export class Deployment extends PureComponent<Props> {
     ) {
       return (
         <div
-          className="container"
+          className={`${globalStyles.container} container`}
           style={{
             padding: '0',
             marginTop: '17px',
@@ -152,21 +157,22 @@ export class Deployment extends PureComponent<Props> {
         {deleteDeploymentReducer.readyStatus !==
           DELETE_DEPLOYMENT_REQUESTING && (
           <div className={globalStyles.contentBlock}>
-            <div className="content-block-container container">
-              <div className="content-block-header">
-                <div className="content-block-header-nav">
+            <div className={`${containerClassName} container`}>
+              <div className={globalStyles.contentBlockHeader}>
+                <div>
                   <ul
-                    className="content-block-menu nav nav-pills"
+                    className={`${globalStyles.contentBlockMenu} nav nav-pills`}
                     role="tablist"
                   >
-                    <li className="content-block-menu__li nav-item">
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
                       <NavLink
-                        activeClassName="active"
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
                         to={routerLinks.getDeploymentLink(
                           match.params.idName,
                           match.params.idDep
                         )}
-                        className="content-block-menu__link"
                       >
                         Pods
                       </NavLink>
