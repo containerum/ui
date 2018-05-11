@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import imageLogo from '../../images/profilePlace.svg';
 import downloadLogs from '../../images/downloadLogs.svg';
@@ -21,6 +22,9 @@ import type {
   ReduxState
 } from '../../types';
 
+import headerStyles from '../../containers/Header/index.scss';
+import globalStyles from '../../theme/global.scss';
+
 type Props = {
   getNamespacesReducer: NamespacesType,
   fetchGetNamespacesIfNeeded: () => void,
@@ -33,6 +37,10 @@ type Props = {
   IdUpdate: ?string,
   typeOfUpdateService: ?string
 };
+
+const globalClass = className.bind(globalStyles);
+
+const breadcumbsClassName = globalClass('breadcumbsLi', 'breadcumbsLiSpacer');
 
 // Export this for unit testing more easily
 export class NavigationHeader extends PureComponent<Props> {
@@ -61,10 +69,14 @@ export class NavigationHeader extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
     ) {
       return (
-        <div className="header-bottom">
-          <div className="header-bottom-container container">
+        <div className={headerStyles.headerBottom}>
+          <div
+            className={`${headerStyles.headerBottomContainer} ${
+              globalStyles.container
+            } container`}
+          >
             <ul className="breadcrumbs nav">
-              <li className="breadcrumbs__li nav-item dropdown">
+              <li className={`${globalStyles.breadcrumbsLi} nav-item dropdown`}>
                 <div style={{ marginBottom: '-5px' }}>
                   <img src={imageLogo} alt="namespaces" />
                 </div>
@@ -85,17 +97,20 @@ export class NavigationHeader extends PureComponent<Props> {
       let isIdOutName = '';
       if (idName) {
         isIdName = (
-          <li className="breadcrumbs__li nav-item dropdown">
+          <li className={`${globalStyles.breadcrumbsLi} nav-item dropdown`}>
             <div
               style={{ cursor: 'pointer' }}
-              className="breadcrumbs__link dropdown-toggle"
+              className={`${globalStyles.dropdownToggle} dropdown-toggle`}
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
               {idName}
             </div>
-            <ul className="dropdown-menu dropdown-menu-left" role="menu">
+            <ul
+              className={`${globalStyles.dropdownMenu} dropdown-menu`}
+              role="menu"
+            >
               {getNamespacesReducer.data.map(item => (
                 <NavLink
                   key={_.uniqueId()}
@@ -109,25 +124,18 @@ export class NavigationHeader extends PureComponent<Props> {
           </li>
         );
         isIdOutName = (
-          <li className="breadcrumbs__li nav-item dropdown">
-            <NavLink to={`/namespaces/${idName}`} className="breadcrumbs__link">
-              {idName}
-            </NavLink>
+          <li className={`${globalStyles.breadcrumbsLi} nav-item dropdown`}>
+            <NavLink to={`/namespaces/${idName}`}>{idName}</NavLink>
           </li>
         );
       }
       let isIdService = '';
       if (idService) {
         isIdService = (
-          <div className="d-flex">
-            <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
-              /
-            </li>
-            <li className="breadcrumbs__li nav-item">
-              <NavLink
-                to={`/namespace/${idName}/services/${idService}`}
-                className="breadcrumbs__link"
-              >
+          <div>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
+              <NavLink to={`/namespace/${idName}/services/${idService}`}>
                 {idService}
               </NavLink>
             </li>
@@ -137,15 +145,10 @@ export class NavigationHeader extends PureComponent<Props> {
       let isIdDep = '';
       if (idDep && !idPod) {
         isIdDep = (
-          <div className="d-flex">
-            <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
-              /
-            </li>
-            <li className="breadcrumbs__li nav-item">
-              <NavLink
-                to={`/namespace/${idName}/deployments/${idDep}`}
-                className="breadcrumbs__link"
-              >
+          <div>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
+              <NavLink to={`/namespace/${idName}/deployments/${idDep}`}>
                 {idDep}
               </NavLink>
             </li>
@@ -155,25 +158,17 @@ export class NavigationHeader extends PureComponent<Props> {
       let idPodContent = '';
       if (idPod) {
         idPodContent = (
-          <div className="d-flex">
-            <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
-              /
-            </li>
-            <li className="breadcrumbs__li nav-item">
-              <NavLink
-                to={`/namespace/${idName}/deployments/${idDep}`}
-                className="breadcrumbs__link"
-              >
+          <div>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
+              <NavLink to={`/namespace/${idName}/deployments/${idDep}`}>
                 {idDep}
               </NavLink>
             </li>
-            <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
-              /
-            </li>
-            <li className="breadcrumbs__li nav-item">
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
               <NavLink
                 to={`/namespace/${idName}/deployment/${idDep}/pods/${idPod}`}
-                className="breadcrumbs__link"
               >
                 {idPod}
               </NavLink>
@@ -184,23 +179,19 @@ export class NavigationHeader extends PureComponent<Props> {
       let IdCreateContent = '';
       if (IdCreate === 'service') {
         IdCreateContent = (
-          <div className="d-flex">
-            <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
-              /
-            </li>
-            <li className="breadcrumbs__li nav-item">
-              <div className="breadcrumbs__link">Create Service</div>
+          <div>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
+              <div>Create Service</div>
             </li>
           </div>
         );
       } else if (IdCreate === 'deployment') {
         IdCreateContent = (
-          <div className="d-flex">
-            <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
-              /
-            </li>
-            <li className="breadcrumbs__li nav-item">
-              <div className="breadcrumbs__link">Create Deployment</div>
+          <div>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
+              <div>Create Deployment</div>
             </li>
           </div>
         );
@@ -208,43 +199,39 @@ export class NavigationHeader extends PureComponent<Props> {
       let IdUpdateContent = '';
       if (IdUpdate === 'service') {
         IdUpdateContent = (
-          <div className="d-flex">
-            <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
-              /
-            </li>
-            <li className="breadcrumbs__li nav-item">
-              <div className="breadcrumbs__link">
-                Update {typeOfUpdateService} Service
-              </div>
+          <div>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
+              <div>Update {typeOfUpdateService} Service</div>
             </li>
           </div>
         );
       } else if (IdUpdate === 'deployment') {
         IdUpdateContent = (
-          <div className="d-flex">
-            <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
-              /
-            </li>
-            <li className="breadcrumbs__li nav-item">
-              <div className="breadcrumbs__link">Update Deployment</div>
+          <div>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
+              <div>Update Deployment</div>
             </li>
           </div>
         );
       }
       if (idPod || idDep || idService || IdCreate === 'domain') {
         mainContent = (
-          <div className="header-bottom">
-            <div className="header-bottom-container container">
+          <div className={headerStyles.headerBottom}>
+            <div
+              className={`${headerStyles.headerBottomContainer} ${
+                globalStyles.container
+              } container`}
+            >
               <ul className="breadcrumbs nav">
                 {isIdOutName}
                 {isIdService}
                 {IdCreate === 'domain' && (
-                  <div className="d-flex">
-                    <li className="breadcrumbs__li breadcrumbs__li_spacer nav-item">
-                      /
-                    </li>
-                    <li className="breadcrumbs__li nav-item">
-                      <div className="breadcrumbs__link">Create Domain</div>
+                  <div>
+                    <li className={`${breadcumbsClassName} nav-item`}>/</li>
+                    <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
+                      <div>Create Domain</div>
                     </li>
                   </div>
                 )}
@@ -270,8 +257,12 @@ export class NavigationHeader extends PureComponent<Props> {
         );
       } else {
         mainContent = (
-          <div className="header-bottom">
-            <div className="header-bottom-container container">
+          <div className={headerStyles.headerBottom}>
+            <div
+              className={`${headerStyles.headerBottomContainer} ${
+                globalStyles.container
+              } container`}
+            >
               <ul className="breadcrumbs nav">
                 {isIdName}
                 {isIdService}
