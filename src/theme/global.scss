@@ -26,6 +26,29 @@
     margin-bottom: 40px;
   }
 
+  &Icon {
+    width: 55px;
+    display: inline-block;
+    vertical-align: top;
+
+    img {
+      max-width: 100%;
+    }
+
+    span {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      font-size: 36px;
+      color: $color-dark-gray;
+      text-transform: uppercase;
+    }
+  }
+
+  &Statistic {
+    margin-top: 20px !important;
+  }
 
   &Container {
     background: $color-white;
@@ -63,6 +86,20 @@
     align-items: flex-start;
     //display: block;
     margin: 0;
+
+    &Namespace {
+      margin: 0 50px;
+      display: inline-block;
+      vertical-align: top;
+
+      &Team {
+        display: flex;
+        align-items: flex-end;
+        height: 44px;
+        margin-right: 0 !important;
+        padding-left: 90px;
+      }
+    }
   }
 
   &InfoName {
@@ -73,6 +110,11 @@
     .inline {
       display: inline-block;
     }
+
+    &Namespace {
+      white-space: pre;
+      font-size: 15px !important;
+    }
   }
 
   &InfoText {
@@ -80,6 +122,15 @@
 
     .inline{
       display: inline-block;
+    }
+
+    &Namespace {
+      font-size: 15px;
+      color: $main-color;
+
+      &:hover {
+        color: $manage-team-hover;
+      }
     }
   }
 
@@ -100,6 +151,10 @@
         &Center {
           text-align: center;
         }
+
+        &NamespaceInfo {
+          line-height: 100% !important;
+        }
       }
 
       &Main {
@@ -111,6 +166,19 @@
         overflow: hidden;
         white-space: nowrap;
         position: relative;
+      }
+
+      &NamespaceInfo {
+        display: flex;
+        align-items: flex-end;
+      }
+
+      &Descript {
+        display: inline-block;
+        font-size: 15px;
+        font-weight: 300;
+        color: $ligth-gray-color;
+        margin-left: 15px;
       }
     }
 
@@ -137,6 +205,11 @@
     &CardBlock {
       margin: 20px 0 0 0;
       padding: 0;
+    }
+
+    &NamespaceInfo {
+      display: flex;
+      align-items: center;
     }
   }
 
@@ -209,6 +282,36 @@
     i:hover {
       color: #29abe2;
       cursor: pointer;
+    }
+  }
+
+  &Menu {
+    height: 30px;
+    margin: 2px 0 0 0;
+
+    &Li {
+      margin-right: 40px;
+
+      &Active {
+        border-color: $main-color !important;
+        color: $color-dark-gray !important;
+      }
+
+      a{
+        display: block;
+        border-bottom: 1px solid transparent;
+        padding: 0 0 15px 0;
+        color:$ligth-gray-color;
+      }
+
+      &:hover {
+        a {
+          border-color: $main-color;
+          color: $color-dark-gray;
+        }
+      }
+
+
     }
   }
 }
@@ -886,5 +989,17 @@
   &Group {
     margin: 0 0 20px 0;
     position: relative;
+  }
+}
+
+/////////breadcrumbs///////////
+
+.breadcrumbs {
+  &Li {
+    margin-right: 10px;
+
+    .breadcrumbsLiSpacer {
+      margin-top: 1px;
+    }
   }
 }

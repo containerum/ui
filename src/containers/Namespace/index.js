@@ -6,6 +6,7 @@ import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
@@ -34,6 +35,14 @@ import DeploymentsPage from '../Deployments';
 import ServicesPage from '../Services';
 import ConfigMapsPage from '../ConfigMaps';
 import ns from '../../images/ns-1.svg';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerNoBack = globalClass('container', 'containerNoBackground');
+
+const containerClassName = globalClass('contentBlockContainer', 'container');
 
 type Props = {
   getNamespacesReducer: Object,
@@ -104,7 +113,7 @@ export class Namespace extends PureComponent<Props> {
     ) {
       return (
         <div
-          className="container"
+          className={`${globalStyles.container} container`}
           style={{
             padding: '0',
             marginTop: '17px',
@@ -123,13 +132,13 @@ export class Namespace extends PureComponent<Props> {
 
     if (deleteNamespaceReducer.readyStatus === DELETE_NAMESPACE_REQUESTING) {
       return (
-        <div className="content-block">
-          <div className="container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div className={`${containerNoBack} container`}>
             <div className="row double">
               {new Array(3).fill().map(() => (
                 <div key={_.uniqueId()} className="col-md-4 align-middle">
                   <img
-                    className="content-block-container-img"
+                    className={globalStyles.contentBlockContainerImg}
                     src={ns}
                     alt="ns"
                   />
@@ -184,37 +193,40 @@ export class Namespace extends PureComponent<Props> {
         )}
         {this.renderNamespaceInfo()}
         {deleteNamespaceReducer.readyStatus !== DELETE_NAMESPACE_REQUESTING && (
-          <div className="content-block">
-            <div className="content-block-container container">
-              <div className="content-block-header">
-                <div className="content-block-header-nav">
+          <div className={globalStyles.contentBlock}>
+            <div className={`${containerClassName} container`}>
+              <div className={globalStyles.contentBlockHeader}>
+                <div>
                   <ul
-                    className="content-block-menu nav nav-pills"
+                    className={`${globalStyles.contentBlockMenu} nav nav-pills`}
                     role="tablist"
                   >
-                    <li className="content-block-menu__li nav-item">
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
                       <NavLink
-                        activeClassName="active"
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
                         to={routerLinks.getDeploymentsLink(match.params.idName)}
-                        className="content-block-menu__link"
                       >
                         Deployments
                       </NavLink>
                     </li>
-                    <li className="content-block-menu__li nav-item">
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
                       <NavLink
-                        activeClassName="active"
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
                         to={routerLinks.getServicesLink(match.params.idName)}
-                        className="content-block-menu__link"
                       >
                         Services
                       </NavLink>
                     </li>
-                    <li className="content-block-menu__li nav-item">
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
                       <NavLink
-                        activeClassName="active"
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
                         to={routerLinks.getConfigMapsLink(match.params.idName)}
-                        className="content-block-menu__link"
                       >
                         ConfigMaps
                       </NavLink>
@@ -222,8 +234,8 @@ export class Namespace extends PureComponent<Props> {
                   </ul>
                 </div>
                 {history.location.pathname.indexOf('/services') + 1 ? (
-                  <div className="content-block-header-extra-panel">
-                    <div className="content-block-header-extra-panel">
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
                         to={routerLinks.createServiceLink(match.params.idName)}
                         className="button_blue btn btn-outline-primary"
@@ -236,8 +248,8 @@ export class Namespace extends PureComponent<Props> {
                   ''
                 )}
                 {history.location.pathname.indexOf('/deployments') + 1 ? (
-                  <div className="content-block-header-extra-panel">
-                    <div className="content-block-header-extra-panel">
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
                         to={`/namespace/${
                           match.params.idName
@@ -252,8 +264,8 @@ export class Namespace extends PureComponent<Props> {
                   ''
                 )}
                 {history.location.pathname.indexOf('/configMaps') + 1 ? (
-                  <div className="content-block-header-extra-panel">
-                    <div className="content-block-header-extra-panel">
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
                         to={`/namespace/${match.params.idName}/createConfigMap`}
                         className="button_blue btn btn-outline-primary"

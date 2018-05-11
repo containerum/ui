@@ -2,9 +2,46 @@
 
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import ns from '../../images/n.png';
+
+import globalStyles from '../../theme/global.scss';
+import namespaceStyles from '../../containers/Namespaces/index.scss';
+
+const globalClass = className.bind(globalStyles);
+const namespaceClass = className.bind(namespaceStyles);
+
+const containerClassName = globalClass(
+  'contentBlockStatistic',
+  'contentBlockContainer'
+);
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentNamespaceInfo'
+);
+const manageTeamClassName = globalClass(
+  'contentBlockInfoItemNamespace',
+  'contentBlockInfoItemNamespaceTeam'
+);
+const headerLabelClassName = globalClass(
+  'contentBlockHeaderLabel',
+  'contentBlockHeaderLabelNamespaceInfo'
+);
+const textLabelClassName = globalClass(
+  'contentBlockHeaderLabelText',
+  'contentBlockHeaderLabelMain',
+  'contentBlockHeaderLabelTextNamespaceInfo'
+);
+const infoNameClassName = globalClass(
+  'contentBlockInfoName',
+  'contentBlockInfoNameNamespace'
+);
+const manageTeamTextClassName = globalClass(
+  'contentBlockInfoText',
+  'contentBlockInfoTextNamespace'
+);
 
 type Props = {
   data: Object,
@@ -16,40 +53,60 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
   const { memory, cpu } = data.resources.used;
   const { memory: memoryLimit, cpu: cpuLimit } = data.resources.hard;
   const newAccessLevel = data.access;
+  const newAccessLevelClassName =
+    data.access[0].toUpperCase() + data.access.slice(1);
+  const classNameBadge = namespaceClass({
+    [`namespaceInfoBadge${newAccessLevelClassName}`]: true
+  });
   const ownerPermissions = newAccessLevel === 'owner';
   return (
-    <div className="content-block-container content-block_common-statistic container">
-      <div className="content-block-header">
-        <div className="content-block-header-label content-block-header-label__namspace-info">
-          <div className="content-block-header-label__text content-block-header-label_main content-block-header-label__text_namspace-info">
-            {idName}
+    <div className={`${containerClassName} container`}>
+      <div className={globalStyles.contentBlockHeader}>
+        <div className={headerLabelClassName}>
+          <div className={textLabelClassName}>{idName}</div>
+          <div className={globalStyles.contentBlockHeaderLabelDescript}>
+            namespace
           </div>
-          <div className="content-block-header-label__descript">namespace</div>
           <div
             style={{ display: 'inline-block' }}
-            className={`badge namspaceinfo-badge namspaceinfo-badge__${newAccessLevel}`}
+            className={`badge ${
+              namespaceStyles.namespaceInfoBadge
+            } ${classNameBadge} `}
           >
             access: {newAccessLevel}
           </div>
         </div>
-        <div className="content-block-header-extra-panel">
-          <div className="content-block-header-extra-panel dropdown no-arrow">
+        <div className={globalStyles.contentBlockHeaderExtraPanel}>
+          <div
+            className={`${
+              globalStyles.contentBlockHeaderExtraPanel
+            } dropdown no-arrow`}
+          >
             <i
-              className="content-block-header__more ion-more dropdown-toggle"
+              className={`${globalStyles.contentBlockHeaderEllipsis} ${
+                globalStyles.dropdownToggle
+              } ${globalStyles.ellipsisRoleMore} ion-more `}
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             />
-            <ul className="dropdown-menu dropdown-menu-right" role="menu">
+            <ul
+              className={` dropdown-menu dropdown-menu-right ${
+                globalStyles.dropdownMenu
+              }`}
+              role="menu"
+            >
               <NavLink
                 activeClassName="active"
-                className="dropdown-item"
+                className={`dropdown-item ${globalStyles.dropdownItem}`}
                 to={routerLinks.resizeNamespaceLink(idName)}
               >
                 Resize
               </NavLink>
               <button
-                className="dropdown-item text-danger"
+                className={`dropdown-item ${
+                  globalStyles.dropdownItem
+                } text-danger`}
                 onClick={() => handleDeleteNamespace(idName)}
               >
                 Delete
@@ -58,41 +115,30 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
           </div>
         </div>
       </div>
-      <div className="content-block-content content-block-content__namspaceinfo">
-        <div className="content-block__r-img">
+      <div className={contentClassName}>
+        <div className={globalStyles.contentClockIcon}>
           <img src={ns} alt="ns" />
         </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name content-block__info-name_namespace">
-            RAM ( Usage / Total ) :{' '}
-          </div>
-          <div className="content-block__info-text ">
+        <div className={globalStyles.contentBlockInfoItemNamespace}>
+          <div className={infoNameClassName}>RAM ( Usage / Total ) : </div>
+          <div className={globalStyles.contentBlockInfoText}>
             {memory} / {memoryLimit}
           </div>
         </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name content-block__info-name_namespace">
-            CPU ( Usage / Total ) :{' '}
-          </div>
-          <div className="content-block__info-text">
+        <div className={globalStyles.contentBlockInfoItemNamespace}>
+          <div className={infoNameClassName}>CPU ( Usage / Total ) : </div>
+          <div className={globalStyles.contentBlockInfoText}>
             {cpu} / {cpuLimit}
           </div>
         </div>
-        <div className="content-block__info-item">
-          <div className="content-block__info-name content-block__info-name_namespace">
-            Volume ( Usage / Total ) :
-          </div>
-          <div className="content-block__info-text">- / -</div>
+        <div className={globalStyles.contentBlockInfoItemNamespace}>
+          <div className={infoNameClassName}>Volume ( Usage / Total ) :</div>
+          <div className={globalStyles.contentBlockInfoText}>- / -</div>
         </div>
         {ownerPermissions && (
-          <div
-            className="content-block__info-item content-block__info-item_namspaceinfo"
-            style={{ paddingLeft: 80 }}
-          >
+          <div className={manageTeamClassName} style={{ paddingLeft: 80 }}>
             <Link to={routerLinks.getMembershipLink(idName)}>
-              <div className="content-block__info-text content-block__info-text_namspaceinfo">
-                Manage Team
-              </div>
+              <div className={manageTeamTextClassName}>Manage Team</div>
             </Link>
           </div>
         )}
