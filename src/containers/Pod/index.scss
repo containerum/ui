@@ -1,0 +1,34 @@
+@import '../../theme/variables';
+
+.log {
+  &Block {
+    margin: 23px 0 0 50px;
+    padding-left: 60px;
+  }
+
+  &Data {
+    padding: 7px;
+    border-radius: 4px;
+    background-color: $log-data-background-color;
+    border: solid 4px $log-data-border-color;
+    font-size: 13px;
+    color: $color-white;
+  }
+
+  &FullScreen {
+    float: right;
+    font-size: 13px;
+    cursor: pointer;
+
+    img {
+      width: 12px;
+      height: 12px;
+      margin-left: 4px;
+    }
+
+    a,div {
+      color: $main-color;
+      font-weight: 400;
+    }
+  }
+}

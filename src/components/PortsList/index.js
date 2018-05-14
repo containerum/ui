@@ -2,9 +2,22 @@
 
 import React from 'react';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 // import { routerLinks } from '../../config';
 import portPng from '../../images/port.svg';
+
+import globalStyles from '../../theme/global.scss';
+import portsStyles from '../../containers/Ports/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const tableClassName = globalClass('contentBlockTable', 'table');
+
+// const contentClassName = globalClass(
+//   'contentBlockContent',
+//   'contentBlockContentFull'
+// );
 
 type Props = {
   data: Object
@@ -13,16 +26,16 @@ type Props = {
 const PortsList = ({ data }: Props) => {
   const { ports, domain } = data;
   return (
-    <table className="content-block__table table" width="1170">
+    <table className={tableClassName} width="1170">
       <thead>
         <tr>
-          <td className="td-1" />
-          <td className="td-2">Name</td>
-          <td className="td-3">Port</td>
-          <td className="td-4">Protocol</td>
-          {domain && <td className="td-5">Link</td>}
-          <td className="td-7" />
-          <td className="td-7" />
+          <td className={portsStyles.td_1_Ports} />
+          <td className={portsStyles.td_2_Ports}>Name</td>
+          <td className={portsStyles.td_3_Ports}>Port</td>
+          <td className={portsStyles.td_4_Ports}>Protocol</td>
+          {domain && <td className={portsStyles.td_5_Ports}>Link</td>}
+          <td className={portsStyles.td_7_Ports} />
+          <td className={portsStyles.td_7_Ports} />
         </tr>
       </thead>
       <tbody>
@@ -30,24 +43,26 @@ const PortsList = ({ data }: Props) => {
           const { name, port, target_port: targetPort, protocol } = currentPort;
           const linkSrv = `${domain}:${port}`;
           return (
-            <tr className="tr-table-hover" key={_.uniqueId()}>
-              <td className="td-1">
+            <tr className={globalStyles.tableHover} key={_.uniqueId()}>
+              <td className={portsStyles.td_1_Ports}>
                 <img src={portPng} alt="port" />
               </td>
-              <td className="td-2">{name}</td>
-              <td className="td-3">
+              <td className={portsStyles.td_2_Ports}>{name}</td>
+              <td className={portsStyles.td_3_Ports}>
                 {port}:{targetPort}
               </td>
-              <td className="td-4">{protocol}</td>
+              <td className={portsStyles.td_4_Ports}>{protocol}</td>
               {domain && (
-                <td className="td-5">
+                <td className={portsStyles.td_5_Ports}>
                   <a target="_blank" href={`http://${linkSrv}`}>
                     {linkSrv}
                   </a>
                 </td>
               )}
-              <td className="td-7" />
-              <td className="td-7">{/* <div className="warning"> </div> */}</td>
+              <td className={portsStyles.td_7_Ports} />
+              <td className={portsStyles.td_7_Ports}>
+                {/* <div className="warning"> </div> */}
+              </td>
             </tr>
           );
         })}

@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
+import className from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetDeployments from '../../actions/deploymentsActions/getDeployments';
@@ -21,6 +22,15 @@ import {
 import DeploymentsList from '../../components/DeploymentsList';
 import Notification from '../Notification';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFull'
+);
 
 type Props = {
   getDeploymentsReducer: Object,
@@ -155,9 +165,9 @@ export class Deployments extends PureComponent<Props> {
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleDelete={this.onHandleDelete}
         />
-        <div className="content-block-content full">
+        <div className={contentClassName}>
           <div className="tab-content">
-            <div className="tab-pane deployments active">
+            <div className="tab-pane active">
               {this.renderDeploymentsList()}
             </div>
           </div>

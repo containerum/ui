@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
+import className from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetPods from '../../actions/podsActions/getPods';
@@ -20,6 +21,15 @@ import {
 } from '../../constants/podConstants/deletePod';
 import PodsList from '../../components/PodsList';
 import Notification from '../Notification';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFull'
+);
 
 type Props = {
   getPodsReducer: Object,
@@ -116,7 +126,7 @@ export class Pods extends PureComponent<Props> {
     return (
       <div>
         <Notification status={status} name={idPod} errorMessage={err} />
-        <div className="content-block-content full">
+        <div className={contentClassName}>
           <div className="tab-content">
             <div className="tab-pane pods active">{this.renderPodsList()}</div>
           </div>

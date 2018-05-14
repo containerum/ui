@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
+import className from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetDeployments from '../../actions/deploymentsActions/getDeployments';
@@ -20,6 +21,15 @@ import {
   GET_SERVICE_SUCCESS
 } from '../../constants/serviceConstants/getService';
 import DeploymentsList from '../../components/DeploymentsList';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFull'
+);
 
 type Props = {
   getDeploymentsReducer: Object,
@@ -109,7 +119,7 @@ export class Deployments extends PureComponent<Props> {
   render() {
     return (
       <div>
-        <div className="content-block-content full">
+        <div className={contentClassName}>
           <div className="tab-content">
             <div className="tab-pane deployments active">
               {this.renderDeploymentsList()}

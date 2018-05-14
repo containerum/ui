@@ -1,0 +1,40 @@
+@import '../../theme/variables';
+
+.td {
+  &_1_Pods {
+    width: 52px !important;
+    padding-left: 30px !important;
+    font-weight: normal !important;
+
+    &NoPods {
+      padding-left: 60px !important;
+      font-weight: 400 !important;
+    }
+  }
+
+  &_2_Pods {
+    width: 255px !important ;
+  }
+
+  &_3_Pods {
+    width: 150px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  &_4_Pods {
+    width: 135px !important;
+  }
+
+  &_5_Pods {
+    width: 145px !important;
+  }
+
+  &_6_Pods {
+    width: 200px !important;
+  }
+
+  &_7_Pods {
+    width: 52px !important;
+  }
+}

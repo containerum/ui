@@ -1,10 +1,14 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 // import { timeago } from '../../functions/timeago';
 import podPng from '../../images/pod-3.png';
+
+import globalStyles from '../../theme/global.scss';
+import podsStyles from '../../containers/Pods/index.scss';
 
 type Props = {
   data: Object,
@@ -13,6 +17,15 @@ type Props = {
   idDep: string,
   handleDeletePod: (idPod: string) => void
 };
+
+const globalClass = className.bind(globalStyles);
+
+const tableClassName = globalClass('contentBlockTable', 'table');
+
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFull'
+);
 
 const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
   const handleClickGetDeployment = name => {
@@ -29,16 +42,16 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
   return (
     <div>
       {data.length >= 1 && (
-        <table className="content-block__table table" width="1170">
+        <table className={tableClassName} width="1170">
           <thead>
             <tr>
-              <td className="td-1" />
-              <td className="td-2">Name</td>
-              <td className="td-3">Status</td>
-              <td className="td-4">Restarts</td>
-              <td className="td-5">Containers</td>
-              {/* <td className="td-6">Age</td> */}
-              <td className="td-7" />
+              <td className={podsStyles.td_1_Pods} />
+              <td className={podsStyles.td_2_Pods}>Name</td>
+              <td className={podsStyles.td_3_Pods}>Status</td>
+              <td className={podsStyles.td_4_Pods}>Restarts</td>
+              <td className={podsStyles.td_5_Pods}>Containers</td>
+              {/* <td className={podsStyles.td_6_Pods}>Age</td> */}
+              <td className={podsStyles.td_7_Pods} />
             </tr>
           </thead>
           <tbody>
@@ -56,39 +69,48 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
               return (
                 <tr
                   key={id}
-                  className="tr-table-hover"
+                  className={globalStyles.tableHover}
                   id={id}
                   onClick={() => handleClickGetDeployment(name)}
                 >
-                  <td className="td-1">
+                  <td className={podsStyles.td_1_Pods}>
                     <img src={podPng} alt="pod" />
                   </td>
-                  <td className="td-2">{name}</td>
-                  <td className="td-3">{status.phase}</td>
-                  <td className="td-4">{status.restart_count} restarts</td>
-                  <td className="td-5">{containers.length}</td>
-                  {/* <td className="td-6">{dateValue}</td> */}
-                  <td className="td-7">
+                  <td className={podsStyles.td_2_Pods}>{name}</td>
+                  <td className={podsStyles.td_3_Pods}>{status.phase}</td>
+                  <td className={podsStyles.td_4_Pods}>
+                    {status.restart_count} restarts
+                  </td>
+                  <td className={podsStyles.td_5_Pods}>{containers.length}</td>
+                  {/* <td className={podsStyles.td_6_Pods}>{dateValue}</td> */}
+                  <td className={podsStyles.td_7_Pods}>
                     {/* <div className="warning"> </div> */}
                   </td>
                   <td
-                    className="td-7 dropdown no-arrow"
+                    className={`${podsStyles.td_7_Pods} dropdown no-arrow`}
                     onClick={e => handleClose(e)}
                     onKeyPress={e => handleClose(e)}
                     role="presentation"
                   >
                     <i
-                      className="content-block-table__more ion-more dropdown-toggle"
+                      className={`${globalStyles.contentBlockTableMore} ${
+                        globalStyles.dropdownToggle
+                      }
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
                       data-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
                     />
                     <ul
-                      className="dropdown-menu dropdown-menu-right"
+                      className={` dropdown-menu dropdown-menu-right ${
+                        globalStyles.dropdownMenu
+                      }`}
                       role="menu"
                     >
                       <button
-                        className="dropdown-item text-danger"
+                        className={`dropdown-item text-danger ${
+                          globalStyles.dropdownItem
+                        }`}
                         onClick={() => handleClickDeleteDeployment(name)}
                       >
                         Delete
@@ -102,13 +124,16 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
         </table>
       )}
       {!data.length && (
-        <div className="content-block-content full">
+        <div className={contentClassName}>
           <div className="tab-content">
             <div className="tab-pane deployments active">
-              <table className="content-block__table table" width="1170">
+              <table className={tableClassName} width="1170">
                 <thead>
                   <tr>
-                    <td className="td-1" style={{ paddingLeft: '60px' }}>
+                    <td
+                      className={podsStyles.td_1_PodsNoPods}
+                      style={{ paddingLeft: '60px' }}
+                    >
                       At the moment the Pod is rebooting
                     </td>
                   </tr>
