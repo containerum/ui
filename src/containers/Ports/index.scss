@@ -1,0 +1,40 @@
+@import '../../theme/variables';
+
+.td {
+  &_1_Ports {
+    width: 52px !important;
+    padding-left: 30px !important;
+    font-weight: normal !important;
+
+    &NoPorts {
+      padding-left: 60px !important;
+      font-weight: 400 !important;
+    }
+  }
+
+  &_2_Ports {
+    width: 255px !important ;
+  }
+
+  &_3_Ports {
+    width: 150px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  &_4_Ports {
+    width: 135px !important;
+  }
+
+  &_5_Ports {
+    width: 145px !important;
+  }
+
+  &_6_Ports {
+    width: 200px !important;
+  }
+
+  &_7_Ports {
+    width: 52px !important;
+  }
+}

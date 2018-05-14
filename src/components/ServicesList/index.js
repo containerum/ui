@@ -2,11 +2,23 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import className from 'classnames/bind';
 
 import { externalLinks, routerLinks } from '../../config';
 // import { timeago } from '../../functions/timeago';
 import servicePng from '../../images/link.svg';
 import { timeago } from '../../functions/timeago';
+import globalStyles from '../../theme/global.scss';
+import servicesStyles from '../../containers/Services/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const tableClassName = globalClass('contentBlockTable', 'table');
+
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFull'
+);
 
 type Props = {
   data: Object,
@@ -31,15 +43,15 @@ const ServicesList = ({
   return (
     <div>
       {data.length >= 1 && (
-        <table className="content-block__table table" width="1170">
+        <table className={tableClassName} width="1170">
           <thead>
             <tr>
-              <td className="td-1" />
-              <td className="td-2">Name</td>
-              <td className="td-2">Type</td>
-              <td className="td-2">Domain</td>
-              <td className="td-6">Age</td>
-              <td className="td-7" />
+              <td className={servicesStyles.td_1_Services} />
+              <td className={servicesStyles.td_2_Services}>Name</td>
+              <td className={servicesStyles.td_2_Services}>Type</td>
+              <td className={servicesStyles.td_2_Services}>Domain</td>
+              <td className={servicesStyles.td_7_Services}>Age</td>
+              <td className={servicesStyles.td_7_Services} />
             </tr>
           </thead>
           <tbody>
@@ -53,42 +65,55 @@ const ServicesList = ({
               return (
                 <tr
                   key={id}
-                  className="tr-table-hover"
+                  className={globalStyles.tableHover}
                   id={id}
                   onClick={() => handleClickGetService(name)}
                 >
-                  <td className="td-1">
+                  <td className={servicesStyles.td_1_Services}>
                     <img src={servicePng} alt="service" />
                   </td>
-                  <td className="td-2">{name}</td>
-                  <td className="td-2">{type}</td>
-                  <td className="td-2">{domain || '-'}</td>
-                  <td className="td-2">{dateValue}</td>
+                  <td className={servicesStyles.td_2_Services}>{name}</td>
+                  <td className={servicesStyles.td_2_Services}>{type}</td>
+                  <td className={servicesStyles.td_2_Services}>
+                    {domain || '-'}
+                  </td>
+                  <td className={servicesStyles.td_2_Services}>{dateValue}</td>
                   <td
-                    className="td-7 dropdown no-arrow"
+                    className={`${
+                      servicesStyles.td_7_Services
+                    } dropdown no-arrow`}
                     onClick={e => handleClose(e)}
                     onKeyPress={e => handleClose(e)}
                     role="presentation"
                   >
                     <i
-                      className="content-block-table__more ion-more dropdown-toggle"
+                      className={`${globalStyles.contentBlockTableMore} ${
+                        globalStyles.dropdownToggle
+                      }
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
                       data-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
                     />
                     <ul
-                      className="dropdown-menu dropdown-menu-right"
+                      className={` dropdown-menu dropdown-menu-right ${
+                        globalStyles.dropdownMenu
+                      }`}
                       role="menu"
                     >
                       <NavLink
                         activeClassName="active"
                         to={routerLinks.resizeServiceLink(idName, name)}
-                        className="dropdown-item"
+                        className={`dropdown-item  ${
+                          globalStyles.dropdownItem
+                        }`}
                       >
                         Update
                       </NavLink>
                       <button
-                        className="dropdown-item text-danger"
+                        className={`dropdown-item text-danger ${
+                          globalStyles.dropdownItem
+                        }`}
                         onClick={() => handleDeleteService(name)}
                       >
                         Delete
@@ -102,25 +127,28 @@ const ServicesList = ({
         </table>
       )}
       {!data.length && (
-        <div className="content-block-content full">
+        <div className={contentClassName}>
           <div className="tab-content">
             <div className="tab-pane deployments active">
-              <table className="content-block__table table" width="1170">
+              <table className={tableClassName} width="1170">
                 <thead>
                   <tr>
-                    <td className="td-1" style={{ paddingLeft: '60px' }}>
+                    <td
+                      className={servicesStyles.td_1_ServicesNoServices}
+                      style={{ paddingLeft: '60px' }}
+                    >
                       Service provides internal and/or external access to a Pod.{' '}
                       <br /> <br />
                       To create a new Service use our{' '}
                       <a
-                        className="documentation-link"
+                        className={globalStyles.linkDocumentation}
                         href={externalLinks.releasesChkit}
                       >
                         CLI Tool
                       </a>{' '}
                       and refer to our{' '}
                       <a
-                        className="documentation-link"
+                        className={globalStyles.linkDocumentation}
                         href={externalLinks.startGuide}
                         target="_blank"
                         rel="noopener noreferrer"

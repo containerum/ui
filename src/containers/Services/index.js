@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
+import className from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetServices from '../../actions/servicesActions/getServices';
@@ -20,6 +21,15 @@ import {
 } from '../../constants/serviceConstants/deleteService';
 import ServicesList from '../../components/ServicesList';
 import Notification from '../Notification';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFull'
+);
 
 type Props = {
   getServicesReducer: Object,
@@ -113,7 +123,7 @@ export class Services extends PureComponent<Props> {
     return (
       <div>
         <Notification status={status} name={idSrv} errorMessage={err} />
-        <div className="content-block-content full">
+        <div className={contentClassName}>
           <div className="tab-content">
             <div className="tab-pane services active">
               {this.renderServicesList()}

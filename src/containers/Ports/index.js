@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
+import className from 'classnames/bind';
 
 import type { ReduxState } from '../../types';
 import {
@@ -11,6 +12,15 @@ import {
   GET_SERVICE_FAILURE
 } from '../../constants/serviceConstants/getService';
 import PortsList from '../../components/PortsList';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFull'
+);
 
 type Props = {
   getServiceReducer: Object
@@ -47,7 +57,7 @@ export class Ports extends PureComponent<Props> {
 
   render() {
     return (
-      <div className="content-block-content full">
+      <div className={contentClassName}>
         <div className="tab-content">
           <div className="tab-pane pods active">{this.renderPortsList()}</div>
         </div>

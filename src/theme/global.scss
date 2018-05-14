@@ -17,6 +17,11 @@
   tbody td {
     border-top: 1px solid $color-white3 !important;
   }
+
+  &Hover {
+    cursor: pointer;
+    height: 42px;
+  }
 }
 
 .contentBlock {
@@ -134,6 +139,30 @@
     }
   }
 
+  &InfoLogs {
+    margin: 0 50px 0 50px;
+  }
+
+  &MorePanel {
+    text-align: right;
+    font-size: 12px;
+    color: $ligth-gray-color;
+
+    &Toggle {
+      color: $ligth-gray-color;
+      margin-top: 4px;
+      cursor: pointer;
+
+      &B::before {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 16px;
+        line-height: 16px;
+        margin: 0 0 -4px 12px;
+      }
+    }
+  }
+
   &Header {
     position: relative;
 
@@ -207,9 +236,15 @@
     position: relative;
     transition: height 0.3s ease-out 0.3s;
 
+    &Full {
+      margin-left:-30px;
+      margin-right:-30px;
+    }
+
     &Collapsed {
       height: 84px;
       overflow: hidden;
+      line-height: 1.15;
     }
 
     &CardBlock {
@@ -357,6 +392,10 @@
 
   &Card {
     min-height: 220px;
+
+    &Pod {
+      max-height: 220px;
+    }
   }
 
   &SubTitle {
@@ -1016,5 +1055,14 @@
     .breadcrumbsLiSpacer {
       margin-top: 1px;
     }
+  }
+}
+
+
+///////links styles///////
+
+.link {
+  &Documentation {
+    color: $main-color;
   }
 }
