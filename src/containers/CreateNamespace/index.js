@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import * as actionGetNamespacesTariffs from '../../actions/namespacesActions/getNamespacesTariffs';
 import * as actionCreateNamespace from '../../actions/namespaceActions/createNamespace';
@@ -32,6 +33,18 @@ import {
   CHANGE_PROFILE_INFO_FAILURE,
   CHANGE_PROFILE_INFO_SUCCESS
 } from '../../constants/profileConstants/changeProfileInfo';
+
+import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'contentBlockContainer',
+  'container',
+  'containerNoBackground',
+  'paddingX0'
+);
 
 type Props = {
   getNamespacesTariffsReducer: NamespacesType,
@@ -210,7 +223,7 @@ export class CreateNamespace extends PureComponent<Props> {
         <div className="row">
           {new Array(8).fill().map(() => (
             <div key={_.uniqueId()} className="col-md-3">
-              <div className="namespace-plan-block-placeholder">
+              <div className={styles.namespacePlanBlockPlaceholder}>
                 <img
                   src={require('../../images/add-ns-block.svg')}
                   alt="add-ns"
@@ -303,11 +316,11 @@ export class CreateNamespace extends PureComponent<Props> {
           errorMessage={errorMessage}
         />
         <Helmet title="Create Namespace" />
-        <div className="content-block">
-          <div className="content-block-container container no-back mt-0 no-padding">
-            <div className="content-block-content mt-0">
-              <div className="namespace-plan mt-0">
-                <div className="namespace-plan-title">
+        <div className={globalStyles.contentBlock}>
+          <div className={`${containerClassName} mt-0 container`}>
+            <div className={`${globalStyles.contentBlockContent} mt-0`}>
+              <div className={`${styles.namespacePlan} mt-0`}>
+                <div className={styles.namespacePlanTitle}>
                   choose a namespace size
                 </div>
               </div>
