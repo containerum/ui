@@ -1,10 +1,28 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 // import { Link } from 'react-router-dom';
 import Tooltip from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap_white.css';
 import { CHANGE_PROFILE_INFO_SUCCESS } from '../../constants/profileConstants/changeProfileInfo';
+
+import createNamespaceStyles from '../../containers/CreateNamespace/index.scss';
+import globalStyles from '../../theme/global.scss';
+// "col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars"
+const createNamespaceClass = className.bind(createNamespaceStyles);
+const globalClass = className.bind(globalStyles);
+
+const rightContent = globalClass(
+  'contentBlockContent',
+  'contentBlockContentCardBlock',
+  'contentBlockContentCardBlockDollars'
+);
+
+const containerLeft = createNamespaceClass(
+  'namespacePlanBlockContainerLeft',
+  'namespacePlanBlockDollars'
+);
 
 type Props = {
   data: Array<Object>,
@@ -58,10 +76,16 @@ const TariffsNamespacesList = ({
               id={label}
               className={
                 isActiveTariff
-                  ? 'namespace-plan-block-container hover-action-new disabled'
+                  ? `${createNamespaceStyles.namespacePlanBlockContainer} ${
+                      globalStyles.hoverAction
+                    } disabled`
                   : label !== tariffName
-                    ? 'namespace-plan-block-container hover-action-new'
-                    : 'namespace-plan-block-container hover-action-new selected'
+                    ? `${createNamespaceStyles.namespacePlanBlockContainer} ${
+                        globalStyles.hoverAction
+                      } `
+                    : `${createNamespaceStyles.namespacePlanBlockContainer} ${
+                        globalStyles.hoverAction
+                      } selected`
               }
               onClick={() => {
                 if (
@@ -117,44 +141,76 @@ const TariffsNamespacesList = ({
                   //     ? 'col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars'
                   //     : 'col-md-6 namespace-plan-block-container-left'
                   // }
-                  className="col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars"
+                  className={`col-md-6 ${containerLeft}`}
                 >
                   {isActiveTariff ? (
-                    <div className="namespace-plan-block-price">Active</div>
+                    <div
+                      className={createNamespaceStyles.namespacePlanBlockPrice}
+                    >
+                      Active
+                    </div>
                   ) : (
-                    <div className="namespace-plan-block-price">
+                    <div
+                      className={createNamespaceStyles.namespacePlanBlockPrice}
+                    >
                       {`$${price}`}
-                      <span className="namespace-plan-span-price">/mo</span>
+                      <span
+                        className={createNamespaceStyles.namespacePlanSpanPrice}
+                      >
+                        /mo
+                      </span>
                     </div>
                   )}
                   {!isActiveTariff && (
-                    <div className="namespace-plan-block-month">
+                    <div
+                      className={createNamespaceStyles.namespacePlanBlockMonth}
+                    >
                       {pricePerDay}
                     </div>
                   )}
                 </div>
-                <div className="col-md-6 namespace-plan-block-container-right">
+                <div
+                  className={`col-md-6 ${
+                    createNamespaceStyles.namespacePlanBlockContainerRight
+                  }`}
+                >
                   <div
                     // className={
                     //   `$${price}` === '$1'
                     //     ? 'content-block-content card-block card-block2dollars'
                     //     : 'content-block-content card-block'
                     // }
-                    className="content-block-content card-block card-block2dollars"
+                    className={rightContent}
                   >
-                    <div className="content-block__info-item">
-                      <div className="content-block__info-name inline">
+                    <div className={globalStyles.contentBlockInfoItem}>
+                      <div
+                        className={`${
+                          globalStyles.contentBlockInfoName
+                        } inline`}
+                      >
                         RAM :{' '}
                       </div>
-                      <div className="content-block__info-text inline">
+                      <div
+                        className={`${
+                          globalStyles.contentBlockInfoText
+                        } inline`}
+                      >
                         {memoryLimit} GB
                       </div>
                     </div>
-                    <div className="content-block__info-item">
-                      <div className="content-block__info-name inline">
+                    <div className={globalStyles.contentBlockInfoItem}>
+                      <div
+                        className={`${
+                          globalStyles.contentBlockInfoName
+                        } inline`}
+                      >
                         CPU :{' '}
                       </div>
-                      <div className="content-block__info-text inline">
+                      <div
+                        className={`${
+                          globalStyles.contentBlockInfoText
+                        } inline`}
+                      >
                         {cpuLimit}
                       </div>
                     </div>

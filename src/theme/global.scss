@@ -11,6 +11,15 @@
   &:hover{
     box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
   }
+
+  &:focus{
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  &:active{
+    border: none;
+    margin-top: 30px;
+  }
 }
 
 .table {
@@ -124,6 +133,7 @@
 
   &InfoText {
     font-weight: 300;
+    //padding-left: 5px;
 
     .inline{
       display: inline-block;
@@ -250,6 +260,10 @@
     &CardBlock {
       margin: 20px 0 0 0;
       padding: 0;
+
+      &Dollars {
+        margin: 30px 0 0 0;
+      }
     }
 
     &Flex {
@@ -258,7 +272,7 @@
 
       &Service {
         display: flex;
-        align-items: top;
+        align-items: flex-start;
       }
     }
   }
@@ -366,9 +380,6 @@
   }
 }
 
-.marginTop30 {
-  margin-top: 30px;
-}
 
 .container{
   background-color: $color-white;
@@ -1065,4 +1076,15 @@
   &Documentation {
     color: $main-color;
   }
+}
+
+/////////////spaces////////////
+
+.marginTop30 {
+  margin-top: 30px ;
+}
+
+.paddingX0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
