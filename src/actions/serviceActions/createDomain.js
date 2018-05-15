@@ -45,37 +45,31 @@ export const fetchCreateDomain = (
   const accessToken = cookie.load('accessToken');
   const browser = cookie.load('browser');
 
-  // const currentData = {
-  //   name: `${dataDomain.domainName}.containerum.io`,
-  //   owner: dataDomain.uid,
-  //   rules: [
-  //     {
-  //       host: `${dataDomain.domainName}.containerum.io`,
-  //       path: [
-  //         {
-  //           path: `/${dataDomain.domainPath}`,
-  //           service_name: dataDomain.currentService.name,
-  //           service_port: dataDomain.currentPort.targetPort
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // };
-  // if (dataDomain.isEnabledSSL) {
-  //   currentData.rules[0].tls_secret = dataDomain.currentService.name;
-  // }
-  // console.log(currentData);
+  const currentData = {
+    name: dataDomain.domainName,
+    // owner: dataDomain.uid,
+    rules: [
+      {
+        host: dataDomain.domainName,
+        path: [
+          {
+            path: `/${dataDomain.domainPath}`,
+            service_name: dataDomain.currentService.name,
+            service_port: dataDomain.currentPort.port
+          }
+        ]
+      }
+    ]
+  };
+  if (dataDomain.isEnabledSSL) {
+    currentData.rules[0].tls_secret = dataDomain.currentService.name;
+  }
   dispatch(createDomainRequest());
 
   let idSrv = idName;
   const response = await axios.post(
     `${URL}/namespace/${idName}/ingress`,
-    {
-      domain: dataDomain.domainName,
-      type: dataDomain.isEnabledSSL ? 'https' : 'http',
-      service: dataDomain.currentService.name,
-      service_port: dataDomain.currentPort.port
-    },
+    currentData,
     {
       headers: {
         'User-Client': browser,
