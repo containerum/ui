@@ -1,6 +1,7 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import icon from '../../../images/icon-create-dep.svg';
 import Common from './Common';
@@ -9,6 +10,14 @@ import Parameters from './Parameters';
 // import Commands from './Commands';
 import Environments from './Environments';
 import Volumes from './Volumes';
+
+import globalStyles from '../../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass('blockContainer', 'paddingX20');
+
+const titleClassName = globalClass('containerTitle', 'marginLeft20');
 
 type Props = {
   item: Object,
@@ -56,9 +65,9 @@ const Container = ({
   const fixedIndex = index + 1;
   const { id } = item;
   return (
-    <div className="blockContainer blockAddContainerPadin">
+    <div className={containerClassName}>
       <div className="col-md-12">
-        <div className="containerTitle marLeft20" id={`container${fixedIndex}`}>
+        <div className={titleClassName} id={`container${fixedIndex}`}>
           Container {fixedIndex}
         </div>
         {containersCount !== 1 && (
