@@ -64,8 +64,8 @@ export const fetchChangeProfileInfo = (
   );
   const { status, data, config } = response;
   switch (status) {
-    case 200: {
-      dispatch(changeProfileInfoSuccess(data, status, config.method));
+    case 202: {
+      dispatch(changeProfileInfoSuccess(data, 200, config.method));
       break;
     }
     case 400: {
