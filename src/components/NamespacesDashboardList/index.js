@@ -42,7 +42,7 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
           }}
         >
           <thead style={{ height: '30px' }}>
-            <tr>
+            <tr style={{ cursor: 'pointer' }}>
               <td className={dashboardStyles.td_1_Dashboard} />
               <td className={dashboardStyles.td_2_Dashboard}>Name</td>
               <td className={dashboardStyles.td_3_Dashboard}>RAM</td>
@@ -66,10 +66,9 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
                     key={id}
                     onClick={() => handleClickGetNamespace(label)}
                     onKeyPress={() => handleClickGetNamespace(label)}
-                    className="content-block-container card-container hover-action"
                     role="link"
                     tabIndex={0}
-                    style={{ margin: 0 }}
+                    style={{ margin: 0, cursor: 'pointer' }}
                   >
                     <td
                       className={dashboardStyles.td_1_Dashboard}

@@ -1,5 +1,25 @@
 import React from 'react';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
+
+import globalStyles from '../../theme/global.scss';
+import membershipStyles from '../../containers/Membership/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const tableClassName = globalClass(
+  'blockItemTokensTable',
+  'table',
+  'contentBlockTable'
+);
+
+const easyTableClassName = globalClass('table', 'contentBlockTable');
+
+const containerClassName = globalClass(
+  'contentBlockContainer',
+  'containerCard',
+  'hoverAction'
+);
 
 type Props = {
   membersList: Array<Object>,
@@ -15,7 +35,7 @@ const MembershipList = ({
   <div>
     {membersList.length ? (
       <table
-        className="block-item__tokens-table content-block__table table"
+        className={tableClassName}
         style={{
           tableLayout: 'fixed',
           width: '100%',
@@ -30,15 +50,15 @@ const MembershipList = ({
             <td style={{ width: 300 }}>Name</td>
             <td style={{ width: 320 }}>Email</td>
             <td>Permission</td>
-            <td className="td-1" />
+            <td className={membershipStyles.td_1_Membership} />
           </tr>
         </thead>
-        <tbody className="domains">
+        <tbody>
           {membersList.map(user => {
             const { login, new_access_level: newAccessLevel } = user;
             return (
               <tr
-                className="content-block-container card-container hover-action"
+                className={containerClassName}
                 style={{
                   margin: 0,
                   height: 43,
@@ -46,16 +66,21 @@ const MembershipList = ({
                 }}
                 key={_.uniqueId()}
               >
-                <td className="td-8">{login}</td>
-                <td className="td-9">
-                  <div className="configmap-overflow">{login}</div>
+                <td className={membershipStyles.td_2_Membership}>{login}</td>
+                <td className={membershipStyles.td_3_Membership}>
+                  <div className={globalStyles.overflow}>{login}</div>
                 </td>
-                <td className="td-3" style={{ overflow: 'initial' }}>
+                <td
+                  className={membershipStyles.td_4_Membership}
+                  style={{ overflow: 'initial' }}
+                >
                   <span>
                     {newAccessLevel !== 'owner' ? (
                       <span style={{ display: 'inline' }}>
                         <i
-                          className="content-block-table__more dropdown-toggle-membership dropdown-toggle"
+                          className={`${globalStyles.membershipArrow} ${
+                            globalStyles.dropdownToggleMembership
+                          }  dropdown-toggle`}
                           data-toggle="dropdown"
                           aria-haspopup="true"
                           aria-expanded="false"
@@ -65,18 +90,24 @@ const MembershipList = ({
                           {newAccessLevel}
                         </i>
                         <ul
-                          className="dropdown-menu dropdown-menu-right"
+                          className={` dropdown-menu dropdown-menu-right ${
+                            globalStyles.dropdownMenu
+                          }`}
                           style={{ width: 160 }}
                           role="menu"
                         >
                           <button
-                            className="dropdown-item"
+                            className={`dropdown-item ${
+                              globalStyles.dropdownItem
+                            }`}
                             onClick={() => changeAccessUser(login, 'write')}
                           >
                             Write
                           </button>
                           <button
-                            className="dropdown-item"
+                            className={`dropdown-item ${
+                              globalStyles.dropdownItem
+                            }`}
                             onClick={() => changeAccessUser(login, 'read')}
                           >
                             Read
@@ -89,16 +120,20 @@ const MembershipList = ({
                   </span>
                 </td>
                 <td
-                  className="td-10 dropdown no-arrow"
+                  className={`${
+                    membershipStyles.td_5_Membership
+                  } dropdown no-arrow`}
                   onClick={() =>
                     newAccessLevel !== 'owner' && handleDeleteDMembers(login)
                   }
                 >
                   {newAccessLevel !== 'owner' && (
-                    <div className="membership-item">
+                    <div className={globalStyles.membershipItem}>
                       <i
                         style={{ verticalAlign: 'middle', paddingRight: 30 }}
-                        className="material-icons material-icons-membership"
+                        className={`${
+                          globalStyles.membershipIcon
+                        } material-icons `}
                         role="presentation"
                       >
                         delete
@@ -112,7 +147,7 @@ const MembershipList = ({
         </tbody>
       </table>
     ) : (
-      <div className="content-block__table table" width="1170">
+      <div className={easyTableClassName} width="1170">
         You don`t have any users
       </div>
     )}
