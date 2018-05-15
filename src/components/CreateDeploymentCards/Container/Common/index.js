@@ -28,7 +28,7 @@ const Common = ({ item, index, handleChangeInputCommon }: Props) => {
     <div className={`${globalStyles.rowLine} row`}>
       <div className="col-md-7">
         <div className={titleClassName} id={`container${index + 1}-info`}>
-          <span>*</span> Common
+          <span className={globalStyles.containerTitleStar}>*</span> Common
           {/* <Tooltip */}
           {/* placement='top' */}
           {/* trigger={['hover']} */}

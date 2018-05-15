@@ -7,6 +7,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
+import className from 'classnames/bind';
 
 import scrollById from '../../functions/scrollById';
 // import * as actionGetVolumes from '../../actions/volumesActions/getVolumesByNS';
@@ -32,6 +33,22 @@ import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import Replicas from '../../components/CreateDeploymentCards/Replicas';
 import Container from '../../components/CreateDeploymentCards/Container';
+
+import deploymentStyles from '../CreateDeployment/index.scss';
+import globalStyles from '../../theme/global.scss';
+
+const deploymentStylesClass = className.bind(deploymentStyles);
+const globalClass = className.bind(globalStyles);
+
+const menuItemClassName = deploymentStylesClass(
+  'sideMenuItem',
+  'sideMenuItemTransformInit'
+);
+
+const containerClassName = globalClass(
+  'containerFluid',
+  'breadcrumbsNavigation'
+);
 
 type Props = {
   // getVolumesByNSReducer: Object,
@@ -843,9 +860,9 @@ export class CreateDeployment extends PureComponent<Props> {
         style={{
           padding: '20px 0'
         }}
-        currentClassName="active"
+        currentClassName={deploymentStyles.sideMenuHeaderActive}
       >
-        <div className="sideMenuHeader">
+        <div className={deploymentStyles.sideMenuHeader}>
           <div
             onClick={() => scrollById('replicas')}
             onKeyPress={() => scrollById('replicas')}
@@ -855,7 +872,10 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
 
-        <div className="sideMenuHeader" id={`container${1}spy`}>
+        <div
+          className={deploymentStyles.sideMenuHeader}
+          id={`container${1}spy`}
+        >
           <div
             onClick={() => scrollById(`container${1}`)}
             onKeyPress={() => scrollById(`container${1}`)}
@@ -865,11 +885,11 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${1}-info-spy`}
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${1}-info`)}
             onKeyPress={() => scrollById(`container${1}-info`)}
             role="presentation"
@@ -878,11 +898,11 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${1}-parameters-spy`}
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${1}-parameters`)}
             onKeyPress={() => scrollById(`container${1}-parameters`)}
             role="presentation"
@@ -891,11 +911,11 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         {/* <div */}
-        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* className={`${deploymentStyles.sideMenuHeader} m-0`} */}
         {/* id={`container${1}-image-ports-spy`} */}
         {/* > */}
         {/* <div */}
-        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* className={`${menuItemClassName} nav-link`} */}
         {/* onClick={() => scrollById(`container${1}-image-ports`)} */}
         {/* onKeyPress={() => scrollById(`container${1}-image-ports`)} */}
         {/* role="presentation" */}
@@ -904,11 +924,11 @@ export class CreateDeployment extends PureComponent<Props> {
         {/* </div> */}
         {/* </div> */}
         {/* <div */}
-        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* className={`${deploymentStyles.sideMenuHeader} m-0`} */}
         {/* id={`container${1}-commands-spy`} */}
         {/* > */}
         {/* <div */}
-        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* className={`${menuItemClassName} nav-link`} */}
         {/* onClick={() => scrollById(`container${1}-commands`)} */}
         {/* onKeyPress={() => scrollById(`container${1}-commands`)} */}
         {/* role="presentation" */}
@@ -917,11 +937,11 @@ export class CreateDeployment extends PureComponent<Props> {
         {/* </div> */}
         {/* </div> */}
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${1}-environments-spy`}
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${1}-environments`)}
             onKeyPress={() => scrollById(`container${1}-environments`)}
             role="presentation"
@@ -930,11 +950,11 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${1}-volume-spy`}
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${1}-volume`)}
             onKeyPress={() => scrollById(`container${1}-volume`)}
             role="presentation"
@@ -944,7 +964,7 @@ export class CreateDeployment extends PureComponent<Props> {
         </div>
 
         <div
-          className="sideMenuHeader"
+          className={deploymentStyles.sideMenuHeader}
           id={`container${2}spy`}
           style={
             containers.length === 1 ? { display: 'none' } : { display: 'block' }
@@ -959,18 +979,18 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${2}-info-spy`}
           style={
             containers.length === 1 ? { display: 'none' } : { display: 'block' }
           }
         >
           <div
-            className="sideMenuHeader sideMenuHeader-nomargin"
+            className={`${deploymentStyles.sideMenuHeader} m-0`}
             id={`container${2}-info-spy`}
           >
             <div
-              className="nav-link sideMenuItem sideMenuItem-transformInit"
+              className={`${menuItemClassName} nav-link`}
               onClick={() => scrollById(`container${2}-info`)}
               onKeyPress={() => scrollById(`container${2}-info`)}
               role="presentation"
@@ -980,14 +1000,14 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${2}-parameters-spy`}
           style={
             containers.length === 1 ? { display: 'none' } : { display: 'block' }
           }
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${2}-parameters`)}
             onKeyPress={() => scrollById(`container${2}-parameters`)}
             role="presentation"
@@ -996,18 +1016,18 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         {/* <div */}
-        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* className={`${deploymentStyles.sideMenuHeader} m-0`} */}
         {/* id={`container${2}-image-ports-spy`} */}
         {/* style={ */}
         {/* containers.length === 1 ? { display: 'none' } : { display: 'block' } */}
         {/* } */}
         {/* > */}
         {/* <div */}
-        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* className={`${deploymentStyles.sideMenuHeader} m-0`} */}
         {/* id={`container${2}-image-ports-spy`} */}
         {/* > */}
         {/* <div */}
-        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* className={`${menuItemClassName} nav-link`} */}
         {/* onClick={() => scrollById(`container${2}-image-ports`)} */}
         {/* onKeyPress={() => scrollById(`container${2}-image-ports`)} */}
         {/* role="presentation" */}
@@ -1017,18 +1037,18 @@ export class CreateDeployment extends PureComponent<Props> {
         {/* </div> */}
         {/* </div> */}
         {/* <div */}
-        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* className={`${deploymentStyles.sideMenuHeader} m-0`} */}
         {/* id={`container${2}-commands-spy`} */}
         {/* style={ */}
         {/* containers.length === 1 ? { display: 'none' } : { display: 'block' } */}
         {/* } */}
         {/* > */}
         {/* <div */}
-        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* className={`${deploymentStyles.sideMenuHeader} m-0`} */}
         {/* id={`container${2}-commands-spy`} */}
         {/* > */}
         {/* <div */}
-        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* className={`${menuItemClassName} nav-link`} */}
         {/* onClick={() => scrollById(`container${2}-commands`)} */}
         {/* onKeyPress={() => scrollById(`container${2}-commands`)} */}
         {/* role="presentation" */}
@@ -1038,18 +1058,18 @@ export class CreateDeployment extends PureComponent<Props> {
         {/* </div> */}
         {/* </div> */}
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${2}-environments-spy`}
           style={
             containers.length === 1 ? { display: 'none' } : { display: 'block' }
           }
         >
           <div
-            className="sideMenuHeader sideMenuHeader-nomargin"
+            className={`${deploymentStyles.sideMenuHeader} m-0`}
             id={`container${2}-environments-spy`}
           >
             <div
-              className="nav-link sideMenuItem sideMenuItem-transformInit"
+              className={`${menuItemClassName} nav-link`}
               onClick={() => scrollById(`container${2}-environments`)}
               onKeyPress={() => scrollById(`container${2}-environments`)}
               role="presentation"
@@ -1059,14 +1079,14 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${2}-volume-spy`}
           style={
             containers.length === 1 ? { display: 'none' } : { display: 'block' }
           }
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${2}-volume`)}
             onKeyPress={() => scrollById(`container${2}-volume`)}
             role="presentation"
@@ -1076,7 +1096,7 @@ export class CreateDeployment extends PureComponent<Props> {
         </div>
 
         <div
-          className="sideMenuHeader"
+          className={deploymentStyles.sideMenuHeader}
           id={`container${3}spy`}
           style={
             containers.length <= 2 ? { display: 'none' } : { display: 'block' }
@@ -1091,14 +1111,14 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${3}-info-spy`}
           style={
             containers.length <= 2 ? { display: 'none' } : { display: 'block' }
           }
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${3}-info`)}
             onKeyPress={() => scrollById(`container${3}-info`)}
             role="presentation"
@@ -1107,14 +1127,14 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${3}-parameters-spy`}
           style={
             containers.length <= 2 ? { display: 'none' } : { display: 'block' }
           }
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${3}-parameters`)}
             onKeyPress={() => scrollById(`container${3}-parameters`)}
             role="presentation"
@@ -1123,14 +1143,14 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         {/* <div */}
-        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* className={`${deploymentStyles.sideMenuHeader} m-0`} */}
         {/* id={`container${3}-image-ports-spy`} */}
         {/* style={ */}
         {/* containers.length <= 2 ? { display: 'none' } : { display: 'block' } */}
         {/* } */}
         {/* > */}
         {/* <div */}
-        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* className={`${menuItemClassName} nav-link`} */}
         {/* onClick={() => scrollById(`container${3}-image-ports`)} */}
         {/* onKeyPress={() => scrollById(`container${3}-image-ports`)} */}
         {/* role="presentation" */}
@@ -1139,14 +1159,14 @@ export class CreateDeployment extends PureComponent<Props> {
         {/* </div> */}
         {/* </div> */}
         {/* <div */}
-        {/* className="sideMenuHeader sideMenuHeader-nomargin" */}
+        {/* className={`${deploymentStyles.sideMenuHeader} m-0`} */}
         {/* id={`container${3}-commands-spy`} */}
         {/* style={ */}
         {/* containers.length <= 2 ? { display: 'none' } : { display: 'block' } */}
         {/* } */}
         {/* > */}
         {/* <div */}
-        {/* className="nav-link sideMenuItem sideMenuItem-transformInit" */}
+        {/* className={`${menuItemClassName} nav-link`} */}
         {/* onClick={() => scrollById(`container${3}-commands`)} */}
         {/* onKeyPress={() => scrollById(`container${3}-commands`)} */}
         {/* role="presentation" */}
@@ -1155,14 +1175,14 @@ export class CreateDeployment extends PureComponent<Props> {
         {/* </div> */}
         {/* </div> */}
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${3}-environments-spy`}
           style={
             containers.length <= 2 ? { display: 'none' } : { display: 'block' }
           }
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${3}-environments`)}
             onKeyPress={() => scrollById(`container${3}-environments`)}
             role="presentation"
@@ -1171,14 +1191,14 @@ export class CreateDeployment extends PureComponent<Props> {
           </div>
         </div>
         <div
-          className="sideMenuHeader sideMenuHeader-nomargin"
+          className={`${deploymentStyles.sideMenuHeader} m-0`}
           id={`container${3}-volume-spy`}
           style={
             containers.length <= 2 ? { display: 'none' } : { display: 'block' }
           }
         >
           <div
-            className="nav-link sideMenuItem sideMenuItem-transformInit"
+            className={`${menuItemClassName} nav-link`}
             onClick={() => scrollById(`container${3}-volume`)}
             onKeyPress={() => scrollById(`container${3}-volume`)}
             role="presentation"
@@ -1271,7 +1291,7 @@ export class CreateDeployment extends PureComponent<Props> {
             match.params.idName
           }`}
         />
-        <div className="container-fluid breadcrumbNavigation">
+        <div className={containerClassName}>
           <NavigationHeaderItem
             idName={match.params.idName}
             IdUpdate="deployment"
@@ -1283,16 +1303,16 @@ export class CreateDeployment extends PureComponent<Props> {
           method={updateDeploymentReducer.method}
           errorMessage={updateDeploymentReducer.err}
         />
-        <div className="content-block">
-          <div className="container no-back">
-            <div className="row pageWidth">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
+            <div className={`${deploymentStyles.pageWidth} row`}>
               <div
-                className="col-md-3 sideMenu"
+                className={`${deploymentStyles.sideMenu} col-md-3`}
                 style={{ padding: '20px 0px' }}
               >
                 {this.renderDeploymentSidebar()}
               </div>
-              <div className="col-md-9 pageContent">
+              <div className="col-md-9">
                 <form onSubmit={e => this.handleSubmitDeployment(e)}>
                   {this.renderCreateDeployment()}
                   <LoadButton
