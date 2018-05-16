@@ -62,8 +62,8 @@ export const fetchChangePassword = (
   // console.log(data, status);
   const { access_token: newAccessToken, refresh_token: newRefreshToken } = data;
   switch (status) {
-    case 202: {
-      dispatch(changePasswordSuccess(data, status, config.method));
+    case 200: {
+      dispatch(changePasswordSuccess(data, 202, config.method));
       cookie.save('accessToken', newAccessToken, { path: '/' });
       cookie.save('refreshToken', newRefreshToken, { path: '/' });
       break;
