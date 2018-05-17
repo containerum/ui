@@ -6,6 +6,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
+import className from 'classnames/bind';
 
 import scrollById from '../../functions/scrollById';
 import * as actionGetService from '../../actions/serviceActions/getService';
@@ -22,6 +23,16 @@ import NavigationHeaderItem from '../NavigationHeader';
 import UpdateServiceCardItem from './CreateServiceCard';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
+import globalStyles from '../../theme/global.scss';
+
+import sideMenuStyles from '../CreateDeployment/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'containerFluid',
+  'breadcrumbsNavigation'
+);
 
 type Props = {
   getServiceReducer: Object,
@@ -184,7 +195,7 @@ export class UpdateService extends PureComponent<Props> {
         }}
         currentClassName="active"
       >
-        <div className="sideMenuHeader">
+        <div className={sideMenuStyles.sideMenuHeader}>
           <div
             onClick={() => scrollById('port')}
             onKeyPress={() => scrollById('port')}
@@ -291,7 +302,7 @@ export class UpdateService extends PureComponent<Props> {
             match.params.idName
           }`}
         />
-        <div className="container-fluid breadcrumbNavigation">
+        <div className={containerClassName}>
           <NavigationHeaderItem
             idName={match.params.idName}
             IdUpdate="service"
@@ -312,16 +323,16 @@ export class UpdateService extends PureComponent<Props> {
           method={updateExternalServiceReducer.method}
           errorMessage={updateExternalServiceReducer.err}
         />
-        <div className="content-block">
-          <div className="container no-back">
-            <div className="row pageWidth">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
+            <div className={`${sideMenuStyles.pageWidth} row`}>
               <div
-                className="col-md-3 sideMenu"
+                className={`${sideMenuStyles.sideMenu} col-md-3`}
                 style={{ padding: '20px 0px' }}
               >
                 {this.renderServiceSidebar()}
               </div>
-              <div className="col-md-9 pageContent">
+              <div className="col-md-9">
                 <form onSubmit={e => this.handleSubmitUpdateService(e)}>
                   {this.renderUpdateService()}
                   <LoadButton

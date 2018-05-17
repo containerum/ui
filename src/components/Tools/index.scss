@@ -15,7 +15,7 @@
     padding-right: 30px;
 
     &Container {
-      min-height: 260px !important;
+      max-height: 261px !important;
       max-width: 370px !important;
       height: 275px;
 
@@ -52,7 +52,7 @@
         padding-left: 30px;
         padding-right: 30px;
         padding-bottom: 15px;
-        border-bottom: 1px solid $color-white;
+        border-bottom: 1px solid $very-light-gray;
       }
     }
 
@@ -83,7 +83,7 @@
 
   &Content {
     &Tools {
-      padding-top: 15px;
+      padding-top: 0;
     }
   }
 

@@ -2,9 +2,37 @@ import React from 'react';
 // import { connect } from 'react-redux';
 // import { Link } from 'react-router';
 // import Tooltip from 'rc-tooltip';
+import className from 'classnames/bind';
 
 import icon from '../../images/icon-create-dep.svg';
 import InputControl from '../InputControl';
+
+import globalStyles from '../../theme/global.scss';
+// import serviceStyles from '../../containers/CreateService/index.scss';
+
+const globalClass = className.bind(globalStyles);
+// const serviceClass = className.bind(serviceStyles);
+
+const containerClassName = globalClass(
+  'blockContainer',
+  'blockContainerOtherPadding'
+);
+
+// const switcherOnClassName = serviceClass(
+//   'serviceSwitcher',
+//   'serviceSwitcherOn'
+// );
+//
+// const labelClassName = globalClass('labelLeft', 'marginTop40');
+
+const titleClassName = globalClass('containerTitle', 'marginLeft20');
+
+const titleSecondClassName = globalClass(
+  'containerTitle',
+  'containerTitleBlock'
+);
+
+const selectClassName = globalClass('selectCustom', 'selectGreyColor');
 
 type Props = {
   externalSrvObject: Array,
@@ -39,7 +67,7 @@ const ServiceForm = ({
 }: Props) => (
   <div>
     <div
-      className="blockContainer blockContainerPadin"
+      className={containerClassName}
       id="internal-service"
       style={
         service && isActiveInternal ? { display: 'block' } : { display: 'none' }
@@ -47,26 +75,29 @@ const ServiceForm = ({
     >
       <div className="row">
         <div className="col-md-9">
-          <div className="containerTitle marLeft20" id="port">
+          <div className={titleClassName} id="port">
             {service ? (
               <div>
                 {service}{' '}
-                <span className="containerTitleText">internal service</span>
+                <span className={globalStyles.containerTitleText}>
+                  internal service
+                </span>
               </div>
             ) : (
               <div>
-                <span className="isHidden">*</span> Internal Service
+                <span className={globalStyles.isHidden}>*</span> Internal
+                Service
               </div>
             )}
           </div>
         </div>
       </div>
       {isActiveInternal && (
-        <div className="serviceWrapper">
-          <div className="row rowWithoutLine">
+        <div>
+          <div className={`${globalStyles.rowWithoutLine} row`}>
             <div className="col-md-12">
-              <div className="containerTitle containerBlockTitle">
-                <span>*</span> Ports
+              <div className={titleSecondClassName}>
+                <span className={globalStyles.containerTitleStar}>*</span> Ports
                 {/* <Tooltip */}
                 {/* placement='top' */}
                 {/* trigger={['hover']} */}
@@ -87,7 +118,7 @@ const ServiceForm = ({
               return (
                 <div style={{ display: 'flex', width: '96%' }} key={id}>
                   <div className="col-md-3">
-                    <div className="has-float-label">
+                    <div className={globalStyles.labelLeft}>
                       <InputControl
                         value={internalSrvName}
                         id={`${id}internalSrvName`}
@@ -114,7 +145,7 @@ const ServiceForm = ({
                     </div>
                   </div>
                   <div className="col-md-3">
-                    <div className="has-float-label">
+                    <div className={globalStyles.labelLeft}>
                       <InputControl
                         value={internalSrvPort}
                         id={`${id}internalSrvPort`}
@@ -143,7 +174,7 @@ const ServiceForm = ({
                     </div>
                   </div>
                   <div className="col-md-3">
-                    <div className="has-float-label">
+                    <div className={globalStyles.labelLeft}>
                       <InputControl
                         value={internalSrvTargetPort}
                         id={`${id}internalSrvTargetPort`}
@@ -172,13 +203,13 @@ const ServiceForm = ({
                     </div>
                   </div>
                   <div className="col-md-2">
-                    <div className="form-group">
-                      <div className="select-wrapper">
-                        <div className="select-arrow-3" />
-                        <div className="select-arrow-3" />
+                    <div className={globalStyles.formGroup}>
+                      <div className={globalStyles.selectWrapper}>
+                        <div className={globalStyles.selectArrow} />
+                        <div className={globalStyles.selectArrow} />
                         <select
                           name="deployment"
-                          className="selectCustom selectGreyColor"
+                          className={selectClassName}
                           value={intServiceType}
                           onChange={e =>
                             handleChangeService(
@@ -206,7 +237,7 @@ const ServiceForm = ({
                     <img
                       src={icon}
                       alt="delete"
-                      className="iconBasket"
+                      className={globalStyles.iconBasket}
                       style={{ marginTop: '30px' }}
                     />
                   </div>
@@ -228,7 +259,7 @@ const ServiceForm = ({
       )}
     </div>
     <div
-      className="blockContainer blockContainerPadin"
+      className={containerClassName}
       id="external-service"
       style={
         service && isActiveExternal ? { display: 'block' } : { display: 'none' }
@@ -236,27 +267,30 @@ const ServiceForm = ({
     >
       <div className="row">
         <div className="col-md-9">
-          <div className="containerTitle marLeft20">
+          <div className={titleClassName}>
             {service ? (
               <div>
                 {service}{' '}
-                <span className="containerTitleText">external Service</span>
+                <span className={globalStyles.containerTitleText}>
+                  external Service
+                </span>
               </div>
             ) : (
               <div>
-                <span className="isHidden">*</span> External Service
+                <span className={globalStyles.isHidden}>*</span> External
+                Service
               </div>
             )}
           </div>
         </div>
       </div>
       {isActiveExternal && (
-        <div className="serviceWrapper">
+        <div>
           <div />
-          <div className="row rowWithoutLine">
+          <div className={`${globalStyles.rowWithoutLine} row`}>
             <div className="col-md-12">
-              <div className="containerTitle containerBlockTitle">
-                <span>*</span> Ports
+              <div className={titleSecondClassName}>
+                <span className={globalStyles.containerTitleStar}>*</span> Ports
                 {/* <Tooltip */}
                 {/* placement='top' */}
                 {/* trigger={['hover']} */}
@@ -276,7 +310,7 @@ const ServiceForm = ({
               return (
                 <div style={{ display: 'flex', width: '100%' }} key={id}>
                   <div className="col-md-3">
-                    <div className="has-float-label">
+                    <div className={globalStyles.labelLeft}>
                       <InputControl
                         value={externalSrvName}
                         id={`${id}externalSrvName`}
@@ -303,7 +337,7 @@ const ServiceForm = ({
                     </div>
                   </div>
                   <div className="col-md-3">
-                    <div className="has-float-label">
+                    <div className={globalStyles.labelLeft}>
                       <InputControl
                         value={externalSrvTargetPort}
                         id={`${id}externalSrvTargetPort`}
@@ -332,13 +366,13 @@ const ServiceForm = ({
                     </div>
                   </div>
                   <div className="col-md-3">
-                    <div className="form-group">
-                      <div className="select-wrapper">
-                        <div className="select-arrow-3" />
-                        <div className="select-arrow-3" />
+                    <div className={globalStyles.formGroup}>
+                      <div className={globalStyles.selectWrapper}>
+                        <div className={globalStyles.selectArrow} />
+                        <div className={globalStyles.selectArrow} />
                         <select
                           name="deployment"
-                          className="selectCustom selectGreyColor"
+                          className={selectClassName}
                           value={extServiceType}
                           onChange={e =>
                             handleChangeService(
@@ -366,7 +400,7 @@ const ServiceForm = ({
                     <img
                       src={icon}
                       alt="delete"
-                      className="iconBasket"
+                      className={globalStyles.iconBasket}
                       style={{ marginTop: '30px' }}
                     />
                   </div>
