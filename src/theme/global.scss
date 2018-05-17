@@ -16,6 +16,10 @@
 }
 //////////////////////////////
 
+.isHidden {
+  display: none;
+}
+
 .wrapper {
   min-height: 100%;
   padding-bottom: 1px;
@@ -1074,6 +1078,12 @@
       font-size: 12px;
     }
   }
+
+  &Helper {
+    font-size: 12px;
+    font-weight: 300;
+    color: $ligth-gray-color;
+  }
 }
 
 .authBtnMargin {
@@ -1218,6 +1228,18 @@
   padding-right: 0 !important;
 }
 
+.paddingL20 {
+  padding-left: 20px;
+}
+
+.marginBottom30 {
+  margin-bottom: 30px;
+}
+
+.marginTop40 {
+  margin-top: 40px;
+}
+
 //////column row///////////////
 
 .column {
@@ -1259,4 +1281,13 @@
     margin-top: 30px;
   }
 
+}
+/////////////////////////////label/////////////////
+
+.label {
+  &Left {
+    label {
+      float: left;
+    }
+  }
 }

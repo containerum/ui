@@ -1,0 +1,55 @@
+@import '../../theme/variables';
+
+.service {
+  &Switcher {
+    width: 49px;
+    float: right;
+    position: relative;
+    margin-top: 4px;
+    margin-right: 20px;
+
+    &::before {
+      display: block;
+      content: ' ';
+      width: 49px;
+      height:16px;
+      border: solid 1px $very-light-gray;
+      border-radius: 15px;
+      background: transparent;
+      -webkit-transition: 0.08s linear;
+      -moz-transition: 0.08s linear;
+      -o-transition: 0.08s linear;
+      transition: 0.08s linear;
+      cursor: pointer;
+    }
+
+    &::after {
+      display: block;
+      content: ' ';
+      width: 25px;
+      height: 25px;
+      border-radius: 15px;
+      background-color: $color-white;
+      box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+      position: absolute;
+      left: -1px;
+      top: -5px;
+      -webkit-transition: left 0.08s linear;
+      -moz-transition: left 0.08s linear;
+      -o-transition: left 0.08s linear;
+      transition: left 0.08s linear;
+      cursor: pointer;
+    }
+
+    &On {
+      &::after {
+        left:25px
+      }
+
+      &::before {
+        background-color: $main-color;
+        border: solid 1px $main-color;
+      }
+    }
+  }
+}
