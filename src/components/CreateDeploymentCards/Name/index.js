@@ -1,8 +1,18 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../../InputControl/index';
+
+import globalStyles from '../../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'blockContainer',
+  'blockContainerOtherPadding'
+);
 
 type Props = {
   inputName: string,
@@ -10,10 +20,10 @@ type Props = {
 };
 
 const CreateDeploymentName = ({ inputName, handleChangeInputName }: Props) => (
-  <div className="blockContainer blockContainerPadin" id="name">
+  <div className={containerClassName} id="name">
     <div className="col-md-7">
-      <div className="containerTitle">
-        <span>*</span> Name
+      <div className={globalStyles.containerTitle}>
+        <span className={globalStyles.containerTitleStar}>*</span> Name
         {/* <Tooltip */}
         {/* placement='top' */}
         {/* trigger={['hover']} */}
@@ -22,7 +32,9 @@ const CreateDeploymentName = ({ inputName, handleChangeInputName }: Props) => (
         {/* <span className="myTooltip" data-toggle="tooltip">?</span> */}
         {/* </Tooltip> */}
       </div>
-      <div className="containerSubTitle">Enter Deployment name</div>
+      <div className={globalStyles.containerSubTitleCreate}>
+        Enter Deployment name
+      </div>
       <InputControl
         value={inputName}
         id="deploymentName"

@@ -1,9 +1,18 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../../../InputControl';
 import icon from '../../../../images/icon-create-dep.svg';
+
+import globalStyles from '../../../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const titleClassName = globalClass('containerTitle', 'containerTitleBlock');
+
+const columnClassName = globalClass('columnCustomVolumes', 'marginLeft_10');
 
 type Props = {
   volumeMounts: Array<Object>,
@@ -38,12 +47,12 @@ const Volumes = ({
   handleClickAddVolume
 }: Props) => (
   <div
-    className="row rowLine"
+    className={`${globalStyles.rowLine} row`}
     id={`container${index + 1}-volume`}
     style={volumes.length && isContainersMore ? {} : { borderBottom: 'none' }}
   >
     <div className="col-md-12">
-      <div className="containerTitle containerBlockTitle">
+      <div className={titleClassName}>
         Volume
         {/* <Tooltip */}
         {/* placement='top' */}
@@ -60,15 +69,15 @@ const Volumes = ({
           // console.log(item);
           const { id, name, subPath, mountPath } = item;
           return (
-            <div className="row marLeft" style={{ width: '100%' }} key={id}>
-              <div className="col-md-4 myCol31">
-                <div className="form-group">
-                  <div className="select-wrapper">
-                    <div className="select-arrow-3" />
-                    <div className="select-arrow-3" />
+            <div className="row ml-0" style={{ width: '100%' }} key={id}>
+              <div className={`${globalStyles.columnCustomVolumes} col-md-4`}>
+                <div className={globalStyles.formGroup}>
+                  <div className={globalStyles.selectWrapper}>
+                    <div className={globalStyles.selectArrow} />
+                    <div className={globalStyles.selectArrow} />
                     <select
                       name="volumes"
-                      className="selectCustom"
+                      className={globalStyles.selectCustom}
                       value={name}
                       onChange={e =>
                         handleChangeVolumeSelect(
@@ -91,14 +100,14 @@ const Volumes = ({
                     </select>
                   </div>
                   {indexVolume === 0 && (
-                    <div className="form-group__helper">
+                    <div className={globalStyles.formGroupHelper}>
                       Choose your exiscting Volume <br />
                       Path - The Folder into your Container or Pod
                     </div>
                   )}
                 </div>
               </div>
-              <div className="col-md-4 myCol31">
+              <div className={`${globalStyles.columnCustomVolumes} col-md-4`}>
                 <InputControl
                   value={subPath}
                   id={`subPath${id}`}
@@ -120,7 +129,7 @@ const Volumes = ({
                   }
                 />
               </div>
-              <div className="col-md-4 myCol31 marLeftt10">
+              <div className={`${columnClassName} col-md-4`}>
                 <InputControl
                   value={mountPath}
                   id={`path${id}`}
@@ -150,7 +159,11 @@ const Volumes = ({
                 onKeyPress={() => handleClickRemoveVolume(id, index)}
                 role="presentation"
               >
-                <img src={icon} alt="delete" className="iconBasket" />
+                <img
+                  src={icon}
+                  alt="delete"
+                  className={globalStyles.iconBasket}
+                />
               </div>
             </div>
           );

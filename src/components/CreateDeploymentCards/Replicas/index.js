@@ -1,8 +1,18 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../../InputControl/index';
+
+import globalStyles from '../../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'blockContainer',
+  'blockContainerOtherPadding'
+);
 
 type Props = {
   inputReplicas: string,
@@ -15,15 +25,16 @@ const CreateDeploymentReplicas = ({
   idDep,
   handleChangeInputReplicasName
 }: Props) => (
-  <div className="blockContainer blockContainerPadin" id="replicas">
+  <div className={containerClassName} id="replicas">
     <div className="col-md-7">
       {idDep ? (
-        <div className="containerTitle">
-          {idDep} <span className="containerTitleText">deployment</span>
+        <div className={globalStyles.containerTitle}>
+          {idDep}{' '}
+          <span className={globalStyles.containerTitleText}>deployment</span>
         </div>
       ) : (
-        <div className="containerTitle">
-          <span>*</span> Replicas
+        <div className={globalStyles.containerTitle}>
+          <span className={globalStyles.containerTitleStar}>*</span> Replicas
           {/* <Tooltip */}
           {/* placement='top' */}
           {/* trigger={['hover']} */}
@@ -33,7 +44,9 @@ const CreateDeploymentReplicas = ({
           {/* </Tooltip> */}
         </div>
       )}
-      <div className="containerSubTitle">Enter Replicas count</div>
+      <div className={globalStyles.containerSubTitleCreate}>
+        Enter Replicas count
+      </div>
       <InputControl
         value={inputReplicas}
         id="deploymentReplicas"

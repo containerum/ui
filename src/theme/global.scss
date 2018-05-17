@@ -409,9 +409,46 @@
     }
   }
 
+  &Title {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1;
+    color: $color-dark-gray;
+    text-transform: uppercase;
+    position: relative;
+
+    &Block {
+      font-size: 15px;
+      margin-top: 40px;
+      margin-bottom: 30px;
+      text-transform: initial;
+    }
+
+    &Star {
+      color: $title-color;
+    }
+
+    &Text {
+      font-size: 15px;
+      font-weight: 300;
+      color: $ligth-gray-color;
+      text-transform: lowercase;
+      margin-left: 10px;
+    }
+  }
+
   &SubTitle {
     font-weight: 300;
     color: $subtitle-color;
+    margin-top: 15px;
+    margin-bottom: 50px;
+  }
+
+  &SubTitleCreate {
+    font-weight: 300;
+    color: $ligth-gray-color
+  ;
     margin-top: 15px;
     margin-bottom: 50px;
   }
@@ -434,6 +471,18 @@
     left: -25px;
     top: 0;
     transition: all 0.3s ease
+  }
+
+  &Basket {
+    margin-top: 19px;
+    margin-left: 30px;
+    width: 12px;
+    height: 15px;
+    cursor: pointer;
+
+    &:hover {
+      fill: $main-color;
+    }
   }
 }
 
@@ -796,6 +845,18 @@
 
 
 .block {
+  &Container {
+    background-color: $color-white;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+    padding: 40px 20px 30px 20px;
+    margin-bottom: 30px;
+
+    &OtherPadding {
+      padding: 40px 35px !important;
+    }
+  }
+
   &Item {
     margin: 0 30px 0 30px;
     padding: 0 0 40px 0;
@@ -962,6 +1023,13 @@
         }
       }
     }
+
+    &Helper {
+      font-size: 12px;
+      font-weight: 300;
+      color: $ligth-gray-color;
+      margin: 7px 0 0 0;
+    }
   }
 }
 
@@ -1048,8 +1116,14 @@
     flex-direction: row;
     align-items: flex-end;
   }
-}
 
+  &Line {
+    border-bottom: 1px solid $color-white2;
+    padding-bottom: 40px;
+    padding-left: 20px;
+  }
+}
+////////////////////input///////////
 .input {
   &Group {
     margin: 0 0 20px 0;
@@ -1066,6 +1140,14 @@
     .breadcrumbsLiSpacer {
       margin-top: 1px;
     }
+  }
+
+  &Navigation {
+    padding-left: 0;
+    padding-right: 0;
+    background-color: $color-white;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
   }
 }
 
@@ -1084,7 +1166,35 @@
   margin-top: 30px ;
 }
 
+.marginLeft20 {
+  margin-left: 20px;
+}
+
+.marginLeft_10 {
+  margin-left: -10px;
+}
+
+.paddingX20 {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
 .paddingX0 {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+//////column row///////////////
+
+.column {
+  &Custom{
+    flex: 0 0 44.666667%;
+    max-width: 44.666667%;
+
+    &Volumes {
+      -ms-flex: 0 0 31%;
+      flex: 0 0 31%;
+      max-width: 31%;
+    }
+  }
 }

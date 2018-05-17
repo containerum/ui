@@ -1,0 +1,44 @@
+@import '../../theme/variables';
+
+.sideMenu {
+  position: sticky;
+  top: 15px;
+  overflow: visible;
+  max-height: calc(100vh);
+  margin: -40px 0 50px;
+  padding: 0;
+
+  &Item {
+    font-size: 15px;
+    font-weight: 300;
+    color: $ligth-gray-color;
+    padding: 7px 20px;
+
+    &TransformInit {
+      text-transform: initial;
+    }
+  }
+
+  &Header {
+    font-size: 15px;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+
+    &Active a {
+      color: $main-color !important;
+    }
+
+    &Active div {
+      color: $main-color !important;
+    }
+  }
+}
+
+.page {
+  &Width {
+    max-width: 1120px
+  }
+}

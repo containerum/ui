@@ -1,9 +1,16 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../../../InputControl/index';
 import icon from '../../../../images/icon-create-dep.svg';
+
+import globalStyles from '../../../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const titleClassName = globalClass('containerTitle', 'containerTitleBlock');
 
 type Props = {
   env: Object,
@@ -26,9 +33,12 @@ const Environments = ({
   handleClickRemoveEnvironment,
   handleClickAddEnvironment
 }: Props) => (
-  <div className="row rowLine" id={`container${index + 1}-environments`}>
+  <div
+    className={`${globalStyles.rowLine} row`}
+    id={`container${index + 1}-environments`}
+  >
     <div className="col-md-12">
-      <div className="containerTitle containerBlockTitle">
+      <div className={titleClassName}>
         Environment
         {/* <Tooltip */}
         {/* placement='top' */}
@@ -42,8 +52,8 @@ const Environments = ({
     {env.map((item, indexEnvironment) => {
       const { id, name, value } = item;
       return (
-        <div className="row marLeft" key={id} style={{ width: '100%' }}>
-          <div className="col-md-5 myColumn">
+        <div className="row ml-0" key={id} style={{ width: '100%' }}>
+          <div className={`${globalStyles.columnCustom} col-md-5`}>
             <InputControl
               value={name}
               id={`envName${id}`}
@@ -70,7 +80,7 @@ const Environments = ({
               }
             />
           </div>
-          <div className="col-md-5 myColumn">
+          <div className={`${globalStyles.columnCustom} col-md-5`}>
             <InputControl
               value={value}
               id={`envValue${id}`}
@@ -97,7 +107,7 @@ const Environments = ({
             onKeyPress={() => handleClickRemoveEnvironment(id, index)}
             role="presentation"
           >
-            <img src={icon} alt="delete" className="iconBasket" />
+            <img src={icon} alt="delete" className={globalStyles.iconBasket} />
           </div>
         </div>
       );

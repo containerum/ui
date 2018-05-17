@@ -1,8 +1,15 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../../../InputControl';
+
+import globalStyles from '../../../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const titleClassName = globalClass('containerTitle', 'containerTitleBlock');
 
 type Props = {
   item: Object,
@@ -18,12 +25,9 @@ type Props = {
 const Common = ({ item, index, handleChangeInputCommon }: Props) => {
   const { id, name, image } = item;
   return (
-    <div className="row rowLine">
+    <div className={`${globalStyles.rowLine} row`}>
       <div className="col-md-7">
-        <div
-          className="containerTitle containerBlockTitle"
-          id={`container${index + 1}-info`}
-        >
+        <div className={titleClassName} id={`container${index + 1}-info`}>
           <span>*</span> Common
           {/* <Tooltip */}
           {/* placement='top' */}
