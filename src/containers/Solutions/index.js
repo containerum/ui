@@ -139,6 +139,7 @@ export class Solutions extends PureComponent<Props> {
                 display: 'inline-block',
                 marginTop: 30,
                 height: '307px',
+                marginLeft: '30px',
                 backgroundColor: '#f6f6f6'
               }}
             />
