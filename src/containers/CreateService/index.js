@@ -7,6 +7,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
+import className from 'classnames/bind';
 
 import scrollById from '../../functions/scrollById';
 import * as actionGetDeployments from '../../actions/deploymentsActions/getDeployments';
@@ -30,6 +31,28 @@ import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import { routerLinks } from '../../config';
 import globalStyles from '../../theme/global.scss';
+
+import sideMenuStyles from '../CreateDeployment/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'containerFluid',
+  'breadcrumbsNavigation'
+);
+
+const nextContainerClassName = globalClass(
+  'blockContainer',
+  'blockContainerOtherPadding'
+);
+const subTitleClassName = globalClass(
+  'marginBottom30',
+  'containerSubTitleCreate'
+);
+
+const selectClassName = globalClass('selectCustom', 'selectGreyColor');
+
+const textHelperClassName = globalClass('textHelper', 'isHidden');
 
 type Props = {
   getDeploymentsReducer: Object,
@@ -156,9 +179,9 @@ export class CreateService extends PureComponent<Props> {
           padding: '50px 0',
           margin: '-40px 0 0'
         }}
-        currentClassName="active"
+        currentClassName={sideMenuStyles.sideMenuHeaderActive}
       >
-        <div className="sideMenuHeader">
+        <div className={sideMenuStyles.sideMenuHeader}>
           <div
             onClick={() => scrollById('target-deployment')}
             onKeyPress={() => scrollById('target-deployment')}
@@ -167,7 +190,7 @@ export class CreateService extends PureComponent<Props> {
             Target Deployment
           </div>
         </div>
-        <div className="sideMenuHeader">
+        <div className={sideMenuStyles.sideMenuHeader}>
           <div
             onClick={() => scrollById('internal-service')}
             onKeyPress={() => scrollById('internal-service')}
@@ -176,7 +199,7 @@ export class CreateService extends PureComponent<Props> {
             Internal Service
           </div>
         </div>
-        <div className="sideMenuHeader">
+        <div className={sideMenuStyles.sideMenuHeader}>
           <div
             onClick={() => scrollById('external-service')}
             onKeyPress={() => scrollById('external-service')}
@@ -274,7 +297,7 @@ export class CreateService extends PureComponent<Props> {
     return (
       <div>
         <Helmet title={`Create Service in ${match.params.idName}`} />
-        <div className="container-fluid breadcrumbNavigation">
+        <div className={containerClassName}>
           <NavigationHeaderItem
             idName={match.params.idName}
             IdCreate="service"
@@ -292,22 +315,28 @@ export class CreateService extends PureComponent<Props> {
         />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
-            <div className="row pageWidth">
+            <div className={`${sideMenuStyles.pageWidth} row`}>
               <div
-                className="col-md-3 sideMenu"
+                className={`${sideMenuStyles.sideMenu} col-md-3`}
                 style={{ padding: '20px 0px' }}
               >
                 {this.renderServiceSidebar()}
               </div>
-              <div className="col-md-9 pageContent">
+              <div className="col-md-9">
                 <form onSubmit={e => this.handleSubmitCreateService(e)}>
                   <div
-                    className="blockContainer blockContainerPadin"
+                    className={nextContainerClassName}
                     id="target-deployment"
                   >
                     <div className="col-md-6">
-                      <div className="containerTitle">
-                        <span className={!currentDeployment ? 'isHidden' : ''}>
+                      <div className={globalStyles.containerTitle}>
+                        <span
+                          className={
+                            !currentDeployment
+                              ? globalStyles.isHidden
+                              : globalStyles.containerTitleStar
+                          }
+                        >
                           *
                         </span>{' '}
                         Target Deployment
@@ -320,22 +349,22 @@ export class CreateService extends PureComponent<Props> {
                         {/* </Tooltip> */}
                       </div>
                       {currentDeployment ? (
-                        <div className="containerSubTitle marBot30">
+                        <div className={subTitleClassName}>
                           Choose Deployment
                         </div>
                       ) : (
-                        <div className="containerSubTitle marBot30">
+                        <div className={subTitleClassName}>
                           You must have Deployment to create a Service
                         </div>
                       )}
 
                       {currentDeployment ? (
-                        <div className="select-wrapper">
-                          <div className="select-arrow-3" />
-                          <div className="select-arrow-3" />
+                        <div className={globalStyles.selectWrapper}>
+                          <div className={globalStyles.selectArrow} />
+                          <div className={globalStyles.selectArrow} />
                           <select
                             name="deployment"
-                            className="selectCustom selectGreyColor"
+                            className={selectClassName}
                             value={currentDeployment}
                             onChange={e => this.handleChange(e)}
                             required
@@ -358,7 +387,7 @@ export class CreateService extends PureComponent<Props> {
                         </NavLink>
                       )}
 
-                      <div className="helperText isHidden">
+                      <div className={textHelperClassName}>
                         Select the deployment for which the Service applies
                       </div>
                     </div>

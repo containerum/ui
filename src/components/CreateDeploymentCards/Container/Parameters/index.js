@@ -1,8 +1,15 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../../../InputControl/index';
+
+import globalStyles from '../../../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const titleClassName = globalClass('containerTitle', 'containerTitleBlock');
 
 type Props = {
   item: Object,
@@ -21,10 +28,13 @@ type Props = {
 const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
   const { id, limits } = item;
   return (
-    <div className="row rowLine" id={`container${index + 1}-parameters`}>
+    <div
+      className={`${globalStyles.rowLine} row`}
+      id={`container${index + 1}-parameters`}
+    >
       <div className="col-md-12">
-        <div className="containerTitle containerBlockTitle">
-          <span>*</span> Parameters
+        <div className={titleClassName}>
+          <span className={globalStyles.containerTitleStar}>*</span> Parameters
           {/* <Tooltip */}
           {/* placement='top' */}
           {/* trigger={['hover']} */}
@@ -34,7 +44,7 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           {/* </Tooltip> */}
         </div>
       </div>
-      <div className="col-md-5 myColumn">
+      <div className={`${globalStyles.columnCustom} col-md-5`}>
         <InputControl
           value={limits.cpu}
           id={`cpu${id}`}
@@ -65,7 +75,7 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
         />
       </div>
 
-      <div className="col-md-5 myColumn">
+      <div className={`${globalStyles.columnCustom} col-md-5`}>
         <InputControl
           value={limits.memory}
           id={`ram${id}`}

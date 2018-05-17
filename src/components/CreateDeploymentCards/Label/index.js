@@ -1,9 +1,19 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../../InputControl/index';
 import icon from '../../../images/icon-create-dep.svg';
+
+import globalStyles from '../../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'blockContainer',
+  'blockContainerOtherPadding'
+);
 
 type Props = {
   labels: Array<Object>,
@@ -18,9 +28,9 @@ const CreateDeploymentLabel = ({
   handleClickAddLabel,
   handleChangeInputLabel
 }: Props) => (
-  <div className="blockContainer blockContainerPadin" id="labels">
+  <div className={containerClassName} id="labels">
     <div className="col-md-12">
-      <div className="containerTitle">
+      <div className={globalStyles.containerTitle}>
         Label
         {/* <Tooltip */}
         {/* placement='top' */}
@@ -30,15 +40,15 @@ const CreateDeploymentLabel = ({
         {/* <span className="myTooltip" data-toggle="tooltip">?</span> */}
         {/* </Tooltip> */}
       </div>
-      <div className="containerSubTitle">Enter Labels</div>
+      <div className={globalStyles.containerSubTitleCreate}>Enter Labels</div>
     </div>
     {labels.map((item, index) => {
       const { id } = item;
       const valueKey = labels[index].key;
       const valueLabel = labels[index].label;
       return (
-        <div className="row marLeft" key={id}>
-          <div className="col-md-5 myColumn">
+        <div className="row ml-0" key={id}>
+          <div className={`${globalStyles.columnCustom} col-md-5`}>
             <InputControl
               value={valueKey}
               id={`deploymentLabelKey${id}`}
@@ -54,7 +64,7 @@ const CreateDeploymentLabel = ({
               }
             />
           </div>
-          <div className="col-md-5 myColumn">
+          <div className={`${globalStyles.columnCustom} col-md-5`}>
             <InputControl
               value={valueLabel}
               id={`deploymentLabelName${id}`}
@@ -79,7 +89,7 @@ const CreateDeploymentLabel = ({
             <img
               src={icon}
               alt="delete"
-              className="iconBasket"
+              className={globalStyles.iconBasket}
               style={{ marginTop: '40px' }}
             />
           </div>
