@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import Notification from '../Notification';
@@ -27,6 +28,29 @@ import {
 } from '../../constants/namespaceConstants/addNamespaceUserAccess';
 import { DELETE_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'contentBlockContainer',
+  'contentBlockContainerMembership'
+);
+const labelClassName = globalClass(
+  'contentBlockHeaderLabelText',
+  'contentBlockHeaderLabelMembership',
+  'contentBlockHeaderLabelMain',
+  'contentBlockHeaderLabelNamespaceInfo'
+);
+const menuClassName = globalClass(
+  'contentBlockMenu',
+  'contentBlockMenuMembership'
+);
+const liClassName = globalClass(
+  'contentBlockMenuLi',
+  'contentBlockMenuLiMembership'
+);
 
 type Props = {
   match: Object,
@@ -300,33 +324,30 @@ class Membership extends PureComponent<Props> {
           namespaceId={match.params.idName}
           err={this.state.errAdd}
         />
-        <div className="content-block">
-          <div className="container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">
               <div className="col-md-3 col-lg-3 col-xl-2" />
               <div className="col-md-9 col-lg-9 col-xl-10">
-                <div className="content-block">
-                  <div className=" content-block-container-membership content-block-container container">
-                    <div className="content-block-header">
-                      <div className="content-block-header-label__text content-block-header-label_main__membership content-block-header-label_main content-block-header-label__text_namspace-info">
-                        {idName}
-                      </div>
-                      <div
-                        className="content-block-header-nav"
-                        style={{ marginBottom: 20 }}
-                      >
+                <div className={globalStyles.contentBlock}>
+                  <div className={`${containerClassName} container`}>
+                    <div className={globalStyles.contentBlockHeader}>
+                      <div className={labelClassName}>{idName}</div>
+                      <div style={{ marginBottom: 20 }}>
                         <ul
-                          className="content-block-menu nav nav-pills content-block-menu__membership"
+                          className={`${menuClassName} nav nav-pills`}
                           role="tablist"
                           style={{ height: '50px' }}
                         >
                           <li
-                            className="content-block-menu__li content-block-menu__li_membership nav-item"
+                            className={`${liClassName} nav-item`}
                             style={{ width: 'auto' }}
                           >
                             <NavLink
+                              activeClassName={
+                                globalStyles.contentBlockMenuLiActive
+                              }
                               to={routerLinks.getMembershipLink(idName)}
-                              className="content-block-menu__link"
                             >
                               Users
                             </NavLink>

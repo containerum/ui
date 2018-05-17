@@ -1,26 +1,27 @@
 @import './variables.scss';
+//////////membership items///////////
+.membership {
+  &Item {
+    color: $main-color;
+    cursor: pointer;
+  }
+
+  &Icon {
+    color: $very-light-gray;
+  }
+
+  &Arrow::before {
+    color: $very-light-gray;
+  }
+}
+//////////////////////////////
 
 .wrapper {
   min-height: 100%;
   padding-bottom: 1px;
 }
 
-.hoverAction {
-  cursor: pointer;
 
-  &:hover{
-    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
-  }
-
-  &:focus{
-    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
-  }
-
-  &:active{
-    border: none;
-    margin-top: 30px;
-  }
-}
 
 .table {
   tbody td {
@@ -90,6 +91,10 @@
       &:hover {
         box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
       }
+    }
+
+    &Membership {
+      padding: 40px 50px 40px 50px !important;
     }
   }
 
@@ -182,6 +187,11 @@
 
     &Label {
       max-width: 800px;
+
+      &Membership {
+        padding-bottom: 30px;
+        color: $main-color !important;
+      }
 
       &Text {
         display: inline-block;
@@ -375,7 +385,17 @@
         }
       }
 
+      &Membership {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+    }
 
+    &Membership {
+      display: flex;
+      justify-content: space-between;
     }
   }
 }
@@ -703,7 +723,15 @@
       border-top-color: $main-color;
       margin: 4px 0 5px 12px;
     }
+
+    &Membership {
+      &::after {
+        border-top-color: $very-light-gray !important;
+        margin-left: 38px !important;
+      }
+    }
   }
+
 
 
   .dropdownToggle {
@@ -715,8 +743,9 @@
   &Item:active{
     background-color: $main-color;
   }
-
 }
+
+
 
 .button {
   cursor: pointer;
@@ -1051,6 +1080,11 @@
   margin-bottom: 15px;
 }
 
+.overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 //////////////////select styles////////////////////
 
@@ -1197,4 +1231,32 @@
       max-width: 31%;
     }
   }
+}
+///////////////////hover action////////////////
+.hoverAction {
+  cursor: pointer;
+
+  &:hover{
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  &:hover .membershipIcon {
+    color: $main-color;
+  }
+
+  &:hover .dropdownToggleMembership {
+    &::after {
+      border-top-color: $main-color !important;
+    }
+  }
+
+  &:focus{
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  &:active{
+    border: none;
+    margin-top: 30px;
+  }
+
 }
