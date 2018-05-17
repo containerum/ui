@@ -34,7 +34,7 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
     >
       <div className="col-md-12">
         <div className={titleClassName}>
-          <span>*</span> Parameters
+          <span className={globalStyles.containerTitleStar}>*</span> Parameters
           {/* <Tooltip */}
           {/* placement='top' */}
           {/* trigger={['hover']} */}
