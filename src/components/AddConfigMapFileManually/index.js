@@ -22,7 +22,7 @@ const globalClass = className.bind(globalStyles);
 const containerClassName = globalClass(
   'container',
   'containerNoBackground',
-  'containerConfigmpAddFile'
+  'containerConfigmapAddFile'
 );
 const container2ClassName = globalClass('container', 'containerNoBackground');
 const formClassName = globalClass('formControl', 'formControlConfigmap');
