@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
 
+import { sourceType } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
@@ -455,45 +456,47 @@ export class Dashboard extends PureComponent<Props> {
               {this.renderDashboardBlockTourAndNews()}
             </div>
 
-            <div className="row">
-              <div className="col-md-12 pl-0 pr-0">
-                <div className={blockContainerTabs}>
-                  <div className={styles.blockContainerTabsHeader}>
-                    PRE-BUILT SOLUTIONS
-                  </div>
-                  <ul
-                    className="nav nav-pills mb-3"
-                    id="pills-tab"
-                    role="tablist"
-                  >
-                    <li className="nav-item">
-                      <NavLink
-                        className={`${styles.customSolutionNavLink} nav-link`}
-                        id="first-tab"
-                        data-toggle="pill"
-                        to="/dashboard"
-                        role="tab"
-                        aria-controls="pills-home"
-                        aria-selected="true"
-                      >
-                        All
-                      </NavLink>
-                    </li>
-                  </ul>
-
-                  <div className="tab-content" id="pills-tabContent">
-                    <div
-                      className="tab-pane fade show active"
-                      id="first"
-                      role="tabpanel"
-                      aria-labelledby="first-tab"
+            {sourceType === 'ONLINE' && (
+              <div className="row">
+                <div className="col-md-12 pl-0 pr-0">
+                  <div className={blockContainerTabs}>
+                    <div className={styles.blockContainerTabsHeader}>
+                      PRE-BUILT SOLUTIONS
+                    </div>
+                    <ul
+                      className="nav nav-pills mb-3"
+                      id="pills-tab"
+                      role="tablist"
                     >
-                      {this.renderSolutionsList()}
+                      <li className="nav-item">
+                        <NavLink
+                          className={`${styles.customSolutionNavLink} nav-link`}
+                          id="first-tab"
+                          data-toggle="pill"
+                          to="/dashboard"
+                          role="tab"
+                          aria-controls="pills-home"
+                          aria-selected="true"
+                        >
+                          All
+                        </NavLink>
+                      </li>
+                    </ul>
+
+                    <div className="tab-content" id="pills-tabContent">
+                      <div
+                        className="tab-pane fade show active"
+                        id="first"
+                        role="tabpanel"
+                        aria-labelledby="first-tab"
+                      >
+                        {this.renderSolutionsList()}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

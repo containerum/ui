@@ -4,7 +4,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Blockies from 'react-blockies';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 // import deployment from '../../images/deployment.png';
 
 import styles from '../../containers/Header/index.scss';
@@ -15,6 +15,8 @@ type Props = {
   balance: string,
   handleLogout: () => void
 };
+
+const isOnline = sourceType === 'ONLINE';
 
 const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
   <div>
@@ -30,6 +32,13 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
+            style={
+              isOnline
+                ? {}
+                : {
+                    marginTop: 6
+                  }
+            }
           >
             {email}
           </a>
@@ -47,13 +56,15 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
             >
               Account
             </NavLink>
-            <NavLink
-              activeClassName="active"
-              className="dropdown-item"
-              to="/billing"
-            >
-              Billing
-            </NavLink>
+            {isOnline && (
+              <NavLink
+                activeClassName="active"
+                className="dropdown-item"
+                to="/billing"
+              >
+                Billing
+              </NavLink>
+            )}
             <NavLink
               activeClassName="active"
               className="dropdown-item text-danger"
@@ -64,9 +75,12 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
             </NavLink>
           </ul>
         </div>
-        <div className={styles.headerTopAccountDeposit}>
-          {balance ? parseFloat(balance).toFixed(2) : 0}$
-        </div>
+
+        {isOnline && (
+          <div className={styles.headerTopAccountDeposit}>
+            {balance ? parseFloat(balance).toFixed(2) : 0}$
+          </div>
+        )}
       </div>
     </div>
     <div className="clearfix" />

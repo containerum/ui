@@ -7,16 +7,22 @@ import classNames from 'classnames/bind';
 import styles from '../../containers/Namespaces/index.scss';
 import globalStyles from '../../theme/global.scss';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import deployment from '../../images/deployment.png';
 
 type Props = {
   data: Array<Object>,
+  role: string,
   history: Object,
   handleDeleteNamespace: (idName: string) => void
 };
 
-const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
+const NamespacesList = ({
+  data,
+  role,
+  history,
+  handleDeleteNamespace
+}: Props) => {
   const handleClickGetNamespace = name => {
     history.push(routerLinks.namespaceLink(name));
   };
@@ -46,6 +52,7 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
     'contentBlockContent',
     'containerCard'
   );
+  const isOnline = sourceType === 'ONLINE';
   return (
     <div className="row double">
       {data &&
@@ -185,17 +192,34 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
             </div>
           );
         })}
-      <div className="col-md-4 align-middle">
-        <NavLink
-          activeClassName="active"
-          to={routerLinks.createNamespace}
-          className={`${addNewBlockClassName} ${styles.addNewBlock}`}
-        >
-          <div className={styles.action}>
-            <i>+</i> Add a namespace
+
+      {isOnline &&
+        role === 'user' && (
+          <div className="col-md-4 align-middle">
+            <NavLink
+              activeClassName="active"
+              to={routerLinks.createNamespace}
+              className={`${addNewBlockClassName} ${styles.addNewBlock}`}
+            >
+              <div className={styles.action}>
+                <i>+</i> Add a namespace
+              </div>
+            </NavLink>
           </div>
-        </NavLink>
-      </div>
+        )}
+      {role === 'admin' && (
+        <div className="col-md-4 align-middle">
+          <NavLink
+            activeClassName="active"
+            to={routerLinks.createCustomNamespace}
+            className={`${addNewBlockClassName} ${styles.addNewBlock}`}
+          >
+            <div className={styles.action}>
+              <i>+</i> Add a namespace
+            </div>
+          </NavLink>
+        </div>
+      )}
     </div>
   );
 };

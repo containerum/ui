@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { Dispatch } from './types';
-import { routerLinks } from './config';
+import { routerLinks, sourceType } from './config';
 import { fetchGetProfileIfNeeded } from './actions/profileActions/getProfile';
 import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
 // import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
@@ -38,6 +38,7 @@ import CreateDomainPage from './containers/CreateDomain';
 import CreatedExternalServiceSuccessfulPage from './containers/CreatedExternalServiceSuccessful';
 import UpdateServicePage from './containers/UpdateService';
 import DeploymentPage from './containers/Deployment';
+import CreateCustomNamespacePage from './containers/CreateCustomNamespace';
 import CreateDeploymentPage from './containers/CreateDeployment';
 import UpdateDeploymentPage from './containers/UpdateDeployment';
 
@@ -61,6 +62,8 @@ import DomainsInfo from './containers/Domains';
 import ConfigMapsInfo from './containers/ConfigMaps';
 import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 
+const isOnline = sourceType === 'ONLINE';
+
 export default [
   {
     path: routerLinks.index,
@@ -80,28 +83,6 @@ export default [
         dispatch(fetchGetNamespacesIfNeeded()),
         dispatch(fetchGetSolutionsIfNeeded()),
         dispatch(fetchGetResourcesIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  {
-    path: routerLinks.solutions,
-    exact: true,
-    component: SolutionsPage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetSolutionsIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  {
-    path: routerLinks.solution,
-    exact: true,
-    component: SolutionPage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetSolutionIfNeeded()),
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
@@ -304,7 +285,29 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
-  {
+  isOnline && {
+    path: routerLinks.solutions,
+    exact: true,
+    component: SolutionsPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([
+        dispatch(fetchGetSolutionsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  isOnline && {
+    path: routerLinks.solution,
+    exact: true,
+    component: SolutionPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([
+        dispatch(fetchGetSolutionIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  isOnline && {
     path: routerLinks.billing,
     exact: true,
     component: BillingPage,
@@ -312,7 +315,7 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
-  {
+  isOnline && {
     path: routerLinks.support,
     exact: true,
     component: SupportPage,
@@ -323,10 +326,18 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  {
+  isOnline && {
     path: routerLinks.successTicket,
     exact: true,
     component: SuccessTicket,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.createCustomNamespace,
+    exact: true,
+    component: CreateCustomNamespacePage,
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])

@@ -21,7 +21,7 @@ import {
   GET_BALANCE_FAILURE
 } from '../../constants/billingConstants/getBalance';
 import type { Dispatch, ReduxState } from '../../types';
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import ProfileDropDown from '../../components/ProfileDropDown';
 import logo from '../../images/logo.svg';
 import imageLogo from '../../images/imageLogo.svg';
@@ -90,6 +90,7 @@ export class Header extends PureComponent<Props> {
   };
 
   render() {
+    const isOnline = sourceType === 'ONLINE';
     return (
       <div>
         <header className={styles.header}>
@@ -128,15 +129,17 @@ export class Header extends PureComponent<Props> {
                 {/* Volumes */}
                 {/* </NavLink> */}
                 {/* </li> */}
-                <li className={`${styles.headerTopMenuLi} nav-item`}>
-                  <NavLink
-                    activeClassName={styles.headerTopMenuLiActive}
-                    to={routerLinks.solutions}
-                    className={styles.headerTopMenuLink}
-                  >
-                    Solutions
-                  </NavLink>
-                </li>
+                {isOnline && (
+                  <li className={`${styles.headerTopMenuLi} nav-item`}>
+                    <NavLink
+                      activeClassName={styles.headerTopMenuLiActive}
+                      to={routerLinks.solutions}
+                      className={styles.headerTopMenuLink}
+                    >
+                      Solutions
+                    </NavLink>
+                  </li>
+                )}
                 <li className={`${styles.headerTopMenuLi} nav-item`}>
                   <NavLink
                     activeClassName={styles.headerTopMenuLiActive}
@@ -146,15 +149,17 @@ export class Header extends PureComponent<Props> {
                     Tools
                   </NavLink>
                 </li>
-                <li className={`${styles.headerTopMenuLi} nav-item`}>
-                  <NavLink
-                    activeClassName={styles.headerTopMenuLiActive}
-                    to={routerLinks.support}
-                    className={styles.headerTopMenuLink}
-                  >
-                    Support
-                  </NavLink>
-                </li>
+                {isOnline && (
+                  <li className={`${styles.headerTopMenuLi} nav-item`}>
+                    <NavLink
+                      activeClassName={styles.headerTopMenuLiActive}
+                      to={routerLinks.support}
+                      className={styles.headerTopMenuLink}
+                    >
+                      Support
+                    </NavLink>
+                  </li>
+                )}
               </ul>
               {/* <div className="header-top-admin-mode"> */}
               {/* <div className="header-top-admin-mode__label">Admin<br />mode</div> */}

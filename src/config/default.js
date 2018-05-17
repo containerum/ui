@@ -15,6 +15,7 @@ module.exports = {
   //   : 'wss://192.168.88.210:8082',
   appRecaptcha:
     process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS',
+  sourceType: process.env.SOURCE_TYPE || 'ONLINE',
   defaultCountry: process.env.COUNTRY || 'US',
   app: {
     htmlAttributes: { lang: 'en' },
@@ -47,6 +48,7 @@ module.exports = {
     namespace: '/namespaces/:idName',
     namespaceLink: (idName: string) => `/namespaces/${idName}/deployments`,
     createNamespace: '/createNamespace',
+    createCustomNamespace: '/createCustomNamespace',
     resizeNamespace: '/namespace/:idName/resize',
     resizeNamespaceLink: (idName: string) => `/namespace/${idName}/resize`,
     // volumes: '/volumes',
@@ -103,6 +105,7 @@ module.exports = {
     settings: '/settings'
   },
   externalLinks: {
+    exonLV: 'http://exon.lv',
     documentation: 'https://docs.containerum.com/docs/about',
     fastDeploy: 'https://docs.containerum.com/how-to',
     helloWorld: 'https://docs.containerum.com/docs/about',

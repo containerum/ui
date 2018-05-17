@@ -654,6 +654,11 @@ body .tooltip > .tooltip-inner {
     max-width: 44.666667%;
 }
 
+.myColumnColMd4 {
+  flex: 0 0 30%;
+  max-width: 30%;
+}
+
 .addBlockBtn {
     display: inline-block;
     margin: 30px 0 0 15px;
