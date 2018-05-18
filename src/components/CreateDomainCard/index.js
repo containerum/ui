@@ -1,9 +1,24 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../InputControl';
 import CheckBoxControl from '../CheckBoxControl';
+
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+const containerClassName = globalClass('blockContainer', 'paddingX20');
+
+const nextContainerClassName = globalClass(
+  'containerTitle',
+  'containerTitleBlock'
+);
+
+const selectClassName = globalClass('selectCustom', 'selectGreyColor');
+
+const textHelperClassName = globalClass('textHelper', 'isHidden');
 
 type Props = {
   currentService: Object,
@@ -32,10 +47,13 @@ const CreateDomainCard = ({
   handleChangeInput,
   handleChangeCheckBox
 }: Props) => (
-  <div className="blockContainer blockAddContainerPadin" id="target-deployment">
-    <div className="row rowLine">
+  <div className={containerClassName} id="target-deployment">
+    <div className={`${globalStyles.rowLine} row`}>
       <div className="col-md-12">
-        <div className="containerTitle" style={{ display: 'block' }}>
+        <div
+          className={globalStyles.containerTitle}
+          style={{ display: 'block' }}
+        >
           Target Service
         </div>
 
@@ -43,15 +61,18 @@ const CreateDomainCard = ({
           className="col-md-4"
           style={{ display: 'inline-block', paddingLeft: 0 }}
         >
-          <div style={{ margin: '30px 0px 5px' }} className="containerSubTitle">
+          <div
+            style={{ margin: '30px 0px 5px' }}
+            className={globalStyles.containerSubTitleCreate}
+          >
             External Service Name
           </div>
-          <div className="select-wrapper">
-            <div className="select-arrow-3" />
-            <div className="select-arrow-3" />
+          <div className={globalStyles.selectWrapper}>
+            <div className={globalStyles.selectArrow} />
+            <div className={globalStyles.selectArrow} />
             <select
               name="services"
-              className="selectCustom selectGreyColor"
+              className={selectClassName}
               value={currentService && currentService.name}
               onChange={e => handleChangeSelectService(e.target.value)}
               required
@@ -70,15 +91,18 @@ const CreateDomainCard = ({
           className="col-md-4"
           style={{ display: 'inline-block', marginLeft: '20px' }}
         >
-          <div style={{ margin: '30px 0px 5px' }} className="containerSubTitle">
+          <div
+            style={{ margin: '30px 0px 5px' }}
+            className={globalStyles.containerSubTitleCreate}
+          >
             Target port
           </div>
-          <div className="select-wrapper">
-            <div className="select-arrow-3" />
-            <div className="select-arrow-3" />
+          <div className={globalStyles.selectWrapper}>
+            <div className={globalStyles.selectArrow} />
+            <div className={globalStyles.selectArrow} />
             <select
               name="ports"
-              className="selectCustom selectGreyColor"
+              className={selectClassName}
               value={currentPort && currentPort.port}
               onChange={e => handleChangeSelectPort(e.target.value)}
               required
@@ -95,18 +119,18 @@ const CreateDomainCard = ({
           </div>
         </div>
 
-        <div className="helperText isHidden">
+        <div className={textHelperClassName}>
           Select the deployment for which the Service applies
         </div>
       </div>
     </div>
     <div
-      className="row rowLine"
+      className={`${globalStyles.rowLine} row`}
       style={{ borderBottom: 'none', paddingBottom: '20px' }}
     >
       <div className="col-md-7">
-        <div className="containerTitle containerBlockTitle">
-          <span>*</span> Domains
+        <div className={nextContainerClassName}>
+          <span className={globalStyles.containerTitleStar}>*</span> Domains
         </div>
         <InputControl
           value={domainName}
@@ -155,14 +179,14 @@ const CreateDomainCard = ({
           </div>
           {isEnabledSSL && (
             <div
-              className="col-md-6 select-wrapper"
+              className={`${globalStyles.selectWrapper} col-md-6`}
               style={{ display: 'inline-block' }}
             >
-              <div className="select-arrow-3" />
-              <div className="select-arrow-3" />
+              <div className={globalStyles.selectArrow} />
+              <div className={globalStyles.selectArrow} />
               <select
                 name="encrypt"
-                className="selectCustom selectGreyColor"
+                className={selectClassName}
                 value="Let`s Encrypt"
                 disabled
                 onChange={() => console.log('Let`s Encrypt')}
