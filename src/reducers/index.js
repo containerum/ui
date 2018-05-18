@@ -18,6 +18,7 @@ import deleteNamespaceReducer from './namespaceReducers/deleteNamespace';
 import getNamespacesTariffsReducer from './namespacesReducers/getNamespacesTariffs';
 import createNamespaceReducer from './namespaceReducers/createNamespace';
 import createCustomNamespaceReducer from './namespaceReducers/createCustomNamespace';
+import updateCustomNamespaceReducer from './namespaceReducers/updateCustomNamespace';
 import resizeNamespaceReducer from './namespaceReducers/resizeNamespace';
 import getDeploymentsReducer from './deploymentsReducers/getDeployments';
 import deleteDeploymentReducer from './deploymentReducers/deleteDeployment';
@@ -86,6 +87,7 @@ const reducers = {
   getNamespacesTariffsReducer,
   createNamespaceReducer,
   createCustomNamespaceReducer,
+  updateCustomNamespaceReducer,
   resizeNamespaceReducer,
   getDeploymentsReducer,
   deleteDeploymentReducer,

@@ -57,22 +57,25 @@ const NamespacesList = ({
     <div className="row double">
       {data &&
         data.map(namespace => {
-          const { label, access } = namespace;
+          const { label, access, name } = namespace;
           const { memory, cpu } = namespace.resources.used;
           const {
             memory: memoryLimit,
             cpu: cpuLimit
           } = namespace.resources.hard;
-          const id = label;
-          const accessStyleName = access[0].toUpperCase() + access.slice(1);
+          const rightName = label || name;
+          const id = rightName;
+          const accessStyleName = access
+            ? access[0].toUpperCase() + access.slice(1)
+            : 'owner';
           const classNameBadge = styleNamespaces({
             [`namespaceInfoBadge${accessStyleName}`]: true
           });
           return (
             <div className="col-md-4" id={id} key={id}>
               <div
-                onClick={() => handleClickGetNamespace(label)}
-                onKeyPress={() => handleClickGetNamespace(label)}
+                onClick={() => handleClickGetNamespace(rightName)}
+                onKeyPress={() => handleClickGetNamespace(rightName)}
                 className={classNameContainer}
                 role="link"
                 tabIndex={0}
@@ -97,7 +100,7 @@ const NamespacesList = ({
                       style={{ display: 'block' }}
                       className={classNameContainerHeader}
                     >
-                      {label}
+                      {rightName}
                     </div>
                   </div>
                   <div
@@ -107,46 +110,68 @@ const NamespacesList = ({
                     role="menuitem"
                     tabIndex={0}
                   >
-                    <div
-                      className={`${
-                        globalStyles.contentBlockHeaderExtraPanel
-                      } dropdown no-arrow`}
-                    >
-                      <i
+                    {(role === 'admin' || access === 'owner') && (
+                      <div
                         className={`${
-                          globalStyles.contentBlockHeaderEllipsis
-                        } ${globalStyles.dropdownToggle}
-                          ${globalStyles.ellipsisRoleMore} ion-more `}
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      />
-                      <ul
-                        className={` dropdown-menu dropdown-menu-right ${
-                          globalStyles.dropdownMenu
-                        }`}
-                        role="menu"
+                          globalStyles.contentBlockHeaderExtraPanel
+                        } dropdown no-arrow`}
                       >
-                        <NavLink
-                          activeClassName="active"
-                          className={`dropdown-item ${
-                            globalStyles.dropdownItem
+                        <i
+                          className={`${
+                            globalStyles.contentBlockHeaderEllipsis
+                          } ${globalStyles.dropdownToggle}
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        />
+                        <ul
+                          className={` dropdown-menu dropdown-menu-right ${
+                            globalStyles.dropdownMenu
                           }`}
-                          to={routerLinks.resizeNamespaceLink(label)}
+                          role="menu"
                         >
-                          Resize
-                        </NavLink>
-                        <button
-                          className={`dropdown-item ${
-                            globalStyles.dropdownItem
-                          } text-danger`}
-                          onClick={() => handleClickDeleteNamespace(label)}
-                          onKeyPress={() => handleClickDeleteNamespace(label)}
-                        >
-                          Delete
-                        </button>
-                      </ul>
-                    </div>
+                          {isOnline &&
+                            role === 'user' && (
+                              <NavLink
+                                activeClassName="active"
+                                className={`dropdown-item ${
+                                  globalStyles.dropdownItem
+                                }`}
+                                to={routerLinks.resizeNamespaceLink(rightName)}
+                              >
+                                Resize
+                              </NavLink>
+                            )}
+                          {role === 'admin' && (
+                            <NavLink
+                              activeClassName="active"
+                              className={`dropdown-item ${
+                                globalStyles.dropdownItem
+                              }`}
+                              to={routerLinks.resizeCustomNamespaceLink(
+                                rightName
+                              )}
+                            >
+                              Resize
+                            </NavLink>
+                          )}
+                          <button
+                            className={`dropdown-item ${
+                              globalStyles.dropdownItem
+                            } text-danger`}
+                            onClick={() =>
+                              handleClickDeleteNamespace(rightName)
+                            }
+                            onKeyPress={() =>
+                              handleClickDeleteNamespace(rightName)
+                            }
+                          >
+                            Delete
+                          </button>
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -220,6 +245,16 @@ const NamespacesList = ({
           </NavLink>
         </div>
       )}
+      {!isOnline &&
+        !data.length &&
+        role === 'user' && (
+          <div className="col-md-4 align-middle">
+            <div className="content-block-container card-container hover-action">
+              You don`t have permission to namespaces. Contact the administrator
+              to obtain permission.
+            </div>
+          </div>
+        )}
     </div>
   );
 };

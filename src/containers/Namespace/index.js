@@ -37,6 +37,11 @@ import ConfigMapsPage from '../ConfigMaps';
 import ns from '../../images/ns-1.svg';
 
 import globalStyles from '../../theme/global.scss';
+import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_INVALID,
+  GET_PROFILE_REQUESTING
+} from '../../constants/profileConstants/getProfile';
 
 const globalClass = className.bind(globalStyles);
 
@@ -45,6 +50,7 @@ const containerNoBack = globalClass('container', 'containerNoBackground');
 const containerClassName = globalClass('contentBlockContainer', 'container');
 
 type Props = {
+  getProfileReducer: Object,
   getNamespacesReducer: Object,
   deleteNamespaceReducer: NamespaceType,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
@@ -105,11 +111,19 @@ export class Namespace extends PureComponent<Props> {
   };
 
   renderNamespaceInfo = () => {
-    const { getNamespacesReducer, deleteNamespaceReducer, match } = this.props;
+    const {
+      getNamespacesReducer,
+      deleteNamespaceReducer,
+      getProfileReducer,
+      match
+    } = this.props;
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
     ) {
       return (
         <div
@@ -150,7 +164,10 @@ export class Namespace extends PureComponent<Props> {
       );
     }
 
-    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getProfileReducer.readyStatus === GET_PROFILE_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Namespace!</p>;
     }
 
@@ -158,9 +175,12 @@ export class Namespace extends PureComponent<Props> {
       <NamespaceInfo
         data={getNamespacesReducer.data.find(
           namespace =>
-            namespace.label === match.params.idName ? namespace : null
+            namespace.label
+              ? namespace.label === match.params.idName
+              : namespace.name === match.params.idName
         )}
         handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
+        role={getProfileReducer.data.role}
         idName={match.params.idName}
       />
     );
@@ -170,11 +190,20 @@ export class Namespace extends PureComponent<Props> {
     const {
       fetchDeleteNamespaceIfNeeded,
       deleteNamespaceReducer,
+      getNamespacesReducer,
       match,
       history
     } = this.props;
-    const { status, idName, err } = this.props.deleteNamespaceReducer;
+    const { status, idName, err } = deleteNamespaceReducer;
     const { inputName, isOpened, idName: currentIdName } = this.state;
+
+    const currentNamespace = getNamespacesReducer.data.find(
+      namespace =>
+        namespace.label
+          ? namespace.label === match.params.idName
+          : namespace.name === match.params.idName
+    );
+    const isReadAccess = currentNamespace && currentNamespace.access !== 'read';
     return (
       <div>
         <Helmet title={`Namespace - ${match.params.idName}`} />
@@ -233,7 +262,8 @@ export class Namespace extends PureComponent<Props> {
                     </li>
                   </ul>
                 </div>
-                {history.location.pathname.indexOf('/services') + 1 ? (
+                {history.location.pathname.indexOf('/services') + 1 &&
+                isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -247,7 +277,8 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {history.location.pathname.indexOf('/deployments') + 1 ? (
+                {history.location.pathname.indexOf('/deployments') + 1 &&
+                isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -263,7 +294,8 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {history.location.pathname.indexOf('/configMaps') + 1 ? (
+                {history.location.pathname.indexOf('/configMaps') + 1 &&
+                isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -312,11 +344,13 @@ const connector: Connector<{}, Props> = connect(
   ({
     getNamespaceReducer,
     getNamespacesReducer,
-    deleteNamespaceReducer
+    deleteNamespaceReducer,
+    getProfileReducer
   }: ReduxState) => ({
     getNamespaceReducer,
     getNamespacesReducer,
-    deleteNamespaceReducer
+    deleteNamespaceReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: () =>

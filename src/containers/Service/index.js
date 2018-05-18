@@ -28,9 +28,15 @@ import LinkedDeployment from '../LinkedDeployment';
 import PortsPage from '../Ports';
 
 import globalStyles from '../../theme/global.scss';
+import {
+  GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_INVALID,
+  GET_NAMESPACES_REQUESTING
+} from '../../constants/namespacesConstants/getNamespaces';
 
 type Props = {
   getServiceReducer: Object,
+  getNamespacesReducer: Object,
   deleteServiceReducer: Object,
   fetchGetServiceIfNeeded: (idName: string, idSrv: string) => void,
   fetchGetDeploymentsIfNeeded: (idName: string) => void,
@@ -69,9 +75,17 @@ export class Service extends PureComponent<Props> {
   };
 
   renderServiceInfo = () => {
-    const { getServiceReducer, deleteServiceReducer, match } = this.props;
+    const {
+      getServiceReducer,
+      getNamespacesReducer,
+      deleteServiceReducer,
+      match
+    } = this.props;
 
     if (
+      !getNamespacesReducer.readyStatus ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
       !getServiceReducer.readyStatus ||
       getServiceReducer.readyStatus === GET_SERVICE_INVALID ||
       getServiceReducer.readyStatus === GET_SERVICE_REQUESTING ||
@@ -96,13 +110,22 @@ export class Service extends PureComponent<Props> {
       );
     }
 
-    if (getServiceReducer.readyStatus === GET_SERVICE_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getServiceReducer.readyStatus === GET_SERVICE_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Service!</p>;
     }
 
     return (
       <ServiceInfo
         data={getServiceReducer.data}
+        dataNamespace={getNamespacesReducer.data.find(
+          namespace =>
+            namespace.label
+              ? namespace.label === match.params.idName
+              : namespace.name === match.params.idName
+        )}
         handleDeleteService={idSrv => this.onHandleDelete(idSrv)}
         idName={match.params.idName}
         idSrv={match.params.idSrv}
@@ -186,8 +209,13 @@ export class Service extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getServiceReducer, deleteServiceReducer }: ReduxState) => ({
+  ({
     getServiceReducer,
+    getNamespacesReducer,
+    deleteServiceReducer
+  }: ReduxState) => ({
+    getServiceReducer,
+    getNamespacesReducer,
     deleteServiceReducer
   }),
   (dispatch: Dispatch) => ({

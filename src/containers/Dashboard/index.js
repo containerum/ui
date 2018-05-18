@@ -52,9 +52,15 @@ import RunSolutionItem from '../RunSolution';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
 import solutionStyles from '../Solutions/index.scss';
+import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_INVALID,
+  GET_PROFILE_REQUESTING
+} from '../../constants/profileConstants/getProfile';
 
 type Props = {
   history: Object,
+  getProfileReducer: Object,
   getNamespacesReducer: Object,
   getBalanceReducer: Object,
   getSolutionsReducer: Object,
@@ -63,6 +69,8 @@ type Props = {
   fetchGetSolutionsIfNeeded: () => void,
   fetchGetResourcesIfNeeded: () => void
 };
+
+const isOnline = sourceType === 'ONLINE';
 
 // Export this for unit testing more easily
 const dashboardClassName = classNames.bind(styles);
@@ -144,11 +152,14 @@ export class Dashboard extends PureComponent<Props> {
   };
 
   renderNamespacesList = () => {
-    const { getNamespacesReducer, history } = this.props;
+    const { getNamespacesReducer, getProfileReducer, history } = this.props;
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
     ) {
       return (
         <div
@@ -161,11 +172,15 @@ export class Dashboard extends PureComponent<Props> {
         />
       );
     }
-    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getProfileReducer.readyStatus === GET_PROFILE_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Namespaces!</p>;
     }
     return (
       <NamespacesDashboardList
+        role={getProfileReducer.data.role}
         data={getNamespacesReducer.data}
         history={history}
       />
@@ -324,15 +339,23 @@ export class Dashboard extends PureComponent<Props> {
       getNamespacesReducer
     } = this.props;
     if (
-      !getNamespacesReducer.readyStatus ||
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
-      !getBalanceReducer.readyStatus ||
-      getBalanceReducer.readyStatus === GET_BALANCE_INVALID ||
-      getBalanceReducer.readyStatus === GET_BALANCE_REQUESTING ||
-      !getResourcesReducer.readyStatus ||
-      getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
-      getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING
+      (isOnline &&
+        (!getNamespacesReducer.readyStatus ||
+          getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+          getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+          !getBalanceReducer.readyStatus ||
+          getBalanceReducer.readyStatus === GET_BALANCE_INVALID ||
+          getBalanceReducer.readyStatus === GET_BALANCE_REQUESTING ||
+          !getResourcesReducer.readyStatus ||
+          getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
+          getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING)) ||
+      (!isOnline &&
+        (!getNamespacesReducer.readyStatus ||
+          getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+          getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+          !getResourcesReducer.readyStatus ||
+          getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
+          getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING))
     ) {
       return (
         <div className="col-md-3 pr-0">
@@ -355,16 +378,20 @@ export class Dashboard extends PureComponent<Props> {
       );
     }
     if (
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
-      getBalanceReducer.readyStatus === GET_BALANCE_FAILURE ||
-      getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE
+      (isOnline &&
+        (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+          getBalanceReducer.readyStatus === GET_BALANCE_FAILURE ||
+          getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE)) ||
+      (!isOnline &&
+        (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+          getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE))
     ) {
       return <p>Oops, Failed to load data of Tour!</p>;
     }
     return (
       <DashboardBlockTourAndNews
         resources={getResourcesReducer.data}
-        balance={getBalanceReducer.data.balance}
+        balance={isOnline ? getBalanceReducer.data.balance : null}
         namespaces={getNamespacesReducer.data}
         linkToDeployment={
           getNamespacesReducer.data.length
@@ -506,11 +533,13 @@ export class Dashboard extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
+    getProfileReducer,
     getNamespacesReducer,
     getBalanceReducer,
     getSolutionsReducer,
     getResourcesReducer
   }: ReduxState) => ({
+    getProfileReducer,
     getNamespacesReducer,
     getBalanceReducer,
     getSolutionsReducer,

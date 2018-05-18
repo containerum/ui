@@ -5,47 +5,45 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
-  CREATE_CUSTOM_NAMESPACE_REQUESTING,
-  CREATE_CUSTOM_NAMESPACE_SUCCESS,
-  CREATE_CUSTOM_NAMESPACE_FAILURE
-} from '../../constants/namespaceConstants/createCustomNamespace';
-import { webApi } from '../../config/index';
+  UPDATE_CUSTOM_NAMESPACE_REQUESTING,
+  UPDATE_CUSTOM_NAMESPACE_SUCCESS,
+  UPDATE_CUSTOM_NAMESPACE_FAILURE
+} from '../../constants/namespaceConstants/updateCustomNamespace';
+// import { webApi } from '../../config/index';
 
-const createCustomNamespaceRequest = () => ({
-  type: CREATE_CUSTOM_NAMESPACE_REQUESTING,
+const updateNamespaceRequest = () => ({
+  type: UPDATE_CUSTOM_NAMESPACE_REQUESTING,
   isFetching: true
 });
 
-const createCustomNamespaceSuccess = (data, status, method, idName) => ({
-  type: CREATE_CUSTOM_NAMESPACE_SUCCESS,
+const updateNamespaceSuccess = (data, status, method) => ({
+  type: UPDATE_CUSTOM_NAMESPACE_SUCCESS,
   isFetching: false,
   data,
   status,
-  method,
-  idName
+  method
 });
 
-const createCustomNamespaceFailure = (err, status, idName) => ({
-  type: CREATE_CUSTOM_NAMESPACE_FAILURE,
+const updateNamespaceFailure = (err, status) => ({
+  type: UPDATE_CUSTOM_NAMESPACE_FAILURE,
   isFetching: false,
   err,
-  status,
-  idName
+  status
 });
 
-const createCustomNamespaceInvalidToken = () => ({
+const updateNamespaceInvalidToken = () => ({
   type: 'GET_INVALID_TOKEN'
 });
 
-export const fetchCreateCustomNamespace = (
+export const fetchUpdateCustomNamespace = (
   dataNS: Object,
-  axios: any,
-  URL: string = webApi
+  axios: any
+  // URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
 
-  dispatch(createCustomNamespaceRequest());
+  dispatch(updateNamespaceRequest());
 
   const {
     label,
@@ -55,8 +53,8 @@ export const fetchCreateCustomNamespace = (
     maxIntServices: max_int_services,
     maxTraffic: max_traffic
   } = dataNS;
-  const response = await axios.post(
-    `${URL}/admin/namespaces`,
+  const response = await axios.put(
+    'http://192.168.88.210:4242/admin/namespaces',
     {
       label,
       cpu,
@@ -76,15 +74,15 @@ export const fetchCreateCustomNamespace = (
   const { status, data, config } = response;
   console.log(status, data);
   switch (status) {
-    case 201: {
-      dispatch(createCustomNamespaceSuccess(data, 201, config.method, label));
+    case 200: {
+      dispatch(updateNamespaceSuccess(data, 201, config.method));
       // if (
       //   typeof window !== 'undefined' &&
       //   typeof window.navigator !== 'undefined'
       // ) {
       //   ReactGA.event({
       //     category: 'UI',
-      //     action: `UI_create_ns_${price}`
+      //     action: `UI_update_ns_${price}`
       //   });
       // }
       dispatch(push('/namespaces'));
@@ -92,19 +90,19 @@ export const fetchCreateCustomNamespace = (
     }
     case 400: {
       if (data.message === 'invalid token received') {
-        dispatch(createCustomNamespaceInvalidToken());
+        dispatch(updateNamespaceInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      } else dispatch(createCustomNamespaceFailure(data.message));
+      } else dispatch(updateNamespaceFailure(data.message));
       break;
     }
     default: {
-      dispatch(createCustomNamespaceFailure(data.message, status));
+      dispatch(updateNamespaceFailure(data.message, status));
     }
   }
 };
 
-export const fetchCreateCustomNamespaceIfNeeded = (
+export const fetchUpdateCustomNamespaceIfNeeded = (
   dataNS: Object
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchCreateCustomNamespace(dataNS, axios));
+  dispatch(fetchUpdateCustomNamespace(dataNS, axios));

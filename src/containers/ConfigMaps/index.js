@@ -32,6 +32,11 @@ import {
   DELETE_CONFIG_MAP_SUCCESS
 } from '../../constants/configMapConstants/deleteConfigMap';
 import globalStyles from '../../theme/global.scss';
+import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_INVALID,
+  GET_PROFILE_REQUESTING
+} from '../../constants/profileConstants/getProfile';
 
 const globalClass = className.bind(globalStyles);
 
@@ -292,10 +297,18 @@ class ConfigMaps extends PureComponent<Props> {
   };
 
   renderConfigMapList = () => {
-    const { getConfigMapsReducer, deleteConfigMapReducer } = this.props;
-    const { params, path } = this.props.match;
+    const {
+      match,
+      getConfigMapsReducer,
+      getNamespacesReducer,
+      deleteConfigMapReducer
+    } = this.props;
+    const { params, path } = match;
 
     if (
+      !getNamespacesReducer.readyStatus ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
       !getConfigMapsReducer.readyStatus ||
       getConfigMapsReducer.readyStatus === GET_CONFIG_MAPS_INVALID ||
       getConfigMapsReducer.readyStatus === GET_CONFIG_MAPS_REQUESTING ||
@@ -314,7 +327,10 @@ class ConfigMaps extends PureComponent<Props> {
       );
     }
 
-    if (getConfigMapsReducer.readyStatus === GET_CONFIG_MAPS_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getConfigMapsReducer.readyStatus === GET_CONFIG_MAPS_FAILURE
+    ) {
       return <p>Oops, Failed to load data of ConfigMaps!</p>;
     }
 
@@ -322,6 +338,7 @@ class ConfigMaps extends PureComponent<Props> {
     const { idName } = params;
     return (
       <ConfigMapListView
+        dataNamespace={getNamespacesReducer.data}
         handleDeleteConfigMap={this.handleDeleteConfigMap}
         configMapsData={this.state.displayedConfigMaps}
         isEqualGetPath={isEqualGetPath}
@@ -330,12 +347,20 @@ class ConfigMaps extends PureComponent<Props> {
     );
   };
   renderConfigMapForm = () => {
-    const { getNamespacesReducer, getNamespaceReducer, match } = this.props;
+    const {
+      getNamespacesReducer,
+      getProfileReducer,
+      getNamespaceReducer,
+      match
+    } = this.props;
 
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
     ) {
       return (
         <div
@@ -349,7 +374,10 @@ class ConfigMaps extends PureComponent<Props> {
       );
     }
 
-    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getProfileReducer.readyStatus === GET_PROFILE_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Namespaces!</p>;
     }
 
@@ -363,6 +391,7 @@ class ConfigMaps extends PureComponent<Props> {
       <div className={globalStyles.contentBlock}>
         <div className={`${globalStyles.containerNoBackground} container`}>
           <ConfigMapForm
+            role={getProfileReducer.data.role}
             namespacesData={this.props.getNamespacesReducer.data}
             currentNamespace={currentNamespace}
             handleSelectNamespace={this.handleSelectNamespace}

@@ -31,12 +31,20 @@ const contentClassName = globalClass(
 
 type Props = {
   data: Object,
+  dataNamespace: Object,
   idName: string,
   idSrv: string,
   handleDeleteService: (idSrv: string) => void
 };
 
-const ServiceInfo = ({ data, idName, idSrv, handleDeleteService }: Props) => {
+const ServiceInfo = ({
+  data,
+  dataNamespace,
+  idName,
+  idSrv,
+  handleDeleteService
+}: Props) => {
+  const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   const { domain, ips } = data;
   const type = domain ? 'External' : 'Internal';
   return (
@@ -49,42 +57,44 @@ const ServiceInfo = ({ data, idName, idSrv, handleDeleteService }: Props) => {
           </div>
         </div>
         <div className={globalStyles.contentBlockHeaderExtraPanel}>
-          <div
-            className={`${
-              globalStyles.contentBlockHeaderExtraPanel
-            } dropdown no-arrow`}
-          >
-            <i
-              className={`${globalStyles.contentBlockHeaderEllipsis} ${
-                globalStyles.dropdownToggle
-              } ${globalStyles.ellipsisRoleMore} ion-more `}
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            />
-            <ul
-              className={` dropdown-menu dropdown-menu-right ${
-                globalStyles.dropdownMenu
-              }`}
-              role="menu"
+          {accessToNamespace !== 'read' && (
+            <div
+              className={`${
+                globalStyles.contentBlockHeaderExtraPanel
+              } dropdown no-arrow`}
             >
-              <NavLink
-                activeClassName="active"
-                className={`dropdown-item ${globalStyles.dropdownItem}`}
-                to={routerLinks.resizeServiceLink(idName, idSrv)}
+              <i
+                className={`${globalStyles.contentBlockHeaderEllipsis} ${
+                  globalStyles.dropdownToggle
+                } ${globalStyles.ellipsisRoleMore} ion-more `}
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              />
+              <ul
+                className={` dropdown-menu dropdown-menu-right ${
+                  globalStyles.dropdownMenu
+                }`}
+                role="menu"
               >
-                Update
-              </NavLink>
-              <button
-                className={`dropdown-item ${
-                  globalStyles.dropdownItem
-                } text-danger`}
-                onClick={() => handleDeleteService(idSrv)}
-              >
-                Delete
-              </button>
-            </ul>
-          </div>
+                <NavLink
+                  activeClassName="active"
+                  className={`dropdown-item ${globalStyles.dropdownItem}`}
+                  to={routerLinks.resizeServiceLink(idName, idSrv)}
+                >
+                  Update
+                </NavLink>
+                <button
+                  className={`dropdown-item ${
+                    globalStyles.dropdownItem
+                  } text-danger`}
+                  onClick={() => handleDeleteService(idSrv)}
+                >
+                  Delete
+                </button>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
       <div className={contentClassName}>

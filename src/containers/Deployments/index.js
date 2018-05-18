@@ -24,6 +24,11 @@ import Notification from '../Notification';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 
 import globalStyles from '../../theme/global.scss';
+import {
+  GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_INVALID,
+  GET_NAMESPACES_REQUESTING
+} from '../../constants/namespacesConstants/getNamespaces';
 
 const globalClass = className.bind(globalStyles);
 
@@ -34,6 +39,7 @@ const contentClassName = globalClass(
 
 type Props = {
   getDeploymentsReducer: Object,
+  getNamespacesReducer: Object,
   deleteDeploymentReducer: Object,
   fetchGetDeploymentsIfNeeded: (idName: string) => void,
   fetchDeleteDeploymentIfNeeded: (idName: string, idDep: string) => void,
@@ -113,12 +119,16 @@ export class Deployments extends PureComponent<Props> {
   renderDeploymentsList = () => {
     const {
       getDeploymentsReducer,
+      getNamespacesReducer,
       deleteDeploymentReducer,
       match
     } = this.props;
     // console.log('getDeploymentsReducer.data', getDeploymentsReducer.data);
 
     if (
+      !getNamespacesReducer.readyStatus ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
       !getDeploymentsReducer.readyStatus ||
       getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_INVALID ||
       getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_REQUESTING ||
@@ -136,13 +146,22 @@ export class Deployments extends PureComponent<Props> {
       );
     }
 
-    if (getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Deployments!</p>;
     }
 
     return (
       <DeploymentsList
         data={this.state.displayedDeployments}
+        dataNamespace={getNamespacesReducer.data.find(
+          namespace =>
+            namespace.label
+              ? namespace.label === match.params.idName
+              : namespace.name === match.params.idName
+        )}
         handleDeleteDeployment={idDep => this.handleDeleteDeployment(idDep)}
         history={this.props.history}
         idName={match.params.idName}
@@ -178,8 +197,13 @@ export class Deployments extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getDeploymentsReducer, deleteDeploymentReducer }: ReduxState) => ({
+  ({
     getDeploymentsReducer,
+    getNamespacesReducer,
+    deleteDeploymentReducer
+  }: ReduxState) => ({
+    getDeploymentsReducer,
+    getNamespacesReducer,
     deleteDeploymentReducer
   }),
   (dispatch: Dispatch) => ({

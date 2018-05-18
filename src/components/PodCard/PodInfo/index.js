@@ -34,6 +34,7 @@ const contentClassName = globalClass(
 
 type Props = {
   data: Object,
+  dataNamespace: Object,
   logs: string,
   errorMessage: string,
   idName: string,
@@ -45,6 +46,7 @@ type Props = {
 
 const PodInfo = ({
   data,
+  dataNamespace,
   logs,
   errorMessage,
   idName,
@@ -58,6 +60,7 @@ const PodInfo = ({
   };
   const { name, total_cpu: cpu, total_memory: memory, status } = data;
   // const labelsToArray = Object.keys(labels);
+  const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   return (
     <div className={`${containerClassName} container`}>
       <div className={globalStyles.contentBlockHeader}>
@@ -68,35 +71,37 @@ const PodInfo = ({
           </div>
         </div>
         <div className={globalStyles.contentBlockHeaderExtraPanel}>
-          <div
-            className={`${
-              globalStyles.contentBlockHeaderExtraPanel
-            } dropdown no-arrow`}
-          >
-            <i
-              className={`${globalStyles.contentBlockHeaderEllipsis} ${
-                globalStyles.dropdownToggle
-              } ${globalStyles.ellipsisRoleMore} ion-more `}
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            />
-            <ul
-              className={` dropdown-menu dropdown-menu-right ${
-                globalStyles.dropdownMenu
-              }`}
-              role="menu"
+          {accessToNamespace !== 'read' && (
+            <div
+              className={`${
+                globalStyles.contentBlockHeaderExtraPanel
+              } dropdown no-arrow`}
             >
-              <button
-                className={`dropdown-item ${
-                  globalStyles.dropdownItem
-                } text-danger`}
-                onClick={() => handleClickDeleteDeployment(name)}
+              <i
+                className={`${globalStyles.contentBlockHeaderEllipsis} ${
+                  globalStyles.dropdownToggle
+                } ${globalStyles.ellipsisRoleMore} ion-more `}
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              />
+              <ul
+                className={` dropdown-menu dropdown-menu-right ${
+                  globalStyles.dropdownMenu
+                }`}
+                role="menu"
               >
-                Delete
-              </button>
-            </ul>
-          </div>
+                <button
+                  className={`dropdown-item ${
+                    globalStyles.dropdownItem
+                  } text-danger`}
+                  onClick={() => handleClickDeleteDeployment(name)}
+                >
+                  Delete
+                </button>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>

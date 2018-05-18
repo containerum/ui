@@ -49,6 +49,9 @@ module.exports = {
     namespaceLink: (idName: string) => `/namespaces/${idName}/deployments`,
     createNamespace: '/createNamespace',
     createCustomNamespace: '/createCustomNamespace',
+    resizeCustomNamespace: '/resizeCustomNamespace/:idName',
+    resizeCustomNamespaceLink: (idName: string) =>
+      `/resizeCustomNamespace/${idName}`,
     resizeNamespace: '/namespace/:idName/resize',
     resizeNamespaceLink: (idName: string) => `/namespace/${idName}/resize`,
     // volumes: '/volumes',

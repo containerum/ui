@@ -22,6 +22,7 @@ const contentClassName = globalClass(
 
 type Props = {
   data: Object,
+  dataNamespace: Object,
   history: Object,
   idName: string,
   handleDeleteDeployment: ?(idDep: string) => void
@@ -29,6 +30,7 @@ type Props = {
 
 const DeploymentsList = ({
   data,
+  dataNamespace,
   history,
   idName,
   handleDeleteDeployment
@@ -43,7 +45,7 @@ const DeploymentsList = ({
     e.stopPropagation();
   };
   const ta = timeago();
-  // console.log(data);
+  const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   return (
     <div>
       {data.length >= 1 && (
@@ -98,48 +100,52 @@ const DeploymentsList = ({
                   <td className={depStyles.td_7_Dep}>
                     {/* <div className="warning"> </div> */}
                   </td>
-                  {handleDeleteDeployment && (
-                    <td
-                      className={`${depStyles.td_7_Dep} dropdown no-arrow`}
-                      onClick={e => handleClose(e)}
-                      onKeyPress={e => handleClose(e)}
-                      role="presentation"
-                    >
-                      <i
-                        className={`${globalStyles.contentBlockTableMore} ${
-                          globalStyles.dropdownToggle
-                        }
+                  <td
+                    className={`${depStyles.td_7_Dep} dropdown no-arrow`}
+                    onClick={e => handleClose(e)}
+                    onKeyPress={e => handleClose(e)}
+                    role="presentation"
+                  >
+                    {handleDeleteDeployment &&
+                      accessToNamespace !== 'read' && (
+                        <i
+                          className={`${globalStyles.contentBlockTableMore} ${
+                            globalStyles.dropdownToggle
+                          }
                           ${globalStyles.ellipsisRoleMore} ion-more `}
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      />
-                      <ul
-                        className={` dropdown-menu dropdown-menu-right ${
-                          globalStyles.dropdownMenu
-                        }`}
-                        role="menu"
-                      >
-                        <NavLink
-                          activeClassName="active"
-                          className={`dropdown-item  ${
-                            globalStyles.dropdownItem
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        />
+                      )}
+                    {handleDeleteDeployment &&
+                      accessToNamespace !== 'read' && (
+                        <ul
+                          className={` dropdown-menu dropdown-menu-right ${
+                            globalStyles.dropdownMenu
                           }`}
-                          to={routerLinks.resizeDeploymentLink(idName, name)}
+                          role="menu"
                         >
-                          Update
-                        </NavLink>
-                        <button
-                          className={`dropdown-item text-danger ${
-                            globalStyles.dropdownItem
-                          }`}
-                          onClick={() => handleClickDeleteDeployment(name)}
-                        >
-                          Delete
-                        </button>
-                      </ul>
-                    </td>
-                  )}
+                          <NavLink
+                            activeClassName="active"
+                            className={`dropdown-item  ${
+                              globalStyles.dropdownItem
+                            }`}
+                            to={routerLinks.resizeDeploymentLink(idName, name)}
+                          >
+                            Update
+                          </NavLink>
+                          <button
+                            className={`dropdown-item text-danger ${
+                              globalStyles.dropdownItem
+                            }`}
+                            onClick={() => handleClickDeleteDeployment(name)}
+                          >
+                            Delete
+                          </button>
+                        </ul>
+                      )}
+                  </td>
                 </tr>
               );
             })}

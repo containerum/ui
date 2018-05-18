@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import className from 'classnames/bind';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 
 import dashboardStyles from '../../containers/Dashboard/index.scss';
 
@@ -19,6 +19,8 @@ type Props = {
   linkToDeployment: string,
   linkToManageTeam: string
 };
+
+const isOnline = sourceType === 'ONLINE';
 
 const DashboardBlockTourAndNews = ({
   resources,
@@ -72,12 +74,16 @@ const DashboardBlockTourAndNews = ({
           aria-labelledby="first-tab"
         >
           <div className={dashboardStyles.tourWrapper}>
-            <Link
-              className={balance !== 0 ? dashboardStyles.tourLinkDisabled : ''}
-              to="/billing"
-            >
-              Top up your Balance or enter Promo code
-            </Link>
+            {isOnline && (
+              <Link
+                className={
+                  balance !== 0 ? dashboardStyles.tourLinkDisabled : ''
+                }
+                to="/billing"
+              >
+                Top up your Balance or enter Promo code
+              </Link>
+            )}
             <Link
               className={
                 namespaces.length ? dashboardStyles.tourLinkDisabled : ''

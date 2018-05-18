@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import deployment from '../../images/deployment.png';
 
 import globalStyles from '../../theme/global.scss';
@@ -12,6 +12,7 @@ import dashboardStyles from '../../containers/Dashboard/index.scss';
 
 type Props = {
   data: Array<Object>,
+  role: string,
   history: Object
 };
 
@@ -21,7 +22,8 @@ const tableClassName = globalClassName('contentBlockTable', 'table');
 
 const btnClassName = globalClassName('btnBlue', 'btnDepl');
 
-const NamespacesDashboardList = ({ data, history }: Props) => {
+const NamespacesDashboardList = ({ data, role, history }: Props) => {
+  const isOnline = sourceType === 'ONLINE';
   const handleClickGetNamespace = idName => {
     history.push(routerLinks.namespaceLink(idName));
   };
@@ -54,18 +56,19 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
           <tbody>
             {data &&
               data.map(namespace => {
-                const { label, access } = namespace;
+                const { label, name, access } = namespace;
                 const {
                   memory: memoryLimit,
                   cpu: cpuLimit
                 } = namespace.resources.hard;
-                const id = label;
+                const rightName = label || name;
+                const id = rightName;
                 return (
                   <tr
                     id={id}
                     key={id}
-                    onClick={() => handleClickGetNamespace(label)}
-                    onKeyPress={() => handleClickGetNamespace(label)}
+                    onClick={() => handleClickGetNamespace(rightName)}
+                    onKeyPress={() => handleClickGetNamespace(rightName)}
                     role="link"
                     tabIndex={0}
                     style={{ margin: 0, cursor: 'pointer' }}
@@ -76,7 +79,9 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
                     >
                       <img src={deployment} alt="deployment" />
                     </td>
-                    <td className={dashboardStyles.td_2_Dashboard}>{label}</td>
+                    <td className={dashboardStyles.td_2_Dashboard}>
+                      {rightName}
+                    </td>
                     <td className={dashboardStyles.td_3_Dashboard}>
                       {memoryLimit}
                     </td>
@@ -92,30 +97,66 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
                       onKeyPress={e => handleClose(e)}
                       role="presentation"
                     >
-                      <i
-                        className={`${globalStyles.contentBlockTableMore} ${
-                          globalStyles.dropdownToggle
-                        }
+                      {isOnline &&
+                        role === 'user' && (
+                          <i
+                            className={`${globalStyles.contentBlockTableMore} ${
+                              globalStyles.dropdownToggle
+                            }
                           ${globalStyles.ellipsisRoleMore} ion-more `}
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      />
-                      <ul
-                        className={` dropdown-menu dropdown-menu-right ${
-                          globalStyles.dropdownMenu
-                        }`}
-                        role="menu"
-                      >
-                        <Link
-                          to={`/namespace/${label}/resize`}
-                          className={`dropdown-item ${
-                            globalStyles.dropdownItem
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          />
+                        )}
+                      {role === 'admin' && (
+                        <i
+                          className={`${globalStyles.contentBlockTableMore} ${
+                            globalStyles.dropdownToggle
+                          }
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        />
+                      )}
+                      {isOnline &&
+                        role === 'user' && (
+                          <ul
+                            className={` dropdown-menu dropdown-menu-right ${
+                              globalStyles.dropdownMenu
+                            }`}
+                            role="menu"
+                          >
+                            <Link
+                              to={routerLinks.resizeNamespaceLink(rightName)}
+                              className={`dropdown-item ${
+                                globalStyles.dropdownItem
+                              }`}
+                            >
+                              Resize
+                            </Link>
+                          </ul>
+                        )}
+                      {role === 'admin' && (
+                        <ul
+                          className={` dropdown-menu dropdown-menu-right ${
+                            globalStyles.dropdownMenu
                           }`}
+                          role="menu"
                         >
-                          Resize
-                        </Link>
-                      </ul>
+                          <Link
+                            to={routerLinks.resizeCustomNamespaceLink(
+                              rightName
+                            )}
+                            className={`dropdown-item ${
+                              globalStyles.dropdownItem
+                            }`}
+                          >
+                            Resize
+                          </Link>
+                        </ul>
+                      )}
                     </td>
                   </tr>
                 );
@@ -124,19 +165,48 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
         </table>
       )}
       {!data.length && (
-        <div className={globalStyles.createDeploymentWrapper}>
-          <div className={globalStyles.noCreatedPodMessage}>
-            You have no active Namespace yet.
-          </div>
-          <Link
-            className={btnClassName}
-            data-toggle="modal"
-            to="/createNamespace"
-          >
-            Create NAMESPACE
-          </Link>
+        <div>
+          {isOnline &&
+            role === 'user' && (
+              <div className={globalStyles.createDeploymentWrapper}>
+                <div className={globalStyles.noCreatedPodMessage}>
+                  You have no active Namespace yet.
+                </div>
+                <Link
+                  className={btnClassName}
+                  data-toggle="modal"
+                  to={routerLinks.createNamespace}
+                >
+                  Create NAMESPACE
+                </Link>
+              </div>
+            )}
+          {role === 'admin' && (
+            <div className={globalStyles.createDeploymentWrapper}>
+              <div className={globalStyles.noCreatedPodMessage}>
+                You have no active Namespace yet.
+              </div>
+              <Link
+                className={btnClassName}
+                data-toggle="modal"
+                to={routerLinks.createCustomNamespace}
+              >
+                Create NAMESPACE
+              </Link>
+            </div>
+          )}
         </div>
       )}
+      {!isOnline &&
+        !data.length &&
+        role === 'user' && (
+          <div className={globalStyles.createDeploymentWrapper}>
+            <div className={globalStyles.noCreatedPodMessage}>
+              You don`t have permission to namespaces. <br />
+              Contact the administrator to obtain permission.
+            </div>
+          </div>
+        )}
     </div>
   );
 };

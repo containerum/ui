@@ -35,12 +35,16 @@ type Props = {
   fetchLogoutIfNeeded: () => void
 };
 
+const isOnline = sourceType === 'ONLINE';
+
 // Export this for unit testing more easily
 export class Header extends PureComponent<Props> {
   componentDidMount() {
     const { fetchGetProfileIfNeeded, fetchGetBalanceIfNeeded } = this.props;
     fetchGetProfileIfNeeded();
-    fetchGetBalanceIfNeeded();
+    if (isOnline) {
+      fetchGetBalanceIfNeeded();
+    }
   }
 
   renderProfileDropDown = () => {
@@ -51,12 +55,17 @@ export class Header extends PureComponent<Props> {
     } = this.props;
 
     if (
-      !getProfileReducer.readyStatus ||
-      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
-      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
-      (!getBalanceReducer.readyStatus ||
-        getBalanceReducer.readyStatus === GET_BALANCE_INVALID ||
-        getBalanceReducer.readyStatus === GET_BALANCE_REQUESTING)
+      (isOnline &&
+        (!getProfileReducer.readyStatus ||
+          getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+          getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
+          !getBalanceReducer.readyStatus ||
+          getBalanceReducer.readyStatus === GET_BALANCE_INVALID ||
+          getBalanceReducer.readyStatus === GET_BALANCE_REQUESTING)) ||
+      (!isOnline &&
+        (!getProfileReducer.readyStatus ||
+          getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+          getProfileReducer.readyStatus === GET_PROFILE_REQUESTING))
     ) {
       return (
         <div>
@@ -74,15 +83,17 @@ export class Header extends PureComponent<Props> {
     }
 
     if (
-      getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
-      getBalanceReducer.readyStatus === GET_BALANCE_FAILURE
+      (isOnline &&
+        (getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
+          getBalanceReducer.readyStatus === GET_BALANCE_FAILURE)) ||
+      (!isOnline && getProfileReducer.readyStatus === GET_PROFILE_FAILURE)
     ) {
       return <p>Oops, Failed to load data of Header!</p>;
     }
 
     return (
       <ProfileDropDown
-        balance={getBalanceReducer.data.balance}
+        balance={isOnline ? getBalanceReducer.data.balance : null}
         email={getProfileReducer.data.login}
         handleLogout={() => fetchLogoutIfNeeded()}
       />
@@ -90,7 +101,6 @@ export class Header extends PureComponent<Props> {
   };
 
   render() {
-    const isOnline = sourceType === 'ONLINE';
     return (
       <div>
         <header className={styles.header}>

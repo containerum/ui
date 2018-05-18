@@ -8,6 +8,7 @@ import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 
 import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
 
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionDeleteNamespaces from '../../actions/namespaceActions/deleteNamespace';
@@ -36,6 +37,7 @@ import Notification from '../Notification';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import NamespacesList from '../../components/NamespacesList';
 import ns from '../../images/ns-1.svg';
+import { sourceType } from '../../config';
 
 type Props = {
   history: Object,
@@ -108,6 +110,27 @@ export class Namespaces extends PureComponent<Props> {
       isOpened: true
     });
   };
+  handleChangeInputSearchNamespace = name => {
+    const nameToLowerCase = name.toLowerCase();
+    const { data } = this.props.getNamespacesReducer;
+    if (nameToLowerCase.length > 1) {
+      const displayedNS = data.filter(
+        namespace =>
+          namespace.label
+            ? namespace.label.includes(nameToLowerCase)
+            : namespace.name.includes(nameToLowerCase)
+      );
+      this.setState({
+        ...this.state,
+        displayedNamespaces: displayedNS
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        displayedNamespaces: data
+      });
+    }
+  };
 
   renderNamespacesList = () => {
     const {
@@ -148,13 +171,35 @@ export class Namespaces extends PureComponent<Props> {
     }
 
     return (
-      <NamespacesList
-        // data={this.props.getNamespacesReducer.data}
-        data={this.state.displayedNamespaces}
-        role={getProfileReducer.data.role}
-        handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
-        history={this.props.history}
-      />
+      <div>
+        {sourceType !== 'ONLINE' &&
+          getProfileReducer.data.role === 'admin' && (
+            <div
+              className="row double"
+              style={{
+                marginBottom: 0,
+                marginTop: 30
+              }}
+            >
+              <div className={`col-md-4 ${styles.formSearchNames}`}>
+                <input
+                  type="search"
+                  className={styles.searchNamesInput}
+                  placeholder="Search..."
+                  onChange={e =>
+                    this.handleChangeInputSearchNamespace(e.target.value)
+                  }
+                />
+              </div>
+            </div>
+          )}
+        <NamespacesList
+          data={this.state.displayedNamespaces}
+          role={getProfileReducer.data.role}
+          handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
+          history={this.props.history}
+        />
+      </div>
     );
   };
 

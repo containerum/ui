@@ -39,6 +39,7 @@ import CreatedExternalServiceSuccessfulPage from './containers/CreatedExternalSe
 import UpdateServicePage from './containers/UpdateService';
 import DeploymentPage from './containers/Deployment';
 import CreateCustomNamespacePage from './containers/CreateCustomNamespace';
+import UpdateCustomNamespacePage from './containers/UpdateCustomNamespace';
 import CreateDeploymentPage from './containers/CreateDeployment';
 import UpdateDeploymentPage from './containers/UpdateDeployment';
 
@@ -341,6 +342,24 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.createCustomNamespace,
+    exact: true,
+    component: UpdateCustomNamespacePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.resizeCustomNamespace,
+    component: UpdateCustomNamespacePage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetNamespaceIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.tools,
