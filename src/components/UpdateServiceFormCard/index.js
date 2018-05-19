@@ -8,10 +8,13 @@ import icon from '../../images/icon-create-dep.svg';
 import InputControl from '../InputControl';
 
 import globalStyles from '../../theme/global.scss';
+import inputStyles from '../../components/InputControl/index.scss';
+
 // import serviceStyles from '../../containers/CreateService/index.scss';
 
 const globalClass = className.bind(globalStyles);
 // const serviceClass = className.bind(serviceStyles);
+const formClassName = globalClass('formInputText', 'formControl');
 
 const containerClassName = globalClass(
   'blockContainer',
@@ -124,14 +127,18 @@ const ServiceForm = ({
                         id={`${id}internalSrvName`}
                         type="text"
                         required
-                        baseClassName="form-group__input-text form-control customInput"
-                        baseClassNameLabel={`form-group__label ${internalSrvName &&
-                          'form-group__label-always-onfocus'}`}
+                        baseClassName={`${formClassName} ${
+                          inputStyles.inputCustom
+                        }`}
+                        baseClassNameLabel={`${
+                          globalStyles.formGroupLabel
+                        } ${internalSrvName &&
+                          globalStyles.formGroupLabelOnFocus}`}
                         labelText="Name"
                         textHelper={
                           index === 0 && 'The port name of Internal Service'
                         }
-                        baseClassNameHelper="helperText"
+                        baseClassNameHelper={globalStyles.textHelper}
                         handleChangeInput={e =>
                           handleChangeService(
                             e,
@@ -153,14 +160,18 @@ const ServiceForm = ({
                         required
                         min="1"
                         max="65535"
-                        baseClassName="form-group__input-text form-control customInput"
-                        baseClassNameLabel={`form-group__label ${internalSrvPort &&
-                          'form-group__label-always-onfocus'}`}
+                        baseClassName={`${formClassName} ${
+                          inputStyles.inputCustom
+                        }`}
+                        baseClassNameLabel={`${
+                          globalStyles.formGroupLabel
+                        } ${internalSrvPort &&
+                          globalStyles.formGroupLabelOnFocus}`}
                         labelText="Port"
                         textHelper={
                           index === 0 && 'The port of Internal Service'
                         }
-                        baseClassNameHelper="helperText"
+                        baseClassNameHelper={globalStyles.textHelper}
                         handleChangeInput={e =>
                           handleChangeService(
                             e,
@@ -182,14 +193,18 @@ const ServiceForm = ({
                         required
                         min="1"
                         max="65535"
-                        baseClassName="form-group__input-text form-control customInput"
-                        baseClassNameLabel={`form-group__label ${internalSrvTargetPort &&
-                          'form-group__label-always-onfocus'}`}
+                        baseClassName={`${formClassName} ${
+                          inputStyles.inputCustom
+                        }`}
+                        baseClassNameLabel={`${
+                          globalStyles.formGroupLabel
+                        } ${internalSrvTargetPort &&
+                          globalStyles.formGroupLabelOnFocus}`}
                         labelText="Target Port"
                         textHelper={
                           index === 0 && 'The target port into your Container'
                         }
-                        baseClassNameHelper="helperText"
+                        baseClassNameHelper={globalStyles.textHelper}
                         handleChangeInput={e =>
                           handleChangeService(
                             e,
@@ -316,14 +331,18 @@ const ServiceForm = ({
                         id={`${id}externalSrvName`}
                         type="text"
                         required
-                        baseClassName="form-group__input-text form-control customInput"
-                        baseClassNameLabel={`form-group__label ${externalSrvName &&
-                          'form-group__label-always-onfocus'}`}
+                        baseClassName={`${formClassName} ${
+                          inputStyles.inputCustom
+                        }`}
+                        baseClassNameLabel={`${
+                          globalStyles.formGroupLabel
+                        } ${externalSrvName &&
+                          globalStyles.formGroupLabelOnFocus}`}
                         labelText="Name"
                         textHelper={
                           index === 0 && 'The port name of External Service'
                         }
-                        baseClassNameHelper="helperText"
+                        baseClassNameHelper={globalStyles.textHelper}
                         handleChangeInput={e =>
                           handleChangeService(
                             e,
@@ -345,14 +364,18 @@ const ServiceForm = ({
                         required
                         min="1"
                         max="65535"
-                        baseClassName="form-group__input-text form-control customInput"
-                        baseClassNameLabel={`form-group__label ${externalSrvTargetPort &&
-                          'form-group__label-always-onfocus'}`}
+                        baseClassName={`${formClassName} ${
+                          inputStyles.inputCustom
+                        }`}
+                        baseClassNameLabel={`${
+                          globalStyles.formGroupLabel
+                        } ${externalSrvTargetPort &&
+                          globalStyles.formGroupLabelOnFocus}`}
                         labelText="Target Port"
                         textHelper={
                           index === 0 && 'The target port into your Container'
                         }
-                        baseClassNameHelper="helperText"
+                        baseClassNameHelper={globalStyles.textHelper}
                         handleChangeInput={e =>
                           handleChangeService(
                             e,

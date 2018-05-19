@@ -1,9 +1,17 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../InputControl';
 import CheckBoxControl from '../CheckBoxControl';
+
+import globalStyles from '../../theme/global.scss';
+import inputStyles from '../../components/InputControl/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   currentService: Object,
@@ -113,11 +121,11 @@ const CreateDomainCard = ({
           id="domainName"
           type="text"
           required
-          baseClassName="form-group__input-text form-control customInput customInputDomain"
-          baseClassNameLabel={`form-group__label ${domainName &&
-            'form-group__label-always-onfocus'}`}
+          baseClassName={`${formClassName} ${inputStyles.Domain}`}
+          baseClassNameLabel={`${globalStyles.formGroupLabel} ${domainName &&
+            globalStyles.formGroupLabelOnFocus}`}
           labelText="Domain"
-          baseClassNameHelper="form-group__helper"
+          baseClassNameHelper={globalStyles.formGroupHelper}
           handleChangeInput={e => {
             // e.target.setSelectionRange(-domainName.length, -domainName.length);
             handleChangeInput(e.target.value, 'domainName');
@@ -128,13 +136,13 @@ const CreateDomainCard = ({
           value={domainPath}
           id="domainPath"
           type="text"
-          baseClassName="form-group__input-text form-control customInput"
-          baseClassNameLabel={`form-group__label ${domainPath &&
-            'form-group__label-always-onfocus'}`}
+          baseClassName={`${formClassName} ${inputStyles.Domain}`}
+          baseClassNameLabel={`${globalStyles.formGroupLabel} ${domainPath &&
+            globalStyles.formGroupLabelOnFocus}`}
           labelText="Path"
           title="Path that the External Service watches to route traffic"
           textHelper="Path that the External Service watches to route traffic"
-          baseClassNameHelper="form-group__helper"
+          baseClassNameHelper={globalStyles.formGroupHelper}
           handleChangeInput={e =>
             handleChangeInput(e.target.value, 'domainPath')
           }

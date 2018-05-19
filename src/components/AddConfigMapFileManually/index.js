@@ -5,6 +5,7 @@ import className from 'classnames/bind';
 import InputControl from '../../components/InputControl';
 
 import globalStyles from '../../theme/global.scss';
+import inputStyles from '../../components/InputControl/index.scss';
 
 type Props = {
   files: Array,
@@ -18,6 +19,12 @@ type Props = {
 };
 
 const globalClass = className.bind(globalStyles);
+
+const formClassNameConfigmap = globalClass(
+  'formInputText',
+  'formControl',
+  'formInputTextConfigmap'
+);
 
 const containerClassName = globalClass(
   'container',
@@ -52,11 +59,14 @@ const AddConfigMapFileManually = ({
                   pattern="^[-._a-zA-Z0-9]+$"
                   title="Valid file name must consist of alphanumeric characters, '-', '_' or '.'"
                   required
-                  baseClassName="form-group__input-text form-group__input-text_configmap form-control customInput"
-                  baseClassNameLabel={`form-group__label ${file.fileName &&
-                    'form-group__label-always-onfocus'}`}
+                  baseClassName={`${formClassNameConfigmap} ${
+                    inputStyles.inputCustom
+                  }`}
+                  baseClassNameLabel={`${
+                    globalStyles.formGroupLabel
+                  } ${file.fileName && globalStyles.formGroupLabelOnFocus}`}
                   labelText="File name"
-                  baseClassNameHelper="form-group__helper"
+                  baseClassNameHelper={globalStyles.formGroupHelper}
                   handleChangeInput={e =>
                     handleChangeInputFileManually(
                       index,

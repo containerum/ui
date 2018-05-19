@@ -2,11 +2,17 @@
 
 import React from 'react';
 import Blockies from 'react-blockies';
+import className from 'classnames/bind';
 
 import InputControl from '../InputControl';
 import './Profile.css';
 
 import globalStyles from '../../theme/global.scss';
+import inputStyles from '../../components/InputControl/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   data: Object
@@ -33,8 +39,12 @@ const ProfileInfo = ({ data }: Props) => (
               value={data.data.first_name}
               id="name"
               type="text"
-              baseClassName="form-group__input-text form-control"
-              baseClassNameLabel="form-group__label form-group__label-always-onfocus"
+              baseClassName={`${formClassName} ${
+                inputStyles.inputCustom
+              } form-control`}
+              baseClassNameLabel={`${globalStyles.formGroupLabel} ${
+                globalStyles.formGroupLabelOnFocus
+              }`}
               labelText="Name"
               disabled
             />
@@ -45,8 +55,12 @@ const ProfileInfo = ({ data }: Props) => (
             value={data.login}
             id="email"
             type="text"
-            baseClassName="form-group__input-text form-control"
-            baseClassNameLabel="form-group__label form-group__label-always-onfocus"
+            baseClassName={`${formClassName} ${
+              inputStyles.inputCustom
+            } form-control`}
+            baseClassNameLabel={`${globalStyles.formGroupLabel} ${
+              globalStyles.formGroupLabelOnFocus
+            }`}
             labelText="Email"
             disabled
           />

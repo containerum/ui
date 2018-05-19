@@ -6,10 +6,12 @@ import className from 'classnames/bind';
 import InputControl from '../../../InputControl/index';
 
 import globalStyles from '../../../../theme/global.scss';
+import inputStyles from '../../../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
 
 const titleClassName = globalClass('containerTitle', 'containerTitleBlock');
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   item: Object,
@@ -53,16 +55,16 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           required
           min="10"
           max="3000"
-          baseClassName="form-group__input-text form-control customInput"
-          baseClassNameLabel={`form-group__label ${
+          baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+          baseClassNameLabel={`${globalStyles.formGroupLabel} ${
             limits.cpu || limits.cpu === 0
-              ? 'form-group__label-always-onfocus'
+              ? globalStyles.formGroupLabelOnFocus
               : ''
           }`}
           labelText="CPU"
           title="Range: 10 - 3000"
           textHelper="Range: 10 - 3000"
-          baseClassNameHelper="form-group__helper"
+          baseClassNameHelper={globalStyles.formGroupHelper}
           handleChangeInput={e => {
             const cpuValue = parseInt(e.target.value, 10);
             handleChangeInputParameters(
@@ -84,16 +86,16 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           required
           min="10"
           max="8000"
-          baseClassName="form-group__input-text form-control customInput"
-          baseClassNameLabel={`form-group__label ${
+          baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+          baseClassNameLabel={`${globalStyles.formGroupLabel} ${
             limits.memory || limits.memory === 0
-              ? 'form-group__label-always-onfocus'
+              ? globalStyles.formGroupLabelOnFocus
               : ''
           }`}
           labelText="RAM"
           title="Range: 10 - 8000"
           textHelper="Range: 10 - 8000"
-          baseClassNameHelper="form-group__helper"
+          baseClassNameHelper={globalStyles.formGroupHelper}
           handleChangeInput={e => {
             const cpuValue = parseInt(e.target.value, 10);
             handleChangeInputParameters(
