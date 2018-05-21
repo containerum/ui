@@ -3,6 +3,8 @@ import Modal from 'react-modal';
 import Tooltip from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap_white.css';
 
+import buttonsStyles from '../../theme/buttons.scss';
+
 const customStyles = {
   overlay: {
     position: 'fixed',
@@ -73,8 +75,8 @@ const CreateModal = ({
 
   const styleSubmit =
     name.length >= 2 && name.search(regexp) !== -1
-      ? 'btn modal-footer-solution-select'
-      : 'btn modal-footer-solution-select modal-footer-volume-delete';
+      ? `${buttonsStyles.buttonModalSelect} btn`
+      : `${buttonsStyles.buttonModalAction} btn`;
   const isDisabledSubmit = name.length >= 2 && name.search(regexp) !== -1;
   const isErrorInputClass =
     name.search(regexp) !== -1
@@ -198,7 +200,7 @@ const CreateModal = ({
         <div className="modal-footer">
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={() => handleCloseModal()}
           >
             Cancel

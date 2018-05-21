@@ -750,7 +750,7 @@
 }
 
 
-
+/////////////////////////buttons///////////////////////
 .button {
   cursor: pointer;
 
@@ -815,6 +815,12 @@
     box-shadow: none;
   }
 }
+
+.close {
+  cursor: pointer;
+}
+
+////////////////////////////////////////////////////////
 
 .col {
   &Namespaces {
@@ -1222,6 +1228,22 @@
   margin-left: -10px;
 }
 
+.marginTop10 {
+  margin-top: 10px !important;
+}
+
+.marginBottom30 {
+  margin-bottom: 30px;
+}
+
+.marginTop40 {
+  margin-top: 40px;
+}
+
+.marginBottom50 {
+  margin-bottom: 50px;
+}
+
 .paddingX20 {
   padding-left: 20px !important;
   padding-right: 20px !important;
@@ -1236,13 +1258,7 @@
   padding-left: 20px;
 }
 
-.marginBottom30 {
-  margin-bottom: 30px;
-}
 
-.marginTop40 {
-  margin-top: 40px;
-}
 
 //////column row///////////////
 
@@ -1289,6 +1305,11 @@
 /////////////////////////////label/////////////////
 
 .label {
+  &Custom {
+    font-weight: 300;
+    color: $ligth-gray-color;
+  }
+
   &Left {
     label {
       float: left;

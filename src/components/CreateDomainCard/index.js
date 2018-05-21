@@ -4,6 +4,7 @@ import React from 'react';
 
 import InputControl from '../InputControl';
 import CheckBoxControl from '../CheckBoxControl';
+import globalStyles from '../../theme/global.scss';
 
 type Props = {
   currentService: Object,
@@ -149,7 +150,7 @@ const CreateDomainCard = ({
               id="ssl"
               value={isEnabledSSL}
               labelText="Enable SSL Security"
-              labelClassName="customLabel"
+              labelClassName={globalStyles.labelCustom}
               handleChangeCheckBox={handleChangeCheckBox}
             />
           </div>

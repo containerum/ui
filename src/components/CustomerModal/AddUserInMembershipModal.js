@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 
 import LoadButton from '../../components/LoadButton';
 import alert from '../../images/alertAddUserMembership.svg';
+import buttonsStyles from '../../theme/buttons.scss';
 
 const customStyles = {
   overlay: {
@@ -168,7 +169,7 @@ const AddUserMembershipModal = ({
         <div className="modal-footer">
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={() => handleCloseModal()}
           >
             Cancel
@@ -180,7 +181,7 @@ const AddUserMembershipModal = ({
             type="submit"
             buttonText="Add"
             isFetching={isFetchingAdd}
-            baseClassButton="btn modal-footer-solution-select"
+            baseClassButton={`${buttonsStyles.buttonModalSelect} btn`}
           />
         </div>
       </form>

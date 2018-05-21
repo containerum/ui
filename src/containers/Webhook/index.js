@@ -26,6 +26,8 @@ import Notification from '../Notification/index';
 import LoadButton from '../../components/LoadButton/index';
 import InputControl from '../../components/InputControl/index';
 
+import buttonsStyles from '../../theme/buttons.scss';
+
 type Props = {
   getImagesTokenReducer: Object,
   deleteImageTokenReducer: Object,
@@ -229,7 +231,9 @@ export class WebHook extends PureComponent<Props> {
                             type="submit"
                             buttonText="Add"
                             isFetching={createImageTokenReducer.isFetching}
-                            baseClassButton="button_blue btn btn-outline-primary"
+                            baseClassButton={`${
+                              buttonsStyles.buttonUIDeployDashboard
+                            } btn btn-outline-primary`}
                           />
                         </div>
                       </div>

@@ -17,6 +17,7 @@ import {
   GET_SERVICE_REQUESTING
 } from '../../constants/serviceConstants/getService';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 type Props = {
   match: Object,
@@ -107,7 +108,9 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
         <div className="text-right">
           <NavLink
             to={`/namespaces/${match.params.idName}`}
-            className="btnTransparency btnService"
+            className={`${buttonsStyles.buttonUILoadButtonTransparency} ${
+              globalStyles.marginBottom50
+            } ${globalStyles.marginTop10}`}
             style={{
               width: '250px',
               display: 'inline-block',
@@ -120,7 +123,9 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
             to={`/namespace/${match.params.idName}/service/${
               match.params.idSrv
             }/createDomain`}
-            className="btnDeployment btnService"
+            className={`${buttonsStyles.buttonUILoadButton} ${
+              globalStyles.marginBottom50
+            } ${globalStyles.marginTop10}`}
             style={{ width: '200px', display: 'inline-block' }}
           >
             Create domain

@@ -30,6 +30,8 @@ import { DELETE_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceC
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -352,9 +354,11 @@ class Membership extends PureComponent<Props> {
                               Users
                             </NavLink>
                           </li>
-                          <li className="membership-btn-container">
+                          <li className={styles.membershipBtnContainer}>
                             <button
-                              className="membership-btn button_blue btn btn-outline-primary fancybox"
+                              className={`${
+                                buttonsStyles.buttonUIAddMembership
+                              } btn btn-outline-primary fancybox`}
                               onClick={this.handleAddMembersAdd}
                             >
                               Add Users

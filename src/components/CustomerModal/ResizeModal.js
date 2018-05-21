@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import 'rc-tooltip/assets/bootstrap_white.css';
 
+import buttonsStyles from '../../theme/buttons.scss';
+
 const customStyles = {
   overlay: {
     position: 'fixed',
@@ -160,12 +162,15 @@ const CreateModal = ({
         <div className="modal-footer">
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={() => handleCloseModal()}
           >
             Cancel
           </button>
-          <button type="submit" className="btn modal-footer-solution-select">
+          <button
+            type="submit"
+            className={`${buttonsStyles.buttonModalSelect} btn`}
+          >
             Resize
           </button>
         </div>

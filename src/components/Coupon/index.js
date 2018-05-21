@@ -5,6 +5,8 @@ import React from 'react';
 import LoadButton from '../LoadButton';
 import InputControl from '../InputControl';
 
+import buttonsStyles from '../../theme/buttons.scss';
+
 type Props = {
   isFetching: boolean,
   inputCoupon: string,
@@ -49,7 +51,9 @@ const Coupon = ({
               type="submit"
               buttonText="Apply"
               isFetching={isFetching}
-              baseClassButton="button_blue btn btn-outline-primary"
+              baseClassButton={`${
+                buttonsStyles.buttonUIDeployDashboard
+                } btn btn-outline-primary`}
             />
           </div>
         </div>

@@ -25,6 +25,7 @@ import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 // import { routerLinks } from '../../config';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 type Props = {
   getServicesReducer: Object,
@@ -217,7 +218,9 @@ export class CreateDomain extends PureComponent<Props> {
                     type="submit"
                     buttonText="Create domain"
                     isFetching={createDomainReducer.isFetching}
-                    baseClassButton="btnDeployment btnService"
+                    baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
+                      globalStyles.marginBottom50
+                    } ${globalStyles.marginTop10}`}
                   />
                 </form>
               </div>

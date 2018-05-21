@@ -10,6 +10,7 @@ import InputControl from '../../components/InputControl';
 import AddConfigMapFileManuallyView from '../../components/AddConfigMapFileManually';
 import styles from '../../containers/ConfigMaps/index.scss';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 type Props = {
   namespacesData: Array<Object>,
@@ -117,7 +118,9 @@ const ConfigMapCreateForm = ({
             </div>
             <Link
               to="/createNamespace"
-              className="button_blue btn btn-outline-primary"
+              className={`${
+                buttonsStyles.buttonUIDeployDashboard
+              } btn btn-outline-primary`}
             >
               Create Namespace
             </Link>
@@ -221,7 +224,7 @@ const ConfigMapCreateForm = ({
             onClick={
               files.length === 0 ? () => handleAddFileManually() : undefined
             }
-            className="btn btn-link"
+            className={`${buttonsStyles.buttonUIAddFile} btn btn-link`}
             style={{ paddingLeft: '0', color: '#1baae4' }}
             disabled={files.length > 0}
           >
@@ -242,7 +245,7 @@ const ConfigMapCreateForm = ({
         type="submit"
         buttonText="Create ConfigMap"
         isFetching={createConfigMapReducer.isFetching}
-        baseClassButton="btn feedback-form__submit"
+        baseClassButton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
         disabled={!namespacesData.length}
         style={{ width: '235px' }}
       />

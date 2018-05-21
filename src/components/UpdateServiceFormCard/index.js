@@ -9,6 +9,7 @@ import InputControl from '../InputControl';
 
 import globalStyles from '../../theme/global.scss';
 // import serviceStyles from '../../containers/CreateService/index.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
 // const serviceClass = className.bind(serviceStyles);
@@ -246,7 +247,7 @@ const ServiceForm = ({
             })}
             <div className="col-md-12">
               <div
-                className="addBlockBtn marLeft"
+                className={`${buttonsStyles.buttonUIAddBlock} ml-0`}
                 onKeyPress={() => handleClickAddInternalPort()}
                 onClick={() => handleClickAddInternalPort()}
                 role="presentation"
@@ -409,7 +410,7 @@ const ServiceForm = ({
             })}
             <div className="col-md-12">
               <div
-                className="addBlockBtn marLeft"
+                className={`${buttonsStyles.buttonUIAddBlock} ml-0`}
                 onKeyPress={() => handleClickAddExternalPort()}
                 onClick={() => handleClickAddExternalPort()}
                 role="presentation"

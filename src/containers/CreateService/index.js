@@ -31,7 +31,7 @@ import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import { routerLinks } from '../../config';
 import globalStyles from '../../theme/global.scss';
-
+import buttonsStyles from '../../theme/buttons.scss';
 import sideMenuStyles from '../CreateDeployment/index.scss';
 
 const globalClass = className.bind(globalStyles);
@@ -381,7 +381,7 @@ export class CreateService extends PureComponent<Props> {
                           to={`/namespace/${
                             match.params.idName
                           }/createDeployment`}
-                          className="deployBtn"
+                          className={buttonsStyles.buttonUICreateSmall}
                         >
                           Create Deployment
                         </NavLink>
@@ -401,7 +401,9 @@ export class CreateService extends PureComponent<Props> {
                         createExternalServiceReducer.isFetching ||
                         createInternalServiceReducer.isFetching
                       }
-                      baseClassButton="btnDeployment btnService"
+                      baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
+                        globalStyles.marginBottom50
+                      } ${globalStyles.marginTop10}`}
                     />
                   )}
                 </form>

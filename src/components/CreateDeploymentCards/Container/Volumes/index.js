@@ -7,6 +7,7 @@ import InputControl from '../../../InputControl';
 import icon from '../../../../images/icon-create-dep.svg';
 
 import globalStyles from '../../../../theme/global.scss';
+import buttonsStyles from '../../../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -172,7 +173,7 @@ const Volumes = ({
     {volumes.length ? (
       <div className="col-md-12">
         <div
-          className="addBlockBtn marLeft"
+          className={`${buttonsStyles.buttonUIAddBlock} ml-0`}
           onClick={() => handleClickAddVolume(index)}
           onKeyPress={() => handleClickAddVolume(index)}
           role="presentation"
