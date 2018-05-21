@@ -3,9 +3,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 
+import domainsStyles from '../../containers/Domains/index.scss';
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const tableClassName = globalClass(
+  'blockItemTokensTable',
+  'table',
+  'contentBlockTable'
+);
+const containerClassName = globalClass(
+  'contentBlcokContainer',
+  'containerCard',
+  'hoverAction'
+);
 type Props = {
   data: Object,
   handleDeleteDomain: (idName: string, label: string) => void
@@ -19,7 +35,7 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
     <div style={isEmptyData ? { height: 'auto' } : {}}>
       {isEmptyData ? (
         <table
-          className="block-item__tokens-table content-block__table table"
+          className={`${tableClassName} table`}
           style={{
             tableLayout: 'fixed',
             width: '100%',
@@ -31,10 +47,10 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
         >
           <thead style={{ height: '30px' }}>
             <tr>
-              <td className="td-1-domains">Domain</td>
-              <td className="td-1-domains">Service</td>
-              <td className="td-2-domains">Namespace</td>
-              <td className="td-10" />
+              <td className={domainsStyles.td_1_Domains}>Domain</td>
+              <td className={domainsStyles.td_1_Domains}>Service</td>
+              <td className={domainsStyles.td_2_Domains}>Namespace</td>
+              <td className={domainsStyles.td_3_Domains} />
             </tr>
           </thead>
           <tbody className="domains" style={{ overflow: 'auto' }}>
@@ -50,14 +66,14 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
                     : `http://${host}`;
                   return (
                     <tr
-                      className="content-block-container card-container hover-action"
+                      className={containerClassName}
                       key={_.uniqueId()}
                       style={{
                         margin: 0,
                         boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
                       }}
                     >
-                      <td className="td-1-domains">
+                      <td className={domainsStyles.td_1_Domains}>
                         <a
                           href={linkDomain}
                           target="_blank"
@@ -67,7 +83,7 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
                           {host}
                         </a>
                       </td>
-                      <td className="td-1-domains">
+                      <td className={domainsStyles.td_1_Domains}>
                         <Link
                           style={{ color: '#29abe2' }}
                           to={routerLinks.getServiceLink(ingressName, srvName)}
@@ -75,7 +91,7 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
                           {srvName}
                         </Link>
                       </td>
-                      <td className="td-2-domains">
+                      <td className={domainsStyles.td_2_Domains}>
                         <Link
                           style={{ color: '#29abe2' }}
                           to={routerLinks.namespaceLink(ingressName)}
@@ -83,19 +99,30 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
                           {ingressName}
                         </Link>
                       </td>
-                      <td className="td-10 dropdown no-arrow">
+                      <td
+                        className={`${
+                          domainsStyles.td_3_Domains
+                        }  dropdown no-arrow`}
+                      >
                         <i
-                          className="content-block-table__more ion-more dropdown-toggle"
+                          className={`${globalStyles.contentBlockTableMore} ${
+                            globalStyles.dropdownToggle
+                          }
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
                           data-toggle="dropdown"
                           aria-haspopup="true"
                           aria-expanded="false"
                         />
                         <ul
-                          className="dropdown-menu dropdown-menu-right"
+                          className={` dropdown-menu dropdown-menu-right ${
+                            globalStyles.dropdownMenu
+                          }`}
                           role="menu"
                         >
                           <li
-                            className="dropdown-item text-danger"
+                            className={`dropdown-item text-danger ${
+                              globalStyles.dropdownItem
+                            }`}
                             onClick={() =>
                               handleDeleteDomain(ingressName, name)
                             }
@@ -113,7 +140,7 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
         </table>
       ) : (
         <table
-          className="content-block__table_domains dashboard-table table"
+          className={`${domainsStyles.domainsTable} table`}
           style={{
             tableLayout: 'fixed',
             width: '100%',
@@ -125,7 +152,12 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
         >
           <thead>
             <tr>
-              <td className="td-1-domains">You don`t have Domains</td>
+              <td
+                className={domainsStyles.td_1_Domains}
+                style={{ borderTop: 'none' }}
+              >
+                You don`t have Domains
+              </td>
             </tr>
           </thead>
         </table>
