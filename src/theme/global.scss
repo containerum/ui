@@ -408,6 +408,12 @@
 .container{
   background-color: $color-white;
 
+  &Domains {
+    margin-top: 30px;
+    padding-top: 40px;
+    background-color: $color-white;
+  }
+
   &ToolsPages {
     margin-top: 30px;
     padding-top: 40px;
