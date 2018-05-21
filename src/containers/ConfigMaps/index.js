@@ -51,7 +51,8 @@ type Props = {
   fetchCreateConfigMapIfNeeded: (idName: string, data: Object) => void,
   // history: Object,
   match: Object,
-  getNamespaceReducer: Object
+  getNamespaceReducer: Object,
+  match: Object
 };
 
 class ConfigMaps extends PureComponent<Props> {
@@ -254,6 +255,7 @@ class ConfigMaps extends PureComponent<Props> {
   };
   handleSubmitCreateConfigMap = e => {
     e.preventDefault();
+    const match = this.props;
     const {
       files,
       filesManually,
@@ -281,10 +283,10 @@ class ConfigMaps extends PureComponent<Props> {
         dataFiles.data[file.fileName] = Base64.encode(file.textArea);
         return null;
       });
-      this.props.fetchCreateConfigMapIfNeeded(
-        currentNamespace.label,
-        dataFiles
-      );
+      const labelPOST = match.match.params.idName
+        ? match.match.params.idName
+        : currentNamespace.label;
+      this.props.fetchCreateConfigMapIfNeeded(labelPOST, dataFiles);
     }
   };
   handleDeleteConfigMap = (idName, configMapLabel) => {
