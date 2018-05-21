@@ -6,6 +6,7 @@ import className from 'classnames/bind';
 import InputControl from '../../InputControl/index';
 
 import globalStyles from '../../../theme/global.scss';
+import inputStyles from '../../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -13,6 +14,8 @@ const containerClassName = globalClass(
   'blockContainer',
   'blockContainerOtherPadding'
 );
+
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   inputReplicas: string,
@@ -54,10 +57,10 @@ const CreateDeploymentReplicas = ({
         required
         min="1"
         max="15"
-        baseClassName="form-group__input-text form-control customInput"
-        baseClassNameLabel={`form-group__label ${
+        baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+        baseClassNameLabel={`${globalStyles.formGroupLabel} ${
           inputReplicas || inputReplicas === 0
-            ? 'form-group__label-always-onfocus'
+            ? globalStyles.formGroupLabelOnFocus
             : ''
         }`}
         labelText="Count"
@@ -68,7 +71,7 @@ const CreateDeploymentReplicas = ({
           );
         }}
         textHelper="Max: 15 replicas"
-        baseClassNameHelper="form-group__helper"
+        baseClassNameHelper={globalStyles.formGroupHelper}
       />
     </div>
   </div>

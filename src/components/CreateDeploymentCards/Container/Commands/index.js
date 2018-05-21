@@ -1,8 +1,16 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../../../InputControl/index';
+
+import globalStyles from '../../../../theme/global.scss';
+import inputStyles from '../../../../components/InputControl/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   item: Object,
@@ -32,12 +40,14 @@ const Commands = ({ item, index, handleChangeInputCommands }: Props) => {
           value={joinedCommands}
           id={`commands${id}`}
           type="text"
-          baseClassName="form-group__input-text form-control customInput"
-          baseClassNameLabel={`form-group__label ${joinedCommands &&
-            'form-group__label-always-onfocus'}`}
+          baseClassName={`${formClassName} ${
+            inputStyles.inputCustom
+            }`}
+          baseClassNameLabel={`${globalStyles.formGroupLabel} ${joinedCommands &&
+          globalStyles.formGroupLabelOnFocus}`}
           labelText="Entrypoint"
           textHelper="Example: top, -b"
-          baseClassNameHelper="form-group__helper"
+          baseClassNameHelper={globalStyles.formGroupHelper}
           handleChangeInput={e =>
             handleChangeInputCommands(e.target.value, id, index)
           }

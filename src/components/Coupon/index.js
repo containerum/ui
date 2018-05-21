@@ -1,9 +1,17 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import LoadButton from '../LoadButton';
 import InputControl from '../InputControl';
+
+import globalStyles from '../../theme/global.scss';
+import inputStyles from '../../components/InputControl/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   isFetching: boolean,
@@ -35,9 +43,10 @@ const Coupon = ({
               id="couponFunds"
               type="text"
               required
-              baseClassName="form-group__input-text form-control"
-              baseClassNameLabel={`form-group__label ${inputCoupon &&
-                'form-group__label-always-onfocus'}`}
+              baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+              baseClassNameLabel={`${
+                globalStyles.formGroupLabel
+              } ${inputCoupon && globalStyles.formGroupLabelOnFocus}`}
               labelText="Promo code"
               handleChangeInput={e => handleChangeInputCode(e.target.value)}
             />

@@ -10,6 +10,7 @@ import InputControl from '../../components/InputControl';
 import AddConfigMapFileManuallyView from '../../components/AddConfigMapFileManually';
 import styles from '../../containers/ConfigMaps/index.scss';
 import globalStyles from '../../theme/global.scss';
+import inputStyles from '../../components/InputControl/index.scss';
 
 type Props = {
   namespacesData: Array<Object>,
@@ -35,6 +36,11 @@ type Props = {
 
 const globalClass = className.bind(globalStyles);
 
+const formClassName = globalClass(
+  'formInputText',
+  'formControl',
+  'formInputTextConfigmap'
+);
 const selectCustomClassNames = globalClass('selectCustom', 'selectGreyColor');
 const itemTitleClassName = globalClass(
   'blockItemTitle',
@@ -129,12 +135,12 @@ const ConfigMapCreateForm = ({
           type="text"
           pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
           required
-          baseClassName="form-group__input-text form-group__input-text_configmap form-control customInput"
-          baseClassNameLabel={`form-group__label ${configMapName &&
-            'form-group__label-always-onfocus'}`}
+          baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+          baseClassNameLabel={`${globalStyles.formGroupLabel} ${configMapName &&
+            globalStyles.formGroupLabelOnFocus}`}
           labelText="ConfigMap name"
           textHelper="Name of ConfigMap"
-          baseClassNameHelper="form-group__helper"
+          baseClassNameHelper={globalStyles.formGroupHelper}
           handleChangeInput={e => handleChangeConfigMapName(e.target.value)}
         />
       </div>

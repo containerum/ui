@@ -1,0 +1,48 @@
+@import '../../theme/variables';
+
+
+.input {
+  &Custom {
+    font-weight: 300;
+    color: $ligth-gray-color;
+    border: none;
+    border-bottom: 1.5px solid $very-light-gray;
+    border-radius: 0;
+    padding-left: 0;
+    width: 100%;
+    margin-bottom: 7px;
+    padding-bottom: 4px;
+
+    &:focus {
+      border: none;
+      border-bottom: 1.5px solid $main-color !important;
+    }
+
+    &:hover {
+      border-bottom: 1.5px solid $ligth-gray-color;
+    }
+  }
+
+  &Subpath {
+    position: absolute;
+    left: -17px;
+    font-weight: 300;
+    color: $ligth-gray-color;
+  }
+}
+
+.Domain {
+  font-weight: 300;
+  color: $ligth-gray-color;
+  border: none;
+  border-bottom: 1.5px solid $very-light-gray;
+  border-radius: 0;
+  padding-left: 0;
+  width: 100%;
+  margin-bottom: 7px;
+  padding-bottom: 4px;
+  padding-right: 155px !important;
+  direction: rtl;
+}
+
+
