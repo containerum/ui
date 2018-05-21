@@ -8,10 +8,13 @@ import icon from '../../../../images/icon-create-dep.svg';
 
 import globalStyles from '../../../../theme/global.scss';
 import buttonsStyles from '../../../../theme/buttons.scss';
+import inputStyles from '../../../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
 
 const titleClassName = globalClass('containerTitle', 'containerTitleBlock');
+
+const formClassName = globalClass('formInputText', 'formControl');
 
 const columnClassName = globalClass('columnCustomVolumes', 'marginLeft_10');
 
@@ -113,11 +116,12 @@ const Volumes = ({
                   value={subPath}
                   id={`subPath${id}`}
                   type="text"
-                  baseClassName="form-group__input-text form-control customInput"
-                  baseClassNameLabel={`form-group__label ${subPath &&
-                    'form-group__label-always-onfocus'}`}
+                  baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+                  baseClassNameLabel={`${
+                    globalStyles.formGroupLabel
+                  } ${subPath && globalStyles.formGroupLabelOnFocus}`}
                   labelText="SubPath"
-                  baseClassNameHelper="form-group__helper"
+                  baseClassNameHelper={globalStyles.formGroupHelper}
                   subPath="true"
                   handleChangeInput={e =>
                     handleChangeInputVolumePath(
@@ -138,11 +142,12 @@ const Volumes = ({
                   pattern="[A-z0-9/]([-A-z0-9/]*[A-z0-9])?"
                   required
                   title="Example: data/mountPath"
-                  baseClassName="form-group__input-text form-control customInput"
-                  baseClassNameLabel={`form-group__label ${mountPath &&
-                    'form-group__label-always-onfocus'}`}
+                  baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+                  baseClassNameLabel={`${
+                    globalStyles.formGroupLabel
+                  } ${mountPath && globalStyles.formGroupLabelOnFocus}`}
                   labelText="Path"
-                  baseClassNameHelper="form-group__helper"
+                  baseClassNameHelper={globalStyles.formGroupHelper}
                   handleChangeInput={e =>
                     handleChangeInputVolumePath(
                       e.target.value,

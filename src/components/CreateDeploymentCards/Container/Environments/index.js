@@ -8,10 +8,12 @@ import icon from '../../../../images/icon-create-dep.svg';
 
 import globalStyles from '../../../../theme/global.scss';
 import buttonsStyles from '../../../../theme/buttons.scss';
+import inputStyles from '../../../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
 
 const titleClassName = globalClass('containerTitle', 'containerTitleBlock');
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   env: Object,
@@ -60,11 +62,11 @@ const Environments = ({
               id={`envName${id}`}
               type="text"
               pattern="[-._a-zA-Z][-._a-zA-Z0-9]*|^$"
-              baseClassName="form-group__input-text form-control customInput"
-              baseClassNameLabel={`form-group__label ${name &&
-                'form-group__label-always-onfocus'}`}
+              baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+              baseClassNameLabel={`${globalStyles.formGroupLabel} ${name &&
+                globalStyles.formGroupLabelOnFocus}`}
               labelText="Name"
-              baseClassNameHelper="form-group__helper"
+              baseClassNameHelper={globalStyles.formGroupHelper}
               title={`The Environment instruction sets the environment variable ${`<key>`} to the value ${`<value>`}`}
               textHelper={
                 indexEnvironment === 0 &&
@@ -86,9 +88,9 @@ const Environments = ({
               value={value}
               id={`envValue${id}`}
               type="text"
-              baseClassName="form-group__input-text form-control customInput"
-              baseClassNameLabel={`form-group__label ${value &&
-                'form-group__label-always-onfocus'}`}
+              baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+              baseClassNameLabel={`${globalStyles.formGroupLabel} ${value &&
+                globalStyles.formGroupLabelOnFocus}`}
               labelText="Value"
               title="Value can only contain letters, numbers and characters"
               handleChangeInput={e =>

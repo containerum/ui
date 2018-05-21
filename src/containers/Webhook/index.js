@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Helmet from 'react-helmet';
+import className from 'classnames/bind';
 
 import HeaderPage from '../Header';
 import FooterPage from '../Footer';
@@ -27,6 +28,13 @@ import LoadButton from '../../components/LoadButton/index';
 import InputControl from '../../components/InputControl/index';
 
 import buttonsStyles from '../../theme/buttons.scss';
+
+import globalStyles from '../../theme/global.scss';
+import inputStyles from '../../components/InputControl/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   getImagesTokenReducer: Object,
@@ -200,9 +208,12 @@ export class WebHook extends PureComponent<Props> {
                           id="webHookLabel"
                           type="text"
                           required
-                          baseClassName="form-group__input-text form-control"
-                          baseClassNameLabel={`form-group__label ${label &&
-                            'form-group__label-always-onfocus'}`}
+                          baseClassName={`${formClassName} ${
+                            inputStyles.inputCustom
+                          }`}
+                          baseClassNameLabel={`${
+                            globalStyles.formGroupLabel
+                          } ${label && globalStyles.formGroupLabelOnFocus}`}
                           labelText="Name"
                           handleChangeInput={e =>
                             this.handleChangeWebHookLabel(e.target.value)
@@ -215,9 +226,12 @@ export class WebHook extends PureComponent<Props> {
                           id="webHookRegexp"
                           type="text"
                           required
-                          baseClassName="form-group__input-text form-control"
-                          baseClassNameLabel={`form-group__label ${regexp &&
-                            'form-group__label-always-onfocus'}`}
+                          baseClassName={`${formClassName} ${
+                            inputStyles.inputCustom
+                          }`}
+                          baseClassNameLabel={`${
+                            globalStyles.formGroupLabel
+                          } ${regexp && globalStyles.formGroupLabelOnFocus}`}
                           labelText="Pattern"
                           handleChangeInput={e =>
                             this.handleChangeWebHookRegexp(e.target.value)

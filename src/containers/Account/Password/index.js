@@ -4,6 +4,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 // import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
+import className from 'classnames/bind';
+
 // import _ from 'lodash/fp';
 
 import * as actionChangePassword from '../../../actions/profileActions/changePassword';
@@ -15,6 +17,11 @@ import InputControl from '../../../components/InputControl';
 
 import globalStyles from '../../../theme/global.scss';
 import buttonsStyles from '../../../theme/buttons.scss';
+import inputStyles from '../../../components/InputControl/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   changePasswordReducer: Object,
@@ -134,9 +141,13 @@ export class Password extends PureComponent<Props> {
                       id="currentPassword"
                       type="password"
                       valid={isValidCurrentPassword}
-                      baseClassName="form-group__input-text form-control"
-                      baseClassNameLabel={`form-group__label ${currentPassword &&
-                        'form-group__label-always-onfocus'}`}
+                      baseClassName={`${formClassName} ${
+                        inputStyles.inputCustom
+                      }`}
+                      baseClassNameLabel={`${
+                        globalStyles.formGroupLabel
+                      } ${currentPassword &&
+                        globalStyles.formGroupLabelOnFocus}`}
                       labelText="Current Password"
                       handleChangeInput={e =>
                         this.handleChangeCurrentPassword(e.target.value)
@@ -149,15 +160,18 @@ export class Password extends PureComponent<Props> {
                       id="newPassword"
                       type="password"
                       valid={isValidNewPassword}
-                      baseClassName="form-group__input-text form-control"
-                      baseClassNameLabel={`form-group__label ${newPassword &&
-                        'form-group__label-always-onfocus'}`}
+                      baseClassName={`${formClassName} ${
+                        inputStyles.inputCustom
+                      }`}
+                      baseClassNameLabel={`${
+                        globalStyles.formGroupLabel
+                      } ${newPassword && globalStyles.formGroupLabelOnFocus}`}
                       labelText="New password"
                       textHelper="Password must be 8 or more characters"
                       handleChangeInput={e =>
                         this.handleChangeNewPassword(e.target.value)
                       }
-                      baseClassNameHelper="form-group__helper"
+                      baseClassNameHelper={globalStyles.formGroupHelper}
                     />
                   </div>
                   <div className="col-md-4">
@@ -166,9 +180,13 @@ export class Password extends PureComponent<Props> {
                       id="repeatPassword"
                       type="password"
                       valid={isValidRepeatPassword}
-                      baseClassName="form-group__input-text form-control"
-                      baseClassNameLabel={`form-group__label ${repeatPassword &&
-                        'form-group__label-always-onfocus'}`}
+                      baseClassName={`${formClassName} ${
+                        inputStyles.inputCustom
+                      }`}
+                      baseClassNameLabel={`${
+                        globalStyles.formGroupLabel
+                      } ${repeatPassword &&
+                        globalStyles.formGroupLabelOnFocus}`}
                       labelText="Confirm new password"
                       handleChangeInput={e =>
                         this.handleChangeRepeatPassword(e.target.value)

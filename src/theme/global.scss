@@ -1040,7 +1040,7 @@
     border-radius: 0.25rem !important;
 
     &:focus {
-      border: solid 0.5px #a7a7a7;
+      border: solid 0.5px $ligth-gray-color;
     }
 
     &Configmap {
@@ -1053,11 +1053,29 @@
     }
   }
 
+
+
   &Group {
     position: relative;
     padding: 22px 0 0 0;
 
     &Label {
+      font-size: 15px;
+      font-weight: 300;
+      color: $ligth-gray-color;
+      display: block;
+      position: absolute;
+      top: 23px;
+      left: 0;
+      -webkit-transition: all 0.2s;
+      transition: all 0.2s;
+
+      &OnFocus {
+        color: $main-color;
+        font-size: 12px;
+        top: 0;
+      }
+
       &Image {
         cursor: pointer;
         height: 70px;
@@ -1075,7 +1093,66 @@
       color: $ligth-gray-color;
       margin: 7px 0 0 0;
     }
+
+
   }
+
+  &InputText {
+    &Configmap{
+      max-width: 400px;
+      min-width: 400px;
+    }
+
+    &:placeholder-shown {
+      & ~ .formGroupLabel {
+        color: $main-color;
+        font-size: 12px;
+        top: -100px;
+      }
+    }
+
+    &:focus {
+      outline: none;
+      border: none ;
+      border-bottom: 1.5px solid $main-color;
+      color: $color-dark-gray;
+      caret-color: $main-color;
+
+      & ~ .formGroupLabel {
+        color: $main-color;
+        font-size: 12px;
+        top: 0;
+      }
+    }
+
+    &:visited {
+      outline: none;
+      border: none ;
+      border-bottom: 1.5px solid $main-color;
+      color: $color-dark-gray;
+      caret-color: $main-color;
+    }
+
+    &Error {
+      .formInputText {
+        border-color: $input-error-color;
+
+        &:focus {
+          caret-color: $input-error-color;
+        }
+      }
+
+      //.formGroupLabel {
+      //  color: $input-error-color;
+      //}
+
+      .formGroupHelper {
+        color: $input-error-color;
+      }
+    }
+  }
+
+
 
   &Input {
     &Volume {
@@ -1153,7 +1230,7 @@
     color: $color-dark-gray;
     background-color: transparent;
     border: none;
-    border: 1.5px solid $very-light-gray;
+    border-bottom: 1.5px solid $very-light-gray;
     border-radius: 0;
     padding: 2px 0 8px;
     margin-bottom: 7px;
