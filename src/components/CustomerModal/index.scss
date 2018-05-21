@@ -1,0 +1,71 @@
+@import '../../theme/variables';
+
+.modal {
+  &RedisText {
+    display: inline-block;
+    font-weight: 300;
+    line-height: 1.67;
+    margin-bottom: 15px;
+
+    &Light {
+      font-size: 12px;
+      font-weight: 300;
+      color: $ligth-gray-color;
+    }
+  }
+
+  &Title {
+    font-size: 20px;
+    line-height: 0.75;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  &Body {
+    text-align: center;
+    padding: 0 30px 30px 30px;
+  }
+
+  &Header {
+    display: block;
+    border-bottom: none;
+    padding: 15px 15px 0;
+  }
+
+  &Footer {
+    justify-content: center;
+    padding: 30px;
+  }
+
+  &Content {
+    border: none;
+  }
+
+  &Dialog {
+    &Create {
+      max-width: 430px;
+    }
+  }
+}
+
+.membership {
+  &Alert {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 370px;
+    height: 70px;
+    border-radius: 2px;
+    background-color: $color-white2;
+    border: solid 1px $color-white2;
+    padding: 15px;
+    margin-bottom: 30px;
+    margin-top: 15px;
+
+    &Item {
+      margin-right: 15px;
+      color: $color-dark-gray;
+    }
+  }
+}

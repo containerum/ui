@@ -3,10 +3,16 @@ import Modal from 'react-modal';
 // import Tooltip from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap_white.css';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import LoadButton from '../LoadButton';
 import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+import modalStyles from './index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const selectClassName = globalClass('formControl', 'selectCustomModal');
 
 type Props = {
   data: Array<Object>,
@@ -74,10 +80,13 @@ const AddInformationModal = ({
       style={customStyles}
       contentLabel="Create"
       ariaHideApp={false}
-      className="modal-dialog modal-dialog2 modal-dialog-create"
+      className={`${modalStyles.modalDialogCreate} modal-dialog`}
     >
-      <form onSubmit={e => onHandleAddInformation(e)} className="modal-content">
-        <div className="modal-header">
+      <form
+        onSubmit={e => onHandleAddInformation(e)}
+        className={`${modalStyles.modalContent} modal-content`}
+      >
+        <div className={`${modalStyles.modalHeader} modal-header`}>
           <button
             type="button"
             className="close"
@@ -86,15 +95,17 @@ const AddInformationModal = ({
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div className="modal-body text-left">
+        <div className={`${modalStyles.modalBody} modal-body text-left`}>
           <h4
-            className="modal-title modal-title-volume"
+            className={`${modalStyles.modalTitle} ${
+              globalStyles.marginBottom30
+            } modal-title`}
             id="modalLabel"
             style={{ marginBottom: '15px' }}
           >
             Add information
           </h4>
-          <span className="modal-redis-text mt-0">
+          <span className={`${modalStyles.modalRedisText} mt-0`}>
             For tax calculation, please, fill in the information below:
           </span>
           {isFailed && (
@@ -104,12 +115,18 @@ const AddInformationModal = ({
               </span>
             </div>
           )}
-          <div className="form-group" style={{ paddingTop: 0 }}>
-            <label htmlFor="countriesSelect" className="modal-redis-text mt-1">
+          <div
+            className={`${globalStyles.formGroup} form-group`}
+            style={{ paddingTop: 0 }}
+          >
+            <label
+              htmlFor="countriesSelect"
+              className={`${modalStyles.modalRedisText} mt-1`}
+            >
               Choose your country
             </label>
             <select
-              className="form-control custom-select"
+              className={`${selectClassName} form-control custom-select`}
               id="countriesSelect"
               name="countries"
               onChange={e => handleSelectCountry(e.target.value)}
@@ -123,8 +140,14 @@ const AddInformationModal = ({
               ))}
             </select>
           </div>
-          <div className="form-group" style={{ paddingTop: 0 }}>
-            <label htmlFor="nameProfile" className="modal-redis-text mt-2">
+          <div
+            className={`${globalStyles.formGroup} form-group`}
+            style={{ paddingTop: 0 }}
+          >
+            <label
+              htmlFor="nameProfile"
+              className={`${modalStyles.modalRedisText} mt-2`}
+            >
               Please, enter your name to continue:
             </label>
             <input
@@ -137,7 +160,7 @@ const AddInformationModal = ({
             />
           </div>
         </div>
-        <div className="modal-footer">
+        <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
             className={`${buttonsStyles.buttonModalCancel} btn`}

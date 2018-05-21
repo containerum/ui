@@ -3,6 +3,9 @@ import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import _ from 'lodash/fp';
 import 'rc-tooltip/assets/bootstrap_white.css';
+import className from 'classnames/bind';
+
+import modalStyles from './index.scss';
 
 import getSolutionImage from '../../functions/getSolutionImage';
 import {
@@ -12,6 +15,10 @@ import {
 } from '../../constants/solutionConstants/runSolution';
 import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const selectClassName = globalClass('formControl', 'selectCustomModal');
 
 const customStyles = {
   overlay: {
@@ -80,7 +87,7 @@ const SelectNamespaceModal = ({
       style={customStyles}
       contentLabel="Create"
       ariaHideApp={false}
-      className="modal-dialog modal-dialog2 modal-dialog-create"
+      className={`${modalStyles.modalDialogCreate} modal-dialog`}
     >
       {readyStatus !== RUN_SOLUTION_FAILURE &&
         readyStatus !== RUN_SOLUTION_SUCCESS && (
@@ -88,9 +95,9 @@ const SelectNamespaceModal = ({
             {!isFetching && readyStatus !== RUN_SOLUTION_REQUESTING ? (
               <form
                 onSubmit={e => handleSubmitCreatingEssence(e)}
-                className="modal-content"
+                className={`${modalStyles.modalContent} modal-content`}
               >
-                <div className="modal-header">
+                <div className={`${modalStyles.modalHeader} modal-header`}>
                   <button
                     type="button"
                     className="close"
@@ -99,7 +106,9 @@ const SelectNamespaceModal = ({
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-                <div className="modal-body text-left">
+                <div
+                  className={`${modalStyles.modalBody} modal-body text-left`}
+                >
                   <div style={{ textAlign: 'center', marginTop: '40px' }}>
                     <img
                       src={srcLogo}
@@ -113,11 +122,13 @@ const SelectNamespaceModal = ({
                   </div>
                   {namespace ? (
                     <div>
-                      <span className="modal-redis-text mt-4 mb-4">
+                      <span
+                        className={`${modalStyles.modalRedisText} mt-4 mb-4`}
+                      >
                         Please, select the Namespace for Solution instalation
                       </span>
                       <select
-                        className="form-control custom-select"
+                        className={`${selectClassName} form-control custom-select`}
                         id="namespaceSelect"
                         name="namespaces"
                         onChange={e => handleSelectNamespace(e.target.value)}
@@ -143,7 +154,7 @@ const SelectNamespaceModal = ({
                   )}
                 </div>
                 {namespace ? (
-                  <div className="modal-footer">
+                  <div className={`${modalStyles.modalFooter} modal-footer`}>
                     <button
                       type="button"
                       className={`${buttonsStyles.buttonModalCancel} btn`}
@@ -159,7 +170,7 @@ const SelectNamespaceModal = ({
                     </button>
                   </div>
                 ) : (
-                  <div className="modal-footer">
+                  <div className={`${modalStyles.modalFooter} modal-footer`}>
                     <Link
                       className={buttonsStyles.buttonModalCreateNamespace}
                       data-toggle="modal"
@@ -171,8 +182,8 @@ const SelectNamespaceModal = ({
                 )}
               </form>
             ) : (
-              <div className="modal-content">
-                <div className="modal-header">
+              <div className={`${modalStyles.modalContent} modal-content`}>
+                <div className={`${modalStyles.modalHeader} modal-header`}>
                   <button
                     type="button"
                     className="close"
@@ -182,7 +193,7 @@ const SelectNamespaceModal = ({
                   </button>
                 </div>
                 <div
-                  className="modal-body text-center"
+                  className={`${modalStyles.modalBody} modal-body text-center`}
                   style={{ marginBottom: '100px' }}
                 >
                   <div style={{ marginTop: '40px' }}>
@@ -196,7 +207,7 @@ const SelectNamespaceModal = ({
                       }}
                     />
                   </div>
-                  <div className="modal-redis-text mt-4 mb-4">
+                  <div className={`${modalStyles.modalRedisText} mt-4 mb-4`}>
                     Solution deployment in progress. <br />
                     Please, wait...
                   </div>
@@ -207,8 +218,8 @@ const SelectNamespaceModal = ({
         )}
 
       {readyStatus === RUN_SOLUTION_FAILURE && (
-        <div className="modal-content">
-          <div className="modal-header">
+        <div className={`${modalStyles.modalContent} modal-content`}>
+          <div className={`${modalStyles.modalHeader} modal-header`}>
             <button
               type="button"
               className="close"
@@ -217,7 +228,7 @@ const SelectNamespaceModal = ({
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div className="modal-body text-left">
+          <div className={`${modalStyles.modalBody} modal-body text-left`}>
             <div style={{ textAlign: 'center', marginTop: '40px' }}>
               <img
                 src={srcLogo}
@@ -236,13 +247,13 @@ const SelectNamespaceModal = ({
               >
                 <span className={globalStyles.errorMessageText}>ERROR</span>
               </div>
-              <span className="modal-redis-text">
+              <span className={modalStyles.modalRedisText}>
                 Please, contact the engineers for support and you will <br />
                 get the assistance as quickly as possible
               </span>
             </div>
           </div>
-          <div className="modal-footer">
+          <div className={`${modalStyles.modalFooter} modal-footer`}>
             <button
               type="button"
               className="btn modal-footer-solution-cancel"
@@ -250,7 +261,7 @@ const SelectNamespaceModal = ({
             >
               Cancel
             </button>
-            <div className="volume-footer-links-deploy">
+            <div className="float-left">
               <Link
                 to="/support"
                 className="footer-links-deploy-btn"
@@ -264,8 +275,8 @@ const SelectNamespaceModal = ({
       )}
 
       {readyStatus === RUN_SOLUTION_SUCCESS && (
-        <div className="modal-content">
-          <div className="modal-header">
+        <div className={`${modalStyles.modalContent} modal-content`}>
+          <div className={`${modalStyles.modalHeader} modal-header`}>
             <button
               type="button"
               className="close"
@@ -274,7 +285,7 @@ const SelectNamespaceModal = ({
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div className="modal-body text-left">
+          <div className={`${modalStyles.modalBody} modal-body text-left`}>
             <div style={{ textAlign: 'center', marginTop: '40px' }}>
               <img
                 src={srcLogo}
@@ -293,12 +304,12 @@ const SelectNamespaceModal = ({
               >
                 <span className={globalStyles.successMessageText}>SUCCESS</span>
               </div>
-              <span className="modal-redis-text">
+              <span className={modalStyles.modalRedisText}>
                 {currentSolution} was successfully deployed
               </span>
             </div>
           </div>
-          <div className="modal-footer">
+          <div className={`${modalStyles.modalFooter} modal-footer`}>
             <Link
               className="blue-btn depl-btn"
               data-toggle="modal"

@@ -408,6 +408,12 @@
 .container{
   background-color: $color-white;
 
+  &Domains {
+    margin-top: 30px;
+    padding-top: 40px;
+    background-color: $color-white;
+  }
+
   &ToolsPages {
     margin-top: 30px;
     padding-top: 40px;
@@ -1070,6 +1076,14 @@
       margin: 7px 0 0 0;
     }
   }
+
+  &Input {
+    &Volume {
+      font-weight: 300;
+      color: #a7a7a7;
+      border: solid 0.5px $ligth-gray-color;
+    }
+  }
 }
 
 
@@ -1139,7 +1153,7 @@
     color: $color-dark-gray;
     background-color: transparent;
     border: none;
-    border-bottom: 1.5px solid $very-light-gray;
+    border: 1.5px solid $very-light-gray;
     border-radius: 0;
     padding: 2px 0 8px;
     margin-bottom: 7px;
@@ -1147,6 +1161,30 @@
     -moz-appearance: none;
     appearance: none;
     outline: 0;
+
+    &Modal {
+      position: relative;
+      width: 100%;
+      font-weight: 300;
+      color: $ligth-gray-color;
+      background-color: transparent;
+      border: none;
+      border: 0.5px solid $ligth-gray-color;
+      padding: 8px 8px 5px;
+      margin-bottom: 7px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      outline: 0;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
 
     &:hover {
       cursor: pointer;
@@ -1299,6 +1337,10 @@
   &:active{
     border: none;
     margin-top: 30px;
+  }
+
+  &CreateModal {
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15) !important;
   }
 
 }

@@ -3,6 +3,9 @@ import Modal from 'react-modal';
 
 import buttonsStyles from '../../theme/buttons.scss';
 
+import globalStyles from '../../theme/global.scss';
+import modalStyles from './index.scss';
+
 const customStyles = {
   overlay: {
     position: 'fixed',
@@ -78,13 +81,13 @@ const DeleteUserMembershipModal = ({
       style={customStyles}
       contentLabel="Create"
       ariaHideApp={false}
-      className="modal-dialog modal-dialog2 modal-dialog-create"
+      className={`${modalStyles.modalDialogCreate} modal-dialog`}
     >
       <form
         onSubmit={e => handleSubmitDeletingEssence(e)}
-        className="modal-content"
+        className={`${modalStyles.modalContent} modal-content`}
       >
-        <div className="modal-header">
+        <div className={`${modalStyles.modalHeader} modal-header`}>
           <button
             type="button"
             className="close"
@@ -93,12 +96,17 @@ const DeleteUserMembershipModal = ({
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div className="modal-body text-left">
-          <h4 className="modal-title modal-title-volume" id="modalLabel">
+        <div className={`${modalStyles.modalBody} modal-body text-left`}>
+          <h4
+            className={`${modalStyles.modalTitle} ${
+              globalStyles.marginBottom30
+            } modal-title`}
+            id="modalLabel"
+          >
             {type}
           </h4>
           {type !== 'Delete USER ACCESS' && (
-            <span className="modal-redis-text">
+            <span className={modalStyles.modalRedisText}>
               Deleting your {type} is irreversible.<br />
               Enter your {type} name (<strong style={{ color: '#29abe2' }}>
                 {typeName}
@@ -106,7 +114,7 @@ const DeleteUserMembershipModal = ({
             </span>
           )}
           {type === 'Delete USER ACCESS' && (
-            <span className="modal-redis-text">
+            <span className={modalStyles.modalRedisText}>
               Enter user’s Email (<strong style={{ color: '#29abe2' }}>
                 example@domain.com
               </strong>) below to<br />
@@ -121,7 +129,7 @@ const DeleteUserMembershipModal = ({
             onChange={e => handleChangeNameOfType(e)}
           />
         </div>
-        <div className="modal-footer">
+        <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
             className={`${buttonsStyles.buttonModalCancel} btn`}
