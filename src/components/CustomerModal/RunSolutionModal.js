@@ -14,6 +14,7 @@ import {
   RUN_SOLUTION_SUCCESS
 } from '../../constants/solutionConstants/runSolution';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -156,14 +157,14 @@ const SelectNamespaceModal = ({
                   <div className={`${modalStyles.modalFooter} modal-footer`}>
                     <button
                       type="button"
-                      className="btn modal-footer-solution-cancel"
+                      className={`${buttonsStyles.buttonModalCancel} btn`}
                       onClick={() => handleCloseModal()}
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="btn modal-footer-solution-select"
+                      className={`${buttonsStyles.buttonModalSelect} btn`}
                     >
                       Create
                     </button>
@@ -171,7 +172,7 @@ const SelectNamespaceModal = ({
                 ) : (
                   <div className={`${modalStyles.modalFooter} modal-footer`}>
                     <Link
-                      className="blue-btn depl-btn"
+                      className={buttonsStyles.buttonModalCreateNamespace}
                       data-toggle="modal"
                       to="/createNamespace"
                     >

@@ -11,6 +11,7 @@ import Notification from '../../Notification';
 import DeleteModal from '../../../components/CustomerModal/DeleteModal';
 
 import globalStyles from '../../../theme/global.scss';
+import buttonsStyles from '../../../theme/buttons.scss';
 
 type Props = {
   getProfileReducer: Object,
@@ -74,7 +75,9 @@ export class DeleteAccount extends PureComponent<Props> {
           </div>
           <div className={globalStyles.blockItemButtons}>
             <button
-              className="button_red btn btn-outline-primary"
+              className={`${
+                buttonsStyles.buttonUICreateDelete
+              } btn btn-outline-primary`}
               onClick={() => this.handleClickDeleteAccount()}
             >
               Delete

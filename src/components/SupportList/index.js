@@ -6,6 +6,7 @@ import ReactFileReader from 'react-file-reader';
 import LoadButton from '../LoadButton';
 import styles from '../../containers/Support/index.scss';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 type Props = {
   data: Array<Object>,
@@ -118,7 +119,7 @@ const SupportList = ({
               type="submit"
               buttonText="Submit Ticket"
               isFetching={isFetching}
-              baseClassButton="feedback-form__submit btn"
+              baseClassButton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
             />
           </div>
         </form>

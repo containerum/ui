@@ -5,6 +5,8 @@ import className from 'classnames/bind';
 
 import InputControl from '../../../InputControl/index';
 import icon from '../../../../images/icon-create-dep.svg';
+import buttonsStyles from '../../../../theme/buttons.scss';
+
 
 import globalStyles from '../../../../theme/global.scss';
 import inputStyles from '../../../../components/InputControl/index.scss';
@@ -96,7 +98,7 @@ const ImagePorts = ({
 
     <div className="col-md-12">
       <div
-        className="addBlockBtn marLeft"
+        className={`${buttonsStyles.buttonUIAddBlock} ml-0`}
         onClick={() => handleClickAddImagePort(index)}
         onKeyPress={() => handleClickAddImagePort(index)}
         role="presentation"

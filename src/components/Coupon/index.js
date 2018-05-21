@@ -6,6 +6,8 @@ import className from 'classnames/bind';
 import LoadButton from '../LoadButton';
 import InputControl from '../InputControl';
 
+import buttonsStyles from '../../theme/buttons.scss';
+
 import globalStyles from '../../theme/global.scss';
 import inputStyles from '../../components/InputControl/index.scss';
 
@@ -58,7 +60,9 @@ const Coupon = ({
               type="submit"
               buttonText="Apply"
               isFetching={isFetching}
-              baseClassButton="button_blue btn btn-outline-primary"
+              baseClassButton={`${
+                buttonsStyles.buttonUIDeployDashboard
+                } btn btn-outline-primary`}
             />
           </div>
         </div>

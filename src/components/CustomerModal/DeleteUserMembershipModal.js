@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 
+import buttonsStyles from '../../theme/buttons.scss';
+
 import globalStyles from '../../theme/global.scss';
 import modalStyles from './index.scss';
 
@@ -69,8 +71,8 @@ const DeleteUserMembershipModal = ({
 
   const styleSubmit =
     name === typeName
-      ? 'btn modal-footer-solution-select'
-      : 'btn modal-footer-solution-select modal-footer-volume-delete';
+      ? `${buttonsStyles.buttonModalSelect} btn`
+      : `${buttonsStyles.buttonModalAction} btn`;
   const isDisabledSubmit = name !== typeName;
   return (
     <Modal
@@ -130,7 +132,7 @@ const DeleteUserMembershipModal = ({
         <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={() => handleCloseModal()}
           >
             Cancel

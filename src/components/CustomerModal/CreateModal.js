@@ -8,6 +8,8 @@ import globalStyles from '../../theme/global.scss';
 import modalStyles from './index.scss';
 import createNamespaceStyles from '../../containers/CreateNamespace/index.scss';
 
+import buttonsStyles from '../../theme/buttons.scss';
+
 const createNamespaceClass = className.bind(createNamespaceStyles);
 const globalClass = className.bind(globalStyles);
 
@@ -90,8 +92,8 @@ const CreateModal = ({
 
   const styleSubmit =
     name.length >= 2 && name.search(regexp) !== -1
-      ? 'btn modal-footer-solution-select'
-      : 'btn modal-footer-solution-select modal-footer-volume-delete';
+      ? `${buttonsStyles.buttonModalSelect} btn`
+      : `${buttonsStyles.buttonModalAction} btn`;
   const isDisabledSubmit = name.length >= 2 && name.search(regexp) !== -1;
   const isErrorInputClass =
     name.search(regexp) !== -1
@@ -262,7 +264,7 @@ const CreateModal = ({
         <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={() => handleCloseModal()}
           >
             Cancel

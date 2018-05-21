@@ -35,4 +35,280 @@
     color: #a7a7a7;
     cursor: not-allowed;
   }
+
+  &DeployDashboard,
+  &Create {
+    cursor: pointer;
+    border-color: $main-color;
+    color: $main-color;
+    padding: 8px 19px 8px 19px;
+    border-radius: 2px;
+  }
+
+  &AddMembership {
+    width: 120px;
+    height: 30px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-color: $main-color;
+    border-radius: 2px;
+    cursor: pointer;
+    color: $main-color;
+
+    &:hover {
+      background: $main-color;
+      border-color: $main-color;
+    }
+
+    &:active,
+    &:focus {
+      background: $btn-active-color;
+      border-color: $btn-active-color;
+      outline: none;
+      box-shadow: none;
+      color: $color-white;
+    }
+  }
+
+  &Create {
+    &Delete {
+      border-color: $button-ui-delete;
+      background-color: $button-ui-delete;
+      color: $color-white;
+
+      &:hover {
+        background: $button-ui-delete;
+        border-color: $button-ui-delete;
+      }
+
+      &:focus,
+      &:active {
+        background: $button-ui-delete-active;
+        border-color: $button-ui-delete-active;
+        outline: none;
+        box-shadow: none;
+        color: $color-white;
+      }
+    }
+
+    &Small {
+      padding: 2px 20px 4px;
+      border-radius: 2px;
+      border: solid 1px $main-color;
+      background-color: $color-white;
+      color: $main-color;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        background-color: $main-color;
+        color: $color-white;
+      }
+
+      &:active {
+        background-color: $btn-active-color;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &FeedbackSubmit {
+    display: block;
+    width:100%;
+    background: $main-color;
+    color:$color-white;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding: 12px 20px 12px 20px;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.15);
+
+    &:hover{
+      background: $btn-active-color;
+    }
+  }
+
+  &AddBlock {
+    display: inline-block;
+    margin: 30px 0 0 15px;
+    font-weight: 300;
+    color: $main-color;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:hover {
+      color: $btn-active-color;
+    }
+
+    &Big {
+      display: inherit;
+      font-size: 20px;
+      margin-left: 0;
+    }
+  }
+
+  &AddFile {
+    padding: 8px 19px 8px 19px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  &LoadButton {
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    color: $color-white;
+    border-radius: 2px;
+    background-color: $main-color;
+    border: none;
+    padding: 11px 0;
+    cursor: pointer;
+    margin: 40px 0 25px;
+    text-transform: uppercase;
+
+
+    &:focus {
+      outline: 0;
+    }
+
+    &:hover {
+      color: $color-white;
+      background-color: $btn-active-color;
+      border-color: $btn-active-color;
+    }
+
+    &:active {
+      background-color: $btn-active-color;
+    }
+  }
+
+  &LoadButtonTransparency {
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 40px 0 25px;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: 2px solid $main-color;
+    color: $main-color;
+    padding: 9px 0;
+
+    &:focus {
+      outline: 0;
+    }
+
+    &:hover {
+      color: $color-white;
+      background-color: $btn-active-color;
+      border-color: $btn-active-color;
+    }
+
+    &:active {
+      background-color: $btn-active-color;
+    }
+  }
+}
+
+.buttonModal {
+  &Select {
+    padding: 9px 19px !important;
+    font-weight: 300;
+    text-align: center;
+    color: $color-white;
+    width: 100%;
+    margin-left: 15px;
+    border-radius: 2px;
+    background-color: $main-color;
+    border: solid 1px $main-color;
+    cursor: pointer;
+
+    &:hover{
+      background-color: $btn-active-color;
+      border: solid 1px $btn-active-color;
+    }
+
+    &:active{
+      background-color: $btn-active-color;
+      border: solid 1px $btn-active-color;
+
+    }
+  }
+
+  &Action {
+    padding: 9px 19px !important;
+    font-weight: 300;
+    text-align: center;
+    width: 100%;
+    margin-left: 15px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: solid 1px $very-light-gray;
+    background-color: $color-white;
+    color: $ligth-gray-color;
+
+    &:hover,
+    &:active {
+      border: solid 1px $very-light-gray;
+      background-color: $color-white;
+      color: $ligth-gray-color;
+    }
+  }
+
+  &Cancel {
+    height: 40px;
+    font-weight: 300;
+    text-align: center;
+    color: $ligth-gray-color;
+    width: 100%;
+    margin-right: 15px;
+    border-radius: 2px;
+    border: solid 0.5px $ligth-gray-color;
+    background: $color-white;
+    outline: none;
+    cursor: pointer;
+
+    &:hover{
+      background-color: $main-color;
+      border: solid 0.5px $main-color;
+      color: $color-white;
+    }
+
+    &:active{
+      background-color: $btn-active-color;
+      border: solid 0.5px $btn-active-color;
+      color: $color-white;
+    }
+  }
+
+  &Create {
+    &Namespace {
+      display: block;
+      border-radius: 2px;
+      background-color: $main-color;
+      color: $color-white;
+      border: none;
+      cursor: pointer;
+      padding: 10px 16px;
+      margin: 15px auto 0;
+      text-transform: uppercase;
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
 }

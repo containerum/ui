@@ -4,6 +4,7 @@ import className from 'classnames/bind';
 
 import LoadButton from '../../components/LoadButton';
 import alert from '../../images/alertAddUserMembership.svg';
+import buttonsStyles from '../../theme/buttons.scss';
 
 import modalStyles from './index.scss';
 import globalStyles from '../../theme/global.scss';
@@ -185,7 +186,7 @@ const AddUserMembershipModal = ({
         <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={() => handleCloseModal()}
           >
             Cancel
@@ -197,7 +198,7 @@ const AddUserMembershipModal = ({
             type="submit"
             buttonText="Add"
             isFetching={isFetchingAdd}
-            baseClassButton="btn modal-footer-solution-select"
+            baseClassButton={`${buttonsStyles.buttonModalSelect} btn`}
           />
         </div>
       </form>

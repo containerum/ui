@@ -37,6 +37,7 @@ import ConfigMapsPage from '../ConfigMaps';
 import ns from '../../images/ns-1.svg';
 
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -238,7 +239,9 @@ export class Namespace extends PureComponent<Props> {
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
                         to={routerLinks.createServiceLink(match.params.idName)}
-                        className="button_blue btn btn-outline-primary"
+                        className={`${
+                          buttonsStyles.buttonUICreate
+                        } btn btn-outline-primary`}
                       >
                         Create
                       </NavLink>
@@ -254,7 +257,9 @@ export class Namespace extends PureComponent<Props> {
                         to={`/namespace/${
                           match.params.idName
                         }/createDeployment`}
-                        className="button_blue btn btn-outline-primary"
+                        className={`${
+                          buttonsStyles.buttonUICreate
+                        } btn btn-outline-primary`}
                       >
                         Create
                       </NavLink>
@@ -268,7 +273,9 @@ export class Namespace extends PureComponent<Props> {
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
                         to={`/namespace/${match.params.idName}/createConfigMap`}
-                        className="button_blue btn btn-outline-primary"
+                        className={`${
+                          buttonsStyles.buttonUICreate
+                        } btn btn-outline-primary`}
                       >
                         Create
                       </NavLink>

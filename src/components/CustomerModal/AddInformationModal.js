@@ -7,6 +7,7 @@ import className from 'classnames/bind';
 
 import LoadButton from '../LoadButton';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 import modalStyles from './index.scss';
 
 const globalClass = className.bind(globalStyles);
@@ -69,8 +70,8 @@ const AddInformationModal = ({
   const countryName = selectedCountry.name;
   const styleSubmit =
     inputValue.length >= 2
-      ? 'btn modal-footer-solution-select'
-      : 'btn modal-footer-solution-select modal-footer-volume-delete';
+      ? `${buttonsStyles.buttonModalSelect} btn`
+      : `${buttonsStyles.buttonModalAction} btn`;
   const isDisabledButton = inputValue.length >= 2;
   return (
     <Modal
@@ -162,7 +163,7 @@ const AddInformationModal = ({
         <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={handleOpenCloseModal}
           >
             Cancel

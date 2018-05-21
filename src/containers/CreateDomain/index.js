@@ -28,6 +28,7 @@ import Notification from '../Notification';
 
 import sideMenuStyles from '../CreateDeployment/index.scss';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -227,7 +228,9 @@ export class CreateDomain extends PureComponent<Props> {
                     type="submit"
                     buttonText="Create domain"
                     isFetching={createDomainReducer.isFetching}
-                    baseClassButton="btnDeployment btnService"
+                    baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
+                      globalStyles.marginBottom50
+                    } ${globalStyles.marginTop10}`}
                   />
                 </form>
               </div>

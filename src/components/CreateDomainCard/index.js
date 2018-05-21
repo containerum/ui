@@ -177,7 +177,7 @@ const CreateDomainCard = ({
               id="ssl"
               value={isEnabledSSL}
               labelText="Enable SSL Security"
-              labelClassName="customLabel"
+              labelClassName={globalStyles.labelCustom}
               handleChangeCheckBox={handleChangeCheckBox}
             />
           </div>

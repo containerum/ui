@@ -7,6 +7,8 @@ import globalStyles from '../../theme/global.scss';
 import modalStyles from './index.scss';
 import createNamespaceStyles from '../../containers/CreateNamespace/index.scss';
 
+import buttonsStyles from '../../theme/buttons.scss';
+
 const createNamespaceClass = className.bind(createNamespaceStyles);
 const globalClass = className.bind(globalStyles);
 
@@ -224,12 +226,15 @@ const CreateModal = ({
         <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={() => handleCloseModal()}
           >
             Cancel
           </button>
-          <button type="submit" className="btn modal-footer-solution-select">
+          <button
+            type="submit"
+            className={`${buttonsStyles.buttonModalSelect} btn`}
+          >
             Resize
           </button>
         </div>

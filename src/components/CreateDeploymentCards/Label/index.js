@@ -7,6 +7,7 @@ import InputControl from '../../InputControl/index';
 import icon from '../../../images/icon-create-dep.svg';
 
 import globalStyles from '../../../theme/global.scss';
+import buttonsstyles from '../../../theme/buttons.scss';
 import inputStyles from '../../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
@@ -101,7 +102,7 @@ const CreateDeploymentLabel = ({
     })}
 
     <div
-      className="addBlockBtn"
+      className={buttonsstyles.buttonUIAddBlock}
       onClick={() => handleClickAddLabel()}
       onKeyPress={() => handleClickAddLabel()}
       role="presentation"

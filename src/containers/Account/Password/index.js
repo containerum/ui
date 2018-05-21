@@ -16,6 +16,7 @@ import LoadButton from '../../../components/LoadButton';
 import InputControl from '../../../components/InputControl';
 
 import globalStyles from '../../../theme/global.scss';
+import buttonsStyles from '../../../theme/buttons.scss';
 import inputStyles from '../../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
@@ -201,7 +202,9 @@ export class Password extends PureComponent<Props> {
                     type="submit"
                     buttonText="Save"
                     isFetching={changePasswordReducer.isFetching}
-                    baseClassButton="button_blue btn btn-outline-primary save-password"
+                    baseClassButton={`${buttonsStyles.buttonUICreate} ${
+                      globalStyles.marginLeft_10
+                    } btn btn-outline-primary`}
                   />
                 </div>
               </div>
