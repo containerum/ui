@@ -704,6 +704,12 @@
 }
 
 .dropdown{
+  &List {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &Menu {
     position: absolute;
     top: 100%;
@@ -1037,6 +1043,7 @@
 
 .form {
   &Control {
+    cursor: pointer;
     border-radius: 0.25rem !important;
 
     &:focus {
@@ -1060,6 +1067,7 @@
     padding: 22px 0 0 0;
 
     &Label {
+      cursor: text;
       font-size: 15px;
       font-weight: 300;
       color: $ligth-gray-color;
@@ -1098,6 +1106,13 @@
   }
 
   &InputText {
+    cursor: text;
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: $color-white;
+    }
+
     &Configmap{
       max-width: 400px;
       min-width: 400px;
@@ -1122,6 +1137,7 @@
         color: $main-color;
         font-size: 12px;
         top: 0;
+        cursor: default;
       }
     }
 

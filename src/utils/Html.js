@@ -104,6 +104,10 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
           rel="stylesheet"
         />
         <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+          rel="stylesheet"
+        />
+        <link
           href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=cyrillic"
           rel="stylesheet"
         />

@@ -229,7 +229,7 @@ export class WebHook extends PureComponent<Props> {
                   isFetching={createImageTokenReducer.isFetching}
                   baseClassButton={`${
                     buttonsStyles.buttonUIDeployDashboard
-                    } btn btn-outline-primary`}
+                  } btn btn-outline-primary`}
                 />
               </div>
             </div>

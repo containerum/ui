@@ -84,7 +84,11 @@ const AddConfigMapFileManually = ({
                 style={{ background: 'none' }}
                 onClick={() => handleDeleteFileManually(id)}
               >
-                <i className="material-icons" role="presentation">
+                <i
+                  className="material-icons"
+                  role="presentation"
+                  style={{ cursor: 'pointer' }}
+                >
                   delete
                 </i>
               </div>
