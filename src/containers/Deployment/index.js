@@ -143,10 +143,7 @@ export class Deployment extends PureComponent<Props> {
       <DeploymentInfo
         data={getDeploymentReducer.data}
         dataNamespace={getNamespacesReducer.data.find(
-          namespace =>
-            namespace.label
-              ? namespace.label === match.params.idName
-              : namespace.name === match.params.idName
+          namespace => namespace.id === match.params.idName
         )}
         handleDeleteDeployment={idDep => this.handleDeleteDeployment(idDep)}
         idName={match.params.idName}

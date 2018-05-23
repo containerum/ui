@@ -39,10 +39,7 @@ const ConfigMapList = ({
   );
 
   const currentDataOfNamespace = dataNamespace.find(
-    namespace =>
-      namespace.label
-        ? namespace.label === currentIdName
-        : namespace.name === currentIdName
+    namespace => namespace.id === currentIdName
   );
   const accessToNamespace = currentDataOfNamespace
     ? currentDataOfNamespace.access
@@ -213,10 +210,7 @@ const ConfigMapList = ({
                   {configMapsData.map(config => {
                     const { idName, configmap } = config;
                     const checkDataOfNamespace = dataNamespace.find(
-                      namespace =>
-                        namespace.label
-                          ? namespace.label === idName
-                          : namespace.name === idName
+                      namespace => namespace.id === idName
                     );
                     const accessToCurrentNamespace = checkDataOfNamespace
                       ? checkDataOfNamespace.access

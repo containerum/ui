@@ -68,7 +68,7 @@ export const fetchCreateDomain = (
 
   let idSrv = idName;
   const response = await axios.post(
-    `${URL}/namespace/${idName}/ingress`,
+    `${URL}/namespaces/${idName}/ingresses`,
     currentData,
     {
       headers: {

@@ -9,14 +9,14 @@ import Scrollspy from 'react-scrollspy';
 
 import scrollById from '../../functions/scrollById';
 import { routerLinks } from '../../config';
-import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
+import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
 import * as actionUpdateCustomNamespace from '../../actions/namespaceActions/updateCustomNamespace';
 import {
-  GET_NAMESPACE_INVALID,
-  GET_NAMESPACE_REQUESTING,
-  GET_NAMESPACE_FAILURE,
-  GET_NAMESPACE_SUCCESS
-} from '../../constants/namespaceConstants/getNamespace';
+  GET_NAMESPACE_USERS_ACCESS_INVALID,
+  GET_NAMESPACE_USERS_ACCESS_REQUESTING,
+  GET_NAMESPACE_USERS_ACCESS_FAILURE,
+  GET_NAMESPACE_USERS_ACCESS_SUCCESS
+} from '../../constants/namespaceConstants/getNamespaceUsersAccess';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 // import { CREATE_CUSTOM_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/updateCustomNamespace';
 import type { Dispatch, ReduxState } from '../../types';
@@ -30,11 +30,11 @@ import globalStyles from '../../theme/global.scss';
 type Props = {
   match: Object,
   history: Object,
-  getNamespaceReducer: Object,
+  getNamespaceUsersAccessReducer: Object,
   getProfileReducer: Object,
   updateCustomNamespaceReducer: Object,
-  fetchGetNamespaceIfNeeded: (idName: string) => void,
-  fetchUpdateCustomNamespaceIfNeeded: (data: Object) => void
+  fetchGetNamespaceUsersAccessIfNeeded: (idName: string) => void,
+  fetchUpdateCustomNamespaceIfNeeded: (data: Object, idName: string) => void
 };
 
 // Export this for unit testing more easily
@@ -51,11 +51,15 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    const { fetchGetNamespaceIfNeeded, match } = this.props;
-    fetchGetNamespaceIfNeeded(match.params.idName);
+    const { fetchGetNamespaceUsersAccessIfNeeded, match } = this.props;
+    fetchGetNamespaceUsersAccessIfNeeded(match.params.idName);
   }
   componentWillUpdate(nextProps) {
-    const { getProfileReducer, getNamespaceReducer, history } = this.props;
+    const {
+      getProfileReducer,
+      getNamespaceUsersAccessReducer,
+      history
+    } = this.props;
     if (
       getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
@@ -67,26 +71,34 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
       }
     }
     if (
-      getNamespaceReducer.readyStatus !==
-        nextProps.getNamespaceReducer.readyStatus &&
-      nextProps.getNamespaceReducer.readyStatus === GET_NAMESPACE_SUCCESS
+      getNamespaceUsersAccessReducer.readyStatus !==
+        nextProps.getNamespaceUsersAccessReducer.readyStatus &&
+      nextProps.getNamespaceUsersAccessReducer.readyStatus ===
+        GET_NAMESPACE_USERS_ACCESS_SUCCESS
     ) {
-      const { cpu, memory } = nextProps.getNamespaceReducer.data.resources.hard;
+      const {
+        label,
+        cpu,
+        max_external_services,
+        max_internal_services,
+        max_traffic,
+        ram
+      } = nextProps.getNamespaceUsersAccessReducer.data;
       this.setState({
         ...this.state,
-        label: nextProps.getNamespaceReducer.data.name,
+        label,
         cpu,
-        memory,
-        maxExtServices: '',
-        maxIntServices: '',
-        maxTraffic: ''
+        memory: ram,
+        maxExtServices: max_external_services,
+        maxIntServices: max_internal_services,
+        maxTraffic: max_traffic
       });
     }
   }
   handleSubmitUpdateCustomNamespace = e => {
     e.preventDefault();
-    const { fetchUpdateCustomNamespaceIfNeeded } = this.props;
-    fetchUpdateCustomNamespaceIfNeeded(this.state);
+    const { fetchUpdateCustomNamespaceIfNeeded, match } = this.props;
+    fetchUpdateCustomNamespaceIfNeeded(this.state, match.params.idName);
   };
   handleChangeInput = (type, value) => {
     this.setState({
@@ -128,11 +140,13 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
     );
   };
   renderUpdateCustomNamespace = () => {
-    const { getNamespaceReducer } = this.props;
+    const { getNamespaceUsersAccessReducer } = this.props;
     if (
-      !getNamespaceReducer.readyStatus ||
-      getNamespaceReducer.readyStatus === GET_NAMESPACE_INVALID ||
-      getNamespaceReducer.readyStatus === GET_NAMESPACE_REQUESTING
+      !getNamespaceUsersAccessReducer.readyStatus ||
+      getNamespaceUsersAccessReducer.readyStatus ===
+        GET_NAMESPACE_USERS_ACCESS_INVALID ||
+      getNamespaceUsersAccessReducer.readyStatus ===
+        GET_NAMESPACE_USERS_ACCESS_REQUESTING
     ) {
       return (
         <div className="row">
@@ -150,7 +164,10 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
       );
     }
 
-    if (getNamespaceReducer.readyStatus === GET_NAMESPACE_FAILURE) {
+    if (
+      getNamespaceUsersAccessReducer.readyStatus ===
+      GET_NAMESPACE_USERS_ACCESS_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Namespace!</p>;
     }
 
@@ -164,6 +181,7 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
     } = this.state;
     return (
       <UpdateCustomNamespaceInfo
+        type="update"
         label={label}
         cpu={cpu}
         memory={memory}
@@ -176,12 +194,15 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
   };
 
   render() {
-    const { updateCustomNamespaceReducer } = this.props;
+    const { updateCustomNamespaceReducer, match } = this.props;
     return (
       <div>
         <Helmet title="Update Custom Namespace" />
         <div className="container-fluid breadcrumbNavigation">
-          <NavigationHeaderItem IdUpdate="namespace" />
+          <NavigationHeaderItem
+            idName={match.params.idName}
+            IdUpdate="namespace"
+          />
         </div>
         <Notification
           status={updateCustomNamespaceReducer.status}
@@ -224,19 +245,26 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
 const connector: Connector<{}, Props> = connect(
   ({
     updateCustomNamespaceReducer,
-    getNamespaceReducer,
+    getNamespaceUsersAccessReducer,
     getProfileReducer
   }: ReduxState) => ({
     updateCustomNamespaceReducer,
-    getNamespaceReducer,
+    getNamespaceUsersAccessReducer,
     getProfileReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetNamespaceIfNeeded: (idName: string) =>
-      dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
-    fetchUpdateCustomNamespaceIfNeeded: (data: Object) =>
+    fetchGetNamespaceUsersAccessIfNeeded: (idName: string) =>
       dispatch(
-        actionUpdateCustomNamespace.fetchUpdateCustomNamespaceIfNeeded(data)
+        actionGetNamespaceUsersAccess.fetchGetNamespaceUsersAccessIfNeeded(
+          idName
+        )
+      ),
+    fetchUpdateCustomNamespaceIfNeeded: (data: Object, idName: string) =>
+      dispatch(
+        actionUpdateCustomNamespace.fetchUpdateCustomNamespaceIfNeeded(
+          data,
+          idName
+        )
       )
   })
 );

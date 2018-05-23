@@ -395,7 +395,7 @@ export class Dashboard extends PureComponent<Props> {
         namespaces={getNamespacesReducer.data}
         linkToDeployment={
           getNamespacesReducer.data.length
-            ? getNamespacesReducer.data[0].label
+            ? getNamespacesReducer.data[0].id
             : ''
         }
         linkToManageTeam={

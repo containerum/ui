@@ -1,18 +1,18 @@
 module.exports = {
   host: process.env.NODE_HOST || 'localhost', // Define your host from 'package.json'
   port: process.env.PORT,
-  webApi: process.env.WEB_API
-    ? `https://${process.env.WEB_API}`
-    : 'https://api.containerum.io:8082',
-  wsApi: process.env.WEB_API
-    ? `wss://${process.env.WEB_API}`
-    : 'wss://api.containerum.io:8082',
   // webApi: process.env.WEB_API
   //   ? `https://${process.env.WEB_API}`
-  //   : 'https://192.168.88.210:8082',
+  //   : 'https://api.containerum.io:8082',
   // wsApi: process.env.WEB_API
   //   ? `wss://${process.env.WEB_API}`
-  //   : 'wss://192.168.88.210:8082',
+  //   : 'wss://api.containerum.io:8082',
+  webApi: process.env.WEB_API
+    ? `http://${process.env.WEB_API}`
+    : 'http://192.168.88.210:8082',
+  wsApi: process.env.WEB_API
+    ? `wss://${process.env.WEB_API}`
+    : 'wss://192.168.88.210:8082',
   appRecaptcha:
     process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS',
   sourceType: process.env.SOURCE_TYPE || 'ONLINE',

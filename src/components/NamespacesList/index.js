@@ -13,6 +13,7 @@ import deployment from '../../images/deployment.png';
 type Props = {
   data: Array<Object>,
   role: string,
+  dataUsageNamespaces: Array<Object>,
   history: Object,
   handleDeleteNamespace: (idName: string) => void
 };
@@ -20,6 +21,7 @@ type Props = {
 const NamespacesList = ({
   data,
   role,
+  dataUsageNamespaces,
   history,
   handleDeleteNamespace
 }: Props) => {
@@ -57,25 +59,20 @@ const NamespacesList = ({
     <div className="row double">
       {data &&
         data.map(namespace => {
-          const { label, access, name } = namespace;
-          const { memory, cpu } = namespace.resources.used;
-          const {
-            memory: memoryLimit,
-            cpu: cpuLimit
-          } = namespace.resources.hard;
-          const rightName = label || name;
-          const id = rightName;
-          const accessStyleName = access
-            ? access[0].toUpperCase() + access.slice(1)
-            : 'owner';
+          const { label, id, access, cpu: cpuLimit, ram: ramLimit } = namespace;
+          const usageNamespaces = dataUsageNamespaces.find(
+            usageNs => usageNs.name === id
+          );
+          const { memory, cpu } = usageNamespaces.resources.used;
+          const accessStyleName = access[0].toUpperCase() + access.slice(1);
           const classNameBadge = styleNamespaces({
             [`namespaceInfoBadge${accessStyleName}`]: true
           });
           return (
             <div className="col-md-4" id={id} key={id}>
               <div
-                onClick={() => handleClickGetNamespace(rightName)}
-                onKeyPress={() => handleClickGetNamespace(rightName)}
+                onClick={() => handleClickGetNamespace(id)}
+                onKeyPress={() => handleClickGetNamespace(id)}
                 className={classNameContainer}
                 role="link"
                 tabIndex={0}
@@ -100,7 +97,7 @@ const NamespacesList = ({
                       style={{ display: 'block' }}
                       className={classNameContainerHeader}
                     >
-                      {rightName}
+                      {label}
                     </div>
                   </div>
                   <div
@@ -138,7 +135,7 @@ const NamespacesList = ({
                                 className={`dropdown-item ${
                                   globalStyles.dropdownItem
                                 }`}
-                                to={routerLinks.resizeNamespaceLink(rightName)}
+                                to={routerLinks.resizeNamespaceLink(id)}
                               >
                                 Resize
                               </NavLink>
@@ -149,9 +146,7 @@ const NamespacesList = ({
                               className={`dropdown-item ${
                                 globalStyles.dropdownItem
                               }`}
-                              to={routerLinks.resizeCustomNamespaceLink(
-                                rightName
-                              )}
+                              to={routerLinks.resizeCustomNamespaceLink(id)}
                             >
                               Resize
                             </NavLink>
@@ -160,12 +155,8 @@ const NamespacesList = ({
                             className={`dropdown-item ${
                               globalStyles.dropdownItem
                             } text-danger`}
-                            onClick={() =>
-                              handleClickDeleteNamespace(rightName)
-                            }
-                            onKeyPress={() =>
-                              handleClickDeleteNamespace(rightName)
-                            }
+                            onClick={() => handleClickDeleteNamespace(id)}
+                            onKeyPress={() => handleClickDeleteNamespace(id)}
                           >
                             Delete
                           </button>
@@ -185,7 +176,7 @@ const NamespacesList = ({
                     <div
                       className={`${globalStyles.contentBlockInfoText} inline`}
                     >
-                      {memory} / {memoryLimit}
+                      {memory} / {ramLimit}
                     </div>
                   </div>
                   <div className={globalStyles.contentBlockInfoItem}>

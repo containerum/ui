@@ -277,19 +277,13 @@ class ConfigMaps extends PureComponent<Props> {
         );
         return null;
       });
-      this.props.fetchCreateConfigMapIfNeeded(
-        currentNamespace.label,
-        dataFiles
-      );
+      this.props.fetchCreateConfigMapIfNeeded(currentNamespace.id, dataFiles);
     } else if (filesManually[0].fileName && filesManually[0].textArea) {
       filesManually.map(file => {
         dataFiles.data[file.fileName] = Base64.encode(file.textArea);
         return null;
       });
-      this.props.fetchCreateConfigMapIfNeeded(
-        currentNamespace.label,
-        dataFiles
-      );
+      this.props.fetchCreateConfigMapIfNeeded(currentNamespace.id, dataFiles);
     }
   };
   handleDeleteConfigMap = (idName, configMapLabel) => {

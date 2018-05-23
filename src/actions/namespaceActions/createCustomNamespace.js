@@ -74,10 +74,12 @@ export const fetchCreateCustomNamespace = (
     }
   );
   const { status, data, config } = response;
-  console.log(status, data);
+  // console.log(status, data);
   switch (status) {
     case 201: {
-      dispatch(createCustomNamespaceSuccess(data, 201, config.method, label));
+      dispatch(
+        createCustomNamespaceSuccess(data, status, config.method, label)
+      );
       // if (
       //   typeof window !== 'undefined' &&
       //   typeof window.navigator !== 'undefined'

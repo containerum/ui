@@ -56,19 +56,18 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
           <tbody>
             {data &&
               data.map(namespace => {
-                const { label, name, access } = namespace;
-                const {
-                  memory: memoryLimit,
-                  cpu: cpuLimit
-                } = namespace.resources.hard;
-                const rightName = label || name;
-                const id = rightName;
+                const { label, access } = namespace;
+                // const {
+                //   memory: memoryLimit,
+                //   cpu: cpuLimit
+                // } = namespace.resources.hard;
+                const { cpu, ram, id } = namespace;
                 return (
                   <tr
                     id={id}
                     key={id}
-                    onClick={() => handleClickGetNamespace(rightName)}
-                    onKeyPress={() => handleClickGetNamespace(rightName)}
+                    onClick={() => handleClickGetNamespace(id)}
+                    onKeyPress={() => handleClickGetNamespace(id)}
                     role="link"
                     tabIndex={0}
                     style={{ margin: 0, cursor: 'pointer' }}
@@ -79,15 +78,9 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                     >
                       <img src={deployment} alt="deployment" />
                     </td>
-                    <td className={dashboardStyles.td_2_Dashboard}>
-                      {rightName}
-                    </td>
-                    <td className={dashboardStyles.td_3_Dashboard}>
-                      {memoryLimit}
-                    </td>
-                    <td className={dashboardStyles.td_4_Dashboard}>
-                      {cpuLimit}
-                    </td>
+                    <td className={dashboardStyles.td_2_Dashboard}>{label}</td>
+                    <td className={dashboardStyles.td_3_Dashboard}>{ram}</td>
+                    <td className={dashboardStyles.td_4_Dashboard}>{cpu}</td>
                     <td className={dashboardStyles.td_4_Dashboard}>{access}</td>
                     <td
                       className={`${
@@ -129,7 +122,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                             role="menu"
                           >
                             <Link
-                              to={routerLinks.resizeNamespaceLink(rightName)}
+                              to={routerLinks.resizeNamespaceLink(id)}
                               className={`dropdown-item ${
                                 globalStyles.dropdownItem
                               }`}
@@ -146,9 +139,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                           role="menu"
                         >
                           <Link
-                            to={routerLinks.resizeCustomNamespaceLink(
-                              rightName
-                            )}
+                            to={routerLinks.resizeCustomNamespaceLink(id)}
                             className={`dropdown-item ${
                               globalStyles.dropdownItem
                             }`}

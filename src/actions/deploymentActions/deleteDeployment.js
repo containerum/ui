@@ -49,7 +49,7 @@ export const fetchDeleteDeployment = (
   dispatch(deleteDeploymentRequest());
 
   const response = await axios.delete(
-    `${URL}/namespace/${idName}/deployment/${idDep}`,
+    `${URL}/namespaces/${idName}/deployments/${idDep}`,
     {
       headers: {
         'User-Client': browser,
@@ -60,8 +60,8 @@ export const fetchDeleteDeployment = (
   );
   const { data, status, config } = response;
   switch (status) {
-    case 200: {
-      dispatch(deleteDeploymentSuccess(data, 202, config.method, idDep));
+    case 202: {
+      dispatch(deleteDeploymentSuccess(data, status, config.method, idDep));
       break;
     }
     case 400: {

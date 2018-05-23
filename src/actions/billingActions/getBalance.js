@@ -33,7 +33,6 @@ const getBalanceInvalidToken = () => ({
 });
 
 export const fetchGetBalance = (
-  idName: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
@@ -71,8 +70,8 @@ export const fetchGetBalance = (
   }
 };
 
-export const fetchGetBalanceIfNeeded = (idName: string): ThunkAction => (
+export const fetchGetBalanceIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetBalance(idName, axios));
+) => dispatch(fetchGetBalance(axios));

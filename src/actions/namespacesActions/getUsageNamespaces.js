@@ -5,43 +5,43 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
-  GET_NAMESPACES_REQUESTING,
-  GET_NAMESPACES_SUCCESS,
-  GET_NAMESPACES_FAILURE
-} from '../../constants/namespacesConstants/getNamespaces';
+  GET_NAMESPACES_USAGE_REQUESTING,
+  GET_NAMESPACES_USAGE_SUCCESS,
+  GET_NAMESPACES_USAGE_FAILURE
+} from '../../constants/namespacesConstants/getUsageNamespaces';
 import { webApi } from '../../config/index';
 
-const getNamespacesRequest = () => ({
-  type: GET_NAMESPACES_REQUESTING,
+const getUsageNamespacesRequest = () => ({
+  type: GET_NAMESPACES_USAGE_REQUESTING,
   isFetching: true
 });
 
-const getNamespacesSuccess = data => ({
-  type: GET_NAMESPACES_SUCCESS,
+const getUsageNamespacesSuccess = data => ({
+  type: GET_NAMESPACES_USAGE_SUCCESS,
   isFetching: false,
   data
 });
 
-const getNamespacesFailure = err => ({
-  type: GET_NAMESPACES_FAILURE,
+const getUsageNamespacesFailure = err => ({
+  type: GET_NAMESPACES_USAGE_FAILURE,
   isFetching: false,
   err
 });
 
-const getNamespacesInvalidToken = () => ({
+const getUsageNamespacesInvalidToken = () => ({
   type: 'GET_INVALID_TOKEN'
 });
 
-export const fetchGetNamespaces = (
+export const fetchGetUsageNamespaces = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
 
-  dispatch(getNamespacesRequest());
+  dispatch(getUsageNamespacesRequest());
 
-  const response = await axios.get(`${URL}/namespaces`, {
+  const response = await axios.get(`${URL}/usage/namespaces`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken
@@ -51,30 +51,30 @@ export const fetchGetNamespaces = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getNamespacesSuccess(data));
+      dispatch(getUsageNamespacesSuccess(data.namespaces));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
-        dispatch(getNamespacesInvalidToken());
+        dispatch(getUsageNamespacesInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      } else dispatch(getNamespacesFailure(data.message));
+      } else dispatch(getUsageNamespacesFailure(data.message));
       break;
     }
     // default: {
-    //   dispatch(getNamespacesSuccess([]));
+    //   dispatch(getUsageNamespacesSuccess([]));
     //   dispatch(push('/login'));
     // }
     default: {
-      dispatch(getNamespacesFailure(data.message));
+      dispatch(getUsageNamespacesFailure(data.message));
       dispatch(push('/login'));
     }
   }
 };
 
-export const fetchGetNamespacesIfNeeded = (): ThunkAction => (
+export const fetchGetUsageNamespacesIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetNamespaces(axios));
+) => dispatch(fetchGetUsageNamespaces(axios));

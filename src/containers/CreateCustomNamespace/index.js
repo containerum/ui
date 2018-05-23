@@ -126,7 +126,7 @@ export class CreateCustomNamespace extends PureComponent<Props> {
       <div>
         <Helmet title="Create Custom Namespace" />
         <div className="container-fluid breadcrumbNavigation">
-          <NavigationHeaderItem IdCreate="namespace" />
+          <NavigationHeaderItem IdCreate="namespace" idName="new" />
         </div>
         <Notification
           status={createCustomNamespaceReducer.status}

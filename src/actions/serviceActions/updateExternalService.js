@@ -63,7 +63,7 @@ export const fetchUpdateExternalService = (
   });
   // console.log(extObj);
   const response = await axios.put(
-    `${URL}/namespace/${idName}/service/${idSrv}`,
+    `${URL}/namespaces/${idName}/services/${idSrv}`,
     extObj,
     {
       headers: {
@@ -76,11 +76,11 @@ export const fetchUpdateExternalService = (
   const { status, data, config } = response;
   // console.log(data);
   switch (status) {
-    case 200: {
+    case 202: {
       dispatch(
         updateExternalServiceSuccess(
           data,
-          202,
+          status,
           config.method,
           `External service ${idSrv}`
         )

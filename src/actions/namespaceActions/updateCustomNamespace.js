@@ -9,7 +9,7 @@ import {
   UPDATE_CUSTOM_NAMESPACE_SUCCESS,
   UPDATE_CUSTOM_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/updateCustomNamespace';
-// import { webApi } from '../../config/index';
+import { webApi } from '../../config/index';
 
 const updateNamespaceRequest = () => ({
   type: UPDATE_CUSTOM_NAMESPACE_REQUESTING,
@@ -37,8 +37,9 @@ const updateNamespaceInvalidToken = () => ({
 
 export const fetchUpdateCustomNamespace = (
   dataNS: Object,
-  axios: any
-  // URL: string = webApi
+  idName: string,
+  axios: any,
+  URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
@@ -54,7 +55,7 @@ export const fetchUpdateCustomNamespace = (
     maxTraffic: max_traffic
   } = dataNS;
   const response = await axios.put(
-    'http://192.168.88.210:4242/admin/namespaces',
+    `${URL}/admin/namespaces/${idName}`,
     {
       label,
       cpu,
@@ -72,10 +73,10 @@ export const fetchUpdateCustomNamespace = (
     }
   );
   const { status, data, config } = response;
-  console.log(status, data);
+  // console.log(status, data);
   switch (status) {
     case 200: {
-      dispatch(updateNamespaceSuccess(data, 201, config.method));
+      dispatch(updateNamespaceSuccess(201, status, config.method));
       // if (
       //   typeof window !== 'undefined' &&
       //   typeof window.navigator !== 'undefined'
@@ -103,6 +104,7 @@ export const fetchUpdateCustomNamespace = (
 };
 
 export const fetchUpdateCustomNamespaceIfNeeded = (
-  dataNS: Object
+  dataNS: Object,
+  idName: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchUpdateCustomNamespace(dataNS, axios));
+  dispatch(fetchUpdateCustomNamespace(dataNS, idName, axios));

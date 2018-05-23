@@ -9,7 +9,7 @@ import _ from 'lodash/fp';
 
 import * as actionGetNamespacesTariffs from '../../actions/namespacesActions/getNamespacesTariffs';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
-import * as actionGetNamespaceAccess from '../../actions/namespaceActions/getNamespaceAccess';
+import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
 import * as actionResizeNamespace from '../../actions/namespaceActions/resizeNamespace';
 import {
   GET_NAMESPACES_TARIFFS_INVALID,
@@ -22,10 +22,10 @@ import {
   GET_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/getNamespace';
 import {
-  GET_NAMESPACE_ACCESS_INVALID,
-  GET_NAMESPACE_ACCESS_REQUESTING,
-  GET_NAMESPACE_ACCESS_FAILURE
-} from '../../constants/namespaceConstants/getNamespaceAccess';
+  GET_NAMESPACE_USERS_ACCESS_INVALID,
+  GET_NAMESPACE_USERS_ACCESS_REQUESTING,
+  GET_NAMESPACE_USERS_ACCESS_FAILURE
+} from '../../constants/namespaceConstants/getNamespaceUsersAccess';
 import type {
   Namespaces as NamespacesType,
   Dispatch,
@@ -38,11 +38,11 @@ import Notification from '../Notification';
 type Props = {
   getNamespacesTariffsReducer: NamespacesType,
   getNamespaceReducer: Object,
-  getNamespaceAccessReducer: Object,
+  getNamespaceUsersAccessReducer: Object,
   resizeNamespaceReducer: Object,
   fetchGetNamespacesTariffsIfNeeded: () => void,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
-  fetchGetNamespaceAccessIfNeeded: (idName: string) => void,
+  fetchGetNamespaceUsersAccessIfNeeded: (idName: string) => void,
   fetchResizeNamespaceIfNeeded: (idName: string, tariff: string) => void,
   match: Object
 };
@@ -67,11 +67,11 @@ export class ResizeNamespace extends PureComponent<Props> {
       match,
       fetchGetNamespacesTariffsIfNeeded,
       fetchGetNamespaceIfNeeded,
-      fetchGetNamespaceAccessIfNeeded
+      fetchGetNamespaceUsersAccessIfNeeded
     } = this.props;
     fetchGetNamespacesTariffsIfNeeded();
     fetchGetNamespaceIfNeeded(match.params.idName);
-    fetchGetNamespaceAccessIfNeeded(match.params.idName);
+    fetchGetNamespaceUsersAccessIfNeeded(match.params.idName);
   }
   handleOpenCloseModal = () => {
     this.setState({
@@ -106,7 +106,7 @@ export class ResizeNamespace extends PureComponent<Props> {
     const {
       getNamespacesTariffsReducer,
       getNamespaceReducer,
-      getNamespaceAccessReducer
+      getNamespaceUsersAccessReducer
     } = this.props;
     if (
       !getNamespacesTariffsReducer.readyStatus ||
@@ -117,11 +117,11 @@ export class ResizeNamespace extends PureComponent<Props> {
       (!getNamespaceReducer.readyStatus ||
         getNamespaceReducer.readyStatus === GET_NAMESPACE_INVALID ||
         getNamespaceReducer.readyStatus === GET_NAMESPACE_REQUESTING) ||
-      (!getNamespaceAccessReducer.readyStatus ||
-        getNamespaceAccessReducer.readyStatus ===
-          GET_NAMESPACE_ACCESS_INVALID ||
-        getNamespaceAccessReducer.readyStatus ===
-          GET_NAMESPACE_ACCESS_REQUESTING)
+      (!getNamespaceUsersAccessReducer.readyStatus ||
+        getNamespaceUsersAccessReducer.readyStatus ===
+          GET_NAMESPACE_USERS_ACCESS_INVALID ||
+        getNamespaceUsersAccessReducer.readyStatus ===
+          GET_NAMESPACE_USERS_ACCESS_REQUESTING)
     ) {
       return (
         <div className="row">
@@ -143,7 +143,8 @@ export class ResizeNamespace extends PureComponent<Props> {
       getNamespacesTariffsReducer.readyStatus ===
         GET_NAMESPACES_TARIFFS_FAILURE ||
       getNamespaceReducer.readyStatus === GET_NAMESPACE_FAILURE ||
-      getNamespaceAccessReducer.readyStatus === GET_NAMESPACE_ACCESS_FAILURE
+      getNamespaceUsersAccessReducer.readyStatus ===
+        GET_NAMESPACE_USERS_ACCESS_FAILURE
     ) {
       return <p>Oops, Failed to load data of Namespace!</p>;
     }
@@ -154,8 +155,8 @@ export class ResizeNamespace extends PureComponent<Props> {
         NSTariffName={this.state.NSTariffName}
         isFullDataOfProfile
         active={
-          getNamespaceAccessReducer.data
-            ? getNamespaceAccessReducer.data.tariff_id
+          getNamespaceUsersAccessReducer.data
+            ? getNamespaceUsersAccessReducer.data.tariff_id
             : null
         }
         handleSelectTariff={tariff => this.handleSelectTariff(tariff)}
@@ -167,6 +168,7 @@ export class ResizeNamespace extends PureComponent<Props> {
   render() {
     const {
       resizeNamespaceReducer,
+      getNamespaceUsersAccessReducer,
       fetchResizeNamespaceIfNeeded,
       match
     } = this.props;
@@ -181,6 +183,9 @@ export class ResizeNamespace extends PureComponent<Props> {
       isOpened
     } = this.state;
     const { status, idName, method, err } = resizeNamespaceReducer;
+    const label = getNamespaceUsersAccessReducer.data
+      ? getNamespaceUsersAccessReducer.data.label
+      : idName;
     return (
       <div>
         <Notification
@@ -205,7 +210,7 @@ export class ResizeNamespace extends PureComponent<Props> {
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleResize={fetchResizeNamespaceIfNeeded}
         />
-        <Helmet title={`Resize Namespace - ${match.params.idName}`} />
+        <Helmet title={`Resize Namespace - ${label}`} />
         <div className="content-block">
           <div className="content-block-container container no-back mt-0 no-padding">
             <div className="content-block-content mt-0">
@@ -213,7 +218,7 @@ export class ResizeNamespace extends PureComponent<Props> {
                 <div className="namespace-plan-title">
                   choose a namespace size for{' '}
                   <span className="namespace-plan-first-step-blue">
-                    {match.params.idName}
+                    {label}
                   </span>
                 </div>
               </div>
@@ -231,12 +236,12 @@ const connector: Connector<{}, Props> = connect(
     getNamespacesTariffsReducer,
     resizeNamespaceReducer,
     getNamespaceReducer,
-    getNamespaceAccessReducer
+    getNamespaceUsersAccessReducer
   }: ReduxState) => ({
     getNamespacesTariffsReducer,
     getNamespaceReducer,
     resizeNamespaceReducer,
-    getNamespaceAccessReducer
+    getNamespaceUsersAccessReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesTariffsIfNeeded: () =>
@@ -247,8 +252,12 @@ const connector: Connector<{}, Props> = connect(
       ),
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
-    fetchGetNamespaceAccessIfNeeded: (idName: string) =>
-      dispatch(actionGetNamespaceAccess.fetchGetNamespaceAccessIfNeeded(idName))
+    fetchGetNamespaceUsersAccessIfNeeded: (idName: string) =>
+      dispatch(
+        actionGetNamespaceUsersAccess.fetchGetNamespaceUsersAccessIfNeeded(
+          idName
+        )
+      )
   })
 );
 

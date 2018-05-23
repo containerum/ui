@@ -131,10 +131,7 @@ export class Pods extends PureComponent<Props> {
       <PodsList
         data={this.state.displayedPods}
         dataNamespace={getNamespacesReducer.data.find(
-          namespace =>
-            namespace.label
-              ? namespace.label === match.params.idName
-              : namespace.name === match.params.idName
+          namespace => namespace.id === match.params.idName
         )}
         handleDeletePod={idPod => this.handleDeletePod(idPod)}
         history={this.props.history}

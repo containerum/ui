@@ -53,13 +53,13 @@ export const fetchCreateExternalService = (
   dispatch(createExternalServiceRequest());
 
   let idSrv = idName;
-  const intObj = {
+  const extObj = {
     deploy: dataSrv.currentDeployment,
     name: dataSrv.externalSrvNameValue,
     ports: []
   };
   dataSrv.externalSrvObject.map(item => {
-    intObj.ports.push({
+    extObj.ports.push({
       name: item.externalSrvName,
       target_port: parseInt(item.externalSrvTargetPort, 10),
       protocol: item.extServiceType
@@ -67,8 +67,8 @@ export const fetchCreateExternalService = (
     return null;
   });
   const response = await axios.post(
-    `${URL}/namespace/${idName}/service`,
-    intObj,
+    `${URL}/namespaces/${idName}/services`,
+    extObj,
     {
       headers: {
         'User-Client': browser,
