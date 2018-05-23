@@ -7,16 +7,24 @@ import classNames from 'classnames/bind';
 import styles from '../../containers/Namespaces/index.scss';
 import globalStyles from '../../theme/global.scss';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import deployment from '../../images/deployment.png';
 
 type Props = {
   data: Array<Object>,
+  role: string,
+  dataUsageNamespaces: Array<Object>,
   history: Object,
   handleDeleteNamespace: (idName: string) => void
 };
 
-const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
+const NamespacesList = ({
+  data,
+  role,
+  dataUsageNamespaces,
+  history,
+  handleDeleteNamespace
+}: Props) => {
   const handleClickGetNamespace = name => {
     history.push(routerLinks.namespaceLink(name));
   };
@@ -46,17 +54,16 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
     'contentBlockContent',
     'containerCard'
   );
+  const isOnline = sourceType === 'ONLINE';
   return (
     <div className="row double">
       {data &&
         data.map(namespace => {
-          const { label, access } = namespace;
-          const { memory, cpu } = namespace.resources.used;
-          const {
-            memory: memoryLimit,
-            cpu: cpuLimit
-          } = namespace.resources.hard;
-          const id = label;
+          const { label, id, access, cpu: cpuLimit, ram: ramLimit } = namespace;
+          const usageNamespaces = dataUsageNamespaces.find(
+            usageNs => usageNs.name === id
+          );
+          const { memory, cpu } = usageNamespaces.resources.used;
           const accessStyleName = access[0].toUpperCase() + access.slice(1);
           const classNameBadge = styleNamespaces({
             [`namespaceInfoBadge${accessStyleName}`]: true
@@ -64,8 +71,8 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
           return (
             <div className="col-md-4" id={id} key={id}>
               <div
-                onClick={() => handleClickGetNamespace(label)}
-                onKeyPress={() => handleClickGetNamespace(label)}
+                onClick={() => handleClickGetNamespace(id)}
+                onKeyPress={() => handleClickGetNamespace(id)}
                 className={classNameContainer}
                 role="link"
                 tabIndex={0}
@@ -100,46 +107,62 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                     role="menuitem"
                     tabIndex={0}
                   >
-                    <div
-                      className={`${
-                        globalStyles.contentBlockHeaderExtraPanel
-                      } dropdown no-arrow`}
-                    >
-                      <i
+                    {(role === 'admin' || access === 'owner') && (
+                      <div
                         className={`${
-                          globalStyles.contentBlockHeaderEllipsis
-                        } ${globalStyles.dropdownToggle}
-                          ${globalStyles.ellipsisRoleMore} ion-more `}
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      />
-                      <ul
-                        className={` dropdown-menu dropdown-menu-right ${
-                          globalStyles.dropdownMenu
-                        }`}
-                        role="menu"
+                          globalStyles.contentBlockHeaderExtraPanel
+                        } dropdown no-arrow`}
                       >
-                        <NavLink
-                          activeClassName="active"
-                          className={`dropdown-item ${
-                            globalStyles.dropdownItem
+                        <i
+                          className={`${
+                            globalStyles.contentBlockHeaderEllipsis
+                          } ${globalStyles.dropdownToggle}
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        />
+                        <ul
+                          className={` dropdown-menu dropdown-menu-right ${
+                            globalStyles.dropdownMenu
                           }`}
-                          to={routerLinks.resizeNamespaceLink(label)}
+                          role="menu"
                         >
-                          Resize
-                        </NavLink>
-                        <button
-                          className={`dropdown-item ${
-                            globalStyles.dropdownItem
-                          } text-danger`}
-                          onClick={() => handleClickDeleteNamespace(label)}
-                          onKeyPress={() => handleClickDeleteNamespace(label)}
-                        >
-                          Delete
-                        </button>
-                      </ul>
-                    </div>
+                          {isOnline &&
+                            role === 'user' && (
+                              <NavLink
+                                activeClassName="active"
+                                className={`dropdown-item ${
+                                  globalStyles.dropdownItem
+                                }`}
+                                to={routerLinks.resizeNamespaceLink(id)}
+                              >
+                                Resize
+                              </NavLink>
+                            )}
+                          {role === 'admin' && (
+                            <NavLink
+                              activeClassName="active"
+                              className={`dropdown-item ${
+                                globalStyles.dropdownItem
+                              }`}
+                              to={routerLinks.resizeCustomNamespaceLink(id)}
+                            >
+                              Resize
+                            </NavLink>
+                          )}
+                          <button
+                            className={`dropdown-item ${
+                              globalStyles.dropdownItem
+                            } text-danger`}
+                            onClick={() => handleClickDeleteNamespace(id)}
+                            onKeyPress={() => handleClickDeleteNamespace(id)}
+                          >
+                            Delete
+                          </button>
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -153,7 +176,7 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                     <div
                       className={`${globalStyles.contentBlockInfoText} inline`}
                     >
-                      {memory} / {memoryLimit}
+                      {memory} / {ramLimit}
                     </div>
                   </div>
                   <div className={globalStyles.contentBlockInfoItem}>
@@ -185,17 +208,44 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
             </div>
           );
         })}
-      <div className="col-md-4 align-middle">
-        <NavLink
-          activeClassName="active"
-          to={routerLinks.createNamespace}
-          className={`${addNewBlockClassName} ${styles.addNewBlock}`}
-        >
-          <div className={styles.action}>
-            <i>+</i> Add a namespace
+
+      {isOnline &&
+        role === 'user' && (
+          <div className="col-md-4 align-middle">
+            <NavLink
+              activeClassName="active"
+              to={routerLinks.createNamespace}
+              className={`${addNewBlockClassName} ${styles.addNewBlock}`}
+            >
+              <div className={styles.action}>
+                <i>+</i> Add a namespace
+              </div>
+            </NavLink>
           </div>
-        </NavLink>
-      </div>
+        )}
+      {role === 'admin' && (
+        <div className="col-md-4 align-middle">
+          <NavLink
+            activeClassName="active"
+            to={routerLinks.createCustomNamespace}
+            className={`${addNewBlockClassName} ${styles.addNewBlock}`}
+          >
+            <div className={styles.action}>
+              <i>+</i> Add a namespace
+            </div>
+          </NavLink>
+        </div>
+      )}
+      {!isOnline &&
+        !data.length &&
+        role === 'user' && (
+          <div className="col-md-4 align-middle">
+            <div className="content-block-container card-container hover-action">
+              You don`t have permission to namespaces. Contact the administrator
+              to obtain permission.
+            </div>
+          </div>
+        )}
     </div>
   );
 };

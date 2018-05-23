@@ -12,6 +12,7 @@ import podsStyles from '../../containers/Pods/index.scss';
 
 type Props = {
   data: Object,
+  dataNamespace: Object,
   history: Object,
   idName: string,
   idDep: string,
@@ -27,7 +28,14 @@ const contentClassName = globalClass(
   'contentBlockContentFull'
 );
 
-const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
+const PodsList = ({
+  data,
+  dataNamespace,
+  history,
+  idName,
+  idDep,
+  handleDeletePod
+}: Props) => {
   const handleClickGetDeployment = name => {
     history.push(routerLinks.getPodLink(idName, idDep, name));
   };
@@ -39,6 +47,7 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
   };
   // const ta = timeago();
   // console.log(data);
+  const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   return (
     <div>
       {data.length >= 1 && (
@@ -92,30 +101,34 @@ const PodsList = ({ data, history, idName, idDep, handleDeletePod }: Props) => {
                     onKeyPress={e => handleClose(e)}
                     role="presentation"
                   >
-                    <i
-                      className={`${globalStyles.contentBlockTableMore} ${
-                        globalStyles.dropdownToggle
-                      }
+                    {accessToNamespace !== 'read' && (
+                      <i
+                        className={`${globalStyles.contentBlockTableMore} ${
+                          globalStyles.dropdownToggle
+                        }
                           ${globalStyles.ellipsisRoleMore} ion-more `}
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    />
-                    <ul
-                      className={` dropdown-menu dropdown-menu-right ${
-                        globalStyles.dropdownMenu
-                      }`}
-                      role="menu"
-                    >
-                      <button
-                        className={`dropdown-item text-danger ${
-                          globalStyles.dropdownItem
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      />
+                    )}
+                    {accessToNamespace !== 'read' && (
+                      <ul
+                        className={` dropdown-menu dropdown-menu-right ${
+                          globalStyles.dropdownMenu
                         }`}
-                        onClick={() => handleClickDeleteDeployment(name)}
+                        role="menu"
                       >
-                        Delete
-                      </button>
-                    </ul>
+                        <button
+                          className={`dropdown-item text-danger ${
+                            globalStyles.dropdownItem
+                          }`}
+                          onClick={() => handleClickDeleteDeployment(name)}
+                        >
+                          Delete
+                        </button>
+                      </ul>
+                    )}
                   </td>
                 </tr>
               );

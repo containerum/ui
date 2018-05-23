@@ -68,7 +68,7 @@ export const fetchCreateInternalService = (
     return null;
   });
   const response = await axios.post(
-    `${URL}/namespace/${idName}/service`,
+    `${URL}/namespaces/${idName}/services`,
     intObj,
     {
       headers: {

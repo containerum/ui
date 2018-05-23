@@ -62,6 +62,10 @@ export class NavigationHeader extends PureComponent<Props> {
       IdUpdate,
       typeOfUpdateService
     } = this.props;
+    const currentNs =
+      idName !== 'new'
+        ? getNamespacesReducer.data.find(ns => ns.id === idName)
+        : getNamespacesReducer.data[0];
 
     if (
       !getNamespacesReducer.readyStatus ||
@@ -105,7 +109,7 @@ export class NavigationHeader extends PureComponent<Props> {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {idName}
+              {currentNs ? currentNs.label : ''}
             </div>
             <ul
               className={`${globalStyles.dropdownMenu} dropdown-menu`}
@@ -115,7 +119,7 @@ export class NavigationHeader extends PureComponent<Props> {
                 <NavLink
                   key={_.uniqueId()}
                   className="dropdown-item"
-                  to={`/namespaces/${item.label}`}
+                  to={`/namespaces/${item.id}`}
                 >
                   {item.label}
                 </NavLink>
@@ -125,7 +129,9 @@ export class NavigationHeader extends PureComponent<Props> {
         );
         isIdOutName = (
           <li className={`${globalStyles.breadcrumbsLi} nav-item dropdown`}>
-            <NavLink to={`/namespaces/${idName}`}>{idName}</NavLink>
+            <NavLink to={`/namespaces/${currentNs.id}`}>
+              {currentNs ? currentNs.label : ''}
+            </NavLink>
           </li>
         );
       }
@@ -135,7 +141,7 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
-              <NavLink to={`/namespace/${idName}/services/${idService}`}>
+              <NavLink to={`/namespace/${currentNs.id}/services/${idService}`}>
                 {idService}
               </NavLink>
             </li>
@@ -148,7 +154,7 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <NavLink to={`/namespace/${idName}/deployments/${idDep}`}>
+              <NavLink to={`/namespace/${currentNs.id}/deployments/${idDep}`}>
                 {idDep}
               </NavLink>
             </li>
@@ -161,14 +167,16 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <NavLink to={`/namespace/${idName}/deployments/${idDep}`}>
+              <NavLink to={`/namespace/${currentNs.id}/deployments/${idDep}`}>
                 {idDep}
               </NavLink>
             </li>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
               <NavLink
-                to={`/namespace/${idName}/deployment/${idDep}/pods/${idPod}`}
+                to={`/namespace/${
+                  currentNs.id
+                }/deployment/${idDep}/pods/${idPod}`}
               >
                 {idPod}
               </NavLink>
@@ -195,6 +203,15 @@ export class NavigationHeader extends PureComponent<Props> {
             </li>
           </div>
         );
+      } else if (IdCreate === 'namespace') {
+        IdCreateContent = (
+          <div style={{ display: 'flex' }}>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
+              <div>Create Namespace</div>
+            </li>
+          </div>
+        );
       }
       let IdUpdateContent = '';
       if (IdUpdate === 'service') {
@@ -212,6 +229,15 @@ export class NavigationHeader extends PureComponent<Props> {
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
               <div>Update Deployment</div>
+            </li>
+          </div>
+        );
+      } else if (IdUpdate === 'namespace') {
+        IdUpdateContent = (
+          <div style={{ display: 'flex' }}>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
+              <div>Update Namespace</div>
             </li>
           </div>
         );

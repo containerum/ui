@@ -106,7 +106,7 @@ export const fetchCreateDeployment = (
 
   let idSrv = dataObj.name;
   const response = await axios.post(
-    `${URL}/namespace/${idName}/deployment`,
+    `${URL}/namespaces/${idName}/deployments`,
     {
       name: dataObj.name,
       labels,
@@ -124,9 +124,9 @@ export const fetchCreateDeployment = (
   );
   const { data, status, config } = response;
   switch (status) {
-    case 200: {
+    case 201: {
       idSrv = `Deployment ${dataObj.name} for ${idName}`;
-      dispatch(createDeploymentSuccess(data, 201, config.method, idSrv));
+      dispatch(createDeploymentSuccess(data, status, config.method, idSrv));
       dispatch(push('/namespaces'));
       break;
     }

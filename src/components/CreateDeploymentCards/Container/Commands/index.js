@@ -40,11 +40,10 @@ const Commands = ({ item, index, handleChangeInputCommands }: Props) => {
           value={joinedCommands}
           id={`commands${id}`}
           type="text"
-          baseClassName={`${formClassName} ${
-            inputStyles.inputCustom
-            }`}
-          baseClassNameLabel={`${globalStyles.formGroupLabel} ${joinedCommands &&
-          globalStyles.formGroupLabelOnFocus}`}
+          baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+          baseClassNameLabel={`${
+            globalStyles.formGroupLabel
+          } ${joinedCommands && globalStyles.formGroupLabelOnFocus}`}
           labelText="Entrypoint"
           textHelper="Example: top, -b"
           baseClassNameHelper={globalStyles.formGroupHelper}

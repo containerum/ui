@@ -106,7 +106,7 @@ export const fetchUpdateDeployment = (
 
   let idSrv = dataObj.name;
   const response = await axios.put(
-    `${URL}/namespace/${idName}/deployment/${idDep}`,
+    `${URL}/namespaces/${idName}/deployments/${idDep}`,
     {
       name: idDep,
       labels,
@@ -124,9 +124,9 @@ export const fetchUpdateDeployment = (
   );
   const { data, status, config } = response;
   switch (status) {
-    case 200: {
+    case 202: {
       idSrv = `Deployment ${dataObj.name} for ${idName}`;
-      dispatch(updateDeploymentSuccess(data, 202, config.method, idSrv));
+      dispatch(updateDeploymentSuccess(data, status, config.method, idSrv));
       dispatch(push('/namespaces'));
       break;
     }

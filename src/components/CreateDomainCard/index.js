@@ -3,6 +3,7 @@
 import React from 'react';
 import className from 'classnames/bind';
 
+import { sourceType } from '../../config';
 import InputControl from '../InputControl';
 import CheckBoxControl from '../CheckBoxControl';
 
@@ -37,6 +38,8 @@ type Props = {
   handleChangeInput: (value: string, type: string) => void,
   handleChangeCheckBox: () => void
 };
+
+const isOnline = sourceType === 'ONLINE';
 
 const CreateDomainCard = ({
   currentService,
@@ -141,16 +144,19 @@ const CreateDomainCard = ({
           id="domainName"
           type="text"
           required
-          baseClassName={`${formClassName} ${inputStyles.Domain}`}
-          baseClassNameLabel={`${globalStyles.formGroupLabel} ${domainName &&
-            globalStyles.formGroupLabelOnFocus}`}
+          baseClassName={`form-group__input-text form-control customInput ${isOnline &&
+            'customInputDomain'}`}
+          baseClassNameLabel={`form-group__label ${domainName &&
+            'form-group__label-always-onfocus'}`}
           labelText="Domain"
           baseClassNameHelper={globalStyles.formGroupHelper}
           handleChangeInput={e => {
             // e.target.setSelectionRange(-domainName.length, -domainName.length);
             handleChangeInput(e.target.value, 'domainName');
           }}
-          alwaysVisiblePlaceholder="customAlwaysVisiblePlaceholder"
+          alwaysVisiblePlaceholder={
+            isOnline && 'customAlwaysVisiblePlaceholder'
+          }
         />
         <InputControl
           value={domainPath}

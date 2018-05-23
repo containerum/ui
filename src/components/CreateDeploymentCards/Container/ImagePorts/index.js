@@ -7,7 +7,6 @@ import InputControl from '../../../InputControl/index';
 import icon from '../../../../images/icon-create-dep.svg';
 import buttonsStyles from '../../../../theme/buttons.scss';
 
-
 import globalStyles from '../../../../theme/global.scss';
 import inputStyles from '../../../../components/InputControl/index.scss';
 

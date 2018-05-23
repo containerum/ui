@@ -26,9 +26,15 @@ import NavigationHeaderItem from '../NavigationHeader';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import PodsPage from '../Pods';
 import globalStyles from '../../theme/global.scss';
+import {
+  GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_INVALID,
+  GET_NAMESPACES_REQUESTING
+} from '../../constants/namespacesConstants/getNamespaces';
 
 type Props = {
   getDeploymentReducer: Object,
+  getNamespacesReducer: Object,
   deleteDeploymentReducer: Object,
   fetchGetDeploymentIfNeeded: (idName: string, idDep: string) => void,
   fetchDeleteDeploymentIfNeeded: (idName: string, idDep: string) => void,
@@ -91,9 +97,17 @@ export class Deployment extends PureComponent<Props> {
   };
 
   renderDeploymentInfo = () => {
-    const { getDeploymentReducer, deleteDeploymentReducer, match } = this.props;
+    const {
+      getDeploymentReducer,
+      getNamespacesReducer,
+      deleteDeploymentReducer,
+      match
+    } = this.props;
 
     if (
+      !getNamespacesReducer.readyStatus ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
       !getDeploymentReducer.readyStatus ||
       getDeploymentReducer.readyStatus === GET_DEPLOYMENT_INVALID ||
       getDeploymentReducer.readyStatus === GET_DEPLOYMENT_REQUESTING ||
@@ -118,13 +132,19 @@ export class Deployment extends PureComponent<Props> {
       );
     }
 
-    if (getDeploymentReducer.readyStatus === GET_DEPLOYMENT_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getDeploymentReducer.readyStatus === GET_DEPLOYMENT_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Deployment!</p>;
     }
 
     return (
       <DeploymentInfo
         data={getDeploymentReducer.data}
+        dataNamespace={getNamespacesReducer.data.find(
+          namespace => namespace.id === match.params.idName
+        )}
         handleDeleteDeployment={idDep => this.handleDeleteDeployment(idDep)}
         idName={match.params.idName}
         idDep={match.params.idDep}
@@ -197,8 +217,13 @@ export class Deployment extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getDeploymentReducer, deleteDeploymentReducer }: ReduxState) => ({
+  ({
     getDeploymentReducer,
+    getNamespacesReducer,
+    deleteDeploymentReducer
+  }: ReduxState) => ({
+    getDeploymentReducer,
+    getNamespacesReducer,
     deleteDeploymentReducer
   }),
   (dispatch: Dispatch) => ({

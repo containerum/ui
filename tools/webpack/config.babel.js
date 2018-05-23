@@ -73,6 +73,9 @@ const getPlugins = () => {
         RECAPTCHA: process.env.RECAPTCHA
           ? `"${process.env.RECAPTCHA}"`
           : undefined,
+        SOURCE_TYPE: process.env.SOURCE_TYPE
+          ? `"${process.env.SOURCE_TYPE}"`
+          : undefined,
         COUNTRY: process.env.COUNTRY ? `"${process.env.COUNTRY}"` : undefined
       }
     }),

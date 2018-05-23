@@ -12,11 +12,13 @@ import forgotReducer from './forgotReducer';
 import checkHashPasswordReducer from './checkHashPasswordReducer';
 import recoveryPasswordReducer from './recoveryPasswordReducer';
 import getNamespacesReducer from './namespacesReducers/getNamespaces';
-import getNamespaceAccessReducer from './namespaceReducers/getNamespaceAccess';
+import getUsageNamespacesReducer from './namespacesReducers/getUsageNamespaces';
 import getNamespaceReducer from './namespaceReducers/getNamespace';
 import deleteNamespaceReducer from './namespaceReducers/deleteNamespace';
 import getNamespacesTariffsReducer from './namespacesReducers/getNamespacesTariffs';
 import createNamespaceReducer from './namespaceReducers/createNamespace';
+import createCustomNamespaceReducer from './namespaceReducers/createCustomNamespace';
+import updateCustomNamespaceReducer from './namespaceReducers/updateCustomNamespace';
 import resizeNamespaceReducer from './namespaceReducers/resizeNamespace';
 import getDeploymentsReducer from './deploymentsReducers/getDeployments';
 import deleteDeploymentReducer from './deploymentReducers/deleteDeployment';
@@ -79,11 +81,13 @@ const reducers = {
   checkHashPasswordReducer,
   recoveryPasswordReducer,
   getNamespacesReducer,
-  getNamespaceAccessReducer,
+  getUsageNamespacesReducer,
   getNamespaceReducer,
   deleteNamespaceReducer,
   getNamespacesTariffsReducer,
   createNamespaceReducer,
+  createCustomNamespaceReducer,
+  updateCustomNamespaceReducer,
   resizeNamespaceReducer,
   getDeploymentsReducer,
   deleteDeploymentReducer,

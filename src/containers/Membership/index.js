@@ -15,7 +15,6 @@ import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace
 import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
 import * as actionAddNamespaceUserAccessIfNeeded from '../../actions/namespaceActions/addNamespaceUserAccess';
 import * as actionDeleteNamespaceUserAccessIfNeeded from '../../actions/namespaceActions/deleteNamespaceUserAccess';
-// import { ADD_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceConstants/addNamespaceAccess';
 import {
   GET_NAMESPACE_USERS_ACCESS_INVALID,
   GET_NAMESPACE_USERS_ACCESS_FAILURE,
@@ -96,48 +95,50 @@ class Membership extends PureComponent<Props> {
   }
   componentWillUpdate(nextProps) {
     const {
+      history,
+      match,
       fetchGetNamespaceUsersAccessIfNeeded,
-      getProfileReducer,
-      match
+      getNamespaceUsersAccessReducer,
+      addNamespaceUserAccessReducer,
+      deleteNamespaceUserAccessReducer
     } = this.props;
     if (
-      this.props.getNamespaceUsersAccessReducer.readyStatus !==
+      getNamespaceUsersAccessReducer.readyStatus !==
         nextProps.getNamespaceUsersAccessReducer.readyStatus &&
       nextProps.getNamespaceUsersAccessReducer.readyStatus ===
         GET_NAMESPACE_USERS_ACCESS_SUCCESS &&
-      getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      if (nextProps.getNamespaceUsersAccessReducer.data.users) {
+      const { users, access } = nextProps.getNamespaceUsersAccessReducer.data;
+      if (users && access === 'owner') {
         const {
           new_access_level: newAccessLevel
         } = nextProps.getNamespaceUsersAccessReducer.data;
-        const users = nextProps.getNamespaceUsersAccessReducer.data.users.concat(
-          [
-            {
-              login: nextProps.getProfileReducer.data.login,
-              new_access_level: newAccessLevel
-            }
-          ]
-        );
+        const concatUsers = users.concat([
+          {
+            login: nextProps.getProfileReducer.data.login,
+            new_access_level: newAccessLevel
+          }
+        ]);
         this.setState({
           ...this.state,
-          membersList: users.sort(
+          membersList: concatUsers.sort(
             (a, b) =>
               a.new_access_level === 'owner' || b.new_access_level === 'owner'
           )
         });
       } else {
-        this.props.history.push(
-          routerLinks.namespaceLink(this.props.match.params.idName)
-        );
+        history.push(routerLinks.namespaceLink(match.params.idName));
       }
+    } else {
+      history.push(routerLinks.namespaceLink(match.params.idName));
     }
     if (
-      (this.props.addNamespaceUserAccessReducer.readyStatus !==
+      (addNamespaceUserAccessReducer.readyStatus !==
         nextProps.addNamespaceUserAccessReducer.readyStatus &&
         nextProps.addNamespaceUserAccessReducer.readyStatus ===
           ADD_NAMESPACE_USER_ACCESS_SUCCESS) ||
-      (this.props.deleteNamespaceUserAccessReducer.readyStatus !==
+      (deleteNamespaceUserAccessReducer.readyStatus !==
         nextProps.deleteNamespaceUserAccessReducer.readyStatus &&
         nextProps.deleteNamespaceUserAccessReducer.readyStatus ===
           DELETE_NAMESPACE_USER_ACCESS_SUCCESS)
@@ -154,7 +155,7 @@ class Membership extends PureComponent<Props> {
       fetchGetNamespaceUsersAccessIfNeeded(match.params.idName);
     }
     if (
-      this.props.addNamespaceUserAccessReducer.readyStatus !==
+      addNamespaceUserAccessReducer.readyStatus !==
         nextProps.addNamespaceUserAccessReducer.readyStatus &&
       nextProps.addNamespaceUserAccessReducer.readyStatus ===
         ADD_NAMESPACE_USER_ACCESS_FAILURE
@@ -277,6 +278,7 @@ class Membership extends PureComponent<Props> {
   render() {
     const {
       match,
+      getNamespaceUsersAccessReducer,
       deleteNamespaceUserAccessReducer,
       addNamespaceUserAccessReducer,
       fetchAddNamespaceUserAccessIfNeeded,
@@ -294,9 +296,12 @@ class Membership extends PureComponent<Props> {
       err: errDelete
     } = deleteNamespaceUserAccessReducer;
     const { idName } = match.params;
+    const label = getNamespaceUsersAccessReducer.data
+      ? getNamespaceUsersAccessReducer.data.label
+      : idName;
     return (
       <div>
-        <Helmet title={`Membership of ${idName}`} />
+        <Helmet title={`Membership of ${label}`} />
         <Notification
           status={statusDelete}
           name={idNameDelete}
@@ -323,7 +328,7 @@ class Membership extends PureComponent<Props> {
           isFetchingAdd={isFetchingAdd}
           accessNewUser={this.state.accessNewUser}
           choiceAccessNewUser={this.choiceAccessNewUser}
-          namespaceId={match.params.idName}
+          namespaceId={idName}
           err={this.state.errAdd}
         />
         <div className={globalStyles.contentBlock}>
@@ -334,7 +339,7 @@ class Membership extends PureComponent<Props> {
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
                     <div className={globalStyles.contentBlockHeader}>
-                      <div className={labelClassName}>{idName}</div>
+                      <div className={labelClassName}>{label}</div>
                       <div style={{ marginBottom: 20 }}>
                         <ul
                           className={`${menuClassName} nav nav-pills`}

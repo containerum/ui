@@ -8,6 +8,7 @@ import configmapStyles from '../../containers/ConfigMaps/index.scss';
 
 type Props = {
   configMapsData: Array<Object>,
+  dataNamespace: Object,
   handleDeleteConfigMap: (idName: string, configMapLabel: string) => void,
   isEqualGetPath: boolean,
   currentIdName: string
@@ -30,11 +31,19 @@ const ConfigMapList = ({
   configMapsData,
   handleDeleteConfigMap,
   isEqualGetPath,
+  dataNamespace,
   currentIdName
 }: Props) => {
   const mainConfigMapsData = configMapsData.find(
     cnf => isEqualGetPath && currentIdName === cnf.idName
   );
+
+  const currentDataOfNamespace = dataNamespace.find(
+    namespace => namespace.id === currentIdName
+  );
+  const accessToNamespace = currentDataOfNamespace
+    ? currentDataOfNamespace.access
+    : 'read';
   return (
     <div className={globalStyles.contentBlock}>
       <div className={`container ${globalStyles.containerNoBackground}`}>
@@ -110,32 +119,39 @@ const ConfigMapList = ({
                               configmapStyles.td_4_Configmap
                             }  dropdown no-arrow`}
                           >
-                            <i
-                              className={`${
-                                globalStyles.contentBlockTableMore
-                              } ${globalStyles.dropdownToggle}
+                            {accessToNamespace !== 'read' && (
+                              <i
+                                className={`${
+                                  globalStyles.contentBlockTableMore
+                                } ${globalStyles.dropdownToggle}
                           ${globalStyles.ellipsisRoleMore} ion-more `}
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            />
-                            <ul
-                              className={` dropdown-menu dropdown-menu-right ${
-                                globalStyles.dropdownMenu
-                              }`}
-                              role="menu"
-                            >
-                              <button
-                                onClick={() =>
-                                  handleDeleteConfigMap(idName, configmap.name)
-                                }
-                                className={`dropdown-item text-danger ${
-                                  globalStyles.dropdownItem
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              />
+                            )}
+                            {accessToNamespace !== 'read' && (
+                              <ul
+                                className={` dropdown-menu dropdown-menu-right ${
+                                  globalStyles.dropdownMenu
                                 }`}
+                                role="menu"
                               >
-                                Delete
-                              </button>
-                            </ul>
+                                <button
+                                  onClick={() =>
+                                    handleDeleteConfigMap(
+                                      idName,
+                                      configmap.name
+                                    )
+                                  }
+                                  className={`dropdown-item text-danger ${
+                                    globalStyles.dropdownItem
+                                  }`}
+                                >
+                                  Delete
+                                </button>
+                              </ul>
+                            )}
                           </td>
                         </tr>
                       );
@@ -193,6 +209,12 @@ const ConfigMapList = ({
                 <tbody>
                   {configMapsData.map(config => {
                     const { idName, configmap } = config;
+                    const checkDataOfNamespace = dataNamespace.find(
+                      namespace => namespace.id === idName
+                    );
+                    const accessToCurrentNamespace = checkDataOfNamespace
+                      ? checkDataOfNamespace.access
+                      : 'read';
                     return (
                       <tr
                         className={containerClassName}
@@ -237,32 +259,36 @@ const ConfigMapList = ({
                             configmapStyles.td_4_Configmap
                           } dopdown no-arrow`}
                         >
-                          <i
-                            className={`${globalStyles.contentBlockTableMore} ${
-                              globalStyles.dropdownToggle
-                            }
+                          {accessToCurrentNamespace !== 'read' && (
+                            <i
+                              className={`${
+                                globalStyles.contentBlockTableMore
+                              } ${globalStyles.dropdownToggle}
                           ${globalStyles.ellipsisRoleMore} ion-more `}
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          />
-                          <ul
-                            className={` dropdown-menu dropdown-menu-right ${
-                              globalStyles.dropdownMenu
-                            }`}
-                            role="menu"
-                          >
-                            <button
-                              onClick={() =>
-                                handleDeleteConfigMap(idName, configmap.name)
-                              }
-                              className={`dropdown-item  text-danger ${
-                                globalStyles.dropdownItem
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            />
+                          )}
+                          {accessToCurrentNamespace !== 'read' && (
+                            <ul
+                              className={` dropdown-menu dropdown-menu-right ${
+                                globalStyles.dropdownMenu
                               }`}
+                              role="menu"
                             >
-                              Delete
-                            </button>
-                          </ul>
+                              <button
+                                onClick={() =>
+                                  handleDeleteConfigMap(idName, configmap.name)
+                                }
+                                className={`dropdown-item  text-danger ${
+                                  globalStyles.dropdownItem
+                                }`}
+                              >
+                                Delete
+                              </button>
+                            </ul>
+                          )}
                         </td>
                       </tr>
                     );

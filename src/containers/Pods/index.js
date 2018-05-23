@@ -23,6 +23,11 @@ import PodsList from '../../components/PodsList';
 import Notification from '../Notification';
 
 import globalStyles from '../../theme/global.scss';
+import {
+  GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_INVALID,
+  GET_NAMESPACES_REQUESTING
+} from '../../constants/namespacesConstants/getNamespaces';
 
 const globalClass = className.bind(globalStyles);
 
@@ -33,6 +38,7 @@ const contentClassName = globalClass(
 
 type Props = {
   getPodsReducer: Object,
+  getNamespacesReducer: Object,
   deletePodReducer: Object,
   fetchGetPodsIfNeeded: (idName: string, idDep: string) => void,
   fetchDeletePodIfNeeded: (idName: string, idPod: string) => void,
@@ -86,9 +92,17 @@ export class Pods extends PureComponent<Props> {
   };
 
   renderPodsList = () => {
-    const { getPodsReducer, deletePodReducer, match } = this.props;
+    const {
+      getPodsReducer,
+      getNamespacesReducer,
+      deletePodReducer,
+      match
+    } = this.props;
 
     if (
+      !getNamespacesReducer.readyStatus ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
       !getPodsReducer.readyStatus ||
       getPodsReducer.readyStatus === GET_PODS_INVALID ||
       getPodsReducer.readyStatus === GET_PODS_REQUESTING ||
@@ -106,13 +120,19 @@ export class Pods extends PureComponent<Props> {
       );
     }
 
-    if (getPodsReducer.readyStatus === GET_PODS_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getPodsReducer.readyStatus === GET_PODS_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Pods!</p>;
     }
 
     return (
       <PodsList
         data={this.state.displayedPods}
+        dataNamespace={getNamespacesReducer.data.find(
+          namespace => namespace.id === match.params.idName
+        )}
         handleDeletePod={idPod => this.handleDeletePod(idPod)}
         history={this.props.history}
         idName={match.params.idName}
@@ -137,8 +157,9 @@ export class Pods extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getPodsReducer, deletePodReducer }: ReduxState) => ({
+  ({ getPodsReducer, getNamespacesReducer, deletePodReducer }: ReduxState) => ({
     getPodsReducer,
+    getNamespacesReducer,
     deletePodReducer
   }),
   (dispatch: Dispatch) => ({

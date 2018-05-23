@@ -8,13 +8,14 @@ module.exports = {
     ? `wss://${process.env.WEB_API}`
     : 'wss://api.containerum.io:8082',
   // webApi: process.env.WEB_API
-  //   ? `https://${process.env.WEB_API}`
-  //   : 'https://192.168.88.210:8082',
+  //   ? `http://${process.env.WEB_API}`
+  //   : 'http://192.168.88.210:8082',
   // wsApi: process.env.WEB_API
   //   ? `wss://${process.env.WEB_API}`
   //   : 'wss://192.168.88.210:8082',
   appRecaptcha:
     process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS',
+  sourceType: process.env.SOURCE_TYPE || 'OFFLINE',
   defaultCountry: process.env.COUNTRY || 'US',
   app: {
     htmlAttributes: { lang: 'en' },
@@ -47,6 +48,10 @@ module.exports = {
     namespace: '/namespaces/:idName',
     namespaceLink: (idName: string) => `/namespaces/${idName}/deployments`,
     createNamespace: '/createNamespace',
+    createCustomNamespace: '/createCustomNamespace',
+    resizeCustomNamespace: '/resizeCustomNamespace/:idName',
+    resizeCustomNamespaceLink: (idName: string) =>
+      `/resizeCustomNamespace/${idName}`,
     resizeNamespace: '/namespace/:idName/resize',
     resizeNamespaceLink: (idName: string) => `/namespace/${idName}/resize`,
     // volumes: '/volumes',
@@ -103,6 +108,7 @@ module.exports = {
     settings: '/settings'
   },
   externalLinks: {
+    exonLV: 'http://exon.lv',
     documentation: 'https://docs.containerum.com/docs/about',
     fastDeploy: 'https://docs.containerum.com/how-to',
     helloWorld: 'https://docs.containerum.com/docs/about',

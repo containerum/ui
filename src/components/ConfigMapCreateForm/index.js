@@ -5,6 +5,7 @@ import Tooltip from 'rc-tooltip';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
 
+import { routerLinks, sourceType } from '../../config';
 import LoadButton from '../../components/LoadButton';
 import InputControl from '../../components/InputControl';
 import AddConfigMapFileManuallyView from '../../components/AddConfigMapFileManually';
@@ -14,6 +15,7 @@ import buttonsStyles from '../../theme/buttons.scss';
 import inputStyles from '../../components/InputControl/index.scss';
 
 type Props = {
+  role: string,
   namespacesData: Array<Object>,
   currentNamespace: Object,
   configMapName: string,
@@ -53,8 +55,10 @@ const itemClassName = globalClass(
   'blockItemTitleNoUppercase'
 );
 const lightText = globalClass('textLight', 'textLightConfigmap');
+const isOnline = sourceType === 'ONLINE';
 
 const ConfigMapCreateForm = ({
+  role,
   namespacesData,
   configMapName,
   currentNamespace,
@@ -118,20 +122,50 @@ const ConfigMapCreateForm = ({
             </div>
           </div>
         ) : (
-          <div style={{ marginBottom: 10 }}>
-            <div style={{ marginBottom: 10 }}>
-              You have no active Namespace yet.
-            </div>
-            <Link
-              to="/createNamespace"
-              className={`${
-                buttonsStyles.buttonUIDeployDashboard
-              } btn btn-outline-primary`}
-            >
-              Create Namespace
-            </Link>
+          <div>
+            {isOnline &&
+              role === 'user' && (
+                <div style={{ marginBottom: 10 }}>
+                  <div style={{ marginBottom: 10 }}>
+                    You have no active Namespace yet.
+                  </div>
+                  <Link
+                    to={routerLinks.createNamespace}
+                    className={`${
+                      buttonsStyles.buttonUIDeployDashboard
+                    } btn btn-outline-primary`}
+                  >
+                    Create Namespace
+                  </Link>
+                </div>
+              )}
+            {role === 'admin' && (
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ marginBottom: 10 }}>
+                  You have no active Namespace yet.
+                </div>
+                <Link
+                  to={routerLinks.createCustomNamespace}
+                  className={`${
+                    buttonsStyles.buttonUIDeployDashboard
+                  } btn btn-outline-primary`}
+                >
+                  Create Namespace
+                </Link>
+              </div>
+            )}
           </div>
         )}
+        {!isOnline &&
+          !namespacesData.length &&
+          role === 'user' && (
+            <div style={{ marginBottom: 10 }}>
+              <div style={{ marginBottom: 10 }}>
+                You don`t have permission to namespaces. <br />
+                Contact the administrator to obtain permission.
+              </div>
+            </div>
+          )}
         <InputControl
           value={configMapName}
           id="configMapName"

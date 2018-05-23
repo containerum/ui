@@ -62,7 +62,7 @@ const Coupon = ({
               isFetching={isFetching}
               baseClassButton={`${
                 buttonsStyles.buttonUIDeployDashboard
-                } btn btn-outline-primary`}
+              } btn btn-outline-primary`}
             />
           </div>
         </div>

@@ -39,40 +39,15 @@ export class Footer extends PureComponent<Props> {
       getReleasesGithubReducer.readyStatus === GET_RELEASES_FAILURE
     ) {
       return (
-        <footer className={styles.footer}>
-          <div className={styles.footerWrapper}>
-            <div className={`${styles.footerContainer} container`}>
-              <div className={styles.footerLogo}>Created by Exon Lab</div>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={externalLinks.releasesChkit}
-                className={styles.footerDownloadCli}
-                // onClick={() => this.handleClickAnaliticsDownloadCLIFooter()}
-              >
-                Download CLI <img src={arrows} alt="" />
-              </a>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={externalLinks.documentation}
-                className={styles.footerHelp}
-                // onClick={() => this.handleClickAnaliticsDocsFooter()}
-              >
-                Docs
-              </a>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={externalLinks.helloWorld}
-                className={styles.footerHelp}
-                // onClick={() => this.handleClickAnaliticsHowToFooter()}
-              >
-                How To
-              </a>
-            </div>
-          </div>
-        </footer>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={externalLinks.releasesChkit}
+          className={styles.footerDownloadCli}
+          // onClick={() => this.handleClickAnaliticsDownloadCLIFooter()}
+        >
+          Download CLI <img src={arrows} alt="" />
+        </a>
       );
     }
 
@@ -82,19 +57,32 @@ export class Footer extends PureComponent<Props> {
 
     const { linkPlatform } = getPlatform(getReleasesGithubReducer.data);
     return (
-      <footer className={`${styles.footer} footer`}>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href={linkPlatform}
+        className={styles.footerDownloadCli}
+        // onClick={() => this.handleClickAnaliticsDownloadCLIFooter()}
+      >
+        Download CLI <img src={arrows} alt="" />
+      </a>
+    );
+  };
+
+  render() {
+    return (
+      <footer className={styles.footer}>
         <div className={styles.footerWrapper}>
           <div className={`${styles.footerContainer} container`}>
-            <div className={styles.footerLogo}>Created by Exon Lab</div>
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href={linkPlatform}
-              className={styles.footerDownloadCli}
-              // onClick={() => this.handleClickAnaliticsDownloadCLIFooter()}
+              className={styles.footerLogo}
+              href={externalLinks.exonLV}
             >
-              Download CLI <img src={arrows} alt="" />
+              &copy; Created by Exon Lab
             </a>
+            {this.renderFooterInfo()}
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -117,10 +105,6 @@ export class Footer extends PureComponent<Props> {
         </div>
       </footer>
     );
-  };
-
-  render() {
-    return <div className="footer">{this.renderFooterInfo()}</div>;
   }
 }
 

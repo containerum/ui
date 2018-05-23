@@ -49,7 +49,7 @@ export const fetchDeleteService = (
   dispatch(deleteServiceRequest());
 
   const response = await axios.delete(
-    `${URL}/namespace/${idName}/service/${idSrv}`,
+    `${URL}/namespaces/${idName}/services/${idSrv}`,
     {
       headers: {
         'User-Client': browser,
@@ -60,8 +60,8 @@ export const fetchDeleteService = (
   );
   const { data, status, config } = response;
   switch (status) {
-    case 200: {
-      dispatch(deleteServiceSuccess(data, 202, config.method, idSrv));
+    case 202: {
+      dispatch(deleteServiceSuccess(data, status, config.method, idSrv));
       break;
     }
     case 400: {

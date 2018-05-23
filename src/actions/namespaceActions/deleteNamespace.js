@@ -47,7 +47,7 @@ export const fetchDeleteNamespace = (
 
   dispatch(deleteNamespaceRequest());
 
-  const response = await axios.delete(`${URL}/namespace/${idName}`, {
+  const response = await axios.delete(`${URL}/namespaces/${idName}`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken

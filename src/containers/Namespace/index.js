@@ -8,8 +8,8 @@ import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
 
-import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
+import * as actionGetUsageNamespaces from '../../actions/namespacesActions/getUsageNamespaces';
 import * as actionDeleteNamespace from '../../actions/namespaceActions/deleteNamespace';
 
 import {
@@ -38,6 +38,11 @@ import ns from '../../images/ns-1.svg';
 
 import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+import {
+  GET_NAMESPACES_USAGE_FAILURE,
+  GET_NAMESPACES_USAGE_INVALID,
+  GET_NAMESPACES_USAGE_REQUESTING
+} from '../../constants/namespacesConstants/getUsageNamespaces';
 
 const globalClass = className.bind(globalStyles);
 
@@ -47,8 +52,9 @@ const containerClassName = globalClass('contentBlockContainer', 'container');
 
 type Props = {
   getNamespacesReducer: Object,
+  getUsageNamespacesReducer: Object,
   deleteNamespaceReducer: NamespaceType,
-  fetchGetNamespaceIfNeeded: (idName: string) => void,
+  fetchGetUsageNamespacesIfNeeded: () => void,
   fetchGetNamespacesIfNeeded: () => void,
   fetchDeleteNamespaceIfNeeded: (idName: string) => void,
   match: Object,
@@ -67,12 +73,11 @@ export class Namespace extends PureComponent<Props> {
   }
   componentDidMount() {
     const {
-      fetchGetNamespaceIfNeeded,
-      fetchGetNamespacesIfNeeded,
-      match
+      fetchGetUsageNamespacesIfNeeded,
+      fetchGetNamespacesIfNeeded
     } = this.props;
     fetchGetNamespacesIfNeeded();
-    fetchGetNamespaceIfNeeded(match.params.idName);
+    fetchGetUsageNamespacesIfNeeded();
   }
   componentWillUpdate(nextProps) {
     if (
@@ -106,11 +111,19 @@ export class Namespace extends PureComponent<Props> {
   };
 
   renderNamespaceInfo = () => {
-    const { getNamespacesReducer, deleteNamespaceReducer, match } = this.props;
+    const {
+      getNamespacesReducer,
+      getUsageNamespacesReducer,
+      deleteNamespaceReducer,
+      match
+    } = this.props;
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+      !getUsageNamespacesReducer.readyStatus ||
+      getUsageNamespacesReducer.readyStatus === GET_NAMESPACES_USAGE_INVALID ||
+      getUsageNamespacesReducer.readyStatus === GET_NAMESPACES_USAGE_REQUESTING
     ) {
       return (
         <div
@@ -151,16 +164,20 @@ export class Namespace extends PureComponent<Props> {
       );
     }
 
-    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getUsageNamespacesReducer.readyStatus === GET_NAMESPACES_USAGE_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Namespace!</p>;
     }
 
+    const currentNamespace = getNamespacesReducer.data.find(
+      namespace => namespace.id === match.params.idName
+    );
     return (
       <NamespaceInfo
-        data={getNamespacesReducer.data.find(
-          namespace =>
-            namespace.label === match.params.idName ? namespace : null
-        )}
+        data={currentNamespace || {}}
+        dataUsageNamespaces={getUsageNamespacesReducer.data}
         handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
         idName={match.params.idName}
       />
@@ -171,11 +188,17 @@ export class Namespace extends PureComponent<Props> {
     const {
       fetchDeleteNamespaceIfNeeded,
       deleteNamespaceReducer,
+      getNamespacesReducer,
       match,
       history
     } = this.props;
-    const { status, idName, err } = this.props.deleteNamespaceReducer;
+    const { status, idName, err } = deleteNamespaceReducer;
     const { inputName, isOpened, idName: currentIdName } = this.state;
+
+    const currentNamespace = getNamespacesReducer.data.find(
+      namespace => namespace.id === match.params.idName
+    );
+    const isReadAccess = currentNamespace && currentNamespace.access !== 'read';
     return (
       <div>
         <Helmet title={`Namespace - ${match.params.idName}`} />
@@ -234,7 +257,8 @@ export class Namespace extends PureComponent<Props> {
                     </li>
                   </ul>
                 </div>
-                {history.location.pathname.indexOf('/services') + 1 ? (
+                {history.location.pathname.indexOf('/services') + 1 &&
+                isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -250,7 +274,8 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {history.location.pathname.indexOf('/deployments') + 1 ? (
+                {history.location.pathname.indexOf('/deployments') + 1 &&
+                isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -268,7 +293,8 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {history.location.pathname.indexOf('/configMaps') + 1 ? (
+                {history.location.pathname.indexOf('/configMaps') + 1 &&
+                isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -317,19 +343,19 @@ export class Namespace extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
-    getNamespaceReducer,
     getNamespacesReducer,
+    getUsageNamespacesReducer,
     deleteNamespaceReducer
   }: ReduxState) => ({
-    getNamespaceReducer,
     getNamespacesReducer,
+    getUsageNamespacesReducer,
     deleteNamespaceReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: () =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded()),
-    fetchGetNamespaceIfNeeded: (idName: string) =>
-      dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
+    fetchGetUsageNamespacesIfNeeded: () =>
+      dispatch(actionGetUsageNamespaces.fetchGetUsageNamespacesIfNeeded()),
     fetchDeleteNamespaceIfNeeded: (idName: string) =>
       dispatch(actionDeleteNamespace.fetchDeleteNamespaceIfNeeded(idName))
   })

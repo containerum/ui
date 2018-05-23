@@ -10,6 +10,7 @@ RUN npm install -g -s --no-progress yarn node-gyp && \
 
 ENV WEB_API="api.containerum.io:8082" \
     COUNTRY="US" \
+    SOURCE_TYPE="ONLINE" \
     RECAPTCHA="6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS"
 
 RUN yarn build

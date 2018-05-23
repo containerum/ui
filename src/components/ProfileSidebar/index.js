@@ -4,6 +4,8 @@ import React from 'react';
 
 import Scrollspy from 'react-scrollspy';
 import { HashLink } from 'react-router-hash-link';
+
+import { sourceType } from '../../config';
 import scrollById from '../../functions/scrollById';
 
 import accountStyles from '../../containers/Account/index.scss';
@@ -107,97 +109,99 @@ const ProfileSidebar = ({ type }: Props) => (
         </li>
       </Scrollspy>
     </li>
-    <li>
-      <div className={`${accountStyles.navRootItem} nav-root-item`}>
-        Billing
-      </div>
-      <Scrollspy
-        items={[
-          'information',
-          'add-funds',
-          // 'coupon',
-          'history'
-        ]}
-        style={{
-          padding: '20px 0 0 20px'
-        }}
-        currentClassName={accountStyles.accountMenuNavActive}
-      >
-        <li className={`${accountStyles.navItem} nav-item`}>
-          {type === 'billing' ? (
-            <div
-              className={`${accountStyles.navLink} nav-link`}
-              onClick={() => scrollById('information')}
-              onKeyPress={() => scrollById('information')}
-              role="presentation"
-            >
-              Information
-            </div>
-          ) : (
-            <HashLink
-              to="/billing#information"
-              className={`${accountStyles.navLink} nav-link`}
-            >
-              Information
-            </HashLink>
-          )}
-        </li>
-        <li className={`${accountStyles.navItem} nav-item`}>
-          {type === 'billing' ? (
-            <div
-              className={`${accountStyles.navLink} nav-link`}
-              onClick={() => scrollById('add-funds')}
-              onKeyPress={() => scrollById('add-funds')}
-              role="presentation"
-            >
-              Payment method
-            </div>
-          ) : (
-            <HashLink
-              to="/billing#add-funds"
-              className={`${accountStyles.navLink} nav-link`}
-            >
-              Payment method
-            </HashLink>
-          )}
-        </li>
-        {/* <li className="nav-item"> */}
-        {/* {type === 'billing' ? ( */}
-        {/* <div */}
-        {/* className="nav-link" */}
-        {/* onClick={() => scrollById('coupon')} */}
-        {/* onKeyPress={() => scrollById('coupon')} */}
-        {/* role="presentation" */}
-        {/* > */}
-        {/* Promo code */}
-        {/* </div> */}
-        {/* ) : ( */}
-        {/* <HashLink to="/billing#coupon" className="nav-link"> */}
-        {/* Coupon */}
-        {/* </HashLink> */}
-        {/* )} */}
-        {/* </li> */}
-        <li className={`${accountStyles.navItem} nav-item`}>
-          {type === 'billing' ? (
-            <div
-              className={`${accountStyles.navLink} nav-link`}
-              onClick={() => scrollById('history')}
-              onKeyPress={() => scrollById('history')}
-              role="presentation"
-            >
-              History
-            </div>
-          ) : (
-            <HashLink
-              to="/billing#history"
-              className={`${accountStyles.navLink} nav-link`}
-            >
-              History
-            </HashLink>
-          )}
-        </li>
-      </Scrollspy>
-    </li>
+    {sourceType === 'ONLINE' && (
+      <li>
+        <div className={`${accountStyles.navRootItem} nav-root-item`}>
+          Billing
+        </div>
+        <Scrollspy
+          items={[
+            'information',
+            'add-funds',
+            // 'coupon',
+            'history'
+          ]}
+          style={{
+            padding: '20px 0 0 20px'
+          }}
+          currentClassName={accountStyles.accountMenuNavActive}
+        >
+          <li className={`${accountStyles.navItem} nav-item`}>
+            {type === 'billing' ? (
+              <div
+                className={`${accountStyles.navLink} nav-link`}
+                onClick={() => scrollById('information')}
+                onKeyPress={() => scrollById('information')}
+                role="presentation"
+              >
+                Information
+              </div>
+            ) : (
+              <HashLink
+                to="/billing#information"
+                className={`${accountStyles.navLink} nav-link`}
+              >
+                Information
+              </HashLink>
+            )}
+          </li>
+          <li className={`${accountStyles.navItem} nav-item`}>
+            {type === 'billing' ? (
+              <div
+                className={`${accountStyles.navLink} nav-link`}
+                onClick={() => scrollById('add-funds')}
+                onKeyPress={() => scrollById('add-funds')}
+                role="presentation"
+              >
+                Payment method
+              </div>
+            ) : (
+              <HashLink
+                to="/billing#add-funds"
+                className={`${accountStyles.navLink} nav-link`}
+              >
+                Payment method
+              </HashLink>
+            )}
+          </li>
+          {/* <li className="nav-item"> */}
+          {/* {type === 'billing' ? ( */}
+          {/* <div */}
+          {/* className="nav-link" */}
+          {/* onClick={() => scrollById('coupon')} */}
+          {/* onKeyPress={() => scrollById('coupon')} */}
+          {/* role="presentation" */}
+          {/* > */}
+          {/* Promo code */}
+          {/* </div> */}
+          {/* ) : ( */}
+          {/* <HashLink to="/billing#coupon" className="nav-link"> */}
+          {/* Coupon */}
+          {/* </HashLink> */}
+          {/* )} */}
+          {/* </li> */}
+          <li className={`${accountStyles.navItem} nav-item`}>
+            {type === 'billing' ? (
+              <div
+                className={`${accountStyles.navLink} nav-link`}
+                onClick={() => scrollById('history')}
+                onKeyPress={() => scrollById('history')}
+                role="presentation"
+              >
+                History
+              </div>
+            ) : (
+              <HashLink
+                to="/billing#history"
+                className={`${accountStyles.navLink} nav-link`}
+              >
+                History
+              </HashLink>
+            )}
+          </li>
+        </Scrollspy>
+      </li>
+    )}
   </ul>
 );
 

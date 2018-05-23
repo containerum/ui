@@ -164,12 +164,15 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
                 require('../containers/Footer/styles.scss')._style +
                 require('../containers/NotFound/styles.scss')._style +
                 require('../components/MiniSpinner/MiniSpinner.css')._style +
+                require('../components/ProfileInfo/Profile.css')._style +
+                require('../components/CustomerModal/index.scss')._style +
+                require('../components/InputControl/index.scss')._style +
+                require('../containers/Domains/index.scss')._style +
                 require('../theme/custom.css')._style +
                 require('../theme/individual.css')._style +
                 require('../theme/style.css')._style +
                 require('../theme/style-custom.css')._style +
                 require('../theme/common.scss')._style +
-                require('../components/ProfileInfo/Profile.css')._style +
                 require('../containers/Account/Account.css')._style
             }}
           />

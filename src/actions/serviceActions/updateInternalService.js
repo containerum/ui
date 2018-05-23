@@ -63,7 +63,7 @@ export const fetchUpdateInternalService = (
     return null;
   });
   const response = await axios.put(
-    `${URL}/namespace/${idName}/service/${idSrv}`,
+    `${URL}/namespaces/${idName}/services/${idSrv}`,
     intObj,
     {
       headers: {
@@ -76,11 +76,11 @@ export const fetchUpdateInternalService = (
   const { status, data, config } = response;
   // console.log(data);
   switch (status) {
-    case 200: {
+    case 202: {
       dispatch(
         updateInternalServiceSuccess(
           data,
-          202,
+          status,
           config.method,
           `Internal service ${response.data.name}`
         )

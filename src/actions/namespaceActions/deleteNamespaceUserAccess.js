@@ -50,7 +50,7 @@ export const fetchDeleteNamespaceUserAccess = (
   const accessToken = cookie.load('accessToken');
 
   dispatch(deleteNamespaceUserAccessRequest());
-  const response = await axios.delete(`${URL}/namespace/${idName}/access`, {
+  const response = await axios.delete(`${URL}/namespaces/${idName}/access`, {
     data: { username },
     headers: {
       'User-Client': browser,
