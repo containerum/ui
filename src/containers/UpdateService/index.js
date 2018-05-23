@@ -24,6 +24,7 @@ import UpdateServiceCardItem from './CreateServiceCard';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 import sideMenuStyles from '../CreateDeployment/index.scss';
 
@@ -342,7 +343,9 @@ export class UpdateService extends PureComponent<Props> {
                       updateExternalServiceReducer.isFetching ||
                       updateInternalServiceReducer.isFetching
                     }
-                    baseClassButton="btnDeployment btnService"
+                    baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
+                      globalStyles.marginBottom50
+                    } ${globalStyles.marginTop10}`}
                   />
                 </form>
               </div>

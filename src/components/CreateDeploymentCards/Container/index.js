@@ -12,8 +12,12 @@ import Environments from './Environments';
 import Volumes from './Volumes';
 
 import globalStyles from '../../../theme/global.scss';
+import buttonsStyles from '../../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
+const buttonsClass = className.bind(buttonsStyles);
+
+const btnClassName = buttonsClass('buttonUIAddBlock', 'buttonUIAddBlockBig');
 
 const containerClassName = globalClass('blockContainer', 'paddingX20');
 
@@ -137,7 +141,7 @@ const Container = ({
         {containersCount === fixedIndex &&
           containersCount < 3 && (
             <div
-              className="addBlockBtn addBlockBtnBig text-md-center"
+              className={`${btnClassName} text-md-center`}
               onClick={() => handleClickContainerAdd()}
               onKeyPress={() => handleClickContainerAdd()}
               role="presentation"

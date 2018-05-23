@@ -34,9 +34,13 @@ import Container from '../../components/CreateDeploymentCards/Container';
 import CreateServiceCardItem from '../CreateService/CreateServiceCard';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 const stylesClass = className.bind(styles);
 const globalClass = className.bind(globalStyles);
+const buttonsClass = className.bind(buttonsStyles);
+
+const addClass = buttonsClass('buttonUIAddBlock', 'buttonUIAddBlockBig');
 
 const menuItemClassName = stylesClass(
   'sideMenuItem',
@@ -1367,7 +1371,7 @@ export class CreateDeployment extends PureComponent<Props> {
             />
           ) : (
             <div
-              className="addBlockBtn addBlockBtnBig btnTooltipContainer linkedServBtn"
+              className={`${addClass} ${globalStyles.marginTop10}`}
               onClick={this.handleClickCreateService}
               onKeyPress={this.handleClickCreateService}
               role="presentation"
@@ -1421,7 +1425,9 @@ export class CreateDeployment extends PureComponent<Props> {
                     type="submit"
                     buttonText="Create deployment"
                     isFetching={createDeploymentReducer.isFetching}
-                    baseClassButton="btnDeployment btnService"
+                    baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
+                      globalStyles.marginBottom50
+                    } ${globalStyles.marginTop10}`}
                   />
                 </form>
               </div>

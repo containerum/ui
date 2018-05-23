@@ -7,6 +7,8 @@ import InputControl from '../../InputControl/index';
 import icon from '../../../images/icon-create-dep.svg';
 
 import globalStyles from '../../../theme/global.scss';
+import buttonsstyles from '../../../theme/buttons.scss';
+import inputStyles from '../../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -14,6 +16,7 @@ const containerClassName = globalClass(
   'blockContainer',
   'blockContainerOtherPadding'
 );
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   labels: Array<Object>,
@@ -54,9 +57,9 @@ const CreateDeploymentLabel = ({
               id={`deploymentLabelKey${id}`}
               type="text"
               pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])?$|^$"
-              baseClassName="form-group__input-text form-control customInput"
-              baseClassNameLabel={`form-group__label ${valueKey &&
-                'form-group__label-always-onfocus'}`}
+              baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+              baseClassNameLabel={`${globalStyles.formGroupLabel} ${valueKey &&
+                globalStyles.formGroupLabelOnFocus}`}
               labelText="Key"
               title="Key can only contain letters, numbers and characters"
               handleChangeInput={e =>
@@ -70,9 +73,10 @@ const CreateDeploymentLabel = ({
               id={`deploymentLabelName${id}`}
               type="text"
               pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])?$|^$"
-              baseClassName="form-group__input-text form-control customInput"
-              baseClassNameLabel={`form-group__label ${valueLabel &&
-                'form-group__label-always-onfocus'}`}
+              baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+              baseClassNameLabel={`${
+                globalStyles.formGroupLabel
+              } ${valueLabel && globalStyles.formGroupLabelOnFocus}`}
               labelText="Label"
               title="Label can only contain letters, numbers and characters"
               handleChangeInput={e =>
@@ -98,7 +102,7 @@ const CreateDeploymentLabel = ({
     })}
 
     <div
-      className="addBlockBtn"
+      className={buttonsstyles.buttonUIAddBlock}
       onClick={() => handleClickAddLabel()}
       onKeyPress={() => handleClickAddLabel()}
       role="presentation"

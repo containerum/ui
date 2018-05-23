@@ -6,6 +6,7 @@ import className from 'classnames/bind';
 import InputControl from '../../InputControl/index';
 
 import globalStyles from '../../../theme/global.scss';
+import inputStyles from '../../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -13,6 +14,7 @@ const containerClassName = globalClass(
   'blockContainer',
   'blockContainerOtherPadding'
 );
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   inputName: string,
@@ -41,12 +43,12 @@ const CreateDeploymentName = ({ inputName, handleChangeInputName }: Props) => (
         type="text"
         pattern="^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
         required
-        baseClassName="form-group__input-text form-control customInput"
-        baseClassNameLabel={`form-group__label ${inputName &&
-          'form-group__label-always-onfocus'}`}
+        baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+        baseClassNameLabel={`${globalStyles.formGroupLabel} ${inputName &&
+          globalStyles.formGroupLabelOnFocus}`}
         labelText="Name"
         textHelper="Deployment name can only contain letters, numbers and characters"
-        baseClassNameHelper="form-group__helper"
+        baseClassNameHelper={globalStyles.formGroupHelper}
         handleChangeInput={e => handleChangeInputName(e.target.value)}
       />
     </div>

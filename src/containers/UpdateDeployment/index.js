@@ -36,6 +36,7 @@ import Container from '../../components/CreateDeploymentCards/Container';
 
 import deploymentStyles from '../CreateDeployment/index.scss';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 const deploymentStylesClass = className.bind(deploymentStyles);
 const globalClass = className.bind(globalStyles);
@@ -1319,7 +1320,9 @@ export class CreateDeployment extends PureComponent<Props> {
                     type="submit"
                     buttonText="Update deployment"
                     isFetching={updateDeploymentReducer.isFetching}
-                    baseClassButton="btnDeployment btnService"
+                    baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
+                      globalStyles.marginBottom50
+                    } ${globalStyles.marginTop10}`}
                   />
                 </form>
               </div>

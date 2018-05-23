@@ -9,6 +9,7 @@ import getSolutionImage from '../../functions/getSolutionImage';
 
 import solutionStyles from '../../containers/Solutions/index.scss';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 type Props = {
   data: Array<Object>,
@@ -21,7 +22,6 @@ const handleClose = e => {
 };
 
 const solutionClassName = classNames.bind(solutionStyles);
-const globalClassName = classNames.bind(globalStyles);
 
 const solutionContainer = solutionClassName(
   'solutionContainer',
@@ -32,8 +32,6 @@ const solutionImg = solutionClassName(
   'solutionContainerImgBlock',
   'preSolutionContainerImgBlock'
 );
-
-const solutionBtn = globalClassName('button', 'buttonBlue', 'btn');
 
 const SolutionsDashboardList = ({
   data,
@@ -64,7 +62,9 @@ Props) => (
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${solutionBtn} btn btn-outline-primary`}
+              className={`${
+                buttonsStyles.buttonUIDeployDashboard
+              } btn btn-outline-primary`}
             >
               Deploy
             </a>

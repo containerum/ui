@@ -1,8 +1,28 @@
 import React from 'react';
 import Modal from 'react-modal';
+import className from 'classnames/bind';
 
 import LoadButton from '../../components/LoadButton';
 import alert from '../../images/alertAddUserMembership.svg';
+import buttonsStyles from '../../theme/buttons.scss';
+
+import modalStyles from './index.scss';
+import globalStyles from '../../theme/global.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const menuClassName = globalClass(
+  'dropdownMenu',
+  'formControl',
+  'formInputVolume'
+);
+
+const toggleClassName = globalClass(
+  'dropdownToggle',
+  'formControl',
+  'formInputVolume',
+  'dropdownList'
+);
 
 const customStyles = {
   overlay: {
@@ -83,13 +103,13 @@ const AddUserMembershipModal = ({
       style={customStyles}
       contentLabel="Create"
       ariaHideApp={false}
-      className="modal-dialog modal-dialog2 modal-dialog-create"
+      className={`${modalStyles.modalDialogCreate} modal-dialog`}
     >
       <form
         onSubmit={e => handleSubmitAddingEssence(e)}
-        className="modal-content"
+        className={`${modalStyles.modalContent} modal-content`}
       >
-        <div className="modal-header">
+        <div className={`${modalStyles.modalHeader} modal-header`}>
           <button
             type="button"
             className="close"
@@ -98,16 +118,21 @@ const AddUserMembershipModal = ({
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div className="modal-body text-left">
-          <h4 className="modal-title modal-title-volume" id="modalLabel">
+        <div className={`${modalStyles.modalBody} modal-body text-left`}>
+          <h4
+            className={`${modalStyles.modalTitle} ${
+              globalStyles.marginBottom30
+            } modal-title`}
+            id="modalLabel"
+          >
             {type}
           </h4>
-          <span className="modal-redis-text">
+          <span className={modalStyles.modalRedisText}>
             Fill in the information below to add new user
           </span>
           {err ? (
-            <div className="membership-add-user-alert">
-              <div className="membership-add-user-alert-item">
+            <div className={modalStyles.membershipAlert}>
+              <div className={modalStyles.membershipAlertItem}>
                 <img src={alert} alt="alert" />
               </div>
               <div>{err}</div>
@@ -115,7 +140,7 @@ const AddUserMembershipModal = ({
           ) : (
             ''
           )}
-          <span className="modal-redis-text">User Email address</span>
+          <span className={modalStyles.modalRedisText}>User Email address</span>
           <input
             type="email"
             className="form-control volume-form-input"
@@ -124,11 +149,13 @@ const AddUserMembershipModal = ({
             onChange={e => handleChangeNameOfType(e)}
             style={{ marginBottom: '15px' }}
           />
-          <span className="modal-redis-text">User permission</span>
+          <span className={modalStyles.modalRedisText}>User permission</span>
 
           <div className="dropdown">
             <button
-              className="btn form-control dropdown-list volume-form-input dropdown-toggle"
+              className={`${toggleClassName} ${
+                modalStyles.membershipSelect
+              } btn form-control dropdown-toggle`}
               type="button"
               id="dropdownMenu2"
               data-toggle="dropdown"
@@ -138,10 +165,13 @@ const AddUserMembershipModal = ({
               {accessNewUser}
             </button>
             <div
-              className="dropdown-menu form-control volume-form-input"
+              className={`${menuClassName} ${
+                modalStyles.membershipMenu
+              } dropdown-menu form-control`}
               aria-labelledby="dropdownMenu2"
             >
               <button
+                style={{ cursor: 'pointer' }}
                 className="dropdown-item"
                 type="button"
                 onClick={() => choiceAccessNewUser('read')}
@@ -149,6 +179,7 @@ const AddUserMembershipModal = ({
                 Read
               </button>
               <button
+                style={{ cursor: 'pointer' }}
                 className="dropdown-item"
                 type="button"
                 onClick={() => choiceAccessNewUser('write')}
@@ -156,19 +187,22 @@ const AddUserMembershipModal = ({
                 Write
               </button>
             </div>
-            <div className="modal-redis-text_ligth" style={{ marginTop: 5 }}>
+            <div
+              className={modalStyles.modalRedisTextLight}
+              style={{ marginTop: 5 }}
+            >
               Read - user can only see all Namespace objects
             </div>
-            <div className="modal-redis-text_ligth">
+            <div className={modalStyles.modalRedisTextLight}>
               Write - user can fully manage all Namespace objects
             </div>
           </div>
         </div>
 
-        <div className="modal-footer">
+        <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={() => handleCloseModal()}
           >
             Cancel
@@ -180,7 +214,7 @@ const AddUserMembershipModal = ({
             type="submit"
             buttonText="Add"
             isFetching={isFetchingAdd}
-            baseClassButton="btn modal-footer-solution-select"
+            baseClassButton={`${buttonsStyles.buttonModalSelect} btn`}
           />
         </div>
       </form>

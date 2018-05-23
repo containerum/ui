@@ -35,4 +35,10 @@
   }
 }
 
+.membership {
+  &BtnContainer {
+    display: flex;
+    align-items: center;
+  }
+}
 

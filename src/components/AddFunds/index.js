@@ -11,6 +11,7 @@ import creditCard from '../../images/credit-card.svg';
 import { CHANGE_PROFILE_INFO_SUCCESS } from '../../constants/profileConstants/changeProfileInfo';
 
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 type Props = {
   // isFetching: boolean,
@@ -51,15 +52,15 @@ const AddFunds = ({
                   href={`${
                     config.webApi
                   }/checkouts/new?User-Client=${browser}&User-Token=${accessToken}`}
-                  style={{ width: '200px', height: '40px' }}
-                  className="feedback-form__submit btn"
+                  style={{ width: '200px', height: '40px', paddingTop: '5px' }}
+                  className={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
                 >
                   Add funds
                 </a>
               ) : (
                 <button
-                  style={{ width: '200px', height: '40px' }}
-                  className="feedback-form__submit btn"
+                  style={{ width: '200px', height: '40px', paddingTop: '5px' }}
+                  className={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
                   onClick={handleClickAddFunds}
                 >
                   Add funds

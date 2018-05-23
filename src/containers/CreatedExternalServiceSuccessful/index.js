@@ -6,6 +6,7 @@ import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 // import { routerLinks } from '../../config';
 import NavigationHeaderItem from '../NavigationHeader';
@@ -16,7 +17,21 @@ import {
   GET_SERVICE_INVALID,
   GET_SERVICE_REQUESTING
 } from '../../constants/serviceConstants/getService';
+import sideMenuStyles from '../CreateDeployment/index.scss';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const nextContainerClassName = globalClass(
+  'blockContainer',
+  'blockContainerOtherPadding'
+);
+
+const containerClassName = globalClass(
+  'containerFluid',
+  'breadcrumbsNavigation'
+);
 
 type Props = {
   match: Object,
@@ -58,10 +73,7 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
 
     return (
       <div>
-        <div
-          className="blockContainer blockContainerPadin"
-          id="target-deployment"
-        >
+        <div className={nextContainerClassName} id="target-deployment">
           <div
             className="col-md-3"
             style={{
@@ -86,7 +98,7 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
             }}
           >
             <div
-              className="containerSubTitle"
+              className={globalStyles.containerSubTitle}
               style={{
                 margin: '0 0 10px 0',
                 color: '#333'
@@ -94,12 +106,15 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
             >
               Ok, new Service {match.params.idSrv} was Created
             </div>
-            <div className="containerSubTitle" style={{ margin: '0 0 40px 0' }}>
+            <div
+              className={globalStyles.containerSubTitleCreate}
+              style={{ margin: '0 0 40px 0' }}
+            >
               Well, now you can additionally create a Domain for this
               <br />
               External Service and enable SSL.
             </div>
-            <div className="documentation-link">
+            <div className={globalStyles.linkDocumentation}>
               Would you like to create a Domain?
             </div>
           </div>
@@ -107,7 +122,9 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
         <div className="text-right">
           <NavLink
             to={`/namespaces/${match.params.idName}`}
-            className="btnTransparency btnService"
+            className={`${buttonsStyles.buttonUILoadButtonTransparency} ${
+              globalStyles.marginBottom50
+            } ${globalStyles.marginTop10}`}
             style={{
               width: '250px',
               display: 'inline-block',
@@ -120,7 +137,9 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
             to={`/namespace/${match.params.idName}/service/${
               match.params.idSrv
             }/createDomain`}
-            className="btnDeployment btnService"
+            className={`${buttonsStyles.buttonUILoadButton} ${
+              globalStyles.marginBottom50
+            } ${globalStyles.marginTop10}`}
             style={{ width: '200px', display: 'inline-block' }}
           >
             Create domain
@@ -138,7 +157,7 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
             match.params.idName
           }`}
         />
-        <div className="container-fluid breadcrumbNavigation">
+        <div className={containerClassName}>
           <NavigationHeaderItem
             idName={match.params.idName}
             IdCreate="service"
@@ -146,11 +165,9 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
         </div>
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
-            <div className="row pageWidth">
-              <div className="col-md-3 sideMenu" />
-              <div className="col-md-9 pageContent">
-                {this.renderCreateDomain()}
-              </div>
+            <div className={`${sideMenuStyles.pageWidth} row`}>
+              <div className={`${sideMenuStyles.sideMenu} col-md-3`} />
+              <div className="col-md-9">{this.renderCreateDomain()}</div>
             </div>
           </div>
         </div>

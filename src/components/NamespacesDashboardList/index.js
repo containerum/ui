@@ -43,7 +43,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
             cellPadding: 0
           }}
         >
-          <thead style={{ height: '30px' }}>
+          <thead style={{ height: '30px', display: 'block' }}>
             <tr style={{ cursor: 'pointer' }}>
               <td className={dashboardStyles.td_1_Dashboard} />
               <td className={dashboardStyles.td_2_Dashboard}>Name</td>

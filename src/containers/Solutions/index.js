@@ -134,12 +134,11 @@ export class Solutions extends PureComponent<Props> {
           {new Array(6).fill().map(() => (
             <div
               key={_.uniqueId()}
-              className={`col-md-4 ${styles.solutionContainer}`}
+              className={`col-md-4  ${styles.solutionContainerPlaceholder}`}
               style={{
                 display: 'inline-block',
                 marginTop: 30,
                 height: '307px',
-                marginLeft: '30px',
                 backgroundColor: '#f6f6f6'
               }}
             />

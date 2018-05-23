@@ -14,6 +14,7 @@ $color-gray-2: #4a4a4a;
 $color-white2: #f6f6f6;
 $color-white3: #e9ecef;
 $color-gray3: #3c3c3c;
+$color-gray-4: #999;
 
 $button-ui-primary: $main-color;
 $button-ui-primary-hover: #3683a8;
@@ -25,9 +26,14 @@ $button-ui-transparency-hover: $main-color;
 $button-ui-transparency-active: #1d87b4;
 $button-ui-transparency-disabled: #eaeaea;
 
+$button-ui-delete: #fe4a49;
+$button-ui-delete-active: #de3e3d;
+
 $title-color: #df5952;
 $subtitle-color: #000;
 $manage-team-hover: #3b5998;
 
 $log-data-background-color: #484e5c;
-$log-data-border-color: #646c7f
+$log-data-border-color: #646c7f;
+
+$input-error-color: #fe4a49;

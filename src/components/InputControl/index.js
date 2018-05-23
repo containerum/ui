@@ -1,6 +1,8 @@
 /* @flow */
 
 import React from 'react';
+import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
 
 type Props = {
   handleChangeInput: Function,
@@ -48,8 +50,10 @@ const InputControl = ({
   alwaysVisiblePlaceholder,
   maxLength
 }: Props) => (
-  <div className={`form-group ${!valid && 'has-error'}`}>
-    {subPath && <span className="inputSubpathSign">/</span>}
+  <div
+    className={`${globalStyles.formGroup} ${!valid && globalStyles.formError}`}
+  >
+    {subPath && <span className={styles.inputSubpath}>/</span>}
     <input
       className={baseClassName}
       id={id}

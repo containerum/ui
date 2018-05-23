@@ -1,9 +1,18 @@
 /* @flow */
 
 import React from 'react';
+import className from 'classnames/bind';
 
 import InputControl from '../../../InputControl/index';
 import icon from '../../../../images/icon-create-dep.svg';
+import buttonsStyles from '../../../../theme/buttons.scss';
+
+import globalStyles from '../../../../theme/global.scss';
+import inputStyles from '../../../../components/InputControl/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   ports: Object,
@@ -49,11 +58,12 @@ const ImagePorts = ({
               type="number"
               min="0"
               max="65535"
-              baseClassName="form-group__input-text form-control customInput"
-              baseClassNameLabel={`form-group__label ${containerPort &&
-                'form-group__label-always-onfocus'}`}
+              baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+              baseClassNameLabel={`${
+                globalStyles.formGroupLabel
+              } ${containerPort && globalStyles.formGroupLabelOnFocus}`}
               labelText="Port"
-              baseClassNameHelper="form-group__helper"
+              baseClassNameHelper={globalStyles.formGroupHelper}
               handleChangeInput={e => {
                 const countPorts = parseInt(e.target.value, 10);
                 handleChangeInputImagePorts(
@@ -87,7 +97,7 @@ const ImagePorts = ({
 
     <div className="col-md-12">
       <div
-        className="addBlockBtn marLeft"
+        className={`${buttonsStyles.buttonUIAddBlock} ml-0`}
         onClick={() => handleClickAddImagePort(index)}
         onKeyPress={() => handleClickAddImagePort(index)}
         role="presentation"

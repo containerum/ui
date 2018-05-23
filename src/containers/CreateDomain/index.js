@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import * as actionGetServices from '../../actions/servicesActions/getServices';
 import * as actionCreateDomain from '../../actions/serviceActions/createDomain';
@@ -24,7 +25,17 @@ import LoadButton from '../../components/LoadButton';
 // import InputControl from '../../components/InputControl';
 import Notification from '../Notification';
 // import { routerLinks } from '../../config';
+
+import sideMenuStyles from '../CreateDeployment/index.scss';
 import globalStyles from '../../theme/global.scss';
+import buttonsStyles from '../../theme/buttons.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'containerFluid',
+  'breadcrumbsNavigation'
+);
 
 type Props = {
   getServicesReducer: Object,
@@ -194,7 +205,7 @@ export class CreateDomain extends PureComponent<Props> {
     return (
       <div>
         <Helmet title={`Create Domain in ${match.params.idSrv}`} />
-        <div className="container-fluid breadcrumbNavigation">
+        <div className={containerClassName}>
           <NavigationHeaderItem
             idName={match.params.idName}
             idService={match.params.idSrv}
@@ -208,16 +219,18 @@ export class CreateDomain extends PureComponent<Props> {
         />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
-            <div className="row pageWidth">
-              <div className="col-md-3 sideMenu" />
-              <div className="col-md-9 pageContent">
+            <div className={`${sideMenuStyles.pageWidth} row`}>
+              <div className={`${sideMenuStyles.sideMenu} col-md-3`} />
+              <div className="col-md-9">
                 <form onSubmit={e => this.handleSubmitCreateDomain(e)}>
                   {this.renderCreateDomain()}
                   <LoadButton
                     type="submit"
                     buttonText="Create domain"
                     isFetching={createDomainReducer.isFetching}
-                    baseClassButton="btnDeployment btnService"
+                    baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
+                      globalStyles.marginBottom50
+                    } ${globalStyles.marginTop10}`}
                   />
                 </form>
               </div>

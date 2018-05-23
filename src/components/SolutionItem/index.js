@@ -9,6 +9,7 @@ import github from '../../images/github.svg';
 
 import solutionPageStyles from '../../containers/Solution/index.scss';
 import dashboardStyle from '../../containers/Dashboard/index.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 type Props = {
   solution: Array<Object>,
@@ -53,7 +54,7 @@ Props) => {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="feedback-form__submit btn"
+          className={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
         >
           Deploy
         </a>

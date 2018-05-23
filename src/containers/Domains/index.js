@@ -21,6 +21,8 @@ import {
 import DomainsList from '../../components/DomainsList';
 import Notification from '../Notification';
 
+import globalStyles from '../../theme/global.scss';
+
 type Props = {
   getDomainsReducer: Object,
   deleteDomainReducer: Object,
@@ -74,7 +76,7 @@ export class Domains extends PureComponent<Props> {
     ) {
       return (
         <div
-          className="container"
+          className={globalStyles.container}
           style={{
             padding: '0',
             marginTop: '17px',
@@ -115,26 +117,32 @@ export class Domains extends PureComponent<Props> {
           method={method}
           errorMessage={err}
         />
-        <div className="container  no-back">
-          <div className="content-block">
+        <div className={`container ${globalStyles.containerNoBackground}`}>
+          <div className={globalStyles.contentBlcok}>
             <div className="row double two-columns">
               <div className="col-md-3 col-lg-3 col-xl-2" />
               <div className="col-md-9 col-lg-9 col-xl-10">
-                <div className="container container__webhook">
-                  <div className="block-item" id="domains">
-                    <div className="block-item__title">Domains</div>
+                <div className={`container ${globalStyles.containerDomains}`}>
+                  <div className={globalStyles.blockItem} id="domains">
+                    <div className={globalStyles.blockItemTitle}>Domains</div>
                     <div className="row">
                       <div className="col-md-8">
-                        <div className="light-text">Your Domains</div>
+                        <div className={globalStyles.textLight}>
+                          Your Domains
+                        </div>
                       </div>
-                      <div className="content-block">
-                        <div className="container no-back">
+                      <div className={globalStyles.contentBlock}>
+                        <div
+                          className={`container ${
+                            globalStyles.containerNoBackground
+                          }`}
+                        >
                           {this.renderDomainsList()}
                         </div>
                       </div>
                       <div className="col-md-8">
                         <div
-                          className="light-text"
+                          className={globalStyles.textLight}
                           style={{ margin: '20px 0' }}
                         >
                           To add Domain, please visit Service creation page and

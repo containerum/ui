@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
+import className from 'classnames/bind';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 
@@ -34,6 +35,18 @@ import type {
 import TariffsNamespacesList from '../../components/TariffsNamespacesList';
 import ResizeModal from '../../components/CustomerModal/ResizeModal';
 import Notification from '../Notification';
+
+import globalStyles from '../../theme/global.scss';
+import styles from '../CreateNamespace/index.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'contentBlockContainer',
+  'container',
+  'containerNoBackground',
+  'paddingX0'
+);
 
 type Props = {
   getNamespacesTariffsReducer: NamespacesType,
@@ -127,7 +140,7 @@ export class ResizeNamespace extends PureComponent<Props> {
         <div className="row">
           {new Array(8).fill().map(() => (
             <div key={_.uniqueId()} className="col-md-3">
-              <div className="namespace-plan-block-placeholder">
+              <div className={styles.namespacePlanBlockPlaceholder}>
                 <img
                   src={require('../../images/add-ns-block.svg')}
                   alt="add-ns"
@@ -211,15 +224,13 @@ export class ResizeNamespace extends PureComponent<Props> {
           onHandleResize={fetchResizeNamespaceIfNeeded}
         />
         <Helmet title={`Resize Namespace - ${label}`} />
-        <div className="content-block">
-          <div className="content-block-container container no-back mt-0 no-padding">
-            <div className="content-block-content mt-0">
-              <div className="namespace-plan mt-0">
-                <div className="namespace-plan-title">
+        <div className={globalStyles.contentBlock}>
+          <div className={`${containerClassName} mt-0 container`}>
+            <div className={`${globalStyles.contentBlockContent} mt-0`}>
+              <div className={`${styles.namespacePlan} mt-0`}>
+                <div className={styles.namespacePlanTitle}>
                   choose a namespace size for{' '}
-                  <span className="namespace-plan-first-step-blue">
-                    {label}
-                  </span>
+                  <span style={{ color: '#29abe2' }}>{label}</span>
                 </div>
               </div>
               {this.renderTariffsNamespacesList()}

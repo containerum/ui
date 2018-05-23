@@ -2,7 +2,26 @@ import React from 'react';
 import Modal from 'react-modal';
 import Tooltip from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap_white.css';
+import className from 'classnames/bind';
 
+import globalStyles from '../../theme/global.scss';
+import modalStyles from './index.scss';
+import createNamespaceStyles from '../../containers/CreateNamespace/index.scss';
+
+import buttonsStyles from '../../theme/buttons.scss';
+
+const createNamespaceClass = className.bind(createNamespaceStyles);
+const globalClass = className.bind(globalStyles);
+
+const rightContent = globalClass(
+  'contentBlockContent',
+  'contentBlockContentCardBlock',
+  'contentBlockContentCardBlockDollars'
+);
+const containerLeft = createNamespaceClass(
+  'namespacePlanBlockContainerLeft',
+  'namespacePlanBlockDollars'
+);
 const customStyles = {
   overlay: {
     position: 'fixed',
@@ -73,8 +92,8 @@ const CreateModal = ({
 
   const styleSubmit =
     name.length >= 2 && name.search(regexp) !== -1
-      ? 'btn modal-footer-solution-select'
-      : 'btn modal-footer-solution-select modal-footer-volume-delete';
+      ? `${buttonsStyles.buttonModalSelect} btn`
+      : `${buttonsStyles.buttonModalAction} btn`;
   const isDisabledSubmit = name.length >= 2 && name.search(regexp) !== -1;
   const isErrorInputClass =
     name.search(regexp) !== -1
@@ -88,13 +107,13 @@ const CreateModal = ({
       style={customStyles}
       contentLabel="Create"
       ariaHideApp={false}
-      className="modal-dialog modal-dialog2 modal-dialog-create"
+      className={`${modalStyles.modalDialogCreate} modal-dialog`}
     >
       <form
         onSubmit={e => handleSubmitCreatingEssence(e)}
-        className="modal-content"
+        className={`${modalStyles.modalContent} modal-content`}
       >
-        <div className="modal-header">
+        <div className={`${modalStyles.modalHeader} modal-header`}>
           <button
             type="button"
             className="close"
@@ -103,12 +122,21 @@ const CreateModal = ({
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div className="modal-body text-left">
-          <h4 className="modal-title modal-title-volume" id="modalLabel">
+        <div className={`${modalStyles.modalBody} modal-body text-left`}>
+          <h4
+            className={`${modalStyles.modalTitle} ${
+              globalStyles.marginBottom30
+            } modal-title`}
+            id="modalLabel"
+          >
             New {type}
           </h4>
           <div className="col-md-10 p-0">
-            <div className="namespace-plan-block-container hover-action-new hover-always-new">
+            <div
+              className={`${
+                createNamespaceStyles.namespacePlanBlockContainer
+              } ${globalStyles.hoverActionCreateModal}`}
+            >
               <div className="row">
                 <div
                   // className={
@@ -116,49 +144,85 @@ const CreateModal = ({
                   //     ? 'col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars'
                   //     : 'col-md-6 namespace-plan-block-container-left'
                   // }
-                  className="col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars"
+                  className={`col-md-6 ${containerLeft}`}
                 >
-                  <div className="namespace-plan-block-price">
+                  <div
+                    className={createNamespaceStyles.namespacePlanBlockPrice}
+                  >
                     ${data.price}
-                    <span className="namespace-plan-span-price">/mo</span>
+                    <span
+                      className={createNamespaceStyles.namespacePlanSpanPrice}
+                    >
+                      /mo
+                    </span>
                   </div>
-                  <div className="namespace-plan-block-month">
+                  <div
+                    className={createNamespaceStyles.namespacePlanBlockMonth}
+                  >
                     {data.pricePerDay}
                   </div>
                 </div>
                 {data.memory &&
                   data.cpu && (
-                    <div className="col-md-6 namespace-plan-block-container-right">
+                    <div
+                      className={`col-md-6 ${
+                        createNamespaceStyles.namespacePlanBlockContainerRight
+                      }`}
+                    >
                       <div
                         // className={
                         //   data.price === '$1'
                         //     ? 'content-block-content card-block card-block2dollars'
                         //     : 'content-block-content card-block'
                         // }
-                        className="content-block-content card-block card-block2dollars"
+                        className={rightContent}
                       >
-                        <div className="content-block__info-item ">
-                          <div className="content-block__info-name inline">
+                        <div className={globalStyles.contentBlockInfoItem}>
+                          <div
+                            className={`${
+                              globalStyles.contentBlockInfoName
+                            } inline`}
+                          >
                             RAM :{' '}
                           </div>
-                          <div className="content-block__info-text inline">
+                          <div
+                            className={`${
+                              globalStyles.contentBlockInfoText
+                            } inline`}
+                          >
                             {data.memory} GB
                           </div>
                         </div>
-                        <div className="content-block__info-item">
-                          <div className="content-block__info-name inline">
+                        <div className={globalStyles.contentBlockInfoItem}>
+                          <div
+                            className={`${
+                              globalStyles.contentBlockInfoName
+                            } inline`}
+                          >
                             CPU :{' '}
                           </div>
-                          <div className="content-block__info-text inline">
+                          <div
+                            className={`${
+                              globalStyles.contentBlockInfoText
+                            } inline`}
+                          >
                             {data.cpu}
                           </div>
                         </div>
                         {data.volume && (
-                          <div className="content-block__info-item">
-                            <div className="content-block__info-name inline">
+                          <div className={globalStyles.contentBlockInfoItem}>
+                            <div
+                              className={`${
+                                globalStyles.contentBlockInfoName
+                              } inline`}
+                            >
                               Volume :{' '}
                             </div>
-                            <div className="content-block__info-text inline">
+                            <div
+                              className={`${
+                                globalStyles.contentBlockInfoText
+                              } inline`}
+                            >
                               {data.volume} GB
                             </div>
                           </div>
@@ -167,23 +231,25 @@ const CreateModal = ({
                     </div>
                   )}
                 {data.storageLimit && (
-                  <div className="col-md-6 volume-plan-container-right">
-                    <div className="hard-drive-size">
-                      {data.storageLimit} GB
-                    </div>
+                  <div
+                    className={`col-md-6 ${
+                      createNamespaceStyles.namespacePlanBlockContainerRight
+                    }`}
+                  >
+                    <div>{data.storageLimit} GB</div>
                   </div>
                 )}
               </div>
             </div>
           </div>
-          <span className="modal-redis-text mt-4">
+          <span className={`${modalStyles.modalRedisText} mt-4`}>
             Please, enter the name to continue
           </span>
           <Tooltip
             placement="top"
             visible
             overlay={<span>Invalid {type} name</span>}
-            overlayClassName={isErrorTooltipClass ? '' : 'display-none'}
+            overlayClassName={isErrorTooltipClass ? '' : 'rc-tooltip-hidden'}
           >
             <input
               type="text"
@@ -195,10 +261,10 @@ const CreateModal = ({
             />
           </Tooltip>
         </div>
-        <div className="modal-footer">
+        <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
-            className="btn modal-footer-solution-cancel"
+            className={`${buttonsStyles.buttonModalCancel} btn`}
             onClick={() => handleCloseModal()}
           >
             Cancel
