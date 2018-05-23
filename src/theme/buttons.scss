@@ -78,6 +78,7 @@
 
   &Create {
     &Delete {
+      cursor: pointer;
       border-color: $button-ui-delete;
       background-color: $button-ui-delete;
       color: $color-white;

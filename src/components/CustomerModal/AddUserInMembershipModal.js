@@ -17,6 +17,13 @@ const menuClassName = globalClass(
   'formInputVolume'
 );
 
+const toggleClassName = globalClass(
+  'dropdownToggle',
+  'formControl',
+  'formInputVolume',
+  'dropdownList'
+);
+
 const customStyles = {
   overlay: {
     position: 'fixed',
@@ -146,7 +153,9 @@ const AddUserMembershipModal = ({
 
           <div className="dropdown">
             <button
-              className="btn form-control dropdown-list volume-form-input dropdown-toggle"
+              className={`${toggleClassName} ${
+                modalStyles.membershipSelect
+              } btn form-control dropdown-toggle`}
               type="button"
               id="dropdownMenu2"
               data-toggle="dropdown"
@@ -155,8 +164,14 @@ const AddUserMembershipModal = ({
             >
               {accessNewUser}
             </button>
-            <div className={menuClassName} aria-labelledby="dropdownMenu2">
+            <div
+              className={`${menuClassName} ${
+                modalStyles.membershipMenu
+              } dropdown-menu form-control`}
+              aria-labelledby="dropdownMenu2"
+            >
               <button
+                style={{ cursor: 'pointer' }}
                 className="dropdown-item"
                 type="button"
                 onClick={() => choiceAccessNewUser('read')}
@@ -164,6 +179,7 @@ const AddUserMembershipModal = ({
                 Read
               </button>
               <button
+                style={{ cursor: 'pointer' }}
                 className="dropdown-item"
                 type="button"
                 onClick={() => choiceAccessNewUser('write')}

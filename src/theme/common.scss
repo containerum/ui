@@ -1,12 +1,17 @@
 @import './variables';
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body{
   font-family:Open Sans,  Arial, Tahoma, sans-serif;
   font-weight: 400;
   font-size:15px;
-  background:#f6f6f6;
-  color:#333;
-
+  background:$color-gray;
+  color:$color-dark-gray;
+  margin-bottom: 45px !important;
 }
 
 

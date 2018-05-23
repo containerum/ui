@@ -82,7 +82,7 @@ export class Footer extends PureComponent<Props> {
 
     const { linkPlatform } = getPlatform(getReleasesGithubReducer.data);
     return (
-      <footer className={styles.footer}>
+      <footer className={`${styles.footer} footer`}>
         <div className={styles.footerWrapper}>
           <div className={`${styles.footerContainer} container`}>
             <div className={styles.footerLogo}>Created by Exon Lab</div>
@@ -120,7 +120,7 @@ export class Footer extends PureComponent<Props> {
   };
 
   render() {
-    return <div>{this.renderFooterInfo()}</div>;
+    return <div className="footer">{this.renderFooterInfo()}</div>;
   }
 }
 

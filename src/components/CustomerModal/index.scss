@@ -68,4 +68,17 @@
       color: $color-dark-gray;
     }
   }
+
+  &Menu {
+    border: none;
+    cursor: pointer;
+  }
+
+  &Select {
+    cursor: pointer;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
 }

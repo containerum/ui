@@ -52,14 +52,14 @@ const AddFunds = ({
                   href={`${
                     config.webApi
                   }/checkouts/new?User-Client=${browser}&User-Token=${accessToken}`}
-                  style={{ width: '200px', height: '40px' }}
+                  style={{ width: '200px', height: '40px', paddingTop: '5px' }}
                   className={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
                 >
                   Add funds
                 </a>
               ) : (
                 <button
-                  style={{ width: '200px', height: '40px' }}
+                  style={{ width: '200px', height: '40px', paddingTop: '5px' }}
                   className={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
                   onClick={handleClickAddFunds}
                 >
