@@ -12,7 +12,7 @@ import forgotReducer from './forgotReducer';
 import checkHashPasswordReducer from './checkHashPasswordReducer';
 import recoveryPasswordReducer from './recoveryPasswordReducer';
 import getNamespacesReducer from './namespacesReducers/getNamespaces';
-import getNamespaceAccessReducer from './namespaceReducers/getNamespaceAccess';
+import getUsageNamespacesReducer from './namespacesReducers/getUsageNamespaces';
 import getNamespaceReducer from './namespaceReducers/getNamespace';
 import deleteNamespaceReducer from './namespaceReducers/deleteNamespace';
 import getNamespacesTariffsReducer from './namespacesReducers/getNamespacesTariffs';
@@ -79,7 +79,7 @@ const reducers = {
   checkHashPasswordReducer,
   recoveryPasswordReducer,
   getNamespacesReducer,
-  getNamespaceAccessReducer,
+  getUsageNamespacesReducer,
   getNamespaceReducer,
   deleteNamespaceReducer,
   getNamespacesTariffsReducer,

@@ -50,7 +50,7 @@ export const fetchResizeNamespace = (
   dispatch(resizeNamespaceRequest());
 
   const response = await axios.put(
-    `${URL}/namespace/${idName}`,
+    `${URL}/namespaces/${idName}`,
     {
       tariff_id: tariff
     },

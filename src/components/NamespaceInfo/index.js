@@ -45,16 +45,31 @@ const manageTeamTextClassName = globalClass(
 
 type Props = {
   data: Object,
+  dataUsageNamespaces: Object,
   idName: string,
   handleDeleteNamespace: (idName: string) => void
 };
 
-const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
-  const { memory, cpu } = data.resources.used;
-  const { memory: memoryLimit, cpu: cpuLimit } = data.resources.hard;
-  const newAccessLevel = data.access;
-  const newAccessLevelClassName =
-    data.access[0].toUpperCase() + data.access.slice(1);
+const NamespaceInfo = ({
+  data,
+  dataUsageNamespaces,
+  idName,
+  handleDeleteNamespace
+}: Props) => {
+  const { cpu, ram, access, label, id } = data;
+  let memoryLimit = '';
+  let cpuLimit = '';
+  const usageNamespaces = dataUsageNamespaces.find(
+    usageNs => usageNs.name === id
+  );
+  if (usageNamespaces) {
+    memoryLimit = usageNamespaces.resources.used.memory;
+    cpuLimit = usageNamespaces.resources.used.cpu;
+  }
+  const newAccessLevel = access;
+  const newAccessLevelClassName = data.access
+    ? data.access[0].toUpperCase() + data.access.slice(1)
+    : 'owner';
   const classNameBadge = namespaceClass({
     [`namespaceInfoBadge${newAccessLevelClassName}`]: true
   });
@@ -63,7 +78,7 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
     <div className={`${containerClassName} container`}>
       <div className={globalStyles.contentBlockHeader}>
         <div className={headerLabelClassName}>
-          <div className={textLabelClassName}>{idName}</div>
+          <div className={textLabelClassName}>{label}</div>
           <div className={globalStyles.contentBlockHeaderLabelDescript}>
             namespace
           </div>
@@ -122,13 +137,13 @@ const NamespaceInfo = ({ data, idName, handleDeleteNamespace }: Props) => {
         <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={infoNameClassName}>RAM ( Usage / Total ) : </div>
           <div className={globalStyles.contentBlockInfoText}>
-            {memory} / {memoryLimit}
+            {memoryLimit} / {ram}
           </div>
         </div>
         <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={infoNameClassName}>CPU ( Usage / Total ) : </div>
           <div className={globalStyles.contentBlockInfoText}>
-            {cpu} / {cpuLimit}
+            {cpuLimit} / {cpu}
           </div>
         </div>
         <div className={globalStyles.contentBlockInfoItemMargin50}>

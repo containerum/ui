@@ -46,7 +46,7 @@ export const fetchGetNamespaceUsersAccess = (
   const accessToken = cookie.load('accessToken');
 
   dispatch(getNamespaceUsersAccessRequest());
-  const response = await axios.get(`${URL}/namespace/${idName}/access`, {
+  const response = await axios.get(`${URL}/namespaces/${idName}/accesses`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken

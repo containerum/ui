@@ -54,7 +54,7 @@ export const fetchCreateNamespace = (
   dispatch(createNamespaceRequest());
 
   const response = await axios.post(
-    `${URL}/namespace`,
+    `${URL}/namespaces`,
     {
       label: idName,
       tariff_id: tariff
@@ -71,7 +71,7 @@ export const fetchCreateNamespace = (
   const { status, data, config } = response;
   // console.log(data);
   switch (status) {
-    case 200: {
+    case 201: {
       dispatch(createNamespaceSuccess(data, 201, config.method, idName));
       // if (
       //   typeof window !== 'undefined' &&

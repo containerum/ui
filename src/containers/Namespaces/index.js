@@ -10,6 +10,7 @@ import _ from 'lodash/fp';
 import globalStyles from '../../theme/global.scss';
 
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
+import * as actionGetUsageNamespaces from '../../actions/namespacesActions/getUsageNamespaces';
 import * as actionDeleteNamespaces from '../../actions/namespaceActions/deleteNamespace';
 import {
   GET_NAMESPACES_INVALID,
@@ -17,6 +18,11 @@ import {
   GET_NAMESPACES_FAILURE,
   GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
+import {
+  GET_NAMESPACES_USAGE_INVALID,
+  GET_NAMESPACES_USAGE_REQUESTING,
+  GET_NAMESPACES_USAGE_FAILURE
+} from '../../constants/namespacesConstants/getUsageNamespaces';
 import {
   DELETE_NAMESPACE_SUCCESS,
   DELETE_NAMESPACE_REQUESTING
@@ -34,9 +40,11 @@ import ns from '../../images/ns-1.svg';
 
 type Props = {
   getNamespacesReducer: NamespacesType,
+  getUsageNamespacesReducer: Object,
   deleteNamespaceReducer: NamespaceType,
   history: Object,
   fetchGetNamespacesIfNeeded: () => void,
+  fetchGetUsageNamespacesIfNeeded: () => void,
   fetchDeleteNamespaceIfNeeded: (idName: string) => void,
   createExternalServiceReducer: Object,
   createInternalServiceReducer: Object
@@ -55,6 +63,7 @@ export class Namespaces extends PureComponent<Props> {
   }
   componentDidMount() {
     this.props.fetchGetNamespacesIfNeeded();
+    this.props.fetchGetUsageNamespacesIfNeeded();
   }
   componentWillUpdate(nextProps) {
     if (
@@ -73,7 +82,7 @@ export class Namespaces extends PureComponent<Props> {
       nextProps.deleteNamespaceReducer.readyStatus === DELETE_NAMESPACE_SUCCESS
     ) {
       const displayedNS = this.state.displayedNamespaces.filter(
-        namespace => nextProps.deleteNamespaceReducer.idName !== namespace.label
+        namespace => nextProps.deleteNamespaceReducer.idName !== namespace.id
       );
       this.setState({
         ...this.state,
@@ -104,12 +113,20 @@ export class Namespaces extends PureComponent<Props> {
   };
 
   renderNamespacesList = () => {
-    const { getNamespacesReducer, deleteNamespaceReducer } = this.props;
+    const {
+      getNamespacesReducer,
+      getUsageNamespacesReducer,
+      deleteNamespaceReducer
+    } = this.props;
 
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+      !getUsageNamespacesReducer.readyStatus ||
+      getUsageNamespacesReducer.readyStatus === GET_NAMESPACES_USAGE_INVALID ||
+      getUsageNamespacesReducer.readyStatus ===
+        GET_NAMESPACES_USAGE_REQUESTING ||
       deleteNamespaceReducer.readyStatus === DELETE_NAMESPACE_REQUESTING
     ) {
       return (
@@ -127,7 +144,10 @@ export class Namespaces extends PureComponent<Props> {
       );
     }
 
-    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getUsageNamespacesReducer.readyStatus === GET_NAMESPACES_USAGE_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Namespaces!</p>;
     }
 
@@ -135,6 +155,7 @@ export class Namespaces extends PureComponent<Props> {
       <NamespacesList
         // data={this.props.getNamespacesReducer.data}
         data={this.state.displayedNamespaces}
+        dataUsageNamespaces={getUsageNamespacesReducer.data}
         handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
         history={this.props.history}
       />
@@ -196,11 +217,13 @@ export class Namespaces extends PureComponent<Props> {
 const connector: Connector<{}, Props> = connect(
   ({
     getNamespacesReducer,
+    getUsageNamespacesReducer,
     deleteNamespaceReducer,
     createExternalServiceReducer,
     createInternalServiceReducer
   }: ReduxState) => ({
     getNamespacesReducer,
+    getUsageNamespacesReducer,
     deleteNamespaceReducer,
     createExternalServiceReducer,
     createInternalServiceReducer
@@ -208,6 +231,8 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: () =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded()),
+    fetchGetUsageNamespacesIfNeeded: () =>
+      dispatch(actionGetUsageNamespaces.fetchGetUsageNamespacesIfNeeded()),
     fetchDeleteNamespaceIfNeeded: (idName: string) =>
       dispatch(actionDeleteNamespaces.fetchDeleteNamespaceIfNeeded(idName))
   })

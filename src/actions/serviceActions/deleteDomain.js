@@ -49,7 +49,7 @@ export const fetchDeleteDomain = (
   dispatch(deleteDomainRequest());
 
   const response = await axios.delete(
-    `${URL}/namespace/${idName}/ingress/${label}`,
+    `${URL}/namespaces/${idName}/ingresses/${label}`,
     {
       headers: {
         'User-Client': browser,

@@ -62,6 +62,7 @@ export class NavigationHeader extends PureComponent<Props> {
       IdUpdate,
       typeOfUpdateService
     } = this.props;
+    const currentNs = getNamespacesReducer.data.find(ns => ns.id === idName);
 
     if (
       !getNamespacesReducer.readyStatus ||
@@ -105,7 +106,7 @@ export class NavigationHeader extends PureComponent<Props> {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {idName}
+              {currentNs ? currentNs.label : ''}
             </div>
             <ul
               className={`${globalStyles.dropdownMenu} dropdown-menu`}
@@ -115,7 +116,7 @@ export class NavigationHeader extends PureComponent<Props> {
                 <NavLink
                   key={_.uniqueId()}
                   className="dropdown-item"
-                  to={`/namespaces/${item.label}`}
+                  to={`/namespaces/${item.id}`}
                 >
                   {item.label}
                 </NavLink>
@@ -125,7 +126,9 @@ export class NavigationHeader extends PureComponent<Props> {
         );
         isIdOutName = (
           <li className={`${globalStyles.breadcrumbsLi} nav-item dropdown`}>
-            <NavLink to={`/namespaces/${idName}`}>{idName}</NavLink>
+            <NavLink to={`/namespaces/${idName}`}>
+              {currentNs ? currentNs.label : ''}
+            </NavLink>
           </li>
         );
       }

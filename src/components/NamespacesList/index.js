@@ -12,11 +12,17 @@ import deployment from '../../images/deployment.png';
 
 type Props = {
   data: Array<Object>,
+  dataUsageNamespaces: Array<Object>,
   history: Object,
   handleDeleteNamespace: (idName: string) => void
 };
 
-const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
+const NamespacesList = ({
+  data,
+  dataUsageNamespaces,
+  history,
+  handleDeleteNamespace
+}: Props) => {
   const handleClickGetNamespace = name => {
     history.push(routerLinks.namespaceLink(name));
   };
@@ -50,13 +56,11 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
     <div className="row double">
       {data &&
         data.map(namespace => {
-          const { label, access } = namespace;
-          const { memory, cpu } = namespace.resources.used;
-          const {
-            memory: memoryLimit,
-            cpu: cpuLimit
-          } = namespace.resources.hard;
-          const id = label;
+          const { label, id, access, cpu: cpuLimit, ram: ramLimit } = namespace;
+          const usageNamespaces = dataUsageNamespaces.find(
+            usageNs => usageNs.name === id
+          );
+          const { memory, cpu } = usageNamespaces.resources.used;
           const accessStyleName = access[0].toUpperCase() + access.slice(1);
           const classNameBadge = styleNamespaces({
             [`namespaceInfoBadge${accessStyleName}`]: true
@@ -64,8 +68,8 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
           return (
             <div className="col-md-4" id={id} key={id}>
               <div
-                onClick={() => handleClickGetNamespace(label)}
-                onKeyPress={() => handleClickGetNamespace(label)}
+                onClick={() => handleClickGetNamespace(id)}
+                onKeyPress={() => handleClickGetNamespace(id)}
                 className={classNameContainer}
                 role="link"
                 tabIndex={0}
@@ -125,7 +129,7 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                           className={`dropdown-item ${
                             globalStyles.dropdownItem
                           }`}
-                          to={routerLinks.resizeNamespaceLink(label)}
+                          to={routerLinks.resizeNamespaceLink(id)}
                         >
                           Resize
                         </NavLink>
@@ -133,8 +137,8 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                           className={`dropdown-item ${
                             globalStyles.dropdownItem
                           } text-danger`}
-                          onClick={() => handleClickDeleteNamespace(label)}
-                          onKeyPress={() => handleClickDeleteNamespace(label)}
+                          onClick={() => handleClickDeleteNamespace(id)}
+                          onKeyPress={() => handleClickDeleteNamespace(id)}
                         >
                           Delete
                         </button>
@@ -153,7 +157,7 @@ const NamespacesList = ({ data, history, handleDeleteNamespace }: Props) => {
                     <div
                       className={`${globalStyles.contentBlockInfoText} inline`}
                     >
-                      {memory} / {memoryLimit}
+                      {memory} / {ramLimit}
                     </div>
                   </div>
                   <div className={globalStyles.contentBlockInfoItem}>

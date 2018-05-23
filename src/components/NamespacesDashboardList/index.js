@@ -55,17 +55,17 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
             {data &&
               data.map(namespace => {
                 const { label, access } = namespace;
-                const {
-                  memory: memoryLimit,
-                  cpu: cpuLimit
-                } = namespace.resources.hard;
-                const id = label;
+                // const {
+                //   memory: memoryLimit,
+                //   cpu: cpuLimit
+                // } = namespace.resources.hard;
+                const { cpu, ram, id } = namespace;
                 return (
                   <tr
                     id={id}
                     key={id}
-                    onClick={() => handleClickGetNamespace(label)}
-                    onKeyPress={() => handleClickGetNamespace(label)}
+                    onClick={() => handleClickGetNamespace(id)}
+                    onKeyPress={() => handleClickGetNamespace(id)}
                     role="link"
                     tabIndex={0}
                     style={{ margin: 0, cursor: 'pointer' }}
@@ -77,12 +77,8 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
                       <img src={deployment} alt="deployment" />
                     </td>
                     <td className={dashboardStyles.td_2_Dashboard}>{label}</td>
-                    <td className={dashboardStyles.td_3_Dashboard}>
-                      {memoryLimit}
-                    </td>
-                    <td className={dashboardStyles.td_4_Dashboard}>
-                      {cpuLimit}
-                    </td>
+                    <td className={dashboardStyles.td_3_Dashboard}>{ram}</td>
+                    <td className={dashboardStyles.td_4_Dashboard}>{cpu}</td>
                     <td className={dashboardStyles.td_4_Dashboard}>{access}</td>
                     <td
                       className={`${
@@ -108,7 +104,7 @@ const NamespacesDashboardList = ({ data, history }: Props) => {
                         role="menu"
                       >
                         <Link
-                          to={`/namespace/${label}/resize`}
+                          to={`/namespace/${id}/resize`}
                           className={`dropdown-item ${
                             globalStyles.dropdownItem
                           }`}

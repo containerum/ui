@@ -8,8 +8,8 @@ module.exports = {
     ? `wss://${process.env.WEB_API}`
     : 'wss://api.containerum.io:8082',
   // webApi: process.env.WEB_API
-  //   ? `https://${process.env.WEB_API}`
-  //   : 'https://192.168.88.210:8082',
+  //   ? `http://${process.env.WEB_API}`
+  //   : 'http://192.168.88.210:8082',
   // wsApi: process.env.WEB_API
   //   ? `wss://${process.env.WEB_API}`
   //   : 'wss://192.168.88.210:8082',
