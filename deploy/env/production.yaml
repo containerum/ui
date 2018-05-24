@@ -1,3 +1,5 @@
 env:
-  WEB_API: "api.containerum.io:8082"
+  API_HOST: "api.containerum.io"
+  API_PROTOCOL_TYPE: "ssl"
+  API_PORT: "8082"
   COUNTRY: "US"
