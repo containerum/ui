@@ -69,7 +69,15 @@ const getPlugins = () => {
       __SERVER__: false,
       __DEV__: isDev,
       'process.env': {
-        WEB_API: process.env.WEB_API ? `"${process.env.WEB_API}"` : undefined,
+        API_HOST: process.env.API_HOST
+          ? `"${process.env.API_HOST}"`
+          : undefined,
+        API_PROTOCOL_TYPE: process.env.API_PROTOCOL_TYPE
+          ? `"${process.env.API_PROTOCOL_TYPE}"`
+          : undefined,
+        API_PORT: process.env.API_PORT
+          ? `"${process.env.API_PORT}"`
+          : undefined,
         RECAPTCHA: process.env.RECAPTCHA
           ? `"${process.env.RECAPTCHA}"`
           : undefined,
