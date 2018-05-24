@@ -16,6 +16,8 @@ export const timeago = () => {
       pl = function(v, n) {
         return s === undefined
           ? `${n} ${v}${n > 1 ? 's' : ''} ago`
+          : v === 'minute'
+          ? n + v.substring(0, 3)
           : n + v.substring(0, 1);
       },
       ts = Date.now() - new Date(nd).getTime(),
