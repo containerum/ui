@@ -12,6 +12,8 @@ const apiWSProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'wss' : 'ws';
 const apiPort = process.env.API_PORT;
 const api = `${apiProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
 const apiWS = `${apiWSProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
+const recaptcha = process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS';
+const defaultCountry = process.env.COUNTRY || 'US';
 const pathToPublic = path.join(process.cwd(), './public');
 const pathToJS = `${pathToPublic}/assets/main.*.js`;
 
@@ -36,8 +38,22 @@ glob(pathToJS, {}, (err, files) => {
     recursive: true,
     silent: true
   });
+  replace({
+    regex: '{{ RECAPTCHA }}',
+    replacement: recaptcha,
+    paths: files,
+    recursive: true,
+    silent: true
+  });
+  replace({
+    regex: '{{ DEFAULT_COUNTRY }}',
+    replacement: defaultCountry,
+    paths: files,
+    recursive: true,
+    silent: true
+  });
   console.log(
-    `replace {{ API }} and {{ API_WS }} to ${api} and ${apiWS} in ${pathToCompressJS}`
+    `replace ENV's in ${pathToCompressJS}`
   );
   compressing.gzip
     .compressFile(pathToCompressJS, `${pathToCompressJS}.gz`)
