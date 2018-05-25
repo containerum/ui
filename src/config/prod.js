@@ -4,5 +4,7 @@ const defaultConfig = require('./default');
 
 module.exports = merge(defaultConfig, {
   webApi: '{{ API }}',
-  wsApi: '{{ API_WS }}'
+  wsApi: '{{ API_WS }}',
+  appRecaptcha: '{{ RECAPTCHA }}',
+  defaultCountry: '{{ DEFAULT_COUNTRY }}'
 });
