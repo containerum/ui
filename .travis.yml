@@ -28,8 +28,7 @@ before_deploy:
   - yq write --inplace charts/$NAME/values.yaml image.tag "${TRAVIS_TAG}"
   - wget https://api.github.com/repos/containerum/$NAME/releases
   - cat releases | jq '.[].assets[].browser_download_url | select(. | test(".tgz")) | select(. | test("${NAME}"))' > download
-  - touch latest
-  - if [ $(cat releases | jq '. | length') != 0 ]; wget https://api.github.com/repos/containerum/$NAME/releases/latest; fi;
+  - wget https://api.github.com/repos/containerum/$NAME/releases/latest
   - cat latest | jq '.assets[].browser_download_url | select(. | test("index.yaml"))' >> download
   - xargs -i wget -P charts '{}' < download
   - rm releases && rm latest && rm download
