@@ -63,7 +63,6 @@ const NamespacesList = ({
           const usageNamespaces = dataUsageNamespaces.find(
             usageNs => usageNs.name === id
           );
-          const { memory, cpu } = usageNamespaces.resources.used;
           const accessStyleName = access[0].toUpperCase() + access.slice(1);
           const classNameBadge = styleNamespaces({
             [`namespaceInfoBadge${accessStyleName}`]: true
@@ -176,7 +175,8 @@ const NamespacesList = ({
                     <div
                       className={`${globalStyles.contentBlockInfoText} inline`}
                     >
-                      {memory} / {ramLimit}
+                      {usageNamespaces && usageNamespaces.resources.used.memory}{' '}
+                      / {ramLimit}
                     </div>
                   </div>
                   <div className={globalStyles.contentBlockInfoItem}>
@@ -188,7 +188,8 @@ const NamespacesList = ({
                     <div
                       className={`${globalStyles.contentBlockInfoText} inline`}
                     >
-                      {cpu} / {cpuLimit}
+                      {usageNamespaces && usageNamespaces.resources.used.cpu} /{' '}
+                      {cpuLimit}
                     </div>
                   </div>
                   <div className={globalStyles.contentBlockInfoItem}>
