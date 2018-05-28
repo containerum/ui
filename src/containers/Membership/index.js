@@ -110,14 +110,11 @@ class Membership extends PureComponent<Props> {
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
       const { users, access } = nextProps.getNamespaceUsersAccessReducer.data;
-      if (users && access === 'owner') {
-        const {
-          new_access_level: newAccessLevel
-        } = nextProps.getNamespaceUsersAccessReducer.data;
+      if (access === 'owner') {
         const concatUsers = users.concat([
           {
             login: nextProps.getProfileReducer.data.login,
-            new_access_level: newAccessLevel
+            new_access_level: access
           }
         ]);
         this.setState({
@@ -130,8 +127,6 @@ class Membership extends PureComponent<Props> {
       } else {
         history.push(routerLinks.namespaceLink(match.params.idName));
       }
-    } else {
-      history.push(routerLinks.namespaceLink(match.params.idName));
     }
     if (
       (addNamespaceUserAccessReducer.readyStatus !==
