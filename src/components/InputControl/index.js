@@ -25,7 +25,8 @@ type Props = {
   max: ?number,
   subPath: ?boolean,
   alwaysVisiblePlaceholder: ?string,
-  maxLength: number
+  maxLength: number,
+  indent: boolean
 };
 const InputControl = ({
   handleChangeInput,
@@ -48,10 +49,12 @@ const InputControl = ({
   max,
   subPath,
   alwaysVisiblePlaceholder,
-  maxLength
+  maxLength,
+  indent
 }: Props) => (
   <div
-    className={`${globalStyles.formGroup} ${!valid && globalStyles.formError}`}
+    className={`${globalStyles.formGroup} ${!valid &&
+      globalStyles.formError} ${indent && globalStyles.marginTop18}`}
   >
     {subPath && <span className={styles.inputSubpath}>/</span>}
     <input
