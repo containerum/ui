@@ -37,6 +37,7 @@ import Container from '../../components/CreateDeploymentCards/Container';
 import deploymentStyles from '../CreateDeployment/index.scss';
 import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+import { UPDATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/updateDeployment';
 
 const deploymentStylesClass = className.bind(deploymentStyles);
 const globalClass = className.bind(globalStyles);
@@ -1284,7 +1285,6 @@ export class CreateDeployment extends PureComponent<Props> {
 
   render() {
     const { match, updateDeploymentReducer } = this.props;
-    // console.log('state', this.state);
     return (
       <div>
         <Helmet
@@ -1300,7 +1300,10 @@ export class CreateDeployment extends PureComponent<Props> {
         </div>
         <Notification
           status={updateDeploymentReducer.status}
-          name={updateDeploymentReducer.idDep}
+          name={
+            updateDeploymentReducer.readyStatus === UPDATE_DEPLOYMENT_SUCCESS &&
+            updateDeploymentReducer.data.name
+          }
           method={updateDeploymentReducer.method}
           errorMessage={updateDeploymentReducer.err}
         />
