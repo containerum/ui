@@ -35,11 +35,13 @@ import {
 
 import styles from './index.scss';
 import globalStyles from '../../theme/global.scss';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 type Props = {
   match: Object,
   getSolutionsReducer: Object,
   getSolutionReducer: Object,
+  getProfileReducer: Object,
   getNamespacesReducer: Object,
   fetchGetSolutionsIfNeeded: () => void,
   fetchGetNamespacesIfNeeded: () => void,
@@ -62,14 +64,21 @@ export class Solution extends PureComponent<Props> {
     const {
       match,
       fetchGetSolutionsIfNeeded,
-      fetchGetNamespacesIfNeeded,
       fetchGetSolutionIfNeeded
     } = this.props;
-    fetchGetNamespacesIfNeeded();
     fetchGetSolutionsIfNeeded();
     fetchGetSolutionIfNeeded(match.params.idSol);
   }
   componentWillUpdate(nextProps) {
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.props.fetchGetNamespacesIfNeeded(
+        nextProps.getProfileReducer.data.role
+      );
+    }
     if (
       this.props.getNamespacesReducer.readyStatus !==
         nextProps.getNamespacesReducer.readyStatus &&
@@ -218,19 +227,21 @@ const connector: Connector<{}, Props> = connect(
   ({
     getSolutionReducer,
     getSolutionsReducer,
-    getNamespacesReducer
+    getNamespacesReducer,
+    getProfileReducer
   }: ReduxState) => ({
     getSolutionReducer,
     getSolutionsReducer,
-    getNamespacesReducer
+    getNamespacesReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSolutionsIfNeeded: () =>
       dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
     fetchGetSolutionIfNeeded: (idSol: string) =>
       dispatch(actionGetSolution.fetchGetSolutionIfNeeded(idSol)),
-    fetchGetNamespacesIfNeeded: () =>
-      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded())
+    fetchGetNamespacesIfNeeded: (role: string) =>
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role))
   })
 );
 
