@@ -8,12 +8,14 @@ RUN npm install -g -s --no-progress yarn node-gyp && \
     yarn && \
     npm rebuild node-sass --force
 
+ARG SOURCE_TYPE="ONLINE"
+
 ENV API_HOST="api.containerum.io" \
     API_PROTOCOL_TYPE="ssl" \
     API_PORT="8082" \
     COUNTRY="US" \
-    SOURCE_TYPE="ONLINE" \
-    RECAPTCHA="6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS"
+    RECAPTCHA="6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS" \
+    SOURCE_TYPE=$SOURCE_TYPE
 
 RUN yarn build
 
