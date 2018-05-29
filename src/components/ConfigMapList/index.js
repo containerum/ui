@@ -111,7 +111,7 @@ const ConfigMapList = ({
                               style={{ color: '#29abe2' }}
                               to={`/namespaces/${idName}/deployments`}
                             >
-                              {idName}
+                              {currentDataOfNamespace.label}
                             </Link>
                           </td>
                           <td
@@ -215,6 +215,9 @@ const ConfigMapList = ({
                     const accessToCurrentNamespace = checkDataOfNamespace
                       ? checkDataOfNamespace.access
                       : 'read';
+                    const label = checkDataOfNamespace
+                      ? checkDataOfNamespace.label
+                      : idName;
                     return (
                       <tr
                         className={containerClassName}
@@ -251,7 +254,7 @@ const ConfigMapList = ({
                             style={{ color: '#29abe2' }}
                             to={`/namespaces/${idName}/deployments`}
                           >
-                            {idName}
+                            {label}
                           </Link>
                         </td>
                         <td
