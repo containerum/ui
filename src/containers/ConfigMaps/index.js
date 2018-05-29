@@ -100,12 +100,24 @@ class ConfigMaps extends PureComponent<Props> {
         nextProps.getNamespacesReducer.readyStatus &&
       nextProps.getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS
     ) {
-      this.setState({
-        ...this.state,
-        currentNamespace: nextProps.getNamespacesReducer.data.length
-          ? nextProps.getNamespacesReducer.data[0]
-          : null
-      });
+      const { params, path } = this.props.match;
+      const isEqualCreatePath = path === '/namespace/:idName/createConfigMap';
+      if (isEqualCreatePath) {
+        const { idName } = params;
+        this.setState({
+          ...this.state,
+          currentNamespace: nextProps.getNamespacesReducer.data.find(
+            namespace => namespace.id === idName
+          )
+        });
+      } else {
+        this.setState({
+          ...this.state,
+          currentNamespace: nextProps.getNamespacesReducer.data.length
+            ? nextProps.getNamespacesReducer.data[0]
+            : {}
+        });
+      }
     }
     if (
       this.props.deleteConfigMapReducer.readyStatus !==
