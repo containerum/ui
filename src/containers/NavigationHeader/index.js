@@ -13,8 +13,8 @@ import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespa
 import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
-  GET_NAMESPACES_FAILURE,
-  GET_NAMESPACES_SUCCESS
+  GET_NAMESPACES_FAILURE
+  // GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
 import type {
   Namespaces as NamespacesType,
@@ -24,9 +24,11 @@ import type {
 
 import headerStyles from '../../containers/Header/index.scss';
 import globalStyles from '../../theme/global.scss';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 type Props = {
   getNamespacesReducer: NamespacesType,
+  getProfileReducer: Object,
   fetchGetNamespacesIfNeeded: () => void,
   handleDownloadLogs: () => void,
   idName: ?string,
@@ -44,10 +46,15 @@ const breadcumbsClassName = globalClass('breadcrumbsLi', 'breadcrumbsLiSpacer');
 
 // Export this for unit testing more easily
 export class NavigationHeader extends PureComponent<Props> {
-  componentDidMount() {
-    const { getNamespacesReducer } = this.props;
-    if (getNamespacesReducer.readyStatus !== GET_NAMESPACES_SUCCESS) {
-      this.props.fetchGetNamespacesIfNeeded();
+  componentWillUpdate(nextProps) {
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.props.fetchGetNamespacesIfNeeded(
+        nextProps.getProfileReducer.data.role
+      );
     }
   }
 
@@ -311,12 +318,13 @@ export class NavigationHeader extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getNamespacesReducer }: ReduxState) => ({
-    getNamespacesReducer
+  ({ getNamespacesReducer, getProfileReducer }: ReduxState) => ({
+    getNamespacesReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetNamespacesIfNeeded: () =>
-      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded())
+    fetchGetNamespacesIfNeeded: (role: string) =>
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role))
   })
 );
 

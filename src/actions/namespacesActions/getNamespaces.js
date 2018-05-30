@@ -34,20 +34,49 @@ const getNamespacesInvalidToken = () => ({
 
 export const fetchGetNamespaces = (
   axios: any,
+  role: string,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
-
   dispatch(getNamespacesRequest());
+  let response;
 
-  const response = await axios.get(`${URL}/namespaces`, {
-    headers: {
-      'User-Client': browser,
-      'User-Token': accessToken
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
+  switch (role) {
+    case 'admin': {
+      response = await axios.get(`${URL}/${role}/namespaces`, {
+        headers: {
+          'User-Client': browser,
+          'User-Token': accessToken
+        },
+        validateStatus: status => status >= 200 && status <= 505
+      });
+      break;
+    }
+
+    case 'user': {
+      response = await axios.get(`${URL}/namespaces`, {
+        headers: {
+          'User-Client': browser,
+          'User-Token': accessToken
+        },
+        validateStatus: status => status >= 200 && status <= 505
+      });
+      break;
+    }
+
+    default: {
+      response = await axios.get(`${URL}/namespaces`, {
+        headers: {
+          'User-Client': browser,
+          'User-Token': accessToken
+        },
+        validateStatus: status => status >= 200 && status <= 505
+      });
+      break;
+    }
+  }
+
   const { status, data } = response;
   switch (status) {
     case 200: {
@@ -73,8 +102,8 @@ export const fetchGetNamespaces = (
   }
 };
 
-export const fetchGetNamespacesIfNeeded = (): ThunkAction => (
+export const fetchGetNamespacesIfNeeded = (role: string): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetNamespaces(axios));
+) => dispatch(fetchGetNamespaces(axios, role));

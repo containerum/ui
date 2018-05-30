@@ -48,6 +48,7 @@ export const fetchGetUsageNamespaces = (
     },
     validateStatus: status => status >= 200 && status <= 505
   });
+
   const { status, data } = response;
   switch (status) {
     case 200: {

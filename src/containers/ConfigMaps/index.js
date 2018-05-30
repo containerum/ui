@@ -35,7 +35,8 @@ import globalStyles from '../../theme/global.scss';
 import {
   GET_PROFILE_FAILURE,
   GET_PROFILE_INVALID,
-  GET_PROFILE_REQUESTING
+  GET_PROFILE_REQUESTING,
+  GET_PROFILE_SUCCESS
 } from '../../constants/profileConstants/getProfile';
 
 const globalClass = className.bind(globalStyles);
@@ -77,14 +78,19 @@ class ConfigMaps extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    const {
-      fetchGetConfigMapsIfNeeded,
-      fetchGetNamespacesIfNeeded
-    } = this.props;
+    const { fetchGetConfigMapsIfNeeded } = this.props;
     fetchGetConfigMapsIfNeeded();
-    fetchGetNamespacesIfNeeded();
   }
   componentWillUpdate(nextProps) {
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.props.fetchGetNamespacesIfNeeded(
+        nextProps.getProfileReducer.data.role
+      );
+    }
     if (
       this.props.getConfigMapsReducer.readyStatus !==
         nextProps.getConfigMapsReducer.readyStatus &&
@@ -528,8 +534,8 @@ const connector: Connector<{}, Props> = connect(
     getNamespaceReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetNamespacesIfNeeded: () =>
-      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded()),
+    fetchGetNamespacesIfNeeded: (role: string) =>
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
     fetchGetConfigMapsIfNeeded: () =>
       dispatch(actionGetConfigMaps.fetchGetConfigMapsIfNeeded()),
     fetchCreateConfigMapIfNeeded: (idName: string, data: Object) =>

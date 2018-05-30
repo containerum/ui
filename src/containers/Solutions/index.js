@@ -36,10 +36,12 @@ import {
 } from '../../constants/solutionConstants/runSolution';
 import SolutionsList from '../../components/SolutionsList';
 import RunSolutionItem from '../RunSolution';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 type Props = {
   history: Object,
   getSolutionsReducer: Object,
+  getProfileReducer: Object,
   getNamespacesReducer: NamespacesType,
   fetchGetSolutionsIfNeeded: () => void,
   fetchGetNamespacesIfNeeded: () => void
@@ -58,14 +60,19 @@ export class Solutions extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    const {
-      fetchGetSolutionsIfNeeded,
-      fetchGetNamespacesIfNeeded
-    } = this.props;
-    fetchGetNamespacesIfNeeded();
+    const { fetchGetSolutionsIfNeeded } = this.props;
     fetchGetSolutionsIfNeeded();
   }
   componentWillUpdate(nextProps) {
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.props.fetchGetNamespacesIfNeeded(
+        nextProps.getProfileReducer.data.role
+      );
+    }
     if (
       this.props.getNamespacesReducer.readyStatus !==
         nextProps.getNamespacesReducer.readyStatus &&
@@ -200,15 +207,20 @@ export class Solutions extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getSolutionsReducer, getNamespacesReducer }: ReduxState) => ({
+  ({
     getSolutionsReducer,
-    getNamespacesReducer
+    getNamespacesReducer,
+    getProfileReducer
+  }: ReduxState) => ({
+    getSolutionsReducer,
+    getNamespacesReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSolutionsIfNeeded: () =>
       dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
-    fetchGetNamespacesIfNeeded: () =>
-      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded())
+    fetchGetNamespacesIfNeeded: (role: string) =>
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role))
   })
 );
 

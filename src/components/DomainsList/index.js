@@ -23,11 +23,12 @@ const containerClassName = globalClass(
   'hoverAction'
 );
 type Props = {
+  namespacesLabels: Object,
   data: Object,
   handleDeleteDomain: (idName: string, label: string) => void
 };
 
-const DomainsList = ({ data, handleDeleteDomain }: Props) => {
+const DomainsList = ({ data, handleDeleteDomain, namespacesLabels }: Props) => {
   const isEmptyData = Object.keys(data).find(
     ingress => data[ingress].ingresses.length
   );
@@ -56,6 +57,9 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
           <tbody className="domains" style={{ overflow: 'auto' }}>
             {Object.keys(data).map(ingressName => {
               const checkArrIngressess = data[ingressName];
+              const namespaceName = namespacesLabels.find(
+                namespace => namespace[0] === ingressName
+              );
               return Object.keys(checkArrIngressess).map(ingress =>
                 checkArrIngressess[ingress].map(ing => {
                   const { name, type } = ing;
@@ -96,7 +100,7 @@ const DomainsList = ({ data, handleDeleteDomain }: Props) => {
                           style={{ color: '#29abe2' }}
                           to={routerLinks.namespaceLink(ingressName)}
                         >
-                          {ingressName}
+                          {namespaceName[1]}
                         </Link>
                       </td>
                       <td
