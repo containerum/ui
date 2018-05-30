@@ -231,7 +231,8 @@ export class Namespaces extends PureComponent<Props> {
       fetchDeleteNamespaceIfNeeded,
       deleteNamespaceReducer,
       createExternalServiceReducer,
-      createInternalServiceReducer
+      createInternalServiceReducer,
+      getNamespacesReducer
     } = this.props;
     const { status, idName, err } = deleteNamespaceReducer;
     const {
@@ -245,6 +246,10 @@ export class Namespaces extends PureComponent<Props> {
       err: errInt
     } = createInternalServiceReducer;
     const { inputName, isOpened, idName: currentIdName } = this.state;
+    const currentNamespace = getNamespacesReducer.data.find(
+      namespace => namespace.id === currentIdName
+    );
+    console.log('azaa', currentNamespace);
     return (
       <div>
         <Helmet title="Namespaces" />
@@ -259,15 +264,18 @@ export class Namespaces extends PureComponent<Props> {
           name={idSrvInt}
           errorMessage={errInt}
         />
-        <DeleteModal
-          type="Namespace"
-          name={inputName}
-          typeName={currentIdName}
-          isOpened={isOpened}
-          handleInputName={this.handleInputName}
-          handleOpenCloseModal={this.handleOpenCloseModal}
-          onHandleDelete={fetchDeleteNamespaceIfNeeded}
-        />
+        {currentNamespace && (
+          <DeleteModal
+            type="Namespace"
+            inputName={inputName}
+            name={currentIdName}
+            typeName={currentNamespace.label}
+            isOpened={isOpened}
+            handleInputName={this.handleInputName}
+            handleOpenCloseModal={this.handleOpenCloseModal}
+            onHandleDelete={fetchDeleteNamespaceIfNeeded}
+          />
+        )}
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             {this.renderNamespacesList()}

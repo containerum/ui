@@ -200,7 +200,7 @@ export class Namespace extends PureComponent<Props> {
       history
     } = this.props;
     const { status, idName, err } = deleteNamespaceReducer;
-    const { inputName, isOpened } = this.state;
+    const { idName: currentIdName, isOpened, inputName } = this.state;
 
     const currentNamespace = getNamespacesReducer.data.find(
       namespace => namespace.id === match.params.idName
@@ -215,7 +215,8 @@ export class Namespace extends PureComponent<Props> {
         {currentNamespace && (
           <DeleteModal
             type="Namespace"
-            name={inputName}
+            inputName={inputName}
+            name={currentIdName}
             typeName={currentNamespace.label}
             isOpened={isOpened}
             handleInputName={this.handleInputName}
