@@ -175,10 +175,15 @@ export class CreateServiceCard extends PureComponent<Props> {
     );
   };
   handleChangeServiceNameValue = (e, type) => {
-    this.setState({
-      ...this.state,
-      [type]: e.target.value
-    });
+    this.setState(
+      {
+        ...this.state,
+        [type]: e.target.value
+      },
+      () => {
+        this.props.handleChangeState(this.state);
+      }
+    );
   };
   render() {
     const {
