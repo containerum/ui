@@ -22,12 +22,22 @@ import DomainsList from '../../components/DomainsList';
 import Notification from '../Notification';
 
 import globalStyles from '../../theme/global.scss';
+import {
+  GET_NAMESPACES_INVALID,
+  GET_NAMESPACES_REQUESTING
+} from '../../constants/namespacesConstants/getNamespaces';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+
+import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 
 type Props = {
+  getProfileReducer: Object,
+  getNamespacesReducer: Object,
   getDomainsReducer: Object,
   deleteDomainReducer: Object,
   fetchGetDomainsIfNeeded: (idName: string) => void,
-  fetchDeleteDomainIfNeeded: (idName: string, label: string) => void
+  fetchDeleteDomainIfNeeded: (idName: string, label: string) => void,
+  fetchGetNamespacesIfNeeded: (role: string) => void
 };
 
 // Export this for unit testing more easily
@@ -43,6 +53,16 @@ export class Domains extends PureComponent<Props> {
     fetchGetDomainsIfNeeded();
   }
   componentWillUpdate(nextProps) {
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.props.fetchGetNamespacesIfNeeded(
+        nextProps.getProfileReducer.data.role
+      );
+    }
+
     if (
       this.props.getDomainsReducer.readyStatus !==
         nextProps.getDomainsReducer.readyStatus &&
@@ -66,13 +86,23 @@ export class Domains extends PureComponent<Props> {
   };
 
   renderDomainsList = () => {
-    const { getDomainsReducer, deleteDomainReducer } = this.props;
-
+    const {
+      getDomainsReducer,
+      deleteDomainReducer,
+      getNamespacesReducer
+    } = this.props;
+    const namespacesLabels = getNamespacesReducer.data.map(ingress => [
+      ingress.id,
+      ingress.label
+    ]);
     if (
       !getDomainsReducer.readyStatus ||
       getDomainsReducer.readyStatus === GET_DOMAINS_INVALID ||
       getDomainsReducer.readyStatus === GET_DOMAINS_REQUESTING ||
-      deleteDomainReducer.readyStatus === DELETE_DOMAIN_REQUESTING
+      deleteDomainReducer.readyStatus === DELETE_DOMAIN_REQUESTING ||
+      (!getNamespacesReducer.readyStatus ||
+        getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+        getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING)
     ) {
       return (
         <div
@@ -99,6 +129,7 @@ export class Domains extends PureComponent<Props> {
 
     return (
       <DomainsList
+        namespacesLabels={namespacesLabels}
         data={this.state.displayedDomains}
         handleDeleteDomain={(idName, label) =>
           this.handleDeleteDomain(idName, label)
@@ -163,11 +194,20 @@ export class Domains extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getDomainsReducer, deleteDomainReducer }: ReduxState) => ({
+  ({
     getDomainsReducer,
-    deleteDomainReducer
+    deleteDomainReducer,
+    getNamespacesReducer,
+    getProfileReducer
+  }: ReduxState) => ({
+    getDomainsReducer,
+    deleteDomainReducer,
+    getNamespacesReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
+    fetchGetNamespacesIfNeeded: (role: string) =>
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
     fetchGetDomainsIfNeeded: () =>
       dispatch(actionGetDomains.fetchGetDomainsIfNeeded()),
     fetchDeleteDomainIfNeeded: (idName: string, label: string) =>
