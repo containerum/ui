@@ -1,0 +1,49 @@
+sudo: required
+
+language: go
+
+env:
+  global:
+  - OWNER=containerum
+  - NAME=ui
+  - IMAGE_NAME=$OWNER/$NAME
+  - MUSEUM=https://charts.containerum.io
+
+services:
+  - docker
+
+install:
+  - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+  - helm init --client-only
+  - helm plugin install https://github.com/chartmuseum/helm-push
+  - go get github.com/mikefarah/yq
+  - sudo apt-get install jq
+
+script:
+  - docker build -t "$IMAGE_NAME" .
+
+before_deploy:
+  - docker login -u="$DOCKER_LOGIN" -p="$DOCKER_PASSWORD"
+  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
+  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${TRAVIS_TAG}"
+  - yq write --inplace charts/$NAME/values.yaml image.tag "${TRAVIS_TAG}"
+  - mkdir -p /tmp/charts
+  - helm package charts/$NAME --version="${TRAVIS_TAG}" --dependency-update --destination /tmp/charts
+  - helm repo add chartmuseum ${MUSEUM}
+
+deploy:
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file:
+      - "/tmp/charts/$NAME-${TRAVIS_TAG}.tgz"
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: script
+    script: docker push "${IMAGE_NAME}:latest" && docker push "${IMAGE_NAME}:${TRAVIS_TAG}"
+    on:
+      tags: true
+  - provider: script
+    script: helm push -u ${HELM_USER} -p ${HELM_PASSWORD} "/tmp/charts/$NAME-${TRAVIS_TAG}.tgz" chartmuseum
+    on:
+      tags: true

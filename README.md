@@ -1,5 +1,16 @@
 # Containerum UI
 
+## Installation
+
+### Using Helm
+
+```
+  helm repo add containerum https://charts.containerum.io
+  helm repo update
+  helm install containerum/ui
+```
+
+
 ## Features
 
 Technologies used:

@@ -1,0 +1,22 @@
+tags:
+  db: true
+
+replicaCount: 1
+
+image:
+  repository: containerum/ui
+  tag: v1.0.0
+  pullPolicy: IfNotPresent
+  secret:
+
+service:
+  port: 3000
+  targetPort: 3000
+  externalIP:
+
+env:
+  API_HOST: "api.containerum.io"
+  API_PROTOCOL_TYPE: "ssl"
+  API_PORT: "8082"
+  COUNTRY: "US"
+  RECAPTCHA: "6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS"

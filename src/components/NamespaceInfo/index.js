@@ -125,7 +125,7 @@ const NamespaceInfo = ({
                       Resize
                     </NavLink>
                   )}
-                {role === 'admin' && (
+                {(role === 'admin' || newAccessLevel === 'owner') && (
                   <NavLink
                     activeClassName="active"
                     className={`dropdown-item ${globalStyles.dropdownItem}`}
