@@ -9,7 +9,6 @@ import _ from 'lodash/fp';
 import className from 'classnames/bind';
 
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
-import * as actionGetUsageNamespaces from '../../actions/namespacesActions/getUsageNamespaces';
 import * as actionDeleteNamespace from '../../actions/namespaceActions/deleteNamespace';
 
 import {
@@ -38,11 +37,6 @@ import ns from '../../images/ns-1.svg';
 
 import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
-import {
-  GET_NAMESPACES_USAGE_FAILURE,
-  GET_NAMESPACES_USAGE_INVALID,
-  GET_NAMESPACES_USAGE_REQUESTING
-} from '../../constants/namespacesConstants/getUsageNamespaces';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 const globalClass = className.bind(globalStyles);
@@ -54,9 +48,7 @@ const containerClassName = globalClass('contentBlockContainer', 'container');
 type Props = {
   getNamespacesReducer: Object,
   getProfileReducer: Object,
-  getUsageNamespacesReducer: Object,
   deleteNamespaceReducer: NamespaceType,
-  fetchGetUsageNamespacesIfNeeded: () => void,
   fetchGetNamespacesIfNeeded: () => void,
   fetchDeleteNamespaceIfNeeded: (idName: string) => void,
   match: Object,
@@ -72,10 +64,6 @@ export class Namespace extends PureComponent<Props> {
       idName: null,
       isOpened: false
     };
-  }
-  componentDidMount() {
-    const { fetchGetUsageNamespacesIfNeeded } = this.props;
-    fetchGetUsageNamespacesIfNeeded();
   }
   componentWillUpdate(nextProps) {
     if (
@@ -119,19 +107,11 @@ export class Namespace extends PureComponent<Props> {
   };
 
   renderNamespaceInfo = () => {
-    const {
-      getNamespacesReducer,
-      getUsageNamespacesReducer,
-      deleteNamespaceReducer,
-      match
-    } = this.props;
+    const { getNamespacesReducer, deleteNamespaceReducer, match } = this.props;
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
-      !getUsageNamespacesReducer.readyStatus ||
-      getUsageNamespacesReducer.readyStatus === GET_NAMESPACES_USAGE_INVALID ||
-      getUsageNamespacesReducer.readyStatus === GET_NAMESPACES_USAGE_REQUESTING
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
     ) {
       return (
         <div
@@ -172,10 +152,7 @@ export class Namespace extends PureComponent<Props> {
       );
     }
 
-    if (
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
-      getUsageNamespacesReducer.readyStatus === GET_NAMESPACES_USAGE_FAILURE
-    ) {
+    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
       return <p>Oops, Failed to load data of Namespace!</p>;
     }
     const currentNamespace = getNamespacesReducer.data.find(
@@ -184,7 +161,6 @@ export class Namespace extends PureComponent<Props> {
     return (
       <NamespaceInfo
         data={currentNamespace || {}}
-        dataUsageNamespaces={getUsageNamespacesReducer.data}
         handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
         idName={match.params.idName}
       />
@@ -355,20 +331,16 @@ export class Namespace extends PureComponent<Props> {
 const connector: Connector<{}, Props> = connect(
   ({
     getNamespacesReducer,
-    getUsageNamespacesReducer,
     deleteNamespaceReducer,
     getProfileReducer
   }: ReduxState) => ({
     getNamespacesReducer,
-    getUsageNamespacesReducer,
     deleteNamespaceReducer,
     getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: (role: string) =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
-    fetchGetUsageNamespacesIfNeeded: () =>
-      dispatch(actionGetUsageNamespaces.fetchGetUsageNamespacesIfNeeded()),
     fetchDeleteNamespaceIfNeeded: (idName: string) =>
       dispatch(actionDeleteNamespace.fetchDeleteNamespaceIfNeeded(idName))
   })
