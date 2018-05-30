@@ -53,6 +53,7 @@ import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
 import solutionStyles from '../Solutions/index.scss';
 import {
+  GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE,
   GET_PROFILE_INVALID,
   GET_PROFILE_REQUESTING
@@ -87,16 +88,20 @@ export class Dashboard extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    const {
-      fetchGetNamespacesIfNeeded,
-      fetchGetSolutionsIfNeeded,
-      fetchGetResourcesIfNeeded
-    } = this.props;
-    fetchGetNamespacesIfNeeded();
+    const { fetchGetSolutionsIfNeeded, fetchGetResourcesIfNeeded } = this.props;
     fetchGetSolutionsIfNeeded();
     fetchGetResourcesIfNeeded();
   }
   componentWillUpdate(nextProps) {
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.props.fetchGetNamespacesIfNeeded(
+        nextProps.getProfileReducer.data.role
+      );
+    }
     if (
       this.props.getNamespacesReducer.readyStatus !==
         nextProps.getNamespacesReducer.readyStatus &&
@@ -546,8 +551,8 @@ const connector: Connector<{}, Props> = connect(
     getResourcesReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetNamespacesIfNeeded: () =>
-      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded()),
+    fetchGetNamespacesIfNeeded: (role: string) =>
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
     fetchGetSolutionsIfNeeded: () =>
       dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
     fetchGetResourcesIfNeeded: () =>

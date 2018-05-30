@@ -16,7 +16,8 @@ import * as actionDeleteNamespaces from '../../actions/namespaceActions/deleteNa
 import {
   GET_PROFILE_INVALID,
   GET_PROFILE_REQUESTING,
-  GET_PROFILE_FAILURE
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_SUCCESS
 } from '../../constants/profileConstants/getProfile';
 import {
   GET_NAMESPACES_INVALID,
@@ -71,10 +72,18 @@ export class Namespaces extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    this.props.fetchGetNamespacesIfNeeded();
     this.props.fetchGetUsageNamespacesIfNeeded();
   }
   componentWillUpdate(nextProps) {
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.props.fetchGetNamespacesIfNeeded(
+        nextProps.getProfileReducer.data.role
+      );
+    }
     if (
       this.props.getNamespacesReducer.readyStatus !==
         nextProps.getNamespacesReducer.readyStatus &&
@@ -286,8 +295,8 @@ const connector: Connector<{}, Props> = connect(
     createInternalServiceReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetNamespacesIfNeeded: () =>
-      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded()),
+    fetchGetNamespacesIfNeeded: (role: string) =>
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
     fetchGetUsageNamespacesIfNeeded: () =>
       dispatch(actionGetUsageNamespaces.fetchGetUsageNamespacesIfNeeded()),
     fetchDeleteNamespaceIfNeeded: (idName: string) =>

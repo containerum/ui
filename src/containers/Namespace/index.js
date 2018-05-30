@@ -43,6 +43,7 @@ import {
   GET_NAMESPACES_USAGE_INVALID,
   GET_NAMESPACES_USAGE_REQUESTING
 } from '../../constants/namespacesConstants/getUsageNamespaces';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 const globalClass = className.bind(globalStyles);
 
@@ -53,6 +54,7 @@ const containerClassName = globalClass('contentBlockContainer', 'container');
 type Props = {
   getNamespacesReducer: Object,
   getUsageNamespacesReducer: Object,
+  getProfileReducer: Object,
   deleteNamespaceReducer: NamespaceType,
   fetchGetUsageNamespacesIfNeeded: () => void,
   fetchGetNamespacesIfNeeded: () => void,
@@ -72,14 +74,19 @@ export class Namespace extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    const {
-      fetchGetUsageNamespacesIfNeeded,
-      fetchGetNamespacesIfNeeded
-    } = this.props;
-    fetchGetNamespacesIfNeeded();
+    const { fetchGetUsageNamespacesIfNeeded } = this.props;
     fetchGetUsageNamespacesIfNeeded();
   }
   componentWillUpdate(nextProps) {
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.props.fetchGetNamespacesIfNeeded(
+        nextProps.getProfileReducer.data.role
+      );
+    }
     if (
       this.props.deleteNamespaceReducer.readyStatus !==
         nextProps.deleteNamespaceReducer.readyStatus &&
@@ -345,15 +352,17 @@ const connector: Connector<{}, Props> = connect(
   ({
     getNamespacesReducer,
     getUsageNamespacesReducer,
-    deleteNamespaceReducer
+    deleteNamespaceReducer,
+    getProfileReducer
   }: ReduxState) => ({
     getNamespacesReducer,
     getUsageNamespacesReducer,
-    deleteNamespaceReducer
+    deleteNamespaceReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetNamespacesIfNeeded: () =>
-      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded()),
+    fetchGetNamespacesIfNeeded: (role: string) =>
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
     fetchGetUsageNamespacesIfNeeded: () =>
       dispatch(actionGetUsageNamespaces.fetchGetUsageNamespacesIfNeeded()),
     fetchDeleteNamespaceIfNeeded: (idName: string) =>
