@@ -7,6 +7,7 @@ env:
   - OWNER=containerum
   - NAME=ui
   - IMAGE_NAME=$OWNER/$NAME
+  - MUSEUM=https://charts.containerum.io
 
 services:
   - docker
@@ -25,10 +26,10 @@ before_deploy:
   - docker login -u="$DOCKER_LOGIN" -p="$DOCKER_PASSWORD"
   - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
   - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${TRAVIS_TAG}"
-  - yq write --inplace charts/api-gateway/values.yaml image.tag "${TRAVIS_TAG}"
+  - yq write --inplace charts/$NAME/values.yaml image.tag "${TRAVIS_TAG}"
   - mkdir -p /tmp/charts
   - helm package charts/$NAME --version="${TRAVIS_TAG}" --dependency-update --destination /tmp/charts
-  - helm repo add chartmuseum https://charts.containerum.io
+  - helm repo add chartmuseum ${MUSEUM}
 
 deploy:
   - provider: releases
