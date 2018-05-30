@@ -1393,7 +1393,6 @@ export class CreateDeployment extends PureComponent<Props> {
 
   render() {
     const { match, createDeploymentReducer } = this.props;
-    // console.log(this.state);
     return (
       <div>
         <Helmet title={`Create Deployment in ${match.params.idName}`} />
@@ -1405,7 +1404,10 @@ export class CreateDeployment extends PureComponent<Props> {
         </div>
         <Notification
           status={createDeploymentReducer.status}
-          name={createDeploymentReducer.idDep}
+          name={
+            createDeploymentReducer.readyStatus === CREATE_DEPLOYMENT_SUCCESS &&
+            createDeploymentReducer.data.name
+          }
           method={createDeploymentReducer.method}
           errorMessage={createDeploymentReducer.err}
         />

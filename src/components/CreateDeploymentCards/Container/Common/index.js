@@ -45,7 +45,7 @@ const Common = ({ item, index, handleChangeInputCommon }: Props) => {
           type="text"
           required
           pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
-          baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+          baseClassName={`${formClassName} ${inputStyles.inputCustom} `}
           baseClassNameLabel={`${globalStyles.formGroupLabel} ${name &&
             globalStyles.formGroupLabelOnFocus}`}
           labelText="Container Name"
@@ -55,6 +55,7 @@ const Common = ({ item, index, handleChangeInputCommon }: Props) => {
           handleChangeInput={e =>
             handleChangeInputCommon(e.target.value, id, index, 'name')
           }
+          indent
         />
         <InputControl
           value={image}
@@ -62,7 +63,7 @@ const Common = ({ item, index, handleChangeInputCommon }: Props) => {
           type="text"
           required
           pattern="(?:.+/)?([^:]+)(?::.+)?*"
-          baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
+          baseClassName={`${formClassName} ${inputStyles.inputCustom} `}
           baseClassNameLabel={`${globalStyles.formGroupLabel} ${image &&
             globalStyles.formGroupLabelOnFocus}`}
           labelText="Docker Image"
@@ -72,6 +73,7 @@ const Common = ({ item, index, handleChangeInputCommon }: Props) => {
           handleChangeInput={e =>
             handleChangeInputCommon(e.target.value, id, index, 'image')
           }
+          indent
         />
       </div>
     </div>
