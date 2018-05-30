@@ -38,3 +38,10 @@ h1 {
   text-transform: uppercase;
   font-weight: 400;
 }
+
+.show > .dropdown-menu {
+  max-height: 500px;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

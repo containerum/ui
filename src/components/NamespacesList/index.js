@@ -13,7 +13,6 @@ import deployment from '../../images/deployment.png';
 type Props = {
   data: Array<Object>,
   role: string,
-  dataUsageNamespaces: Array<Object>,
   history: Object,
   handleDeleteNamespace: (idName: string) => void
 };
@@ -21,7 +20,6 @@ type Props = {
 const NamespacesList = ({
   data,
   role,
-  dataUsageNamespaces,
   history,
   handleDeleteNamespace
 }: Props) => {
@@ -59,10 +57,9 @@ const NamespacesList = ({
     <div className="row double">
       {data &&
         data.map(namespace => {
-          const { label, id, access, cpu: cpuLimit, ram: ramLimit } = namespace;
-          const usageNamespaces = dataUsageNamespaces.find(
-            usageNs => usageNs.name === id
-          );
+          const { label, id, access, resources } = namespace;
+          const { memory, cpu } = resources.used;
+          const { memory: memoryLimit, cpu: cpuLimit } = resources.hard;
           const accessStyleName = access[0].toUpperCase() + access.slice(1);
           const classNameBadge = styleNamespaces({
             [`namespaceInfoBadge${accessStyleName}`]: true
@@ -175,8 +172,7 @@ const NamespacesList = ({
                     <div
                       className={`${globalStyles.contentBlockInfoText} inline`}
                     >
-                      {usageNamespaces && usageNamespaces.resources.used.memory}{' '}
-                      / {ramLimit}
+                      {memory} / {memoryLimit}
                     </div>
                   </div>
                   <div className={globalStyles.contentBlockInfoItem}>
@@ -188,8 +184,7 @@ const NamespacesList = ({
                     <div
                       className={`${globalStyles.contentBlockInfoText} inline`}
                     >
-                      {usageNamespaces && usageNamespaces.resources.used.cpu} /{' '}
-                      {cpuLimit}
+                      {cpu} / {cpuLimit}
                     </div>
                   </div>
                   <div className={globalStyles.contentBlockInfoItem}>

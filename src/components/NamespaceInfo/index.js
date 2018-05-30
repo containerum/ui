@@ -46,7 +46,6 @@ const manageTeamTextClassName = globalClass(
 type Props = {
   data: Object,
   role: string,
-  dataUsageNamespaces: Object,
   idName: string,
   handleDeleteNamespace: (idName: string) => void
 };
@@ -54,21 +53,13 @@ type Props = {
 const NamespaceInfo = ({
   data,
   role,
-  dataUsageNamespaces,
   idName,
   handleDeleteNamespace
 }: Props) => {
   const isOnline = sourceType === 'ONLINE';
-  const { cpu, ram, access, label, id } = data;
-  let memoryLimit = '';
-  let cpuLimit = '';
-  const usageNamespaces = dataUsageNamespaces.find(
-    usageNs => usageNs.name === id
-  );
-  if (usageNamespaces) {
-    memoryLimit = usageNamespaces.resources.used.memory;
-    cpuLimit = usageNamespaces.resources.used.cpu;
-  }
+  const { access, label, resources } = data;
+  const { memory, cpu } = resources.used;
+  const { memory: memoryLimit, cpu: cpuLimit } = resources.hard;
   const newAccessLevel = access;
   const newAccessLevelClassName = data.access
     ? data.access[0].toUpperCase() + data.access.slice(1)
@@ -154,13 +145,13 @@ const NamespaceInfo = ({
         <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={infoNameClassName}>RAM ( Usage / Total ) : </div>
           <div className={globalStyles.contentBlockInfoText}>
-            {memoryLimit} / {ram}
+            {memory} / {memoryLimit}
           </div>
         </div>
         <div className={globalStyles.contentBlockInfoItemMargin50}>
           <div className={infoNameClassName}>CPU ( Usage / Total ) : </div>
           <div className={globalStyles.contentBlockInfoText}>
-            {cpuLimit} / {cpu}
+            {cpu} / {cpuLimit}
           </div>
         </div>
         <div className={globalStyles.contentBlockInfoItemMargin50}>
