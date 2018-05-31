@@ -37,6 +37,7 @@ type Props = {
   type: string,
   name: string,
   typeName: string,
+  inputName: string,
   isOpened: boolean,
   handleInputName: () => void,
   onHandleDelete: (name: string) => void,
@@ -46,6 +47,7 @@ type Props = {
 const DeleteModal = ({
   type,
   name,
+  inputName,
   typeName,
   isOpened,
   handleInputName,
@@ -68,10 +70,10 @@ const DeleteModal = ({
   };
 
   const styleSubmit =
-    name === typeName
+    inputName === typeName
       ? `${buttonsStyles.buttonModalSelect} btn`
       : `${buttonsStyles.buttonModalAction} btn`;
-  const isDisabledSubmit = name !== typeName;
+  const isDisabledSubmit = inputName !== typeName;
   return (
     <Modal
       isOpen={isOpened}
@@ -112,7 +114,7 @@ const DeleteModal = ({
             type="text"
             className="form-control volume-form-input"
             placeholder="Name"
-            value={name}
+            // value={name}
             onChange={e => handleChangeNameOfType(e)}
           />
         </div>
