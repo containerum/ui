@@ -249,7 +249,6 @@ export class Namespaces extends PureComponent<Props> {
     const currentNamespace = getNamespacesReducer.data.find(
       namespace => namespace.id === currentIdName
     );
-    console.log('azaa', currentNamespace);
     return (
       <div>
         <Helmet title="Namespaces" />
