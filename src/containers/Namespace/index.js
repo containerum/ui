@@ -14,7 +14,8 @@ import * as actionDeleteNamespace from '../../actions/namespaceActions/deleteNam
 import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
-  GET_NAMESPACES_FAILURE
+  GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
 import {
   DELETE_NAMESPACE_SUCCESS,
@@ -155,9 +156,12 @@ export class Namespace extends PureComponent<Props> {
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
       return <p>Oops, Failed to load data of Namespace!</p>;
     }
-    const currentNamespace = getNamespacesReducer.data.find(
-      namespace => namespace.id === match.params.idName
-    );
+    let currentNamespace;
+    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
+      currentNamespace = getNamespacesReducer.data.namespaces.find(
+        namespace => namespace.id === match.params.idName
+      );
+    }
     return (
       <NamespaceInfo
         data={currentNamespace || {}}
@@ -175,19 +179,21 @@ export class Namespace extends PureComponent<Props> {
       match,
       history
     } = this.props;
-    const { status, idName, err } = deleteNamespaceReducer;
-    const { idName: currentIdName, isOpened, inputName } = this.state;
-
-    const currentNamespace = getNamespacesReducer.data.find(
-      namespace => namespace.id === match.params.idName
-    );
+    const { status, idLabel, err } = deleteNamespaceReducer;
+    const { idName: currentIdName, inputName, isOpened } = this.state;
+    let currentNamespace;
+    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
+      currentNamespace = getNamespacesReducer.data.namespaces.find(
+        namespace => namespace.id === match.params.idName
+      );
+    }
     const isReadAccess = currentNamespace && currentNamespace.access !== 'read';
     return (
       <div>
         {currentNamespace && (
           <Helmet title={`Namespace - ${currentNamespace.label}`} />
         )}
-        <Notification status={status} name={idName} errorMessage={err} />
+        <Notification status={status} name={idLabel} errorMessage={err} />
         {currentNamespace && (
           <DeleteModal
             type="Namespace"
@@ -342,8 +348,10 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: (role: string) =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
-    fetchDeleteNamespaceIfNeeded: (idName: string) =>
-      dispatch(actionDeleteNamespace.fetchDeleteNamespaceIfNeeded(idName))
+    fetchDeleteNamespaceIfNeeded: (idName: string, idLabel: string) =>
+      dispatch(
+        actionDeleteNamespace.fetchDeleteNamespaceIfNeeded(idName, idLabel)
+      )
   })
 );
 

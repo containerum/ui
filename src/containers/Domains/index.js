@@ -24,7 +24,8 @@ import Notification from '../Notification';
 import globalStyles from '../../theme/global.scss';
 import {
   GET_NAMESPACES_INVALID,
-  GET_NAMESPACES_REQUESTING
+  GET_NAMESPACES_REQUESTING,
+  GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
@@ -91,10 +92,14 @@ export class Domains extends PureComponent<Props> {
       deleteDomainReducer,
       getNamespacesReducer
     } = this.props;
-    const namespacesLabels = getNamespacesReducer.data.map(ingress => [
-      ingress.id,
-      ingress.label
-    ]);
+    let namespacesLabels;
+    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
+      namespacesLabels = getNamespacesReducer.data.namespaces.map(ingress => [
+        ingress.id,
+        ingress.label
+      ]);
+    }
+
     if (
       !getDomainsReducer.readyStatus ||
       getDomainsReducer.readyStatus === GET_DOMAINS_INVALID ||

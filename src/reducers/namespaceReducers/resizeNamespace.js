@@ -17,7 +17,8 @@ const initialState = {
   status: null,
   method: null,
   idName: null,
-  err: null
+  err: null,
+  label: null
 };
 
 export default (state = initialState, action: Action) => {
@@ -40,6 +41,7 @@ export default (state = initialState, action: Action) => {
         status: action.status,
         method: action.method,
         idName: action.idName,
+        label: action.label,
         err: null
       });
     case RESIZE_NAMESPACE_FAILURE:

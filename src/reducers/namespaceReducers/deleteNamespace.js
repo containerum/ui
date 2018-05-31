@@ -17,6 +17,7 @@ const initialState = {
   status: null,
   method: null,
   idName: null,
+  idLabel: null,
   err: null
 };
 
@@ -40,6 +41,7 @@ export default (state = initialState, action: Action) => {
         status: action.status,
         method: action.method,
         idName: action.idName,
+        idLabel: action.idLabel,
         err: null
       });
     case DELETE_NAMESPACE_FAILURE:

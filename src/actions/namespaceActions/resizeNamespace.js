@@ -17,13 +17,14 @@ const resizeNamespaceRequest = () => ({
   isFetching: true
 });
 
-const resizeNamespaceSuccess = (data, status, method, idName) => ({
+const resizeNamespaceSuccess = (data, status, method, idName, label) => ({
   type: RESIZE_NAMESPACE_SUCCESS,
   isFetching: false,
   data,
   status,
   method,
-  idName
+  idName,
+  label
 });
 
 const resizeNamespaceFailure = (err, status, idName) => ({
@@ -42,6 +43,7 @@ export const fetchResizeNamespace = (
   idName: string,
   tariff: string,
   axios: any,
+  label: string,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
@@ -66,7 +68,7 @@ export const fetchResizeNamespace = (
   const { status, data, config } = response;
   switch (status) {
     case 200: {
-      dispatch(resizeNamespaceSuccess(data, 202, config.method, idName));
+      dispatch(resizeNamespaceSuccess(data, 202, config.method, idName, label));
       dispatch(push('/namespaces'));
       break;
     }
@@ -86,6 +88,7 @@ export const fetchResizeNamespace = (
 
 export const fetchResizeNamespaceIfNeeded = (
   idName: string,
-  tariff: string
+  tariff: string,
+  label: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchResizeNamespace(idName, tariff, axios));
+  dispatch(fetchResizeNamespace(idName, tariff, axios, label));

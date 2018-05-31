@@ -16,13 +16,14 @@ const deleteNamespaceRequest = () => ({
   isFetching: true
 });
 
-const deleteNamespaceSuccess = (data, status, method, idName) => ({
+const deleteNamespaceSuccess = (data, status, method, idName, idLabel) => ({
   type: DELETE_NAMESPACE_SUCCESS,
   isFetching: false,
   data,
   status,
   method,
-  idName
+  idName,
+  idLabel
 });
 
 const deleteNamespaceFailure = (err, status, idName) => ({
@@ -39,6 +40,7 @@ const deleteNamespaceInvalidToken = () => ({
 
 export const fetchDeleteNamespace = (
   idName: string,
+  idLabel: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
@@ -58,7 +60,9 @@ export const fetchDeleteNamespace = (
   // console.log(data);
   switch (status) {
     case 200: {
-      dispatch(deleteNamespaceSuccess(data, 202, config.method, idName));
+      dispatch(
+        deleteNamespaceSuccess(data, 202, config.method, idName, idLabel)
+      );
       break;
     }
     case 400: {
@@ -75,8 +79,8 @@ export const fetchDeleteNamespace = (
   }
 };
 
-export const fetchDeleteNamespaceIfNeeded = (idName: string): ThunkAction => (
-  dispatch: Dispatch,
-  getState: GetState,
-  axios: any
-) => dispatch(fetchDeleteNamespace(idName, axios));
+export const fetchDeleteNamespaceIfNeeded = (
+  idName: string,
+  idLabel: string
+): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
+  dispatch(fetchDeleteNamespace(idName, idLabel, axios));

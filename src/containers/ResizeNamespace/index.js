@@ -195,19 +195,33 @@ export class ResizeNamespace extends PureComponent<Props> {
       NSTariffPricePerDay,
       isOpened
     } = this.state;
-    const { status, idName, method, err } = resizeNamespaceReducer;
+
+    const {
+      status,
+      idName,
+      method,
+      err,
+      label: idLabel
+    } = resizeNamespaceReducer;
     const label = getNamespaceUsersAccessReducer.data
       ? getNamespaceUsersAccessReducer.data.label
       : idName;
+    // let currentNamespace;
+    // if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
+    //   currentNamespace = getNamespacesReducer.data.namespaces.find(
+    //     namespace => namespace.id === IdName
+    //   );
+    // }
     return (
       <div>
         <Notification
           status={status}
-          name={idName}
+          name={idLabel}
           method={method}
           errorMessage={err}
         />
         <ResizeModal
+          label={label}
           type="Namespace"
           tariff={NSTariffName}
           id={NSTariffId}
@@ -246,20 +260,28 @@ const connector: Connector<{}, Props> = connect(
   ({
     getNamespacesTariffsReducer,
     resizeNamespaceReducer,
-    getNamespaceReducer,
-    getNamespaceUsersAccessReducer
+    getNamespaceUsersAccessReducer,
+    getNamespaceReducer
   }: ReduxState) => ({
     getNamespacesTariffsReducer,
-    getNamespaceReducer,
     resizeNamespaceReducer,
-    getNamespaceUsersAccessReducer
+    getNamespaceUsersAccessReducer,
+    getNamespaceReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesTariffsIfNeeded: () =>
       dispatch(actionGetNamespacesTariffs.fetchGetNamespacesTariffsIfNeeded()),
-    fetchResizeNamespaceIfNeeded: (idName: string, tariff: string) =>
+    fetchResizeNamespaceIfNeeded: (
+      idName: string,
+      tariff: string,
+      label: string
+    ) =>
       dispatch(
-        actionResizeNamespace.fetchResizeNamespaceIfNeeded(idName, tariff)
+        actionResizeNamespace.fetchResizeNamespaceIfNeeded(
+          idName,
+          tariff,
+          label
+        )
       ),
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
