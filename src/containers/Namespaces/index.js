@@ -80,7 +80,7 @@ export class Namespaces extends PureComponent<Props> {
     ) {
       this.setState({
         ...this.state,
-        displayedNamespaces: nextProps.getNamespacesReducer.data.namespaces
+        displayedNamespaces: nextProps.getNamespacesReducer.data
       });
     }
     if (
@@ -198,7 +198,7 @@ export class Namespaces extends PureComponent<Props> {
           </div>
         )}
         <NamespacesList
-          // data={this.props.getNamespacesReducer.data.namespaces}
+          // data={this.props.getNamespacesReducer.data}
           data={this.state.displayedNamespaces}
           role={getProfileReducer.data.role}
           handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
@@ -230,7 +230,7 @@ export class Namespaces extends PureComponent<Props> {
     const { inputName, isOpened, idName: currentIdName } = this.state;
     let currentNamespace;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
-      currentNamespace = getNamespacesReducer.data.namespaces.find(
+      currentNamespace = getNamespacesReducer.data.find(
         namespace => namespace.id === currentIdName
       );
     }

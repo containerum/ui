@@ -174,7 +174,7 @@ export class Namespace extends PureComponent<Props> {
     }
     let currentNamespace;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
-      currentNamespace = getNamespacesReducer.data.namespaces.find(
+      currentNamespace = getNamespacesReducer.data.find(
         namespace => namespace.id === match.params.idName
       );
     }
@@ -200,7 +200,7 @@ export class Namespace extends PureComponent<Props> {
     const { idName: currentIdName, inputName, isOpened } = this.state;
     let currentNamespace;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
-      currentNamespace = getNamespacesReducer.data.namespaces.find(
+      currentNamespace = getNamespacesReducer.data.find(
         namespace => namespace.id === match.params.idName
       );
     }

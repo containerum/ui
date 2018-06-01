@@ -208,7 +208,7 @@ export class ResizeNamespace extends PureComponent<Props> {
       : idName;
     // let currentNamespace;
     // if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
-    //   currentNamespace = getNamespacesReducer.data.namespaces.find(
+    //   currentNamespace = getNamespacesReducer.data.find(
     //     namespace => namespace.id === IdName
     //   );
     // }
