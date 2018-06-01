@@ -57,7 +57,6 @@ export const fetchDeleteNamespace = (
     validateStatus: status => status >= 200 && status <= 505
   });
   const { data, status, config } = response;
-  // console.log(data);
   switch (status) {
     case 200: {
       dispatch(

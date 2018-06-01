@@ -55,8 +55,7 @@ const MembershipList = ({
         </thead>
         <tbody>
           {membersList.map(user => {
-            console.log('zaza', user);
-            const { login, new_access_level: newAccessLevel } = user;
+            const { username: login, access_level: newAccessLevel } = user;
             return (
               <tr
                 className={containerClassName}
