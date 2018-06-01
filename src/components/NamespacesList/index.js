@@ -53,7 +53,6 @@ const NamespacesList = ({
     'containerCard'
   );
   const isOnline = sourceType === 'ONLINE';
-  // console.log('data', data);
   return (
     <div className="row double">
       {data &&
