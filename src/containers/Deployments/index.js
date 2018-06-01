@@ -169,18 +169,29 @@ export class Deployments extends PureComponent<Props> {
   render() {
     const { status, idDep, err } = this.props.deleteDeploymentReducer;
     const { inputName, isOpened, idDep: currentIdDep } = this.state;
+    let currentDepl;
+    if (
+      this.props.getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_SUCCESS
+    ) {
+      currentDepl = this.props.getDeploymentsReducer.data.find(
+        depl => depl.name === currentIdDep
+      );
+    }
     return (
       <div>
         <Notification status={status} name={idDep} errorMessage={err} />
-        <DeleteModal
-          type="Deployment"
-          name={inputName}
-          typeName={currentIdDep}
-          isOpened={isOpened}
-          handleInputName={this.handleInputName}
-          handleOpenCloseModal={this.handleOpenCloseModal}
-          onHandleDelete={this.onHandleDelete}
-        />
+        {currentDepl && (
+          <DeleteModal
+            type="Deployment"
+            inputName={inputName}
+            name={currentIdDep}
+            typeName={currentDepl.name}
+            isOpened={isOpened}
+            handleInputName={this.handleInputName}
+            handleOpenCloseModal={this.handleOpenCloseModal}
+            onHandleDelete={this.onHandleDelete}
+          />
+        )}
         <div className={contentClassName}>
           <div className="tab-content">
             <div className="tab-pane active">
