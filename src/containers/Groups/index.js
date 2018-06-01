@@ -9,7 +9,7 @@ import { routerLinks } from '../../config';
 import Notification from '../Notification';
 import DeleteUserMembershipModal from '../../components/CustomerModal/DeleteUserMembershipModal';
 import AddUserInMembershipModal from '../../components/CustomerModal/AddUserInMembershipModal';
-import MembershipList from '../../components/MembershipList';
+import GroupsList from '../../components/GroupsList';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
@@ -29,7 +29,7 @@ import { DELETE_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceC
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 import globalStyles from '../../theme/global.scss';
-import styles from './index.scss';
+import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
@@ -69,7 +69,7 @@ type Props = {
   ) => void
 };
 
-class Membership extends PureComponent<Props> {
+class Groups extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,7 +80,7 @@ class Membership extends PureComponent<Props> {
       idUser: null,
       accessNewUser: 'read',
       accessUser: 'read',
-      membersList: [],
+      groupsList: [],
       errAdd: null
     };
   }
@@ -111,26 +111,17 @@ class Membership extends PureComponent<Props> {
     ) {
       const { users, access } = nextProps.getNamespaceUsersAccessReducer.data;
       if (access === 'owner') {
-        let concatUsers;
-        if (users) {
-          concatUsers = users.concat([
-            {
-              username: nextProps.getProfileReducer.data.login,
-              access_level: access
-            }
-          ]);
-        } else {
-          concatUsers = [
-            {
-              username: nextProps.getProfileReducer.data.login,
-              access_level: access
-            }
-          ];
-        }
+        const concatUsers = users.concat([
+          {
+            login: nextProps.getProfileReducer.data.login,
+            new_access_level: access
+          }
+        ]);
         this.setState({
           ...this.state,
-          membersList: concatUsers.sort(
-            (a, b) => a.access_level === 'owner' || b.access_level === 'owner'
+          groupsList: concatUsers.sort(
+            (a, b) =>
+              a.new_access_level === 'owner' || b.new_access_level === 'owner'
           )
         });
       } else {
@@ -178,10 +169,8 @@ class Membership extends PureComponent<Props> {
   };
   changeAccessUser = (login, access) => {
     const { fetchAddNamespaceUserAccessIfNeeded, match } = this.props;
-    const user = this.state.membersList.find(
-      member => member.username === login
-    );
-    const { access_level: newAccessLevel } = user;
+    const user = this.state.groupsList.find(member => member.login === login);
+    const { new_access_level: newAccessLevel } = user;
     if (access !== newAccessLevel) {
       this.setState(
         {
@@ -243,7 +232,7 @@ class Membership extends PureComponent<Props> {
     });
   };
 
-  renderMembershipList = () => {
+  renderGroupsList = () => {
     const { getNamespaceUsersAccessReducer, match } = this.props;
     if (
       !getNamespaceUsersAccessReducer.readyStatus ||
@@ -272,10 +261,9 @@ class Membership extends PureComponent<Props> {
     }
 
     return (
-      <MembershipList
+      <GroupsList
         idName={match.params.idName}
-        membersList={this.state.membersList}
-        changeAccessUser={this.changeAccessUser}
+        groupsList={this.state.groupsList}
         handleDeleteDMembers={this.handleDeleteDMembers}
       />
     );
@@ -393,7 +381,7 @@ class Membership extends PureComponent<Props> {
                         </ul>
                       </div>
 
-                      {this.renderMembershipList()}
+                      {this.renderGroupsList()}
                     </div>
                   </div>
                 </div>
@@ -454,4 +442,4 @@ const connector: Connector<{}, Props> = connect(
   })
 );
 
-export default connector(Membership);
+export default connector(Groups);

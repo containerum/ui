@@ -1,0 +1,43 @@
+@import '../../theme/variables';
+
+.td {
+  &_1_Membership {
+    width: 52px;
+    padding-left: 30px;
+    font-weight: normal;
+  }
+
+  &_2_Membership {
+    width: 115px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &_3_Membership {
+    width: 280px;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &_4_Membership {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &_5_Membership {
+    width: 45px;
+    vertical-align: top;
+    text-align: center !important;
+  }
+}
+
+.membership {
+  &BtnContainer {
+    display: flex;
+    align-items: center;
+  }
+}
