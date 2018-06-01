@@ -128,7 +128,7 @@ export class Services extends PureComponent<Props> {
     return (
       <ServicesList
         data={this.state.displayedService}
-        dataNamespace={getNamespacesReducer.data.namespaces.find(
+        dataNamespace={getNamespacesReducer.data.find(
           namespace => namespace.id === match.params.idName
         )}
         handleDeleteService={idSrv => this.handleDeleteService(idSrv)}

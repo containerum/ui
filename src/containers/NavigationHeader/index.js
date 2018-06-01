@@ -73,8 +73,8 @@ export class NavigationHeader extends PureComponent<Props> {
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
       currentNs =
         idName !== 'new'
-          ? getNamespacesReducer.data.namespaces.find(ns => ns.id === idName)
-          : getNamespacesReducer.data.namespaces[0];
+          ? getNamespacesReducer.data.find(ns => ns.id === idName)
+          : getNamespacesReducer.data[0];
     }
     if (
       !getNamespacesReducer.readyStatus ||
@@ -124,7 +124,7 @@ export class NavigationHeader extends PureComponent<Props> {
               className={`${globalStyles.dropdownMenu} dropdown-menu`}
               role="menu"
             >
-              {getNamespacesReducer.data.namespaces.map(item => (
+              {getNamespacesReducer.data.map(item => (
                 <NavLink
                   key={_.uniqueId()}
                   className="dropdown-item"
