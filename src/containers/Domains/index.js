@@ -94,7 +94,7 @@ export class Domains extends PureComponent<Props> {
     } = this.props;
     let namespacesLabels;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
-      namespacesLabels = getNamespacesReducer.data.namespaces.map(ingress => [
+      namespacesLabels = getNamespacesReducer.data.map(ingress => [
         ingress.id,
         ingress.label
       ]);

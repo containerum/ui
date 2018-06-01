@@ -86,9 +86,9 @@ export class Solution extends PureComponent<Props> {
     ) {
       this.setState({
         ...this.state,
-        displayedNamespaces: nextProps.getNamespacesReducer.data.namespaces,
-        idName: nextProps.getNamespacesReducer.data.namespaces.length
-          ? nextProps.getNamespacesReducer.data.namespaces[0]
+        displayedNamespaces: nextProps.getNamespacesReducer.data,
+        idName: nextProps.getNamespacesReducer.data.length
+          ? nextProps.getNamespacesReducer.data[0]
           : null
       });
     }
