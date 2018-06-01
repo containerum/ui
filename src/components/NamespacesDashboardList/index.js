@@ -56,12 +56,8 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
           <tbody>
             {data &&
               data.map(namespace => {
-                const { label, access } = namespace;
-                // const {
-                //   memory: memoryLimit,
-                //   cpu: cpuLimit
-                // } = namespace.resources.hard;
-                const { cpu, ram, id } = namespace;
+                const { access, label, resources, id } = namespace;
+                const { memory, cpu } = resources.hard;
                 return (
                   <tr
                     id={id}
@@ -79,7 +75,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                       <img src={deployment} alt="deployment" />
                     </td>
                     <td className={dashboardStyles.td_2_Dashboard}>{label}</td>
-                    <td className={dashboardStyles.td_3_Dashboard}>{ram}</td>
+                    <td className={dashboardStyles.td_3_Dashboard}>{memory}</td>
                     <td className={dashboardStyles.td_4_Dashboard}>{cpu}</td>
                     <td className={dashboardStyles.td_4_Dashboard}>{access}</td>
                     <td

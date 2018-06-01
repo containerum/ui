@@ -188,7 +188,7 @@ const TariffsNamespacesList = ({
                           globalStyles.contentBlockInfoName
                         } inline`}
                       >
-                        RAM :{' '}
+                        RAM :&nbsp;
                       </div>
                       <div
                         className={`${
@@ -204,7 +204,7 @@ const TariffsNamespacesList = ({
                           globalStyles.contentBlockInfoName
                         } inline`}
                       >
-                        CPU :{' '}
+                        CPU :&nbsp;
                       </div>
                       <div
                         className={`${
