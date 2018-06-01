@@ -111,17 +111,26 @@ class Membership extends PureComponent<Props> {
     ) {
       const { users, access } = nextProps.getNamespaceUsersAccessReducer.data;
       if (access === 'owner') {
-        const concatUsers = users.concat([
-          {
-            login: nextProps.getProfileReducer.data.login,
-            new_access_level: access
-          }
-        ]);
+        let concatUsers;
+        if (users) {
+          concatUsers = users.concat([
+            {
+              username: nextProps.getProfileReducer.data.login,
+              access_level: access
+            }
+          ]);
+        } else {
+          concatUsers = [
+            {
+              username: nextProps.getProfileReducer.data.login,
+              access_level: access
+            }
+          ];
+        }
         this.setState({
           ...this.state,
           membersList: concatUsers.sort(
-            (a, b) =>
-              a.new_access_level === 'owner' || b.new_access_level === 'owner'
+            (a, b) => a.access_level === 'owner' || b.access_level === 'owner'
           )
         });
       } else {
@@ -169,8 +178,10 @@ class Membership extends PureComponent<Props> {
   };
   changeAccessUser = (login, access) => {
     const { fetchAddNamespaceUserAccessIfNeeded, match } = this.props;
-    const user = this.state.membersList.find(member => member.login === login);
-    const { new_access_level: newAccessLevel } = user;
+    const user = this.state.membersList.find(
+      member => member.username === login
+    );
+    const { access_level: newAccessLevel } = user;
     if (access !== newAccessLevel) {
       this.setState(
         {
