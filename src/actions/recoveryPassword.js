@@ -55,7 +55,7 @@ export const fetchRecoveryPassword = (
   const { status, data } = response;
   const { access_token: accessToken, refresh_token: refreshToken } = data;
   switch (status) {
-    case 202: {
+    case 200: {
       cookie.save('accessToken', accessToken, { path: '/' });
       cookie.save('refreshToken', refreshToken, { path: '/' });
       dispatch(recoveryPasswordSuccess(data));

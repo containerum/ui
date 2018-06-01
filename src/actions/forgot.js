@@ -49,7 +49,7 @@ export const fetchForgot = (
   );
   const { status, data } = response;
   switch (status) {
-    case 200: {
+    case 202: {
       dispatch(forgotSuccess(data));
       dispatch(push('/checkEmail'));
       break;
