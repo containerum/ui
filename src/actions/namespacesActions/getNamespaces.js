@@ -80,7 +80,7 @@ export const fetchGetNamespaces = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getNamespacesSuccess(data));
+      dispatch(getNamespacesSuccess(data.namespaces));
       break;
     }
     case 400: {
