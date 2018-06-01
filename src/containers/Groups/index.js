@@ -295,7 +295,7 @@ class Groups extends PureComponent<Props> {
       : idName;
     return (
       <div>
-        <Helmet title={`Membership of ${label}`} />
+        <Helmet title={`Groups of ${label}`} />
         <Notification
           status={statusDelete}
           name={idNameDelete}
@@ -375,7 +375,7 @@ class Groups extends PureComponent<Props> {
                               } btn btn-outline-primary fancybox`}
                               onClick={this.handleAddMembersAdd}
                             >
-                              Add Users
+                              Add Group
                             </button>
                           </li>
                         </ul>

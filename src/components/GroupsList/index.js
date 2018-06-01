@@ -43,9 +43,9 @@ const GroupsList = ({ groupsList, handleDeleteDMembers }: Props) => (
       >
         <thead style={{ height: '30px' }}>
           <tr>
-            <td style={{ width: 300 }}>Group Name</td>
-            <td style={{ width: 320 }}>Users Count</td>
-            <td className={styles.td_1_Membership} />
+            <td className={styles.td_1_Groups}>Group Name</td>
+            <td className={styles.td_2_Groups}>Users Count</td>
+            <td className={styles.td_3_Groups} />
           </tr>
         </thead>
         <tbody>
@@ -61,12 +61,12 @@ const GroupsList = ({ groupsList, handleDeleteDMembers }: Props) => (
                 }}
                 key={_.uniqueId()}
               >
-                <td className={styles.td_2_Membership}>{login}</td>
-                <td className={styles.td_3_Membership}>
+                <td className={styles.td_1_Groups}>{login}</td>
+                <td className={styles.td_2_Groups}>
                   <div className={globalStyles.overflow}>{login}</div>
                 </td>
                 <td
-                  className={`${styles.td_5_Membership} dropdown no-arrow`}
+                  className={`${styles.td_3_Groups} dropdown no-arrow`}
                   onClick={() =>
                     newAccessLevel !== 'owner' && handleDeleteDMembers(login)
                   }

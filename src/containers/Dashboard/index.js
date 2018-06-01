@@ -93,7 +93,6 @@ export class Dashboard extends PureComponent<Props> {
     fetchGetResourcesIfNeeded();
   }
   componentWillUpdate(nextProps) {
-    console.log('aaa', nextProps.getNamespacesReducer.data);
     if (
       this.props.getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&

@@ -387,7 +387,7 @@ class Membership extends PureComponent<Props> {
                               } btn btn-outline-primary fancybox`}
                               onClick={this.handleAddMembersAdd}
                             >
-                              Add Users
+                              Add User
                             </button>
                           </li>
                         </ul>
