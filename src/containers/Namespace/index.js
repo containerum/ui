@@ -17,6 +17,12 @@ import {
   GET_NAMESPACES_FAILURE
 } from '../../constants/namespacesConstants/getNamespaces';
 import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_REQUESTING,
+  GET_PROFILE_INVALID,
+  GET_PROFILE_SUCCESS
+} from '../../constants/profileConstants/getProfile';
+import {
   DELETE_NAMESPACE_SUCCESS,
   DELETE_NAMESPACE_REQUESTING
 } from '../../constants/namespaceConstants/deleteNamespace';
@@ -37,7 +43,6 @@ import ns from '../../images/ns-1.svg';
 
 import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
-import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 const globalClass = className.bind(globalStyles);
 
@@ -107,11 +112,19 @@ export class Namespace extends PureComponent<Props> {
   };
 
   renderNamespaceInfo = () => {
-    const { getNamespacesReducer, deleteNamespaceReducer, match } = this.props;
+    const {
+      getNamespacesReducer,
+      deleteNamespaceReducer,
+      getProfileReducer,
+      match
+    } = this.props;
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
     ) {
       return (
         <div
@@ -152,7 +165,10 @@ export class Namespace extends PureComponent<Props> {
       );
     }
 
-    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getProfileReducer.readyStatus === GET_PROFILE_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Namespace!</p>;
     }
     const currentNamespace = getNamespacesReducer.data.find(
@@ -161,6 +177,7 @@ export class Namespace extends PureComponent<Props> {
     return (
       <NamespaceInfo
         data={currentNamespace || {}}
+        role={getProfileReducer.data.role}
         handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
         idName={match.params.idName}
       />
