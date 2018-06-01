@@ -39,6 +39,7 @@ type Props = {
   typeName: string,
   inputName: string,
   isOpened: boolean,
+  minLengthName: ?number,
   handleInputName: () => void,
   onHandleDelete: (name: string) => void,
   handleOpenCloseModal: () => void
@@ -50,6 +51,7 @@ const DeleteModal = ({
   inputName,
   typeName,
   isOpened,
+  minLengthName,
   handleInputName,
   handleOpenCloseModal,
   onHandleDelete
@@ -59,7 +61,8 @@ const DeleteModal = ({
   };
   const handleSubmitDeletingEssence = e => {
     e.preventDefault();
-    if (name.length >= 2) {
+    const minLength = minLengthName || 2;
+    if (name.length >= minLength) {
       handleOpenCloseModal();
       onHandleDelete(name, inputName);
     }
