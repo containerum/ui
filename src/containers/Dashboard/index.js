@@ -93,7 +93,6 @@ export class Dashboard extends PureComponent<Props> {
     fetchGetResourcesIfNeeded();
   }
   componentWillUpdate(nextProps) {
-    console.log('aaa', nextProps.getNamespacesReducer.data);
     if (
       this.props.getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
@@ -394,15 +393,16 @@ export class Dashboard extends PureComponent<Props> {
     ) {
       return <p>Oops, Failed to load data of Tour!</p>;
     }
+
+    const currentNS = getNamespacesReducer.data.find(
+      ns => ns.access !== 'read'
+    );
     return (
       <DashboardBlockTourAndNews
         resources={getResourcesReducer.data}
         balance={isOnline ? getBalanceReducer.data.balance : null}
-        namespaces={getNamespacesReducer.data}
         linkToDeployment={
-          getNamespacesReducer.data.length
-            ? getNamespacesReducer.data[0].id
-            : ''
+          getNamespacesReducer.data.length && currentNS ? currentNS.id : ''
         }
         linkToManageTeam={
           getNamespacesReducer.data.length

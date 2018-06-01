@@ -15,7 +15,6 @@ const blockClassName = dashboardClassName('blockContainer', 'blockHTabs');
 type Props = {
   resources: Object,
   balance: string,
-  namespaces: Object,
   linkToDeployment: string,
   linkToManageTeam: string
 };
@@ -25,7 +24,6 @@ const isOnline = sourceType === 'ONLINE';
 const DashboardBlockTourAndNews = ({
   resources,
   balance,
-  namespaces,
   linkToDeployment,
   linkToManageTeam
 }: Props) => (
@@ -86,7 +84,7 @@ const DashboardBlockTourAndNews = ({
             )}
             <Link
               className={
-                namespaces.length ? dashboardStyles.tourLinkDisabled : ''
+                linkToDeployment ? dashboardStyles.tourLinkDisabled : ''
               }
               to="/createNamespace"
             >
