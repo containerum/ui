@@ -109,9 +109,9 @@ export class Dashboard extends PureComponent<Props> {
     ) {
       this.setState({
         ...this.state,
-        displayedNamespaces: nextProps.getNamespacesReducer.data,
-        idName: nextProps.getNamespacesReducer.data.length
-          ? nextProps.getNamespacesReducer.data[0]
+        displayedNamespaces: nextProps.getNamespacesReducer.data.namespaces,
+        idName: nextProps.getNamespacesReducer.data.namespaces.length
+          ? nextProps.getNamespacesReducer.data.namespaces[0]
           : null
       });
     }
@@ -186,7 +186,7 @@ export class Dashboard extends PureComponent<Props> {
     return (
       <NamespacesDashboardList
         role={getProfileReducer.data.role}
-        data={getNamespacesReducer.data}
+        data={getNamespacesReducer.data.namespaces}
         history={history}
       />
     );
@@ -397,15 +397,15 @@ export class Dashboard extends PureComponent<Props> {
       <DashboardBlockTourAndNews
         resources={getResourcesReducer.data}
         balance={isOnline ? getBalanceReducer.data.balance : null}
-        namespaces={getNamespacesReducer.data}
+        namespaces={getNamespacesReducer.data.namespaces}
         linkToDeployment={
-          getNamespacesReducer.data.length
-            ? getNamespacesReducer.data[0].id
+          getNamespacesReducer.data.namespaces.length
+            ? getNamespacesReducer.data.namespaces[0].id
             : ''
         }
         linkToManageTeam={
-          getNamespacesReducer.data.length
-            ? getNamespacesReducer.data.find(
+          getNamespacesReducer.data.namespaces.length
+            ? getNamespacesReducer.data.namespaces.find(
                 ns => (ns.access === 'owner' ? ns.access : '')
               )
             : ''

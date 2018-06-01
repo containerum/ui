@@ -61,7 +61,7 @@ const DeleteModal = ({
     e.preventDefault();
     if (name.length >= 2) {
       handleOpenCloseModal();
-      onHandleDelete(name);
+      onHandleDelete(name, inputName);
     }
   };
   const handleChangeNameOfType = e => {

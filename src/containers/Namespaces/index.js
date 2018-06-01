@@ -80,7 +80,7 @@ export class Namespaces extends PureComponent<Props> {
     ) {
       this.setState({
         ...this.state,
-        displayedNamespaces: nextProps.getNamespacesReducer.data
+        displayedNamespaces: nextProps.getNamespacesReducer.data.namespaces
       });
     }
     if (
@@ -198,7 +198,7 @@ export class Namespaces extends PureComponent<Props> {
           </div>
         )}
         <NamespacesList
-          // data={this.props.getNamespacesReducer.data}
+          // data={this.props.getNamespacesReducer.data.namespaces}
           data={this.state.displayedNamespaces}
           role={getProfileReducer.data.role}
           handleDeleteNamespace={idName => this.handleDeleteNamespace(idName)}
@@ -216,7 +216,7 @@ export class Namespaces extends PureComponent<Props> {
       createInternalServiceReducer,
       getNamespacesReducer
     } = this.props;
-    const { status, idName, err } = deleteNamespaceReducer;
+    const { status, idLabel, err } = deleteNamespaceReducer;
     const {
       status: statusExt,
       idSrv: idSrvExt,
@@ -228,13 +228,17 @@ export class Namespaces extends PureComponent<Props> {
       err: errInt
     } = createInternalServiceReducer;
     const { inputName, isOpened, idName: currentIdName } = this.state;
-    const currentNamespace = getNamespacesReducer.data.find(
-      namespace => namespace.id === currentIdName
-    );
+    let currentNamespace;
+    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
+      currentNamespace = getNamespacesReducer.data.namespaces.find(
+        namespace => namespace.id === currentIdName
+      );
+    }
+
     return (
       <div>
         <Helmet title="Namespaces" />
-        <Notification status={status} name={idName} errorMessage={err} />
+        <Notification status={status} name={idLabel} errorMessage={err} />
         <Notification
           status={statusExt}
           name={idSrvExt}
@@ -284,8 +288,10 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: (role: string) =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
-    fetchDeleteNamespaceIfNeeded: (idName: string) =>
-      dispatch(actionDeleteNamespaces.fetchDeleteNamespaceIfNeeded(idName))
+    fetchDeleteNamespaceIfNeeded: (idName: string, idLabel: string) =>
+      dispatch(
+        actionDeleteNamespaces.fetchDeleteNamespaceIfNeeded(idName, idLabel)
+      )
   })
 );
 

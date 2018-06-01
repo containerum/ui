@@ -112,15 +112,16 @@ class ConfigMaps extends PureComponent<Props> {
         const { idName } = params;
         this.setState({
           ...this.state,
-          currentNamespace: nextProps.getNamespacesReducer.data.find(
+          currentNamespace: nextProps.getNamespacesReducer.data.namespaces.find(
             namespace => namespace.id === idName
           )
         });
       } else {
         this.setState({
           ...this.state,
-          currentNamespace: nextProps.getNamespacesReducer.data.length
-            ? nextProps.getNamespacesReducer.data[0]
+          currentNamespace: nextProps.getNamespacesReducer.data.namespaces
+            .length
+            ? nextProps.getNamespacesReducer.data.namespaces[0]
             : {}
         });
       }
@@ -151,7 +152,7 @@ class ConfigMaps extends PureComponent<Props> {
     });
   };
   handleSelectNamespace = value => {
-    const currentNamespace = this.props.getNamespacesReducer.data.find(
+    const currentNamespace = this.props.getNamespacesReducer.data.namespaces.find(
       ns => ns.label === value
     );
     this.setState({
@@ -350,7 +351,7 @@ class ConfigMaps extends PureComponent<Props> {
     const { idName } = params;
     return (
       <ConfigMapListView
-        dataNamespace={getNamespacesReducer.data}
+        dataNamespace={getNamespacesReducer.data.namespaces}
         handleDeleteConfigMap={this.handleDeleteConfigMap}
         configMapsData={this.state.displayedConfigMaps}
         isEqualGetPath={isEqualGetPath}
@@ -404,7 +405,7 @@ class ConfigMaps extends PureComponent<Props> {
         <div className={`${globalStyles.containerNoBackground} container`}>
           <ConfigMapForm
             role={getProfileReducer.data.role}
-            namespacesData={this.props.getNamespacesReducer.data}
+            namespacesData={this.props.getNamespacesReducer.data.namespaces}
             currentNamespace={currentNamespace}
             handleSelectNamespace={this.handleSelectNamespace}
             handleSubmitCreateConfigMap={this.handleSubmitCreateConfigMap}

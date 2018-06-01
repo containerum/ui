@@ -13,8 +13,8 @@ import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespa
 import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
-  GET_NAMESPACES_FAILURE
-  // GET_NAMESPACES_SUCCESS
+  GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
 import type {
   Namespaces as NamespacesType,
@@ -69,11 +69,13 @@ export class NavigationHeader extends PureComponent<Props> {
       IdUpdate,
       typeOfUpdateService
     } = this.props;
-    const currentNs =
-      idName !== 'new'
-        ? getNamespacesReducer.data.find(ns => ns.id === idName)
-        : getNamespacesReducer.data[0];
-
+    let currentNs;
+    if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
+      currentNs =
+        idName !== 'new'
+          ? getNamespacesReducer.data.namespaces.find(ns => ns.id === idName)
+          : getNamespacesReducer.data.namespaces[0];
+    }
     if (
       !getNamespacesReducer.readyStatus ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
@@ -122,7 +124,7 @@ export class NavigationHeader extends PureComponent<Props> {
               className={`${globalStyles.dropdownMenu} dropdown-menu`}
               role="menu"
             >
-              {getNamespacesReducer.data.map(item => (
+              {getNamespacesReducer.data.namespaces.map(item => (
                 <NavLink
                   key={_.uniqueId()}
                   className="dropdown-item"

@@ -57,7 +57,7 @@ export const fetchAddNamespaceUserAccess = (
   };
 
   const response = await axios.put(
-    `${URL}/namespaces/${idName}/access`,
+    `${URL}/namespaces/${idName}/accesses`,
     userNeedAdd,
     {
       headers: {
