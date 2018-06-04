@@ -1,0 +1,454 @@
+import React, { PureComponent } from 'react';
+import Helmet from 'react-helmet';
+import type { Connector } from 'react-redux';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import className from 'classnames/bind';
+
+// import { routerLinks } from '../../config';
+import Notification from '../Notification';
+import DeleteUserMembershipModal from '../../components/CustomerModal/DeleteUserMembershipModal';
+import AddUserInMembershipModal from '../../components/CustomerModal/AddUserInMembershipModal';
+import GlobalMembershipList from '../../components/GlobalMembershipList';
+import type { Dispatch, ReduxState } from '../../types';
+import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
+import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
+import * as actionAddNamespaceUserAccessIfNeeded from '../../actions/namespaceActions/addNamespaceUserAccess';
+import * as actionDeleteNamespaceUserAccessIfNeeded from '../../actions/namespaceActions/deleteNamespaceUserAccess';
+import * as actionGetUserListIfNeeded from '../../actions/globalMembership/getUserList';
+// import { GET_NAMESPACE_USERS_ACCESS_SUCCESS } from '../../constants/namespaceConstants/getNamespaceUsersAccess';
+import {
+  GET_USERLIST_FAILURE,
+  GET_USERLIST_REQUESTING,
+  GET_USERLIST_INVALID
+} from '../../constants/globalMembership/getUserList';
+// import {
+//   ADD_NAMESPACE_USER_ACCESS_FAILURE,
+//   ADD_NAMESPACE_USER_ACCESS_SUCCESS
+// } from '../../constants/namespaceConstants/addNamespaceUserAccess';
+// import { DELETE_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
+// import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+
+import globalStyles from '../../theme/global.scss';
+import styles from '../Membership/index.scss';
+import buttonsStyles from '../../theme/buttons.scss';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'contentBlockContainer',
+  'contentBlockContainerMembership'
+);
+const labelClassName = globalClass(
+  'contentBlockHeaderLabelText',
+  'contentBlockHeaderLabelMembership',
+  'contentBlockHeaderLabelMain',
+  'contentBlockHeaderLabelNamespaceInfo'
+);
+const menuClassName = globalClass(
+  'contentBlockMenu',
+  'contentBlockMenuMembership'
+);
+const liClassName = globalClass(
+  'contentBlockMenuLi',
+  'contentBlockMenuLiMembership'
+);
+
+type Props = {
+  match: Object,
+  // history: Object,
+  getNamespaceUsersAccessReducer: Object,
+  addNamespaceUserAccessReducer: Object,
+  deleteNamespaceUserAccessReducer: Object,
+  getUserListReducer: Object,
+  // getProfileReducer: Object,
+  fetchGetUserListIfNeeded: () => void,
+  // fetchGetNamespaceIfNeeded: (idName: string) => void,
+  // fetchGetNamespaceUsersAccessIfNeeded: (idName: string) => void,
+  fetchAddNamespaceUserAccessIfNeeded: (idName: string, data: Object) => void,
+  fetchDeleteNamespaceUserAccessIfNeeded: (
+    idName: string,
+    username: string
+  ) => void
+};
+
+class GlobalMembership extends PureComponent<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputEmailDelete: '',
+      inputEmailAdd: '',
+      isOpen: false,
+      isOpenAdd: false,
+      idUser: null,
+      accessNewUser: 'read',
+      accessUser: 'read',
+      membersList: [],
+      errAdd: null
+    };
+  }
+  componentDidMount() {
+    const { fetchGetUserListIfNeeded } = this.props;
+    fetchGetUserListIfNeeded();
+  }
+  // componentWillUpdate(nextProps) {
+  //   const {
+  //     history,
+  //     match,
+  //     fetchGetNamespaceUsersAccessIfNeeded,
+  //     getNamespaceUsersAccessReducer,
+  //     addNamespaceUserAccessReducer,
+  //     deleteNamespaceUserAccessReducer
+  //   } = this.props;
+  //   if (
+  //     getNamespaceUsersAccessReducer.readyStatus !==
+  //       nextProps.getNamespaceUsersAccessReducer.readyStatus &&
+  //     nextProps.getNamespaceUsersAccessReducer.readyStatus ===
+  //       GET_NAMESPACE_USERS_ACCESS_SUCCESS &&
+  //     nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+  //   ) {
+  //     const { users, access } = nextProps.getNamespaceUsersAccessReducer.data;
+  //     if (access === 'owner') {
+  //       let concatUsers;
+  //       if (users) {
+  //         concatUsers = users.concat([
+  //           {
+  //             username: nextProps.getProfileReducer.data.login,
+  //             access_level: access
+  //           }
+  //         ]);
+  //       } else {
+  //         concatUsers = [
+  //           {
+  //             username: nextProps.getProfileReducer.data.login,
+  //             access_level: access
+  //           }
+  //         ];
+  //       }
+  //       this.setState({
+  //         ...this.state,
+  //         membersList: concatUsers.sort(
+  //           (a, b) => a.access_level === 'owner' || b.access_level === 'owner'
+  //         )
+  //       });
+  //     } else {
+  //       history.push(routerLinks.namespaceLink(match.params.idName));
+  //     }
+  //   }
+  //   if (
+  //     (addNamespaceUserAccessReducer.readyStatus !==
+  //       nextProps.addNamespaceUserAccessReducer.readyStatus &&
+  //       nextProps.addNamespaceUserAccessReducer.readyStatus ===
+  //         ADD_NAMESPACE_USER_ACCESS_SUCCESS) ||
+  //     (deleteNamespaceUserAccessReducer.readyStatus !==
+  //       nextProps.deleteNamespaceUserAccessReducer.readyStatus &&
+  //       nextProps.deleteNamespaceUserAccessReducer.readyStatus ===
+  //         DELETE_NAMESPACE_USER_ACCESS_SUCCESS)
+  //   ) {
+  //     this.setState({
+  //       ...this.state,
+  //       isOpen: false,
+  //       idUser: null,
+  //       inputEmailDelete: '',
+  //       isOpenAdd: false,
+  //       inputEmailAdd: '',
+  //       errAdd: null
+  //     });
+  //     fetchGetNamespaceUsersAccessIfNeeded(match.params.idName);
+  //   }
+  //   if (
+  //     addNamespaceUserAccessReducer.readyStatus !==
+  //       nextProps.addNamespaceUserAccessReducer.readyStatus &&
+  //     nextProps.addNamespaceUserAccessReducer.readyStatus ===
+  //       ADD_NAMESPACE_USER_ACCESS_FAILURE
+  //   ) {
+  //     const { err: errAdd } = nextProps.addNamespaceUserAccessReducer;
+  //     this.setState({
+  //       errAdd
+  //     });
+  //   }
+  // }
+  choiceAccessNewUser = access => {
+    this.setState({
+      ...this.state,
+      accessNewUser: access
+    });
+  };
+  // changeAccessUser = (login, access) => {
+  //   const { fetchAddNamespaceUserAccessIfNeeded, match } = this.props;
+  //   const user = this.state.membersList.find(
+  //     member => member.username === login
+  //   );
+  //   const { access_level: newAccessLevel } = user;
+  //   if (access !== newAccessLevel) {
+  //     this.setState(
+  //       {
+  //         ...this.state,
+  //         accessUser: access
+  //       },
+  //       () => {
+  //         fetchAddNamespaceUserAccessIfNeeded(
+  //           match.params.idName,
+  //           {
+  //             username: login,
+  //             access
+  //           },
+  //           'change'
+  //         );
+  //       }
+  //     );
+  //   }
+  // };
+  handleDeleteDMembers = idUser => {
+    this.setState({
+      ...this.state,
+      idUser,
+      isOpen: true
+    });
+  };
+  handleAddMembersAdd = () => {
+    this.setState({
+      ...this.state,
+      isOpenAdd: true
+    });
+  };
+  handleOpenCloseModal = () => {
+    this.setState({
+      ...this.state,
+      isOpen: !this.state.isOpen,
+      idUser: null,
+      inputEmailDelete: ''
+    });
+  };
+  handleOpenCloseModalAdd = () => {
+    this.setState({
+      isOpenAdd: !this.state.isOpenAdd,
+      accessNewUser: 'read',
+      inputEmailAdd: '',
+      errAdd: null
+    });
+  };
+  handleInputEmailDelete = inputEmailDelete => {
+    this.setState({
+      ...this.state,
+      inputEmailDelete
+    });
+  };
+  handleInputEmailAdd = inputEmailAdd => {
+    this.setState({
+      ...this.state,
+      inputEmailAdd
+    });
+  };
+
+  renderGlobalMembershipList = () => {
+    const { match, getUserListReducer } = this.props;
+    if (
+      !getUserListReducer.readyStatus ||
+      getUserListReducer.readyStatus === GET_USERLIST_INVALID ||
+      getUserListReducer.readyStatus === GET_USERLIST_REQUESTING
+    ) {
+      return (
+        <div
+          style={{
+            height: '200px',
+            margin: '10px 0',
+            borderRadius: '2px',
+            backgroundColor: '#f6f6f6'
+          }}
+        />
+      );
+    }
+
+    if (getUserListReducer.readyStatus === GET_USERLIST_FAILURE) {
+      return <p>Oops, Failed to load data of Namespaces!</p>;
+    }
+
+    return (
+      <GlobalMembershipList
+        idName={match.params.idName}
+        membersList={getUserListReducer.data.users}
+        changeAccessUser={this.changeAccessUser}
+        handleDeleteDMembers={this.handleDeleteDMembers}
+      />
+    );
+  };
+
+  render() {
+    const {
+      match,
+      getNamespaceUsersAccessReducer,
+      deleteNamespaceUserAccessReducer,
+      addNamespaceUserAccessReducer,
+      fetchAddNamespaceUserAccessIfNeeded,
+      fetchDeleteNamespaceUserAccessIfNeeded
+    } = this.props;
+    const {
+      status: statusAdd,
+      idName: idNameAdd,
+      isFetching: isFetchingAdd,
+      method: methodAdd
+    } = addNamespaceUserAccessReducer;
+    const {
+      status: statusDelete,
+      idName: idNameDelete,
+      err: errDelete
+    } = deleteNamespaceUserAccessReducer;
+    const { idName } = match.params;
+    const label = getNamespaceUsersAccessReducer.data
+      ? getNamespaceUsersAccessReducer.data.label
+      : idName;
+    return (
+      <div>
+        <Helmet title={`Membership of ${label}`} />
+        <Notification
+          status={statusDelete}
+          name={idNameDelete}
+          errorMessage={errDelete}
+        />
+        <Notification status={statusAdd} name={idNameAdd} method={methodAdd} />
+        <DeleteUserMembershipModal
+          type="Delete User access"
+          name={this.state.inputEmailDelete}
+          isOpened={this.state.isOpen}
+          typeName={this.state.idUser}
+          idName={idName}
+          handleInputEmailDelete={this.handleInputEmailDelete}
+          handleOpenCloseModal={this.handleOpenCloseModal}
+          onHandleDelete={fetchDeleteNamespaceUserAccessIfNeeded}
+        />
+        <AddUserInMembershipModal
+          type="Add User"
+          name={this.state.inputEmailAdd}
+          isOpened={this.state.isOpenAdd}
+          handleInputEmailAdd={this.handleInputEmailAdd}
+          handleOpenCloseModal={this.handleOpenCloseModalAdd}
+          onHandleAdd={fetchAddNamespaceUserAccessIfNeeded}
+          isFetchingAdd={isFetchingAdd}
+          accessNewUser={this.state.accessNewUser}
+          choiceAccessNewUser={this.choiceAccessNewUser}
+          namespaceId={idName}
+          err={this.state.errAdd}
+        />
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
+            <div className="row double two-columns">
+              <div className="col-md-3 col-lg-3 col-xl-2" />
+              <div className="col-md-9 col-lg-9 col-xl-10">
+                <div className={globalStyles.contentBlock}>
+                  <div className={`${containerClassName} container`}>
+                    <div className={globalStyles.contentBlockHeader}>
+                      <div className={labelClassName}>{label}</div>
+                      <div style={{ marginBottom: 20 }}>
+                        <ul
+                          className={`${menuClassName} nav nav-pills`}
+                          role="tablist"
+                          style={{ height: '50px' }}
+                        >
+                          <li style={{ display: 'flex' }}>
+                            <li
+                              className={`${liClassName} nav-item`}
+                              style={{ width: 'auto' }}
+                            >
+                              <NavLink
+                                activeClassName={
+                                  globalStyles.contentBlockMenuLiActive
+                                }
+                                to="/membership/users"
+                              >
+                                Users
+                              </NavLink>
+                            </li>
+                            <li
+                              className={`${liClassName} nav-item`}
+                              style={{ width: 'auto' }}
+                            >
+                              <NavLink
+                                activeClassName={
+                                  globalStyles.contentBlockMenuLiActive
+                                }
+                                to="/membership/users"
+                              >
+                                Groups
+                              </NavLink>
+                            </li>
+                          </li>
+                          <li className={styles.membershipBtnContainer}>
+                            <button
+                              className={`${
+                                buttonsStyles.buttonUIAddMembership
+                              } btn btn-outline-primary fancybox`}
+                              onClick={this.handleAddMembersAdd}
+                            >
+                              Add Users
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {this.renderGlobalMembershipList()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+const connector: Connector<{}, Props> = connect(
+  ({
+    getNamespaceUsersAccessReducer,
+    getNamespaceReducer,
+    addNamespaceUserAccessReducer,
+    deleteNamespaceUserAccessReducer,
+    getProfileReducer,
+    getUserListReducer
+  }: ReduxState) => ({
+    getNamespaceUsersAccessReducer,
+    getNamespaceReducer,
+    addNamespaceUserAccessReducer,
+    deleteNamespaceUserAccessReducer,
+    getProfileReducer,
+    getUserListReducer
+  }),
+  (dispatch: Dispatch) => ({
+    fetchGetUserListIfNeeded: () =>
+      dispatch(actionGetUserListIfNeeded.fetchGetUserListIfNeeded()),
+    fetchGetNamespaceIfNeeded: (idName: string) =>
+      dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
+    fetchGetNamespaceUsersAccessIfNeeded: (idName: string) =>
+      dispatch(
+        actionGetNamespaceUsersAccess.fetchGetNamespaceUsersAccessIfNeeded(
+          idName
+        )
+      ),
+    fetchAddNamespaceUserAccessIfNeeded: (
+      idName: string,
+      date: Object,
+      access: string
+    ) =>
+      dispatch(
+        actionAddNamespaceUserAccessIfNeeded.fetchAddNamespaceUserAccessIfNeeded(
+          idName,
+          date,
+          access
+        )
+      ),
+    fetchDeleteNamespaceUserAccessIfNeeded: (
+      idName: string,
+      username: string
+    ) =>
+      dispatch(
+        actionDeleteNamespaceUserAccessIfNeeded.fetchDeleteNamespaceUserAccessIfNeeded(
+          idName,
+          username
+        )
+      )
+  })
+);
+
+export default connector(GlobalMembership);

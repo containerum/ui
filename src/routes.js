@@ -62,6 +62,7 @@ import Tools from './components/Tools';
 import DomainsInfo from './containers/Domains';
 import ConfigMapsInfo from './containers/ConfigMaps';
 import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
+import GlobalMembershipInfo from './containers/GlobalMembership';
 
 const isOnline = sourceType === 'ONLINE';
 
@@ -375,6 +376,11 @@ export default [
     path: routerLinks.domains,
     include: true,
     component: DomainsInfo
+  },
+  {
+    path: routerLinks.getGlobalMembership,
+    include: true,
+    component: GlobalMembershipInfo
   },
   {
     path: routerLinks.configmap,
