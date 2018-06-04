@@ -64,6 +64,7 @@ module.exports = {
       `/namespace/${idName}/deployments/${idDep}/pods`,
     getMembership: '/namespace/:idName/membership',
     getMembershipLink: (idName: string) => `/namespace/${idName}/membership`,
+    getGlobalMembership: '/membership/users',
     createDeployment: '/namespace/:idName/createDeployment',
     createDeploymentLink: (idName: string) =>
       `/namespace/${idName}/createDeployment`,

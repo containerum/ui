@@ -71,6 +71,7 @@ import deleteConfigMapReducer from './configMapReducers/deleteConfigMap';
 import getNamespaceUsersAccessReducer from './namespaceReducers/getNamespaceUsersAccess';
 import addNamespaceUserAccessReducer from './namespaceReducers/addNamespaceUserAccess';
 import deleteNamespaceUserAccessReducer from './namespaceReducers/deleteNamespaceUserAccess';
+import getUserListReducer from './globalMembership/getUserList';
 
 const reducers = {
   loginReducer,
@@ -140,6 +141,7 @@ const reducers = {
   getNamespaceUsersAccessReducer,
   deleteNamespaceUserAccessReducer,
   addNamespaceUserAccessReducer,
+  getUserListReducer,
   router,
   loadingBar: loadingBarReducer
 };

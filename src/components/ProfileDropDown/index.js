@@ -11,6 +11,7 @@ import styles from '../../containers/Header/index.scss';
 import globalStyles from '../../theme/global.scss';
 
 type Props = {
+  role: string,
   email: string,
   balance: string,
   handleLogout: () => void
@@ -18,7 +19,7 @@ type Props = {
 
 const isOnline = sourceType === 'ONLINE';
 
-const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
+const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
   <div>
     <div className={styles.headerTopAccount}>
       <div className={styles.headerTopAccountAvatar}>
@@ -63,6 +64,15 @@ const ProfileDropDown = ({ email, balance, handleLogout }: Props) => (
                 to="/billing"
               >
                 Billing
+              </NavLink>
+            )}
+            {role === 'admin' && (
+              <NavLink
+                activeClassName="active"
+                className="dropdown-item"
+                to="/membership/users"
+              >
+                Membership
               </NavLink>
             )}
             <NavLink

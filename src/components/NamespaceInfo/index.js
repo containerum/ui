@@ -57,12 +57,14 @@ const NamespaceInfo = ({
   handleDeleteNamespace
 }: Props) => {
   const isOnline = sourceType === 'ONLINE';
-  const { access, label, resources } = data;
+  const { label, resources } = data;
+  console.log('sss', role);
+  const access = role === 'admin' ? 'owner' : data.access;
   const { memory, cpu } = resources.used;
   const { memory: memoryLimit, cpu: cpuLimit } = resources.hard;
   const newAccessLevel = access;
-  const newAccessLevelClassName = data.access
-    ? data.access[0].toUpperCase() + data.access.slice(1)
+  const newAccessLevelClassName = access
+    ? access[0].toUpperCase() + access.slice(1)
     : 'owner';
   const classNameBadge = namespaceClass({
     [`namespaceInfoBadge${newAccessLevelClassName}`]: true
