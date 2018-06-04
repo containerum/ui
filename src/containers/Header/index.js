@@ -93,6 +93,7 @@ export class Header extends PureComponent<Props> {
 
     return (
       <ProfileDropDown
+        role={getProfileReducer.data.role}
         balance={isOnline ? getBalanceReducer.data.balance : null}
         email={getProfileReducer.data.login}
         handleLogout={() => fetchLogoutIfNeeded()}

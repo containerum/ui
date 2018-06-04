@@ -68,6 +68,7 @@ module.exports = {
     getMembershipLink: (idName: string) => `/namespace/${idName}/membership`,
     // getGroups: '/namespace/:idName/groups',
     // getGroupsLink: (idName: string) => `/namespace/${idName}/groups`,
+    getGlobalMembership: '/membership/users',
     createDeployment: '/namespace/:idName/createDeployment',
     createDeploymentLink: (idName: string) =>
       `/namespace/${idName}/createDeployment`,
