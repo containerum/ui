@@ -7,9 +7,9 @@ import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import Notification from '../Notification';
-import DeleteUserMembershipModal from '../../components/CustomerModal/DeleteUserMembershipModal';
-import AddUserInMembershipModal from '../../components/CustomerModal/AddUserInMembershipModal';
-import GroupsList from '../../components/GroupsList';
+import DeleteUserGroupModal from '../../components/CustomerModal/DeleteMembershipModal';
+import AddUserInGroupModal from '../../components/CustomerModal/AddMembershipModal';
+import GroupList from '../../components/GroupsList';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
@@ -29,7 +29,6 @@ import { DELETE_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceC
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 import globalStyles from '../../theme/global.scss';
-import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
@@ -69,7 +68,7 @@ type Props = {
   ) => void
 };
 
-class Groups extends PureComponent<Props> {
+class Group extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,7 +79,7 @@ class Groups extends PureComponent<Props> {
       idUser: null,
       accessNewUser: 'read',
       accessUser: 'read',
-      groupsList: [],
+      membersList: [],
       errAdd: null
     };
   }
@@ -111,17 +110,26 @@ class Groups extends PureComponent<Props> {
     ) {
       const { users, access } = nextProps.getNamespaceUsersAccessReducer.data;
       if (access === 'owner') {
-        const concatUsers = users.concat([
-          {
-            login: nextProps.getProfileReducer.data.login,
-            new_access_level: access
-          }
-        ]);
+        let concatUsers;
+        if (users) {
+          concatUsers = users.concat([
+            {
+              username: nextProps.getProfileReducer.data.login,
+              access_level: access
+            }
+          ]);
+        } else {
+          concatUsers = [
+            {
+              username: nextProps.getProfileReducer.data.login,
+              access_level: access
+            }
+          ];
+        }
         this.setState({
           ...this.state,
-          groupsList: concatUsers.sort(
-            (a, b) =>
-              a.new_access_level === 'owner' || b.new_access_level === 'owner'
+          membersList: concatUsers.sort(
+            (a, b) => a.access_level === 'owner' || b.access_level === 'owner'
           )
         });
       } else {
@@ -169,8 +177,10 @@ class Groups extends PureComponent<Props> {
   };
   changeAccessUser = (login, access) => {
     const { fetchAddNamespaceUserAccessIfNeeded, match } = this.props;
-    const user = this.state.groupsList.find(member => member.login === login);
-    const { new_access_level: newAccessLevel } = user;
+    const user = this.state.membersList.find(
+      member => member.username === login
+    );
+    const { access_level: newAccessLevel } = user;
     if (access !== newAccessLevel) {
       this.setState(
         {
@@ -232,7 +242,7 @@ class Groups extends PureComponent<Props> {
     });
   };
 
-  renderGroupsList = () => {
+  renderGroupList = () => {
     const { getNamespaceUsersAccessReducer, match } = this.props;
     if (
       !getNamespaceUsersAccessReducer.readyStatus ||
@@ -261,9 +271,10 @@ class Groups extends PureComponent<Props> {
     }
 
     return (
-      <GroupsList
+      <GroupList
         idName={match.params.idName}
-        groupsList={this.state.groupsList}
+        membersList={this.state.membersList}
+        changeAccessUser={this.changeAccessUser}
         handleDeleteDMembers={this.handleDeleteDMembers}
       />
     );
@@ -295,14 +306,14 @@ class Groups extends PureComponent<Props> {
       : idName;
     return (
       <div>
-        <Helmet title={`Groups of ${label}`} />
+        <Helmet title={`Group of ${label}`} />
         <Notification
           status={statusDelete}
           name={idNameDelete}
           errorMessage={errDelete}
         />
         <Notification status={statusAdd} name={idNameAdd} method={methodAdd} />
-        <DeleteUserMembershipModal
+        <DeleteUserGroupModal
           type="Delete User access"
           name={this.state.inputEmailDelete}
           isOpened={this.state.isOpen}
@@ -312,8 +323,8 @@ class Groups extends PureComponent<Props> {
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleDelete={fetchDeleteNamespaceUserAccessIfNeeded}
         />
-        <AddUserInMembershipModal
-          type="Add User"
+        <AddUserInGroupModal
+          type="Add Group"
           name={this.state.inputEmailAdd}
           isOpened={this.state.isOpenAdd}
           handleInputEmailAdd={this.handleInputEmailAdd}
@@ -368,7 +379,7 @@ class Groups extends PureComponent<Props> {
                               </NavLink>
                             </li>
                           </li>
-                          <li className={styles.membershipBtnContainer}>
+                          <li>
                             <button
                               className={`${
                                 buttonsStyles.buttonUIAddMembership
@@ -381,7 +392,7 @@ class Groups extends PureComponent<Props> {
                         </ul>
                       </div>
 
-                      {this.renderGroupsList()}
+                      {this.renderGroupList()}
                     </div>
                   </div>
                 </div>
@@ -442,4 +453,4 @@ const connector: Connector<{}, Props> = connect(
   })
 );
 
-export default connector(Groups);
+export default connector(Group);

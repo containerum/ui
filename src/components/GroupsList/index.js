@@ -3,7 +3,7 @@ import _ from 'lodash/fp';
 import className from 'classnames/bind';
 
 import globalStyles from '../../theme/global.scss';
-import styles from './index.scss';
+import membershipStyles from '../../containers/Membership/index.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -22,14 +22,13 @@ const containerClassName = globalClass(
 );
 
 type Props = {
-  groupsList: Array<Object>,
-  // changeAccessUser: (login: string, access: string) => void,
+  membersList: Array<Object>,
   handleDeleteDMembers: (login: string) => void
 };
 
-const GroupsList = ({ groupsList, handleDeleteDMembers }: Props) => (
+const MembershipList = ({ membersList, handleDeleteDMembers }: Props) => (
   <div>
-    {groupsList.length ? (
+    {membersList.length ? (
       <table
         className={tableClassName}
         style={{
@@ -43,14 +42,14 @@ const GroupsList = ({ groupsList, handleDeleteDMembers }: Props) => (
       >
         <thead style={{ height: '30px' }}>
           <tr>
-            <td className={styles.td_1_Groups}>Group Name</td>
-            <td className={styles.td_2_Groups}>Users Count</td>
-            <td className={styles.td_3_Groups} />
+            <td style={{ width: 450 }}>Group Name</td>
+            <td style={{ width: 320 }}>Users Count</td>
+            <td className={membershipStyles.td_1_Membership} />
           </tr>
         </thead>
         <tbody>
-          {groupsList.map(user => {
-            const { username: login, access_level: newAccessLevel } = user;
+          {membersList.map(user => {
+            const { username: login } = user;
             return (
               <tr
                 className={containerClassName}
@@ -61,29 +60,27 @@ const GroupsList = ({ groupsList, handleDeleteDMembers }: Props) => (
                 }}
                 key={_.uniqueId()}
               >
-                <td className={styles.td_1_Groups}>{login}</td>
-                <td className={styles.td_2_Groups}>
+                <td className={membershipStyles.td_2_Membership}>{login}</td>
+                <td className={membershipStyles.td_3_Membership}>
                   <div className={globalStyles.overflow}>{login}</div>
                 </td>
                 <td
-                  className={`${styles.td_3_Groups} dropdown no-arrow`}
-                  onClick={() =>
-                    newAccessLevel !== 'owner' && handleDeleteDMembers(login)
-                  }
+                  className={`${
+                    membershipStyles.td_5_Membership
+                  } dropdown no-arrow`}
+                  onClick={() => handleDeleteDMembers(login)}
                 >
-                  {newAccessLevel !== 'owner' && (
-                    <div className={globalStyles.membershipItem}>
-                      <i
-                        style={{ verticalAlign: 'middle', paddingRight: 30 }}
-                        className={`${
-                          globalStyles.membershipIcon
-                        } material-icons `}
-                        role="presentation"
-                      >
-                        delete
-                      </i>
-                    </div>
-                  )}
+                  <div className={globalStyles.membershipItem}>
+                    <i
+                      style={{ verticalAlign: 'middle', paddingRight: 30 }}
+                      className={`${
+                        globalStyles.membershipIcon
+                      } material-icons `}
+                      role="presentation"
+                    >
+                      delete
+                    </i>
+                  </div>
                 </td>
               </tr>
             );
@@ -98,4 +95,4 @@ const GroupsList = ({ groupsList, handleDeleteDMembers }: Props) => (
   </div>
 );
 
-export default GroupsList;
+export default MembershipList;
