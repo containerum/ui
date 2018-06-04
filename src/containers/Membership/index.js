@@ -7,8 +7,8 @@ import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import Notification from '../Notification';
-import DeleteUserMembershipModal from '../../components/CustomerModal/DeleteUserMembershipModal';
-import AddUserInMembershipModal from '../../components/CustomerModal/AddUserInMembershipModal';
+import DeleteUserMembershipModal from '../../components/CustomerModal/DeleteMembershipModal';
+import AddUserInMembershipModal from '../../components/CustomerModal/AddMembershipModal';
 import MembershipList from '../../components/MembershipList';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
@@ -129,9 +129,7 @@ class Membership extends PureComponent<Props> {
         }
         this.setState({
           ...this.state,
-          membersList: concatUsers.sort(
-            (a, b) => a.access_level === 'owner' || b.access_level === 'owner'
-          )
+          membersList: concatUsers.sort().reverse()
         });
       } else {
         history.push(routerLinks.namespaceLink(match.params.idName));
@@ -352,18 +350,33 @@ class Membership extends PureComponent<Props> {
                           role="tablist"
                           style={{ height: '50px' }}
                         >
-                          <li
-                            className={`${liClassName} nav-item`}
-                            style={{ width: 'auto' }}
-                          >
-                            <NavLink
-                              activeClassName={
-                                globalStyles.contentBlockMenuLiActive
-                              }
-                              to={routerLinks.getMembershipLink(idName)}
+                          <li style={{ display: 'flex' }}>
+                            <li
+                              className={`${liClassName} nav-item`}
+                              style={{ width: 'auto' }}
                             >
-                              Users
-                            </NavLink>
+                              <NavLink
+                                activeClassName={
+                                  globalStyles.contentBlockMenuLiActive
+                                }
+                                to={routerLinks.getMembershipLink(idName)}
+                              >
+                                Users
+                              </NavLink>
+                            </li>
+                            {/* <li */}
+                            {/* className={`${liClassName} nav-item`} */}
+                            {/* style={{ width: 'auto' }} */}
+                            {/* > */}
+                            {/* <NavLink */}
+                            {/* activeClassName={ */}
+                            {/* globalStyles.contentBlockMenuLiActive */}
+                            {/* } */}
+                            {/* to={routerLinks.getGroupsLink(idName)} */}
+                            {/* > */}
+                            {/* Groups */}
+                            {/* </NavLink> */}
+                            {/* </li> */}
                           </li>
                           <li className={styles.membershipBtnContainer}>
                             <button
@@ -372,7 +385,7 @@ class Membership extends PureComponent<Props> {
                               } btn btn-outline-primary fancybox`}
                               onClick={this.handleAddMembersAdd}
                             >
-                              Add Users
+                              Add User
                             </button>
                           </li>
                         </ul>

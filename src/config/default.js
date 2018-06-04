@@ -12,6 +12,8 @@ module.exports = {
   wsApi: apiWS,
   // webApi: 'http://192.168.88.210:8082',
   // wsApi: 'wss://192.168.88.210:8082',
+  // webApi: 'https://api.containerum.io:8082',
+  // wsApi: 'wss://api.containerum.io:8082',
   appRecaptcha:
     process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS',
   sourceType: process.env.SOURCE_TYPE || 'ONLINE',
@@ -64,6 +66,8 @@ module.exports = {
       `/namespace/${idName}/deployments/${idDep}/pods`,
     getMembership: '/namespace/:idName/membership',
     getMembershipLink: (idName: string) => `/namespace/${idName}/membership`,
+    // getGroups: '/namespace/:idName/groups',
+    // getGroupsLink: (idName: string) => `/namespace/${idName}/groups`,
     getGlobalMembership: '/membership/users',
     createDeployment: '/namespace/:idName/createDeployment',
     createDeploymentLink: (idName: string) =>
