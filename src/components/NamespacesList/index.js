@@ -61,7 +61,9 @@ const NamespacesList = ({
           const access = role === 'admin' ? 'owner' : data.access;
           const { memory, cpu } = resources.used;
           const { memory: memoryLimit, cpu: cpuLimit } = resources.hard;
-          const accessStyleName = access[0].toUpperCase() + access.slice(1);
+          const accessStyleName = access
+            ? access[0].toUpperCase() + access.slice(1)
+            : 'Owner';
           const classNameBadge = styleNamespaces({
             [`namespaceInfoBadge${accessStyleName}`]: true
           });
@@ -88,7 +90,7 @@ const NamespacesList = ({
                         styles.namespaceInfoBadge
                       } ${classNameBadge}`}
                     >
-                      {access}
+                      {access || 'owner'}
                     </div>
                     <div
                       style={{ display: 'block' }}

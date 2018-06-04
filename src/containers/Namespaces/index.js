@@ -122,8 +122,11 @@ export class Namespaces extends PureComponent<Props> {
     const nameToLowerCase = name.toLowerCase();
     const { data } = this.props.getNamespacesReducer;
     if (nameToLowerCase.length > 1) {
-      const displayedNS = data.filter(namespace =>
-        namespace.label.includes(nameToLowerCase)
+      const displayedNS = data.filter(
+        namespace =>
+          namespace.label
+            ? namespace.label.includes(nameToLowerCase)
+            : namespace.id.includes(nameToLowerCase)
       );
       this.setState({
         ...this.state,
