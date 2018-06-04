@@ -7,8 +7,8 @@ import className from 'classnames/bind';
 
 // import { routerLinks } from '../../config';
 import Notification from '../Notification';
-import DeleteUserMembershipModal from '../../components/CustomerModal/DeleteUserMembershipModal';
-import AddUserInMembershipModal from '../../components/CustomerModal/AddUserInMembershipModal';
+import DeleteUserMembershipModal from '../../components/CustomerModal/DeleteMembershipModal';
+import AddUserInMembershipModal from '../../components/CustomerModal/AddMembershipModal';
 import GlobalMembershipList from '../../components/GlobalMembershipList';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
