@@ -72,6 +72,7 @@ import getNamespaceUsersAccessReducer from './namespaceReducers/getNamespaceUser
 import addNamespaceUserAccessReducer from './namespaceReducers/addNamespaceUserAccess';
 import deleteNamespaceUserAccessReducer from './namespaceReducers/deleteNamespaceUserAccess';
 import getUserListReducer from './globalMembership/getUserList';
+import adminDeleteUserReducer from './globalMembership/adminDeleteUser';
 
 const reducers = {
   loginReducer,
@@ -142,6 +143,7 @@ const reducers = {
   deleteNamespaceUserAccessReducer,
   addNamespaceUserAccessReducer,
   getUserListReducer,
+  adminDeleteUserReducer,
   router,
   loadingBar: loadingBarReducer
 };
