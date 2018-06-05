@@ -5,42 +5,44 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
-  GET_USER_LIST_REQUESTING,
-  GET_USER_LIST_SUCCESS,
-  GET_USER_LIST_FAILURE
-} from '../../constants/globalMembershipConstants/getUserList';
+  DELETE_GROUP_REQUESTING,
+  DELETE_GROUP_SUCCESS,
+  DELETE_GROUP_FAILURE
+} from '../../constants/globalMembershipConstants/deleteGroup';
 import { webApi } from '../../config/index';
 
-const getUserListRequest = () => ({
-  type: GET_USER_LIST_REQUESTING,
+const deleteGroupRequest = () => ({
+  type: DELETE_GROUP_REQUESTING,
   isFetching: true
 });
 
-const getUserListSuccess = data => ({
-  type: GET_USER_LIST_SUCCESS,
+const deleteGroupSuccess = data => ({
+  type: DELETE_GROUP_SUCCESS,
   isFetching: false,
   data
 });
 
-const getUserListFailure = err => ({
-  type: GET_USER_LIST_FAILURE,
+const deleteGroupFailure = err => ({
+  type: DELETE_GROUP_FAILURE,
   isFetching: false,
   err
 });
 
-const getUserListInvalidToken = () => ({
+const deleteGroupInvalidToken = () => ({
   type: 'GET_INVALID_TOKEN'
 });
 
-export const fetchGetUserList = (
+export const fetchDeleteGroup = (
+  id: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
-  dispatch(getUserListRequest());
+  dispatch(deleteGroupRequest());
 
-  const response = await axios.get(`${URL}/user/list`, {
+  console.log(id);
+  const response = await axios.delete(`${URL}/groups/${id}`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken
@@ -49,16 +51,16 @@ export const fetchGetUserList = (
   });
   const { status, data } = response;
   switch (status) {
-    case 200: {
-      dispatch(getUserListSuccess(data));
+    case 202: {
+      dispatch(deleteGroupSuccess(data));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
-        dispatch(getUserListInvalidToken());
+        dispatch(deleteGroupInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      } else dispatch(getUserListFailure(data.message));
+      } else dispatch(deleteGroupFailure(data.message));
       break;
     }
     // default: {
@@ -66,14 +68,14 @@ export const fetchGetUserList = (
     //   dispatch(push('/login'));
     // }
     default: {
-      dispatch(getUserListFailure(data.message));
+      dispatch(deleteGroupFailure(data.message));
       dispatch(push('/dashboard'));
     }
   }
 };
 
-export const fetchGetUserListIfNeeded = (): ThunkAction => (
+export const fetchDeleteGroupIfNeeded = (id: string): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetUserList(axios));
+) => dispatch(fetchDeleteGroup(id, axios));

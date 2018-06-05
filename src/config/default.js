@@ -1,17 +1,17 @@
-const apiHost = process.env.API_HOST || 'api.containerum.io';
-const apiProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'https' : 'http';
-const apiWSProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'wss' : 'ws';
-const apiPort = process.env.API_PORT;
-const api = `${apiProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
-const apiWS = `${apiWSProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
+// const apiHost = process.env.API_HOST || 'api.containerum.io';
+// const apiProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'https' : 'http';
+// const apiWSProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'wss' : 'ws';
+// const apiPort = process.env.API_PORT;
+// const api = `${apiProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
+// const apiWS = `${apiWSProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
 
 module.exports = {
   host: process.env.NODE_HOST || 'localhost', // Define your host from 'package.json'
   port: process.env.PORT,
-  webApi: api,
-  wsApi: apiWS,
-  // webApi: 'http://192.168.88.210:8082',
-  // wsApi: 'wss://192.168.88.210:8082',
+  // webApi: api,
+  // wsApi: apiWS,
+  webApi: 'https://192.168.88.210:8082',
+  wsApi: 'wss://192.168.88.210:8082',
   // webApi: 'https://api.containerum.io:8082',
   // wsApi: 'wss://api.containerum.io:8082',
   appRecaptcha:
@@ -69,6 +69,7 @@ module.exports = {
     // getGroups: '/namespace/:idName/groups',
     // getGroupsLink: (idName: string) => `/namespace/${idName}/groups`,
     getGlobalMembership: '/membership/users',
+    getGlobalGroups: '/membership/groups',
     createDeployment: '/namespace/:idName/createDeployment',
     createDeploymentLink: (idName: string) =>
       `/namespace/${idName}/createDeployment`,

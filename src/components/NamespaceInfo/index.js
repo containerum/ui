@@ -58,7 +58,6 @@ const NamespaceInfo = ({
 }: Props) => {
   const isOnline = sourceType === 'ONLINE';
   const { label, resources } = data;
-  console.log('sss', role);
   const access = role === 'admin' ? 'owner' : data.access;
   const { memory, cpu } = resources.used;
   const { memory: memoryLimit, cpu: cpuLimit } = resources.hard;
