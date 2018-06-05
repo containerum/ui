@@ -32,6 +32,10 @@ spec:
             - name: {{ $key  }}
               value: {{ $val | quote }}
             {{- end }}
+            {{ if .Values.env.local.API_HOST }}
+            - name: API_HOST
+              value: {{ .Values.env.local.API_HOST }}
+            {{ end }}
             - name: RECAPTCHA
               valueFrom:
                 secretKeyRef:
