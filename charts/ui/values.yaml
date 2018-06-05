@@ -15,8 +15,12 @@ service:
   externalIP:
 
 env:
-  API_HOST: "api.containerum.io"
-  API_PROTOCOL_TYPE: "ssl"
-  API_PORT: "8082"
-  COUNTRY: "US"
-  RECAPTCHA: "6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS"
+  global:
+    COUNTRY: US
+    SOURCE_TYPE: local
+    ## for HTTPS use: ssl
+    API_PROTOCOL_TYPE: no-ssl
+    API_PORT: "8082"
+  local:
+    API_HOST: api.containerum.io
+    RECAPTCHA: null

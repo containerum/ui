@@ -9,6 +9,7 @@ variables:
   NAMESPACE: hosting
   SECRET: gitlab-registry
   REPOSITORY: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+  RECAPTCHA_SAND: 6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS
 
 .docker-login: &docker-login
   before_script:
@@ -61,18 +62,18 @@ test-build-ofline:
     - tags
 
 
-dev-release:
-  image: docker:latest
-  stage: release
-  tags:
-    - build
-  <<: *docker-login
-  script:
-    - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} .
-    - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-    - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-  only:
-    - develop
+# dev-release:
+#   image: docker:latest
+#   stage: release
+#   tags:
+#     - build
+#   <<: *docker-login
+#   script:
+#     - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} .
+#     - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#     - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#   only:
+#     - develop
 
 dev-deploy:
   image: exon/helm
@@ -89,7 +90,7 @@ dev-deploy:
   script:
     - cd charts/ui
     - helm dep up
-    - helm upgrade --install --debug --namespace=${NAMESPACE} ${CI_PROJECT_NAME}-test --set tags.db=false --set image.tag=${CI_COMMIT_SHA:0:8} --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=192.168.88.210 --values values.yaml .
+    - helm upgrade --install --debug --namespace=${NAMESPACE} ${CI_PROJECT_NAME}-test --set tags.db=false --set image.tag=460bee55 --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=192.168.88.210 --set env.global.SOURCE_TYPE=online --set env.global.API_PROTOCOL_TYPE=ssl --set env.local.RECAPTCHA=${RECAPTCHA_SAND} --set env.local.API_HOST=192.168.88.210 --values values.yaml .
   only:
     - develop
 
