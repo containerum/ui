@@ -10,7 +10,7 @@ module.exports = {
   port: process.env.PORT,
   webApi: api,
   wsApi: apiWS,
-  // webApi: 'http://192.168.88.210:8082',
+  // webApi: 'https://192.168.88.210:8082',
   // wsApi: 'wss://192.168.88.210:8082',
   // webApi: 'https://api.containerum.io:8082',
   // wsApi: 'wss://api.containerum.io:8082',
@@ -69,6 +69,7 @@ module.exports = {
     // getGroups: '/namespace/:idName/groups',
     // getGroupsLink: (idName: string) => `/namespace/${idName}/groups`,
     getGlobalMembership: '/membership/users',
+    getGlobalGroups: '/membership/groups',
     createDeployment: '/namespace/:idName/createDeployment',
     createDeploymentLink: (idName: string) =>
       `/namespace/${idName}/createDeployment`,

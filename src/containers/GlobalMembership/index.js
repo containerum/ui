@@ -18,10 +18,10 @@ import * as actionDeleteNamespaceUserAccessIfNeeded from '../../actions/namespac
 import * as actionGetUserListIfNeeded from '../../actions/globalMembership/getUserList';
 // import { GET_NAMESPACE_USERS_ACCESS_SUCCESS } from '../../constants/namespaceConstants/getNamespaceUsersAccess';
 import {
-  GET_USERLIST_FAILURE,
-  GET_USERLIST_REQUESTING,
-  GET_USERLIST_INVALID
-} from '../../constants/globalMembership/getUserList';
+  GET_USER_LIST_FAILURE,
+  GET_USER_LIST_REQUESTING,
+  GET_USER_LIST_INVALID
+} from '../../constants/globalMembershipConstants/getUserList';
 // import {
 //   ADD_NAMESPACE_USER_ACCESS_FAILURE,
 //   ADD_NAMESPACE_USER_ACCESS_SUCCESS
@@ -245,8 +245,8 @@ class GlobalMembership extends PureComponent<Props> {
     const { match, getUserListReducer } = this.props;
     if (
       !getUserListReducer.readyStatus ||
-      getUserListReducer.readyStatus === GET_USERLIST_INVALID ||
-      getUserListReducer.readyStatus === GET_USERLIST_REQUESTING
+      getUserListReducer.readyStatus === GET_USER_LIST_INVALID ||
+      getUserListReducer.readyStatus === GET_USER_LIST_REQUESTING
     ) {
       return (
         <div
@@ -260,7 +260,7 @@ class GlobalMembership extends PureComponent<Props> {
       );
     }
 
-    if (getUserListReducer.readyStatus === GET_USERLIST_FAILURE) {
+    if (getUserListReducer.readyStatus === GET_USER_LIST_FAILURE) {
       return <p>Oops, Failed to load data of Namespaces!</p>;
     }
 

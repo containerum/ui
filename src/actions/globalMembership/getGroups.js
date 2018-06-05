@@ -5,42 +5,42 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
-  GET_USER_LIST_REQUESTING,
-  GET_USER_LIST_SUCCESS,
-  GET_USER_LIST_FAILURE
-} from '../../constants/globalMembershipConstants/getUserList';
+  GET_GROUPS_REQUESTING,
+  GET_GROUPS_SUCCESS,
+  GET_GROUPS_FAILURE
+} from '../../constants/globalMembershipConstants/getGroups';
 import { webApi } from '../../config/index';
 
-const getUserListRequest = () => ({
-  type: GET_USER_LIST_REQUESTING,
+const getGroupsRequest = () => ({
+  type: GET_GROUPS_REQUESTING,
   isFetching: true
 });
 
-const getUserListSuccess = data => ({
-  type: GET_USER_LIST_SUCCESS,
+const getGroupsSuccess = data => ({
+  type: GET_GROUPS_SUCCESS,
   isFetching: false,
   data
 });
 
-const getUserListFailure = err => ({
-  type: GET_USER_LIST_FAILURE,
+const getGroupsFailure = err => ({
+  type: GET_GROUPS_FAILURE,
   isFetching: false,
   err
 });
 
-const getUserListInvalidToken = () => ({
+const getGroupsInvalidToken = () => ({
   type: 'GET_INVALID_TOKEN'
 });
 
-export const fetchGetUserList = (
+export const fetchGetGroups = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
-  dispatch(getUserListRequest());
+  dispatch(getGroupsRequest());
 
-  const response = await axios.get(`${URL}/user/list`, {
+  const response = await axios.get(`${URL}/groups`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken
@@ -50,15 +50,15 @@ export const fetchGetUserList = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getUserListSuccess(data));
+      dispatch(getGroupsSuccess(data));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
-        dispatch(getUserListInvalidToken());
+        dispatch(getGroupsInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      } else dispatch(getUserListFailure(data.message));
+      } else dispatch(getGroupsFailure(data.message));
       break;
     }
     // default: {
@@ -66,14 +66,14 @@ export const fetchGetUserList = (
     //   dispatch(push('/login'));
     // }
     default: {
-      dispatch(getUserListFailure(data.message));
+      dispatch(getGroupsFailure(data.message));
       dispatch(push('/dashboard'));
     }
   }
 };
 
-export const fetchGetUserListIfNeeded = (): ThunkAction => (
+export const fetchGetGroupsIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetUserList(axios));
+) => dispatch(fetchGetGroups(axios));
