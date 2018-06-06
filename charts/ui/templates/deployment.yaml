@@ -33,7 +33,7 @@ spec:
               value: {{ $val | quote }}
             {{- end }}
             - name: API_PORT
-              value: {{ .Values.env.local.API_PORT }}
+              value: {{ .Values.env.local.API_PORT | quote }}
             - name: RECAPTCHA
               valueFrom:
                 secretKeyRef:
