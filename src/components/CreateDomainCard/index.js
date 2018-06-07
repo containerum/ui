@@ -162,7 +162,9 @@ const CreateDomainCard = ({
           value={domainPath}
           id="domainPath"
           type="text"
-          baseClassName={`${formClassName} ${inputStyles.Domain}`}
+          baseClassName={`${formClassName} ${inputStyles.Domain} ${
+            inputStyles.DomainPath
+          }`}
           baseClassNameLabel={`${globalStyles.formGroupLabel} ${domainPath &&
             globalStyles.formGroupLabelOnFocus}`}
           labelText="Path"
