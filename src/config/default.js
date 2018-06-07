@@ -116,7 +116,8 @@ module.exports = {
     exonLV: 'http://exon.lv',
     documentation: 'https://docs.containerum.com/docs/about',
     fastDeploy: 'https://docs.containerum.com/how-to',
-    helloWorld: 'https://docs.containerum.com/docs/about',
+    helloWorld:
+      'https://docs.containerum.com/how-to/?_ga=2.48830502.1413750744.1528358625-1916900540.1524062321',
     solutions: 'https://github.com/containerum',
     blog: 'https://medium.com/@containerum',
     startGuide: 'https://docs.containerum.com/docs/start-guide',
