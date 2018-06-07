@@ -10,7 +10,7 @@ module.exports = {
   port: process.env.PORT,
   webApi: api,
   wsApi: apiWS,
-  // webApi: 'https://192.168.88.210:8082',
+  // webApi: 'http://192.168.88.210:8082',
   // wsApi: 'wss://192.168.88.210:8082',
   // webApi: 'https://api.containerum.io:8082',
   // wsApi: 'wss://api.containerum.io:8082',
