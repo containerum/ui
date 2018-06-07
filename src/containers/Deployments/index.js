@@ -187,6 +187,7 @@ export class Deployments extends PureComponent<Props> {
             name={currentIdDep}
             typeName={currentDepl.name}
             isOpened={isOpened}
+            minLengthName={1}
             handleInputName={this.handleInputName}
             handleOpenCloseModal={this.handleOpenCloseModal}
             onHandleDelete={this.onHandleDelete}
