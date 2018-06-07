@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
-import _ from 'lodash/fp';
+import className from 'classnames/bind';
 
 import * as actionGetVolumes from '../../actions/volumesActions/getVolumes';
 import * as actionDeleteVolumes from '../../actions/volumeActions/deleteVolume';
@@ -23,15 +23,26 @@ import type { Dispatch, ReduxState } from '../../types';
 import Notification from '../Notification';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import VolumesList from '../../components/VolumesList';
-import HeaderPage from '../Header';
-import FooterPage from '../Footer';
-import ns from '../../images/ns-1.svg';
+import globalStyles from '../../theme/global.scss';
+import {
+  GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_INVALID,
+  GET_NAMESPACES_REQUESTING
+} from '../../constants/namespacesConstants/getNamespaces';
+
+const globalClass = className.bind(globalStyles);
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFull'
+);
 
 type Props = {
+  match: Object,
   getVolumesReducer: Object,
+  getNamespacesReducer: Object,
   deleteVolumeReducer: Object,
-  fetchGetVolumesIfNeeded: () => void,
-  fetchDeleteVolumeIfNeeded: (idVol: string) => void
+  fetchGetVolumesIfNeeded: (id: string) => void,
+  fetchDeleteVolumeIfNeeded: (idVol: string, idName: string) => void
 };
 
 // Export this for unit testing more easily
@@ -46,7 +57,8 @@ export class Volumes extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    this.props.fetchGetVolumesIfNeeded();
+    const { fetchGetVolumesIfNeeded, match } = this.props;
+    fetchGetVolumesIfNeeded(match.params.idName);
   }
   componentWillUpdate(nextProps) {
     if (
@@ -64,7 +76,6 @@ export class Volumes extends PureComponent<Props> {
         nextProps.deleteVolumeReducer.readyStatus &&
       nextProps.deleteVolumeReducer.readyStatus === DELETE_VOLUME_SUCCESS
     ) {
-      // console.log(nextProps.deleteVolumeReducer.idVol);
       const displayedNS = this.state.displayedVolumes.filter(
         volume => nextProps.deleteVolumeReducer.idVol !== volume.name
       );
@@ -97,41 +108,56 @@ export class Volumes extends PureComponent<Props> {
   };
 
   renderVolumesList = () => {
-    const { getVolumesReducer, deleteVolumeReducer } = this.props;
+    const {
+      getVolumesReducer,
+      getNamespacesReducer,
+      deleteVolumeReducer,
+      match
+    } = this.props;
 
     if (
+      !getNamespacesReducer.readyStatus ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
       !getVolumesReducer.readyStatus ||
       getVolumesReducer.readyStatus === GET_VOLUMES_INVALID ||
       getVolumesReducer.readyStatus === GET_VOLUMES_REQUESTING ||
       deleteVolumeReducer.readyStatus === DELETE_VOLUME_REQUESTING
     ) {
       return (
-        <div className="row double">
-          {new Array(3).fill().map(() => (
-            <div key={_.uniqueId()} className="col-md-4 align-middle">
-              <img className="content-block-container-img" src={ns} alt="ns" />
-            </div>
-          ))}
-        </div>
+        <div
+          style={{
+            height: '270px',
+            margin: '0 30px',
+            borderRadius: '2px',
+            backgroundColor: '#f6f6f6'
+          }}
+        />
       );
     }
 
-    if (getVolumesReducer.readyStatus === GET_VOLUMES_FAILURE) {
+    if (
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getVolumesReducer.readyStatus === GET_VOLUMES_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Volumes!</p>;
     }
 
     return (
       <VolumesList
         data={this.state.displayedVolumes}
+        dataNamespace={getNamespacesReducer.data.find(
+          namespace => namespace.id === match.params.idName
+        )}
+        idName={match.params.idName}
         handleDeleteVolume={idVol => this.handleDeleteVolume(idVol)}
       />
     );
   };
 
   render() {
-    // console.log('state', this.state.displayedVolumes);
     const { status, idVol, err } = this.props.deleteVolumeReducer;
-    const { fetchDeleteVolumeIfNeeded } = this.props;
+    const { fetchDeleteVolumeIfNeeded, match } = this.props;
     const { inputName, isOpened, idVol: currentIdVol } = this.state;
     return (
       <div>
@@ -139,33 +165,43 @@ export class Volumes extends PureComponent<Props> {
         <Notification status={status} name={idVol} errorMessage={err} />
         <DeleteModal
           type="Volume"
-          name={inputName}
+          inputName={inputName}
+          idName={match.params.idName}
+          name={currentIdVol}
           typeName={currentIdVol}
           isOpened={isOpened}
           handleInputName={this.handleInputName}
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleDelete={fetchDeleteVolumeIfNeeded}
         />
-        <HeaderPage />
-        <div className="content-block">
-          <div className="container no-back">{this.renderVolumesList()}</div>
+
+        <div className={contentClassName}>
+          <div className="tab-content">
+            <div className="tab-pane services active">
+              {this.renderVolumesList()}
+            </div>
+          </div>
         </div>
-        <FooterPage />
       </div>
     );
   }
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getVolumesReducer, deleteVolumeReducer }: ReduxState) => ({
+  ({
     getVolumesReducer,
+    getNamespacesReducer,
+    deleteVolumeReducer
+  }: ReduxState) => ({
+    getVolumesReducer,
+    getNamespacesReducer,
     deleteVolumeReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetVolumesIfNeeded: () =>
-      dispatch(actionGetVolumes.fetchGetVolumesIfNeeded()),
-    fetchDeleteVolumeIfNeeded: (idVol: string) =>
-      dispatch(actionDeleteVolumes.fetchDeleteVolumeIfNeeded(idVol))
+    fetchGetVolumesIfNeeded: (id: string) =>
+      dispatch(actionGetVolumes.fetchGetVolumesIfNeeded(id)),
+    fetchDeleteVolumeIfNeeded: (idVol: string, idName: string) =>
+      dispatch(actionDeleteVolumes.fetchDeleteVolumeIfNeeded(idVol, idName))
   })
 );
 
