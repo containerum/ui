@@ -8,7 +8,7 @@ import {
   CREATE_EXTERNAL_SERVICE_SUCCESS,
   CREATE_EXTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/createExternalService';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CREATE_EXTERNAL_SERVICE_INVALID,

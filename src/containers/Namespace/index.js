@@ -170,7 +170,7 @@ export class Namespace extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
       getProfileReducer.readyStatus === GET_PROFILE_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Namespace!</p>;
+      return <p>Oops, Failed to load data of Project!</p>;
     }
     let currentNamespace;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
@@ -208,12 +208,12 @@ export class Namespace extends PureComponent<Props> {
     return (
       <div>
         {currentNamespace && (
-          <Helmet title={`Namespace - ${currentNamespace.label}`} />
+          <Helmet title={`Project - ${currentNamespace.label}`} />
         )}
         <Notification status={status} name={idLabel} errorMessage={err} />
         {currentNamespace && (
           <DeleteModal
-            type="Namespace"
+            type="Project"
             inputName={inputName}
             name={currentIdName}
             typeName={currentNamespace.label}
@@ -290,9 +290,9 @@ export class Namespace extends PureComponent<Props> {
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
-                        to={`/namespace/${
+                        to={routerLinks.createDeploymentLink(
                           match.params.idName
-                        }/createDeployment`}
+                        )}
                         className={`${
                           buttonsStyles.buttonUICreate
                         } btn btn-outline-primary`}
@@ -309,7 +309,9 @@ export class Namespace extends PureComponent<Props> {
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
-                        to={`/namespace/${match.params.idName}/createConfigMap`}
+                        to={routerLinks.createConfigMapLink(
+                          match.params.idName
+                        )}
                         className={`${
                           buttonsStyles.buttonUICreate
                         } btn btn-outline-primary`}
@@ -334,7 +336,7 @@ export class Namespace extends PureComponent<Props> {
                   component={ServicesPage}
                 />
                 <Route
-                  path={`${match.path}/configmaps`}
+                  path={`${match.path}/configMaps`}
                   exact
                   component={ConfigMapsPage}
                 />

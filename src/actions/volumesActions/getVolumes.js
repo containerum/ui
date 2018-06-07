@@ -8,13 +8,13 @@ import type {
   GetState,
   ThunkAction
   // ReduxState
-} from '../../types/index';
+} from '../../types';
 import {
   GET_VOLUMES_REQUESTING,
   GET_VOLUMES_SUCCESS,
   GET_VOLUMES_FAILURE
 } from '../../constants/volumesConstants/getVolumes';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getVolumesRequest = () => ({
   type: GET_VOLUMES_REQUESTING,
@@ -65,7 +65,7 @@ export const fetchGetVolumes = (
       if (data.message === 'invalid token received') {
         dispatch(getVolumesInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getVolumesFailure(data.message));
       break;
     }

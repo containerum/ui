@@ -53,7 +53,7 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
             <NavLink
               activeClassName="active"
               className="dropdown-item"
-              to="/account"
+              to={routerLinks.account}
             >
               Account
             </NavLink>
@@ -61,7 +61,7 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
               <NavLink
                 activeClassName="active"
                 className="dropdown-item"
-                to="/billing"
+                to={routerLinks.billing}
               >
                 Billing
               </NavLink>
@@ -70,7 +70,7 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
               <NavLink
                 activeClassName="active"
                 className="dropdown-item"
-                to="/membership/users"
+                to={routerLinks.getGlobalMembership}
               >
                 Membership
               </NavLink>

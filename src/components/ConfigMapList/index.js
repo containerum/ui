@@ -65,9 +65,7 @@ const ConfigMapList = ({
                   <tr>
                     <td className={configmapStyles.td_1_Configmap}>Name</td>
                     <td className={configmapStyles.td_2_Configmap}>Filename</td>
-                    <td className={configmapStyles.td_3_Configmap}>
-                      Namespace
-                    </td>
+                    <td className={configmapStyles.td_3_Configmap}>Project</td>
                     <td className={configmapStyles.td_4_Configmap} />
                   </tr>
                 </thead>
@@ -109,7 +107,7 @@ const ConfigMapList = ({
                           <td className={configmapStyles.td_3_Configmap}>
                             <Link
                               style={{ color: '#29abe2' }}
-                              to={`/namespaces/${idName}/deployments`}
+                              to={routerLinks.getDeploymentsLink(idName)}
                             >
                               {currentDataOfNamespace.label}
                             </Link>
@@ -200,9 +198,7 @@ const ConfigMapList = ({
                   <tr>
                     <td className={configmapStyles.td_1_Configmap}>Name</td>
                     <td className={configmapStyles.td_2_Configmap}>Filename</td>
-                    <td className={configmapStyles.td_3_Configmap}>
-                      Namespace
-                    </td>
+                    <td className={configmapStyles.td_3_Configmap}>Project</td>
                     <td className={configmapStyles.td_4_Configmap} />
                   </tr>
                 </thead>
@@ -252,7 +248,7 @@ const ConfigMapList = ({
                         <td className={configmapStyles.td_3_Configmap}>
                           <Link
                             style={{ color: '#29abe2' }}
-                            to={`/namespaces/${idName}/deployments`}
+                            to={routerLinks.getDeploymentsLink(idName)}
                           >
                             {label}
                           </Link>

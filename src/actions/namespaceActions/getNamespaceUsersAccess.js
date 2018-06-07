@@ -9,7 +9,7 @@ import {
   GET_NAMESPACE_USERS_ACCESS_FAILURE
 } from '../../constants/namespaceConstants/getNamespaceUsersAccess';
 
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 import type { Dispatch, GetState, ThunkAction } from '../../types';
 
 const getNamespaceUsersAccessRequest = () => ({
@@ -63,7 +63,7 @@ export const fetchGetNamespaceUsersAccess = (
       if (data.message === 'invalid token received') {
         dispatch(getNamespaceUsersAccessInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else
         dispatch(getNamespaceUsersAccessFailure(data.message, status, idName));
       break;

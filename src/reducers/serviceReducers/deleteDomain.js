@@ -8,7 +8,7 @@ import {
   DELETE_DOMAIN_SUCCESS,
   DELETE_DOMAIN_FAILURE
 } from '../../constants/serviceConstants/deleteDomain';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_DOMAIN_INVALID,

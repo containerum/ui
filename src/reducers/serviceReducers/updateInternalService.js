@@ -8,7 +8,7 @@ import {
   UPDATE_INTERNAL_SERVICE_SUCCESS,
   UPDATE_INTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/updateInternalService';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: UPDATE_INTERNAL_SERVICE_INVALID,

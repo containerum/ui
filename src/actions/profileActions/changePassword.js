@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   CHANGE_PASSWORD_REQUESTING,
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAILURE
 } from '../../constants/profileConstants/changePassword';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const changePasswordRequest = () => ({
   type: CHANGE_PASSWORD_REQUESTING,
@@ -72,7 +72,7 @@ export const fetchChangePassword = (
       if (data.message === 'invalid token received') {
         dispatch(changePasswordInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(changePasswordFailure(data.message, status));
       break;
     }

@@ -8,7 +8,7 @@ import {
   UPDATE_DEPLOYMENT_SUCCESS,
   UPDATE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/updateDeployment';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: UPDATE_DEPLOYMENT_INVALID,

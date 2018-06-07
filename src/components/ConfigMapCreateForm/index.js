@@ -95,7 +95,7 @@ const ConfigMapCreateForm = ({
               style={{ margin: '10px 0px 15px' }}
               className={globalStyles.containerSubTitle}
             >
-              Namespace Name
+              Project Name
             </div>
             <div className={globalStyles.selectWrapper}>
               <div className={globalStyles.selectArrow} />
@@ -144,7 +144,7 @@ const ConfigMapCreateForm = ({
                     buttonsStyles.buttonUIDeployDashboard
                   } btn btn-outline-primary`}
                 >
-                  Create Namespace
+                  Create Project
                 </Link>
               </div>
             )}
@@ -155,7 +155,7 @@ const ConfigMapCreateForm = ({
           role === 'user' && (
             <div style={{ marginBottom: 10 }}>
               <div style={{ marginBottom: 10 }}>
-                You don`t have permission to namespaces. <br />
+                You don`t have permission to projects. <br />
                 Contact the administrator to obtain permission.
               </div>
             </div>

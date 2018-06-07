@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_DOMAIN_REQUESTING,
   DELETE_DOMAIN_SUCCESS,
   DELETE_DOMAIN_FAILURE
 } from '../../constants/serviceConstants/deleteDomain';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const deleteDomainRequest = () => ({
   type: DELETE_DOMAIN_REQUESTING,
@@ -68,7 +68,7 @@ export const fetchDeleteDomain = (
       if (data.message === 'invalid token received') {
         dispatch(deleteDomainInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(deleteDomainFailure(data.message, status, label));
       break;
     }

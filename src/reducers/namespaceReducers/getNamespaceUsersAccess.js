@@ -14,7 +14,7 @@ import {
   ADD_NAMESPACE_USER_ACCESS_FAILURE
 } from '../../constants/namespaceConstants/addNamespaceUserAccess';
 
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_NAMESPACE_USERS_ACCESS_INVALID,

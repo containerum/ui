@@ -164,7 +164,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                   data-toggle="modal"
                   to={routerLinks.createNamespace}
                 >
-                  Create NAMESPACE
+                  Create Project
                 </Link>
               </div>
             )}
@@ -178,7 +178,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                 data-toggle="modal"
                 to={routerLinks.createCustomNamespace}
               >
-                Create NAMESPACE
+                Create Project
               </Link>
             </div>
           )}
@@ -189,7 +189,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
         role === 'user' && (
           <div className={globalStyles.createDeploymentWrapper}>
             <div className={globalStyles.noCreatedPodMessage}>
-              You don`t have permission to namespaces. <br />
+              You don`t have permission to projects. <br />
               Contact the administrator to obtain permission.
             </div>
           </div>

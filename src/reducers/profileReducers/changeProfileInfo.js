@@ -8,7 +8,7 @@ import {
   CHANGE_PROFILE_INFO_SUCCESS,
   CHANGE_PROFILE_INFO_FAILURE
 } from '../../constants/profileConstants/changeProfileInfo';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CHANGE_PROFILE_INFO_INVALID,

@@ -3,14 +3,14 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   CREATE_VOLUME_REQUESTING,
   CREATE_VOLUME_SUCCESS,
   CREATE_VOLUME_FAILURE
 } from '../../constants/volumeConstants/createVolume';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -82,14 +82,14 @@ export const fetchCreateVolume = (
       //     action: `UI_create_vol_${price}`
       //   });
       // }
-      dispatch(push('/volumes'));
+      dispatch(push(routerLinks.volumes));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(createVolumeInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(createVolumeFailure(data.message, status, idVol));
       break;
     }

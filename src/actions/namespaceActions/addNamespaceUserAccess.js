@@ -1,14 +1,14 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   ADD_NAMESPACE_USER_ACCESS_INVALID,
   ADD_NAMESPACE_USER_ACCESS_REQUESTING,
   ADD_NAMESPACE_USER_ACCESS_SUCCESS,
   ADD_NAMESPACE_USER_ACCESS_FAILURE
 } from '../../constants/namespaceConstants/addNamespaceUserAccess';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const addNamespaceUserAccessInvalid = () => ({
   type: ADD_NAMESPACE_USER_ACCESS_INVALID
@@ -84,7 +84,7 @@ export const fetchAddNamespaceUserAccess = (
       if (data.message === 'invalid token received') {
         dispatch(addNamespaceUserAccessInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(addNamespaceUserAccessFailure(data.message, status));
       break;
     }

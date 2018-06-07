@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 
 import * as actionDeleteAccount from '../../../actions/profileActions/deleteAccount';
-import type { Dispatch, ReduxState } from '../../../types/index';
+import type { Dispatch, ReduxState } from '../../../types';
 
 import Notification from '../../Notification';
 import DeleteModal from '../../../components/CustomerModal/DeleteModal';

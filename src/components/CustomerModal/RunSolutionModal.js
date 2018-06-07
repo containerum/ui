@@ -5,6 +5,7 @@ import _ from 'lodash/fp';
 import 'rc-tooltip/assets/bootstrap_white.css';
 import className from 'classnames/bind';
 
+import { routerLinks } from '../../config';
 import modalStyles from './index.scss';
 
 import getSolutionImage from '../../functions/getSolutionImage';
@@ -125,7 +126,7 @@ const SelectNamespaceModal = ({
                       <span
                         className={`${modalStyles.modalRedisText} mt-4 mb-4`}
                       >
-                        Please, select the Namespace for Solution instalation
+                        Please, select the Project for Solution instalation
                       </span>
                       <select
                         className={`${selectClassName} form-control custom-select`}
@@ -148,7 +149,7 @@ const SelectNamespaceModal = ({
                       style={{ margin: '20px 0 0' }}
                     >
                       <span className={globalStyles.errorMessageText}>
-                        You have no Namespace yet
+                        You have no Project yet
                       </span>
                     </div>
                   )}
@@ -174,9 +175,9 @@ const SelectNamespaceModal = ({
                     <Link
                       className={buttonsStyles.buttonModalCreateNamespace}
                       data-toggle="modal"
-                      to="/createNamespace"
+                      to={routerLinks.createNamespace}
                     >
-                      Create NAMESPACE
+                      Create Project
                     </Link>
                   </div>
                 )}
@@ -263,7 +264,7 @@ const SelectNamespaceModal = ({
             </button>
             <div className="float-left">
               <Link
-                to="/support"
+                to={routerLinks.support}
                 className="footer-links-deploy-btn"
                 style={{ padding: '8px 55px' }}
               >
@@ -313,9 +314,9 @@ const SelectNamespaceModal = ({
             <Link
               className="blue-btn depl-btn"
               data-toggle="modal"
-              to={`/namespaces/${namespace.name}/deployments`}
+              to={routerLinks.getDeploymentsLink(namespace.name)}
             >
-              Open Namespace
+              Open Project
             </Link>
           </div>
         </div>

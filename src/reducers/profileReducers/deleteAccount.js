@@ -8,7 +8,7 @@ import {
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE
 } from '../../constants/profileConstants/deleteAccount';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_ACCOUNT_INVALID,

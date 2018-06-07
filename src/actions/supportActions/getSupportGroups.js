@@ -2,7 +2,7 @@
 
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_SUPPORT_GROUPS_REQUESTING,
   GET_SUPPORT_GROUPS_SUCCESS,

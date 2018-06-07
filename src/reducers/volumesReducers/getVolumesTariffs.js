@@ -8,7 +8,7 @@ import {
   GET_VOLUMES_TARIFFS_SUCCESS,
   GET_VOLUMES_TARIFFS_FAILURE
 } from '../../constants/volumesConstants/getVolumesTariffs';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_VOLUMES_TARIFFS_INVALID,

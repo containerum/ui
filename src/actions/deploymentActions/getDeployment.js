@@ -3,14 +3,14 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_DEPLOYMENT_REQUESTING,
   GET_DEPLOYMENT_SUCCESS,
   GET_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/getDeployment';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getDeploymentRequest = () => ({
   type: GET_DEPLOYMENT_REQUESTING,
@@ -70,14 +70,14 @@ export const fetchGetDeployment = (
       if (data.message === 'invalid token received') {
         dispatch(getDeploymentInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else
         dispatch(getDeploymentFailure(data.message, status, idName, idDep));
       break;
     }
     default: {
       dispatch(getDeploymentFailure(data.message, status, idName, idDep));
-      dispatch(push('/namespaces'));
+      dispatch(push(routerLinks.namespaces));
     }
   }
 };

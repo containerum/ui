@@ -9,7 +9,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE
 } from '../constants/signUpConstants';
-import { webApi } from '../config';
+import { routerLinks, webApi } from '../config';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -72,7 +72,7 @@ export const fetchSignUp = (
       //   });
       // }
       dispatch(signUpSuccess(data));
-      dispatch(push('/confirmEmail'));
+      dispatch(push(routerLinks.confirmEmail));
       break;
     }
     default: {

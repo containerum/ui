@@ -69,7 +69,7 @@ const TariffsNamespacesList = ({
           <Tooltip
             placement="top"
             trigger={['hover']}
-            overlay={<span>Current Namespace size</span>}
+            overlay={<span>Current Project size</span>}
             overlayClassName={isActiveTariff ? '' : 'display-none'}
           >
             <div

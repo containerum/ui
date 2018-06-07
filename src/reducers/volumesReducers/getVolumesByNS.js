@@ -8,7 +8,7 @@ import {
   GET_VOLUMES_BY_NS_SUCCESS,
   GET_VOLUMES_BY_NS_FAILURE
 } from '../../constants/volumesConstants/getVolumesByNS';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_VOLUMES_BY_NS_INVALID,

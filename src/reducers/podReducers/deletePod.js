@@ -8,7 +8,7 @@ import {
   DELETE_POD_SUCCESS,
   DELETE_POD_FAILURE
 } from '../../constants/podConstants/deletePod';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_POD_INVALID,

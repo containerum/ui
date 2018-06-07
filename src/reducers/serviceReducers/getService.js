@@ -8,7 +8,7 @@ import {
   GET_SERVICE_SUCCESS,
   GET_SERVICE_FAILURE
 } from '../../constants/serviceConstants/getService';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_SERVICE_INVALID,

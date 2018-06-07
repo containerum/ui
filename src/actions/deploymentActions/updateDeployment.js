@@ -4,13 +4,13 @@ import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 import cloneDeep from 'clone-deep';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   UPDATE_DEPLOYMENT_REQUESTING,
   UPDATE_DEPLOYMENT_SUCCESS,
   UPDATE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/updateDeployment';
-import { webApi } from '../../config';
+import { routerLinks, webApi } from '../../config';
 
 const updateDeploymentRequest = () => ({
   type: UPDATE_DEPLOYMENT_REQUESTING,
@@ -127,14 +127,14 @@ export const fetchUpdateDeployment = (
     case 202: {
       idSrv = `Deployment ${dataObj.name} for ${idName}`;
       dispatch(updateDeploymentSuccess(data, status, config.method, idSrv));
-      dispatch(push('/namespaces'));
+      dispatch(push(routerLinks.getDeploymentLink(idName, dataObj.name)));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(updateDeploymentInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(updateDeploymentFailure(data.message, status, data));
       break;
     }
