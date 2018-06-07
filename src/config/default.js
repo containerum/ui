@@ -10,7 +10,7 @@ module.exports = {
   port: process.env.PORT,
   webApi: api,
   wsApi: apiWS,
-  // webApi: 'https://192.168.88.210:8082',
+  // webApi: 'http://192.168.88.210:8082',
   // wsApi: 'wss://192.168.88.210:8082',
   // webApi: 'https://api.containerum.io:8082',
   // wsApi: 'wss://api.containerum.io:8082',
@@ -116,7 +116,8 @@ module.exports = {
     exonLV: 'http://exon.lv',
     documentation: 'https://docs.containerum.com/docs/about',
     fastDeploy: 'https://docs.containerum.com/how-to',
-    helloWorld: 'https://docs.containerum.com/docs/about',
+    helloWorld:
+      'https://docs.containerum.com/how-to/?_ga=2.48830502.1413750744.1528358625-1916900540.1524062321',
     solutions: 'https://github.com/containerum',
     blog: 'https://medium.com/@containerum',
     startGuide: 'https://docs.containerum.com/docs/start-guide',
