@@ -58,6 +58,7 @@ import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
 import MembershipInfo from './containers/Membership';
 import GlobalGroupsInfo from './containers/GlobalGroups';
+import GroupInfo from './containers/Group';
 // import GroupsInfo from './containers/Groups';
 import Tools from './components/Tools';
 // import WebHookInfo from './containers/Webhook';
@@ -388,6 +389,11 @@ export default [
     path: routerLinks.getGlobalGroups,
     include: true,
     component: GlobalGroupsInfo
+  },
+  {
+    path: routerLinks.getGroup,
+    include: true,
+    component: GroupInfo
   },
   {
     path: routerLinks.configmap,

@@ -200,7 +200,8 @@ class Group extends PureComponent<Props> {
       );
     }
   };
-  handleDeleteDMembers = idUser => {
+  handleDeleteDMembers = (idUser, e) => {
+    e.stopPropagation();
     this.setState({
       ...this.state,
       idUser,
@@ -243,7 +244,7 @@ class Group extends PureComponent<Props> {
   };
 
   renderGroupList = () => {
-    const { getNamespaceUsersAccessReducer, match } = this.props;
+    const { getNamespaceUsersAccessReducer, history, match } = this.props;
     if (
       !getNamespaceUsersAccessReducer.readyStatus ||
       getNamespaceUsersAccessReducer.readyStatus ===
@@ -272,6 +273,7 @@ class Group extends PureComponent<Props> {
 
     return (
       <GroupList
+        history={history}
         idName={match.params.idName}
         membersList={this.state.membersList}
         changeAccessUser={this.changeAccessUser}
