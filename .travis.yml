@@ -20,7 +20,7 @@ install:
   - sudo apt-get install jq
 
 script:
-  - docker build -t "$IMAGE_NAME" .
+  - docker build -t --build-arg SOURCE_TYPE=LOCAL "$IMAGE_NAME" .
 
 before_deploy:
   - docker login -u="$DOCKER_LOGIN" -p="$DOCKER_PASSWORD"

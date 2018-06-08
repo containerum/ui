@@ -1,6 +1,3 @@
-tags:
-  db: true
-
 replicaCount: 1
 
 image:
@@ -17,7 +14,7 @@ service:
 env:
   global:
     COUNTRY: US
-    SOURCE_TYPE: local
+    SOURCE_TYPE: LOCAL
     ## for HTTPS use: ssl
     API_PROTOCOL_TYPE: no-ssl
   local:
