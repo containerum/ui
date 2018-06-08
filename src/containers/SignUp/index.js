@@ -23,6 +23,7 @@ import LoadButton from '../../components/LoadButton';
 import globalStyles from '../../theme/global.scss';
 import buttonStyles from '../../theme/buttons.scss';
 import styles from './index.scss';
+import logoContainerum from '../../images/logo_containerum_exon_lv.svg';
 
 type Props = {
   signUpReducer: Object,
@@ -234,6 +235,17 @@ class SignUp extends PureComponent<Props> {
                 </div>
               )}
             </div>
+            {sourceType !== 'ONLINE' && (
+              <img
+                src={logoContainerum}
+                alt="logo containerum"
+                style={{
+                  bottom: 30,
+                  position: 'absolute',
+                  right: 170
+                }}
+              />
+            )}
           </div>
         </div>
       </div>

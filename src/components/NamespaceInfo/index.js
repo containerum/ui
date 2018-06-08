@@ -83,7 +83,7 @@ const NamespaceInfo = ({
               namespaceStyles.namespaceInfoBadge
             } ${classNameBadge} `}
           >
-            access: {newAccessLevel}
+            access: <span style={{ fontWeight: 400 }}>{newAccessLevel}</span>
           </div>
         </div>
         <div className={globalStyles.contentBlockHeaderExtraPanel}>

@@ -9,8 +9,9 @@ import Helmet from 'react-helmet';
 import cookie from 'react-cookies';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
+import logoContainerum from '../../images/logo_containerum_exon_lv.svg';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 
 type Props = {
   forgotReducer: Object,
@@ -85,6 +86,17 @@ class CheckEmail extends PureComponent<Props> {
               {/* Go to login */}
               {/* </NavLink> */}
             </div>
+            {sourceType !== 'ONLINE' && (
+              <img
+                src={logoContainerum}
+                alt="logo containerum"
+                style={{
+                  bottom: 30,
+                  position: 'absolute',
+                  right: 170
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
