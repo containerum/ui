@@ -7,7 +7,7 @@ import className from 'classnames/bind';
 
 // import { routerLinks } from '../../config';
 import Notification from '../Notification';
-import DeleteUserGroupshipModal from '../../components/CustomerModal/DeleteMembershipModal';
+import AdminDeleteGroupModal from '../../components/CustomerModal/AdminDeleteUserModal';
 import GlobalGroupsList from '../../components/GlobalGroupsList';
 import AddGlobalUserMembershipModal from '../../components/CustomerModal/AddGlobalMembershipModal';
 import type { Dispatch, ReduxState } from '../../types';
@@ -25,6 +25,7 @@ import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 import { routerLinks } from '../../config';
+import { DELETE_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/deleteGroup';
 
 const globalClass = className.bind(globalStyles);
 
@@ -39,6 +40,13 @@ const menuClassName = globalClass(
 const liClassName = globalClass(
   'contentBlockMenuLi',
   'contentBlockMenuLiMembership'
+);
+
+const labelClassName = globalClass(
+  'contentBlockHeaderLabelText',
+  'contentBlockHeaderLabelMembership',
+  'contentBlockHeaderLabelMain',
+  'contentBlockHeaderLabelNamespaceInfo'
 );
 
 type Props = {
@@ -90,6 +98,13 @@ class GlobalGroups extends PureComponent<Props> {
       this.props.addGroupReducer.readyStatus !==
         nextProps.addGroupReducer.readyStatus &&
       nextProps.addGroupReducer.readyStatus === ADD_GROUP_SUCCESS
+    ) {
+      fetchGetGroupsIfNeeded();
+    }
+    if (
+      this.props.deleteGroupReducer.readyStatus !==
+        nextProps.deleteGroupReducer.readyStatus &&
+      nextProps.deleteGroupReducer.readyStatus === DELETE_GROUP_SUCCESS
     ) {
       fetchGetGroupsIfNeeded();
     }
@@ -203,8 +218,10 @@ class GlobalGroups extends PureComponent<Props> {
     const {
       deleteGroupReducer,
       addGroupReducer,
+      getProfileReducer,
       fetchAddGroupIfNeeded,
-      fetchDeleteGroupIfNeeded
+      fetchDeleteGroupIfNeeded,
+      getGroupsReducer
     } = this.props;
     const {
       status: statusAdd,
@@ -217,9 +234,16 @@ class GlobalGroups extends PureComponent<Props> {
     }
     const {
       status: statusDelete,
-      idName: idNameDelete,
+      data: idNameDelete,
       err: errDelete
     } = deleteGroupReducer;
+    let idDel;
+    if (this.state.idUser) {
+      idDel = getGroupsReducer.data.groups.find(
+        group => group.id === this.state.idUser
+      );
+    }
+    const label = getProfileReducer.data ? getProfileReducer.data.login : '';
     return (
       <div>
         <Helmet title="Groups" />
@@ -229,11 +253,12 @@ class GlobalGroups extends PureComponent<Props> {
           errorMessage={errDelete}
         />
         <Notification status={statusAdd} name={idNameAdd} method={methodAdd} />
-        <DeleteUserGroupshipModal
+        <AdminDeleteGroupModal
           type="Delete Group"
           name={this.state.inputEmailDelete}
+          idName={this.state.idUser}
           isOpened={this.state.isOpen}
-          typeName={this.state.idUser}
+          typeName={idDel && idDel.label}
           handleInputEmailDelete={this.handleInputEmailDelete}
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleDelete={fetchDeleteGroupIfNeeded}
@@ -258,6 +283,12 @@ class GlobalGroups extends PureComponent<Props> {
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
                     <div className={globalStyles.contentBlockHeader}>
+                      <div
+                        className={labelClassName}
+                        style={{ textTransform: 'lowercase' }}
+                      >
+                        {label}
+                      </div>
                       <div style={{ marginBottom: 20 }}>
                         <ul
                           className={`${menuClassName} nav nav-pills`}
@@ -335,8 +366,8 @@ const connector: Connector<{}, Props> = connect(
       dispatch(actionGetGroupsIfNeeded.fetchGetGroupsIfNeeded()),
     fetchAddGroupIfNeeded: (label: string) =>
       dispatch(actionAddGroupIfNeeded.fetchAddGroupIfNeeded(label)),
-    fetchDeleteGroupIfNeeded: (id: string) =>
-      dispatch(actionDeleteGroupIfNeeded.fetchDeleteGroupIfNeeded(id))
+    fetchDeleteGroupIfNeeded: (id: string, name: string) =>
+      dispatch(actionDeleteGroupIfNeeded.fetchDeleteGroupIfNeeded(id, name))
   })
 );
 

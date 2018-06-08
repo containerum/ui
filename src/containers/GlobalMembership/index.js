@@ -214,7 +214,7 @@ class GlobalMembership extends PureComponent<Props> {
         <Notification status={statusAdd} name={loginAdd} method={methodAdd} />
 
         <AdminDeleteUserModal
-          type="Delete User "
+          type="Delete User"
           name={this.state.inputEmailDelete}
           isOpened={this.state.isOpen}
           typeName={this.state.idUser}

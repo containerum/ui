@@ -105,10 +105,10 @@ const AdminDeleteUserModal = ({
           >
             {type}
           </h4>
-          {type !== 'Delete User' && (
+          {type === 'Delete Group' && (
             <span className={modalStyles.modalRedisText}>
-              Deleting your {type} is irreversible.<br />
-              Enter your {type} name (<strong style={{ color: '#29abe2' }}>
+              Deleting your group is irreversible.<br />
+              Enter your group name (<strong style={{ color: '#29abe2' }}>
                 {typeName}
               </strong>) below to confirm you want to permanently delete it:
             </span>
@@ -124,7 +124,7 @@ const AdminDeleteUserModal = ({
           <input
             type="text"
             className="form-control volume-form-input"
-            placeholder={type === 'Delete User' ? 'Email' : 'Name'}
+            placeholder={type === 'Delete User' ? 'Email' : 'Group'}
             value={name}
             onChange={e => handleChangeNameOfType(e)}
           />

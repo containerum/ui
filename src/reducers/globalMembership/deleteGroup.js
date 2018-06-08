@@ -36,7 +36,7 @@ export default (state = initialState, action: Action) => {
       return _.assign(state, {
         readyStatus: DELETE_GROUP_SUCCESS,
         isFetching: action.isFetching,
-        data: action.data,
+        data: action.name,
         status: action.status,
         method: action.method,
         idDep: action.idDep,
