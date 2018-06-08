@@ -5,32 +5,39 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
 
-// import { routerLinks } from '../../config';
+import { routerLinks } from '../../config';
 import Notification from '../Notification';
-import DeleteUserGroupshipModal from '../../components/CustomerModal/DeleteMembershipModal';
-import AddUserInGroupshipModal from '../../components/CustomerModal/AddMembershipModal';
-import GlobalGroupsList from '../../components/GlobalGroupsList';
+import AdminDeleteUserModal from '../../components/CustomerModal/AdminDeleteUserModal';
+import AddGlobalUserMembershipModal from '../../components/CustomerModal/AddGlobalMembershipModal';
+import GlobalUserListInGroup from '../../components/GlobalUserListInGroup';
 import type { Dispatch, ReduxState } from '../../types';
-import * as actionAddGroupIfNeeded from '../../actions/globalMembership/addGroup';
-import * as actionDeleteGroupIfNeeded from '../../actions/globalMembership/deleteGroup';
-import * as actionGetGroupsIfNeeded from '../../actions/globalMembership/getGroups';
+import * as actionAddGlobalUserIfNeeded from '../../actions/globalMembership/addUser';
+import * as actionAdminDeleteUserIfNeeded from '../../actions/globalMembership/adminDeleteUser';
+import * as actionGetGroup from '../../actions/globalMembership/getGroup';
 import {
-  GET_GROUPS_FAILURE,
-  GET_GROUPS_REQUESTING,
-  GET_GROUPS_INVALID
-} from '../../constants/globalMembershipConstants/getGroups';
+  GET_GROUP_FAILURE,
+  GET_GROUP_REQUESTING,
+  GET_GROUP_INVALID,
+  GET_GROUP_SUCCESS
+} from '../../constants/globalMembershipConstants/getGroup';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 import globalStyles from '../../theme/global.scss';
 import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
-import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
-import { routerLinks } from '../../config';
+// import { fetchAddGlobalUser } from '../../actions/globalMembership/addUser';
 
 const globalClass = className.bind(globalStyles);
 
 const containerClassName = globalClass(
   'contentBlockContainer',
   'contentBlockContainerMembership'
+);
+const labelClassName = globalClass(
+  'contentBlockHeaderLabelText',
+  'contentBlockHeaderLabelMembership',
+  'contentBlockHeaderLabelMain',
+  'contentBlockHeaderLabelNamespaceInfo'
 );
 const menuClassName = globalClass(
   'contentBlockMenu',
@@ -42,17 +49,18 @@ const liClassName = globalClass(
 );
 
 type Props = {
+  match: Object,
   history: Object,
-  addGroupReducer: Object,
-  deleteGroupReducer: Object,
-  getGroupsReducer: Object,
+  adminDeleteUserReducer: Object,
+  getGroupReducer: Object,
   getProfileReducer: Object,
-  fetchGetGroupsIfNeeded: () => void,
-  fetchAddGroupIfNeeded: (idName: string, data: Object) => void,
-  fetchDeleteGroupIfNeeded: (id: string) => void
+  addUserReducer: Object,
+  fetchGetGroupIfNeeded: (idGroup: string) => void,
+  fetchAddGlobalUserIfNeeded: (login: string) => void,
+  fetchAdminDeleteUserIfNeeded: (username: string) => void
 };
 
-class GlobalGroups extends PureComponent<Props> {
+class GlobalMembership extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,62 +75,37 @@ class GlobalGroups extends PureComponent<Props> {
       errAdd: null
     };
   }
-  componentDidMount() {
-    const { fetchGetGroupsIfNeeded } = this.props;
-    fetchGetGroupsIfNeeded();
-  }
+
   componentWillUpdate(nextProps) {
-    const { getProfileReducer, history } = this.props;
+    const { fetchGetGroupIfNeeded, match, history } = this.props;
     if (
-      getProfileReducer.readyStatus !==
+      this.props.getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      if (nextProps.getProfileReducer.data.role !== 'admin') {
+      if (nextProps.getProfileReducer.data.role === 'admin') {
+        fetchGetGroupIfNeeded(match.params.idGroup);
+      } else {
         history.push(routerLinks.namespaces);
       }
     }
   }
+
   choiceAccessNewUser = access => {
     this.setState({
       ...this.state,
       accessNewUser: access
     });
   };
-  // changeAccessUser = (login, access) => {
-  //   const { fetchAddGroupIfNeeded, match } = this.props;
-  //   const user = this.state.membersList.find(
-  //     member => member.username === login
-  //   );
-  //   const { access_level: newAccessLevel } = user;
-  //   if (access !== newAccessLevel) {
-  //     this.setState(
-  //       {
-  //         ...this.state,
-  //         accessUser: access
-  //       },
-  //       () => {
-  //         fetchAddGroupIfNeeded(
-  //           match.params.idName,
-  //           {
-  //             username: login,
-  //             access
-  //           },
-  //           'change'
-  //         );
-  //       }
-  //     );
-  //   }
-  // };
-  handleDeleteGroup = (idUser, e) => {
-    e.stopPropagation();
+
+  handleDeleteDMembers = idUser => {
     this.setState({
       ...this.state,
       idUser,
       isOpen: true
     });
   };
-  handleAddGroupsAdd = () => {
+  handleAddMembersAdd = () => {
     this.setState({
       ...this.state,
       isOpenAdd: true
@@ -157,12 +140,12 @@ class GlobalGroups extends PureComponent<Props> {
     });
   };
 
-  renderGlobalGroupsList = () => {
-    const { history, getGroupsReducer } = this.props;
+  renderGlobalMembershipList = () => {
+    const { match, getGroupReducer } = this.props;
     if (
-      !getGroupsReducer.readyStatus ||
-      getGroupsReducer.readyStatus === GET_GROUPS_INVALID ||
-      getGroupsReducer.readyStatus === GET_GROUPS_REQUESTING
+      !getGroupReducer.readyStatus ||
+      getGroupReducer.readyStatus === GET_GROUP_INVALID ||
+      getGroupReducer.readyStatus === GET_GROUP_REQUESTING
     ) {
       return (
         <div
@@ -176,66 +159,72 @@ class GlobalGroups extends PureComponent<Props> {
       );
     }
 
-    if (getGroupsReducer.readyStatus === GET_GROUPS_FAILURE) {
-      return <p>Oops, Failed to load data of Groups!</p>;
+    if (getGroupReducer.readyStatus === GET_GROUP_FAILURE) {
+      return <p>Oops, Failed to load data of Namespaces!</p>;
     }
 
     return (
-      <GlobalGroupsList
-        history={history}
-        groupsList={getGroupsReducer.data.groups}
+      <GlobalUserListInGroup
+        idName={match.params.idName}
+        membersList={getGroupReducer.data.members}
         changeAccessUser={this.changeAccessUser}
-        handleDeleteGroup={this.handleDeleteGroup}
+        handleDeleteDMembers={this.handleDeleteDMembers}
       />
     );
   };
 
   render() {
     const {
-      deleteGroupReducer,
-      addGroupReducer,
-      fetchAddGroupIfNeeded,
-      fetchDeleteGroupIfNeeded
+      match,
+      adminDeleteUserReducer,
+      getGroupReducer,
+      addUserReducer,
+      fetchAddGlobalUserIfNeeded,
+      fetchAdminDeleteUserIfNeeded
     } = this.props;
     const {
       status: statusAdd,
-      idName: idNameAdd,
+      login: loginAdd,
       isFetching: isFetchingAdd,
       method: methodAdd
-    } = addGroupReducer;
+    } = addUserReducer;
     const {
       status: statusDelete,
       idName: idNameDelete,
       err: errDelete
-    } = deleteGroupReducer;
+    } = adminDeleteUserReducer;
+    const label =
+      getGroupReducer.readyStatus === GET_GROUP_SUCCESS
+        ? getGroupReducer.data.label
+        : match.params.idGroup;
     return (
       <div>
-        <Helmet title="Groups" />
+        <Helmet title={`Users of ${label}`} />
         <Notification
           status={statusDelete}
           name={idNameDelete}
           errorMessage={errDelete}
         />
-        <Notification status={statusAdd} name={idNameAdd} method={methodAdd} />
-        <DeleteUserGroupshipModal
+
+        <Notification status={statusAdd} name={loginAdd} method={methodAdd} />
+
+        <AdminDeleteUserModal
           type="Delete Group"
           name={this.state.inputEmailDelete}
           isOpened={this.state.isOpen}
           typeName={this.state.idUser}
           handleInputEmailDelete={this.handleInputEmailDelete}
           handleOpenCloseModal={this.handleOpenCloseModal}
-          onHandleDelete={fetchDeleteGroupIfNeeded}
+          onHandleDelete={fetchAdminDeleteUserIfNeeded}
         />
-        <AddUserInGroupshipModal
-          type="Add Group"
+        <AddGlobalUserMembershipModal
+          type="Add User"
           name={this.state.inputEmailAdd}
           isOpened={this.state.isOpenAdd}
           handleInputEmailAdd={this.handleInputEmailAdd}
           handleOpenCloseModal={this.handleOpenCloseModalAdd}
-          onHandleAdd={fetchAddGroupIfNeeded}
+          onHandleAdd={fetchAddGlobalUserIfNeeded}
           isFetchingAdd={isFetchingAdd}
-          accessNewUser={this.state.accessNewUser}
-          choiceAccessNewUser={this.choiceAccessNewUser}
           err={this.state.errAdd}
         />
         <div className={globalStyles.contentBlock}>
@@ -246,6 +235,25 @@ class GlobalGroups extends PureComponent<Props> {
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
                     <div className={globalStyles.contentBlockHeader}>
+                      <div
+                        className={labelClassName}
+                        style={{
+                          textTransform: 'lowercase',
+                          display: 'inline-block'
+                        }}
+                      >
+                        {label}
+                      </div>
+                      <div
+                        style={{
+                          float: 'right',
+                          display: 'inline-block'
+                        }}
+                        className={globalStyles.contentBlockHeaderLabelDescript}
+                        onClick={() => console.log('delete group')}
+                      >
+                        Delete Group
+                      </div>
                       <div style={{ marginBottom: 20 }}>
                         <ul
                           className={`${menuClassName} nav nav-pills`}
@@ -261,22 +269,9 @@ class GlobalGroups extends PureComponent<Props> {
                                 activeClassName={
                                   globalStyles.contentBlockMenuLiActive
                                 }
-                                to={routerLinks.getGlobalMembership}
+                                to="/membership/users"
                               >
                                 Users
-                              </NavLink>
-                            </li>
-                            <li
-                              className={`${liClassName} nav-item`}
-                              style={{ width: 'auto' }}
-                            >
-                              <NavLink
-                                activeClassName={
-                                  globalStyles.contentBlockMenuLiActive
-                                }
-                                to={routerLinks.getGlobalGroups}
-                              >
-                                Groups
                               </NavLink>
                             </li>
                           </li>
@@ -285,15 +280,15 @@ class GlobalGroups extends PureComponent<Props> {
                               className={`${
                                 buttonsStyles.buttonUIAddMembership
                               } btn btn-outline-primary fancybox`}
-                              onClick={this.handleAddGroupsAdd}
+                              onClick={this.handleAddMembersAdd}
                             >
-                              Add Group
+                              Add User
                             </button>
                           </li>
                         </ul>
                       </div>
 
-                      {this.renderGlobalGroupsList()}
+                      {this.renderGlobalMembershipList()}
                     </div>
                   </div>
                 </div>
@@ -308,24 +303,35 @@ class GlobalGroups extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
-    addGroupReducer,
-    deleteGroupReducer,
+    getNamespaceUsersAccessReducer,
+    getNamespaceReducer,
+    addNamespaceUserAccessReducer,
     getProfileReducer,
-    getGroupsReducer
+    getGroupReducer,
+    adminDeleteUserReducer,
+    addUserReducer
   }: ReduxState) => ({
-    addGroupReducer,
-    deleteGroupReducer,
+    getNamespaceUsersAccessReducer,
+    getNamespaceReducer,
+    addNamespaceUserAccessReducer,
     getProfileReducer,
-    getGroupsReducer
+    getGroupReducer,
+    adminDeleteUserReducer,
+    addUserReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetGroupsIfNeeded: () =>
-      dispatch(actionGetGroupsIfNeeded.fetchGetGroupsIfNeeded()),
-    fetchAddGroupIfNeeded: (label: string) =>
-      dispatch(actionAddGroupIfNeeded.fetchAddGroupIfNeeded(label)),
-    fetchDeleteGroupIfNeeded: (id: string) =>
-      dispatch(actionDeleteGroupIfNeeded.fetchDeleteGroupIfNeeded(id))
+    fetchGetGroupIfNeeded: (idGroup: string) =>
+      dispatch(actionGetGroup.fetchGetGroupIfNeeded(idGroup)),
+    fetchAddGlobalUserIfNeeded: (login: string) =>
+      dispatch(actionAddGlobalUserIfNeeded.fetchAddGlobalUserIfNeeded(login)),
+    fetchAdminDeleteUserIfNeeded: (idName: string, username: string) =>
+      dispatch(
+        actionAdminDeleteUserIfNeeded.fetchAdminDeleteUserIfNeeded(
+          idName,
+          username
+        )
+      )
   })
 );
 
-export default connector(GlobalGroups);
+export default connector(GlobalMembership);

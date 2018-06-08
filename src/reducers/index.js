@@ -77,6 +77,7 @@ import addGroupReducer from './globalMembership/addGroup';
 import deleteGroupReducer from './globalMembership/deleteGroup';
 import adminDeleteUserReducer from './globalMembership/adminDeleteUser';
 import addUserReducer from './globalMembership/addUser';
+import getGroupReducer from './globalMembership/getGroup';
 
 const reducers = {
   loginReducer,
@@ -152,6 +153,7 @@ const reducers = {
   deleteGroupReducer,
   adminDeleteUserReducer,
   addUserReducer,
+  getGroupReducer,
   router,
   loadingBar: loadingBarReducer
 };
