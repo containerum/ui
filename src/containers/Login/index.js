@@ -10,7 +10,7 @@ import cookie from 'react-cookies';
 import isEmail from 'validator/lib/isEmail';
 import queryString from 'query-string';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import * as actionLogin from '../../actions/login';
 import * as actionConfirmSignUp from '../../actions/confirmSignUp';
 import {
@@ -25,6 +25,7 @@ import { RECOVERY_PASSWORD_SUCCESS } from '../../constants/recoveryPasswordConst
 import globalStyles from '../../theme/global.scss';
 import buttonStyles from '../../theme/buttons.scss';
 import styles from './index.scss';
+import logoContainerum from '../../images/logo_containerum_exon_lv.svg';
 
 type Props = {
   loginReducer: Object,
@@ -260,6 +261,17 @@ class Login extends PureComponent<Props> {
                 )}
               </div>
             </div>
+            {sourceType !== 'ONLINE' && (
+              <img
+                src={logoContainerum}
+                alt="logo containerum"
+                style={{
+                  bottom: 30,
+                  position: 'absolute',
+                  right: 170
+                }}
+              />
+            )}
           </div>
         </div>
       </div>

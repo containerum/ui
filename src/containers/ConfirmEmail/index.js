@@ -7,9 +7,10 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
+import logoContainerum from '../../images/logo_containerum_exon_lv.svg';
 
 type Props = {
   signUpReducer: Object,
@@ -69,6 +70,17 @@ class ConfirmEmail extends PureComponent<Props> {
                 sent to your inbox.
               </div>
             </div>
+            {sourceType !== 'ONLINE' && (
+              <img
+                src={logoContainerum}
+                alt="logo containerum"
+                style={{
+                  bottom: 30,
+                  position: 'absolute',
+                  right: 170
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
