@@ -14,8 +14,7 @@ module.exports = {
   // wsApi: 'wss://192.168.88.210:8082',
   // webApi: 'https://api.containerum.io:8082',
   // wsApi: 'wss://api.containerum.io:8082',
-  appRecaptcha:
-    process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS',
+  appRecaptcha: process.env.RECAPTCHA || null,
   sourceType: process.env.SOURCE_TYPE || 'ONLINE',
   defaultCountry: process.env.COUNTRY || 'US',
   app: {
@@ -56,9 +55,11 @@ module.exports = {
     resizeNamespace: '/namespace/:idName/resize',
     resizeNamespaceLink: (idName: string) => `/namespace/${idName}/resize`,
     // volumes: '/volumes',
-    createVolume: '/createVolume',
-    resizeVolume: '/volume/:idVol/resize',
-    resizeVolumeLink: (idVol: string) => `/volume/${idVol}/resize`,
+    createVolume: '/namespace/:idName/createVolume',
+    createVolumeLink: (idName: string) => `/namespace/${idName}/createVolume`,
+    resizeVolume: '/namespace/:idName/resizeVolume/:idVol',
+    resizeVolumeLink: (idName: string, idVol: string) =>
+      `/namespace/${idName}/resizeVolume/${idVol}`,
     getDeployments: '/namespaces/:idName/deployments',
     getDeploymentsLink: (idName: string) => `/namespaces/${idName}/deployments`,
     getDeployment: '/namespace/:idName/deployments/:idDep',
@@ -82,6 +83,8 @@ module.exports = {
       `/namespace/${idName}/deployment/${idDep}/pod/${idPod}/logs`,
     getServices: '/namespaces/:idName/services',
     getServicesLink: (idName: string) => `/namespaces/${idName}/services`,
+    getVolumes: '/namespaces/:idName/volumes',
+    getVolumesLink: (idName: string) => `/namespaces/${idName}/volumes`,
     createService: '/namespace/:idName/createService',
     getConfigMaps: '/namespaces/:idName/configMaps',
     createConfigMap: '/namespace/:idName/createConfigMap',

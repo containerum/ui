@@ -39,24 +39,26 @@ const getVolumeInvalidToken = () => ({
 });
 
 export const fetchGetVolume = (
+  idName: string,
   idVol: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(getVolumeRequest());
 
-  const response = await axios.get(`${URL}/api/volumes/${idVol}`, {
-    headers: {
-      'User-Client': browser,
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
+  const response = await axios.get(
+    `${URL}/namespaces/${idName}/volumes/${idVol}`,
+    {
+      headers: {
+        'User-Client': browser,
+        'User-Token': accessToken
+      },
+      validateStatus: status => status >= 200 && status <= 505
+    }
+  );
   const { status, data, config } = response;
   switch (status) {
     case 200: {
@@ -77,8 +79,8 @@ export const fetchGetVolume = (
   }
 };
 
-export const fetchGetVolumeIfNeeded = (idVol: string): ThunkAction => (
-  dispatch: Dispatch,
-  getState: GetState,
-  axios: any
-) => dispatch(fetchGetVolume(idVol, axios));
+export const fetchGetVolumeIfNeeded = (
+  idName: string,
+  idVol: string
+): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
+  dispatch(fetchGetVolume(idName, idVol, axios));

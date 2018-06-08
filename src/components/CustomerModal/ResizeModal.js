@@ -53,6 +53,7 @@ type Props = {
   label: string,
   tariff: string,
   id: string,
+  idName: string,
   name: string,
   data: Object,
   isOpened: boolean,
@@ -65,6 +66,7 @@ const CreateModal = ({
   label,
   tariff,
   id,
+  idName,
   name,
   data,
   isOpened,
@@ -78,7 +80,12 @@ const CreateModal = ({
     e.preventDefault();
     if (tariff && name) {
       handleOpenCloseModal();
-      onHandleResize(name, id, label);
+
+      if (idName) {
+        onHandleResize(name, idName, tariff);
+      } else {
+        onHandleResize(name, id, label);
+      }
     }
   };
 

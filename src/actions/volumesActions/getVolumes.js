@@ -38,20 +38,19 @@ const getVolumesInvalidToken = () => ({
 });
 
 export const fetchGetVolumes = (
+  id: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(getVolumesRequest());
 
-  const response = await axios.get(`${URL}/api/volumes`, {
+  const response = await axios.get(`${URL}/namespaces/${id}/volumes`, {
     headers: {
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });
@@ -75,8 +74,8 @@ export const fetchGetVolumes = (
   }
 };
 
-export const fetchGetVolumesIfNeeded = (): ThunkAction => (
+export const fetchGetVolumesIfNeeded = (id: string): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetVolumes(axios));
+) => dispatch(fetchGetVolumes(id, axios));

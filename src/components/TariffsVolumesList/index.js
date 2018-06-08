@@ -14,7 +14,8 @@ type Props = {
     storageLimit: string,
     label: string,
     price: number,
-    pricePerDay: string
+    pricePerDay: string,
+    id: string
   }) => void,
   changeProfile: string,
   isFullDataOfProfile: boolean,
@@ -32,7 +33,7 @@ const TariffsVolumesList = ({
 }: Props) => (
   <div className="row">
     {data.map(tariff => {
-      const { storage_limit: storageLimit, price, label } = tariff;
+      const { storage_limit: storageLimit, price, label, id } = tariff;
       const pricePerDay = `$${(price / 30).toFixed(2)} daily`;
       const isActiveTariff = label === active;
       return (
@@ -62,7 +63,8 @@ const TariffsVolumesList = ({
                       label,
                       storageLimit,
                       price,
-                      pricePerDay
+                      pricePerDay,
+                      id
                     });
                   } else {
                     console.log('Active');

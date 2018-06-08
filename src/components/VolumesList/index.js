@@ -2,119 +2,148 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
-import volumePng from '../../images/deployment.png';
+import volumePng from '../../images/volume.svg';
+import globalStyles from '../../theme/global.scss';
+import depStyles from '../../containers/Deployments/index.scss';
+import { timeago } from '../../functions/timeago';
+
+const globalClass = className.bind(globalStyles);
+
+const tableClassName = globalClass('contentBlockTable', 'table');
+
+const contentClassName = globalClass(
+  'contentBlockContent',
+  'contentBlockContentFull'
+);
 
 type Props = {
   data: Array<Object>,
+  dataNamespace: Object,
+  idName: string,
   handleDeleteVolume: (idVol: string) => void
 };
 
-const VolumesList = ({ data, handleDeleteVolume }: Props) => {
-  // console.log(data);
+const VolumesList = ({
+  data,
+  dataNamespace,
+  idName,
+  handleDeleteVolume
+}: Props) => {
   const handleClickDeleteVolume = name => {
     handleDeleteVolume(name);
   };
   const handleClose = e => {
     e.stopPropagation();
   };
+  const ta = timeago();
+  const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   return (
-    <div className="row double">
-      {data.map(volume => {
-        const {
-          name,
-          used_size: usedSize,
-          total_size: totalSize,
-          status
-        } = volume;
-        const id = name;
-        const currentStatus =
-          status === 'Started' || status === 'Created'
-            ? 'Active'
-            : 'Not Active';
-        return (
-          <div className="col-md-4" id={id} key={id}>
-            <div className="content-block-container card-container hover-action">
-              <div className="content-block-header">
-                <div className="content-block-header-label">
-                  <div className="content-block-header-img">
-                    <img src={volumePng} alt="ns-icon" />
-                  </div>
-                  <div className="content-block-header-label__text content-block-header-label_main">
-                    {name}
-                  </div>
-                </div>
-                <div
-                  className="content-block-header-extra-panel"
-                  onClick={e => handleClose(e)}
-                  onKeyPress={e => handleClose(e)}
-                  role="menuitem"
-                  tabIndex={0}
-                >
-                  <div className="content-block-header-extra-panel dropdown no-arrow">
-                    <i
-                      className="content-block-header__more ion-more dropdown-toggle"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    />
-                    <ul
-                      className="dropdown-menu dropdown-menu-right"
-                      role="menu"
+    <div>
+      {data.length >= 1 && (
+        <table className={tableClassName} width="1170">
+          <thead>
+            <tr>
+              <td className={depStyles.td_1_Dep} />
+              <td className={depStyles.td_2_Dep}>Name</td>
+              <td className={depStyles.td_5_Dep}>Total (GB)</td>
+              <td className={depStyles.td_6_Dep}>Age</td>
+              <td className={depStyles.td_7_Dep} />
+              <td className={depStyles.td_7_Dep} />
+            </tr>
+          </thead>
+          <tbody>
+            {data.map(volume => {
+              const { name, created_at: createdAt, capacity } = volume;
+              const milliseconds = Date.parse(createdAt);
+              const dateHours = new Date(milliseconds);
+              const dateValue = ta.ago(dateHours, true);
+              const id = `item_${name}`;
+              return (
+                <tr key={id} className={globalStyles.tableHover} id={id}>
+                  <td className={depStyles.td_1_Dep}>
+                    <img src={volumePng} alt="volume" />
+                  </td>
+                  <td className={depStyles.td_2_Dep}>{name}</td>
+                  <td className={depStyles.td_4_Dep}>{capacity}</td>
+                  <td className={depStyles.td_6_Dep}>{dateValue}</td>
+                  <td className={depStyles.td_7_Dep}>
+                    {/* <div className="warning"> </div> */}
+                  </td>
+                  <td
+                    className={`${depStyles.td_7_Dep} dropdown no-arrow`}
+                    onClick={e => handleClose(e)}
+                    onKeyPress={e => handleClose(e)}
+                    role="presentation"
+                  >
+                    {handleClickDeleteVolume &&
+                      accessToNamespace !== 'read' && (
+                        <i
+                          className={`${globalStyles.contentBlockTableMore} ${
+                            globalStyles.dropdownToggle
+                          }
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        />
+                      )}
+                    {handleClickDeleteVolume &&
+                      accessToNamespace !== 'read' && (
+                        <ul
+                          className={` dropdown-menu dropdown-menu-right ${
+                            globalStyles.dropdownMenu
+                          }`}
+                          role="menu"
+                        >
+                          <NavLink
+                            activeClassName="active"
+                            className={`dropdown-item  ${
+                              globalStyles.dropdownItem
+                            }`}
+                            to={routerLinks.resizeVolumeLink(idName, name)}
+                          >
+                            Resize
+                          </NavLink>
+                          <button
+                            className={`dropdown-item text-danger ${
+                              globalStyles.dropdownItem
+                            }`}
+                            onClick={() => handleClickDeleteVolume(name)}
+                          >
+                            Delete
+                          </button>
+                        </ul>
+                      )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+      {!data.length && (
+        <div className={contentClassName}>
+          <div className="tab-content">
+            <div className="tab-pane deployments active">
+              <table className={tableClassName} width="1170">
+                <thead>
+                  <tr>
+                    <td
+                      className={depStyles.td_1_DepNoDep}
+                      style={{ paddingLeft: '60px' }}
                     >
-                      <NavLink
-                        activeClassName="active"
-                        className="dropdown-item"
-                        to={routerLinks.resizeVolumeLink(name)}
-                      >
-                        Resize
-                      </NavLink>
-                      <button
-                        className="dropdown-item text-danger"
-                        onClick={() => handleClickDeleteVolume(name)}
-                        onKeyPress={() => handleClickDeleteVolume(name)}
-                      >
-                        Delete
-                      </button>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="content-block-content card-block">
-                <div className="content-block__info-item ">
-                  <div className="content-block__info-name inline">
-                    Usage / Total :{' '}
-                  </div>
-                  <div className="content-block__info-text inline">
-                    {usedSize} / {totalSize} GB
-                  </div>
-                </div>
-                <div className="content-block__info-item">
-                  <div className="content-block__info-name inline">
-                    Status:{' '}
-                  </div>
-                  <div className="content-block__info-text inline">
-                    {currentStatus}
-                  </div>
-                </div>
-              </div>
+                      You have no active Volumes yet.
+                    </td>
+                  </tr>
+                </thead>
+              </table>
             </div>
           </div>
-        );
-      })}
-      <div className="col-md-4 align-middle">
-        <NavLink
-          activeClassName="active"
-          to={routerLinks.createVolume}
-          className="add-new-block content-block-content card-container hover-action "
-        >
-          <div className="action action-vol">
-            <i>+</i> Add a volume
-          </div>
-        </NavLink>
-      </div>
+        </div>
+      )}
     </div>
   );
 };
