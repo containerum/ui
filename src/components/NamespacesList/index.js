@@ -57,12 +57,12 @@ const NamespacesList = ({
     <div className="row double">
       {data &&
         data.map(namespace => {
-          const { label, id, resources } = namespace;
-          const access = role === 'admin' ? 'owner' : data.access;
+          const { label, id, resources, access } = namespace;
+          const currentAccess = role === 'admin' ? 'owner' : access;
           const { memory, cpu } = resources.used;
           const { memory: memoryLimit, cpu: cpuLimit } = resources.hard;
-          const accessStyleName = access
-            ? access[0].toUpperCase() + access.slice(1)
+          const accessStyleName = currentAccess
+            ? currentAccess[0].toUpperCase() + currentAccess.slice(1)
             : 'Owner';
           const classNameBadge = styleNamespaces({
             [`namespaceInfoBadge${accessStyleName}`]: true
