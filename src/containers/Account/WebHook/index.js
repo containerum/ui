@@ -9,7 +9,7 @@ import className from 'classnames/bind';
 import * as actionGetImagesToken from '../../../actions/webHookActions/getImagesToken';
 import * as actionDeleteImageToken from '../../../actions/webHookActions/deleteImageToken';
 import * as actionCreateImageToken from '../../../actions/webHookActions/createImageToken';
-import type { Dispatch, ReduxState } from '../../../types/index';
+import type { Dispatch, ReduxState } from '../../../types';
 import {
   GET_IMAGES_TOKEN_INVALID,
   GET_IMAGES_TOKEN_REQUESTING,
@@ -267,7 +267,7 @@ export class WebHook extends PureComponent<Props> {
                 className="block-item__copy-string block-item__copy-string-docker"
               >
                 <div className="block-item__content-string block-item__content-string-docker">
-                  http://web.api.containerum.io:5000/api/namespaces/&#123;NAMESPACE_NAME&#125;/deployments/&#123;DEPLOY_NAME&#125;/containers/&#123;CONTAINER_NAME&#125;/set/image/{
+                  http://web.api.containerum.io:5000/api/namespaces/&#123;PROJECT_NAME&#125;/deployments/&#123;DEPLOY_NAME&#125;/containers/&#123;CONTAINER_NAME&#125;/set/image/{
                     firstImageToken
                   }
                 </div>

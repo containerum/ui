@@ -8,7 +8,7 @@ import {
   DELETE_NAMESPACE_SUCCESS,
   DELETE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/deleteNamespace';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_NAMESPACE_INVALID,

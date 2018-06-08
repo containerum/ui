@@ -7,6 +7,7 @@ import toastr from 'toastr';
 import { Base64 } from 'js-base64';
 import className from 'classnames/bind';
 
+import { routerLinks } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionGetConfigMaps from '../../actions/configMapActions/getConfigMaps';
@@ -107,7 +108,7 @@ class ConfigMaps extends PureComponent<Props> {
       nextProps.getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS
     ) {
       const { params, path } = this.props.match;
-      const isEqualCreatePath = path === '/namespace/:idName/createConfigMap';
+      const isEqualCreatePath = path === routerLinks.createConfigMap;
       if (isEqualCreatePath) {
         const { idName } = params;
         this.setState({
@@ -346,7 +347,7 @@ class ConfigMaps extends PureComponent<Props> {
       return <p>Oops, Failed to load data of ConfigMaps!</p>;
     }
 
-    const isEqualGetPath = path === '/namespaces/:idName/configmaps';
+    const isEqualGetPath = path === routerLinks.getConfigMaps;
     const { idName } = params;
     return (
       <ConfigMapListView
@@ -390,7 +391,7 @@ class ConfigMaps extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
       getProfileReducer.readyStatus === GET_PROFILE_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Projects!</p>;
     }
 
     const {
@@ -436,8 +437,8 @@ class ConfigMaps extends PureComponent<Props> {
       configMapName: deleteConfigMapName,
       err: deleteErr
     } = this.props.deleteConfigMapReducer;
-    const isEqualGetPath = path === '/namespaces/:idName/configmaps';
-    const isEqualCreatePath = path === '/namespace/:idName/createConfigMap';
+    const isEqualGetPath = path === routerLinks.getConfigMaps;
+    const isEqualCreatePath = path === routerLinks.createConfigMap;
     return (
       <div>
         <Helmet title="ConfigMaps" />

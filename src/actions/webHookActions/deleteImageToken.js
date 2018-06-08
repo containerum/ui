@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_IMAGE_TOKEN_REQUESTING,
   DELETE_IMAGE_TOKEN_SUCCESS,
   DELETE_IMAGE_TOKEN_FAILURE
 } from '../../constants/webHookConstants/deleteImageToken';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const deleteImageTokenRequest = () => ({
   type: DELETE_IMAGE_TOKEN_REQUESTING,
@@ -66,7 +66,7 @@ export const fetchDeleteImageToken = (
       if (data.message === 'invalid token received') {
         dispatch(deleteImageTokenInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(deleteImageTokenFailure(data.message, status, label));
       break;
     }

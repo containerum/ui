@@ -8,7 +8,7 @@ import {
   DELETE_SERVICE_SUCCESS,
   DELETE_SERVICE_FAILURE
 } from '../../constants/serviceConstants/deleteService';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_SERVICE_INVALID,

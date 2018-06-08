@@ -8,7 +8,7 @@ import {
   CREATE_DEPLOYMENT_SUCCESS,
   CREATE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/createDeployment';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CREATE_DEPLOYMENT_INVALID,

@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_VOLUME_REQUESTING,
   DELETE_VOLUME_SUCCESS,
   DELETE_VOLUME_FAILURE
 } from '../../constants/volumeConstants/deleteVolume';
-import { webApi } from '../../config';
+import { webApi, routerLinks } from '../../config';
 
 const deleteVolumeRequest = () => ({
   type: DELETE_VOLUME_REQUESTING,
@@ -68,7 +68,7 @@ export const fetchDeleteVolume = (
       if (data.message === 'invalid token received') {
         dispatch(deleteVolumeInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(deleteVolumeFailure(data.message, status, idVol));
       break;
     }

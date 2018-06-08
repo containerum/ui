@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_ACCOUNT_REQUESTING,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE
 } from '../../constants/profileConstants/deleteAccount';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const deleteAccountRequest = () => ({
   type: DELETE_ACCOUNT_REQUESTING,
@@ -69,7 +69,7 @@ export const fetchDeleteAccount = (
       if (data.message === 'invalid token received') {
         dispatch(deleteAccountInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(deleteAccountFailure(data.message, status));
       break;
     }

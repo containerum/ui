@@ -8,7 +8,7 @@ import {
   CREATE_DOMAIN_SUCCESS,
   CREATE_DOMAIN_FAILURE
 } from '../../constants/serviceConstants/createDomain';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CREATE_DOMAIN_INVALID,

@@ -8,7 +8,7 @@ import {
   GET_BALANCE_SUCCESS,
   GET_BALANCE_FAILURE
 } from '../../constants/billingConstants/getBalance';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_BALANCE_INVALID,

@@ -9,7 +9,7 @@ import className from 'classnames/bind';
 // import _ from 'lodash/fp';
 
 import * as actionChangePassword from '../../../actions/profileActions/changePassword';
-import type { Dispatch, ReduxState } from '../../../types/index';
+import type { Dispatch, ReduxState } from '../../../types';
 import { CHANGE_PASSWORD_SUCCESS } from '../../../constants/profileConstants/changePassword';
 import Notification from '../../Notification';
 import LoadButton from '../../../components/LoadButton';

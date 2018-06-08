@@ -50,7 +50,7 @@ const DomainsList = ({ data, handleDeleteDomain, namespacesLabels }: Props) => {
             <tr>
               <td className={domainsStyles.td_1_Domains}>Domain</td>
               <td className={domainsStyles.td_1_Domains}>Service</td>
-              <td className={domainsStyles.td_2_Domains}>Namespace</td>
+              <td className={domainsStyles.td_2_Domains}>Project</td>
               <td className={domainsStyles.td_3_Domains} />
             </tr>
           </thead>

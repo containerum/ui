@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_GROUP_REQUESTING,
   DELETE_GROUP_SUCCESS,
   DELETE_GROUP_FAILURE
 } from '../../constants/globalMembershipConstants/deleteGroup';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const deleteGroupRequest = () => ({
   type: DELETE_GROUP_REQUESTING,
@@ -58,7 +58,7 @@ export const fetchDeleteGroup = (
       if (data.message === 'invalid token received') {
         dispatch(deleteGroupInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(deleteGroupFailure(data.message));
       break;
     }
@@ -68,7 +68,7 @@ export const fetchDeleteGroup = (
     // }
     default: {
       dispatch(deleteGroupFailure(data.message));
-      dispatch(push('/dashboard'));
+      dispatch(push(routerLinks.dashboard));
     }
   }
 };

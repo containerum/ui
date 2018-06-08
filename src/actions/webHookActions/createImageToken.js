@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   CREATE_IMAGE_TOKEN_REQUESTING,
   CREATE_IMAGE_TOKEN_SUCCESS,
   CREATE_IMAGE_TOKEN_FAILURE
 } from '../../constants/webHookConstants/createImageToken';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const createImageTokenRequest = () => ({
   type: CREATE_IMAGE_TOKEN_REQUESTING,
@@ -74,7 +74,7 @@ export const fetchCreateImageToken = (
       if (data.message === 'invalid token received') {
         dispatch(createImageTokenInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(createImageTokenFailure(data.message, status, label));
       break;
     }

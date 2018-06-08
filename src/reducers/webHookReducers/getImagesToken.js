@@ -8,7 +8,7 @@ import {
   GET_IMAGES_TOKEN_SUCCESS,
   GET_IMAGES_TOKEN_FAILURE
 } from '../../constants/webHookConstants/getImagesToken';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_IMAGES_TOKEN_INVALID,

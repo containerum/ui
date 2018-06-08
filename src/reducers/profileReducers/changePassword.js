@@ -8,7 +8,7 @@ import {
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAILURE
 } from '../../constants/profileConstants/changePassword';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CHANGE_PASSWORD_INVALID,

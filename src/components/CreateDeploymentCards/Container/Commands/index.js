@@ -3,7 +3,7 @@
 import React from 'react';
 import className from 'classnames/bind';
 
-import InputControl from '../../../InputControl/index';
+import InputControl from '../../../InputControl';
 
 import globalStyles from '../../../../theme/global.scss';
 import inputStyles from '../../../../components/InputControl/index.scss';

@@ -217,7 +217,7 @@ const NamespacesList = ({
               className={`${addNewBlockClassName} ${styles.addNewBlock}`}
             >
               <div className={styles.action}>
-                <i>+</i> Add a namespace
+                <i>+</i> Add a Project
               </div>
             </NavLink>
           </div>
@@ -230,7 +230,7 @@ const NamespacesList = ({
             className={`${addNewBlockClassName} ${styles.addNewBlock}`}
           >
             <div className={styles.action}>
-              <i>+</i> Add a namespace
+              <i>+</i> Add a Project
             </div>
           </NavLink>
         </div>
@@ -240,7 +240,7 @@ const NamespacesList = ({
         role === 'user' && (
           <div className="col-md-4 align-middle">
             <div className="content-block-container card-container hover-action">
-              You don`t have permission to namespaces. Contact the administrator
+              You don`t have permission to projects. Contact the administrator
               to obtain permission.
             </div>
           </div>

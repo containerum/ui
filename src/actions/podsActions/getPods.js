@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_PODS_REQUESTING,
   GET_PODS_SUCCESS,
   GET_PODS_FAILURE
 } from '../../constants/podsConstants/getPods';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getPodsRequest = () => ({
   type: GET_PODS_REQUESTING,
@@ -67,7 +67,7 @@ export const fetchGetPods = (
       if (data.message === 'invalid token received') {
         dispatch(getPodsInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getPodsFailure(data.message, status, idName));
       break;
     }

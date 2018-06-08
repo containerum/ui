@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_SERVICE_REQUESTING,
   DELETE_SERVICE_SUCCESS,
   DELETE_SERVICE_FAILURE
 } from '../../constants/serviceConstants/deleteService';
-import { webApi } from '../../config';
+import { webApi, routerLinks } from '../../config';
 
 const deleteServiceRequest = () => ({
   type: DELETE_SERVICE_REQUESTING,
@@ -68,7 +68,7 @@ export const fetchDeleteService = (
       if (data.message === 'invalid token received') {
         dispatch(deleteServiceInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(deleteServiceFailure(data.message, status, idSrv));
       break;
     }

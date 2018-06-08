@@ -3,14 +3,14 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   RESIZE_NAMESPACE_REQUESTING,
   RESIZE_NAMESPACE_SUCCESS,
   RESIZE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/resizeNamespace';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const resizeNamespaceRequest = () => ({
   type: RESIZE_NAMESPACE_REQUESTING,
@@ -69,14 +69,14 @@ export const fetchResizeNamespace = (
   switch (status) {
     case 200: {
       dispatch(resizeNamespaceSuccess(data, 202, config.method, idName, label));
-      dispatch(push('/namespaces'));
+      dispatch(push(routerLinks.namespaces));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(resizeNamespaceInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(resizeNamespaceFailure(data.message, status, idName));
       break;
     }

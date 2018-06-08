@@ -3,14 +3,14 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   CREATE_INTERNAL_SERVICE_INVALID,
   CREATE_INTERNAL_SERVICE_REQUESTING,
   CREATE_INTERNAL_SERVICE_SUCCESS,
   CREATE_INTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/createInternalService';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const createInternalServiceInvalid = () => ({
   type: CREATE_INTERNAL_SERVICE_INVALID
@@ -91,7 +91,7 @@ export const fetchCreateInternalService = (
       if (data.message === 'invalid token received') {
         dispatch(createInternalInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else
         dispatch(createInternalServiceFailure(data.message, status, idSrv));
       break;

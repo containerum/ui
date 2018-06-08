@@ -8,7 +8,7 @@ import {
   GET_NAMESPACES_SUCCESS,
   GET_NAMESPACES_FAILURE
 } from '../../constants/namespacesConstants/getNamespaces';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_NAMESPACES_INVALID,

@@ -5,7 +5,7 @@ import React from 'react';
 import Scrollspy from 'react-scrollspy';
 import { HashLink } from 'react-router-hash-link';
 
-import { sourceType } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import scrollById from '../../functions/scrollById';
 
 import accountStyles from '../../containers/Account/index.scss';
@@ -43,7 +43,7 @@ const ProfileSidebar = ({ type }: Props) => (
             </div>
           ) : (
             <HashLink
-              to="/account#profile"
+              to={`${routerLinks.account}#profile`}
               className={`${accountStyles.navLink} nav-link`}
             >
               Profile
@@ -62,7 +62,7 @@ const ProfileSidebar = ({ type }: Props) => (
             </div>
           ) : (
             <HashLink
-              to="/account#password"
+              to={`${routerLinks.account}#password`}
               className={`${accountStyles.navLink} nav-link`}
             >
               Password
@@ -81,7 +81,7 @@ const ProfileSidebar = ({ type }: Props) => (
             </div>
           ) : (
             <HashLink
-              to="/account#cli"
+              to={`${routerLinks.account}#cli`}
               className={`${accountStyles.navLink} nav-link`}
             >
               CLI
@@ -100,7 +100,7 @@ const ProfileSidebar = ({ type }: Props) => (
             </div>
           ) : (
             <HashLink
-              to="/account#delete-account"
+              to={`${routerLinks.account}#delete-account`}
               className={`${accountStyles.navLink} nav-link`}
             >
               Delete Account
@@ -138,7 +138,7 @@ const ProfileSidebar = ({ type }: Props) => (
               </div>
             ) : (
               <HashLink
-                to="/billing#information"
+                to={`${routerLinks.billing}#information`}
                 className={`${accountStyles.navLink} nav-link`}
               >
                 Information
@@ -157,7 +157,7 @@ const ProfileSidebar = ({ type }: Props) => (
               </div>
             ) : (
               <HashLink
-                to="/billing#add-funds"
+                to={`${routerLinks.billing}#add-funds`}
                 className={`${accountStyles.navLink} nav-link`}
               >
                 Payment method
@@ -192,7 +192,7 @@ const ProfileSidebar = ({ type }: Props) => (
               </div>
             ) : (
               <HashLink
-                to="/billing#history"
+                to={`${routerLinks.billing}#history`}
                 className={`${accountStyles.navLink} nav-link`}
               >
                 History

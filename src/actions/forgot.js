@@ -9,7 +9,7 @@ import {
   FORGOT_SUCCESS,
   FORGOT_FAILURE
 } from '../constants/forgotConstants';
-import { webApi } from '../config';
+import { webApi, routerLinks } from '../config';
 
 const forgotRequest = email => ({
   type: FORGOT_REQUESTING,
@@ -51,7 +51,7 @@ export const fetchForgot = (
   switch (status) {
     case 202: {
       dispatch(forgotSuccess(data));
-      dispatch(push('/checkEmail'));
+      dispatch(push(routerLinks.checkEmail));
       break;
     }
     default: {

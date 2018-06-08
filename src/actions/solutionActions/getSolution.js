@@ -2,7 +2,8 @@
 
 import { push } from 'react-router-redux';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import { routerLinks } from '../../config';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_SOLUTION_REQUESTING,
   GET_SOLUTION_SUCCESS,
@@ -75,7 +76,7 @@ export const fetchGetSolution = (
       case 400: {
         dispatch(getSolutionRequest());
         if (data.message === 'invalid token received') {
-          dispatch(push('/login'));
+          dispatch(push(routerLinks.login));
         }
         break;
       }

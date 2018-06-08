@@ -8,7 +8,7 @@ import {
   CREATE_IMAGE_TOKEN_SUCCESS,
   CREATE_IMAGE_TOKEN_FAILURE
 } from '../../constants/webHookConstants/createImageToken';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CREATE_IMAGE_TOKEN_INVALID,

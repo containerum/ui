@@ -8,7 +8,7 @@ import {
   GET_RESOURCES_SUCCESS,
   GET_RESOURCES_FAILURE
 } from '../../constants/statisticsConstants/getResourcesConstants';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_RESOURCES_INVALID,

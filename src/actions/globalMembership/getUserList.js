@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_USER_LIST_REQUESTING,
   GET_USER_LIST_SUCCESS,
   GET_USER_LIST_FAILURE
 } from '../../constants/globalMembershipConstants/getUserList';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getUserListRequest = () => ({
   type: GET_USER_LIST_REQUESTING,
@@ -57,7 +57,7 @@ export const fetchGetUserList = (
       if (data.message === 'invalid token received') {
         dispatch(getUserListInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getUserListFailure(data.message));
       break;
     }
@@ -67,7 +67,7 @@ export const fetchGetUserList = (
     // }
     default: {
       dispatch(getUserListFailure(data.message));
-      dispatch(push('/dashboard'));
+      dispatch(push(routerLinks.dashboard));
     }
   }
 };

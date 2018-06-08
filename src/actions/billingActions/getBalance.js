@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_BALANCE_REQUESTING,
   GET_BALANCE_SUCCESS,
   GET_BALANCE_FAILURE
 } from '../../constants/billingConstants/getBalance';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getBalanceRequest = () => ({
   type: GET_BALANCE_REQUESTING,
@@ -60,7 +60,7 @@ export const fetchGetBalance = (
       if (data.message === 'invalid token received') {
         dispatch(getBalanceInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getBalanceFailure(data.message));
       break;
     }

@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_PROFILE_REPORT_REQUESTING,
   GET_PROFILE_REPORT_SUCCESS,
   GET_PROFILE_REPORT_FAILURE
 } from '../../constants/profileConstants/getProfileReport';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getProfileReportRequest = () => ({
   type: GET_PROFILE_REPORT_REQUESTING,
@@ -59,7 +59,7 @@ export const fetchGetProfileReport = (
       if (data.message === 'invalid token received') {
         dispatch(getProfileInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getProfileReportFailure(data.message));
       break;
     }

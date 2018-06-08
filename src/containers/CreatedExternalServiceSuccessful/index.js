@@ -8,7 +8,7 @@ import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
 
-// import { routerLinks } from '../../config';
+import { routerLinks } from '../../config';
 import NavigationHeaderItem from '../NavigationHeader';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetService from '../../actions/serviceActions/getService';
@@ -121,7 +121,7 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
         </div>
         <div className="text-right">
           <NavLink
-            to={`/namespaces/${match.params.idName}`}
+            to={routerLinks.namespaceLink(match.params.idName)}
             className={`${buttonsStyles.buttonUILoadButtonTransparency} ${
               globalStyles.marginBottom50
             } ${globalStyles.marginTop10}`}
@@ -131,12 +131,13 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
               marginRight: '20px'
             }}
           >
-            Go to namespace
+            Go to project
           </NavLink>
           <NavLink
-            to={`/namespace/${match.params.idName}/service/${
+            to={routerLinks.createDomainLink(
+              match.params.idName,
               match.params.idSrv
-            }/createDomain`}
+            )}
             className={`${buttonsStyles.buttonUILoadButton} ${
               globalStyles.marginBottom50
             } ${globalStyles.marginTop10}`}

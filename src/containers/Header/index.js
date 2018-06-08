@@ -128,7 +128,7 @@ export class Header extends PureComponent<Props> {
                     to={routerLinks.namespaces}
                     className={styles.headerTopMenuLink}
                   >
-                    Namespaces
+                    Projects
                   </NavLink>
                 </li>
                 {/* <li className="header-top-menu__li nav-item"> */}
