@@ -16,15 +16,17 @@ const deleteGroupRequest = () => ({
   isFetching: true
 });
 
-const deleteGroupSuccess = data => ({
+const deleteGroupSuccess = (name, status) => ({
   type: DELETE_GROUP_SUCCESS,
   isFetching: false,
-  data
+  name,
+  status
 });
 
-const deleteGroupFailure = err => ({
+const deleteGroupFailure = (err, status) => ({
   type: DELETE_GROUP_FAILURE,
   isFetching: false,
+  status,
   err
 });
 
@@ -34,6 +36,7 @@ const deleteGroupInvalidToken = () => ({
 
 export const fetchDeleteGroup = (
   id: string,
+  name: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
@@ -51,7 +54,7 @@ export const fetchDeleteGroup = (
   const { status, data } = response;
   switch (status) {
     case 202: {
-      dispatch(deleteGroupSuccess(data));
+      dispatch(deleteGroupSuccess(name, status));
       break;
     }
     case 400: {
@@ -59,7 +62,7 @@ export const fetchDeleteGroup = (
         dispatch(deleteGroupInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push(routerLinks.login));
-      } else dispatch(deleteGroupFailure(data.message));
+      } else dispatch(deleteGroupFailure(data.message, status));
       break;
     }
     // default: {
@@ -67,14 +70,14 @@ export const fetchDeleteGroup = (
     //   dispatch(push('/login'));
     // }
     default: {
-      dispatch(deleteGroupFailure(data.message));
+      dispatch(deleteGroupFailure(data.message, status));
       dispatch(push(routerLinks.dashboard));
     }
   }
 };
 
-export const fetchDeleteGroupIfNeeded = (id: string): ThunkAction => (
-  dispatch: Dispatch,
-  getState: GetState,
-  axios: any
-) => dispatch(fetchDeleteGroup(id, axios));
+export const fetchDeleteGroupIfNeeded = (
+  id: string,
+  name: string
+): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
+  dispatch(fetchDeleteGroup(id, name, axios));

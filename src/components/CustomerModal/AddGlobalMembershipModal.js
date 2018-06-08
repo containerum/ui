@@ -66,6 +66,7 @@ const AddGlobalUserMembershipModal = ({
         login: name
       };
       onHandleAdd(addData);
+      handleCloseModal();
     }
   };
   const handleChangeNameOfType = e => {
@@ -104,9 +105,16 @@ const AddGlobalUserMembershipModal = ({
           >
             {type}
           </h4>
-          <span className={modalStyles.modalRedisText}>
-            Fill in the information below to add new user
-          </span>
+          {type === 'Add User' && (
+            <span className={modalStyles.modalRedisText}>
+              Fill in the information below to add new user
+            </span>
+          )}
+          {type === 'Add Group' && (
+            <span className={modalStyles.modalRedisText}>
+              Fill in the information below to add new group
+            </span>
+          )}
           {err ? (
             <div className={modalStyles.membershipAlert}>
               <div className={modalStyles.membershipAlertItem}>
@@ -117,11 +125,18 @@ const AddGlobalUserMembershipModal = ({
           ) : (
             ''
           )}
-          <span className={modalStyles.modalRedisText}>User Email address</span>
+          {type === 'Add User' && (
+            <span className={modalStyles.modalRedisText}>
+              User Email address
+            </span>
+          )}
+          {type === 'Add Group' && (
+            <span className={modalStyles.modalRedisText}>Group Name</span>
+          )}
           <input
-            type="email"
+            type={type === 'Add User' ? 'email' : 'text'}
             className="form-control volume-form-input"
-            placeholder="Email"
+            placeholder={type === 'Add User' ? 'Email' : 'Group'}
             value={name}
             onChange={e => handleChangeNameOfType(e)}
             style={{ marginBottom: '15px' }}
