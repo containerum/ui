@@ -40,35 +40,34 @@ const resizeVolumeInvalidToken = () => ({
 
 export const fetchResizeVolume = (
   idVol: string,
+  idName: string,
   tariff: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(resizeVolumeRequest());
 
   const response = await axios.put(
-    `${URL}/api/volumes/${idVol}`,
+    `${URL}/namespaces/${idName}/volumes/${idVol}`,
     {
-      tariff_label: tariff
+      tariff_id: tariff
     },
     {
       headers: {
         'User-Client': browser,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { status, data, config } = response;
   switch (status) {
-    case 202: {
-      dispatch(resizeVolumeSuccess(data, status, config.method, idVol));
-      dispatch(push(routerLinks.volumes));
+    case 200: {
+      dispatch(resizeVolumeSuccess(data, 202, config.method, idVol));
+      dispatch(push(routerLinks.getVolumesLink(idName)));
       break;
     }
     case 400: {
@@ -87,6 +86,7 @@ export const fetchResizeVolume = (
 
 export const fetchResizeVolumeIfNeeded = (
   idVol: string,
+  idName: string,
   tariff: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchResizeVolume(idVol, tariff, axios));
+  dispatch(fetchResizeVolume(idVol, idName, tariff, axios));

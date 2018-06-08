@@ -9,7 +9,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE
 } from '../constants/signUpConstants';
-import { routerLinks, webApi } from '../config';
+import { webApi, appRecaptcha, routerLinks } from '../config';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -49,7 +49,7 @@ export const fetchSignUp = (
     {
       login: email,
       password,
-      recaptcha
+      recaptcha: appRecaptcha ? recaptcha : 'offline'
     },
     {
       headers: {

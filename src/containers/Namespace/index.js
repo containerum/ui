@@ -39,6 +39,7 @@ import NavigationHeaderItem from '../NavigationHeader';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import DeploymentsPage from '../Deployments';
 import ServicesPage from '../Services';
+import VolumesPage from '../Volumes';
 import ConfigMapsPage from '../ConfigMaps';
 import ns from '../../images/ns-1.svg';
 
@@ -261,6 +262,16 @@ export class Namespace extends PureComponent<Props> {
                     >
                       <NavLink
                         activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.getVolumesLink(match.params.idName)}
+                      >
+                        Volumes
+                      </NavLink>
+                    </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
                         to={routerLinks.getConfigMapsLink(match.params.idName)}
                       >
                         ConfigMaps
@@ -274,6 +285,23 @@ export class Namespace extends PureComponent<Props> {
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
                         to={routerLinks.createServiceLink(match.params.idName)}
+                        className={`${
+                          buttonsStyles.buttonUICreate
+                        } btn btn-outline-primary`}
+                      >
+                        Create
+                      </NavLink>
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
+                {history.location.pathname.indexOf('/volumes') + 1 &&
+                isReadAccess ? (
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                      <NavLink
+                        to={routerLinks.createVolumeLink(match.params.idName)}
                         className={`${
                           buttonsStyles.buttonUICreate
                         } btn btn-outline-primary`}
@@ -334,6 +362,11 @@ export class Namespace extends PureComponent<Props> {
                   path={`${match.path}/services`}
                   exact
                   component={ServicesPage}
+                />
+                <Route
+                  path={`${match.path}/volumes`}
+                  exact
+                  component={VolumesPage}
                 />
                 <Route
                   path={`${match.path}/configMaps`}

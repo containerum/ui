@@ -12,7 +12,7 @@ const apiWSProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'wss' : 'ws';
 const apiPort = process.env.API_PORT;
 const api = `${apiProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
 const apiWS = `${apiWSProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
-const recaptcha = process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS';
+const recaptcha = process.env.RECAPTCHA || null;
 const defaultCountry = process.env.COUNTRY || 'US';
 const pathToPublic = path.join(process.cwd(), './public');
 const pathToJS = `${pathToPublic}/assets/main.*.js`;

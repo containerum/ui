@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 
+import LoadButton from '../../components/LoadButton';
+import alert from '../../images/alertAddUserMembership.svg';
 import buttonsStyles from '../../theme/buttons.scss';
 
 import modalStyles from './index.scss';
@@ -29,61 +31,48 @@ const customStyles = {
     borderRadius: 'none',
     outline: 'none',
     padding: '0',
-    maxHeight: '450px'
+    maxHeight: '590px'
   }
 };
 
 type Props = {
   type: string,
   name: string,
-  typeName: string,
-  inputName: string,
-  idName: string,
   isOpened: boolean,
-  minLengthName: ?number,
-  handleInputName: () => void,
-  onHandleDelete: (name: string) => void,
-  handleOpenCloseModal: () => void
+  isFetchingAdd: boolean,
+  handleInputEmailAdd: () => void,
+  onHandleAdd: (idName: string) => void,
+  handleOpenCloseModal: () => void,
+  err: string
 };
 
-const DeleteModal = ({
+const AddGlobalUserMembershipModal = ({
   type,
   name,
-  inputName,
-  typeName,
   isOpened,
-  idName,
-  minLengthName,
-  handleInputName,
+  isFetchingAdd,
+  handleInputEmailAdd,
   handleOpenCloseModal,
-  onHandleDelete
+  onHandleAdd,
+  err
 }: Props) => {
   const handleCloseModal = () => {
     handleOpenCloseModal();
   };
-  const handleSubmitDeletingEssence = e => {
+  const handleSubmitAddingEssence = e => {
     e.preventDefault();
-    const minLength = minLengthName || 2;
-    if (name.length >= minLength) {
-      handleOpenCloseModal();
-
-      if (idName) {
-        onHandleDelete(name, idName, inputName);
-      } else {
-        onHandleDelete(name, inputName);
-      }
+    if (name.length >= 2) {
+      const addData = {
+        login: name
+      };
+      onHandleAdd(addData);
     }
   };
   const handleChangeNameOfType = e => {
     const inputValue = e.target.value.trim();
-    handleInputName(inputValue);
+    handleInputEmailAdd(inputValue);
   };
 
-  const styleSubmit =
-    inputName === typeName
-      ? `${buttonsStyles.buttonModalSelect} btn`
-      : `${buttonsStyles.buttonModalAction} btn`;
-  const isDisabledSubmit = inputName !== typeName;
   return (
     <Modal
       isOpen={isOpened}
@@ -94,7 +83,7 @@ const DeleteModal = ({
       className={`${modalStyles.modalDialogCreate} modal-dialog`}
     >
       <form
-        onSubmit={e => handleSubmitDeletingEssence(e)}
+        onSubmit={e => handleSubmitAddingEssence(e)}
         className={`${modalStyles.modalContent} modal-content`}
       >
         <div className={`${modalStyles.modalHeader} modal-header`}>
@@ -111,23 +100,34 @@ const DeleteModal = ({
             className={`${modalStyles.modalTitle} ${
               globalStyles.marginBottom30
             } modal-title`}
+            id="modalLabel"
           >
             {type}
           </h4>
           <span className={modalStyles.modalRedisText}>
-            Deleting your {type} is irreversible.<br />
-            Enter your {type} name (<strong style={{ color: '#29abe2' }}>
-              {typeName}
-            </strong>) below to confirm you want to permanently delete it:
+            Fill in the information below to add new user
           </span>
+          {err ? (
+            <div className={modalStyles.membershipAlert}>
+              <div className={modalStyles.membershipAlertItem}>
+                <img src={alert} alt="alert" />
+              </div>
+              <div>{err}</div>
+            </div>
+          ) : (
+            ''
+          )}
+          <span className={modalStyles.modalRedisText}>User Email address</span>
           <input
-            type="text"
+            type="email"
             className="form-control volume-form-input"
-            placeholder="Name"
-            // value={name}
+            placeholder="Email"
+            value={name}
             onChange={e => handleChangeNameOfType(e)}
+            style={{ marginBottom: '15px' }}
           />
         </div>
+
         <div className={`${modalStyles.modalFooter} modal-footer`}>
           <button
             type="button"
@@ -136,17 +136,19 @@ const DeleteModal = ({
           >
             Cancel
           </button>
-          <button
+          <LoadButton
+            style={{
+              height: '40px'
+            }}
             type="submit"
-            className={styleSubmit}
-            disabled={isDisabledSubmit}
-          >
-            Delete
-          </button>
+            buttonText="Add"
+            isFetching={isFetchingAdd}
+            baseClassButton={`${buttonsStyles.buttonModalSelect} btn`}
+          />
         </div>
       </form>
     </Modal>
   );
 };
 
-export default DeleteModal;
+export default AddGlobalUserMembershipModal;

@@ -3,8 +3,8 @@ import Modal from 'react-modal';
 
 import buttonsStyles from '../../theme/buttons.scss';
 
-import modalStyles from './index.scss';
 import globalStyles from '../../theme/global.scss';
+import modalStyles from './index.scss';
 
 const customStyles = {
   overlay: {
@@ -37,25 +37,21 @@ type Props = {
   type: string,
   name: string,
   typeName: string,
-  inputName: string,
   idName: string,
   isOpened: boolean,
-  minLengthName: ?number,
-  handleInputName: () => void,
-  onHandleDelete: (name: string) => void,
+  onHandleDelete: (idName: string, name: string) => void,
+  handleInputEmailDelete: (value: string) => void,
   handleOpenCloseModal: () => void
 };
 
-const DeleteModal = ({
+const AdminDeleteUserModal = ({
   type,
   name,
-  inputName,
   typeName,
-  isOpened,
   idName,
-  minLengthName,
-  handleInputName,
+  isOpened,
   handleOpenCloseModal,
+  handleInputEmailDelete,
   onHandleDelete
 }: Props) => {
   const handleCloseModal = () => {
@@ -63,27 +59,21 @@ const DeleteModal = ({
   };
   const handleSubmitDeletingEssence = e => {
     e.preventDefault();
-    const minLength = minLengthName || 2;
-    if (name.length >= minLength) {
+    if (name.length >= 2) {
       handleOpenCloseModal();
-
-      if (idName) {
-        onHandleDelete(name, idName, inputName);
-      } else {
-        onHandleDelete(name, inputName);
-      }
+      onHandleDelete(idName, name);
     }
   };
   const handleChangeNameOfType = e => {
     const inputValue = e.target.value.trim();
-    handleInputName(inputValue);
+    handleInputEmailDelete(inputValue);
   };
 
   const styleSubmit =
-    inputName === typeName
+    name === typeName
       ? `${buttonsStyles.buttonModalSelect} btn`
       : `${buttonsStyles.buttonModalAction} btn`;
-  const isDisabledSubmit = inputName !== typeName;
+  const isDisabledSubmit = name !== typeName;
   return (
     <Modal
       isOpen={isOpened}
@@ -111,20 +101,31 @@ const DeleteModal = ({
             className={`${modalStyles.modalTitle} ${
               globalStyles.marginBottom30
             } modal-title`}
+            id="modalLabel"
           >
             {type}
           </h4>
-          <span className={modalStyles.modalRedisText}>
-            Deleting your {type} is irreversible.<br />
-            Enter your {type} name (<strong style={{ color: '#29abe2' }}>
-              {typeName}
-            </strong>) below to confirm you want to permanently delete it:
-          </span>
+          {type !== 'Delete User' && (
+            <span className={modalStyles.modalRedisText}>
+              Deleting your {type} is irreversible.<br />
+              Enter your {type} name (<strong style={{ color: '#29abe2' }}>
+                {typeName}
+              </strong>) below to confirm you want to permanently delete it:
+            </span>
+          )}
+          {type === 'Delete User' && (
+            <span className={modalStyles.modalRedisText}>
+              Enter user’s Email (<strong style={{ color: '#29abe2' }}>
+                example@domain.com
+              </strong>) below to<br />
+              confirm you want to permanently delete it:
+            </span>
+          )}
           <input
             type="text"
             className="form-control volume-form-input"
-            placeholder="Name"
-            // value={name}
+            placeholder={type === 'Delete User' ? 'Email' : 'Name'}
+            value={name}
             onChange={e => handleChangeNameOfType(e)}
           />
         </div>
@@ -149,4 +150,4 @@ const DeleteModal = ({
   );
 };
 
-export default DeleteModal;
+export default AdminDeleteUserModal;

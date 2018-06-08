@@ -1,21 +1,20 @@
-// const apiHost = process.env.API_HOST || 'api.containerum.io';
-// const apiProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'https' : 'http';
-// const apiWSProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'wss' : 'ws';
-// const apiPort = process.env.API_PORT;
-// const api = `${apiProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
-// const apiWS = `${apiWSProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
+const apiHost = process.env.API_HOST || 'api.containerum.io';
+const apiProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'https' : 'http';
+const apiWSProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'wss' : 'ws';
+const apiPort = process.env.API_PORT;
+const api = `${apiProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
+const apiWS = `${apiWSProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
 
 module.exports = {
   host: process.env.NODE_HOST || 'localhost', // Define your host from 'package.json'
   port: process.env.PORT,
-  // webApi: api,
-  // wsApi: apiWS,
-  webApi: 'http://192.168.88.210:8082',
-  wsApi: 'wss://192.168.88.210:8082',
+  webApi: api,
+  wsApi: apiWS,
+  // webApi: 'http://192.168.88.210:8082',
+  // wsApi: 'wss://192.168.88.210:8082',
   // webApi: 'https://api.containerum.io:8082',
   // wsApi: 'wss://api.containerum.io:8082',
-  appRecaptcha:
-    process.env.RECAPTCHA || '6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS',
+  appRecaptcha: process.env.RECAPTCHA || null,
   sourceType: process.env.SOURCE_TYPE || 'ONLINE',
   defaultCountry: process.env.COUNTRY || 'US',
   app: {
@@ -56,9 +55,11 @@ module.exports = {
     resizeNamespace: '/project/:idName/resize',
     resizeNamespaceLink: (idName: string) => `/project/${idName}/resize`,
     // volumes: '/volumes',
-    createVolume: '/createVolume',
-    resizeVolume: '/volume/:idVol/resize',
-    resizeVolumeLink: (idVol: string) => `/volume/${idVol}/resize`,
+    createVolume: '/project/:idName/createVolume',
+    createVolumeLink: (idName: string) => `/project/${idName}/createVolume`,
+    resizeVolume: '/project/:idName/resizeVolume/:idVol',
+    resizeVolumeLink: (idName: string, idVol: string) =>
+      `/project/${idName}/resizeVolume/${idVol}`,
     getDeployments: '/projects/:idName/deployments',
     getDeploymentsLink: (idName: string) => `/projects/${idName}/deployments`,
     getDeployment: '/project/:idName/deployments/:idDep',
@@ -82,13 +83,12 @@ module.exports = {
       `/project/${idName}/deployment/${idDep}/pod/${idPod}/logs`,
     getServices: '/projects/:idName/services',
     getServicesLink: (idName: string) => `/projects/${idName}/services`,
+    getVolumes: '/projects/:idName/volumes',
+    getVolumesLink: (idName: string) => `/projects/${idName}/volumes`,
     createService: '/project/:idName/createService',
     getConfigMaps: '/projects/:idName/configMaps',
-    getConfigMapsLink: (idName: string) => `/projects/${idName}/configMaps`,
     createConfigMap: '/project/:idName/createConfigMap',
-    createConfigMapLink: (idName: string) =>
-      `/project/${idName}/createConfigMap`,
-    viewConfigMapFiles: '/project/:idName/configMaps/:idCnf/file/:idFile',
+    viewConfigMapFiles: '/project/:idName/configmaps/:idCnf/file/:idFile',
     viewConfigMapFilesLink: (idName: string, idCnf: string, idFile: string) =>
       `/project/${idName}/configMaps/${idCnf}/file/${idFile}`,
     createDomain: '/project/:idName/service/:idSrv/createDomain',
@@ -119,7 +119,8 @@ module.exports = {
     exonLV: 'http://exon.lv',
     documentation: 'https://docs.containerum.com/docs/about',
     fastDeploy: 'https://docs.containerum.com/how-to',
-    helloWorld: 'https://docs.containerum.com/docs/about',
+    helloWorld:
+      'https://docs.containerum.com/how-to/?_ga=2.48830502.1413750744.1528358625-1916900540.1524062321',
     solutions: 'https://github.com/containerum',
     blog: 'https://medium.com/@containerum',
     startGuide: 'https://docs.containerum.com/docs/start-guide',

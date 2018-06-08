@@ -39,27 +39,29 @@ const deleteVolumeInvalidToken = () => ({
 
 export const fetchDeleteVolume = (
   idVol: string,
+  idName: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(deleteVolumeRequest());
 
-  const response = await axios.delete(`${URL}/api/volumes/${idVol}`, {
-    headers: {
-      'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
+  const response = await axios.delete(
+    `${URL}/namespaces/${idName}/volumes/${idVol}`,
+    {
+      headers: {
+        'User-Client': browser,
+        'User-Token': accessToken
+      },
+      validateStatus: status => status >= 200 && status <= 505
+    }
+  );
   const { data, status, config } = response;
   switch (status) {
-    case 202: {
-      dispatch(deleteVolumeSuccess(data, status, config.method, idVol));
+    case 200: {
+      dispatch(deleteVolumeSuccess(data, 202, config.method, idVol));
       break;
     }
     case 400: {
@@ -76,8 +78,8 @@ export const fetchDeleteVolume = (
   }
 };
 
-export const fetchDeleteVolumeIfNeeded = (idVol: string): ThunkAction => (
-  dispatch: Dispatch,
-  getState: GetState,
-  axios: any
-) => dispatch(fetchDeleteVolume(idVol, axios));
+export const fetchDeleteVolumeIfNeeded = (
+  idVol: string,
+  idName: string
+): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
+  dispatch(fetchDeleteVolume(idVol, idName, axios));

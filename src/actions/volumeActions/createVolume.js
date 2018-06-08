@@ -9,7 +9,6 @@ import {
   CREATE_VOLUME_SUCCESS,
   CREATE_VOLUME_FAILURE
 } from '../../constants/volumeConstants/createVolume';
-// import isTokenExist from '../functions/isTokenExist';
 import { webApi, routerLinks } from '../../config';
 
 // const isServer = typeof window === 'undefined';
@@ -43,28 +42,27 @@ const createVolumeInvalidToken = () => ({
 
 export const fetchCreateVolume = (
   idVol: string,
+  idName: string,
   tariff: string,
   price: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(createVolumeRequest());
 
   const response = await axios.post(
-    `${URL}/api/volumes`,
+    `${URL}/namespaces/${idName}/volumes`,
     {
       label: idVol,
-      tariff_label: tariff
+      tariff_id: tariff
     },
     {
       headers: {
         'User-Client': browser,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }
@@ -82,7 +80,7 @@ export const fetchCreateVolume = (
       //     action: `UI_create_vol_${price}`
       //   });
       // }
-      dispatch(push(routerLinks.volumes));
+      dispatch(push(routerLinks.getVolumesLink(idName)));
       break;
     }
     case 400: {
@@ -101,7 +99,8 @@ export const fetchCreateVolume = (
 
 export const fetchCreateVolumeIfNeeded = (
   idVol: string,
+  idName: string,
   tariff: string,
   price: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchCreateVolume(idVol, tariff, price, axios));
+  dispatch(fetchCreateVolume(idVol, idName, tariff, price, axios));

@@ -3,12 +3,7 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type {
-  Dispatch,
-  GetState,
-  ThunkAction,
-  ReduxState
-} from '../../types';
+import type { Dispatch, GetState, ThunkAction, ReduxState } from '../../types';
 import {
   GET_VOLUMES_TARIFFS_REQUESTING,
   GET_VOLUMES_TARIFFS_SUCCESS,
@@ -42,16 +37,14 @@ export const fetchGetVolumesTariffs = (
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(getVolumesTariffsRequest());
 
-  const response = await axios.get(`${URL}/api/volume_tariffs`, {
+  const response = await axios.get(`${URL}/tariffs/volume`, {
     headers: {
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });
