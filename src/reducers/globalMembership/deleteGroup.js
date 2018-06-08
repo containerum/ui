@@ -8,7 +8,7 @@ import {
   DELETE_GROUP_SUCCESS,
   DELETE_GROUP_FAILURE
 } from '../../constants/globalMembershipConstants/deleteGroup';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_GROUP_INVALID,

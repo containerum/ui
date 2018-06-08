@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import InputControl from '../InputControl/index';
+import InputControl from '../InputControl';
 import globalStyles from '../../theme/global.scss';
 
 type Props = {
@@ -36,7 +36,7 @@ const CreateCustomNamespaceInfo = ({
         <div className="col-md-7">
           <div className={globalStyles.containerTitle}>
             {label}{' '}
-            <span className={globalStyles.containerTitleText}>namespace</span>
+            <span className={globalStyles.containerTitleText}>project</span>
           </div>
         </div>
       ) : (
@@ -51,7 +51,7 @@ const CreateCustomNamespaceInfo = ({
             {/* <span className="myTooltip" data-toggle="tooltip">?</span> */}
             {/* </Tooltip> */}
           </div>
-          <div className="containerSubTitle">Enter Namespace name</div>
+          <div className="containerSubTitle">Enter Project name</div>
           <InputControl
             value={label}
             id="deploymentName"
@@ -62,7 +62,7 @@ const CreateCustomNamespaceInfo = ({
             baseClassNameLabel={`form-group__label ${label &&
               'form-group__label-always-onfocus'}`}
             labelText="Name"
-            textHelper="Namespace name can only contain letters, numbers and characters"
+            textHelper="Project name can only contain letters, numbers and characters"
             baseClassNameHelper="form-group__helper"
             handleChangeInput={e => handleChangeInput('label', e.target.value)}
           />

@@ -8,7 +8,7 @@ import {
   GET_DEPLOYMENTS_SUCCESS,
   GET_DEPLOYMENTS_FAILURE
 } from '../../constants/deploymentsConstants/getDeployments';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_DEPLOYMENTS_INVALID,

@@ -8,7 +8,7 @@ import {
   GET_SUPPORT_GROUPS_SUCCESS,
   GET_SUPPORT_GROUPS_FAILURE
 } from '../../constants/supportConstants/getSupportGroupsConstants';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_SUPPORT_GROUPS_INVALID,

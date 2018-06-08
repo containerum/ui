@@ -8,7 +8,7 @@ import {
   GET_GROUPS_SUCCESS,
   GET_GROUPS_FAILURE
 } from '../../constants/globalMembershipConstants/getGroups';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_GROUPS_INVALID,

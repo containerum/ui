@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_PROFILE_TARIFFS_REQUESTING,
   GET_PROFILE_TARIFFS_SUCCESS,
   GET_PROFILE_TARIFFS_FAILURE
 } from '../../constants/profileConstants/getProfileTariffs';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getProfileTariffsRequest = () => ({
   type: GET_PROFILE_TARIFFS_REQUESTING,
@@ -63,7 +63,7 @@ export const fetchGetProfileTariffs = (
       if (data.message === 'invalid token received') {
         dispatch(getProfileTariffsInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getProfileTariffsFailure(data.message));
       break;
     }

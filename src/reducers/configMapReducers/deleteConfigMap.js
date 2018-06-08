@@ -8,7 +8,7 @@ import {
   DELETE_CONFIG_MAP_SUCCESS,
   DELETE_CONFIG_MAP_FAILURE
 } from '../../constants/configMapConstants/deleteConfigMap';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_CONFIG_MAP_INVALID,

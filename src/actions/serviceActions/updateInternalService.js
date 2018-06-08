@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   UPDATE_INTERNAL_SERVICE_REQUESTING,
   UPDATE_INTERNAL_SERVICE_SUCCESS,
   UPDATE_INTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/updateInternalService';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const updateInternalServiceRequest = () => ({
   type: UPDATE_INTERNAL_SERVICE_REQUESTING,
@@ -85,14 +85,14 @@ export const fetchUpdateInternalService = (
           `Internal service ${response.data.name}`
         )
       );
-      dispatch(push('/namespaces'));
+      dispatch(push(routerLinks.getServiceLink(idName, idSrv)));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(updateInternalInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else
         dispatch(updateInternalServiceFailure(data.message, status, idSrv));
       break;

@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_RESOURCES_REQUESTING,
   GET_RESOURCES_SUCCESS,
   GET_RESOURCES_FAILURE
 } from '../../constants/statisticsConstants/getResourcesConstants';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getResourcesRequest = () => ({
   type: GET_RESOURCES_REQUESTING,
@@ -58,7 +58,7 @@ export const fetchGetResources = (
       if (data.message === 'invalid token received') {
         dispatch(getResourcesInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getResourcesFailure(data.message));
       break;
     }

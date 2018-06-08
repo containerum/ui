@@ -124,7 +124,7 @@ export class CreateCustomNamespace extends PureComponent<Props> {
     // console.log(this.state);
     return (
       <div>
-        <Helmet title="Create Custom Namespace" />
+        <Helmet title="Create Custom Project" />
         <div className="container-fluid breadcrumbNavigation">
           <NavigationHeaderItem IdCreate="namespace" idName="new" />
         </div>
@@ -152,7 +152,7 @@ export class CreateCustomNamespace extends PureComponent<Props> {
                   </div>
                   <LoadButton
                     type="submit"
-                    buttonText="Create namespace"
+                    buttonText="Create project"
                     isFetching={createCustomNamespaceReducer.isFetching}
                     baseClassButton="btnDeployment btnService"
                   />

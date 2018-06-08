@@ -8,7 +8,7 @@ import {
   PAY_FOR_SUCCESS,
   PAY_FOR_FAILURE
 } from '../../constants/billingConstants/payFor';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: PAY_FOR_INVALID,

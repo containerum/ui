@@ -8,7 +8,7 @@ import {
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE
 } from '../../constants/profileConstants/getProfile';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_PROFILE_INVALID,

@@ -8,7 +8,7 @@ import {
   CREATE_CONFIG_MAP_SUCCESS,
   CREATE_CONFIG_MAP_FAILURE
 } from '../../constants/configMapConstants/createConfigMap';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CREATE_CONFIG_MAP_INVALID,

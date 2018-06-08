@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_NAMESPACE_REQUESTING,
   DELETE_NAMESPACE_SUCCESS,
   DELETE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/deleteNamespace';
-import { webApi } from '../../config';
+import { routerLinks, webApi } from '../../config';
 
 const deleteNamespaceRequest = () => ({
   type: DELETE_NAMESPACE_REQUESTING,
@@ -68,7 +68,7 @@ export const fetchDeleteNamespace = (
       if (data.message === 'invalid token received') {
         dispatch(deleteNamespaceInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(deleteNamespaceFailure(data.message, status, idName));
       break;
     }

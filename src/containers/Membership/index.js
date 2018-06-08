@@ -266,7 +266,7 @@ class Membership extends PureComponent<Props> {
       getNamespaceUsersAccessReducer.readyStatus ===
       GET_NAMESPACE_USERS_ACCESS_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Users!</p>;
     }
 
     return (

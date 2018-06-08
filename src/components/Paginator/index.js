@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
+import { routerLinks } from '../../config';
 
 type Props = {
   countPage: number,
@@ -30,7 +31,10 @@ const Paginator = ({ countPage, currentPage }: Props) => {
           className={item === currentPage ? 'page-item active' : 'page-item'}
           key={_.uniqueId()}
         >
-          <NavLink to={`/billing?page=${item}`} className="page-link">
+          <NavLink
+            to={`${routerLinks.billing}?page=${item}`}
+            className="page-link"
+          >
             {item}
           </NavLink>
         </li>

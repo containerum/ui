@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   COUPON_PAY_REQUESTING,
   COUPON_PAY_SUCCESS,
   COUPON_PAY_FAILURE
 } from '../../constants/billingConstants/couponPay';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const couponPayRequest = () => ({
   type: COUPON_PAY_REQUESTING,
@@ -71,7 +71,7 @@ export const fetchCouponPay = (
       if (data.message === 'invalid token received') {
         dispatch(couponPayInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(couponPayFailure(data.message));
       break;
     }

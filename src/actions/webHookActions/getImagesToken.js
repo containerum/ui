@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_IMAGES_TOKEN_REQUESTING,
   GET_IMAGES_TOKEN_SUCCESS,
   GET_IMAGES_TOKEN_FAILURE
 } from '../../constants/webHookConstants/getImagesToken';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getImagesTokenRequest = () => ({
   type: GET_IMAGES_TOKEN_REQUESTING,
@@ -60,7 +60,7 @@ export const fetchGetImagesToken = (
       if (data.message === 'invalid token received') {
         dispatch(getImagesTokenInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getImagesTokenFailure(data.message));
       break;
     }

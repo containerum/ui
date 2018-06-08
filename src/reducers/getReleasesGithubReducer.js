@@ -8,7 +8,7 @@ import {
   GET_RELEASES_SUCCESS,
   GET_RELEASES_FAILURE
 } from '../constants/getReleasesGithubConstants';
-import type { Action } from '../types/index';
+import type { Action } from '../types';
 
 const initialState = {
   readyStatus: GET_RELEASES_INVALID,

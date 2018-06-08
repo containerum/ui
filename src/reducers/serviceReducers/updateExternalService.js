@@ -8,7 +8,7 @@ import {
   UPDATE_EXTERNAL_SERVICE_SUCCESS,
   UPDATE_EXTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/updateExternalService';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: UPDATE_EXTERNAL_SERVICE_INVALID,

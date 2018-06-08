@@ -202,7 +202,7 @@ class GlobalGroups extends PureComponent<Props> {
     }
 
     if (getGroupsReducer.readyStatus === GET_GROUPS_FAILURE) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Groups!</p>;
     }
 
     return (
@@ -304,7 +304,7 @@ class GlobalGroups extends PureComponent<Props> {
                                 activeClassName={
                                   globalStyles.contentBlockMenuLiActive
                                 }
-                                to="/membership/users"
+                                to={routerLinks.getGlobalMembership}
                               >
                                 Users
                               </NavLink>
@@ -317,7 +317,7 @@ class GlobalGroups extends PureComponent<Props> {
                                 activeClassName={
                                   globalStyles.contentBlockMenuLiActive
                                 }
-                                to="/membership/groups"
+                                to={routerLinks.getGlobalGroups}
                               >
                                 Groups
                               </NavLink>

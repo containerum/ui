@@ -8,7 +8,7 @@ import {
   COUPON_PAY_SUCCESS,
   COUPON_PAY_FAILURE
 } from '../../constants/billingConstants/couponPay';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: COUPON_PAY_INVALID,

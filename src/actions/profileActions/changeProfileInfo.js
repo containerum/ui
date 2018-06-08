@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   CHANGE_PROFILE_INFO_REQUESTING,
   CHANGE_PROFILE_INFO_SUCCESS,
   CHANGE_PROFILE_INFO_FAILURE
 } from '../../constants/profileConstants/changeProfileInfo';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const changeProfileInfoRequest = () => ({
   type: CHANGE_PROFILE_INFO_REQUESTING,
@@ -72,7 +72,7 @@ export const fetchChangeProfileInfo = (
       if (data.message === 'invalid token received') {
         dispatch(changeProfileInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else
         dispatch(changeProfileInfoFailure(data.message, status, config.method));
       break;

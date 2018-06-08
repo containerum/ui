@@ -8,7 +8,7 @@ import {
   DELETE_IMAGE_TOKEN_SUCCESS,
   DELETE_IMAGE_TOKEN_FAILURE
 } from '../../constants/webHookConstants/deleteImageToken';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_IMAGE_TOKEN_INVALID,

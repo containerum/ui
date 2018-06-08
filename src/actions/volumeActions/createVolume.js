@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   CREATE_VOLUME_REQUESTING,
   CREATE_VOLUME_SUCCESS,
   CREATE_VOLUME_FAILURE
 } from '../../constants/volumeConstants/createVolume';
-import { webApi, routerLinks } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 // const isServer = typeof window === 'undefined';
 // const ReactGA = isServer ? require('react-ga') : null;
@@ -87,7 +87,7 @@ export const fetchCreateVolume = (
       if (data.message === 'invalid token received') {
         dispatch(createVolumeInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(createVolumeFailure(data.message, status, idVol));
       break;
     }

@@ -8,7 +8,7 @@ import {
   DELETE_VOLUME_SUCCESS,
   DELETE_VOLUME_FAILURE
 } from '../../constants/volumeConstants/deleteVolume';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_VOLUME_INVALID,

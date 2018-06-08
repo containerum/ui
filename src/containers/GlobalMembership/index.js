@@ -24,7 +24,7 @@ import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile
 import globalStyles from '../../theme/global.scss';
 import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
-// import { fetchAddGlobalUser } from '../../actions/globalMembership/addUser';
+import { routerLinks } from '../../config';
 
 const globalClass = className.bind(globalStyles);
 
@@ -156,7 +156,7 @@ class GlobalMembership extends PureComponent<Props> {
     }
 
     if (getUserListReducer.readyStatus === GET_USER_LIST_FAILURE) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Users!</p>;
     }
 
     return (
@@ -263,7 +263,7 @@ class GlobalMembership extends PureComponent<Props> {
                                 activeClassName={
                                   globalStyles.contentBlockMenuLiActive
                                 }
-                                to="/membership/users"
+                                to={routerLinks.getGlobalMembership}
                               >
                                 Users
                               </NavLink>
@@ -276,7 +276,7 @@ class GlobalMembership extends PureComponent<Props> {
                                 activeClassName={
                                   globalStyles.contentBlockMenuLiActive
                                 }
-                                to="/membership/groups"
+                                to={routerLinks.getGlobalGroups}
                               >
                                 Groups
                               </NavLink>

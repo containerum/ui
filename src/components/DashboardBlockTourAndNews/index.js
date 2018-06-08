@@ -77,7 +77,7 @@ const DashboardBlockTourAndNews = ({
                 className={
                   balance !== 0 ? dashboardStyles.tourLinkDisabled : ''
                 }
-                to="/billing"
+                to={routerLinks.billing}
               >
                 Top up your Balance or enter Promo code
               </Link>
@@ -86,9 +86,9 @@ const DashboardBlockTourAndNews = ({
               className={
                 linkToDeployment ? dashboardStyles.tourLinkDisabled : ''
               }
-              to="/createNamespace"
+              to={routerLinks.createNamespace}
             >
-              Create Namespace
+              Create Project
             </Link>
             {/* <Link to="/createVolume">Create Volume</Link> */}
             <Link
@@ -120,7 +120,7 @@ const DashboardBlockTourAndNews = ({
             >
               Launch 1st Service
             </Link>
-            <Link to="/configmap">Launch 1st ConfigMap</Link>
+            <Link to={routerLinks.configmap}>Launch 1st ConfigMap</Link>
             {/* <Link to="/account"> */}
             {/* Set up Web Hooks for Continuous Deployment */}
             {/* </Link> */}
@@ -136,7 +136,7 @@ const DashboardBlockTourAndNews = ({
                   : { color: '#cecece', cursor: 'not-allowed' }
               }
             >
-              Share Namespace with your team
+              Share Project with your team
             </Link>
           </div>
 

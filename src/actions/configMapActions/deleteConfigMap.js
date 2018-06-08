@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_CONFIG_MAP_REQUESTING,
   DELETE_CONFIG_MAP_SUCCESS,
   DELETE_CONFIG_MAP_FAILURE
 } from '../../constants/configMapConstants/deleteConfigMap';
-import { webApi } from '../../config';
+import { routerLinks, webApi } from '../../config';
 
 const deleteConfigMapRequest = () => ({
   type: DELETE_CONFIG_MAP_REQUESTING,
@@ -78,7 +78,7 @@ export const fetchDeleteConfigMap = (
       if (data.message === 'invalid token received') {
         dispatch(deleteConfigMapInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else
         dispatch(
           deleteConfigMapFailure(data.message, status, configMapName, idName)

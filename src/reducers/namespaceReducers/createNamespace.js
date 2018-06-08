@@ -8,7 +8,7 @@ import {
   CREATE_NAMESPACE_SUCCESS,
   CREATE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/createNamespace';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CREATE_NAMESPACE_INVALID,

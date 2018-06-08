@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   CREATE_CUSTOM_NAMESPACE_REQUESTING,
   CREATE_CUSTOM_NAMESPACE_SUCCESS,
   CREATE_CUSTOM_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/createCustomNamespace';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const createCustomNamespaceRequest = () => ({
   type: CREATE_CUSTOM_NAMESPACE_REQUESTING,
@@ -89,14 +89,14 @@ export const fetchCreateCustomNamespace = (
       //     action: `UI_create_ns_${price}`
       //   });
       // }
-      dispatch(push('/namespaces'));
+      dispatch(push(routerLinks.namespaces));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(createCustomNamespaceInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(createCustomNamespaceFailure(data.message));
       break;
     }

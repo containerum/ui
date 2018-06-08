@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_DOMAINS_REQUESTING,
   GET_DOMAINS_SUCCESS,
   GET_DOMAINS_FAILURE
 } from '../../constants/serviceConstants/getDomains';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getDomainsRequest = () => ({
   type: GET_DOMAINS_REQUESTING,
@@ -60,7 +60,7 @@ export const fetchGetDomains = (
       if (data.message === 'invalid token received') {
         dispatch(getDomainsInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getDomainsFailure(data.message));
       break;
     }

@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_POD_REQUESTING,
   DELETE_POD_SUCCESS,
   DELETE_POD_FAILURE
 } from '../../constants/podConstants/deletePod';
-import { webApi } from '../../config';
+import { webApi, routerLinks } from '../../config';
 
 const deletePodRequest = () => ({
   type: DELETE_POD_REQUESTING,
@@ -70,7 +70,7 @@ export const fetchDeletePod = (
       if (data.message === 'invalid token received') {
         dispatch(deletePodInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(deletePodFailure(data.message, status, idPod, idName));
       break;
     }

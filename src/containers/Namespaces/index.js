@@ -175,7 +175,7 @@ export class Namespaces extends PureComponent<Props> {
       getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Projects!</p>;
     }
 
     return (
@@ -240,7 +240,7 @@ export class Namespaces extends PureComponent<Props> {
 
     return (
       <div>
-        <Helmet title="Namespaces" />
+        <Helmet title="Projects" />
         <Notification status={status} name={idLabel} errorMessage={err} />
         <Notification
           status={statusExt}
@@ -254,7 +254,7 @@ export class Namespaces extends PureComponent<Props> {
         />
         {currentNamespace && (
           <DeleteModal
-            type="Namespace"
+            type="Project"
             inputName={inputName}
             name={currentIdName}
             typeName={currentNamespace.label}

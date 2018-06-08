@@ -238,7 +238,7 @@ export class CreateNamespace extends PureComponent<Props> {
     if (
       getNamespacesTariffsReducer.readyStatus === GET_NAMESPACES_TARIFFS_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Projects!</p>;
     }
 
     return (
@@ -286,7 +286,7 @@ export class CreateNamespace extends PureComponent<Props> {
           errorMessage={err}
         />
         <CreateModal
-          type="Namespace"
+          type="Project"
           tariff={NSTariffName}
           id={NSTariffId}
           name={Name}
@@ -315,13 +315,13 @@ export class CreateNamespace extends PureComponent<Props> {
           isFailed={isFailed}
           errorMessage={errorMessage}
         />
-        <Helmet title="Create Namespace" />
+        <Helmet title="Create Project" />
         <div className={globalStyles.contentBlock}>
           <div className={`${containerClassName} mt-0 container`}>
             <div className={`${globalStyles.contentBlockContent} mt-0`}>
               <div className={`${styles.namespacePlan} mt-0`}>
                 <div className={styles.namespacePlanTitle}>
-                  choose a namespace size
+                  choose a project size
                 </div>
               </div>
               {this.renderTariffsNamespacesList()}

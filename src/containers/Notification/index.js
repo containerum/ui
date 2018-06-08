@@ -63,7 +63,7 @@ class Notification extends PureComponent<Props> {
         'Applied Success'
       );
     } else if (
-      (nextProps.errorMessage === 'Not enough money to buy a namespace' ||
+      (nextProps.errorMessage === 'Not enough money to buy a project' ||
         nextProps.errorMessage === 'Not enough money to buy volume' ||
         nextProps.errorMessage === 'Not enough money to resize volume') &&
       nextProps.name !== this.props.name

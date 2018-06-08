@@ -8,14 +8,14 @@ import type {
   GetState,
   ThunkAction
   // ReduxState
-} from '../../types/index';
+} from '../../types';
 import {
   GET_SOLUTIONS_REQUESTING,
   GET_SOLUTIONS_SUCCESS,
   solutionsArray
   // GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
-// import { webApi } from '../../config/index';
+// import { webApi } from '../../config';
 
 const getSolutionsRequest = () => ({
   type: GET_SOLUTIONS_REQUESTING,

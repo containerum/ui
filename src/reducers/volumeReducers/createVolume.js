@@ -8,7 +8,7 @@ import {
   CREATE_VOLUME_SUCCESS,
   CREATE_VOLUME_FAILURE
 } from '../../constants/volumeConstants/createVolume';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CREATE_VOLUME_INVALID,

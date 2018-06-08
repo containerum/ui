@@ -8,7 +8,7 @@ import {
   GET_PROFILE_TARIFFS_SUCCESS,
   GET_PROFILE_TARIFFS_FAILURE
 } from '../../constants/profileConstants/getProfileTariffs';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_PROFILE_TARIFFS_INVALID,

@@ -3,7 +3,7 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   RESIZE_VOLUME_REQUESTING,
   RESIZE_VOLUME_SUCCESS,
@@ -74,7 +74,7 @@ export const fetchResizeVolume = (
       if (data.message === 'invalid token received') {
         dispatch(resizeVolumeInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(resizeVolumeFailure(data.message, status, idVol));
       break;
     }

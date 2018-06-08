@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_NAMESPACES_USAGE_REQUESTING,
   GET_NAMESPACES_USAGE_SUCCESS,
   GET_NAMESPACES_USAGE_FAILURE
 } from '../../constants/namespacesConstants/getUsageNamespaces';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getUsageNamespacesRequest = () => ({
   type: GET_NAMESPACES_USAGE_REQUESTING,
@@ -59,7 +59,7 @@ export const fetchGetUsageNamespaces = (
       if (data.message === 'invalid token received') {
         dispatch(getUsageNamespacesInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getUsageNamespacesFailure(data.message));
       break;
     }
@@ -69,7 +69,7 @@ export const fetchGetUsageNamespaces = (
     // }
     default: {
       dispatch(getUsageNamespacesFailure(data.message));
-      dispatch(push('/login'));
+      dispatch(push(routerLinks.login));
     }
   }
 };

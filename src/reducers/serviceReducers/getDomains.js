@@ -8,7 +8,7 @@ import {
   GET_DOMAINS_SUCCESS,
   GET_DOMAINS_FAILURE
 } from '../../constants/serviceConstants/getDomains';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_DOMAINS_INVALID,

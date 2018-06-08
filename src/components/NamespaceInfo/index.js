@@ -75,7 +75,7 @@ const NamespaceInfo = ({
         <div className={headerLabelClassName}>
           <div className={textLabelClassName}>{label}</div>
           <div className={globalStyles.contentBlockHeaderLabelDescript}>
-            namespace
+            project
           </div>
           <div
             style={{ display: 'inline-block' }}

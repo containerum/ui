@@ -159,7 +159,7 @@ export class ResizeNamespace extends PureComponent<Props> {
       getNamespaceUsersAccessReducer.readyStatus ===
         GET_NAMESPACE_USERS_ACCESS_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Namespace!</p>;
+      return <p>Oops, Failed to load data of Project!</p>;
     }
 
     return (
@@ -222,7 +222,7 @@ export class ResizeNamespace extends PureComponent<Props> {
         />
         <ResizeModal
           label={label}
-          type="Namespace"
+          type="Project"
           tariff={NSTariffName}
           id={NSTariffId}
           name={match.params.idName}
@@ -237,13 +237,13 @@ export class ResizeNamespace extends PureComponent<Props> {
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleResize={fetchResizeNamespaceIfNeeded}
         />
-        <Helmet title={`Resize Namespace - ${label}`} />
+        <Helmet title={`Resize Project - ${label}`} />
         <div className={globalStyles.contentBlock}>
           <div className={`${containerClassName} mt-0 container`}>
             <div className={`${globalStyles.contentBlockContent} mt-0`}>
               <div className={`${styles.namespacePlan} mt-0`}>
                 <div className={styles.namespacePlanTitle}>
-                  choose a namespace size for{' '}
+                  choose a project size for{' '}
                   <span style={{ color: '#29abe2' }}>{label}</span>
                 </div>
               </div>

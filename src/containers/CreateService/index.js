@@ -378,9 +378,9 @@ export class CreateService extends PureComponent<Props> {
                         </div>
                       ) : (
                         <NavLink
-                          to={`/namespace/${
+                          to={routerLinks.createDeploymentLink(
                             match.params.idName
-                          }/createDeployment`}
+                          )}
                           className={buttonsStyles.buttonUICreateSmall}
                         >
                           Create Deployment

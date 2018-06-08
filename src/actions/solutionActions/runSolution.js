@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   RUN_SOLUTION_REQUESTING,
   RUN_SOLUTION_SUCCESS,
   RUN_SOLUTION_FAILURE
 } from '../../constants/solutionConstants/runSolution';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const runSolutionsRequest = () => ({
   type: RUN_SOLUTION_REQUESTING,
@@ -67,7 +67,7 @@ export const fetchRunSolutions = (
       if (data.message === 'invalid token received') {
         dispatch(runSolutionsInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(runSolutionsFailure(data.message));
       break;
     }

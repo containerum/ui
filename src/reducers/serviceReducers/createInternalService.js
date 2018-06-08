@@ -8,7 +8,7 @@ import {
   CREATE_INTERNAL_SERVICE_SUCCESS,
   CREATE_INTERNAL_SERVICE_FAILURE
 } from '../../constants/serviceConstants/createInternalService';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: CREATE_INTERNAL_SERVICE_INVALID,

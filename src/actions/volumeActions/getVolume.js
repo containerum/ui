@@ -3,14 +3,14 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_VOLUME_REQUESTING,
   GET_VOLUME_SUCCESS,
   GET_VOLUME_FAILURE
 } from '../../constants/volumeConstants/getVolume';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getVolumeRequest = () => ({
   type: GET_VOLUME_REQUESTING,
@@ -69,7 +69,7 @@ export const fetchGetVolume = (
       if (data.message === 'invalid token received') {
         dispatch(getVolumeInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getVolumeFailure(data.message, status, idVol));
       break;
     }

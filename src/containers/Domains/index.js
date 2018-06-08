@@ -7,7 +7,7 @@ import Helmet from 'react-helmet';
 
 import * as actionGetDomains from '../../actions/serviceActions/getDomains';
 import * as actionDeleteDomain from '../../actions/serviceActions/deleteDomain';
-import type { Dispatch, ReduxState } from '../../types/index';
+import type { Dispatch, ReduxState } from '../../types';
 import {
   GET_DOMAINS_INVALID,
   GET_DOMAINS_REQUESTING,

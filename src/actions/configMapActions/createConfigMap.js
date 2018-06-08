@@ -4,13 +4,13 @@ import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 // import cloneDeep from 'clone-deep';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   CREATE_CONFIG_MAP_REQUESTING,
   CREATE_CONFIG_MAP_SUCCESS,
   CREATE_CONFIG_MAP_FAILURE
 } from '../../constants/configMapConstants/createConfigMap';
-import { webApi } from '../../config';
+import { webApi, routerLinks } from '../../config';
 
 const createConfigMapRequest = () => ({
   type: CREATE_CONFIG_MAP_REQUESTING,
@@ -64,14 +64,14 @@ export const fetchCreateConfigMap = (
   switch (status) {
     case 201: {
       dispatch(createConfigMapSuccess(data, 201, config.method, dataObj.name));
-      dispatch(push(`/namespaces/${idName}/configMaps`));
+      dispatch(push(routerLinks.getConfigMapsLink(idName)));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(createConfigMapInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(createConfigMapFailure(data.message, status));
       break;
     }
