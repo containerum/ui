@@ -8,7 +8,7 @@ import {
   GET_USER_LIST_SUCCESS,
   GET_USER_LIST_FAILURE
 } from '../../constants/globalMembershipConstants/getUserList';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_USER_LIST_INVALID,

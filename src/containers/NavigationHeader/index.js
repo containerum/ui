@@ -25,6 +25,7 @@ import type {
 import headerStyles from '../../containers/Header/index.scss';
 import globalStyles from '../../theme/global.scss';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+import { routerLinks } from '../../config';
 
 type Props = {
   getNamespacesReducer: NamespacesType,
@@ -101,7 +102,7 @@ export class NavigationHeader extends PureComponent<Props> {
     }
 
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE) {
-      return <p>Oops, Failed to load data of Namespace!</p>;
+      return <p>Oops, Failed to load data of Project!</p>;
     }
 
     let mainContent = '';
@@ -128,7 +129,7 @@ export class NavigationHeader extends PureComponent<Props> {
                 <NavLink
                   key={_.uniqueId()}
                   className="dropdown-item"
-                  to={`/namespaces/${item.id}`}
+                  to={routerLinks.namespaceLink(item.id)}
                 >
                   {item.label}
                 </NavLink>
@@ -138,7 +139,7 @@ export class NavigationHeader extends PureComponent<Props> {
         );
         isIdOutName = (
           <li className={`${globalStyles.breadcrumbsLi} nav-item dropdown`}>
-            <NavLink to={`/namespaces/${currentNs.id}`}>
+            <NavLink to={routerLinks.namespaceLink(currentNs.id)}>
               {currentNs ? currentNs.label : ''}
             </NavLink>
           </li>
@@ -150,7 +151,7 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
-              <NavLink to={`/namespace/${currentNs.id}/services/${idService}`}>
+              <NavLink to={routerLinks.getServiceLink(currentNs.id, idService)}>
                 {idService}
               </NavLink>
             </li>
@@ -163,7 +164,7 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <NavLink to={`/namespace/${currentNs.id}/deployments/${idDep}`}>
+              <NavLink to={routerLinks.getDeploymentLink(currentNs.id, idDep)}>
                 {idDep}
               </NavLink>
             </li>
@@ -176,17 +177,13 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <NavLink to={`/namespace/${currentNs.id}/deployments/${idDep}`}>
+              <NavLink to={routerLinks.getDeploymentLink(currentNs.id, idDep)}>
                 {idDep}
               </NavLink>
             </li>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <NavLink
-                to={`/namespace/${
-                  currentNs.id
-                }/deployment/${idDep}/pods/${idPod}`}
-              >
+              <NavLink to={routerLinks.getPodLink(currentNs.id, idDep, idPod)}>
                 {idPod}
               </NavLink>
             </li>
@@ -217,7 +214,7 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
-              <div>Create Namespace</div>
+              <div>Create Project</div>
             </li>
           </div>
         );
@@ -246,7 +243,7 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <div>Update Namespace</div>
+              <div>Update Project</div>
             </li>
           </div>
         );

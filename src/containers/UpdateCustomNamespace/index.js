@@ -168,7 +168,7 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
       getNamespaceUsersAccessReducer.readyStatus ===
       GET_NAMESPACE_USERS_ACCESS_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Namespace!</p>;
+      return <p>Oops, Failed to load data of Project!</p>;
     }
 
     const {
@@ -197,7 +197,7 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
     const { updateCustomNamespaceReducer, match } = this.props;
     return (
       <div>
-        <Helmet title="Update Custom Namespace" />
+        <Helmet title="Update Custom Project" />
         <div className="container-fluid breadcrumbNavigation">
           <NavigationHeaderItem
             idName={match.params.idName}
@@ -228,7 +228,7 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
                   </div>
                   <LoadButton
                     type="submit"
-                    buttonText="Update namespace"
+                    buttonText="Update project"
                     isFetching={updateCustomNamespaceReducer.isFetching}
                     baseClassButton="btnDeployment btnService"
                   />

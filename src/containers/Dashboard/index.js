@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
 
-import { sourceType } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
@@ -181,7 +181,7 @@ export class Dashboard extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
       getProfileReducer.readyStatus === GET_PROFILE_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Namespaces!</p>;
+      return <p>Oops, Failed to load data of Projects!</p>;
     }
     return (
       <NamespacesDashboardList
@@ -479,7 +479,7 @@ export class Dashboard extends PureComponent<Props> {
 
                   <div className={`col-md-10 ${globalStyles.colNamespaces}`}>
                     <div className={blockContainer}>
-                      <div className={styles.topBlockHeader}>Namespaces</div>
+                      <div className={styles.topBlockHeader}>Projects</div>
                       {this.renderNamespacesList()}
                     </div>
                   </div>
@@ -506,7 +506,7 @@ export class Dashboard extends PureComponent<Props> {
                           className={`${styles.customSolutionNavLink} nav-link`}
                           id="first-tab"
                           data-toggle="pill"
-                          to="/dashboard"
+                          to={routerLinks.dashboard}
                           role="tab"
                           aria-controls="pills-home"
                           aria-selected="true"

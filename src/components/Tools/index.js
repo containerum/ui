@@ -3,6 +3,8 @@ import classNames from 'classnames/bind';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
+
+import { routerLinks } from '../../config';
 import styles from './index.scss';
 import globalStyles from '../../theme/global.scss';
 
@@ -61,7 +63,7 @@ const Tools = () => (
         globalStyles.containerNoBackground
       }`}
     >
-      <Link to="/configmap">
+      <Link to={routerLinks.configmap}>
         <div className={`col-md-12 ${styles.toolsCard}`}>
           <div className={`${containerGlobalClassName} ${containerClassName}`}>
             <div className={globalStyles.contentBlockHeader}>
@@ -95,7 +97,7 @@ const Tools = () => (
           </div>
         </div>
       </Link>
-      <Link to="/domains">
+      <Link to={routerLinks.domains}>
         <div className={`col-md-12 ${styles.toolsCard}`}>
           <div className={`${containerGlobalClassName} ${containerClassName}`}>
             <div className={globalStyles.contentBlockHeader}>

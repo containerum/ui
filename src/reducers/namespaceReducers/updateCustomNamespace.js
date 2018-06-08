@@ -8,7 +8,7 @@ import {
   UPDATE_CUSTOM_NAMESPACE_SUCCESS,
   UPDATE_CUSTOM_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/updateCustomNamespace';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: UPDATE_CUSTOM_NAMESPACE_INVALID,

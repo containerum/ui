@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_SERVICE_REQUESTING,
   GET_SERVICE_SUCCESS,
   GET_SERVICE_FAILURE
 } from '../../constants/serviceConstants/getService';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getServiceRequest = () => ({
   type: GET_SERVICE_REQUESTING,
@@ -70,13 +70,13 @@ export const fetchGetService = (
       if (data.message === 'invalid token received') {
         dispatch(getServiceInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getServiceFailure(data.message, status, idName, idSrv));
       break;
     }
     default: {
       dispatch(getServiceFailure(data.message, status, idName, idSrv));
-      dispatch(push('/namespaces'));
+      dispatch(push(routerLinks.namespaces));
     }
   }
 };

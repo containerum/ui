@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   PAY_FOR_REQUESTING,
   PAY_FOR_SUCCESS,
   PAY_FOR_FAILURE
 } from '../../constants/billingConstants/payFor';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const payForRequest = () => ({
   type: PAY_FOR_REQUESTING,
@@ -70,7 +70,7 @@ export const fetchPayFor = (
       if (data.message === 'invalid token received') {
         dispatch(payForInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(payForFailure(data.message));
       break;
     }

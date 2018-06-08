@@ -54,6 +54,7 @@ type Props = {
   tariff: string,
   id: string,
   name: string,
+  idName: string,
   data: Object,
   // typeModal: string,
   // name: string,
@@ -68,6 +69,7 @@ const CreateModal = ({
   tariff,
   id,
   name,
+  idName,
   data,
   isOpened,
   handleInputName,
@@ -82,7 +84,11 @@ const CreateModal = ({
     e.preventDefault();
     if (tariff && name.length >= 2 && name.search(regexp) !== -1) {
       handleOpenCloseModal();
-      onHandleCreate(name, id, data.price);
+      if (idName) {
+        onHandleCreate(name, idName, tariff, data.price);
+      } else {
+        onHandleCreate(name, id, data.price);
+      }
     }
   };
   const handleChangeNameOfType = e => {

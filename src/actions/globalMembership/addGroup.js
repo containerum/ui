@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   ADD_GROUP_REQUESTING,
   ADD_GROUP_SUCCESS,
   ADD_GROUP_FAILURE
 } from '../../constants/globalMembershipConstants/addGroup';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const addGroupRequest = () => ({
   type: ADD_GROUP_REQUESTING,
@@ -44,7 +44,6 @@ export const fetchAddGroup = (
   const accessToken = cookie.load('accessToken');
   dispatch(addGroupRequest());
 
-  console.log(label);
   const response = await axios.post(
     `${URL}/groups`,
     { label: 'qwer@qweqr.qwer' },
@@ -66,7 +65,7 @@ export const fetchAddGroup = (
       if (data.message === 'invalid token received') {
         dispatch(addGroupInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(addGroupFailure(data.message));
       break;
     }
@@ -76,7 +75,7 @@ export const fetchAddGroup = (
     // }
     default: {
       dispatch(addGroupFailure(data.message, status));
-      dispatch(push('/dashboard'));
+      dispatch(push(routerLinks.dashboard));
     }
   }
 };

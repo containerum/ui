@@ -8,7 +8,7 @@ import {
   RUN_SOLUTION_SUCCESS,
   RUN_SOLUTION_FAILURE
 } from '../../constants/solutionConstants/runSolution';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: RUN_SOLUTION_INVALID,

@@ -8,7 +8,7 @@ import {
   GET_PROFILE_REPORT_SUCCESS,
   GET_PROFILE_REPORT_FAILURE
 } from '../../constants/profileConstants/getProfileReport';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_PROFILE_REPORT_INVALID,

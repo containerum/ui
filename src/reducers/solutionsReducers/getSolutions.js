@@ -8,7 +8,7 @@ import {
   GET_SOLUTIONS_SUCCESS,
   GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_SOLUTIONS_INVALID,

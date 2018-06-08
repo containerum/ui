@@ -10,7 +10,12 @@ import cookie from 'react-cookies';
 import isEmail from 'validator/lib/isEmail';
 import Recaptcha from 'react-google-recaptcha';
 
-import { appRecaptcha, externalLinks, routerLinks } from '../../config';
+import {
+  appRecaptcha,
+  externalLinks,
+  routerLinks,
+  sourceType
+} from '../../config';
 import * as signUpLogin from '../../actions/signUp';
 import InputEmail from '../../components/InputEmail';
 import InputPassword from '../../components/InputPassword';
@@ -155,17 +160,19 @@ class SignUp extends PureComponent<Props> {
                   id="password"
                   placeholder="Password"
                 />
-                <Recaptcha
-                  style={{
-                    margin: '28px 0 25px',
-                    transform: 'scale(1.175)',
-                    width: 0
-                  }}
-                  sitekey={appRecaptcha}
-                  onChange={recaptchaKey =>
-                    this.handleVerifyRecaptchaCallback(recaptchaKey)
-                  }
-                />
+                {appRecaptcha && (
+                  <Recaptcha
+                    style={{
+                      margin: '28px 0 25px',
+                      transform: 'scale(1.175)',
+                      width: 0
+                    }}
+                    sitekey={appRecaptcha}
+                    onChange={recaptchaKey =>
+                      this.handleVerifyRecaptchaCallback(recaptchaKey)
+                    }
+                  />
+                )}
                 <LoadButton
                   type="submit"
                   buttonText="Create account"
@@ -206,24 +213,26 @@ class SignUp extends PureComponent<Props> {
                 </div>
               )}
 
-              <div className={styles.SignUpFooter}>
-                By signing up, you agree to the{' '}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={externalLinks.termsOfService}
-                >
-                  Terms Of Service
-                </a>{' '}
-                and{' '}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={externalLinks.privacyPolicy}
-                >
-                  Privacy Policy
-                </a>
-              </div>
+              {sourceType === 'ONLINE' && (
+                <div className={styles.SignUpFooter}>
+                  By signing up, you agree to the{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={externalLinks.termsOfService}
+                  >
+                    Terms Of Service
+                  </a>{' '}
+                  and{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={externalLinks.privacyPolicy}
+                  >
+                    Privacy Policy
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>

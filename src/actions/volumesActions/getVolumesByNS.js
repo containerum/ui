@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_VOLUMES_BY_NS_REQUESTING,
   GET_VOLUMES_BY_NS_SUCCESS,
   GET_VOLUMES_BY_NS_FAILURE
 } from '../../constants/volumesConstants/getVolumesByNS';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getVolumesByNSRequest = () => ({
   type: GET_VOLUMES_BY_NS_REQUESTING,
@@ -61,7 +61,7 @@ export const fetchGetVolumesByNS = (
       if (data.message === 'invalid token received') {
         dispatch(getVolumesInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getVolumesByNSFailure(data.message));
       break;
     }

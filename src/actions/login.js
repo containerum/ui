@@ -9,7 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE
 } from '../constants/loginConstants';
-import { webApi } from '../config';
+import { webApi, routerLinks } from '../config';
 
 const loginRequest = (email, password) => ({
   type: LOGIN_REQUESTING,
@@ -61,10 +61,7 @@ export const fetchLogin = (
       cookie.save('accessToken', accessToken, { path: '/' });
       cookie.save('refreshToken', refreshToken, { path: '/' });
       dispatch(loginSuccess(token));
-      // if (typeof window !== 'undefined') {
-      //   window.location.replace('/dashboard');
-      // }
-      dispatch(push('/dashboard'));
+      dispatch(push(routerLinks.dashboard));
       break;
     }
     default: {

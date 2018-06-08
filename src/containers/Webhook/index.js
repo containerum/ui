@@ -13,7 +13,7 @@ import FooterPage from '../Footer';
 import * as actionGetImagesToken from '../../actions/webHookActions/getImagesToken';
 import * as actionDeleteImageToken from '../../actions/webHookActions/deleteImageToken';
 import * as actionCreateImageToken from '../../actions/webHookActions/createImageToken';
-import type { Dispatch, ReduxState } from '../../types/index';
+import type { Dispatch, ReduxState } from '../../types';
 import {
   GET_IMAGES_TOKEN_INVALID,
   GET_IMAGES_TOKEN_REQUESTING,
@@ -22,10 +22,10 @@ import {
 } from '../../constants/webHookConstants/getImagesToken';
 import { DELETE_IMAGE_TOKEN_SUCCESS } from '../../constants/webHookConstants/deleteImageToken';
 import { CREATE_IMAGE_TOKEN_SUCCESS } from '../../constants/webHookConstants/createImageToken';
-import ImagesTokenList from '../../components/ImagesTokenList/index';
-import Notification from '../Notification/index';
-import LoadButton from '../../components/LoadButton/index';
-import InputControl from '../../components/InputControl/index';
+import ImagesTokenList from '../../components/ImagesTokenList';
+import Notification from '../Notification';
+import LoadButton from '../../components/LoadButton';
+import InputControl from '../../components/InputControl';
 
 import buttonsStyles from '../../theme/buttons.scss';
 

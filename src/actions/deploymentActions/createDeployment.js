@@ -4,13 +4,13 @@ import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 import cloneDeep from 'clone-deep';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   CREATE_DEPLOYMENT_REQUESTING,
   CREATE_DEPLOYMENT_SUCCESS,
   CREATE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/createDeployment';
-import { webApi } from '../../config';
+import { routerLinks, webApi } from '../../config';
 
 const createDeploymentRequest = () => ({
   type: CREATE_DEPLOYMENT_REQUESTING,
@@ -117,7 +117,6 @@ export const fetchCreateDeployment = (
       headers: {
         'User-Client': browser,
         'User-Token': accessToken
-        // 'Content-Type': 'application/json'
       },
       validateStatus: status => status >= 200 && status <= 505
     }
@@ -127,14 +126,14 @@ export const fetchCreateDeployment = (
     case 201: {
       idSrv = `Deployment ${dataObj.name} for ${idName}`;
       dispatch(createDeploymentSuccess(data, status, config.method, idSrv));
-      dispatch(push('/namespaces'));
+      dispatch(push(routerLinks.getDeploymentLink(idName, dataObj.name)));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
         dispatch(createDeploymentInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(createDeploymentFailure(data.message, status, data));
       break;
     }

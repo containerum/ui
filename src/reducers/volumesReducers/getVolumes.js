@@ -8,7 +8,7 @@ import {
   GET_VOLUMES_SUCCESS,
   GET_VOLUMES_FAILURE
 } from '../../constants/volumesConstants/getVolumes';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_VOLUMES_INVALID,

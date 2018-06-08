@@ -8,7 +8,7 @@ import {
   RESIZE_VOLUME_SUCCESS,
   RESIZE_VOLUME_FAILURE
 } from '../../constants/volumeConstants/resizeVolume';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: RESIZE_VOLUME_INVALID,

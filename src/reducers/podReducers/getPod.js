@@ -8,7 +8,7 @@ import {
   GET_POD_SUCCESS,
   GET_POD_FAILURE
 } from '../../constants/podConstants/getPod';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: GET_POD_INVALID,

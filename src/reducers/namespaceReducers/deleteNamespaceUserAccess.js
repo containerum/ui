@@ -8,7 +8,7 @@ import {
   DELETE_NAMESPACE_USER_ACCESS_SUCCESS,
   DELETE_NAMESPACE_USER_ACCESS_FAILURE
 } from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_NAMESPACE_USER_ACCESS_INVALID,

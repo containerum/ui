@@ -3,7 +3,7 @@
 import React from 'react';
 import className from 'classnames/bind';
 
-import InputControl from '../../../InputControl/index';
+import InputControl from '../../../InputControl';
 import icon from '../../../../images/icon-create-dep.svg';
 import buttonsStyles from '../../../../theme/buttons.scss';
 

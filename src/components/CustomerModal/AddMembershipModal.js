@@ -191,10 +191,10 @@ const AddUserMembershipModal = ({
               className={modalStyles.modalRedisTextLight}
               style={{ marginTop: 5 }}
             >
-              Read - user can only see all Namespace objects
+              Read - user can only see all Project objects
             </div>
             <div className={modalStyles.modalRedisTextLight}>
-              Write - user can fully manage all Namespace objects
+              Write - user can fully manage all Project objects
             </div>
           </div>
         </div>

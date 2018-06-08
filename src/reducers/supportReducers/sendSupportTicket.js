@@ -8,7 +8,7 @@ import {
   SEND_SUPPORT_TICKET_SUCCESS,
   SEND_SUPPORT_TICKET_FAILURE
 } from '../../constants/supportConstants/sendSupportTicketConstants';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: SEND_SUPPORT_TICKET_INVALID,

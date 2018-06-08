@@ -3,14 +3,14 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_CONFIG_MAPS_REQUESTING,
   GET_CONFIG_MAPS_SUCCESS,
   GET_CONFIG_MAPS_FAILURE
 } from '../../constants/configMapConstants/getConfigMaps';
 // import isTokenExist from '../functions/isTokenExist';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getConfigMapsRequest = () => ({
   type: GET_CONFIG_MAPS_REQUESTING,
@@ -73,13 +73,13 @@ export const fetchGetConfigMaps = (
       if (data.message === 'invalid token received') {
         dispatch(getConfigMapsInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getConfigMapsFailure(data.message, status));
       break;
     }
     default: {
       dispatch(getConfigMapsFailure(data.message, status));
-      dispatch(push('/namespaces'));
+      dispatch(push(routerLinks.namespaces));
     }
   }
 };

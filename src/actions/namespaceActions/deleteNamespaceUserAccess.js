@@ -1,14 +1,14 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_NAMESPACE_USER_ACCESS_INVALID,
   DELETE_NAMESPACE_USER_ACCESS_REQUESTING,
   DELETE_NAMESPACE_USER_ACCESS_SUCCESS,
   DELETE_NAMESPACE_USER_ACCESS_FAILURE
 } from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const deleteNamespaceUserAccessInvalid = () => ({
   type: DELETE_NAMESPACE_USER_ACCESS_INVALID
@@ -72,7 +72,7 @@ export const fetchDeleteNamespaceUserAccess = (
       if (data.message === 'invalid token received') {
         dispatch(deleteNamespaceUserAccessInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else
         dispatch(
           deleteNamespaceUserAccessFailure(data.message, status, username)

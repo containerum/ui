@@ -8,7 +8,7 @@ import {
   DELETE_DEPLOYMENT_SUCCESS,
   DELETE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/deleteDeployment';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: DELETE_DEPLOYMENT_INVALID,

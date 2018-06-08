@@ -8,7 +8,7 @@ import {
   RESIZE_NAMESPACE_SUCCESS,
   RESIZE_NAMESPACE_FAILURE
 } from '../../constants/namespaceConstants/resizeNamespace';
-import type { Action } from '../../types/index';
+import type { Action } from '../../types';
 
 const initialState = {
   readyStatus: RESIZE_NAMESPACE_INVALID,

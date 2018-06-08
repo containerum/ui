@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_GROUPS_REQUESTING,
   GET_GROUPS_SUCCESS,
   GET_GROUPS_FAILURE
 } from '../../constants/globalMembershipConstants/getGroups';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getGroupsRequest = () => ({
   type: GET_GROUPS_REQUESTING,
@@ -57,7 +57,7 @@ export const fetchGetGroups = (
       if (data.message === 'invalid token received') {
         dispatch(getGroupsInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getGroupsFailure(data.message));
       break;
     }
@@ -67,7 +67,7 @@ export const fetchGetGroups = (
     // }
     default: {
       dispatch(getGroupsFailure(data.message));
-      dispatch(push('/dashboard'));
+      dispatch(push(routerLinks.dashboard));
     }
   }
 };

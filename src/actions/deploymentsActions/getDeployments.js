@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_DEPLOYMENTS_REQUESTING,
   GET_DEPLOYMENTS_SUCCESS,
   GET_DEPLOYMENTS_FAILURE
 } from '../../constants/deploymentsConstants/getDeployments';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getDeploymentsRequest = () => ({
   type: GET_DEPLOYMENTS_REQUESTING,
@@ -67,13 +67,13 @@ export const fetchGetDeployments = (
       if (data.message === 'invalid token received') {
         dispatch(getDeploymentsInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getDeploymentsFailure(data.message));
       break;
     }
     default: {
       dispatch(getDeploymentsFailure(data.message, status, idName));
-      dispatch(push('/namespaces'));
+      dispatch(push(routerLinks.namespaces));
     }
   }
 };

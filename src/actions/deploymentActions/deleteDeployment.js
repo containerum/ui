@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types/index';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   DELETE_DEPLOYMENT_REQUESTING,
   DELETE_DEPLOYMENT_SUCCESS,
   DELETE_DEPLOYMENT_FAILURE
 } from '../../constants/deploymentConstants/deleteDeployment';
-import { webApi } from '../../config';
+import { routerLinks, webApi } from '../../config';
 
 const deleteDeploymentRequest = () => ({
   type: DELETE_DEPLOYMENT_REQUESTING,
@@ -68,7 +68,7 @@ export const fetchDeleteDeployment = (
       if (data.message === 'invalid token received') {
         dispatch(deleteDeploymentInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(deleteDeploymentFailure(data.message, status, idDep));
       break;
     }

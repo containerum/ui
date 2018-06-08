@@ -8,13 +8,13 @@ import type {
   GetState,
   ThunkAction
   // ReduxState
-} from '../../types/index';
+} from '../../types';
 import {
   GET_VOLUMES_REQUESTING,
   GET_VOLUMES_SUCCESS,
   GET_VOLUMES_FAILURE
 } from '../../constants/volumesConstants/getVolumes';
-import { webApi } from '../../config/index';
+import { webApi, routerLinks } from '../../config';
 
 const getVolumesRequest = () => ({
   type: GET_VOLUMES_REQUESTING,
@@ -38,20 +38,19 @@ const getVolumesInvalidToken = () => ({
 });
 
 export const fetchGetVolumes = (
+  id: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(getVolumesRequest());
 
-  const response = await axios.get(`${URL}/api/volumes`, {
+  const response = await axios.get(`${URL}/namespaces/${id}/volumes`, {
     headers: {
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });
@@ -65,7 +64,7 @@ export const fetchGetVolumes = (
       if (data.message === 'invalid token received') {
         dispatch(getVolumesInvalidToken());
       } else if (data.message === 'invalid request body format') {
-        dispatch(push('/login'));
+        dispatch(push(routerLinks.login));
       } else dispatch(getVolumesFailure(data.message));
       break;
     }
@@ -75,8 +74,8 @@ export const fetchGetVolumes = (
   }
 };
 
-export const fetchGetVolumesIfNeeded = (): ThunkAction => (
+export const fetchGetVolumesIfNeeded = (id: string): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetVolumes(axios));
+) => dispatch(fetchGetVolumes(id, axios));
