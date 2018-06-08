@@ -44,7 +44,6 @@ export const fetchAddGroup = (
   const accessToken = cookie.load('accessToken');
   dispatch(addGroupRequest());
 
-  console.log(label);
   const response = await axios.post(
     `${URL}/groups`,
     { label: 'qwer@qweqr.qwer' },

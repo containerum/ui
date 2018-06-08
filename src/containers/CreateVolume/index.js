@@ -30,6 +30,7 @@ import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile
 import globalStyles from '../../theme/global.scss';
 
 type Props = {
+  match: Object,
   getVolumesTariffsReducer: VolumesType,
   createVolumeReducer: Object,
   changeProfileInfoReducer: Object,
@@ -37,6 +38,7 @@ type Props = {
   fetchGetVolumesTariffsIfNeeded: () => void,
   fetchCreateVolumeIfNeeded: (
     idVol: string,
+    idName: string,
     tariff: string,
     price: string
   ) => void,
@@ -56,6 +58,7 @@ export class CreateVolume extends PureComponent<Props> {
     this.state = {
       isOpened: false,
       Name: '',
+      VolTariffId: null,
       VolTariffName: null,
       VolTariffVolume: null,
       VolTariffPrice: null,
@@ -130,10 +133,11 @@ export class CreateVolume extends PureComponent<Props> {
     });
   };
   handleSelectTariff = tariff => {
-    const { label, volumeSize, price, storageLimit, pricePerDay } = tariff;
+    const { label, volumeSize, price, storageLimit, pricePerDay, id } = tariff;
     this.setState({
       ...this.state,
       isOpened: true,
+      VolTariffId: id,
       VolTariffName: label,
       VolTariffVolume: volumeSize,
       VolTariffPrice: price,
@@ -212,7 +216,6 @@ export class CreateVolume extends PureComponent<Props> {
     return (
       <TariffsVolumesList
         data={this.props.getVolumesTariffsReducer.data}
-        VolTariffName={this.state.VolTariffName}
         handleSelectTariff={tariff => this.handleSelectTariff(tariff)}
         changeProfile={changeProfileInfoReducer.readyStatus}
         isFullDataOfProfile={this.state.isFullDataOfProfile}
@@ -223,12 +226,13 @@ export class CreateVolume extends PureComponent<Props> {
 
   render() {
     const {
+      match,
       createVolumeReducer,
       fetchCreateVolumeIfNeeded,
       changeProfileInfoReducer
     } = this.props;
     const {
-      VolTariffName,
+      VolTariffId,
       Name,
       VolTariffVolume,
       VolTariffPrice,
@@ -252,7 +256,7 @@ export class CreateVolume extends PureComponent<Props> {
         />
         <CreateModal
           type="Volume"
-          tariff={VolTariffName}
+          tariff={VolTariffId}
           name={Name}
           data={{
             volume: VolTariffVolume,
@@ -261,6 +265,7 @@ export class CreateVolume extends PureComponent<Props> {
             pricePerDay: VolTariffPricePerDay
           }}
           isOpened={isOpened}
+          idName={match.params.idName}
           handleInputName={this.handleInputName}
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleCreate={fetchCreateVolumeIfNeeded}
@@ -309,9 +314,19 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetVolumesTariffsIfNeeded: () =>
       dispatch(actionGetVolumesTariffs.fetchGetVolumesTariffsIfNeeded()),
-    fetchCreateVolumeIfNeeded: (idVol: string, tariff: string, price: string) =>
+    fetchCreateVolumeIfNeeded: (
+      idVol: string,
+      idName: string,
+      tariff: string,
+      price: string
+    ) =>
       dispatch(
-        actionCreateVolume.fetchCreateVolumeIfNeeded(idVol, tariff, price)
+        actionCreateVolume.fetchCreateVolumeIfNeeded(
+          idVol,
+          idName,
+          tariff,
+          price
+        )
       ),
     fetchChangeProfileInfoIfNeeded: (countryCode: number, firstName: string) =>
       dispatch(

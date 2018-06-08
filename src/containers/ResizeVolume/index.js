@@ -32,8 +32,12 @@ type Props = {
   resizeVolumeReducer: Object,
   getVolumeReducer: Object,
   fetchGetVolumesTariffsIfNeeded: () => void,
-  fetchResizeVolumeIfNeeded: (idVol: string, tariff: string) => void,
-  fetchGetVolumeIfNeeded: (idVol: string) => void,
+  fetchResizeVolumeIfNeeded: (
+    idVol: string,
+    idName: string,
+    tariff: string
+  ) => void,
+  fetchGetVolumeIfNeeded: (idName: string, idVol: string) => void,
   match: Object
 };
 
@@ -43,6 +47,7 @@ export class ResizeVolume extends PureComponent<Props> {
     super();
     this.state = {
       isOpened: false,
+      VolTariffId: null,
       VolTariffName: null,
       VolTariffVolume: null,
       VolTariffPrice: null,
@@ -51,9 +56,13 @@ export class ResizeVolume extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    const { match } = this.props;
-    this.props.fetchGetVolumesTariffsIfNeeded();
-    this.props.fetchGetVolumeIfNeeded(match.params.idVol);
+    const {
+      match,
+      fetchGetVolumesTariffsIfNeeded,
+      fetchGetVolumeIfNeeded
+    } = this.props;
+    fetchGetVolumesTariffsIfNeeded();
+    fetchGetVolumeIfNeeded(match.params.idName, match.params.idVol);
   }
   handleOpenCloseModal = () => {
     this.setState({
@@ -62,10 +71,11 @@ export class ResizeVolume extends PureComponent<Props> {
     });
   };
   handleSelectTariff = tariff => {
-    const { label, volumeSize, price, storageLimit, pricePerDay } = tariff;
+    const { label, volumeSize, price, storageLimit, pricePerDay, id } = tariff;
     this.setState({
       ...this.state,
       isOpened: true,
+      VolTariffId: id,
       VolTariffName: label,
       VolTariffVolume: volumeSize,
       VolTariffPrice: price,
@@ -127,7 +137,7 @@ export class ResizeVolume extends PureComponent<Props> {
       match
     } = this.props;
     const {
-      VolTariffName,
+      VolTariffId,
       VolTariffVolume,
       VolTariffPrice,
       VolTariffPricePerDay,
@@ -145,8 +155,9 @@ export class ResizeVolume extends PureComponent<Props> {
         />
         <ResizeModal
           type="Volume"
-          tariff={VolTariffName}
+          tariff={VolTariffId}
           name={match.params.idVol}
+          idName={match.params.idName}
           data={{
             volume: VolTariffVolume,
             price: VolTariffPrice,
@@ -191,10 +202,16 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetVolumesTariffsIfNeeded: () =>
       dispatch(actionGetVolumesTariffs.fetchGetVolumesTariffsIfNeeded()),
-    fetchResizeVolumeIfNeeded: (idVol: string, tariff: string) =>
-      dispatch(actionResizeVolume.fetchResizeVolumeIfNeeded(idVol, tariff)),
-    fetchGetVolumeIfNeeded: (idVol: string) =>
-      dispatch(actionGetVolume.fetchGetVolumeIfNeeded(idVol))
+    fetchResizeVolumeIfNeeded: (
+      idVol: string,
+      idName: string,
+      tariff: string
+    ) =>
+      dispatch(
+        actionResizeVolume.fetchResizeVolumeIfNeeded(idVol, idName, tariff)
+      ),
+    fetchGetVolumeIfNeeded: (idName: string, idVol: string) =>
+      dispatch(actionGetVolume.fetchGetVolumeIfNeeded(idName, idVol))
   })
 );
 
