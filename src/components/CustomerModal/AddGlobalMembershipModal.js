@@ -105,7 +105,7 @@ const AddGlobalUserMembershipModal = ({
           >
             {type}
           </h4>
-          {type === 'Add User' && (
+          {(type === 'Add User' || type === 'Add User in Group') && (
             <span className={modalStyles.modalRedisText}>
               Fill in the information below to add new user
             </span>
