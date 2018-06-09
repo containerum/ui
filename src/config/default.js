@@ -90,6 +90,8 @@ module.exports = {
     getConfigMaps: '/projects/:idName/configMaps',
     getConfigMapsLink: (idName: string) => `/projects/${idName}/configMaps`,
     createConfigMap: '/project/:idName/createConfigMap',
+    createConfigMapLink: (idName: string) =>
+      `/project/${idName}/createConfigMap`,
     viewConfigMapFiles: '/project/:idName/configmaps/:idCnf/file/:idFile',
     viewConfigMapFilesLink: (idName: string, idCnf: string, idFile: string) =>
       `/project/${idName}/configMaps/${idCnf}/file/${idFile}`,
