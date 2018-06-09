@@ -61,6 +61,7 @@ export class DeleteAccount extends PureComponent<Props> {
         />
         <DeleteModal
           type="Account"
+          inputName={inputName}
           name={inputName}
           typeName={getProfileReducer.data.login}
           isOpened={isOpened}
