@@ -3,36 +3,38 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
-  ADD_GLOBAL_USER_INVALID,
-  ADD_GLOBAL_USER_REQUESTING,
-  ADD_GLOBAL_USER_SUCCESS,
-  ADD_GLOBAL_USER_FAILURE
-} from '../../constants/globalMembershipConstants/addGlobalUser';
+  ADD_GLOBAL_USER_IN_GROUP_INVALID,
+  ADD_GLOBAL_USER_IN_GROUP_REQUESTING,
+  ADD_GLOBAL_USER_IN_GROUP_SUCCESS,
+  ADD_GLOBAL_USER_IN_GROUP_FAILURE
+} from '../../constants/globalMembershipConstants/addGlobalUserInGroup';
 import { webApi } from '../../config/index';
 
 const addGlobalUserInvalid = () => ({
-  type: ADD_GLOBAL_USER_INVALID
+  type: ADD_GLOBAL_USER_IN_GROUP_INVALID
 });
 
 const addGlobalUserRequest = () => ({
-  type: ADD_GLOBAL_USER_REQUESTING,
+  type: ADD_GLOBAL_USER_IN_GROUP_REQUESTING,
   isFetching: true
 });
 
-const addGlobalUserSuccess = (login, status, method) => ({
-  type: ADD_GLOBAL_USER_SUCCESS,
+const addGlobalUserSuccess = (members, status, method, labelGroup) => ({
+  type: ADD_GLOBAL_USER_IN_GROUP_SUCCESS,
   isFetching: false,
-  login,
+  members,
   status,
-  method
+  method,
+  labelGroup
 });
 
-const addGlobalUserFailure = (err, status, login) => ({
-  type: ADD_GLOBAL_USER_FAILURE,
+const addGlobalUserFailure = (err, status, members, labelGroup) => ({
+  type: ADD_GLOBAL_USER_IN_GROUP_FAILURE,
   isFetching: false,
   err,
   status,
-  login
+  members,
+  labelGroup
 });
 
 const addGlobalUserInvalidToken = () => ({
@@ -41,24 +43,19 @@ const addGlobalUserInvalidToken = () => ({
 
 export const fetchAddGlobalUser = (
   idGroup: string,
-  login: string,
+  members: Array<Object>,
+  labelGroup: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
-
   dispatch(addGlobalUserRequest());
 
   const response = await axios.post(
     `${URL}/groups/${idGroup}/members `,
     {
-      members: [
-        {
-          username: login,
-          access: 'guest'
-        }
-      ]
+      members
     },
     {
       headers: {
@@ -70,8 +67,8 @@ export const fetchAddGlobalUser = (
   );
   const { status, data } = response;
   switch (status) {
-    case 201: {
-      dispatch(addGlobalUserSuccess(login, status, 'put'));
+    case 202: {
+      dispatch(addGlobalUserSuccess(members, status, 'put', labelGroup));
       break;
     }
     case 400: {
@@ -83,7 +80,7 @@ export const fetchAddGlobalUser = (
       break;
     }
     default: {
-      dispatch(addGlobalUserFailure(data.message, status, login));
+      dispatch(addGlobalUserFailure(data.message, status, members, labelGroup));
     }
   }
   dispatch(addGlobalUserInvalid());
@@ -91,6 +88,7 @@ export const fetchAddGlobalUser = (
 
 export const fetchAddGlobalUserIfNeeded = (
   idGroup: string,
-  login: string
+  members: Array<Object>,
+  labelGroup: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchAddGlobalUser(idGroup, login, axios));
+  dispatch(fetchAddGlobalUser(idGroup, members, labelGroup, axios));
