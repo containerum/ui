@@ -2173,9 +2173,9 @@ select.form-control:not([size]):not([multiple]) {
     border: solid 0.5px #a7a7a7;
 }
 
-.form-control {
-  border-radius: 0.25rem !important;
-}
+/*.form-control {*/
+  /*border-radius: 0.25rem !important;*/
+/*}*/
 
 
 .input-group{
