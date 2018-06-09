@@ -122,7 +122,7 @@ export class CreateServiceCard extends PureComponent<Props> {
             {
               externalSrvName: '',
               externalSrvTargetPort: '',
-              intServiceType: 'TCP',
+              extServiceType: 'TCP',
               id: _.uniqueId(),
               index: 0
             }
@@ -164,7 +164,7 @@ export class CreateServiceCard extends PureComponent<Props> {
           {
             externalSrvName: '',
             externalSrvTargetPort: '',
-            intServiceType: 'TCP',
+            extServiceType: 'TCP',
             id: _.uniqueId(),
             index: 0
           }
