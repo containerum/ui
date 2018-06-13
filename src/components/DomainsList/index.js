@@ -24,11 +24,17 @@ const containerClassName = globalClass(
 );
 type Props = {
   namespacesLabels: Object,
+  namespacesData: Array<Object>,
   data: Object,
   handleDeleteDomain: (idName: string, label: string) => void
 };
 
-const DomainsList = ({ data, handleDeleteDomain, namespacesLabels }: Props) => {
+const DomainsList = ({
+  data,
+  namespacesData,
+  handleDeleteDomain,
+  namespacesLabels
+}: Props) => {
   const isEmptyData = Object.keys(data).find(
     ingress => data[ingress].ingresses.length
   );
@@ -60,6 +66,10 @@ const DomainsList = ({ data, handleDeleteDomain, namespacesLabels }: Props) => {
               const namespaceName = namespacesLabels.find(
                 namespace => namespace[0] === ingressName
               );
+              const namespaceInfo = namespacesData.find(
+                namespace =>
+                  namespaceName ? namespace.id === namespaceName[0] : {}
+              );
               return Object.keys(checkArrIngressess).map(ingress =>
                 checkArrIngressess[ingress].map(ing => {
                   const { name, type } = ing;
@@ -74,7 +84,8 @@ const DomainsList = ({ data, handleDeleteDomain, namespacesLabels }: Props) => {
                       key={_.uniqueId()}
                       style={{
                         margin: 0,
-                        boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
+                        boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)',
+                        height: 42
                       }}
                     >
                       <td className={domainsStyles.td_1_Domains}>
@@ -108,32 +119,36 @@ const DomainsList = ({ data, handleDeleteDomain, namespacesLabels }: Props) => {
                           domainsStyles.td_3_Domains
                         }  dropdown no-arrow`}
                       >
-                        <i
-                          className={`${globalStyles.contentBlockTableMore} ${
-                            globalStyles.dropdownToggle
-                          }
-                          ${globalStyles.ellipsisRoleMore} ion-more `}
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        />
-                        <ul
-                          className={` dropdown-menu dropdown-menu-right ${
-                            globalStyles.dropdownMenu
-                          }`}
-                          role="menu"
-                        >
-                          <li
-                            className={`dropdown-item text-danger ${
-                              globalStyles.dropdownItem
-                            }`}
-                            onClick={() =>
-                              handleDeleteDomain(ingressName, name)
+                        {namespaceInfo.access !== 'read' && (
+                          <i
+                            className={`${globalStyles.contentBlockTableMore} ${
+                              globalStyles.dropdownToggle
                             }
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          />
+                        )}
+                        {namespaceInfo.access !== 'read' && (
+                          <ul
+                            className={` dropdown-menu dropdown-menu-right ${
+                              globalStyles.dropdownMenu
+                            }`}
+                            role="menu"
                           >
-                            Delete
-                          </li>
-                        </ul>
+                            <li
+                              className={`dropdown-item text-danger ${
+                                globalStyles.dropdownItem
+                              }`}
+                              onClick={() =>
+                                handleDeleteDomain(ingressName, name)
+                              }
+                            >
+                              Delete
+                            </li>
+                          </ul>
+                        )}
                       </td>
                     </tr>
                   );

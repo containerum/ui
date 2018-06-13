@@ -135,6 +135,7 @@ export class Domains extends PureComponent<Props> {
     return (
       <DomainsList
         namespacesLabels={namespacesLabels}
+        namespacesData={getNamespacesReducer.data}
         data={this.state.displayedDomains}
         handleDeleteDomain={(idName, label) =>
           this.handleDeleteDomain(idName, label)

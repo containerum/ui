@@ -59,7 +59,7 @@ const MembershipList = ({
           </thead>
           <tbody>
             {membersList.map(user => {
-              console.log(user);
+              // console.log(user);
               const { username: login, id } = user;
               return (
                 <tr
