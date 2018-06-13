@@ -12,7 +12,7 @@ import GlobalUserListInGroup from '../../components/GlobalUserListInGroup';
 import AddUserInGlobalGroupModal from '../../components/CustomerModal/AddUserInGlobalGroupModal';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionAddGlobalUserIfNeeded from '../../actions/globalMembership/addUserInGroup';
-import * as actionAdminDeleteUserIfNeeded from '../../actions/globalMembership/adminDeleteUser';
+import * as actionfetchDeleteUserFromGroupIfNeeded from '../../actions/globalMembership/deleteUserFromGroup';
 import * as actionGetGroup from '../../actions/globalMembership/getGroup';
 import {
   GET_GROUP_FAILURE,
@@ -26,6 +26,7 @@ import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile
 import globalStyles from '../../theme/global.scss';
 import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+import { DELETE_USER_FROM_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/deleteUserFromGroup';
 // import { fetchAddGlobalUser } from '../../actions/globalMembership/addUser';
 
 const globalClass = className.bind(globalStyles);
@@ -52,7 +53,7 @@ const liClassName = globalClass(
 type Props = {
   match: Object,
   history: Object,
-  adminDeleteUserReducer: Object,
+  deleteUserFromGroupReducer: Object,
   getGroupReducer: Object,
   getProfileReducer: Object,
   fetchGetGroupIfNeeded: (idGroup: string) => void,
@@ -62,7 +63,7 @@ type Props = {
     labelGroup: string
   ) => void,
   addUserInGroupReducer: Object,
-  fetchAdminDeleteUserIfNeeded: (username: string) => void
+  fetchDeleteUserFromGroupIfNeeded: (idGroup: string, username: string) => void
 };
 
 class GlobalMembership extends PureComponent<Props> {
@@ -99,6 +100,14 @@ class GlobalMembership extends PureComponent<Props> {
         nextProps.addUserInGroupReducer.readyStatus &&
       nextProps.addUserInGroupReducer.readyStatus ===
         ADD_GLOBAL_USER_IN_GROUP_SUCCESS
+    ) {
+      fetchGetGroupIfNeeded(match.params.idGroup);
+    }
+    if (
+      this.props.deleteUserFromGroupReducer.readyStatus !==
+        nextProps.deleteUserFromGroupReducer.readyStatus &&
+      nextProps.deleteUserFromGroupReducer.readyStatus ===
+        DELETE_USER_FROM_GROUP_SUCCESS
     ) {
       fetchGetGroupIfNeeded(match.params.idGroup);
     }
@@ -217,11 +226,11 @@ class GlobalMembership extends PureComponent<Props> {
   render() {
     const {
       match,
-      adminDeleteUserReducer,
+      deleteUserFromGroupReducer,
       getGroupReducer,
       addUserInGroupReducer,
       fetchAddGlobalUserIfNeeded,
-      fetchAdminDeleteUserIfNeeded
+      fetchDeleteUserFromGroupIfNeeded
     } = this.props;
     const {
       status: statusAdd,
@@ -231,9 +240,9 @@ class GlobalMembership extends PureComponent<Props> {
     } = addUserInGroupReducer;
     const {
       status: statusDelete,
-      idName: idNameDelete,
+      username: idNameDelete,
       err: errDelete
-    } = adminDeleteUserReducer;
+    } = deleteUserFromGroupReducer;
     const label =
       getGroupReducer.readyStatus === GET_GROUP_SUCCESS
         ? getGroupReducer.data.label
@@ -258,13 +267,14 @@ class GlobalMembership extends PureComponent<Props> {
         />
 
         <AdminDeleteUserModal
-          type="Delete Group"
+          type="Delete User from Group"
           name={this.state.inputEmailDelete}
           isOpened={this.state.isOpen}
           typeName={this.state.idUser}
+          idGroup={idGroup}
           handleInputEmailDelete={this.handleInputEmailDelete}
           handleOpenCloseModal={this.handleOpenCloseModal}
-          onHandleDelete={fetchAdminDeleteUserIfNeeded}
+          onHandleDelete={fetchDeleteUserFromGroupIfNeeded}
         />
         <AddUserInGlobalGroupModal
           type="Add User"
@@ -366,7 +376,8 @@ const connector: Connector<{}, Props> = connect(
     getGroupReducer,
     adminDeleteUserReducer,
     addUserReducer,
-    addUserInGroupReducer
+    addUserInGroupReducer,
+    deleteUserFromGroupReducer
   }: ReduxState) => ({
     getNamespaceUsersAccessReducer,
     getNamespaceReducer,
@@ -375,7 +386,8 @@ const connector: Connector<{}, Props> = connect(
     getGroupReducer,
     adminDeleteUserReducer,
     addUserReducer,
-    addUserInGroupReducer
+    addUserInGroupReducer,
+    deleteUserFromGroupReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetGroupIfNeeded: (idGroup: string) =>
@@ -392,10 +404,10 @@ const connector: Connector<{}, Props> = connect(
           labelGroup
         )
       ),
-    fetchAdminDeleteUserIfNeeded: (idName: string, username: string) =>
+    fetchDeleteUserFromGroupIfNeeded: (idGroup: string, username: string) =>
       dispatch(
-        actionAdminDeleteUserIfNeeded.fetchAdminDeleteUserIfNeeded(
-          idName,
+        actionfetchDeleteUserFromGroupIfNeeded.fetchDeleteUserFromGroupIfNeeded(
+          idGroup,
           username
         )
       )

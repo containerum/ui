@@ -35,10 +35,11 @@ const customStyles = {
 
 type Props = {
   type: string,
+  idName: string,
   name: string,
   typeName: string,
-  idName: string,
   isOpened: boolean,
+  idGroup: string,
   onHandleDelete: (idName: string, name: string) => void,
   handleInputEmailDelete: (value: string) => void,
   handleOpenCloseModal: () => void
@@ -47,9 +48,10 @@ type Props = {
 const AdminDeleteUserModal = ({
   type,
   name,
-  typeName,
   idName,
+  typeName,
   isOpened,
+  idGroup,
   handleOpenCloseModal,
   handleInputEmailDelete,
   onHandleDelete
@@ -59,7 +61,15 @@ const AdminDeleteUserModal = ({
   };
   const handleSubmitDeletingEssence = e => {
     e.preventDefault();
-    if (name.length >= 2) {
+    if (type === 'Delete User from Group') {
+      handleOpenCloseModal();
+      onHandleDelete(idGroup, name);
+    }
+    if (type === 'Delete Group') {
+      handleOpenCloseModal();
+      onHandleDelete(idName, name);
+    }
+    if (type === 'Delete User') {
       handleOpenCloseModal();
       onHandleDelete(idName, name);
     }
@@ -121,10 +131,22 @@ const AdminDeleteUserModal = ({
               confirm you want to permanently delete it:
             </span>
           )}
+          {type === 'Delete User from Group' && (
+            <span className={modalStyles.modalRedisText}>
+              Enter user’s Email (<strong style={{ color: '#29abe2' }}>
+                example@domain.com
+              </strong>) below to<br />
+              confirm you want to delete it:
+            </span>
+          )}
           <input
             type="text"
             className="form-control volume-form-input"
-            placeholder={type === 'Delete User' ? 'Email' : 'Group'}
+            placeholder={
+              type === 'Delete User' || type === 'Delete User from Group'
+                ? 'Email'
+                : 'Group'
+            }
             value={name}
             onChange={e => handleChangeNameOfType(e)}
           />
