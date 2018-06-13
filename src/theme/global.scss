@@ -1461,3 +1461,12 @@
     }
   }
 }
+////////////////////////error//////////
+.errorPassword {
+  color: $none-access-color !important;
+  border-color: $none-access-color !important;
+
+  &:focus {
+    border-bottom-color: $none-access-color !important;
+  }
+}

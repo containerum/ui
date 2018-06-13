@@ -65,7 +65,8 @@ export class Password extends PureComponent<Props> {
     newPassword: '',
     isValidRepeatPassword: true,
     isValidCurrentPassword: true,
-    isValidNewPassword: true
+    isValidNewPassword: true,
+    newPasswordEquals: true
   });
   submitUpdatePasswordData = e => {
     e.preventDefault();
@@ -85,6 +86,17 @@ export class Password extends PureComponent<Props> {
         isValidCurrentPassword: false,
         isValidRepeatPassword: false,
         isValidNewPassword: false
+      });
+    }
+    if (newPassword === repeatPassword) {
+      this.setState({
+        ...this.state,
+        newPasswordEquals: true
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        newPasswordEquals: false
       });
     }
   };
@@ -143,7 +155,7 @@ export class Password extends PureComponent<Props> {
                       valid={isValidCurrentPassword}
                       baseClassName={`${formClassName} ${
                         inputStyles.inputCustom
-                      }`}
+                      } `}
                       baseClassNameLabel={`${
                         globalStyles.formGroupLabel
                       } ${currentPassword &&
@@ -160,12 +172,14 @@ export class Password extends PureComponent<Props> {
                       id="newPassword"
                       type="password"
                       valid={isValidNewPassword}
-                      baseClassName={`${formClassName} ${
+                      baseClassName={`${!this.state.newPasswordEquals &&
+                        globalStyles.errorPassword} ${formClassName} ${
                         inputStyles.inputCustom
-                      }`}
-                      baseClassNameLabel={`${
+                      } `}
+                      baseClassNameLabel={` ${!this.state.newPasswordEquals &&
+                        globalStyles.errorPassword} ${
                         globalStyles.formGroupLabel
-                      } ${newPassword && globalStyles.formGroupLabelOnFocus}`}
+                      } ${newPassword && globalStyles.formGroupLabelOnFocus} `}
                       labelText="New password"
                       textHelper="Password must be 8 or more characters"
                       handleChangeInput={e =>
@@ -180,13 +194,15 @@ export class Password extends PureComponent<Props> {
                       id="repeatPassword"
                       type="password"
                       valid={isValidRepeatPassword}
-                      baseClassName={`${formClassName} ${
+                      baseClassName={` ${!this.state.newPasswordEquals &&
+                        globalStyles.errorPassword} ${formClassName} ${
                         inputStyles.inputCustom
-                      }`}
-                      baseClassNameLabel={`${
+                      } `}
+                      baseClassNameLabel={` ${!this.state.newPasswordEquals &&
+                        globalStyles.errorPassword} ${
                         globalStyles.formGroupLabel
                       } ${repeatPassword &&
-                        globalStyles.formGroupLabelOnFocus}`}
+                        globalStyles.formGroupLabelOnFocus} `}
                       labelText="Confirm new password"
                       handleChangeInput={e =>
                         this.handleChangeRepeatPassword(e.target.value)
