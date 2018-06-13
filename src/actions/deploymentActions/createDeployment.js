@@ -126,7 +126,7 @@ export const fetchCreateDeployment = (
     case 201: {
       idSrv = `Deployment ${dataObj.name} for ${idName}`;
       dispatch(createDeploymentSuccess(data, status, config.method, idSrv));
-      dispatch(push(routerLinks.getDeploymentLink(idName, dataObj.name)));
+      // dispatch(push(routerLinks.getDeploymentLink(idName, dataObj.name)));
       break;
     }
     case 400: {

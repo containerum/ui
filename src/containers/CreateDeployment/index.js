@@ -35,6 +35,7 @@ import CreateServiceCardItem from '../CreateService/CreateServiceCard';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+import { routerLinks } from '../../config';
 
 const stylesClass = className.bind(styles);
 const globalClass = className.bind(globalStyles);
@@ -55,6 +56,7 @@ type Props = {
   // getVolumesByNSReducer: Object,
   getNamespaceReducer: Object,
   createDeploymentReducer: Object,
+  history: Object,
   match: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
@@ -117,6 +119,14 @@ export class CreateDeployment extends PureComponent<Props> {
         serviceObject.externalSrvObject[0].externalSrvTargetPort
       ) {
         fetchCreateExternalServiceIfNeeded(match.params.idName, serviceObject);
+        this.props.history.push(
+          routerLinks.createdExternalServiceSuccessfulLink(
+            match.params.idName,
+            serviceObject.externalSrvNameValue
+          )
+        );
+      } else {
+        this.props.history.push(routerLinks.namespaces);
       }
     }
   }
