@@ -27,6 +27,7 @@ import globalStyles from '../../theme/global.scss';
 import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import { DELETE_USER_FROM_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/deleteUserFromGroup';
+import * as actionDeleteGroupIfNeeded from '../../actions/globalMembership/deleteGroup';
 // import { fetchAddGlobalUser } from '../../actions/globalMembership/addUser';
 
 const globalClass = className.bind(globalStyles);
@@ -54,9 +55,11 @@ type Props = {
   match: Object,
   history: Object,
   deleteUserFromGroupReducer: Object,
+  deleteGroupReducer: Object,
   getGroupReducer: Object,
   getProfileReducer: Object,
   fetchGetGroupIfNeeded: (idGroup: string) => void,
+  fetchDeleteGroupIfNeeded: (id: string, name: string) => void,
   fetchAddGlobalUserIfNeeded: (
     idGroup: string,
     members: Array<Object>,
@@ -72,6 +75,8 @@ class GlobalMembership extends PureComponent<Props> {
     this.state = {
       inputEmailDelete: '',
       inputEmailAdd: '',
+      inputEmailDeleteGroup: '',
+      isOpenDeleteGroup: false,
       isOpen: false,
       isOpenAdd: false,
       idUser: null,
@@ -159,6 +164,14 @@ class GlobalMembership extends PureComponent<Props> {
       inputEmailDelete: ''
     });
   };
+  handleOpenCloseModalDeleteGroup = () => {
+    this.setState({
+      ...this.state,
+      isOpenDeleteGroup: !this.state.isOpenDeleteGroup,
+      idUser: null,
+      inputEmailDeleteGroup: ''
+    });
+  };
   handleOpenCloseModalAdd = () => {
     this.setState({
       isOpenAdd: !this.state.isOpenAdd,
@@ -172,6 +185,12 @@ class GlobalMembership extends PureComponent<Props> {
     this.setState({
       ...this.state,
       inputEmailDelete
+    });
+  };
+  handleInputEmailDeleteGroup = inputEmailDeleteGroup => {
+    this.setState({
+      ...this.state,
+      inputEmailDeleteGroup
     });
   };
   handleInputEmailAdd = inputEmailAdd => {
@@ -229,7 +248,9 @@ class GlobalMembership extends PureComponent<Props> {
       deleteUserFromGroupReducer,
       getGroupReducer,
       addUserInGroupReducer,
+      deleteGroupReducer,
       fetchAddGlobalUserIfNeeded,
+      fetchDeleteGroupIfNeeded,
       fetchDeleteUserFromGroupIfNeeded
     } = this.props;
     const {
@@ -243,6 +264,11 @@ class GlobalMembership extends PureComponent<Props> {
       username: idNameDelete,
       err: errDelete
     } = deleteUserFromGroupReducer;
+    const {
+      status: statusDeleteGroup,
+      data: idNameDeleteGroup,
+      err: errDeleteGroup
+    } = deleteGroupReducer;
     const label =
       getGroupReducer.readyStatus === GET_GROUP_SUCCESS
         ? getGroupReducer.data.label
@@ -258,6 +284,11 @@ class GlobalMembership extends PureComponent<Props> {
           status={statusDelete}
           name={idNameDelete}
           errorMessage={errDelete}
+        />
+        <Notification
+          status={statusDeleteGroup}
+          name={idNameDeleteGroup}
+          errorMessage={errDeleteGroup}
         />
 
         <Notification
@@ -275,6 +306,16 @@ class GlobalMembership extends PureComponent<Props> {
           handleInputEmailDelete={this.handleInputEmailDelete}
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleDelete={fetchDeleteUserFromGroupIfNeeded}
+        />
+        <AdminDeleteUserModal
+          type="Delete Group"
+          name={this.state.inputEmailDeleteGroup}
+          isOpened={this.state.isOpenDeleteGroup}
+          typeName={label}
+          idName={idGroup}
+          handleInputEmailDelete={this.handleInputEmailDeleteGroup}
+          handleOpenCloseModal={this.handleOpenCloseModalDeleteGroup}
+          onHandleDelete={fetchDeleteGroupIfNeeded}
         />
         <AddUserInGlobalGroupModal
           type="Add User"
@@ -313,10 +354,13 @@ class GlobalMembership extends PureComponent<Props> {
                       <div
                         style={{
                           float: 'right',
-                          display: 'inline-block'
+                          display: 'inline-block',
+                          cursor: 'pointer'
                         }}
-                        className={globalStyles.contentBlockHeaderLabelDescript}
-                        onClick={() => console.log('delete group')}
+                        className={`${
+                          globalStyles.contentBlockHeaderLabelDescript
+                        } ${globalStyles.hoverActionDelete}`}
+                        onClick={this.handleOpenCloseModalDeleteGroup}
                       >
                         Delete Group
                       </div>
@@ -377,7 +421,8 @@ const connector: Connector<{}, Props> = connect(
     adminDeleteUserReducer,
     addUserReducer,
     addUserInGroupReducer,
-    deleteUserFromGroupReducer
+    deleteUserFromGroupReducer,
+    deleteGroupReducer
   }: ReduxState) => ({
     getNamespaceUsersAccessReducer,
     getNamespaceReducer,
@@ -387,7 +432,8 @@ const connector: Connector<{}, Props> = connect(
     adminDeleteUserReducer,
     addUserReducer,
     addUserInGroupReducer,
-    deleteUserFromGroupReducer
+    deleteUserFromGroupReducer,
+    deleteGroupReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetGroupIfNeeded: (idGroup: string) =>
@@ -410,7 +456,9 @@ const connector: Connector<{}, Props> = connect(
           idGroup,
           username
         )
-      )
+      ),
+    fetchDeleteGroupIfNeeded: (id: string, name: string) =>
+      dispatch(actionDeleteGroupIfNeeded.fetchDeleteGroupIfNeeded(id, name))
   })
 );
 

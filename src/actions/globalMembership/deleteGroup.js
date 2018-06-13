@@ -55,6 +55,7 @@ export const fetchDeleteGroup = (
   switch (status) {
     case 202: {
       dispatch(deleteGroupSuccess(name, status));
+      dispatch(push(routerLinks.getGlobalGroups));
       break;
     }
     case 400: {
