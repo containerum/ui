@@ -157,7 +157,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
             role === 'user' && (
               <div className={globalStyles.createDeploymentWrapper}>
                 <div className={globalStyles.noCreatedPodMessage}>
-                  You have no active Namespace yet.
+                  You have no active projects yet.
                 </div>
                 <Link
                   className={btnClassName}
@@ -171,7 +171,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
           {role === 'admin' && (
             <div className={globalStyles.createDeploymentWrapper}>
               <div className={globalStyles.noCreatedPodMessage}>
-                You have no active Namespace yet.
+                You have no active projects yet.
               </div>
               <Link
                 className={btnClassName}

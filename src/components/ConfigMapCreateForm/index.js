@@ -121,7 +121,7 @@ const ConfigMapCreateForm = ({
               role === 'user' && (
                 <div style={{ marginBottom: 10 }}>
                   <div style={{ marginBottom: 10 }}>
-                    You have no active Namespace yet.
+                    You have no active projects yet.
                   </div>
                   <Link
                     to={routerLinks.createNamespace}
@@ -136,7 +136,7 @@ const ConfigMapCreateForm = ({
             {role === 'admin' && (
               <div style={{ marginBottom: 10 }}>
                 <div style={{ marginBottom: 10 }}>
-                  You have no active Namespace yet.
+                  You have no active projects yet.
                 </div>
                 <Link
                   to={routerLinks.createCustomNamespace}
