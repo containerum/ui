@@ -3,13 +3,13 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types';
+import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
   GET_DOMAINS_REQUESTING,
   GET_DOMAINS_SUCCESS,
   GET_DOMAINS_FAILURE
 } from '../../constants/serviceConstants/getDomains';
-import { webApi, routerLinks } from '../../config';
+import { webApi, routerLinks } from '../../config/index';
 
 const getDomainsRequest = () => ({
   type: GET_DOMAINS_REQUESTING,
@@ -42,7 +42,7 @@ export const fetchGetDomains = (
 
   dispatch(getDomainsRequest());
 
-  const response = await axios.get(`${URL}/ingresses`, {
+  const response = await axios.get(`${URL}/namespaces/${idName}/ingresses`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken
