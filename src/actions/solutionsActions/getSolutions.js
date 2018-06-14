@@ -1,85 +1,78 @@
 /* @flow */
 
-// import { push } from 'react-router-redux';
-// import cookie from 'react-cookies';
+import { push } from 'react-router-redux';
+import cookie from 'react-cookies';
 
-import type {
-  Dispatch,
-  GetState,
-  ThunkAction
-  // ReduxState
-} from '../../types';
+import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_SOLUTIONS_REQUESTING,
   GET_SOLUTIONS_SUCCESS,
-  solutionsArray
-  // GET_SOLUTIONS_FAILURE
+  GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
-// import { webApi } from '../../config';
+import { webApi, routerLinks } from '../../config';
 
 const getSolutionsRequest = () => ({
   type: GET_SOLUTIONS_REQUESTING,
   isFetching: true
 });
 
-const getSolutionsSuccess = data => ({
+const getSolutionsSuccess = (data, status) => ({
   type: GET_SOLUTIONS_SUCCESS,
   isFetching: false,
-  data
+  data,
+  status
 });
 
-// const getSolutionsFailure = err => ({
-//   type: GET_SOLUTIONS_FAILURE,
-//   isFetching: false,
-//   err
-// });
+const getSolutionsFailure = (err, status) => ({
+  type: GET_SOLUTIONS_FAILURE,
+  isFetching: false,
+  err,
+  status
+});
 
-export const fetchGetSolutions = (): // axios: any,
-// URL: string = webApi
-ThunkAction => async (dispatch: Dispatch) => {
-  // const browser = cookie.load('browser');
+const getSolutionsInvalidToken = () => ({
+  type: 'GET_INVALID_TOKEN'
+});
+
+export const fetchGetSolutions = (
+  axios: any,
+  URL: string = webApi
+): ThunkAction => async (dispatch: Dispatch) => {
+  const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(getSolutionsRequest());
 
-  // const response = await axios.get(`${URL}/api/solutions`, {
-  //   headers: {
-  //     'User-Client': browser,
-  //     'Content-Type': 'application/x-www-form-urlencode',
-  //     'Access-Control-Allow-Origin': '*',
-  //     'Cache-Control':
-  //       'no-cache, no-store, must-revalidate, max-age=-1, private'
-  //   },
-  //   validateStatus: status => status >= 200 && status <= 505
-  // });
-  // const { status, data } = response;
-  dispatch(getSolutionsSuccess(solutionsArray));
+  const response = await axios.get(`${URL}/templates`, {
+    headers: {
+      'User-Client': browser,
+      'User-Token': accessToken
+    },
+    validateStatus: status => status >= 200 && status <= 505
+  });
+  const { status, data } = response;
+  switch (status) {
+    case 200: {
+      dispatch(getSolutionsSuccess(data.solutions, status));
+      break;
+    }
+    case 400: {
+      if (data.message === 'invalid token received') {
+        dispatch(getSolutionsInvalidToken());
+      } else if (data.message === 'invalid request body format') {
+        dispatch(push(routerLinks.login));
+      } else dispatch(getSolutionsFailure(data.message, status));
+      break;
+    }
+    default: {
+      dispatch(getSolutionsFailure(data.message, status));
+      dispatch(push(routerLinks.namespaces));
+    }
+  }
 };
 
-// Preventing dobule fetching data
-/* istanbul ignore next */
-// const shouldFetchGetSolutions = (state: ReduxState): boolean => {
-//   // In development, we will allow action dispatching
-//   // or your reducer hot reloading won't updated on the view
-//   if (__DEV__) return true;
-//
-//   console.log(state);
-//   if (state.getSolutionsReducer.readyStatus === GET_SOLUTIONS_SUCCESS)
-//     return false; // Preventing double fetching data
-//
-//   return true;
-// };
-
-/* istanbul ignore next */
 export const fetchGetSolutionsIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) =>
-  /* istanbul ignore next */
-  // if (shouldFetchGetSolutions(getState())) {
-  /* istanbul ignore next */
-  dispatch(fetchGetSolutions(axios));
-// }
-
-/* istanbul ignore next */
-// return null;
+) => dispatch(fetchGetSolutions(axios));

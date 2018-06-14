@@ -199,8 +199,8 @@ export class Solution extends PureComponent<Props> {
         />
         <SolutionItem
           text={getSolutionReducer.data}
-          solution={getSolutionsReducer.data.filter(
-            solution => solution.Name === match.params.idSol
+          solution={getSolutionsReducer.data.find(
+            solution => solution.name === match.params.idSol
           )}
           handleClickRunSolution={solutionName =>
             this.handleClickRunSolution(solutionName)
