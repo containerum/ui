@@ -46,7 +46,8 @@ module.exports = {
     recoveryPassword: '/recoveryPassword',
     namespaces: '/projects',
     namespace: '/projects/:idName',
-    namespaceLink: (idName: string) => `/projects/${idName}/deployments`,
+    namespaceLink: (idName: string, additionalPath: string) =>
+      `/projects/${idName}${additionalPath || ''}`,
     namespaceDomains: '/projects/:idName/ingresses',
     namespaceDomainsLink: (idName: string) => `/projects/${idName}/ingresses`,
     createNamespace: '/createProject',
@@ -72,6 +73,11 @@ module.exports = {
     getMembershipLink: (idName: string) => `/project/${idName}/membership`,
     // getGroups: '/project/:idName/groups',
     // getGroupsLink: (idName: string) => `/project/${idName}/groups`,
+    getRunningSolutions: '/projects/:idName/solutions',
+    getRunningSolutionsLink: (idName: string) =>
+      `/projects/${idName}/solutions`,
+    createSolution: '/project/:idName/createSolution',
+    createSolutionLink: (idName: string) => `/project/${idName}/createSolution`,
     getGlobalMembership: '/membership/users',
     getGlobalGroups: '/membership/groups',
     getGroup: '/membership/group/:idGroup',

@@ -32,6 +32,7 @@ type Props = {
   getProfileReducer: Object,
   fetchGetNamespacesIfNeeded: () => void,
   handleDownloadLogs: () => void,
+  additionalPath: ?string,
   idName: ?string,
   idDep: ?string,
   idPod: ?string,
@@ -62,6 +63,7 @@ export class NavigationHeader extends PureComponent<Props> {
   renderNamespacesList = () => {
     const {
       getNamespacesReducer,
+      additionalPath,
       idName,
       idDep,
       idPod,
@@ -129,7 +131,7 @@ export class NavigationHeader extends PureComponent<Props> {
                 <NavLink
                   key={_.uniqueId()}
                   className="dropdown-item"
-                  to={routerLinks.namespaceLink(item.id)}
+                  to={routerLinks.namespaceLink(item.id, additionalPath)}
                 >
                   {item.label}
                 </NavLink>
