@@ -14,7 +14,7 @@ import {
 import type { ReduxState } from '../../types';
 import ProfileSidebar from '../../components/ProfileSidebar';
 // import ProfileWebHook from './WebHook';
-import ProfileDomains from '../Domains';
+import ProfileDomains from '../DomainsGlobal';
 import CLIInfo from '../../components/CLIInfo';
 
 type Props = {
