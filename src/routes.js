@@ -65,6 +65,7 @@ import DomainsInfo from './containers/Domains';
 import ConfigMapsInfo from './containers/ConfigMaps';
 import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 import GlobalMembershipInfo from './containers/GlobalMembership';
+import RunningSolutionsPage from './containers/RunningSolutions';
 
 const isOnline = sourceType === 'ONLINE';
 
@@ -108,6 +109,17 @@ export default [
     loadData: (dispatch: Dispatch, params: Object) =>
       Promise.all([
         dispatch(fetchGetNamespaceIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  {
+    path: routerLinks.getRunningSolutions,
+    exact: true,
+    component: RunningSolutionsPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
         dispatch(fetchGetProfileIfNeeded())
       ])
   },

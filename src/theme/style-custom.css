@@ -1335,11 +1335,13 @@ body .tooltip > .tooltip-inner {
 .status-active {
   color: #03b5aa;
   font-weight: 400;
+  text-transform: uppercase;
 }
 
 .status-inactive {
   color: #fe4a49;
   font-weight: 400;
+  text-transform: uppercase;
 }
 
 .nocreated-sol-message {

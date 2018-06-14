@@ -80,6 +80,8 @@ import addUserReducer from './globalMembership/addUser';
 import getGroupReducer from './globalMembership/getGroup';
 import addUserInGroupReducer from './globalMembership/addUserInGroup';
 import deleteUserFromGroupReducer from './globalMembership/deleteUserFromGroup';
+import getRunningSolutionsReducer from './solutionsReducers/getRunningSolutions';
+import deleteRunningSolutionReducer from './solutionReducers/deleteRunningSolution';
 
 const reducers = {
   loginReducer,
@@ -158,6 +160,8 @@ const reducers = {
   addUserInGroupReducer,
   getGroupReducer,
   deleteUserFromGroupReducer,
+  getRunningSolutionsReducer,
+  deleteRunningSolutionReducer,
   router,
   loadingBar: loadingBarReducer
 };

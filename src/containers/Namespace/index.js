@@ -38,6 +38,7 @@ import Notification from '../Notification';
 import NavigationHeaderItem from '../NavigationHeader';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import DeploymentsPage from '../Deployments';
+import RunningSolutionsPage from '../RunningSolutions';
 import ServicesPage from '../Services';
 // import VolumesPage from '../Volumes';
 import ConfigMapsPage from '../ConfigMaps';
@@ -197,6 +198,30 @@ export class Namespace extends PureComponent<Props> {
       match,
       history
     } = this.props;
+    const { pathname } = history.location;
+    let additionalPath = null;
+    const solutionsPathname = '/solutions';
+    const servicesPathname = '/services';
+    // const volumesPathname = '/volumes';
+    const configMapsPathname = '/configMaps';
+    const deploymentsPathname = '/deployments';
+    const isSolutionsPathname = pathname.indexOf(solutionsPathname) + 1;
+    const isServicesPathname = pathname.indexOf(servicesPathname) + 1;
+    // const isVolumesPathname = pathname.indexOf(volumesPathname) + 1;
+    const isConfigMapsPathname = pathname.indexOf(configMapsPathname) + 1;
+    const isDeploymentsPathname = pathname.indexOf(deploymentsPathname) + 1;
+    if (isSolutionsPathname) {
+      additionalPath = solutionsPathname;
+    } else if (isServicesPathname) {
+      additionalPath = servicesPathname;
+    } else if (isConfigMapsPathname) {
+      additionalPath = configMapsPathname;
+    } else if (isDeploymentsPathname) {
+      additionalPath = deploymentsPathname;
+    }
+    // else if (isVolumesPathname) {
+    //   additionalPath = volumesPathname;
+    // }
     const { status, idLabel, err } = deleteNamespaceReducer;
     const { idName: currentIdName, inputName, isOpened } = this.state;
     let currentNamespace;
@@ -225,7 +250,10 @@ export class Namespace extends PureComponent<Props> {
           />
         )}
         {deleteNamespaceReducer.readyStatus !== DELETE_NAMESPACE_REQUESTING && (
-          <NavigationHeaderItem idName={match.params.idName} />
+          <NavigationHeaderItem
+            idName={match.params.idName}
+            additionalPath={additionalPath}
+          />
         )}
         {this.renderNamespaceInfo()}
         {deleteNamespaceReducer.readyStatus !== DELETE_NAMESPACE_REQUESTING && (
@@ -257,16 +285,6 @@ export class Namespace extends PureComponent<Props> {
                         Services
                       </NavLink>
                     </li>
-                    {/* <li */}
-                    {/* className={`${globalStyles.contentBlockMenuLi} nav-item`} */}
-                    {/* > */}
-                    {/* <NavLink */}
-                    {/* activeClassName={globalStyles.contentBlockMenuLiActive} */}
-                    {/* to={routerLinks.getVolumesLink(match.params.idName)} */}
-                    {/* > */}
-                    {/* Volumes */}
-                    {/* </NavLink> */}
-                    {/* </li> */}
                     <li
                       className={`${globalStyles.contentBlockMenuLi} nav-item`}
                     >
@@ -277,10 +295,47 @@ export class Namespace extends PureComponent<Props> {
                         ConfigMaps
                       </NavLink>
                     </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.getRunningSolutionsLink(
+                          match.params.idName
+                        )}
+                      >
+                        Solutions
+                      </NavLink>
+                    </li>
+                    {/* <li */}
+                    {/* className={`${globalStyles.contentBlockMenuLi} nav-item`} */}
+                    {/* > */}
+                    {/* <NavLink */}
+                    {/* activeClassName={globalStyles.contentBlockMenuLiActive} */}
+                    {/* to={routerLinks.getVolumesLink(match.params.idName)} */}
+                    {/* > */}
+                    {/* Volumes */}
+                    {/* </NavLink> */}
+                    {/* </li> */}
                   </ul>
                 </div>
-                {history.location.pathname.indexOf('/services') + 1 &&
-                isReadAccess ? (
+                {isSolutionsPathname + 1 && isReadAccess ? (
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                      <NavLink
+                        to={routerLinks.createSolutionLink(match.params.idName)}
+                        className={`${
+                          buttonsStyles.buttonUICreate
+                        } btn btn-outline-primary`}
+                      >
+                        Create
+                      </NavLink>
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
+                {isServicesPathname + 1 && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -296,8 +351,7 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {/* {history.location.pathname.indexOf('/volumes') + 1 && */}
-                {/* isReadAccess ? ( */}
+                {/* {isVolumesPathname && isReadAccess ? ( */}
                 {/* <div className={globalStyles.contentBlockHeaderExtraPanel}> */}
                 {/* <div className={globalStyles.contentBlockHeaderExtraPanel}> */}
                 {/* <NavLink */}
@@ -313,8 +367,7 @@ export class Namespace extends PureComponent<Props> {
                 {/* ) : ( */}
                 {/* '' */}
                 {/* )} */}
-                {history.location.pathname.indexOf('/deployments') + 1 &&
-                isReadAccess ? (
+                {isDeploymentsPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -332,8 +385,7 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {history.location.pathname.indexOf('/configMaps') + 1 &&
-                isReadAccess ? (
+                {isConfigMapsPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -353,6 +405,11 @@ export class Namespace extends PureComponent<Props> {
                 )}
               </div>
               <Switch>
+                <Route
+                  path={`${match.path}/solutions`}
+                  exact
+                  component={RunningSolutionsPage}
+                />
                 <Route
                   path={`${match.path}/deployments`}
                   exact
