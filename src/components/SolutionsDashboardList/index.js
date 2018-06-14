@@ -44,7 +44,7 @@ Props) => (
     }`}
   >
     {data.map(solution => {
-      const { Name: name, URL: url } = solution;
+      const { name, url } = solution;
       const { srcLogo, logoHeight } = getSolutionImage(name, '85px');
       return (
         <div

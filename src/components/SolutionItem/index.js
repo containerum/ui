@@ -29,7 +29,8 @@ const SolutionItem = ({
   text
 }: // handleClickRunSolution
 Props) => {
-  const { Name: name, URL: url, CPU: cpu, RAM: ram } = solution[0];
+  const { name, url, limits } = solution;
+  const { cpu, ram } = limits;
   const { srcLogo, logoHeight } = getSolutionImage(name, '100px');
   const regexpGif = /gif\//gi;
   const regexpImage = /images\//gi;

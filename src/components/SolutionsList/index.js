@@ -32,7 +32,8 @@ const SolutionsList = ({
 Props) => (
   <div className="row">
     {data.map(solution => {
-      const { Name: name, URL: url, CPU: cpu, RAM: ram } = solution;
+      const { name, url, limits } = solution;
+      const { cpu, ram } = limits;
       const { srcLogo, logoHeight } = getSolutionImage(name, '100px');
       return (
         <div
