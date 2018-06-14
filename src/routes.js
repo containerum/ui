@@ -61,7 +61,8 @@ import GroupInfo from './containers/Group';
 // import GroupsInfo from './containers/Groups';
 import Tools from './components/Tools';
 // import WebHookInfo from './containers/Webhook';
-import DomainsInfo from './containers/Domains';
+import namespaceDomainsInfo from './containers/Domains';
+import DomainsInfo from './containers/DomainsGlobal';
 import ConfigMapsInfo from './containers/ConfigMaps';
 import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 import GlobalMembershipInfo from './containers/GlobalMembership';
@@ -391,6 +392,11 @@ export default [
     path: routerLinks.domains,
     include: true,
     component: DomainsInfo
+  },
+  {
+    path: routerLinks.namespaceDomains,
+    include: true,
+    component: namespaceDomainsInfo
   },
   {
     path: routerLinks.getGlobalMembership,

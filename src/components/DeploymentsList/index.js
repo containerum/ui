@@ -64,11 +64,10 @@ const DeploymentsList = ({
           </thead>
           <tbody>
             {data.map(deploy => {
-              const { name } = deploy;
+              const { name, created_at: createdAt } = deploy;
               const {
                 available_replicas: podsActive,
-                replicas: podsLimit,
-                created_at: createdAt
+                replicas: podsLimit
               } = deploy.status;
               const cpu = deploy.containers
                 .map(container => parseInt(container.limits.cpu, 10))

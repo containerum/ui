@@ -42,6 +42,7 @@ import RunningSolutionsPage from '../RunningSolutions';
 import ServicesPage from '../Services';
 // import VolumesPage from '../Volumes';
 import ConfigMapsPage from '../ConfigMaps';
+import DomainsList from '../Domains';
 import ns from '../../images/ns-1.svg';
 
 import globalStyles from '../../theme/global.scss';
@@ -205,11 +206,13 @@ export class Namespace extends PureComponent<Props> {
     // const volumesPathname = '/volumes';
     const configMapsPathname = '/configMaps';
     const deploymentsPathname = '/deployments';
+    const ingressesPathname = '/ingresses';
     const isSolutionsPathname = pathname.indexOf(solutionsPathname) + 1;
     const isServicesPathname = pathname.indexOf(servicesPathname) + 1;
     // const isVolumesPathname = pathname.indexOf(volumesPathname) + 1;
     const isConfigMapsPathname = pathname.indexOf(configMapsPathname) + 1;
     const isDeploymentsPathname = pathname.indexOf(deploymentsPathname) + 1;
+    const isIngressesPathname = pathname.indexOf(ingressesPathname) + 1;
     if (isSolutionsPathname) {
       additionalPath = solutionsPathname;
     } else if (isServicesPathname) {
@@ -218,6 +221,8 @@ export class Namespace extends PureComponent<Props> {
       additionalPath = configMapsPathname;
     } else if (isDeploymentsPathname) {
       additionalPath = deploymentsPathname;
+    } else if (isIngressesPathname) {
+      additionalPath = ingressesPathname;
     }
     // else if (isVolumesPathname) {
     //   additionalPath = volumesPathname;
@@ -307,6 +312,18 @@ export class Namespace extends PureComponent<Props> {
                         Solutions
                       </NavLink>
                     </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.namespaceDomainsLink(
+                          match.params.idName
+                        )}
+                      >
+                        Domains
+                      </NavLink>
+                    </li>
                     {/* <li */}
                     {/* className={`${globalStyles.contentBlockMenuLi} nav-item`} */}
                     {/* > */}
@@ -385,6 +402,22 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
+                {isIngressesPathname && isReadAccess ? (
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                      <NavLink
+                        to={routerLinks.createDomainLink(match.params.idName)}
+                        className={`${
+                          buttonsStyles.buttonUICreate
+                        } btn btn-outline-primary`}
+                      >
+                        Create
+                      </NavLink>
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
                 {isConfigMapsPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
@@ -429,6 +462,11 @@ export class Namespace extends PureComponent<Props> {
                   path={`${match.path}/configMaps`}
                   exact
                   component={ConfigMapsPage}
+                />
+                <Route
+                  path={`${match.path}/ingresses`}
+                  exact
+                  component={DomainsList}
                 />
                 <Route
                   path={`${match.url}`}

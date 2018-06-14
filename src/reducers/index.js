@@ -62,7 +62,8 @@ import getResourcesReducer from './statisticsReducers/getResources';
 import getSolutionsReducer from './solutionsReducers/getSolutions';
 import getSolutionReducer from './solutionReducers/getSolution';
 import runSolutionReducer from './solutionReducers/runSolution';
-import getDomainsReducer from './serviceReducers/getDomains';
+import getDomainsGlobalReducer from './servicesReducers/getDomainsGlobal';
+import getDomainsReducer from './servicesReducers/getDomains';
 import deleteDomainReducer from './serviceReducers/deleteDomain';
 import getConfigMapsReducer from './configMapReducers/getConfigMaps';
 import getConfigMapReducer from './configMapReducers/getConfigMap';
@@ -142,7 +143,7 @@ const reducers = {
   getSolutionsReducer,
   getSolutionReducer,
   runSolutionReducer,
-  getDomainsReducer,
+  getDomainsGlobalReducer,
   deleteDomainReducer,
   getConfigMapsReducer,
   getConfigMapReducer,
@@ -159,6 +160,7 @@ const reducers = {
   addUserReducer,
   addUserInGroupReducer,
   getGroupReducer,
+  getDomainsReducer,
   deleteUserFromGroupReducer,
   getRunningSolutionsReducer,
   deleteRunningSolutionReducer,
