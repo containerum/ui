@@ -41,6 +41,7 @@ import DeploymentsPage from '../Deployments';
 import ServicesPage from '../Services';
 // import VolumesPage from '../Volumes';
 import ConfigMapsPage from '../ConfigMaps';
+import DomainsList from '../Domains';
 import ns from '../../images/ns-1.svg';
 
 import globalStyles from '../../theme/global.scss';
@@ -277,6 +278,18 @@ export class Namespace extends PureComponent<Props> {
                         ConfigMaps
                       </NavLink>
                     </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.namespaceDomainsLink(
+                          match.params.idName
+                        )}
+                      >
+                        Domains
+                      </NavLink>
+                    </li>
                   </ul>
                 </div>
                 {history.location.pathname.indexOf('/services') + 1 &&
@@ -372,6 +385,11 @@ export class Namespace extends PureComponent<Props> {
                   path={`${match.path}/configMaps`}
                   exact
                   component={ConfigMapsPage}
+                />
+                <Route
+                  path={`${match.path}/ingresses`}
+                  exact
+                  component={DomainsList}
                 />
                 <Route
                   path={`${match.url}`}

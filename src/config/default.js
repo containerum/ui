@@ -47,6 +47,8 @@ module.exports = {
     namespaces: '/projects',
     namespace: '/projects/:idName',
     namespaceLink: (idName: string) => `/projects/${idName}/deployments`,
+    namespaceDomains: '/projects/:idName/ingresses',
+    namespaceDomainsLink: (idName: string) => `/projects/${idName}/ingresses`,
     createNamespace: '/createProject',
     createCustomNamespace: '/createCustomProject',
     resizeCustomNamespace: '/resizeCustomProject/:idName',
