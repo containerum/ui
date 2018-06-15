@@ -364,6 +364,25 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
+                {history.location.pathname.indexOf('/ingresses') + 1 &&
+                isReadAccess ? (
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                      <NavLink
+                        to={routerLinks.createCustomDomainLink(
+                          match.params.idName
+                        )}
+                        className={`${
+                          buttonsStyles.buttonUICreate
+                        } btn btn-outline-primary`}
+                      >
+                        Create
+                      </NavLink>
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
               </div>
               <Switch>
                 <Route
