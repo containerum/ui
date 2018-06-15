@@ -83,6 +83,8 @@ import addUserInGroupReducer from './globalMembership/addUserInGroup';
 import deleteUserFromGroupReducer from './globalMembership/deleteUserFromGroup';
 import getRunningSolutionsReducer from './solutionsReducers/getRunningSolutions';
 import deleteRunningSolutionReducer from './solutionReducers/deleteRunningSolution';
+import getDeploymentsRunningSolutionReducer from './solutionsReducers/getDeploymentsRunningSolution';
+import getServicesRunningSolutionReducer from './solutionsReducers/getServicesRunningSolution';
 
 const reducers = {
   loginReducer,
@@ -164,6 +166,8 @@ const reducers = {
   deleteUserFromGroupReducer,
   getRunningSolutionsReducer,
   deleteRunningSolutionReducer,
+  getDeploymentsRunningSolutionReducer,
+  getServicesRunningSolutionReducer,
   router,
   loadingBar: loadingBarReducer
 };

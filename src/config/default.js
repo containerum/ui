@@ -15,7 +15,7 @@ module.exports = {
   // webApi: 'https://api.containerum.io:8082',
   // wsApi: 'wss://api.containerum.io:8082',
   appRecaptcha: process.env.RECAPTCHA || null,
-  sourceType: process.env.SOURCE_TYPE || 'OFFLINE',
+  sourceType: process.env.SOURCE_TYPE || 'ONLINE',
   defaultCountry: process.env.COUNTRY || 'US',
   app: {
     htmlAttributes: { lang: 'en' },
@@ -76,6 +76,9 @@ module.exports = {
     getRunningSolutions: '/projects/:idName/solutions',
     getRunningSolutionsLink: (idName: string) =>
       `/projects/${idName}/solutions`,
+    getRunningSolution: '/project/:idName/solution/:idSol',
+    getRunningSolutionLink: (idName: string, idSol: string) =>
+      `/project/${idName}/solution/${idSol}`,
     createSolution: '/project/:idName/createSolution',
     createSolutionLink: (idName: string) => `/project/${idName}/createSolution`,
     getGlobalMembership: '/membership/users',

@@ -15,7 +15,7 @@ const btnClassName = globalClassName('btnBlue', 'btnDepl');
 type Props = {
   data: Object,
   // dataNamespace: Object,
-  // history: Object,
+  history: Object,
   idName: string
   // handleDeleteDeployment: ?(idDep: string) => void
 };
@@ -23,15 +23,16 @@ type Props = {
 const RunningSolutionsList = ({
   data,
   // dataNamespace,
+  history,
   idName
 }: // dataNamespace,
 // history,
 // idName,
 // handleDeleteDeployment
 Props) => {
-  // const handleClickGetDeployment = name => {
-  //   history.push(routerLinks.getDeploymentLink(idName, name));
-  // };
+  const handleClickGetSolution = name => {
+    history.push(routerLinks.getRunningSolutionLink(idName, name));
+  };
   // const handleClickDeleteDeployment = name => {
   //   handleDeleteDeployment(name);
   // };
@@ -58,7 +59,11 @@ Props) => {
               const { name, branch, template } = solution;
               const { srcLogo, logoHeight } = getSolutionImage(name, '100px');
               return (
-                <div className="solution-container" key={_.uniqueId()}>
+                <div
+                  className="solution-container"
+                  key={_.uniqueId()}
+                  onClick={() => handleClickGetSolution(name)}
+                >
                   <div className="solution-container-img">
                     <div className="solution-container-img-block">
                       <img
