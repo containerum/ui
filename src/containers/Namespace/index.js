@@ -295,6 +295,18 @@ export class Namespace extends PureComponent<Props> {
                     >
                       <NavLink
                         activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.namespaceDomainsLink(
+                          match.params.idName
+                        )}
+                      >
+                        Domains
+                      </NavLink>
+                    </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
                         to={routerLinks.getConfigMapsLink(match.params.idName)}
                       >
                         ConfigMaps
@@ -310,18 +322,6 @@ export class Namespace extends PureComponent<Props> {
                         )}
                       >
                         Solutions
-                      </NavLink>
-                    </li>
-                    <li
-                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
-                    >
-                      <NavLink
-                        activeClassName={globalStyles.contentBlockMenuLiActive}
-                        to={routerLinks.namespaceDomainsLink(
-                          match.params.idName
-                        )}
-                      >
-                        Domains
                       </NavLink>
                     </li>
                     {/* <li */}

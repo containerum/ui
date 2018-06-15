@@ -14,7 +14,10 @@ const initialState = {
   readyStatus: DELETE_RUNNING_SOLUTION_INVALID,
   isFetching: false,
   data: null,
-  err: null
+  err: null,
+  status: null,
+  method: null,
+  idSol: null
 };
 
 export default (state = initialState, action: Action) => {
@@ -24,21 +27,30 @@ export default (state = initialState, action: Action) => {
         readyStatus: DELETE_RUNNING_SOLUTION_REQUESTING,
         isFetching: action.isFetching,
         data: null,
-        err: null
+        err: null,
+        status: null,
+        method: null,
+        idSol: null
       });
     case DELETE_RUNNING_SOLUTION_SUCCESS:
       return _.assign(state, {
         readyStatus: DELETE_RUNNING_SOLUTION_SUCCESS,
         isFetching: action.isFetching,
         data: action.data,
-        err: null
+        err: null,
+        status: action.status,
+        method: action.method,
+        idSol: action.idSol
       });
     case DELETE_RUNNING_SOLUTION_FAILURE:
       return _.assign(state, {
         readyStatus: DELETE_RUNNING_SOLUTION_FAILURE,
         isFetching: action.isFetching,
         data: null,
-        err: action.err
+        err: action.err,
+        status: null,
+        method: null,
+        idSol: null
       });
     default:
       return state;
