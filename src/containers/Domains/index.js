@@ -116,7 +116,8 @@ export class Domains extends PureComponent<Props> {
     const {
       getDomainsReducer,
       deleteDomainReducer,
-      getNamespacesReducer
+      getNamespacesReducer,
+      match
     } = this.props;
     let namespacesLabels;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
@@ -160,6 +161,7 @@ export class Domains extends PureComponent<Props> {
 
     return (
       <DomainsList
+        match={match}
         namespacesLabels={namespacesLabels}
         namespacesData={getNamespacesReducer.data}
         data={getDomainsReducer.data.ingresses}
