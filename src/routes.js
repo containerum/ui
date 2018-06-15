@@ -257,6 +257,13 @@ export default [
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
+    path: routerLinks.createCustomDomain,
+    component: CreateDomainPage,
+    include: true
+    // loadData: (dispatch: Dispatch) =>
+    //   Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
     path: routerLinks.createDomain,
     component: CreateDomainPage,
     include: true,

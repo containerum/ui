@@ -106,6 +106,9 @@ module.exports = {
     createDomain: '/project/:idName/service/:idSrv/createDomain',
     createDomainLink: (idName: string, idSrv: string) =>
       `/project/${idName}/service/${idSrv}/createDomain`,
+    createCustomDomain: `/project/:idName/createDomain`,
+    createCustomDomainLink: (idName: string) =>
+      `/project/${idName}/createDomain`,
     createServiceLink: (idName: string) => `/project/${idName}/createService`,
     createdExternalServiceSuccessful: '/project/:idName/createdService/:idSrv',
     createdExternalServiceSuccessfulLink: (idName: string, idSrv: string) =>
