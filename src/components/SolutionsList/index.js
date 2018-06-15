@@ -6,7 +6,6 @@ import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
 
 import { routerLinks } from '../../config';
-import getSolutionImage from '../../functions/getSolutionImage';
 import githubIcon from '../../images/githubIcon.svg';
 
 import styles from '../../containers/Solutions/index.scss';
@@ -34,7 +33,10 @@ Props) => (
     {data.map(solution => {
       const { name, url, limits } = solution;
       const { cpu, ram } = limits;
-      const { srcLogo, logoHeight } = getSolutionImage(name, '100px');
+      const imageHref = `${url}/master/${name}.png`.replace(
+        'github.com',
+        'raw.githubusercontent.com'
+      );
       return (
         <div
           className="col-md-4"
@@ -46,9 +48,8 @@ Props) => (
             <div className={globalStyles.contentBlockVolumeHeader}>
               <img
                 className={styles.volumeHeaderImg}
-                src={srcLogo}
+                src={imageHref}
                 alt={name}
-                style={{ height: logoHeight }}
               />
             </div>
             <div className={globalStyles.contentBlockVolumeFooter}>

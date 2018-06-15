@@ -5,7 +5,6 @@ import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
 
 import { routerLinks } from '../../config';
-import getSolutionImage from '../../functions/getSolutionImage';
 
 import solutionStyles from '../../containers/Solutions/index.scss';
 import globalStyles from '../../theme/global.scss';
@@ -45,7 +44,10 @@ Props) => (
   >
     {data.map(solution => {
       const { name, url } = solution;
-      const { srcLogo, logoHeight } = getSolutionImage(name, '85px');
+      const imageHref = `${url}/master/${name}.png`.replace(
+        'github.com',
+        'raw.githubusercontent.com'
+      );
       return (
         <div
           key={_.uniqueId()}
@@ -54,7 +56,7 @@ Props) => (
           style={{ cursor: 'pointer' }}
         >
           <div className={solutionImg}>
-            <img src={srcLogo} alt={name} style={{ maxHeight: logoHeight }} />
+            <img src={imageHref} alt={name} />
           </div>
           <div className={solutionStyles.preSolutionContainerInfo}>{name}</div>
           <div onClick={e => handleClose(e)}>

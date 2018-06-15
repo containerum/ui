@@ -8,7 +8,7 @@ import className from 'classnames/bind';
 import { routerLinks } from '../../config';
 import modalStyles from './index.scss';
 
-import getSolutionImage from '../../functions/getSolutionImage';
+// import getSolutionImage from '../../functions/getSolutionImage';
 import {
   RUN_SOLUTION_REQUESTING,
   RUN_SOLUTION_FAILURE,
@@ -80,7 +80,7 @@ const SelectNamespaceModal = ({
     onHandleCreate();
   };
 
-  const { srcLogo, logoHeight } = getSolutionImage(currentSolution, '100px');
+  // const { srcLogo, logoHeight } = getSolutionImage(currentSolution, '100px');
   return (
     <Modal
       isOpen={isOpened}
@@ -111,15 +111,15 @@ const SelectNamespaceModal = ({
                   className={`${modalStyles.modalBody} modal-body text-left`}
                 >
                   <div style={{ textAlign: 'center', marginTop: '40px' }}>
-                    <img
-                      src={srcLogo}
-                      alt="logo"
-                      style={{
-                        maxWidth: '200px',
-                        height: logoHeight,
-                        maxHeight: '130px'
-                      }}
-                    />
+                    {/* <img */}
+                    {/* src={srcLogo} */}
+                    {/* alt="logo" */}
+                    {/* style={{ */}
+                    {/* maxWidth: '200px', */}
+                    {/* height: logoHeight, */}
+                    {/* maxHeight: '130px' */}
+                    {/* }} */}
+                    {/* /> */}
                   </div>
                   {namespace ? (
                     <div>
@@ -198,15 +198,15 @@ const SelectNamespaceModal = ({
                   style={{ marginBottom: '100px' }}
                 >
                   <div style={{ marginTop: '40px' }}>
-                    <img
-                      src={srcLogo}
-                      alt="logo"
-                      style={{
-                        maxWidth: '200px',
-                        height: logoHeight,
-                        maxHeight: '130px'
-                      }}
-                    />
+                    {/* <img */}
+                    {/* src={srcLogo} */}
+                    {/* alt="logo" */}
+                    {/* style={{ */}
+                    {/* maxWidth: '200px', */}
+                    {/* height: logoHeight, */}
+                    {/* maxHeight: '130px' */}
+                    {/* }} */}
+                    {/* /> */}
                   </div>
                   <div className={`${modalStyles.modalRedisText} mt-4 mb-4`}>
                     Solution deployment in progress. <br />
@@ -231,15 +231,15 @@ const SelectNamespaceModal = ({
           </div>
           <div className={`${modalStyles.modalBody} modal-body text-left`}>
             <div style={{ textAlign: 'center', marginTop: '40px' }}>
-              <img
-                src={srcLogo}
-                alt="logo"
-                style={{
-                  maxWidth: '200px',
-                  height: logoHeight,
-                  maxHeight: '130px'
-                }}
-              />
+              {/* <img */}
+              {/* src={srcLogo} */}
+              {/* alt="logo" */}
+              {/* style={{ */}
+              {/* maxWidth: '200px', */}
+              {/* height: logoHeight, */}
+              {/* maxHeight: '130px' */}
+              {/* }} */}
+              {/* /> */}
             </div>
             <div style={{ textAlign: 'center' }}>
               <div
@@ -288,15 +288,15 @@ const SelectNamespaceModal = ({
           </div>
           <div className={`${modalStyles.modalBody} modal-body text-left`}>
             <div style={{ textAlign: 'center', marginTop: '40px' }}>
-              <img
-                src={srcLogo}
-                alt="logo"
-                style={{
-                  maxWidth: '200px',
-                  height: logoHeight,
-                  maxHeight: '130px'
-                }}
-              />
+              {/* <img */}
+              {/* src={srcLogo} */}
+              {/* alt="logo" */}
+              {/* style={{ */}
+              {/* maxWidth: '200px', */}
+              {/* height: logoHeight, */}
+              {/* maxHeight: '130px' */}
+              {/* }} */}
+              {/* /> */}
             </div>
             <div style={{ textAlign: 'center' }}>
               <div
