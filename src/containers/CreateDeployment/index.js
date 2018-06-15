@@ -28,7 +28,7 @@ import NavigationHeaderItem from '../NavigationHeader';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import Name from '../../components/CreateDeploymentCards/Name';
-import Label from '../../components/CreateDeploymentCards/Label';
+// import Label from '../../components/CreateDeploymentCards/Label';
 import Replicas from '../../components/CreateDeploymentCards/Replicas';
 import Container from '../../components/CreateDeploymentCards/Container';
 import CreateServiceCardItem from '../CreateService/CreateServiceCard';
@@ -1294,7 +1294,7 @@ export class CreateDeployment extends PureComponent<Props> {
 
     const {
       name,
-      labels,
+      // labels,
       replicas,
       containers,
       containersCount,
@@ -1307,12 +1307,13 @@ export class CreateDeployment extends PureComponent<Props> {
           inputName={name}
           handleChangeInputName={this.handleChangeInputName}
         />
+        {/* {' '}
         <Label
           labels={labels}
           handleClickRemoveLabel={this.handleClickRemoveLabel}
           handleClickAddLabel={this.handleClickAddLabel}
           handleChangeInputLabel={this.handleChangeInputLabel}
-        />
+        /> */}
         <Replicas
           inputReplicas={replicas}
           handleChangeInputReplicasName={this.handleChangeInputReplicasName}
