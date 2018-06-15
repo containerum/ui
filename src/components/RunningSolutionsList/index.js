@@ -7,7 +7,6 @@ import classNames from 'classnames/bind';
 
 import { routerLinks } from '../../config';
 import globalStyles from '../../theme/global.scss';
-import getSolutionImage from '../../functions/getSolutionImage';
 
 const globalClassName = classNames.bind(globalStyles);
 const btnClassName = globalClassName('btnBlue', 'btnDepl');
@@ -36,9 +35,9 @@ Props) => {
   // const handleClickDeleteDeployment = name => {
   //   handleDeleteDeployment(name);
   // };
-  // const handleClose = e => {
-  //   e.stopPropagation();
-  // };
+  const handleClose = e => {
+    e.stopPropagation();
+  };
   // const ta = timeago();
   // const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
 
@@ -56,8 +55,10 @@ Props) => {
         {currentDataSolution.length >= 1 && (
           <div className="solution-containers-wrapper">
             {currentDataSolution.map(solution => {
-              const { name, branch, template } = solution;
-              const { srcLogo, logoHeight } = getSolutionImage(name, '100px');
+              const { name, branch, template, url } = solution;
+              const imageHref = `${url}/${template}.png`
+                .replace('github.com', 'raw.githubusercontent.com')
+                .replace('/tree', '');
               return (
                 <div
                   className="solution-container"
@@ -66,11 +67,7 @@ Props) => {
                 >
                   <div className="solution-container-img">
                     <div className="solution-container-img-block">
-                      <img
-                        src={srcLogo}
-                        alt={name}
-                        style={{ maxHeight: logoHeight }}
-                      />
+                      <img src={imageHref} alt={name} />
                     </div>
                   </div>
                   <div className="solution-container-info">
@@ -78,9 +75,14 @@ Props) => {
                     <div className="solution-container-info-text">
                       {template}
                     </div>
-                    <div className="solution-container-status">
+                    <a
+                      href={url}
+                      target="_blank"
+                      className="solution-container-status"
+                      onClick={handleClose}
+                    >
                       branch: <span className="status-active">{branch}</span>
-                    </div>
+                    </a>
                   </div>
                 </div>
               );

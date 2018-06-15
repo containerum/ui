@@ -4,9 +4,11 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
+import classNames from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
+import * as actionGetRunningSolution from '../../actions/solutionActions/getRunningSolution';
 import * as actionGetDeploymentsRunningSolution from '../../actions/solutionsActions/getDeploymentsRunningSolution';
 import * as actionDeleteDeployment from '../../actions/deploymentActions/deleteDeployment';
 import * as actionGetServicesRunningSolution from '../../actions/solutionsActions/getServicesRunningSolution';
@@ -36,6 +38,11 @@ import {
   GET_NAMESPACE_INVALID,
   GET_NAMESPACE_REQUESTING
 } from '../../constants/namespaceConstants/getNamespace';
+import {
+  GET_RUNNING_SOLUTION_FAILURE,
+  GET_RUNNING_SOLUTION_INVALID,
+  GET_RUNNING_SOLUTION_REQUESTING
+} from '../../constants/solutionConstants/getRunningSolution';
 import ServicesList from '../../components/ServicesList';
 import DeploymentsList from '../../components/DeploymentsList';
 import Notification from '../Notification';
@@ -43,10 +50,15 @@ import DeleteModal from '../../components/CustomerModal/DeleteModal';
 // import getSolutionImage from '../../functions/getSolutionImage';
 import globalStyles from '../../theme/global.scss';
 
+const globalClassName = classNames.bind(globalStyles);
+const btnClassName = globalClassName('btnBlue', 'btnDepl');
+
 type Props = {
   getDeploymentsRunningSolutionReducer: Object,
+  getRunningSolutionReducer: Object,
   deleteDeploymentReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
+  fetchGetRunningSolutionIfNeeded: (idSol: string) => void,
   fetchGetDeploymentsRunningSolutionIfNeeded: (idSol: string) => void,
   fetchDeleteDeploymentIfNeeded: (idName: string, idDep: string) => void,
   getServicesRunningSolutionReducer: Object,
@@ -75,9 +87,11 @@ export class RunningSolution extends PureComponent<Props> {
       fetchGetNamespaceIfNeeded,
       fetchGetDeploymentsRunningSolutionIfNeeded,
       fetchGetServicesRunningSolutionIfNeeded,
+      fetchGetRunningSolutionIfNeeded,
       match
     } = this.props;
     fetchGetNamespaceIfNeeded(match.params.idName);
+    fetchGetRunningSolutionIfNeeded(match.params.idSol);
     fetchGetServicesRunningSolutionIfNeeded(match.params.idSol);
     fetchGetDeploymentsRunningSolutionIfNeeded(match.params.idSol);
   }
@@ -139,7 +153,6 @@ export class RunningSolution extends PureComponent<Props> {
     fetchDeleteDeploymentIfNeeded(match.params.idName, idDep);
   };
   handleDeleteDeployment = idDep => {
-    // console.log(idDep);
     this.setState({
       ...this.state,
       idDep,
@@ -168,6 +181,103 @@ export class RunningSolution extends PureComponent<Props> {
     console.log('Delete idSol', this.props.match.params.idSol);
   };
 
+  renderSolutionList = () => {
+    const { getRunningSolutionReducer, getNamespaceReducer } = this.props;
+
+    if (
+      !getNamespaceReducer.readyStatus ||
+      getNamespaceReducer.readyStatus === GET_NAMESPACE_INVALID ||
+      getNamespaceReducer.readyStatus === GET_NAMESPACE_REQUESTING ||
+      !getRunningSolutionReducer.readyStatus ||
+      getRunningSolutionReducer.readyStatus === GET_RUNNING_SOLUTION_INVALID ||
+      getRunningSolutionReducer.readyStatus === GET_RUNNING_SOLUTION_REQUESTING
+    ) {
+      return (
+        <div
+          className={`${globalStyles.container} container`}
+          style={{
+            padding: '0',
+            marginTop: '17px',
+            marginBottom: '30px',
+            backgroundColor: 'transparent'
+          }}
+        >
+          <img
+            src={require('../../images/ns-dep.svg')}
+            alt="ns-dep"
+            style={{ width: '100%' }}
+          />
+        </div>
+      );
+    }
+
+    if (
+      getNamespaceReducer.readyStatus === GET_NAMESPACE_FAILURE ||
+      getRunningSolutionReducer.readyStatus === GET_RUNNING_SOLUTION_FAILURE
+    ) {
+      return <p>Oops, Failed to load data of Solution!</p>;
+    }
+    const { name, url, template } = getRunningSolutionReducer.data;
+    const imageHref = `${url}/${template}.png`
+      .replace('github.com', 'raw.githubusercontent.com')
+      .replace('/tree', '');
+    const accessToNamespace = getNamespaceReducer.data.access;
+    return (
+      <div className="content-block-container content-block_common-statistic container ">
+        <div className="content-block-header active-solution-header">
+          <div className="active-solution-wrapper">
+            <div className="solution-container-img-block active-solution-block">
+              <img src={imageHref} alt={name} />
+            </div>
+            <div className="content-block-header-label">
+              <div className="content-block-header-label__text content-block-header-label_main">
+                {name}{' '}
+                <span className="content-block-header-label__descript">
+                  solution
+                </span>
+              </div>
+              <a href={url} target="_blank" className={btnClassName}>
+                open application
+              </a>
+            </div>
+          </div>
+
+          <div className="content-block-header-extra-panel">
+            <div className="content-block-header-extra-panel dropdown no-arrow">
+              {accessToNamespace !== 'read' && (
+                <i
+                  className={`${globalStyles.contentBlockTableMore} ${
+                    globalStyles.dropdownToggle
+                  }
+                          ${globalStyles.ellipsisRoleMore} ion-more `}
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                />
+              )}
+              {accessToNamespace !== 'read' && (
+                <ul
+                  className={` dropdown-menu dropdown-menu-right ${
+                    globalStyles.dropdownMenu
+                  }`}
+                  role="menu"
+                >
+                  <button
+                    className={`dropdown-item text-danger ${
+                      globalStyles.dropdownItem
+                    }`}
+                    onClick={this.handleClickDeleteSolution}
+                  >
+                    Delete
+                  </button>
+                </ul>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
   renderDeploymentsList = () => {
     const {
       getDeploymentsRunningSolutionReducer,
@@ -175,7 +285,6 @@ export class RunningSolution extends PureComponent<Props> {
       deleteDeploymentReducer,
       match
     } = this.props;
-    // console.log('getDeploymentsRunningSolutionReducer.data', getDeploymentsRunningSolutionReducer.data);
 
     if (
       !getNamespaceReducer.readyStatus ||
@@ -225,7 +334,6 @@ export class RunningSolution extends PureComponent<Props> {
       deleteServiceReducer,
       match
     } = this.props;
-    // console.log('getServicesRunningSolutionReducer.data', getServicesRunningSolutionReducer.data);
 
     if (
       !getNamespaceReducer.readyStatus ||
@@ -271,8 +379,6 @@ export class RunningSolution extends PureComponent<Props> {
 
   render() {
     const {
-      match,
-      getNamespaceReducer,
       deleteDeploymentReducer,
       deleteServiceReducer,
       getDeploymentsRunningSolutionReducer
@@ -289,9 +395,6 @@ export class RunningSolution extends PureComponent<Props> {
         depl => depl.name === currentIdDep
       );
     }
-    const accessToNamespace = getNamespaceReducer.data
-      ? getNamespaceReducer.data.access
-      : 'read';
     // const { srcLogo, logoHeight } = getSolutionImage(name, '85px');
     return (
       <div>
@@ -310,65 +413,7 @@ export class RunningSolution extends PureComponent<Props> {
             onHandleDelete={this.onHandleDelete}
           />
         )}
-        <div className="content-block ">
-          <div className="content-block-container content-block_common-statistic container ">
-            <div className="content-block-header active-solution-header">
-              <div className="active-solution-wrapper">
-                <div className="solution-container-img-block active-solution-block">
-                  {/* <img */}
-                  {/* src={srcLogo} */}
-                  {/* alt={name} */}
-                  {/* style={{ maxHeight: logoHeight }} */}
-                  {/* /> */}
-                </div>
-                <div className="content-block-header-label">
-                  <div className="content-block-header-label__text content-block-header-label_main">
-                    {match.params.idSol}{' '}
-                    <span className="content-block-header-label__descript">
-                      solution
-                    </span>
-                  </div>
-                  <button className="blue-btn application-btn">
-                    open application
-                  </button>
-                </div>
-              </div>
-
-              <div className="content-block-header-extra-panel">
-                <div className="content-block-header-extra-panel dropdown no-arrow">
-                  {accessToNamespace !== 'read' && (
-                    <i
-                      className={`${globalStyles.contentBlockTableMore} ${
-                        globalStyles.dropdownToggle
-                      }
-                          ${globalStyles.ellipsisRoleMore} ion-more `}
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    />
-                  )}
-                  {accessToNamespace !== 'read' && (
-                    <ul
-                      className={` dropdown-menu dropdown-menu-right ${
-                        globalStyles.dropdownMenu
-                      }`}
-                      role="menu"
-                    >
-                      <button
-                        className={`dropdown-item text-danger ${
-                          globalStyles.dropdownItem
-                        }`}
-                        onClick={this.handleClickDeleteSolution}
-                      >
-                        Delete
-                      </button>
-                    </ul>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="content-block">{this.renderSolutionList()}</div>
         <div className="content-block">
           <div className="content-block-container container ">
             <div className="active-solution-title">Deployments</div>
@@ -396,17 +441,21 @@ const connector: Connector<{}, Props> = connect(
     getNamespaceReducer,
     deleteDeploymentReducer,
     getServicesRunningSolutionReducer,
-    deleteServiceReducer
+    deleteServiceReducer,
+    getRunningSolutionReducer
   }: ReduxState) => ({
     getDeploymentsRunningSolutionReducer,
     getNamespaceReducer,
     deleteDeploymentReducer,
     getServicesRunningSolutionReducer,
-    deleteServiceReducer
+    deleteServiceReducer,
+    getRunningSolutionReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
+    fetchGetRunningSolutionIfNeeded: (idSol: string) =>
+      dispatch(actionGetRunningSolution.fetchGetRunningSolutionIfNeeded(idSol)),
     fetchGetDeploymentsRunningSolutionIfNeeded: (idSol: string) =>
       dispatch(
         actionGetDeploymentsRunningSolution.fetchGetDeploymentsRunningSolutionIfNeeded(

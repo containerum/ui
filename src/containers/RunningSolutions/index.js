@@ -124,7 +124,6 @@ export class RunningSolutions extends PureComponent<Props> {
       deleteRunningSolutionReducer,
       match
     } = this.props;
-    // console.log('getRunningSolutionsReducer.data', getRunningSolutionsReducer.data);
 
     if (
       !getNamespacesReducer.readyStatus ||
