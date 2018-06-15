@@ -36,6 +36,7 @@ import {
 } from '../../constants/solutionConstants/runSolution';
 import SolutionsList from '../../components/SolutionsList';
 import RunSolutionItem from '../RunSolution';
+import RunSolutionModals from '../../components/CustomerModal/RunSolutionModals';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 type Props = {
@@ -196,6 +197,7 @@ export class Solutions extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Solutions" />
+        <RunSolutionModals />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             {this.renderSolutionsList()}

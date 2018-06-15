@@ -82,3 +82,67 @@
     }
   }
 }
+
+.runSolutionModalDialog {
+  max-width: 1170px !important;
+}
+
+.runSolutionModal {
+  max-width: 1170px;
+  max-height: 826px;
+
+  &Content {
+    border: none;
+  }
+
+  &Header {
+    height: 50px;
+    display: flex;
+    border-bottom: 1px solid #eaeaea;
+    background-color: #f6f6f6;
+    border-radius: 4px 4px 0 0;
+  }
+
+  &Body {
+    padding: 0 50px !important;
+    height: 80px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  &MainContent {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    height: 690px;
+  }
+
+  &ModalList {
+    display: inline-block;
+    width: 20%;
+    background-color: #f6f6f6;
+    border-right: 1px solid #eaeaea;
+    list-style: none;
+    padding-top: 28px;
+    padding-left: 50px;
+    margin-bottom: 0;
+
+    li a {
+      display: inline-block;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+
+    li a.active {
+      color: #29abe2;
+    }
+  }
+}
