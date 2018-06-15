@@ -9,6 +9,7 @@ import classNames from 'classnames/bind';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionGetRunningSolution from '../../actions/solutionActions/getRunningSolution';
+import * as actionDeleteRunningSolutions from '../../actions/solutionActions/deleteRunningSolution';
 import * as actionGetDeploymentsRunningSolution from '../../actions/solutionsActions/getDeploymentsRunningSolution';
 import * as actionDeleteDeployment from '../../actions/deploymentActions/deleteDeployment';
 import * as actionGetServicesRunningSolution from '../../actions/solutionsActions/getServicesRunningSolution';
@@ -57,8 +58,10 @@ type Props = {
   getDeploymentsRunningSolutionReducer: Object,
   getRunningSolutionReducer: Object,
   deleteDeploymentReducer: Object,
+  deleteRunningSolutionReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetRunningSolutionIfNeeded: (idSol: string) => void,
+  fetchDeleteRunningSolutionIfNeeded: (idName: string, idSol: string) => void,
   fetchGetDeploymentsRunningSolutionIfNeeded: (idSol: string) => void,
   fetchDeleteDeploymentIfNeeded: (idName: string, idDep: string) => void,
   getServicesRunningSolutionReducer: Object,
@@ -78,6 +81,7 @@ export class RunningSolution extends PureComponent<Props> {
       inputName: '',
       idDep: null,
       isOpened: false,
+      isOpenedSol: false,
       displayedDeployments: [],
       displayedService: []
     };
@@ -152,12 +156,9 @@ export class RunningSolution extends PureComponent<Props> {
     const { fetchDeleteDeploymentIfNeeded, match } = this.props;
     fetchDeleteDeploymentIfNeeded(match.params.idName, idDep);
   };
-  handleDeleteDeployment = idDep => {
-    this.setState({
-      ...this.state,
-      idDep,
-      isOpened: true
-    });
+  onHandleDeleteSolution = () => {
+    const { match, fetchDeleteRunningSolutionIfNeeded } = this.props;
+    fetchDeleteRunningSolutionIfNeeded(match.params.idName, match.params.idSol);
   };
   handleInputName = inputName => {
     this.setState({
@@ -173,12 +174,30 @@ export class RunningSolution extends PureComponent<Props> {
       inputName: ''
     });
   };
+  handleOpenCloseSolutionModal = () => {
+    this.setState({
+      ...this.state,
+      isOpenedSol: !this.state.isOpenedSol,
+      idDep: null,
+      inputName: ''
+    });
+  };
   handleDeleteService = idSrv => {
     const { match } = this.props;
     this.props.fetchDeleteServiceIfNeeded(match.params.idName, idSrv);
   };
+  handleDeleteDeployment = idDep => {
+    this.setState({
+      ...this.state,
+      idDep,
+      isOpened: true
+    });
+  };
   handleClickDeleteSolution = () => {
-    console.log('Delete idSol', this.props.match.params.idSol);
+    this.setState({
+      ...this.state,
+      isOpenedSol: true
+    });
   };
 
   renderSolutionList = () => {
@@ -381,11 +400,24 @@ export class RunningSolution extends PureComponent<Props> {
     const {
       deleteDeploymentReducer,
       deleteServiceReducer,
-      getDeploymentsRunningSolutionReducer
+      deleteRunningSolutionReducer,
+      getDeploymentsRunningSolutionReducer,
+      match
     } = this.props;
+    const { idSol } = match.params;
     const { status, idDep, err } = deleteDeploymentReducer;
     const { status: statusSrv, idSrv, err: errSrv } = deleteServiceReducer;
-    const { inputName, isOpened, idDep: currentIdDep } = this.state;
+    const {
+      status: statusSol,
+      idSol: deleteSol,
+      err: errSol
+    } = deleteRunningSolutionReducer;
+    const {
+      inputName,
+      isOpened,
+      isOpenedSol,
+      idDep: currentIdDep
+    } = this.state;
     let currentDepl;
     if (
       getDeploymentsRunningSolutionReducer.readyStatus ===
@@ -400,6 +432,11 @@ export class RunningSolution extends PureComponent<Props> {
       <div>
         <Notification status={status} name={idDep} errorMessage={err} />
         <Notification status={statusSrv} name={idSrv} errorMessage={errSrv} />
+        <Notification
+          status={statusSol}
+          name={deleteSol}
+          errorMessage={errSol}
+        />
         {currentDepl && (
           <DeleteModal
             type="Deployment"
@@ -413,6 +450,17 @@ export class RunningSolution extends PureComponent<Props> {
             onHandleDelete={this.onHandleDelete}
           />
         )}
+        <DeleteModal
+          type="Solution"
+          inputName={inputName}
+          name={idSol}
+          typeName={idSol}
+          isOpened={isOpenedSol}
+          minLengthName={1}
+          handleInputName={this.handleInputName}
+          handleOpenCloseModal={this.handleOpenCloseSolutionModal}
+          onHandleDelete={this.onHandleDeleteSolution}
+        />
         <div className="content-block">{this.renderSolutionList()}</div>
         <div className="content-block">
           <div className="content-block-container container ">
@@ -442,20 +490,29 @@ const connector: Connector<{}, Props> = connect(
     deleteDeploymentReducer,
     getServicesRunningSolutionReducer,
     deleteServiceReducer,
-    getRunningSolutionReducer
+    getRunningSolutionReducer,
+    deleteRunningSolutionReducer
   }: ReduxState) => ({
     getDeploymentsRunningSolutionReducer,
     getNamespaceReducer,
     deleteDeploymentReducer,
     getServicesRunningSolutionReducer,
     deleteServiceReducer,
-    getRunningSolutionReducer
+    getRunningSolutionReducer,
+    deleteRunningSolutionReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
     fetchGetRunningSolutionIfNeeded: (idSol: string) =>
       dispatch(actionGetRunningSolution.fetchGetRunningSolutionIfNeeded(idSol)),
+    fetchDeleteRunningSolutionIfNeeded: (idName: string, idSol: string) =>
+      dispatch(
+        actionDeleteRunningSolutions.fetchDeleteRunningSolutionIfNeeded(
+          idName,
+          idSol
+        )
+      ),
     fetchGetDeploymentsRunningSolutionIfNeeded: (idSol: string) =>
       dispatch(
         actionGetDeploymentsRunningSolution.fetchGetDeploymentsRunningSolutionIfNeeded(
