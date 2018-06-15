@@ -33,6 +33,8 @@ type Props = {
   domainName: string,
   domainPath: string,
   isEnabledSSL: boolean,
+  match: Object,
+  // history: Object,
   handleChangeSelectService: (value: string) => void,
   handleChangeSelectPort: (value: string) => void,
   handleChangeInput: (value: string, type: string) => void,
@@ -48,6 +50,8 @@ const CreateDomainCard = ({
   portsList,
   domainName,
   domainPath,
+  match,
+  // history,
   isEnabledSSL,
   handleChangeSelectService,
   handleChangeSelectPort,
@@ -83,7 +87,7 @@ const CreateDomainCard = ({
               value={currentService && currentService.name}
               onChange={e => handleChangeSelectService(e.target.value)}
               required
-              disabled
+              disabled={match.params.idSrv}
             >
               {servicesList.map(item => (
                 <option key={item.name} value={item.name}>
@@ -104,26 +108,44 @@ const CreateDomainCard = ({
           >
             Target port
           </div>
-          <div className={globalStyles.selectWrapper}>
-            <div className={globalStyles.selectArrow} />
-            <div className={globalStyles.selectArrow} />
-            <select
-              name="ports"
-              className={selectClassName}
-              value={currentPort && currentPort.port}
-              onChange={e => handleChangeSelectPort(e.target.value)}
-              required
-            >
-              {portsList.map(
-                port =>
-                  port.protocol === 'TCP' && (
-                    <option key={port.port} value={port.port}>
-                      {port.port}
-                    </option>
-                  )
-              )}
-            </select>
-          </div>
+          {portsList && (
+            <div className={globalStyles.selectWrapper}>
+              <div className={globalStyles.selectArrow} />
+              <div className={globalStyles.selectArrow} />
+              <select
+                name="ports"
+                className={selectClassName}
+                value={currentPort && currentPort.port}
+                onChange={e => handleChangeSelectPort(e.target.value)}
+                required
+              >
+                {portsList.map(
+                  port =>
+                    port.protocol === 'TCP' && (
+                      <option key={port.port} value={port.port}>
+                        {port.port}
+                      </option>
+                    )
+                )}
+              </select>
+            </div>
+          )}
+          {!portsList && (
+            <div className={globalStyles.selectWrapper}>
+              <div className={globalStyles.selectArrow} />
+              <div className={globalStyles.selectArrow} />
+              <select name="ports" className={selectClassName} required>
+                <option
+                  key={servicesList[0].ports[0].port}
+                  value={
+                    servicesList.length !== 0 && servicesList[0].ports[0].port
+                  }
+                >
+                  {servicesList.length !== 0 && servicesList[0].ports[0].port}
+                </option>
+              </select>
+            </div>
+          )}
         </div>
 
         <div className={textHelperClassName}>

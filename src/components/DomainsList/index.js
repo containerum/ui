@@ -27,6 +27,7 @@ type Props = {
   namespacesLabels: Object,
   namespacesData: Array<Object>,
   data: Object,
+  match: Object,
   handleDeleteDomain: (idName: string, label: string) => void
 };
 
@@ -34,6 +35,7 @@ const DomainsList = ({
   data,
   namespacesData,
   handleDeleteDomain,
+  match,
   namespacesLabels
 }: Props) => {
   // const isEmptyData = Object.keys(data).find(
@@ -67,7 +69,7 @@ const DomainsList = ({
               const nameIngress = ingress.name;
               const srvName = ingress.rules[0].path[0].service_name;
               const namespaceName = namespacesLabels.find(
-                namespace => namespace[0] === nameIngress
+                namespace => namespace[0] === match.params.idName
               );
               const namespaceInfo = namespacesData.find(
                 namespace =>

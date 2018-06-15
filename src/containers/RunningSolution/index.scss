@@ -1,0 +1,40 @@
+@import '../../theme/variables';
+
+.td {
+  &_1_Dep {
+    width: 52px !important;
+    padding-left: 30px !important;
+    font-weight: normal !important;
+
+    &NoDep {
+      padding-left: 60px !important;
+      font-weight: 400 !important;
+    }
+  }
+
+  &_2_Dep {
+    width: 255px !important ;
+  }
+
+  &_3_Dep {
+    width: 150px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  &_4_Dep {
+    width: 135px !important;
+  }
+
+  &_5_Dep {
+    width: 145px !important;
+  }
+
+  &_6_Dep {
+    width: 200px !important;
+  }
+
+  &_7_Dep {
+    width: 52px !important;
+  }
+}

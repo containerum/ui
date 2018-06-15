@@ -67,6 +67,7 @@ import ConfigMapsInfo from './containers/ConfigMaps';
 import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 import GlobalMembershipInfo from './containers/GlobalMembership';
 import RunningSolutionsPage from './containers/RunningSolutions';
+import RunningSolutionPage from './containers/RunningSolution';
 
 const isOnline = sourceType === 'ONLINE';
 
@@ -117,6 +118,17 @@ export default [
     path: routerLinks.getRunningSolutions,
     exact: true,
     component: RunningSolutionsPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  {
+    path: routerLinks.getRunningSolution,
+    exact: true,
+    component: RunningSolutionPage,
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
       Promise.all([
@@ -255,6 +267,13 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.createCustomDomain,
+    component: CreateDomainPage,
+    include: true
+    // loadData: (dispatch: Dispatch) =>
+    //   Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.createDomain,

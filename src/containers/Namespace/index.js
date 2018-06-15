@@ -336,7 +336,7 @@ export class Namespace extends PureComponent<Props> {
                     {/* </li> */}
                   </ul>
                 </div>
-                {isSolutionsPathname + 1 && isReadAccess ? (
+                {isSolutionsPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -352,7 +352,7 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {isServicesPathname + 1 && isReadAccess ? (
+                {isServicesPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -423,6 +423,25 @@ export class Namespace extends PureComponent<Props> {
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
                         to={routerLinks.createConfigMapLink(
+                          match.params.idName
+                        )}
+                        className={`${
+                          buttonsStyles.buttonUICreate
+                        } btn btn-outline-primary`}
+                      >
+                        Create
+                      </NavLink>
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
+                {history.location.pathname.indexOf('/ingresses') + 1 &&
+                isReadAccess ? (
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                      <NavLink
+                        to={routerLinks.createCustomDomainLink(
                           match.params.idName
                         )}
                         className={`${

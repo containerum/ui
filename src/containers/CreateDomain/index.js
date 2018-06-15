@@ -67,6 +67,7 @@ export class CreateDomain extends PureComponent<Props> {
     fetchGetServicesIfNeeded(match.params.idName);
   }
   componentWillUpdate(nextProps) {
+    // const {match} = this.props;
     if (
       this.props.getServicesReducer.readyStatus !==
         nextProps.getServicesReducer.readyStatus &&
@@ -82,9 +83,13 @@ export class CreateDomain extends PureComponent<Props> {
               (service.ports.length >= 1 &&
                 service.ports[0].protocol === 'TCP'))
         );
-        const currentService = servicesList.find(
-          service => service.name === this.props.match.params.idSrv
-        );
+        let currentService = '';
+        if (this.props.match.params.idSrv) {
+          currentService = servicesList.find(
+            service => service.name === this.props.match.params.idSrv
+          );
+        }
+
         this.setState({
           ...this.state,
           currentService,
@@ -143,7 +148,7 @@ export class CreateDomain extends PureComponent<Props> {
     fetchCreateDomainIfNeeded(match.params.idName, this.state);
   };
   renderCreateDomain = () => {
-    const { getServicesReducer } = this.props;
+    const { getServicesReducer, match } = this.props;
     if (
       !getServicesReducer.readyStatus ||
       getServicesReducer.readyStatus === GET_SERVICES_INVALID ||
@@ -192,6 +197,7 @@ export class CreateDomain extends PureComponent<Props> {
         handleChangeSelectService={value =>
           this.handleChangeSelectService(value)
         }
+        match={match}
         handleChangeSelectPort={value => this.handleChangeSelectPort(value)}
         handleChangeInput={(value, type) => this.handleChangeInput(value, type)}
         handleChangeCheckBox={this.handleChangeCheckBox}
