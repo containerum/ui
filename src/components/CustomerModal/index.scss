@@ -14,6 +14,31 @@
     }
   }
 
+  &Input {
+    color: $ligth-gray-color !important;
+    border: none;
+    padding-left: 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid $very-light-gray;
+    border-radius: 0;
+
+    &::placeholder{
+      color: $very-light-gray;
+    }
+
+    &:focus {
+      border-top: none !important;
+      border-right: none !important;
+      border-left: none !important;
+      border-bottom: 2px solid $main-color !important;
+      border-radius: 0 !important;
+    }
+
+    &:hover {
+      border-bottom-color: $ligth-gray-color;
+    }
+  }
+
   &Title {
     font-size: 20px;
     line-height: 0.75;

@@ -10,7 +10,7 @@ const SelectNamespaceModal = () => (
     role="dialog"
     aria-labelledby="modalLabel"
     aria-hidden="true"
-    style={{ display: 'block' }}
+    style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
   >
     <div className={`modal-dialog ${styles.runSolutionModal}`} role="document">
       <div className={`modal-content ${styles.runSolutionModalContent}`}>
@@ -79,7 +79,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
@@ -95,7 +95,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
@@ -111,7 +111,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
@@ -129,7 +129,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
@@ -142,7 +142,7 @@ const SelectNamespaceModal = () => (
 
             <div className="input-box">
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Input"
@@ -155,7 +155,7 @@ const SelectNamespaceModal = () => (
 
             <div className="input-box">
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Input"
@@ -171,7 +171,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
@@ -217,7 +217,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
@@ -233,7 +233,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
@@ -249,7 +249,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
@@ -267,7 +267,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
@@ -280,7 +280,7 @@ const SelectNamespaceModal = () => (
 
             <div className="input-box">
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Input"
@@ -293,7 +293,7 @@ const SelectNamespaceModal = () => (
 
             <div className="input-box">
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Input"
@@ -309,7 +309,7 @@ const SelectNamespaceModal = () => (
                 Name
               </label>
               <input
-                className="form-control add-funds-input"
+                className={`${styles.modalInput} form-control add-funds-input`}
                 id="text"
                 type="text"
                 placeholder="Admin Name Admin NameAdmin Name"
