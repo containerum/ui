@@ -48,13 +48,16 @@ export const fetchDeleteRunningSolution = (
 
   dispatch(deleteRunningSolutionRequest());
 
-  const response = await axios.delete(`${URL}/solutions/${idSol}`, {
-    headers: {
-      'User-Client': browser,
-      'User-Token': accessToken
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
+  const response = await axios.delete(
+    `${URL}/namespaces/${idName}/solutions/${idSol}`,
+    {
+      headers: {
+        'User-Client': browser,
+        'User-Token': accessToken
+      },
+      validateStatus: status => status >= 200 && status <= 505
+    }
+  );
   const { status, data, config } = response;
   switch (status) {
     case 202: {
@@ -75,7 +78,6 @@ export const fetchDeleteRunningSolution = (
     }
     default: {
       dispatch(deleteRunningSolutionFailure(data.message, status, idSol));
-      dispatch(push(routerLinks.namespaces));
     }
   }
 };

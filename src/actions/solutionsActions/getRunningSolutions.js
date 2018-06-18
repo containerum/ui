@@ -46,7 +46,7 @@ export const fetchGetRunningSolutions = (
 
   dispatch(getRunningSolutionsRequest());
 
-  const response = await axios.get(`${URL}/solutions`, {
+  const response = await axios.get(`${URL}/namespaces/${idName}/solutions`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken
