@@ -8,7 +8,6 @@ import className from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetRunningSolutions from '../../actions/solutionsActions/getRunningSolutions';
-import * as actionDeleteRunningSolutions from '../../actions/solutionActions/deleteRunningSolution';
 import {
   GET_RUNNING_SOLUTIONS_INVALID,
   GET_RUNNING_SOLUTIONS_REQUESTING,
@@ -124,7 +123,6 @@ export class RunningSolutions extends PureComponent<Props> {
       deleteRunningSolutionReducer,
       match
     } = this.props;
-    // console.log('getRunningSolutionsReducer.data', getRunningSolutionsReducer.data);
 
     if (
       !getNamespacesReducer.readyStatus ||
@@ -226,13 +224,6 @@ const connector: Connector<{}, Props> = connect(
     fetchGetRunningSolutionsIfNeeded: (idName: string) =>
       dispatch(
         actionGetRunningSolutions.fetchGetRunningSolutionsIfNeeded(idName)
-      ),
-    fetchDeleteRunningSolutionsIfNeeded: (idName: string, idDep: string) =>
-      dispatch(
-        actionDeleteRunningSolutions.fetchDeleteRunningSolutionsIfNeeded(
-          idName,
-          idDep
-        )
       )
   })
 );

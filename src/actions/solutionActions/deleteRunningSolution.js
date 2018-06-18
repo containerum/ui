@@ -5,77 +5,83 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
-  GET_RUNNING_SOLUTIONS_REQUESTING,
-  GET_RUNNING_SOLUTIONS_SUCCESS,
-  GET_RUNNING_SOLUTIONS_FAILURE
-} from '../../constants/solutionsConstants/getRunningSolutions';
+  DELETE_RUNNING_SOLUTION_REQUESTING,
+  DELETE_RUNNING_SOLUTION_SUCCESS,
+  DELETE_RUNNING_SOLUTION_FAILURE
+} from '../../constants/solutionConstants/deleteRunningSolution';
 import { webApi, routerLinks } from '../../config';
 
-const getRunningSolutionsRequest = () => ({
-  type: GET_RUNNING_SOLUTIONS_REQUESTING,
+const deleteRunningSolutionRequest = () => ({
+  type: DELETE_RUNNING_SOLUTION_REQUESTING,
   isFetching: true
 });
 
-const getRunningSolutionsSuccess = (data, status, idName) => ({
-  type: GET_RUNNING_SOLUTIONS_SUCCESS,
+const deleteRunningSolutionSuccess = (data, status, method, idSol) => ({
+  type: DELETE_RUNNING_SOLUTION_SUCCESS,
   isFetching: false,
   data,
   status,
-  idName
+  method,
+  idSol
 });
 
-const getRunningSolutionsFailure = (err, status, idName) => ({
-  type: GET_RUNNING_SOLUTIONS_FAILURE,
+const deleteRunningSolutionFailure = (err, status, idSol) => ({
+  type: DELETE_RUNNING_SOLUTION_FAILURE,
   isFetching: false,
   err,
   status,
-  idName
+  idSol
 });
 
-const getRunningSolutionsInvalidToken = () => ({
+const deleteRunningSolutionInvalidToken = () => ({
   type: 'GET_INVALID_TOKEN'
 });
 
-export const fetchGetRunningSolutions = (
+export const fetchDeleteRunningSolution = (
   idName: string,
+  idSol: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
 
-  dispatch(getRunningSolutionsRequest());
+  dispatch(deleteRunningSolutionRequest());
 
-  const response = await axios.get(`${URL}/solutions`, {
+  const response = await axios.delete(`${URL}/solutions/${idSol}`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });
-  const { status, data } = response;
-  console.log('getRunningSolutionsRequest', data);
+  const { status, data, config } = response;
   switch (status) {
-    case 200: {
-      dispatch(getRunningSolutionsSuccess(data.services, status, idName));
+    case 202: {
+      dispatch(
+        deleteRunningSolutionSuccess(data, status, config.method, idSol)
+      );
+      dispatch(push(routerLinks.getRunningSolutionsLink(idName)));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
-        dispatch(getRunningSolutionsInvalidToken());
+        dispatch(deleteRunningSolutionInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push(routerLinks.login));
-      } else dispatch(getRunningSolutionsFailure(data.message, status, idName));
+      } else
+        dispatch(deleteRunningSolutionFailure(data.message, status, idSol));
       break;
     }
     default: {
-      dispatch(getRunningSolutionsFailure(data.message, status, idName));
+      dispatch(deleteRunningSolutionFailure(data.message, status, idSol));
       dispatch(push(routerLinks.namespaces));
     }
   }
 };
 
-export const fetchGetRunningSolutionsIfNeeded = (
-  idName: string
+export const fetchDeleteRunningSolutionIfNeeded = (
+  idName: string,
+  idSol: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchGetRunningSolutions(idName, axios));
+  dispatch(fetchDeleteRunningSolution(idName, idSol, axios));

@@ -295,6 +295,18 @@ export class Namespace extends PureComponent<Props> {
                     >
                       <NavLink
                         activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.namespaceDomainsLink(
+                          match.params.idName
+                        )}
+                      >
+                        Domains
+                      </NavLink>
+                    </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
                         to={routerLinks.getConfigMapsLink(match.params.idName)}
                       >
                         ConfigMaps
@@ -312,18 +324,6 @@ export class Namespace extends PureComponent<Props> {
                         Solutions
                       </NavLink>
                     </li>
-                    <li
-                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
-                    >
-                      <NavLink
-                        activeClassName={globalStyles.contentBlockMenuLiActive}
-                        to={routerLinks.namespaceDomainsLink(
-                          match.params.idName
-                        )}
-                      >
-                        Domains
-                      </NavLink>
-                    </li>
                     {/* <li */}
                     {/* className={`${globalStyles.contentBlockMenuLi} nav-item`} */}
                     {/* > */}
@@ -336,7 +336,7 @@ export class Namespace extends PureComponent<Props> {
                     {/* </li> */}
                   </ul>
                 </div>
-                {isSolutionsPathname + 1 && isReadAccess ? (
+                {isSolutionsPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
@@ -352,7 +352,7 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {isServicesPathname + 1 && isReadAccess ? (
+                {isServicesPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink

@@ -1276,7 +1276,7 @@ body .tooltip > .tooltip-inner {
   display: -ms-flex;
   display: -o-flex;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   flex-wrap: wrap;
   margin-top: 40px;
 }
@@ -1291,8 +1291,13 @@ body .tooltip > .tooltip-inner {
   border-radius: 4px;
   background-color: #ffffff;
   border: solid 1px #eaeaea;
-  margin: 0 0 30px 0;
+  margin: 0 29px 30px 0;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.solution-container:nth-child(3n) {
+  margin: 0;
 }
 
 .solution-container:hover {

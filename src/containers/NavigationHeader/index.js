@@ -125,6 +125,10 @@ export class NavigationHeader extends PureComponent<Props> {
             </div>
             <ul
               className={`${globalStyles.dropdownMenu} dropdown-menu`}
+              style={{
+                maxHeight: 500,
+                overflowY: 'auto'
+              }}
               role="menu"
             >
               {getNamespacesReducer.data.map(item => (

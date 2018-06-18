@@ -4,7 +4,6 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import className from 'classnames/bind';
 
-import getSolutionImage from '../../functions/getSolutionImage';
 import github from '../../images/github.svg';
 
 import solutionPageStyles from '../../containers/Solution/index.scss';
@@ -31,7 +30,10 @@ const SolutionItem = ({
 Props) => {
   const { name, url, limits } = solution;
   const { cpu, ram } = limits;
-  const { srcLogo, logoHeight } = getSolutionImage(name, '100px');
+  const imageHref = `${url}/master/${name}.png`.replace(
+    'github.com',
+    'raw.githubusercontent.com'
+  );
   const regexpGif = /gif\//gi;
   const regexpImage = /images\//gi;
   const regexpWithoutSlash = /\/https/gi;
@@ -49,7 +51,7 @@ Props) => {
     <div className={`${solutionPageStyles.solutionPageWrapper} row`}>
       <div className={`${solutionPageStyles.solutionPageLeftSide} col-md-4`}>
         <div className={solutionPageStyles.solutionPageBlockImg}>
-          <img src={srcLogo} alt={name} style={{ height: logoHeight }} />
+          <img src={imageHref} alt={name} />
         </div>
         <a
           href={url}
