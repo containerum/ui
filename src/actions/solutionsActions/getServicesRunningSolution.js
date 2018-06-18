@@ -37,6 +37,7 @@ const getServicesRunningSolutionInvalidToken = () => ({
 });
 
 export const fetchGetServicesRunningSolution = (
+  idName: string,
   label: string,
   axios: any,
   URL: string = webApi
@@ -46,13 +47,16 @@ export const fetchGetServicesRunningSolution = (
 
   dispatch(getServicesRunningSolutionRequest());
 
-  const response = await axios.get(`${URL}/solutions/${label}/services`, {
-    headers: {
-      'User-Client': browser,
-      'User-Token': accessToken
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
+  const response = await axios.get(
+    `${URL}/namespaces/${idName}/solutions/${label}/services`,
+    {
+      headers: {
+        'User-Client': browser,
+        'User-Token': accessToken
+      },
+      validateStatus: status => status >= 200 && status <= 505
+    }
+  );
   const { status, data } = response;
   switch (status) {
     case 200: {
@@ -79,6 +83,7 @@ export const fetchGetServicesRunningSolution = (
 };
 
 export const fetchGetServicesRunningSolutionIfNeeded = (
+  idName: string,
   label: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchGetServicesRunningSolution(label, axios));
+  dispatch(fetchGetServicesRunningSolution(idName, label, axios));
