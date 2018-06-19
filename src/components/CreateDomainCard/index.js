@@ -2,13 +2,15 @@
 
 import React from 'react';
 import className from 'classnames/bind';
+import { NavLink } from 'react-router-dom';
 
-import { sourceType } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import InputControl from '../InputControl';
 import CheckBoxControl from '../CheckBoxControl';
 
 import globalStyles from '../../theme/global.scss';
 import inputStyles from '../../components/InputControl/index.scss';
+import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -68,85 +70,98 @@ const CreateDomainCard = ({
           Target Service
         </div>
 
-        <div
-          className="col-md-4"
-          style={{ display: 'inline-block', paddingLeft: 0 }}
-        >
+        {servicesList.length > 0 ? (
           <div
-            style={{ margin: '30px 0px 5px' }}
-            className={globalStyles.containerSubTitleCreate}
+            className="col-md-4"
+            style={{ display: 'inline-block', paddingLeft: 0 }}
           >
-            External Service Name
-          </div>
-          <div className={globalStyles.selectWrapper}>
-            <div className={globalStyles.selectArrow} />
-            <div className={globalStyles.selectArrow} />
-            <select
-              name="services"
-              className={selectClassName}
-              value={currentService && currentService.name}
-              onChange={e => handleChangeSelectService(e.target.value)}
-              required
-              disabled={match.params.idSrv}
+            <div
+              style={{ margin: '30px 0px 5px' }}
+              className={globalStyles.containerSubTitleCreate}
             >
-              {servicesList.map(item => (
-                <option key={item.name} value={item.name}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div
-          className="col-md-4"
-          style={{ display: 'inline-block', marginLeft: '20px' }}
-        >
-          <div
-            style={{ margin: '30px 0px 5px' }}
-            className={globalStyles.containerSubTitleCreate}
-          >
-            Target port
-          </div>
-          {portsList && (
+              External Service Name
+            </div>
             <div className={globalStyles.selectWrapper}>
               <div className={globalStyles.selectArrow} />
               <div className={globalStyles.selectArrow} />
               <select
-                name="ports"
+                name="services"
                 className={selectClassName}
-                value={currentPort && currentPort.port}
-                onChange={e => handleChangeSelectPort(e.target.value)}
+                value={currentService && currentService.name}
+                onChange={e => handleChangeSelectService(e.target.value)}
                 required
+                disabled={match.params.idSrv}
               >
-                {portsList.map(
-                  port =>
-                    port.protocol === 'TCP' && (
-                      <option key={port.port} value={port.port}>
-                        {port.port}
-                      </option>
-                    )
-                )}
+                {servicesList.map(item => (
+                  <option key={item.name} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
-          )}
-          {!portsList && (
-            <div className={globalStyles.selectWrapper}>
-              <div className={globalStyles.selectArrow} />
-              <div className={globalStyles.selectArrow} />
-              <select name="ports" className={selectClassName} required>
-                <option
-                  key={servicesList[0].ports[0].port}
-                  value={
-                    servicesList.length !== 0 && servicesList[0].ports[0].port
-                  }
+          </div>
+        ) : (
+          <div style={{ marginTop: '30px' }}>
+            <NavLink
+              to={routerLinks.createServiceLink(match.params.idName)}
+              className={buttonsStyles.buttonUICreateSmall}
+            >
+              Create Service
+            </NavLink>
+          </div>
+        )}
+
+        {servicesList.length > 0 && (
+          <div
+            className="col-md-4"
+            style={{ display: 'inline-block', marginLeft: '20px' }}
+          >
+            <div
+              style={{ margin: '30px 0px 5px' }}
+              className={globalStyles.containerSubTitleCreate}
+            >
+              Target port
+            </div>
+            {portsList && (
+              <div className={globalStyles.selectWrapper}>
+                <div className={globalStyles.selectArrow} />
+                <div className={globalStyles.selectArrow} />
+                <select
+                  name="ports"
+                  className={selectClassName}
+                  value={currentPort && currentPort.port}
+                  onChange={e => handleChangeSelectPort(e.target.value)}
+                  required
                 >
-                  {servicesList.length !== 0 && servicesList[0].ports[0].port}
-                </option>
-              </select>
-            </div>
-          )}
-        </div>
+                  {portsList.map(
+                    port =>
+                      port.protocol === 'TCP' && (
+                        <option key={port.port} value={port.port}>
+                          {port.port}
+                        </option>
+                      )
+                  )}
+                </select>
+              </div>
+            )}
+            {!portsList && (
+              <div className={globalStyles.selectWrapper}>
+                <div className={globalStyles.selectArrow} />
+                <div className={globalStyles.selectArrow} />
+                <select name="ports" className={selectClassName} required>
+                  <option
+                    key={servicesList[0].ports[0].port}
+                    value={
+                      servicesList.length !== 0 && servicesList[0].ports[0].port
+                    }
+                  >
+                    {servicesList.length !== 0 && servicesList[0].ports[0].port}
+                  </option>
+                </select>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className={textHelperClassName}>
           Select the deployment for which the Service applies
