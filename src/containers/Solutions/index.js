@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
-// import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
 
 import styles from './index.scss';
@@ -17,11 +16,16 @@ import type {
   ReduxState
 } from '../../types';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
+import * as actionRunSolution from '../../actions/solutionActions/runSolution';
+import * as actionGetEnvsSolution from '../../actions/solutionActions/getEnvsSolution';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
+import * as actionGetDeploymentsRunningSolution from '../../actions/solutionsActions/getDeploymentsRunningSolution';
+import * as actionGetServicesRunningSolution from '../../actions/solutionsActions/getServicesRunningSolution';
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
-  GET_SOLUTIONS_FAILURE
+  GET_SOLUTIONS_FAILURE,
+  GET_SOLUTIONS_SUCCESS
 } from '../../constants/solutionsConstants/getSolutions';
 import {
   GET_NAMESPACES_INVALID,
@@ -35,27 +39,34 @@ import {
   RUN_SOLUTION_FAILURE
 } from '../../constants/solutionConstants/runSolution';
 import SolutionsList from '../../components/SolutionsList';
-import RunSolutionItem from '../RunSolution';
-import RunSolutionModals from '../../components/CustomerModal/RunSolutionModals';
+import RunSolutionModals from '../../components/CustomerModal/RunSolutionModals/RunSolutionModals';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+import { GET_ENVS_SOLUTION_SUCCESS } from '../../constants/solutionConstants/getEnvsSolution';
 
 type Props = {
   history: Object,
   getSolutionsReducer: Object,
+  runSolutionReducer: Object,
+  getEnvsSolutionReducer: Object,
+  fetchGetEnvsSolutionIfNeeded: Object,
   getProfileReducer: Object,
   getNamespacesReducer: NamespacesType,
   fetchGetSolutionsIfNeeded: () => void,
+  fetchRunSolutionIfNeeded: (idName: string, data: Object) => void,
   fetchGetNamespacesIfNeeded: () => void
 };
 
-// Export this for unit testing more easily
 export class Solutions extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      idName: null,
       displayedNamespaces: [],
-      currentSolution: null,
+      currentNamespace: {},
+      displayedSolutions: [],
+      displayEnvsSolution: [],
+      currentSolution: {},
+      solutionName: '',
+      currentView: 'first',
       isOpenedSelectNamespace: false,
       statusOfRunSolution: RUN_SOLUTION_INVALID
     };
@@ -64,7 +75,7 @@ export class Solutions extends PureComponent<Props> {
     const { fetchGetSolutionsIfNeeded } = this.props;
     fetchGetSolutionsIfNeeded();
   }
-  componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps, nextState) {
     if (
       this.props.getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
@@ -82,48 +93,155 @@ export class Solutions extends PureComponent<Props> {
       this.setState({
         ...this.state,
         displayedNamespaces: nextProps.getNamespacesReducer.data,
-        idName: nextProps.getNamespacesReducer.data.length
+        currentNamespace: nextProps.getNamespacesReducer.data.length
           ? nextProps.getNamespacesReducer.data[0]
-          : null
+          : {}
       });
     }
+    if (
+      this.props.getSolutionsReducer.readyStatus !==
+        nextProps.getSolutionsReducer.readyStatus &&
+      nextProps.getSolutionsReducer.readyStatus === GET_SOLUTIONS_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        currentSolution: nextProps.getSolutionsReducer.data.length
+          ? nextProps.getSolutionsReducer.data[0]
+          : null,
+        displayedSolutions: nextProps.getSolutionsReducer.data
+      });
+    }
+    if (
+      this.props.getEnvsSolutionReducer.readyStatus !==
+        nextProps.getEnvsSolutionReducer.readyStatus &&
+      nextProps.getEnvsSolutionReducer.readyStatus === GET_ENVS_SOLUTION_SUCCESS
+    ) {
+      const envsSolutionWithOutHash = Object.assign(
+        {},
+        nextProps.getEnvsSolutionReducer.data
+      );
+      delete envsSolutionWithOutHash.HASH;
+      this.setState({
+        ...this.state,
+        currentView: 'second',
+        displayEnvsSolution: envsSolutionWithOutHash
+      });
+    }
+    if (
+      this.props.runSolutionReducer.readyStatus !==
+        nextProps.runSolutionReducer.readyStatus &&
+      nextProps.runSolutionReducer.readyStatus === RUN_SOLUTION_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        currentView: 'third-success'
+      });
+    }
+    if (
+      this.props.runSolutionReducer.readyStatus !==
+        nextProps.runSolutionReducer.readyStatus &&
+      nextProps.runSolutionReducer.readyStatus === RUN_SOLUTION_FAILURE
+    ) {
+      this.setState({
+        ...this.state,
+        currentView: 'third-error'
+      });
+    }
+    if (nextState.isOpenedSelectNamespace && typeof document === 'object') {
+      const getHtml = document.querySelector('html');
+      getHtml.style.overflow = 'hidden';
+    } else if (
+      !nextState.isOpenedSelectNamespace &&
+      typeof document === 'object'
+    ) {
+      const getHtml = document.querySelector('html');
+      getHtml.style.overflow = 'auto';
+    }
   }
-  handleClickRunSolution = solutionName => {
+  handleClickRunSolution = solutionTemplate => {
+    const currentSolution = this.state.displayedSolutions.find(
+      ns => ns.name === solutionTemplate
+    );
     this.setState({
       ...this.state,
-      currentSolution: solutionName,
+      currentSolution,
       isOpenedSelectNamespace: true
     });
   };
-  handleOpenCloseModal = () => {
-    this.setState({
+  handleOpenCloseModal = currentView => {
+    const newState = {
       ...this.state,
       isOpenedSelectNamespace: !this.state.isOpenedSelectNamespace,
-      idName: this.state.displayedNamespaces.length
+      currentNamespace: this.state.displayedNamespaces.length
         ? this.state.displayedNamespaces[0]
-        : null,
-      statusOfRunSolution: RUN_SOLUTION_INVALID
+        : {},
+      statusOfRunSolution: RUN_SOLUTION_INVALID,
+      currentView: 'first'
+    };
+    if (currentView === 'second') {
+      if (typeof window !== 'undefined') {
+        const result = window.confirm('Are you sure?');
+        if (result) {
+          this.setState(newState);
+        }
+      }
+    } else {
+      this.setState(newState);
+    }
+  };
+  openFirstModal = () => {
+    this.setState({
+      currentView: 'first'
+    });
+  };
+  handleOpenPreviousModal = () => {
+    this.setState({
+      ...this.state,
+      currentView: 'first'
     });
   };
   handleSelectNamespace = value => {
-    const currentNamespace = this.state.displayedNamespaces.filter(
+    const currentNamespace = this.state.displayedNamespaces.find(
       ns => ns.label === value
     );
     this.setState({
       ...this.state,
-      idName: currentNamespace ? currentNamespace[0] : null
+      currentNamespace
     });
   };
-  handleSolutionSuccess = () => {
+  handleSubmitCreatingEssence = (e, type) => {
+    e.preventDefault();
+    const {
+      currentSolution,
+      currentNamespace,
+      displayEnvsSolution,
+      solutionName
+    } = this.state;
+    if (currentSolution && currentNamespace) {
+      if (type === 'next') {
+        this.props.fetchGetEnvsSolutionIfNeeded(currentSolution.name);
+      } else if (type === 'deploy') {
+        this.props.fetchRunSolutionIfNeeded(currentNamespace.id, {
+          template: currentSolution.name,
+          name: solutionName,
+          branch: 'master',
+          env: displayEnvsSolution
+        });
+      }
+    }
+  };
+  handleChangeInputEnvironment = (value, env) => {
+    const nextState = Object.assign({}, this.state.displayEnvsSolution);
+    nextState[env] = value;
     this.setState({
       ...this.state,
-      statusOfRunSolution: RUN_SOLUTION_SUCCESS
+      displayEnvsSolution: nextState
     });
   };
-  handleSolutionFailure = () => {
+  handleChangeInput = value => {
     this.setState({
       ...this.state,
-      statusOfRunSolution: RUN_SOLUTION_FAILURE
+      solutionName: value
     });
   };
 
@@ -161,43 +279,60 @@ export class Solutions extends PureComponent<Props> {
       return <p>Oops, Failed to load data of Solutions!</p>;
     }
 
-    const {
-      currentSolution,
-      isOpenedSelectNamespace,
-      idName,
-      displayedNamespaces,
-      statusOfRunSolution
-    } = this.state;
-    return (
-      <div>
-        <RunSolutionItem
-          idName={idName}
-          currentSolution={currentSolution}
-          displayedNamespaces={displayedNamespaces}
-          isOpenedSelectNamespace={isOpenedSelectNamespace}
-          statusOfRunSolution={statusOfRunSolution}
-          handleOpenCloseModal={this.handleOpenCloseModal}
-          handleSelectNamespace={value => this.handleSelectNamespace(value)}
-          handleSolutionFailure={this.handleSolutionFailure}
-          handleSolutionSuccess={this.handleSolutionSuccess}
-        />
-        <SolutionsList
-          data={getSolutionsReducer.data}
-          history={history}
-          handleClickRunSolution={solutionName =>
-            this.handleClickRunSolution(solutionName)
-          }
-        />
-      </div>
-    );
+    if (
+      getSolutionsReducer.readyStatus === GET_SOLUTIONS_SUCCESS &&
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS
+    ) {
+      const {
+        currentView,
+        currentSolution,
+        solutionName,
+        isOpenedSelectNamespace,
+        currentNamespace,
+        statusOfRunSolution,
+        displayEnvsSolution
+      } = this.state;
+      return (
+        <div>
+          {currentSolution &&
+            currentNamespace && (
+              <RunSolutionModals
+                currentNamespace={currentNamespace}
+                currentView={currentView}
+                currentSolution={currentSolution}
+                displayedNamespaces={getNamespacesReducer.data}
+                isOpenedSelectNamespace={isOpenedSelectNamespace}
+                statusOfRunSolution={statusOfRunSolution}
+                getEnvsData={displayEnvsSolution}
+                solutionName={solutionName}
+                handleOpenCloseModal={this.handleOpenCloseModal}
+                openFirstModal={this.openFirstModal}
+                handleOpenPreviousModal={this.handleOpenPreviousModal}
+                handleSubmitCreatingEssence={this.handleSubmitCreatingEssence}
+                handleChangeInputEnvironment={this.handleChangeInputEnvironment}
+                handleChangeInput={this.handleChangeInput}
+                handleSelectNamespace={value =>
+                  this.handleSelectNamespace(value)
+                }
+              />
+            )}
+          <SolutionsList
+            data={getSolutionsReducer.data}
+            history={history}
+            handleClickRunSolution={solutionTemplate =>
+              this.handleClickRunSolution(solutionTemplate)
+            }
+          />
+        </div>
+      );
+    }
+    return null;
   };
 
   render() {
-    // console.log(this.state);
     return (
       <div>
         <Helmet title="Solutions" />
-        <RunSolutionModals />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             {this.renderSolutionsList()}
@@ -211,18 +346,39 @@ export class Solutions extends PureComponent<Props> {
 const connector: Connector<{}, Props> = connect(
   ({
     getSolutionsReducer,
+    runSolutionReducer,
+    getEnvsSolutionReducer,
     getNamespacesReducer,
     getProfileReducer
   }: ReduxState) => ({
     getSolutionsReducer,
+    runSolutionReducer,
+    getEnvsSolutionReducer,
     getNamespacesReducer,
     getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSolutionsIfNeeded: () =>
       dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
+    fetchRunSolutionIfNeeded: (idName: string, data: Object) =>
+      dispatch(actionRunSolution.fetchRunSolutionIfNeeded(idName, data)),
+    fetchGetEnvsSolutionIfNeeded: (label: string) =>
+      dispatch(actionGetEnvsSolution.fetchGetEnvsSolutionIfNeeded(label)),
     fetchGetNamespacesIfNeeded: (role: string) =>
-      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role))
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
+
+    fetchGetDeploymentsRunningSolutionIfNeeded: (idSol: string) =>
+      dispatch(
+        actionGetDeploymentsRunningSolution.fetchGetDeploymentsRunningSolutionIfNeeded(
+          idSol
+        )
+      ),
+    fetchGetServicesRunningSolutionIfNeeded: (idSol: string) =>
+      dispatch(
+        actionGetServicesRunningSolution.fetchGetServicesRunningSolutionIfNeeded(
+          idSol
+        )
+      )
   })
 );
 

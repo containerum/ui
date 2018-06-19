@@ -2493,7 +2493,7 @@ button:focus{
 .main-content{
   padding: 0 100px 30px 60px;
   width: 80%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .main-content-title{
   font-weight: 300;
@@ -2522,10 +2522,10 @@ button:focus{
 .input-box{
   margin-bottom: 20px;
 }
-/*.modal-main-content-success-page,*/
-/*.modal-main-content-error-page{*/
-  /*padding: 40px 50px 35px;*/
-/*}*/
+.modal-main-content-success-page,
+.modal-main-content-error-page{
+  padding: 40px 50px 35px;
+}
 .status-message-success,
 .status-message-error{
   position: relative;

@@ -147,6 +147,7 @@
       "es6": true
     },
     "rules": {
+      "no-alert": 0,
       "global-require": 0,
       "no-nested-ternary": 0,
       "no-underscore-dangle": 0,

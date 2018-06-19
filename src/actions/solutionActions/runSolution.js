@@ -11,74 +11,76 @@ import {
 } from '../../constants/solutionConstants/runSolution';
 import { webApi, routerLinks } from '../../config';
 
-const runSolutionsRequest = () => ({
+const runSolutionRequest = () => ({
   type: RUN_SOLUTION_REQUESTING,
   isFetching: true
 });
 
-const runSolutionsSuccess = data => ({
+const runSolutionSuccess = (data, status, idSol) => ({
   type: RUN_SOLUTION_SUCCESS,
   isFetching: false,
-  data
+  data,
+  status,
+  idSol
 });
 
-const runSolutionsFailure = err => ({
+const runSolutionFailure = (err, status, idSol) => ({
   type: RUN_SOLUTION_FAILURE,
   isFetching: false,
-  err
+  err,
+  status,
+  idSol
 });
 
-const runSolutionsInvalidToken = () => ({
+const runSolutionInvalidToken = () => ({
   type: 'GET_INVALID_TOKEN'
 });
 
-export const fetchRunSolutions = (
+export const fetchRunSolution = (
   idName: string,
-  idSol: string,
+  dataObj: Object,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
+  const accessToken = cookie.load('accessToken');
   const browser = cookie.load('browser');
 
-  dispatch(runSolutionsRequest());
+  dispatch(runSolutionRequest());
 
   const response = await axios.post(
-    `${URL}/solutions/run`,
-    { namespace: idName, label: idSol },
+    `${URL}/namespaces/${idName}/solutions`,
+    dataObj,
     {
       headers: {
         'User-Client': browser,
-        'Content-Type': 'application/json'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }
   );
   const { status, data } = response;
   switch (status) {
-    case 201: {
-      dispatch(runSolutionsSuccess(data));
-      break;
-    }
-    case 404: {
-      dispatch(runSolutionsSuccess([]));
+    case 202: {
+      dispatch(runSolutionSuccess(data, status, dataObj.template));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
-        dispatch(runSolutionsInvalidToken());
+        dispatch(runSolutionInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push(routerLinks.login));
-      } else dispatch(runSolutionsFailure(data.message));
+      } else
+        dispatch(runSolutionFailure(data.message, status, dataObj.template));
       break;
     }
     default: {
-      dispatch(runSolutionsFailure(data.message));
+      dispatch(runSolutionFailure(data.message, status, dataObj.template));
     }
   }
 };
 
-export const fetchRunSolutionsIfNeeded = (
+export const fetchRunSolutionIfNeeded = (
   idName: string,
-  idSol: string
+  dataObj: Object
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchRunSolutions(idName, idSol, axios));
+  dispatch(fetchRunSolution(idName, dataObj, axios));

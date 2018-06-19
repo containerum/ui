@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 
 import type { Dispatch, ReduxState } from '../../types';
-import * as actionRunSolutions from '../../actions/solutionActions/runSolution';
+import * as actionRunSolution from '../../actions/solutionActions/runSolution';
 import SelectNamespaceModal from '../../components/CustomerModal/RunSolutionModal';
 import {
   RUN_SOLUTION_SUCCESS,
@@ -23,7 +23,7 @@ type Props = {
   runSolutionReducer: Object,
   handleSolutionFailure: () => void,
   handleSolutionSuccess: () => void,
-  fetchRunSolutionsIfNeeded: (idName: string, idSol: string) => void
+  fetchRunSolutionIfNeeded: (idName: string, idSol: string) => void
 };
 
 // Export this for unit testing more easily
@@ -44,8 +44,8 @@ export class RunSolution extends PureComponent<Props> {
     }
   }
   handleCreate = () => {
-    const { fetchRunSolutionsIfNeeded, currentSolution, idName } = this.props;
-    fetchRunSolutionsIfNeeded(idName.name, currentSolution);
+    const { fetchRunSolutionIfNeeded, currentSolution, idName } = this.props;
+    fetchRunSolutionIfNeeded(idName.name, currentSolution);
   };
 
   render() {
@@ -82,8 +82,8 @@ const connector: Connector<{}, Props> = connect(
     runSolutionReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchRunSolutionsIfNeeded: (idName: string, idSol: string) =>
-      dispatch(actionRunSolutions.fetchRunSolutionsIfNeeded(idName, idSol))
+    fetchRunSolutionIfNeeded: (idName: string, idSol: string) =>
+      dispatch(actionRunSolution.fetchRunSolutionIfNeeded(idName, idSol))
   })
 );
 
