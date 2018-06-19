@@ -30,6 +30,7 @@ import {
   GET_SERVICES_RUNNING_SOLUTION_FAILURE,
   GET_SERVICES_RUNNING_SOLUTION_SUCCESS
 } from '../../constants/solutionsConstants/getServicesRunningSolution';
+import { DELETE_RUNNING_SOLUTION_REQUESTING } from '../../constants/solutionConstants/deleteRunningSolution';
 import {
   DELETE_SERVICE_SUCCESS,
   DELETE_SERVICE_REQUESTING
@@ -60,14 +61,20 @@ type Props = {
   deleteDeploymentReducer: Object,
   deleteRunningSolutionReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
-  fetchGetRunningSolutionIfNeeded: (idSol: string) => void,
+  fetchGetRunningSolutionIfNeeded: (idName: string, idSol: string) => void,
   fetchDeleteRunningSolutionIfNeeded: (idName: string, idSol: string) => void,
-  fetchGetDeploymentsRunningSolutionIfNeeded: (idSol: string) => void,
+  fetchGetDeploymentsRunningSolutionIfNeeded: (
+    idName: string,
+    idSol: string
+  ) => void,
   fetchDeleteDeploymentIfNeeded: (idName: string, idDep: string) => void,
   getServicesRunningSolutionReducer: Object,
   getNamespaceReducer: Object,
   deleteServiceReducer: Object,
-  fetchGetServicesRunningSolutionIfNeeded: (idName: string) => void,
+  fetchGetServicesRunningSolutionIfNeeded: (
+    idName: string,
+    idSol: string
+  ) => void,
   fetchDeleteServiceIfNeeded: (idName: string, idSvr: string) => void,
   history: Object,
   match: Object
@@ -94,10 +101,11 @@ export class RunningSolution extends PureComponent<Props> {
       fetchGetRunningSolutionIfNeeded,
       match
     } = this.props;
-    fetchGetNamespaceIfNeeded(match.params.idName);
-    fetchGetRunningSolutionIfNeeded(match.params.idSol);
-    fetchGetServicesRunningSolutionIfNeeded(match.params.idSol);
-    fetchGetDeploymentsRunningSolutionIfNeeded(match.params.idSol);
+    const { idName, idSol } = match.params;
+    fetchGetNamespaceIfNeeded(idName);
+    fetchGetRunningSolutionIfNeeded(idName, idSol);
+    fetchGetServicesRunningSolutionIfNeeded(idName, idSol);
+    fetchGetDeploymentsRunningSolutionIfNeeded(idName, idSol);
   }
   componentWillUpdate(nextProps) {
     if (
@@ -200,8 +208,13 @@ export class RunningSolution extends PureComponent<Props> {
     });
   };
 
-  renderSolutionList = () => {
-    const { getRunningSolutionReducer, getNamespaceReducer } = this.props;
+  renderSolution = () => {
+    const {
+      getRunningSolutionReducer,
+      deleteRunningSolutionReducer,
+      getNamespaceReducer,
+      getServicesRunningSolutionReducer
+    } = this.props;
 
     if (
       !getNamespaceReducer.readyStatus ||
@@ -209,7 +222,15 @@ export class RunningSolution extends PureComponent<Props> {
       getNamespaceReducer.readyStatus === GET_NAMESPACE_REQUESTING ||
       !getRunningSolutionReducer.readyStatus ||
       getRunningSolutionReducer.readyStatus === GET_RUNNING_SOLUTION_INVALID ||
-      getRunningSolutionReducer.readyStatus === GET_RUNNING_SOLUTION_REQUESTING
+      getRunningSolutionReducer.readyStatus ===
+        GET_RUNNING_SOLUTION_REQUESTING ||
+      !getServicesRunningSolutionReducer.readyStatus ||
+      getServicesRunningSolutionReducer.readyStatus ===
+        GET_SERVICES_RUNNING_SOLUTION_INVALID ||
+      getServicesRunningSolutionReducer.readyStatus ===
+        GET_SERVICES_RUNNING_SOLUTION_REQUESTING ||
+      deleteRunningSolutionReducer.readyStatus ===
+        DELETE_RUNNING_SOLUTION_REQUESTING
     ) {
       return (
         <div
@@ -232,7 +253,9 @@ export class RunningSolution extends PureComponent<Props> {
 
     if (
       getNamespaceReducer.readyStatus === GET_NAMESPACE_FAILURE ||
-      getRunningSolutionReducer.readyStatus === GET_RUNNING_SOLUTION_FAILURE
+      getRunningSolutionReducer.readyStatus === GET_RUNNING_SOLUTION_FAILURE ||
+      getServicesRunningSolutionReducer.readyStatus ===
+        GET_SERVICES_RUNNING_SOLUTION_FAILURE
     ) {
       return <p>Oops, Failed to load data of Solution!</p>;
     }
@@ -241,6 +264,16 @@ export class RunningSolution extends PureComponent<Props> {
       .replace('github.com', 'raw.githubusercontent.com')
       .replace('/tree', '');
     const accessToNamespace = getNamespaceReducer.data.access;
+    const firstServiceWithDomain = this.state.displayedService.find(
+      service => (service ? service.domain : null)
+    );
+    let openApplication = url;
+    if (firstServiceWithDomain) {
+      const { ports } = firstServiceWithDomain;
+      openApplication = `http://${firstServiceWithDomain.domain}:${
+        ports[0].port
+      }`;
+    }
     return (
       <div className="content-block-container content-block_common-statistic container ">
         <div className="content-block-header active-solution-header">
@@ -255,7 +288,11 @@ export class RunningSolution extends PureComponent<Props> {
                   solution
                 </span>
               </div>
-              <a href={url} target="_blank" className={btnClassName}>
+              <a
+                href={openApplication}
+                target="_blank"
+                className={btnClassName}
+              >
                 open application
               </a>
             </div>
@@ -461,7 +498,7 @@ export class RunningSolution extends PureComponent<Props> {
           handleOpenCloseModal={this.handleOpenCloseSolutionModal}
           onHandleDelete={this.onHandleDeleteSolution}
         />
-        <div className="content-block">{this.renderSolutionList()}</div>
+        <div className="content-block">{this.renderSolution()}</div>
         <div className="content-block">
           <div className="content-block-container container ">
             <div className="active-solution-title">Deployments</div>
@@ -504,8 +541,10 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
-    fetchGetRunningSolutionIfNeeded: (idSol: string) =>
-      dispatch(actionGetRunningSolution.fetchGetRunningSolutionIfNeeded(idSol)),
+    fetchGetRunningSolutionIfNeeded: (idName: string, idSol: string) =>
+      dispatch(
+        actionGetRunningSolution.fetchGetRunningSolutionIfNeeded(idName, idSol)
+      ),
     fetchDeleteRunningSolutionIfNeeded: (idName: string, idSol: string) =>
       dispatch(
         actionDeleteRunningSolutions.fetchDeleteRunningSolutionIfNeeded(
@@ -513,9 +552,13 @@ const connector: Connector<{}, Props> = connect(
           idSol
         )
       ),
-    fetchGetDeploymentsRunningSolutionIfNeeded: (idSol: string) =>
+    fetchGetDeploymentsRunningSolutionIfNeeded: (
+      idName: string,
+      idSol: string
+    ) =>
       dispatch(
         actionGetDeploymentsRunningSolution.fetchGetDeploymentsRunningSolutionIfNeeded(
+          idName,
           idSol
         )
       ),
@@ -523,9 +566,10 @@ const connector: Connector<{}, Props> = connect(
       dispatch(
         actionDeleteDeployment.fetchDeleteDeploymentIfNeeded(idName, idDep)
       ),
-    fetchGetServicesRunningSolutionIfNeeded: (idSol: string) =>
+    fetchGetServicesRunningSolutionIfNeeded: (idName: string, idSol: string) =>
       dispatch(
         actionGetServicesRunningSolution.fetchGetServicesRunningSolutionIfNeeded(
+          idName,
           idSol
         )
       ),

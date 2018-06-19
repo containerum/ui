@@ -13,37 +13,18 @@ const btnClassName = globalClassName('btnBlue', 'btnDepl');
 
 type Props = {
   data: Object,
-  // dataNamespace: Object,
   history: Object,
   idName: string
-  // handleDeleteDeployment: ?(idDep: string) => void
 };
 
-const RunningSolutionsList = ({
-  data,
-  // dataNamespace,
-  history,
-  idName
-}: // dataNamespace,
-// history,
-// idName,
-// handleDeleteDeployment
-Props) => {
+const RunningSolutionsList = ({ data, history, idName }: Props) => {
   const handleClickGetSolution = name => {
     history.push(routerLinks.getRunningSolutionLink(idName, name));
   };
-  // const handleClickDeleteDeployment = name => {
-  //   handleDeleteDeployment(name);
-  // };
   const handleClose = e => {
     e.stopPropagation();
   };
-  // const ta = timeago();
-  // const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
 
-  const currentDataSolution = data.filter(
-    solution => solution.namespace === idName
-  );
   return (
     <div className="tab-content" id="pills-tabContent" style={{ margin: 30 }}>
       <div
@@ -52,9 +33,9 @@ Props) => {
         role="tabpanel"
         aria-labelledby="Solutions-tab"
       >
-        {currentDataSolution.length >= 1 && (
+        {data.length >= 1 && (
           <div className="solution-containers-wrapper">
-            {currentDataSolution.map(solution => {
+            {data.map(solution => {
               const { name, branch, template, url } = solution;
               const imageHref = `${url}/${template}.png`
                 .replace('github.com', 'raw.githubusercontent.com')
@@ -89,7 +70,7 @@ Props) => {
             })}
           </div>
         )}
-        {!currentDataSolution.length && (
+        {!data.length && (
           <div>
             <div className={globalStyles.createDeploymentWrapper}>
               <div className={globalStyles.noCreatedPodMessage}>
