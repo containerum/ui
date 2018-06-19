@@ -64,6 +64,12 @@ export const fetchGetBalance = (
       } else dispatch(getBalanceFailure(data.message));
       break;
     }
+    case 404: {
+      if (data.message === 'Token was not found in storage') {
+        dispatch(push(routerLinks.login));
+      }
+      break;
+    }
     default: {
       dispatch(getBalanceFailure(data.message));
     }
