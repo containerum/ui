@@ -6,6 +6,7 @@ import classNames from 'classnames/bind';
 
 import rectangle from '../../../images/rectangle.png';
 import globalStyles from '../../../theme/global.scss';
+import podStyles from '../../../containers/Pod/index.scss';
 
 type Props = {
   data: Object
@@ -32,13 +33,25 @@ const PodsList = ({ data }: Props) => {
   );
 
   return (
-    <div className="row double">
+    <div
+      className="row double"
+      style={{
+        paddingLeft: '15px',
+        paddingRight: '15px',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+      }}
+    >
       {containers.map(container => {
         // console.log(container);
         const { name, image } = container;
         const { cpu, memory } = container.limits;
         return (
-          <div className="col-md-6 px-0" key={_.uniqueId()}>
+          <div
+            className={`${podStyles.podCard} col-md-6 px-0`}
+            key={_.uniqueId()}
+          >
             <div className={`${classNameContainer} mt-0`}>
               <div className={globalStyles.contentBlockHeader}>
                 <div className={globalStyles.contentBlockHeaderLabel}>

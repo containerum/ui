@@ -15,7 +15,7 @@ module.exports = {
   // webApi: 'https://api.containerum.io:8082',
   // wsApi: 'wss://api.containerum.io:8082',
   appRecaptcha: process.env.RECAPTCHA || null,
-  sourceType: process.env.SOURCE_TYPE || 'ONLINE',
+  sourceType: process.env.SOURCE_TYPE || 'OFFLINE',
   defaultCountry: process.env.COUNTRY || 'US',
   app: {
     htmlAttributes: { lang: 'en' },
