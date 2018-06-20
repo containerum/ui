@@ -106,7 +106,10 @@ const DomainsList = ({
                   <td className={domainsStyles.td_1_Domains}>
                     <Link
                       style={{ color: '#29abe2' }}
-                      to={routerLinks.getServiceLink(nameIngress, srvName)}
+                      to={routerLinks.getServiceLink(
+                        match.params.idName,
+                        srvName
+                      )}
                     >
                       {srvName}
                     </Link>
