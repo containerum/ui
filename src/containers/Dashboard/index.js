@@ -397,6 +397,10 @@ export class Dashboard extends PureComponent<Props> {
     const currentNS = getNamespacesReducer.data.find(
       ns => ns.access !== 'read'
     );
+    let linkTo = false;
+    if (this.props.getProfileReducer.data.role === 'admin') {
+      linkTo = true;
+    }
     return (
       <DashboardBlockTourAndNews
         resources={getResourcesReducer.data}
@@ -407,10 +411,11 @@ export class Dashboard extends PureComponent<Props> {
         linkToManageTeam={
           getNamespacesReducer.data.length
             ? getNamespacesReducer.data.find(
-                ns => (ns.access === 'owner' ? ns.access : '')
+                ns => (ns.access === 'admin' ? ns.access : '')
               )
             : ''
         }
+        linkToManageTeamAdmin={linkTo}
       />
     );
   };

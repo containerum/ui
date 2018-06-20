@@ -16,7 +16,8 @@ type Props = {
   resources: Object,
   balance: string,
   linkToDeployment: string,
-  linkToManageTeam: string
+  linkToManageTeam: string,
+  linkToManageTeamAdmin: boolean
 };
 
 const isOnline = sourceType === 'ONLINE';
@@ -25,7 +26,8 @@ const DashboardBlockTourAndNews = ({
   resources,
   balance,
   linkToDeployment,
-  linkToManageTeam
+  linkToManageTeam,
+  linkToManageTeamAdmin
 }: Props) => (
   <div className="col-md-3 pr-0">
     <div className={blockClassName}>
@@ -127,13 +129,17 @@ const DashboardBlockTourAndNews = ({
             <Link
               to={
                 linkToManageTeam
-                  ? routerLinks.getMembershipLink(linkToManageTeam.label)
-                  : '/'
+                  ? routerLinks.getMembershipLink(linkToManageTeam.id)
+                  : linkToManageTeamAdmin
+                    ? routerLinks.getGlobalMembership
+                    : '/'
               }
               style={
                 linkToManageTeam
                   ? {}
-                  : { color: '#cecece', cursor: 'not-allowed' }
+                  : linkToManageTeamAdmin
+                    ? {}
+                    : { color: '#cecece', cursor: 'not-allowed' }
               }
             >
               Share Project with your team
