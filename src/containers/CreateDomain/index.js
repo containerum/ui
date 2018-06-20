@@ -148,6 +148,15 @@ export class CreateDomain extends PureComponent<Props> {
     fetchCreateDomainIfNeeded(match.params.idName, this.state);
   };
   renderCreateDomain = () => {
+    if (this.state.servicesList.length > 0 && !this.state.currentService) {
+      const currentService = this.state.servicesList[0];
+      this.setState({
+        ...this.state,
+        currentService,
+        currentPort: currentService.ports[0],
+        portsList: currentService.ports
+      });
+    }
     const { getServicesReducer, match } = this.props;
     if (
       !getServicesReducer.readyStatus ||
@@ -185,6 +194,7 @@ export class CreateDomain extends PureComponent<Props> {
       domainPath,
       isEnabledSSL
     } = this.state;
+
     return (
       <CreateDomainCard
         currentService={currentService}
