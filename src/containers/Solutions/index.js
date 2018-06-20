@@ -42,6 +42,8 @@ import SolutionsList from '../../components/SolutionsList';
 import RunSolutionModals from '../../components/CustomerModal/RunSolutionModals/RunSolutionModals';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 import { GET_ENVS_SOLUTION_SUCCESS } from '../../constants/solutionConstants/getEnvsSolution';
+import { GET_DEPLOYMENTS_RUNNING_SOLUTION_SUCCESS } from '../../constants/solutionsConstants/getDeploymentsRunningSolution';
+import { GET_SERVICES_RUNNING_SOLUTION_SUCCESS } from '../../constants/solutionsConstants/getServicesRunningSolution';
 
 type Props = {
   history: Object,
@@ -51,9 +53,19 @@ type Props = {
   fetchGetEnvsSolutionIfNeeded: Object,
   getProfileReducer: Object,
   getNamespacesReducer: NamespacesType,
+  getServicesRunningSolutionReducer: Object,
+  getDeploymentsRunningSolutionReducer: Object,
   fetchGetSolutionsIfNeeded: () => void,
   fetchRunSolutionIfNeeded: (idName: string, data: Object) => void,
-  fetchGetNamespacesIfNeeded: () => void
+  fetchGetNamespacesIfNeeded: () => void,
+  fetchGetServicesRunningSolutionIfNeeded: (
+    idName: string,
+    idSol: string
+  ) => void,
+  fetchGetDeploymentsRunningSolutionIfNeeded: (
+    idName: string,
+    idSol: string
+  ) => void
 };
 
 export class Solutions extends PureComponent<Props> {
@@ -130,16 +142,6 @@ export class Solutions extends PureComponent<Props> {
     if (
       this.props.runSolutionReducer.readyStatus !==
         nextProps.runSolutionReducer.readyStatus &&
-      nextProps.runSolutionReducer.readyStatus === RUN_SOLUTION_SUCCESS
-    ) {
-      this.setState({
-        ...this.state,
-        currentView: 'third-success'
-      });
-    }
-    if (
-      this.props.runSolutionReducer.readyStatus !==
-        nextProps.runSolutionReducer.readyStatus &&
       nextProps.runSolutionReducer.readyStatus === RUN_SOLUTION_FAILURE
     ) {
       this.setState({
@@ -156,6 +158,36 @@ export class Solutions extends PureComponent<Props> {
     ) {
       const getHtml = document.querySelector('html');
       getHtml.style.overflow = 'auto';
+    }
+    if (
+      this.props.runSolutionReducer.readyStatus !==
+        nextProps.runSolutionReducer.readyStatus &&
+      nextProps.runSolutionReducer.readyStatus === RUN_SOLUTION_SUCCESS
+    ) {
+      const { currentNamespace, solutionName } = this.state;
+      this.props.fetchGetServicesRunningSolutionIfNeeded(
+        currentNamespace.id,
+        solutionName
+      );
+      this.props.fetchGetDeploymentsRunningSolutionIfNeeded(
+        currentNamespace.id,
+        solutionName
+      );
+    }
+    if (
+      (this.props.getDeploymentsRunningSolutionReducer.readyStatus !==
+        nextProps.getDeploymentsRunningSolutionReducer.readyStatus &&
+        nextProps.getDeploymentsRunningSolutionReducer.readyStatus ===
+          GET_DEPLOYMENTS_RUNNING_SOLUTION_SUCCESS) ||
+      (this.props.getServicesRunningSolutionReducer.readyStatus !==
+        nextProps.getServicesRunningSolutionReducer.readyStatus &&
+        nextProps.getServicesRunningSolutionReducer.readyStatus ===
+          GET_SERVICES_RUNNING_SOLUTION_SUCCESS)
+    ) {
+      this.setState({
+        ...this.state,
+        currentView: 'third-success'
+      });
     }
   }
   handleClickRunSolution = solutionTemplate => {
@@ -217,7 +249,7 @@ export class Solutions extends PureComponent<Props> {
       displayEnvsSolution,
       solutionName
     } = this.state;
-    if (currentSolution && currentNamespace) {
+    if (currentSolution && currentNamespace && solutionName) {
       if (type === 'next') {
         this.props.fetchGetEnvsSolutionIfNeeded(currentSolution.name);
       } else if (type === 'deploy') {
@@ -246,7 +278,15 @@ export class Solutions extends PureComponent<Props> {
   };
 
   renderSolutionsList = () => {
-    const { getSolutionsReducer, getNamespacesReducer, history } = this.props;
+    const {
+      getSolutionsReducer,
+      getNamespacesReducer,
+      getDeploymentsRunningSolutionReducer,
+      getServicesRunningSolutionReducer,
+      runSolutionReducer,
+      getEnvsSolutionReducer,
+      history
+    } = this.props;
     if (
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
@@ -305,6 +345,13 @@ export class Solutions extends PureComponent<Props> {
                 statusOfRunSolution={statusOfRunSolution}
                 getEnvsData={displayEnvsSolution}
                 solutionName={solutionName}
+                history={history}
+                getEnvsSolutionReducer={getEnvsSolutionReducer}
+                runSolutionReducer={runSolutionReducer}
+                deploymentsRunningSolution={
+                  getDeploymentsRunningSolutionReducer.data
+                }
+                servicesRunningSolution={getServicesRunningSolutionReducer.data}
                 handleOpenCloseModal={this.handleOpenCloseModal}
                 openFirstModal={this.openFirstModal}
                 handleOpenPreviousModal={this.handleOpenPreviousModal}
@@ -349,13 +396,17 @@ const connector: Connector<{}, Props> = connect(
     runSolutionReducer,
     getEnvsSolutionReducer,
     getNamespacesReducer,
-    getProfileReducer
+    getProfileReducer,
+    getServicesRunningSolutionReducer,
+    getDeploymentsRunningSolutionReducer
   }: ReduxState) => ({
     getSolutionsReducer,
     runSolutionReducer,
     getEnvsSolutionReducer,
     getNamespacesReducer,
-    getProfileReducer
+    getProfileReducer,
+    getServicesRunningSolutionReducer,
+    getDeploymentsRunningSolutionReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSolutionsIfNeeded: () =>
@@ -367,15 +418,20 @@ const connector: Connector<{}, Props> = connect(
     fetchGetNamespacesIfNeeded: (role: string) =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
 
-    fetchGetDeploymentsRunningSolutionIfNeeded: (idSol: string) =>
+    fetchGetDeploymentsRunningSolutionIfNeeded: (
+      idName: string,
+      idSol: string
+    ) =>
       dispatch(
         actionGetDeploymentsRunningSolution.fetchGetDeploymentsRunningSolutionIfNeeded(
+          idName,
           idSol
         )
       ),
-    fetchGetServicesRunningSolutionIfNeeded: (idSol: string) =>
+    fetchGetServicesRunningSolutionIfNeeded: (idName: string, idSol: string) =>
       dispatch(
         actionGetServicesRunningSolution.fetchGetServicesRunningSolutionIfNeeded(
+          idName,
           idSol
         )
       )

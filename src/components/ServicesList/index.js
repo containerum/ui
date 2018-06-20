@@ -89,43 +89,45 @@ const ServicesList = ({
                     onKeyPress={e => handleClose(e)}
                     role="presentation"
                   >
-                    {accessToNamespace !== 'read' && (
-                      <i
-                        className={`${globalStyles.contentBlockTableMore} ${
-                          globalStyles.dropdownToggle
-                        }
+                    {handleDeleteService &&
+                      accessToNamespace !== 'read' && (
+                        <i
+                          className={`${globalStyles.contentBlockTableMore} ${
+                            globalStyles.dropdownToggle
+                          }
                           ${globalStyles.ellipsisRoleMore} ion-more `}
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      />
-                    )}
-                    {accessToNamespace !== 'read' && (
-                      <ul
-                        className={` dropdown-menu dropdown-menu-right ${
-                          globalStyles.dropdownMenu
-                        }`}
-                        role="menu"
-                      >
-                        <NavLink
-                          activeClassName="active"
-                          to={routerLinks.resizeServiceLink(idName, name)}
-                          className={`dropdown-item  ${
-                            globalStyles.dropdownItem
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        />
+                      )}
+                    {handleDeleteService &&
+                      accessToNamespace !== 'read' && (
+                        <ul
+                          className={` dropdown-menu dropdown-menu-right ${
+                            globalStyles.dropdownMenu
                           }`}
+                          role="menu"
                         >
-                          Update
-                        </NavLink>
-                        <button
-                          className={`dropdown-item text-danger ${
-                            globalStyles.dropdownItem
-                          }`}
-                          onClick={() => handleDeleteService(name)}
-                        >
-                          Delete
-                        </button>
-                      </ul>
-                    )}
+                          <NavLink
+                            activeClassName="active"
+                            to={routerLinks.resizeServiceLink(idName, name)}
+                            className={`dropdown-item  ${
+                              globalStyles.dropdownItem
+                            }`}
+                          >
+                            Update
+                          </NavLink>
+                          <button
+                            className={`dropdown-item text-danger ${
+                              globalStyles.dropdownItem
+                            }`}
+                            onClick={() => handleDeleteService(name)}
+                          >
+                            Delete
+                          </button>
+                        </ul>
+                      )}
                   </td>
                 </tr>
               );

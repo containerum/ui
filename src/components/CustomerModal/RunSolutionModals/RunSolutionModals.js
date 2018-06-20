@@ -9,9 +9,13 @@ import { routerLinks } from '../../../config';
 import modalStyles from '../index.scss';
 
 import Environments from './Environments';
+import LoadButton from '../../LoadButton';
 import InputControl from '../../InputControl';
+import DeploymentsList from '../../DeploymentsList';
+import ServicesList from '../../ServicesList';
 
 import globalStyles from '../../../theme/global.scss';
+import buttonsStyles from '../../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
 const selectClassName = globalClass('formControl', 'selectCustomModal');
@@ -44,7 +48,12 @@ type Props = {
   solutionName: string,
   currentSolution: Object,
   getEnvsData: Object,
+  history: Object,
+  runSolutionReducer: Object,
+  getEnvsSolutionReducer: Object,
   isOpenedSelectNamespace: Object,
+  deploymentsRunningSolution: Array<Object>,
+  servicesRunningSolution: Array<Object>,
   displayedNamespaces: Array<Object>,
   handleSubmitCreatingEssence: (e: Object) => void,
   handleSelectNamespace: (e: Object) => void,
@@ -61,6 +70,11 @@ const RunSolutionModals = ({
   solutionName,
   currentSolution,
   getEnvsData,
+  history,
+  runSolutionReducer,
+  deploymentsRunningSolution,
+  getEnvsSolutionReducer,
+  servicesRunningSolution,
   isOpenedSelectNamespace,
   handleSubmitCreatingEssence,
   handleSelectNamespace,
@@ -76,6 +90,19 @@ const RunSolutionModals = ({
     barFill = '50%';
   } else if (currentView.indexOf('third') + 1) {
     barFill = '100%';
+  }
+
+  let openApplication = currentSolution.url;
+  if (servicesRunningSolution.length) {
+    const firstServiceWithDomain = servicesRunningSolution.find(
+      service => (service ? service.domain : null)
+    );
+    if (firstServiceWithDomain) {
+      const { ports } = firstServiceWithDomain;
+      openApplication = `http://${firstServiceWithDomain.domain}:${
+        ports[0].port
+      }`;
+    }
   }
   return (
     <Modal
@@ -165,27 +192,50 @@ const RunSolutionModals = ({
                 </div>
               </div>
             </div>
-            {currentView === 'first' && (
-              <button
-                onClick={e => handleSubmitCreatingEssence(e, 'next')}
-                style={{ padding: '4px 27px' }}
-                className="btn blue-btn modal-body-next-btn"
-                disabled={!displayedNamespaces.length}
-                type="submit"
-              >
-                Next
-              </button>
-            )}
+            {currentView === 'first' &&
+              displayedNamespaces.length && (
+                <div onClick={e => handleSubmitCreatingEssence(e, 'next')}>
+                  <LoadButton
+                    style={
+                      getEnvsSolutionReducer.isFetching
+                        ? {
+                            padding: '4px 41px',
+                            width: 117.08
+                          }
+                        : {
+                            padding: '4px 41px'
+                          }
+                    }
+                    type="submit"
+                    buttonText="Next"
+                    isFetching={getEnvsSolutionReducer.isFetching}
+                    disabled={!solutionName}
+                    mini="miniFont"
+                    baseClassButton="btn blue-btn modal-body-next-btn"
+                  />
+                </div>
+              )}
             {currentView === 'second' && (
-              <button
-                onClick={e => handleSubmitCreatingEssence(e, 'deploy')}
-                style={{ padding: '4px 27px' }}
-                className="btn blue-btn modal-body-next-btn"
-                disabled={!displayedNamespaces.length}
-                type="submit"
-              >
-                Deploy
-              </button>
+              <div onClick={e => handleSubmitCreatingEssence(e, 'deploy')}>
+                <LoadButton
+                  style={
+                    runSolutionReducer.isFetching
+                      ? {
+                          padding: '4px 41px',
+                          width: 134.22
+                        }
+                      : {
+                          padding: '4px 41px'
+                        }
+                  }
+                  type="submit"
+                  buttonText="Deploy"
+                  isFetching={runSolutionReducer.isFetching}
+                  disabled={!displayedNamespaces.length}
+                  mini="miniFont"
+                  baseClassButton="btn blue-btn modal-body-next-btn"
+                />
+              </div>
             )}
           </div>
 
@@ -282,6 +332,20 @@ const RunSolutionModals = ({
                   envs={getEnvsData}
                   handleChangeInputEnvironment={handleChangeInputEnvironment}
                 />
+                <div
+                  onClick={e => handleSubmitCreatingEssence(e, 'deploy')}
+                  style={{ marginTop: 30 }}
+                >
+                  <LoadButton
+                    type="submit"
+                    buttonText="Deploy"
+                    isFetching={runSolutionReducer.isFetching}
+                    disabled={!displayedNamespaces.length}
+                    baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
+                      globalStyles.marginBottom50
+                    } ${globalStyles.marginTop10}`}
+                  />
+                </div>
               </div>
             </div>
           )}
@@ -289,79 +353,56 @@ const RunSolutionModals = ({
             <div className="modal-main-content-success-page">
               <div className="status-message-success">success</div>
               <div className="message-text">
-                <a href="##">Continue to the project overview</a> to … open
-                source Docker, which developed a method to give containers
-                better portability -- allowing them to be moved among any system
-                that shares the host OS type without requiring code changes.
-                With Docker containers, there are no guest OS environment.
+                {currentSolution.name} was successfully run
               </div>
-              <div className="table-title">Deployments</div>
-              <table className="table modal-table" width="1170">
-                <thead>
-                  <tr>
-                    <td className="" />
-                    <td className="w-30">Name</td>
-                    <td className="w-25">Port</td>
-                    <td className="w-50">TCP/UDP</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="">
-                    <td className="">
-                      <img alt="img" src="img/cube-3.png" />
-                    </td>
-                    <td className="">Redis-django-123456789-7fns</td>
-                    <td className="">80:500</td>
-                    <td className="">TCP</td>
-                  </tr>
-                  <tr className="">
-                    <td className="border-bot">
-                      <img alt="img" src="img/cube-3.png" />
-                    </td>
-                    <td className="border-bot">Redis-django-123456789-7fns</td>
-                    <td className="border-bot">13456:14600</td>
-                    <td className="border-bot">UDP</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <div className="table-title">Services</div>
-              <table className="table modal-table" width="1170">
-                <thead>
-                  <tr>
-                    <td className="" />
-                    <td className="w-30">Name</td>
-                    <td className="w-25">Port</td>
-                    <td className="w-50">TCP/UDP</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="">
-                    <td className="">
-                      <img alt="img" src="img/cube-3.png" />
-                    </td>
-                    <td className="">Redis-django-123456789-7fns</td>
-                    <td className="">80:500</td>
-                    <td className="">TCP</td>
-                  </tr>
-                  <tr className="">
-                    <td className="border-bot">
-                      <img alt="img" src="img/cube-3.png" />
-                    </td>
-                    <td className="border-bot">Redis-django-123456789-7fns</td>
-                    <td className="border-bot">13456:14600</td>
-                    <td className="border-bot">UDP</td>
-                  </tr>
-                </tbody>
-              </table>
-
+              {deploymentsRunningSolution.length ? (
+                <div>
+                  <div className="table-title">Deployments</div>
+                  <div style={{ marginBottom: 40 }}>
+                    <DeploymentsList
+                      data={deploymentsRunningSolution}
+                      dataNamespace={{}}
+                      history={history}
+                      idName={currentNamespace.id}
+                    />
+                  </div>
+                </div>
+              ) : (
+                ''
+              )}
+              {servicesRunningSolution.length ? (
+                <div>
+                  <div className="table-title">Services</div>
+                  <div style={{ marginBottom: 40 }}>
+                    <ServicesList
+                      data={servicesRunningSolution}
+                      dataNamespace={{}}
+                      history={history}
+                      idName={currentNamespace.id}
+                    />
+                  </div>
+                </div>
+              ) : (
+                ''
+              )}
               <div className="error-page-btn-wrap">
-                <button className="white-btn white-btn-success">
-                  APPLICATION PAGE
-                </button>
-                <button className="blue-btn white-btn-success">
-                  open application
-                </button>
+                <Link
+                  onClick={openFirstModal}
+                  to={routerLinks.getRunningSolutionLink(
+                    currentNamespace.id,
+                    solutionName
+                  )}
+                  className="white-btn white-btn-success"
+                >
+                  Application page
+                </Link>
+                <a
+                  href={openApplication}
+                  target="_blank"
+                  className="blue-btn white-btn-success"
+                >
+                  Open application
+                </a>
               </div>
             </div>
           )}
@@ -369,11 +410,8 @@ const RunSolutionModals = ({
             <div className="modal-main-content-error-page">
               <div className="status-message-error">error</div>
               <div className="message-text">
-                Containerization gained prominence with the open source Docker,
-                which developed a method to give containers better portability
-                -- allowing them to be moved among any system that shares the
-                host OS type without requiring code changes. With Docker
-                containers, there are no guest OS environment.
+                {runSolutionReducer.err}
+                <br />
               </div>
 
               <div className="error-page-btn-wrap">

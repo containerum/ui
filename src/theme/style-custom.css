@@ -2609,6 +2609,9 @@ button:focus{
   margin: 0 25px;
   text-transform: uppercase;
 }
+.white-btn-success:hover{
+  color: #000;
+}
 .deploy-btn,
 .prev-btn{
   display: none;
