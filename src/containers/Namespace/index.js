@@ -32,7 +32,7 @@ import type {
   Namespace as NamespaceType,
   ReduxState
 } from '../../types';
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import NamespaceInfo from '../../components/NamespaceInfo';
 import Notification from '../Notification';
 import NavigationHeaderItem from '../NavigationHeader';
@@ -49,10 +49,10 @@ import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
-
 const containerNoBack = globalClass('container', 'containerNoBackground');
-
 const containerClassName = globalClass('contentBlockContainer', 'container');
+
+const isOnline = sourceType === 'ONLINE';
 
 type Props = {
   getNamespacesReducer: Object,
@@ -312,18 +312,24 @@ export class Namespace extends PureComponent<Props> {
                         ConfigMaps
                       </NavLink>
                     </li>
-                    <li
-                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
-                    >
-                      <NavLink
-                        activeClassName={globalStyles.contentBlockMenuLiActive}
-                        to={routerLinks.getRunningSolutionsLink(
-                          match.params.idName
-                        )}
+                    {isOnline && (
+                      <li
+                        className={`${
+                          globalStyles.contentBlockMenuLi
+                        } nav-item`}
                       >
-                        Solutions
-                      </NavLink>
-                    </li>
+                        <NavLink
+                          activeClassName={
+                            globalStyles.contentBlockMenuLiActive
+                          }
+                          to={routerLinks.getRunningSolutionsLink(
+                            match.params.idName
+                          )}
+                        >
+                          Solutions
+                        </NavLink>
+                      </li>
+                    )}
                     {/* <li */}
                     {/* className={`${globalStyles.contentBlockMenuLi} nav-item`} */}
                     {/* > */}

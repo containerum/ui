@@ -114,7 +114,7 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  {
+  isOnline && {
     path: routerLinks.getRunningSolutions,
     exact: true,
     component: RunningSolutionsPage,
@@ -125,7 +125,7 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  {
+  isOnline && {
     path: routerLinks.getRunningSolution,
     exact: true,
     component: RunningSolutionPage,
