@@ -250,11 +250,11 @@ const RunSolutionModals = ({
                   modalStyles.runSolutionModalModalList
                 }`}
               >
-                <li>
-                  <a href="##" className="active">
-                    Profile
-                  </a>
-                </li>
+                {/* <li> */}
+                {/* <a href="##" className="active"> */}
+                {/* Profile */}
+                {/* </a> */}
+                {/* </li> */}
               </ul>
               <div className="main-content">
                 <div className="main-content-title">Projects</div>
@@ -320,11 +320,11 @@ const RunSolutionModals = ({
                   modalStyles.runSolutionModalModalList
                 }`}
               >
-                <li>
-                  <a href="##" className="active">
-                    Profile
-                  </a>
-                </li>
+                {/* <li> */}
+                {/* <a href="##" className="active"> */}
+                {/* Profile */}
+                {/* </a> */}
+                {/* </li> */}
               </ul>
               <div className="main-content">
                 <div className="main-content-title">Environments</div>
