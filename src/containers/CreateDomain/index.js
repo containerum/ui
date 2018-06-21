@@ -217,7 +217,6 @@ export class CreateDomain extends PureComponent<Props> {
 
   render() {
     const { match, createDomainReducer } = this.props;
-    // console.log(this.state);
     return (
       <div>
         <Helmet title={`Create Domain in ${match.params.idSrv}`} />

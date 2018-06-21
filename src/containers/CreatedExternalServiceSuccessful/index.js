@@ -34,16 +34,28 @@ const containerClassName = globalClass(
 );
 
 type Props = {
+  history: Object,
   match: Object,
   getServiceReducer: Object,
+  createExternalServiceReducer: Object,
   fetchGetServiceIfNeeded: (idName: string, idSrv: string) => void
 };
 
 // Export this for unit testing more easily
 export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
   componentDidMount() {
-    const { fetchGetServiceIfNeeded, match } = this.props;
+    const { fetchGetServiceIfNeeded, match, history } = this.props;
     fetchGetServiceIfNeeded(match.params.idName, match.params.idSrv);
+    if (
+      this.props.createExternalServiceReducer.data.externalSrvObject[0]
+        .extServiceType === 'UDP'
+    ) {
+      history.push(
+        routerLinks.getServicesLink(
+          this.props.createExternalServiceReducer.idName
+        )
+      );
+    }
   }
 
   renderCreateDomain = () => {
@@ -178,8 +190,9 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getServiceReducer }: ReduxState) => ({
-    getServiceReducer
+  ({ getServiceReducer, createExternalServiceReducer }: ReduxState) => ({
+    getServiceReducer,
+    createExternalServiceReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetServiceIfNeeded: (idName: string, idSrv: string) =>
