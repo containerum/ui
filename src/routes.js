@@ -324,7 +324,7 @@ export default [
   },
   isOnline && {
     path: routerLinks.solutions,
-    exact: true,
+    // exact: true,
     component: SolutionsPage,
     include: true,
     loadData: (dispatch: Dispatch) =>

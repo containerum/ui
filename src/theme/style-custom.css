@@ -1329,6 +1329,23 @@ body .tooltip > .tooltip-inner {
 .solution-container-info-text,
 .solution-container-info-title {
   font-weight: 300;
+  max-width: 205px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.solution-container-delete {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.solution-container-delete i {
+  padding-right: 0 !important;
+}
+.solution-container:hover .solution-container-delete i {
+  color: #29abe2;
 }
 
 .solution-container-status {
@@ -2609,8 +2626,8 @@ button:focus{
   margin: 0 25px;
   text-transform: uppercase;
 }
-.white-btn-success:hover{
-  color: #000;
+a.blue-btn.white-btn-error:hover{
+  color: #fff;
 }
 .deploy-btn,
 .prev-btn{

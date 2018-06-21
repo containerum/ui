@@ -8,12 +8,11 @@ import { routerLinks } from '../../config';
 
 import solutionStyles from '../../containers/Solutions/index.scss';
 import globalStyles from '../../theme/global.scss';
-import buttonsStyles from '../../theme/buttons.scss';
 
 type Props = {
   data: Array<Object>,
-  history: Object
-  // handleClickRunSolution: (name: string) => void
+  history: Object,
+  handleClickRunSolution: (name: string) => void
 };
 
 const handleClose = e => {
@@ -34,9 +33,9 @@ const solutionImg = solutionClassName(
 
 const SolutionsDashboardList = ({
   data,
-  history
-}: // handleClickRunSolution
-Props) => (
+  history,
+  handleClickRunSolution
+}: Props) => (
   <div
     className={`${solutionStyles.solutionContainerWrapper} ${
       globalStyles.marginTop30
@@ -60,25 +59,13 @@ Props) => (
           </div>
           <div className={solutionStyles.preSolutionContainerInfo}>{name}</div>
           <div onClick={e => handleClose(e)}>
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${
-                buttonsStyles.buttonUIDeployDashboard
-              } btn btn-outline-primary`}
+            <div
+              onClick={() => handleClickRunSolution(name)}
+              className="button button_blue btn btn-outline-primary"
             >
               Deploy
-            </a>
+            </div>
           </div>
-          {/* <div onClick={e => handleClose(e)}> */}
-          {/* <div */}
-          {/* onClick={() => handleClickRunSolution(name)} */}
-          {/* className="button button_blue btn btn-outline-primary" */}
-          {/* > */}
-          {/* Deploy */}
-          {/* </div> */}
-          {/* </div> */}
         </div>
       );
     })}

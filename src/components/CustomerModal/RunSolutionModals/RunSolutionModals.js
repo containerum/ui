@@ -392,14 +392,14 @@ const RunSolutionModals = ({
                     currentNamespace.id,
                     solutionName
                   )}
-                  className="white-btn white-btn-success"
+                  className="white-btn white-btn-error"
                 >
                   Application page
                 </Link>
                 <a
                   href={openApplication}
                   target="_blank"
-                  className="blue-btn white-btn-success"
+                  className="blue-btn white-btn-error"
                 >
                   Open application
                 </a>

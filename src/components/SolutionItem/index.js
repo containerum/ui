@@ -8,12 +8,11 @@ import github from '../../images/github.svg';
 
 import solutionPageStyles from '../../containers/Solution/index.scss';
 import dashboardStyle from '../../containers/Dashboard/index.scss';
-import buttonsStyles from '../../theme/buttons.scss';
 
 type Props = {
   solution: Array<Object>,
-  text: string
-  // handleClickRunSolution: (name: string) => void
+  text: string,
+  handleClickRunSolution: (name: string) => void
 };
 
 const solutionClassName = className.bind(solutionPageStyles);
@@ -23,11 +22,7 @@ const navLinksClass = solutionClassName(
   'solutionNavLinkActive'
 );
 
-const SolutionItem = ({
-  solution,
-  text
-}: // handleClickRunSolution
-Props) => {
+const SolutionItem = ({ solution, text, handleClickRunSolution }: Props) => {
   const { name, url, limits } = solution;
   const { cpu, ram } = limits;
   const imageHref = `${url}/master/${name}.png`.replace(
@@ -53,20 +48,12 @@ Props) => {
         <div className={solutionPageStyles.solutionPageBlockImg}>
           <img src={imageHref} alt={name} />
         </div>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
+        <button
+          className="left-side-btn"
+          onClick={() => handleClickRunSolution(name)}
         >
           Deploy
-        </a>
-        {/* <button */}
-        {/* className="left-side-btn" */}
-        {/* onClick={() => handleClickRunSolution(name)} */}
-        {/* > */}
-        {/* Deploy */}
-        {/* </button> */}
+        </button>
         {/* <div className="left-side-update-date">Last update: 12/12/17</div> */}
         <div className={solutionPageStyles.solutionPageResourses}>
           <div className={solutionPageStyles.solutionPageResoursesTitle}>

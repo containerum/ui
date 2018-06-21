@@ -336,22 +336,6 @@ export class Namespace extends PureComponent<Props> {
                     {/* </li> */}
                   </ul>
                 </div>
-                {isSolutionsPathname && isReadAccess ? (
-                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
-                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
-                      <NavLink
-                        to={routerLinks.createSolutionLink(match.params.idName)}
-                        className={`${
-                          buttonsStyles.buttonUICreate
-                        } btn btn-outline-primary`}
-                      >
-                        Create
-                      </NavLink>
-                    </div>
-                  </div>
-                ) : (
-                  ''
-                )}
                 {isServicesPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
@@ -436,14 +420,11 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {history.location.pathname.indexOf('/ingresses') + 1 &&
-                isReadAccess ? (
+                {isSolutionsPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
-                        to={routerLinks.createCustomDomainLink(
-                          match.params.idName
-                        )}
+                        to={routerLinks.solutions}
                         className={`${
                           buttonsStyles.buttonUICreate
                         } btn btn-outline-primary`}

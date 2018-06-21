@@ -8,12 +8,15 @@ import className from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetRunningSolutions from '../../actions/solutionsActions/getRunningSolutions';
+import * as actionDeleteRunningSolutions from '../../actions/solutionActions/deleteRunningSolution';
 import {
   GET_RUNNING_SOLUTIONS_INVALID,
   GET_RUNNING_SOLUTIONS_REQUESTING,
   GET_RUNNING_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getRunningSolutions';
 import RunningSolutionsList from '../../components/RunningSolutionsList';
+import DeleteModal from '../../components/CustomerModal/DeleteModal';
+import Notification from '../Notification';
 // import Notification from '../Notification';
 // import DeleteModal from '../../components/CustomerModal/DeleteModal';
 
@@ -23,6 +26,7 @@ import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING
 } from '../../constants/namespacesConstants/getNamespaces';
+import { DELETE_RUNNING_SOLUTION_REQUESTING } from '../../constants/solutionConstants/deleteRunningSolution';
 
 const globalClass = className.bind(globalStyles);
 
@@ -34,22 +38,61 @@ const contentClassName = globalClass(
 type Props = {
   getRunningSolutionsReducer: Object,
   getNamespacesReducer: Object,
+  deleteRunningSolutionReducer: Object,
   fetchGetRunningSolutionsIfNeeded: (idName: string) => void,
+  fetchDeleteRunningSolutionIfNeeded: (idName: string, idSol: string) => void,
   history: Object,
   match: Object
 };
 
-// Export this for unit testing more easily
 export class RunningSolutions extends PureComponent<Props> {
+  constructor() {
+    super();
+    this.state = {
+      inputName: '',
+      currentSolutionName: '',
+      isOpenedSol: false,
+      displayedDeployments: [],
+      displayedService: []
+    };
+  }
   componentDidMount() {
     const { fetchGetRunningSolutionsIfNeeded, match } = this.props;
     fetchGetRunningSolutionsIfNeeded(match.params.idName);
   }
+  onHandleDeleteSolution = () => {
+    const { match, fetchDeleteRunningSolutionIfNeeded } = this.props;
+    fetchDeleteRunningSolutionIfNeeded(
+      match.params.idName,
+      this.state.currentSolutionName
+    );
+  };
+  handleDeleteSolution = currentSolutionName => {
+    this.setState({
+      ...this.state,
+      currentSolutionName,
+      isOpenedSol: true
+    });
+  };
+  handleInputName = inputName => {
+    this.setState({
+      ...this.state,
+      inputName
+    });
+  };
+  handleOpenCloseSolutionModal = () => {
+    this.setState({
+      ...this.state,
+      isOpenedSol: !this.state.isOpenedSol,
+      inputName: ''
+    });
+  };
 
   renderRunningSolutionsList = () => {
     const {
       getRunningSolutionsReducer,
       getNamespacesReducer,
+      deleteRunningSolutionReducer,
       match
     } = this.props;
 
@@ -61,7 +104,9 @@ export class RunningSolutions extends PureComponent<Props> {
       getRunningSolutionsReducer.readyStatus ===
         GET_RUNNING_SOLUTIONS_INVALID ||
       getRunningSolutionsReducer.readyStatus ===
-        GET_RUNNING_SOLUTIONS_REQUESTING
+        GET_RUNNING_SOLUTIONS_REQUESTING ||
+      deleteRunningSolutionReducer.readyStatus ===
+        DELETE_RUNNING_SOLUTION_REQUESTING
     ) {
       return (
         <div
@@ -87,13 +132,36 @@ export class RunningSolutions extends PureComponent<Props> {
         data={getRunningSolutionsReducer.data}
         history={this.props.history}
         idName={match.params.idName}
+        handleDeleteSolution={this.handleDeleteSolution}
       />
     );
   };
 
   render() {
+    const {
+      status: statusSol,
+      idSol: deleteSol,
+      err: errSol
+    } = this.props.deleteRunningSolutionReducer;
+    const { inputName, isOpenedSol, currentSolutionName } = this.state;
     return (
       <div>
+        <Notification
+          status={statusSol}
+          name={deleteSol}
+          errorMessage={errSol}
+        />
+        <DeleteModal
+          type="Solution"
+          inputName={inputName}
+          name={currentSolutionName}
+          typeName={currentSolutionName}
+          isOpened={isOpenedSol}
+          minLengthName={1}
+          handleInputName={this.handleInputName}
+          handleOpenCloseModal={this.handleOpenCloseSolutionModal}
+          onHandleDelete={this.onHandleDeleteSolution}
+        />
         <div className={contentClassName}>
           <div className="tab-content">
             <div className="tab-pane active">
@@ -120,6 +188,13 @@ const connector: Connector<{}, Props> = connect(
     fetchGetRunningSolutionsIfNeeded: (idName: string) =>
       dispatch(
         actionGetRunningSolutions.fetchGetRunningSolutionsIfNeeded(idName)
+      ),
+    fetchDeleteRunningSolutionIfNeeded: (idName: string, idSol: string) =>
+      dispatch(
+        actionDeleteRunningSolutions.fetchDeleteRunningSolutionIfNeeded(
+          idName,
+          idSol
+        )
       )
   })
 );
