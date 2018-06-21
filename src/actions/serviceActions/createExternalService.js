@@ -21,12 +21,13 @@ const createExternalServiceRequest = () => ({
   isFetching: true
 });
 
-const createExternalServiceSuccess = (data, status, idSrv) => ({
+const createExternalServiceSuccess = (data, status, idSrv, idName) => ({
   type: CREATE_EXTERNAL_SERVICE_SUCCESS,
   isFetching: false,
   data,
   status,
-  idSrv
+  idSrv,
+  idName
 });
 
 const createExternalServiceFailure = (err, status, idSrv) => ({
@@ -49,7 +50,6 @@ export const fetchCreateExternalService = (
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
-
   dispatch(createExternalServiceRequest());
 
   let idSrv = idName;
@@ -83,7 +83,7 @@ export const fetchCreateExternalService = (
       idSrv = `External service ${dataSrv.externalSrvNameValue} for ${
         dataSrv.currentDeployment
       }`;
-      dispatch(createExternalServiceSuccess(data, status, idSrv));
+      dispatch(createExternalServiceSuccess(dataSrv, status, idSrv, idName));
       break;
     }
     case 400: {
