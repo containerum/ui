@@ -41,7 +41,11 @@ type Props = {
   idDep: string,
   handleDeletePod: (idPod: string) => void,
   handleViewLogs: () => void,
-  isLogViewed: boolean
+  isLogViewed: boolean,
+  // handleCloseFullScreen: ()=> void,
+  closeFullScreen: boolean,
+  match: Object,
+  history: Object
 };
 
 const PodInfo = ({
@@ -53,7 +57,8 @@ const PodInfo = ({
   idDep,
   handleDeletePod,
   handleViewLogs,
-  isLogViewed
+  isLogViewed,
+  closeFullScreen
 }: Props) => {
   const handleClickDeleteDeployment = name => {
     handleDeletePod(name);
@@ -61,6 +66,7 @@ const PodInfo = ({
   const { name, total_cpu: cpu, total_memory: memory, status } = data;
   // const labelsToArray = Object.keys(labels);
   const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
+
   return (
     <div className={`${containerClassName} container`}>
       <div className={globalStyles.contentBlockHeader}>
@@ -150,9 +156,9 @@ const PodInfo = ({
         </div>
         <div>
           <div
-            className={`${globalStyles.contentBlockInfoLogs} collapse ${
-              podStyles.logBlock
-            } pl-6`}
+            className={`${
+              globalStyles.contentBlockInfoLogs
+            } collapse ${closeFullScreen && 'show'} ${podStyles.logBlock} pl-6`}
             id="collapseExample"
           >
             <div className={globalStyles.contentBlockInfoName}>

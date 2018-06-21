@@ -90,8 +90,10 @@ module.exports = {
       `/project/${idName}/createDeployment`,
     getPods: '/project/:idName/deployments/:idDep/pods',
     getPod: '/project/:idName/deployment/:idDep/pods/:idPod',
-    getPodLink: (idName: string, idDep: string, idPod: string) =>
-      `/project/${idName}/deployment/${idDep}/pods/${idPod}`,
+    getPodLink: (idName: string, idDep: string, idPod: string, logs: boolean) =>
+      `/project/${idName}/deployment/${idDep}/pods/${idPod}${
+        logs ? '?logs=view' : ' '
+      }`,
     getPodLogs: '/project/:idName/deployment/:idDep/pod/:idPod/logs',
     getPodLogsLink: (idName: string, idDep: string, idPod: string) =>
       `/project/${idName}/deployment/${idDep}/pod/${idPod}/logs`,
