@@ -15,7 +15,7 @@ module.exports = {
   // webApi: 'https://api.containerum.io:8082',
   // wsApi: 'wss://api.containerum.io:8082',
   appRecaptcha: process.env.RECAPTCHA || null,
-  sourceType: process.env.SOURCE_TYPE || 'ONLINE',
+  sourceType: process.env.SOURCE_TYPE || 'OFFLINE',
   defaultCountry: process.env.COUNTRY || 'US',
   app: {
     htmlAttributes: { lang: 'en' },
@@ -90,8 +90,10 @@ module.exports = {
       `/project/${idName}/createDeployment`,
     getPods: '/project/:idName/deployments/:idDep/pods',
     getPod: '/project/:idName/deployment/:idDep/pods/:idPod',
-    getPodLink: (idName: string, idDep: string, idPod: string) =>
-      `/project/${idName}/deployment/${idDep}/pods/${idPod}`,
+    getPodLink: (idName: string, idDep: string, idPod: string, logs: boolean) =>
+      `/project/${idName}/deployment/${idDep}/pods/${idPod}${
+        logs ? '?logs=view' : ' '
+      }`,
     getPodLogs: '/project/:idName/deployment/:idDep/pod/:idPod/logs',
     getPodLogsLink: (idName: string, idDep: string, idPod: string) =>
       `/project/${idName}/deployment/${idDep}/pod/${idPod}/logs`,

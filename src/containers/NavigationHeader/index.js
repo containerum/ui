@@ -24,6 +24,7 @@ import type {
 
 import headerStyles from '../../containers/Header/index.scss';
 import globalStyles from '../../theme/global.scss';
+import podStyles from '../../containers/Pod/index.scss';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 import { routerLinks } from '../../config';
 
@@ -39,7 +40,8 @@ type Props = {
   idService: ?string,
   IdCreate: ?string,
   IdUpdate: ?string,
-  typeOfUpdateService: ?string
+  typeOfUpdateService: ?string,
+  closeFullScreenLogs: boolean
 };
 
 const globalClass = className.bind(globalStyles);
@@ -189,7 +191,9 @@ export class NavigationHeader extends PureComponent<Props> {
             </li>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <NavLink to={routerLinks.getPodLink(currentNs.id, idDep, idPod)}>
+              <NavLink
+                to={routerLinks.getPodLink(currentNs.id, idDep, idPod, false)}
+              >
                 {idPod}
               </NavLink>
             </li>
@@ -280,7 +284,7 @@ export class NavigationHeader extends PureComponent<Props> {
                     src={downloadLogs}
                     style={{
                       position: 'absolute',
-                      right: 0,
+                      right: '100px',
                       cursor: 'pointer'
                     }}
                     alt="download logs"
@@ -288,6 +292,25 @@ export class NavigationHeader extends PureComponent<Props> {
                     onKeyPress={this.props.handleDownloadLogs}
                     role="presentation"
                   />
+                )}
+                {this.props.closeFullScreenLogs && (
+                  <NavLink
+                    from={routerLinks.getPodLogs}
+                    to={routerLinks.getPodLink(
+                      idName,
+                      idDep,
+                      idPod,
+                      this.props.closeFullScreenLogs
+                    )}
+                    className={podStyles.logCloseButton}
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Close
+                  </NavLink>
                 )}
               </ul>
             </div>
