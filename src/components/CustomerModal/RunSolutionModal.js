@@ -126,7 +126,7 @@ const SelectNamespaceModal = ({
                       <span
                         className={`${modalStyles.modalRedisText} mt-4 mb-4`}
                       >
-                        Please, select the Project for Solution instalation
+                        Please, select the Project for Solution installation
                       </span>
                       <select
                         className={`${selectClassName} form-control custom-select`}

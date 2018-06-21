@@ -14,10 +14,16 @@ const btnClassName = globalClassName('btnBlue', 'btnDepl');
 type Props = {
   data: Object,
   history: Object,
-  idName: string
+  idName: string,
+  handleDeleteSolution: (name: string) => void
 };
 
-const RunningSolutionsList = ({ data, history, idName }: Props) => {
+const RunningSolutionsList = ({
+  data,
+  history,
+  idName,
+  handleDeleteSolution
+}: Props) => {
   const handleClickGetSolution = name => {
     history.push(routerLinks.getRunningSolutionLink(idName, name));
   };
@@ -45,6 +51,9 @@ const RunningSolutionsList = ({ data, history, idName }: Props) => {
                   className="solution-container"
                   key={_.uniqueId()}
                   onClick={() => handleClickGetSolution(name)}
+                  style={{
+                    position: 'relative'
+                  }}
                 >
                   <div className="solution-container-img">
                     <div className="solution-container-img-block">
@@ -65,6 +74,23 @@ const RunningSolutionsList = ({ data, history, idName }: Props) => {
                       branch: <span className="status-active">{branch}</span>
                     </a>
                   </div>
+                  <div
+                    className={`${
+                      globalStyles.membershipItem
+                    } solution-container-delete`}
+                    onClick={handleClose}
+                  >
+                    <i
+                      style={{ verticalAlign: 'middle', paddingRight: 30 }}
+                      className={`${
+                        globalStyles.membershipIcon
+                      } material-icons `}
+                      role="presentation"
+                      onClick={() => handleDeleteSolution(name)}
+                    >
+                      delete
+                    </i>
+                  </div>
                 </div>
               );
             })}
@@ -79,7 +105,7 @@ const RunningSolutionsList = ({ data, history, idName }: Props) => {
               <NavLink
                 className={btnClassName}
                 data-toggle="modal"
-                to={routerLinks.createSolutionLink(idName)}
+                to={routerLinks.solutions}
               >
                 Create Solution
               </NavLink>

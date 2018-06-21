@@ -50,6 +50,7 @@ import DeploymentsList from '../../components/DeploymentsList';
 import Notification from '../Notification';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 // import getSolutionImage from '../../functions/getSolutionImage';
+import NavigationHeaderItem from '../NavigationHeader';
 import globalStyles from '../../theme/global.scss';
 
 const globalClassName = classNames.bind(globalStyles);
@@ -467,6 +468,7 @@ export class RunningSolution extends PureComponent<Props> {
     // const { srcLogo, logoHeight } = getSolutionImage(name, '85px');
     return (
       <div>
+        <NavigationHeaderItem idName={match.params.idName} />
         <Notification status={status} name={idDep} errorMessage={err} />
         <Notification status={statusSrv} name={idSrv} errorMessage={errSrv} />
         <Notification

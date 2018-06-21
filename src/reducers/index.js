@@ -86,6 +86,7 @@ import deleteRunningSolutionReducer from './solutionReducers/deleteRunningSoluti
 import getDeploymentsRunningSolutionReducer from './solutionsReducers/getDeploymentsRunningSolution';
 import getServicesRunningSolutionReducer from './solutionsReducers/getServicesRunningSolution';
 import getRunningSolutionReducer from './solutionReducers/getRunningSolution';
+import getEnvsSolutionReducer from './solutionReducers/getEnvsSolution';
 
 const reducers = {
   loginReducer,
@@ -170,6 +171,7 @@ const reducers = {
   getDeploymentsRunningSolutionReducer,
   getServicesRunningSolutionReducer,
   getRunningSolutionReducer,
+  getEnvsSolutionReducer,
   router,
   loadingBar: loadingBarReducer
 };

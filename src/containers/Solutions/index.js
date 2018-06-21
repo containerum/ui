@@ -4,66 +4,55 @@ import React, { PureComponent } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
-// import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
 
 import styles from './index.scss';
 import '../../theme/common.scss';
 import globalStyles from '../../theme/global.scss';
 
-import type {
-  Dispatch,
-  Namespaces as NamespacesType,
-  ReduxState
-} from '../../types';
+import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
-  GET_SOLUTIONS_FAILURE
+  GET_SOLUTIONS_FAILURE,
+  GET_SOLUTIONS_SUCCESS
 } from '../../constants/solutionsConstants/getSolutions';
+import SolutionsList from '../../components/SolutionsList';
+import RunSolutionModal from '../RunSolution';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 import {
-  GET_NAMESPACES_INVALID,
   GET_NAMESPACES_FAILURE,
+  GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
   GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
-import {
-  RUN_SOLUTION_INVALID,
-  RUN_SOLUTION_SUCCESS,
-  RUN_SOLUTION_FAILURE
-} from '../../constants/solutionConstants/runSolution';
-import SolutionsList from '../../components/SolutionsList';
-import RunSolutionItem from '../RunSolution';
-import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 type Props = {
   history: Object,
-  getSolutionsReducer: Object,
   getProfileReducer: Object,
-  getNamespacesReducer: NamespacesType,
-  fetchGetSolutionsIfNeeded: () => void,
-  fetchGetNamespacesIfNeeded: () => void
+  getSolutionsReducer: Object,
+  getNamespacesReducer: Object,
+  fetchGetNamespacesIfNeeded: () => void,
+  fetchGetSolutionsIfNeeded: () => void
 };
 
-// Export this for unit testing more easily
 export class Solutions extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      idName: null,
-      displayedNamespaces: [],
-      currentSolution: null,
-      isOpenedSelectNamespace: false,
-      statusOfRunSolution: RUN_SOLUTION_INVALID
+      isOpenedRunSolution: false,
+      currentSolutionTemplate: null
     };
   }
   componentDidMount() {
-    const { fetchGetSolutionsIfNeeded } = this.props;
-    fetchGetSolutionsIfNeeded();
+    const { fetchGetSolutionsIfNeeded, getSolutionsReducer } = this.props;
+    if (getSolutionsReducer.readyStatus !== GET_SOLUTIONS_SUCCESS) {
+      fetchGetSolutionsIfNeeded();
+    }
   }
-  componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps, nextState) {
     if (
       this.props.getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
@@ -73,56 +62,33 @@ export class Solutions extends PureComponent<Props> {
         nextProps.getProfileReducer.data.role
       );
     }
-    if (
-      this.props.getNamespacesReducer.readyStatus !==
-        nextProps.getNamespacesReducer.readyStatus &&
-      nextProps.getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS
-    ) {
-      this.setState({
-        ...this.state,
-        displayedNamespaces: nextProps.getNamespacesReducer.data,
-        idName: nextProps.getNamespacesReducer.data.length
-          ? nextProps.getNamespacesReducer.data[0]
-          : null
-      });
+    if (nextState.isOpenedRunSolution && typeof document === 'object') {
+      const getHtml = document.querySelector('html');
+      getHtml.style.overflow = 'hidden';
+    } else if (!nextState.isOpenedRunSolution && typeof document === 'object') {
+      const getHtml = document.querySelector('html');
+      getHtml.style.overflow = 'auto';
     }
   }
-  handleClickRunSolution = solutionName => {
+  componentWillUnmount() {
+    if (typeof document === 'object') {
+      const getHtml = document.querySelector('html');
+      getHtml.style.overflow = 'auto';
+    }
+  }
+  handleClickRunSolution = solutionTemplate => {
     this.setState({
       ...this.state,
-      currentSolution: solutionName,
-      isOpenedSelectNamespace: true
+      isOpenedRunSolution: true,
+      currentSolutionTemplate: solutionTemplate
     });
+    // this.props.history.push(`/solutions/${solutionTemplate}/runSolution`);
   };
-  handleOpenCloseModal = () => {
+  handleOpenClose = () => {
     this.setState({
       ...this.state,
-      isOpenedSelectNamespace: !this.state.isOpenedSelectNamespace,
-      idName: this.state.displayedNamespaces.length
-        ? this.state.displayedNamespaces[0]
-        : null,
-      statusOfRunSolution: RUN_SOLUTION_INVALID
-    });
-  };
-  handleSelectNamespace = value => {
-    const currentNamespace = this.state.displayedNamespaces.filter(
-      ns => ns.label === value
-    );
-    this.setState({
-      ...this.state,
-      idName: currentNamespace ? currentNamespace[0] : null
-    });
-  };
-  handleSolutionSuccess = () => {
-    this.setState({
-      ...this.state,
-      statusOfRunSolution: RUN_SOLUTION_SUCCESS
-    });
-  };
-  handleSolutionFailure = () => {
-    this.setState({
-      ...this.state,
-      statusOfRunSolution: RUN_SOLUTION_FAILURE
+      isOpenedRunSolution: false,
+      currentSolutionTemplate: null
     });
   };
 
@@ -160,42 +126,41 @@ export class Solutions extends PureComponent<Props> {
       return <p>Oops, Failed to load data of Solutions!</p>;
     }
 
-    const {
-      currentSolution,
-      isOpenedSelectNamespace,
-      idName,
-      displayedNamespaces,
-      statusOfRunSolution
-    } = this.state;
-    return (
-      <div>
-        <RunSolutionItem
-          idName={idName}
-          currentSolution={currentSolution}
-          displayedNamespaces={displayedNamespaces}
-          isOpenedSelectNamespace={isOpenedSelectNamespace}
-          statusOfRunSolution={statusOfRunSolution}
-          handleOpenCloseModal={this.handleOpenCloseModal}
-          handleSelectNamespace={value => this.handleSelectNamespace(value)}
-          handleSolutionFailure={this.handleSolutionFailure}
-          handleSolutionSuccess={this.handleSolutionSuccess}
-        />
+    if (
+      getSolutionsReducer.readyStatus === GET_SOLUTIONS_SUCCESS &&
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS
+    ) {
+      return (
         <SolutionsList
           data={getSolutionsReducer.data}
           history={history}
-          handleClickRunSolution={solutionName =>
-            this.handleClickRunSolution(solutionName)
+          handleClickRunSolution={solutionTemplate =>
+            this.handleClickRunSolution(solutionTemplate)
           }
         />
-      </div>
-    );
+      );
+    }
+    return null;
   };
 
   render() {
-    // console.log(this.state);
+    const { history } = this.props;
+    const { isOpenedRunSolution, currentSolutionTemplate } = this.state;
     return (
       <div>
-        <Helmet title="Solutions" />
+        {currentSolutionTemplate ? (
+          <Helmet title={`Run ${currentSolutionTemplate}`} />
+        ) : (
+          <Helmet title="Solutions" />
+        )}
+        {isOpenedRunSolution && (
+          <RunSolutionModal
+            history={history}
+            isOpenedRunSolution={isOpenedRunSolution}
+            currentSolutionTemplate={currentSolutionTemplate}
+            handleOpenClose={this.handleOpenClose}
+          />
+        )}
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             {this.renderSolutionsList()}
@@ -208,13 +173,13 @@ export class Solutions extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
+    getProfileReducer,
     getSolutionsReducer,
-    getNamespacesReducer,
-    getProfileReducer
+    getNamespacesReducer
   }: ReduxState) => ({
+    getProfileReducer,
     getSolutionsReducer,
-    getNamespacesReducer,
-    getProfileReducer
+    getNamespacesReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSolutionsIfNeeded: () =>

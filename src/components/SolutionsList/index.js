@@ -14,8 +14,8 @@ import '../../theme/common.scss';
 
 type Props = {
   data: Array<Object>,
-  history: Object
-  // handleClickRunSolution: (name: string) => void
+  history: Object,
+  handleClickRunSolution: (name: string) => void
 };
 
 const handleClose = e => {
@@ -24,11 +24,7 @@ const handleClose = e => {
 
 const styleSolutions = classNames.bind(styles);
 const iconClassName = styleSolutions('icon', 'iconGitHub');
-const SolutionsList = ({
-  data,
-  history
-}: // handleClickRunSolution
-Props) => (
+const SolutionsList = ({ data, history, handleClickRunSolution }: Props) => (
   <div className="row">
     {data.map(solution => {
       const { name, url, limits } = solution;
@@ -61,20 +57,20 @@ Props) => (
 
               <div onClick={e => handleClose(e)}>
                 <div className={styles.volumeFooterLinksDeploy}>
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.volumeFooterLinksDeployBtn}
-                  >
-                    Deploy
-                  </a>
-                  {/* <div */}
-                  {/* className="footer-links-deploy-btn" */}
-                  {/* onClick={() => handleClickRunSolution(name)} */}
+                  {/* <a */}
+                  {/* href={url} */}
+                  {/* target="_blank" */}
+                  {/* rel="noopener noreferrer" */}
+                  {/* className={styles.volumeFooterLinksDeployBtn} */}
                   {/* > */}
-                  {/* deploy */}
-                  {/* </div> */}
+                  {/* Deploy */}
+                  {/* </a> */}
+                  <div
+                    className="footer-links-deploy-btn"
+                    onClick={() => handleClickRunSolution(name)}
+                  >
+                    deploy
+                  </div>
                 </div>
                 <div className={styles.volumeFooterLinksGithub}>
                   <a
