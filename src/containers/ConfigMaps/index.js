@@ -83,7 +83,6 @@ class ConfigMaps extends PureComponent<Props> {
     fetchGetConfigMapsIfNeeded();
   }
   componentWillUpdate(nextProps) {
-    console.log('caa', this.props.getConfigMapsReducer);
     if (
       this.props.getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
