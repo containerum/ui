@@ -21,6 +21,7 @@ const itemClassName = globalClass(
   'contentBlockTable',
   'table'
 );
+
 const containerClassName = globalClass(
   'contentBlcokContainer',
   'containerCard',
@@ -45,8 +46,19 @@ const ConfigMapList = ({
     ? currentDataOfNamespace.access
     : 'read';
   return (
-    <div className={globalStyles.contentBlock}>
-      <div className={`container ${globalStyles.containerNoBackground}`}>
+    <div
+      className={`${globalStyles.contentBlock}  ${
+        globalStyles.contentBlockContent
+      }`}
+      style={{ marginBottom: 0, marginLeft: '-15px', marginRight: '-15px' }}
+    >
+      <div
+        className={`container ${globalStyles.containerNoBackground}`}
+        style={{
+          paddingRight: 0,
+          paddingLeft: 0
+        }}
+      >
         {isEqualGetPath ? (
           <div>
             {configMapsData.length >= 1 && mainConfigMapsData ? (
@@ -58,7 +70,8 @@ const ConfigMapList = ({
                   border: 0,
                   cellspacing: 0,
                   cellpadding: 0,
-                  marginTop: '30px'
+                  marginTop: '30px',
+                  marginBottom: 0
                 }}
               >
                 <thead style={{ height: '30px' }}>
@@ -77,8 +90,7 @@ const ConfigMapList = ({
                         <tr
                           className={containerClassName}
                           style={{
-                            margin: 0,
-                            boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
+                            margin: 0
                           }}
                           key={configmap.name}
                         >
