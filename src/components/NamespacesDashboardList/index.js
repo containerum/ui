@@ -87,7 +87,8 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                       role="presentation"
                     >
                       {isOnline &&
-                        role === 'user' && (
+                        role === 'user' &&
+                        access === 'owner' && (
                           <i
                             className={`${globalStyles.contentBlockTableMore} ${
                               globalStyles.dropdownToggle
