@@ -15,6 +15,7 @@ const blockClassName = dashboardClassName('blockContainer', 'blockHTabs');
 type Props = {
   resources: Object,
   balance: string,
+  configmaps: Object,
   linkToDeployment: string,
   linkToManageTeam: string,
   linkToManageTeamAdmin: boolean
@@ -25,6 +26,7 @@ const isOnline = sourceType === 'ONLINE';
 const DashboardBlockTourAndNews = ({
   resources,
   balance,
+  configmaps,
   linkToDeployment,
   linkToManageTeam,
   linkToManageTeamAdmin
@@ -122,7 +124,16 @@ const DashboardBlockTourAndNews = ({
             >
               Launch 1st Service
             </Link>
-            <Link to={routerLinks.configmap}>Launch 1st ConfigMap</Link>
+            <Link
+              className={
+                configmaps.data.length > 0
+                  ? dashboardStyles.tourLinkDisabled
+                  : ''
+              }
+              to={routerLinks.configmap}
+            >
+              Launch 1st ConfigMap
+            </Link>
             {/* <Link to="/account"> */}
             {/* Set up Web Hooks for Continuous Deployment */}
             {/* </Link> */}
