@@ -78,12 +78,13 @@ const DeleteModal = ({
     const inputValue = e.target.value.trim();
     handleInputName(inputValue);
   };
-
+  console.log('input', name);
+  console.log('type', typeName);
   const styleSubmit =
-    inputName === typeName
+    name === typeName
       ? `${buttonsStyles.buttonModalSelect} btn`
       : `${buttonsStyles.buttonModalAction} btn`;
-  const isDisabledSubmit = inputName !== typeName;
+  const isDisabledSubmit = name !== typeName;
   return (
     <Modal
       isOpen={isOpened}
