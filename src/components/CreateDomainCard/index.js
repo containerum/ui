@@ -3,6 +3,7 @@
 import React from 'react';
 import className from 'classnames/bind';
 import { NavLink } from 'react-router-dom';
+import Tooltip from 'rc-tooltip';
 
 import { routerLinks, sourceType } from '../../config';
 import InputControl from '../InputControl';
@@ -59,197 +60,223 @@ const CreateDomainCard = ({
   handleChangeSelectPort,
   handleChangeInput,
   handleChangeCheckBox
-}: Props) => (
-  <div className={containerClassName} id="target-deployment">
-    <div className={`${globalStyles.rowLine} row`}>
-      <div className="col-md-12">
-        <div
-          className={globalStyles.containerTitle}
-          style={{ display: 'block' }}
-        >
-          Target Service
-        </div>
-
-        {servicesList.length > 0 ? (
+}: Props) => {
+  const regexp = /^[a-z][a-z0-9-]*$|^$/;
+  const isErrorNameTooltipClass = domainName.search(regexp) === -1;
+  const isErrorPathTooltipClass = domainPath.search(regexp) === -1;
+  return (
+    <div className={containerClassName} id="target-deployment">
+      <div className={`${globalStyles.rowLine} row`}>
+        <div className="col-md-12">
           <div
-            className="col-md-4"
-            style={{ display: 'inline-block', paddingLeft: 0 }}
+            className={globalStyles.containerTitle}
+            style={{ display: 'block' }}
           >
+            Target Service
+          </div>
+
+          {servicesList.length > 0 ? (
             <div
-              style={{ margin: '30px 0px 5px' }}
-              className={globalStyles.containerSubTitleCreate}
+              className="col-md-4"
+              style={{ display: 'inline-block', paddingLeft: 0 }}
             >
-              External Service Name
-            </div>
-            <div className={globalStyles.selectWrapper}>
-              <div className={globalStyles.selectArrow} />
-              <div className={globalStyles.selectArrow} />
-              <select
-                name="services"
-                className={selectClassName}
-                value={currentService && currentService.name}
-                onChange={e => handleChangeSelectService(e.target.value)}
-                required
-                disabled={match.params.idSrv}
+              <div
+                style={{ margin: '30px 0px 5px' }}
+                className={globalStyles.containerSubTitleCreate}
               >
-                {servicesList.map(item => (
-                  <option key={item.name} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        ) : (
-          <div style={{ marginTop: '30px' }}>
-            <NavLink
-              to={routerLinks.createServiceLink(match.params.idName)}
-              className={buttonsStyles.buttonUICreateSmall}
-            >
-              Create Service
-            </NavLink>
-          </div>
-        )}
-
-        {servicesList.length > 0 && (
-          <div
-            className="col-md-4"
-            style={{ display: 'inline-block', marginLeft: '20px' }}
-          >
-            <div
-              style={{ margin: '30px 0px 5px' }}
-              className={globalStyles.containerSubTitleCreate}
-            >
-              Target port
-            </div>
-            {portsList && (
+                External Service Name
+              </div>
               <div className={globalStyles.selectWrapper}>
                 <div className={globalStyles.selectArrow} />
                 <div className={globalStyles.selectArrow} />
                 <select
-                  name="ports"
+                  name="services"
                   className={selectClassName}
-                  value={currentPort && currentPort.port}
-                  onChange={e => handleChangeSelectPort(e.target.value)}
+                  value={currentService && currentService.name}
+                  onChange={e => handleChangeSelectService(e.target.value)}
                   required
+                  disabled={match.params.idSrv}
                 >
-                  {portsList.map(
-                    port =>
-                      port.protocol === 'TCP' && (
-                        <option key={port.port} value={port.port}>
-                          {port.port}
-                        </option>
-                      )
-                  )}
+                  {servicesList.map(item => (
+                    <option key={item.name} value={item.name}>
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
               </div>
-            )}
-            {!portsList && (
-              <div className={globalStyles.selectWrapper}>
-                <div className={globalStyles.selectArrow} />
-                <div className={globalStyles.selectArrow} />
-                <select name="ports" className={selectClassName} required>
-                  <option
-                    key={servicesList[0].ports[0].port}
-                    value={
-                      servicesList.length !== 0 && servicesList[0].ports[0].port
-                    }
+            </div>
+          ) : (
+            <div style={{ marginTop: '30px' }}>
+              <NavLink
+                to={routerLinks.createServiceLink(match.params.idName)}
+                className={buttonsStyles.buttonUICreateSmall}
+              >
+                Create Service
+              </NavLink>
+            </div>
+          )}
+
+          {servicesList.length > 0 && (
+            <div
+              className="col-md-4"
+              style={{ display: 'inline-block', marginLeft: '20px' }}
+            >
+              <div
+                style={{ margin: '30px 0px 5px' }}
+                className={globalStyles.containerSubTitleCreate}
+              >
+                Target port
+              </div>
+              {portsList && (
+                <div className={globalStyles.selectWrapper}>
+                  <div className={globalStyles.selectArrow} />
+                  <div className={globalStyles.selectArrow} />
+                  <select
+                    name="ports"
+                    className={selectClassName}
+                    value={currentPort && currentPort.port}
+                    onChange={e => handleChangeSelectPort(e.target.value)}
+                    required
                   >
-                    {servicesList.length !== 0 && servicesList[0].ports[0].port}
+                    {portsList.map(
+                      port =>
+                        port.protocol === 'TCP' && (
+                          <option key={port.port} value={port.port}>
+                            {port.port}
+                          </option>
+                        )
+                    )}
+                  </select>
+                </div>
+              )}
+              {!portsList && (
+                <div className={globalStyles.selectWrapper}>
+                  <div className={globalStyles.selectArrow} />
+                  <div className={globalStyles.selectArrow} />
+                  <select name="ports" className={selectClassName} required>
+                    <option
+                      key={servicesList[0].ports[0].port}
+                      value={
+                        servicesList.length !== 0 &&
+                        servicesList[0].ports[0].port
+                      }
+                    >
+                      {servicesList.length !== 0 &&
+                        servicesList[0].ports[0].port}
+                    </option>
+                  </select>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className={textHelperClassName}>
+            Select the deployment for which the Service applies
+          </div>
+        </div>
+      </div>
+      <div
+        className={`${globalStyles.rowLine} row`}
+        style={{ borderBottom: 'none', paddingBottom: '20px' }}
+      >
+        <div className="col-md-7">
+          <div className={nextContainerClassName}>
+            <span className={globalStyles.containerTitleStar}>*</span> Domains
+          </div>
+          <Tooltip
+            placement="left"
+            visible
+            overlay={<span>Invalid domain name</span>}
+            overlayClassName={
+              isErrorNameTooltipClass ? '' : 'rc-tooltip-hidden'
+            }
+          >
+            <InputControl
+              value={domainName}
+              id="domainName"
+              type="text"
+              required
+              baseClassName={`form-group__input-text form-control customInput ${isOnline &&
+                'customInputDomain'}`}
+              baseClassNameLabel={`form-group__label ${domainName &&
+                'form-group__label-always-onfocus'}`}
+              labelText="Domain"
+              baseClassNameHelper={globalStyles.formGroupHelper}
+              handleChangeInput={e => {
+                // e.target.setSelectionRange(-domainName.length, -domainName.length);
+                handleChangeInput(e.target.value, 'domainName');
+              }}
+              alwaysVisiblePlaceholder={
+                isOnline && 'customAlwaysVisiblePlaceholder'
+              }
+            />
+          </Tooltip>
+          <Tooltip
+            placement="right"
+            visible
+            overlay={<span>Invalid path name</span>}
+            overlayClassName={
+              isErrorPathTooltipClass ? '' : 'rc-tooltip-hidden'
+            }
+          >
+            <InputControl
+              value={domainPath}
+              id="domainPath"
+              type="text"
+              baseClassName={`${formClassName} ${inputStyles.Domain} ${
+                inputStyles.DomainPath
+              }`}
+              baseClassNameLabel={`${
+                globalStyles.formGroupLabel
+              } ${domainPath && globalStyles.formGroupLabelOnFocus}`}
+              labelText="Path"
+              title="Path that the External Service watches to route traffic"
+              textHelper="Path that the External Service watches to route traffic"
+              baseClassNameHelper={globalStyles.formGroupHelper}
+              handleChangeInput={e =>
+                handleChangeInput(e.target.value, 'domainPath')
+              }
+              alwaysVisiblePlaceholder="customAlwaysVisibleInputPathPlaceholder"
+            />
+          </Tooltip>
+          <div style={{ marginTop: '40px' }}>
+            <div
+              className="col-md-6"
+              style={{ display: 'inline-block', paddingLeft: 0 }}
+            >
+              <CheckBoxControl
+                id="ssl"
+                value={isEnabledSSL}
+                labelText="Enable SSL Security"
+                labelClassName={globalStyles.labelCustom}
+                handleChangeCheckBox={handleChangeCheckBox}
+              />
+            </div>
+            {isEnabledSSL && (
+              <div
+                className={`${globalStyles.selectWrapper} col-md-6`}
+                style={{ display: 'inline-block' }}
+              >
+                <div className={globalStyles.selectArrow} />
+                <div className={globalStyles.selectArrow} />
+                <select
+                  name="encrypt"
+                  className={selectClassName}
+                  value="Let`s Encrypt"
+                  disabled
+                  onChange={() => console.log('Let`s Encrypt')}
+                >
+                  <option key="Let`s Encrypt" value="Let`s Encrypt">
+                    Let`s Encrypt
                   </option>
                 </select>
               </div>
             )}
           </div>
-        )}
-
-        <div className={textHelperClassName}>
-          Select the deployment for which the Service applies
         </div>
       </div>
     </div>
-    <div
-      className={`${globalStyles.rowLine} row`}
-      style={{ borderBottom: 'none', paddingBottom: '20px' }}
-    >
-      <div className="col-md-7">
-        <div className={nextContainerClassName}>
-          <span className={globalStyles.containerTitleStar}>*</span> Domains
-        </div>
-        <InputControl
-          value={domainName}
-          id="domainName"
-          type="text"
-          required
-          baseClassName={`form-group__input-text form-control customInput ${isOnline &&
-            'customInputDomain'}`}
-          baseClassNameLabel={`form-group__label ${domainName &&
-            'form-group__label-always-onfocus'}`}
-          labelText="Domain"
-          baseClassNameHelper={globalStyles.formGroupHelper}
-          handleChangeInput={e => {
-            // e.target.setSelectionRange(-domainName.length, -domainName.length);
-            handleChangeInput(e.target.value, 'domainName');
-          }}
-          alwaysVisiblePlaceholder={
-            isOnline && 'customAlwaysVisiblePlaceholder'
-          }
-        />
-        <InputControl
-          value={domainPath}
-          id="domainPath"
-          type="text"
-          baseClassName={`${formClassName} ${inputStyles.Domain} ${
-            inputStyles.DomainPath
-          }`}
-          baseClassNameLabel={`${globalStyles.formGroupLabel} ${domainPath &&
-            globalStyles.formGroupLabelOnFocus}`}
-          labelText="Path"
-          title="Path that the External Service watches to route traffic"
-          textHelper="Path that the External Service watches to route traffic"
-          baseClassNameHelper={globalStyles.formGroupHelper}
-          handleChangeInput={e =>
-            handleChangeInput(e.target.value, 'domainPath')
-          }
-          alwaysVisiblePlaceholder="customAlwaysVisibleInputPathPlaceholder"
-        />
-        <div style={{ marginTop: '40px' }}>
-          <div
-            className="col-md-6"
-            style={{ display: 'inline-block', paddingLeft: 0 }}
-          >
-            <CheckBoxControl
-              id="ssl"
-              value={isEnabledSSL}
-              labelText="Enable SSL Security"
-              labelClassName={globalStyles.labelCustom}
-              handleChangeCheckBox={handleChangeCheckBox}
-            />
-          </div>
-          {isEnabledSSL && (
-            <div
-              className={`${globalStyles.selectWrapper} col-md-6`}
-              style={{ display: 'inline-block' }}
-            >
-              <div className={globalStyles.selectArrow} />
-              <div className={globalStyles.selectArrow} />
-              <select
-                name="encrypt"
-                className={selectClassName}
-                value="Let`s Encrypt"
-                disabled
-                onChange={() => console.log('Let`s Encrypt')}
-              >
-                <option key="Let`s Encrypt" value="Let`s Encrypt">
-                  Let`s Encrypt
-                </option>
-              </select>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  </div>
-);
+  );
+};
 
 export default CreateDomainCard;
