@@ -53,7 +53,8 @@ const DomainsList = ({
             border: 0,
             cellspacing: 0,
             cellpadding: 0,
-            marginTop: '30px'
+            marginTop: '30px',
+            marginBottom: 0
           }}
         >
           <thead style={{ height: '30px' }}>
@@ -89,7 +90,6 @@ const DomainsList = ({
                   key={_.uniqueId()}
                   style={{
                     margin: 0,
-                    boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)',
                     height: 42
                   }}
                 >
