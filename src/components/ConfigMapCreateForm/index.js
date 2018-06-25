@@ -129,7 +129,7 @@ const ConfigMapCreateForm = ({
                       buttonsStyles.buttonUIDeployDashboard
                     } btn btn-outline-primary`}
                   >
-                    Create Namespace
+                    Create Project
                   </Link>
                 </div>
               )}
