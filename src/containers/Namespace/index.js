@@ -396,7 +396,9 @@ export class Namespace extends PureComponent<Props> {
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
-                        to={routerLinks.createDomainLink(match.params.idName)}
+                        to={routerLinks.createCustomDomainLink(
+                          match.params.idName
+                        )}
                         className={`${
                           buttonsStyles.buttonUICreate
                         } btn btn-outline-primary`}

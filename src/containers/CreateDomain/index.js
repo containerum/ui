@@ -83,11 +83,14 @@ export class CreateDomain extends PureComponent<Props> {
               (service.ports.length >= 1 &&
                 service.ports[0].protocol === 'TCP'))
         );
-        let currentService = '';
+        let currentService;
+        const serviceFirst = servicesList[0];
         if (this.props.match.params.idSrv) {
           currentService = servicesList.find(
             service => service.name === this.props.match.params.idSrv
           );
+        } else {
+          currentService = serviceFirst;
         }
 
         this.setState({
@@ -217,6 +220,8 @@ export class CreateDomain extends PureComponent<Props> {
 
   render() {
     const { match, createDomainReducer } = this.props;
+    const regexp = /^[a-z][a-z0-9-]*$|^$/;
+    const { domainName, domainPath } = this.state;
     return (
       <div>
         <Helmet title={`Create Domain in ${match.params.idSrv}`} />
@@ -246,6 +251,10 @@ export class CreateDomain extends PureComponent<Props> {
                     baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
                       globalStyles.marginBottom50
                     } ${globalStyles.marginTop10}`}
+                    disabled={
+                      domainName.search(regexp) === -1 ||
+                      domainPath.search(regexp) === -1
+                    }
                   />
                 </form>
               </div>

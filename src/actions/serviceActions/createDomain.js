@@ -84,7 +84,7 @@ export const fetchCreateDomain = (
       // console.log(data);
       idSrv = `Domain ${dataDomain.domainName}`;
       dispatch(createDomainSuccess(data, status, idSrv));
-      dispatch(push(routerLinks.getServicesLink(idName)));
+      dispatch(push(routerLinks.namespaceDomainsLink(idName)));
       break;
     }
     case 400: {
