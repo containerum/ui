@@ -34,6 +34,7 @@ const containerClassName = globalClass(
   'containerFluid',
   'breadcrumbsNavigation'
 );
+const regexp = /^[a-z][a-z0-9-]*$|^$/;
 
 type Props = {
   getServiceReducer: Object,
@@ -346,6 +347,16 @@ export class UpdateService extends PureComponent<Props> {
                     baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
                       globalStyles.marginBottom50
                     } ${globalStyles.marginTop10}`}
+                    disabled={
+                      (this.state.internalSrvObject &&
+                        this.state.internalSrvObject[0].internalSrvName.search(
+                          regexp
+                        ) === -1) ||
+                      (this.state.externalSrvObject &&
+                        this.state.externalSrvObject[0].externalSrvName.search(
+                          regexp
+                        ) === -1)
+                    }
                   />
                 </form>
               </div>
