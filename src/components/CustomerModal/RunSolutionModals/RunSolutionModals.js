@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
 import 'rc-tooltip/assets/bootstrap_white.css';
+import Tooltip from 'rc-tooltip';
 
 import { routerLinks } from '../../../config';
 import modalStyles from '../index.scss';
@@ -104,6 +105,9 @@ const RunSolutionModals = ({
       }`;
     }
   }
+  const regexp = /^[a-z][a-z0-9-]*$|^$/;
+  const isErrorNameSolutionTooltipClass = solutionName.search(regexp) === -1;
+
   return (
     <Modal
       isOpen={isOpenedSelectNamespace}
@@ -260,20 +264,31 @@ const RunSolutionModals = ({
                 <div className="main-content-title">Projects</div>
                 {displayedNamespaces.length ? (
                   <div>
-                    <InputControl
-                      value={solutionName}
-                      id="solutionName"
-                      type="text"
-                      required
-                      baseClassName="form-group__input-text form-control customInput"
-                      baseClassNameLabel={`form-group__label ${solutionName &&
-                        'form-group__label-always-onfocus'}`}
-                      labelText="Solution name"
-                      baseClassNameHelper={globalStyles.formGroupHelper}
-                      handleChangeInput={e => {
-                        handleChangeInput(e.target.value);
-                      }}
-                    />
+                    <Tooltip
+                      placement="top"
+                      visible
+                      overlay={<span>Invalid domain name</span>}
+                      overlayClassName={
+                        isErrorNameSolutionTooltipClass
+                          ? ''
+                          : 'rc-tooltip-hidden'
+                      }
+                    >
+                      <InputControl
+                        value={solutionName}
+                        id="solutionName"
+                        type="text"
+                        required
+                        baseClassName="form-group__input-text form-control customInput"
+                        baseClassNameLabel={`form-group__label ${solutionName &&
+                          'form-group__label-always-onfocus'}`}
+                        labelText="Solution name"
+                        baseClassNameHelper={globalStyles.formGroupHelper}
+                        handleChangeInput={e => {
+                          handleChangeInput(e.target.value);
+                        }}
+                      />
+                    </Tooltip>
                     <span className={`${modalStyles.modalRedisText} mt-4 mb-4`}>
                       Please, select the Project for Solution installation
                     </span>
