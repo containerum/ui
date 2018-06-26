@@ -156,6 +156,7 @@ export class Deployment extends PureComponent<Props> {
     const { deleteDeploymentReducer, match } = this.props;
     const { status, idDep, err } = this.props.deleteDeploymentReducer;
     const { inputName, isOpened, idDep: currentIdDep } = this.state;
+    console.log(this.state);
     return (
       <div>
         <Helmet title={`Deployment - ${match.params.idDep}`} />
