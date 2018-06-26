@@ -112,7 +112,6 @@ const RunSolutionModals = ({
   );
   const regexp = /^[a-z][a-z0-9-]*$|^$/;
   const isErrorNameSolutionTooltipClass = solutionName.search(regexp) === -1;
-
   return (
     <Modal
       isOpen={isOpenedSelectNamespace}
@@ -303,8 +302,13 @@ const RunSolutionModals = ({
                       id="namespaceSelect"
                       name="namespaces"
                       onChange={e => handleSelectNamespace(e.target.value)}
-                      value={currentNamespace.label}
                       required
+                      value={
+                        history.location.search
+                          ? history.location.search.substr(1)
+                          : currentNamespace.label
+                      }
+                      disabled={history.location.search}
                     >
                       {filterDisplayedNamespaces.map(ns => (
                         <option key={_.uniqueId()} value={ns.label}>
