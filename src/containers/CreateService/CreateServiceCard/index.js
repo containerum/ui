@@ -11,7 +11,8 @@ import ServiceForm from '../../../components/ServiceFormCard';
 type Props = {
   handleChangeState: () => void,
   handleChangeActivityInternal: () => void,
-  handleChangeActivityExternal: () => void
+  handleChangeActivityExternal: () => void,
+  match: Object
 };
 
 // Export this for unit testing more easily
@@ -197,6 +198,7 @@ export class CreateServiceCard extends PureComponent<Props> {
     // console.log('state', this.state);
     return (
       <ServiceForm
+        match={this.props.match}
         handleChangeActivityInternal={() => {
           this.props.handleChangeActivityInternal();
           this.setState({
