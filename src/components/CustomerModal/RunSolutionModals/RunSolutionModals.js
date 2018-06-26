@@ -46,6 +46,7 @@ const customStyles = {
 type Props = {
   currentNamespace: string,
   currentView: string,
+  login: string,
   solutionName: string,
   currentSolution: Object,
   getEnvsData: Object,
@@ -72,6 +73,7 @@ const RunSolutionModals = ({
   currentSolution,
   getEnvsData,
   history,
+  login,
   runSolutionReducer,
   deploymentsRunningSolution,
   getEnvsSolutionReducer,
@@ -105,6 +107,9 @@ const RunSolutionModals = ({
       }`;
     }
   }
+  const filterDisplayedNamespaces = displayedNamespaces.filter(
+    ns => ns.access !== 'read'
+  );
   const regexp = /^[a-z][a-z0-9-]*$|^$/;
   const isErrorNameSolutionTooltipClass = solutionName.search(regexp) === -1;
 
@@ -301,9 +306,10 @@ const RunSolutionModals = ({
                       value={currentNamespace.label}
                       required
                     >
-                      {displayedNamespaces.map(ns => (
+                      {filterDisplayedNamespaces.map(ns => (
                         <option key={_.uniqueId()} value={ns.label}>
                           {ns.label}
+                          {login !== ns.owner_login && ` (${ns.owner_login}) `}
                         </option>
                       ))}
                     </select>
