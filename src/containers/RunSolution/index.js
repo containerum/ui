@@ -216,7 +216,7 @@ export class RunSolution extends PureComponent<Props> {
     });
   };
   handleChangeInput = value => {
-    const regexp = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?$|^$/;
+    const regexp = /^[a-z][a-z0-9-]*$|^$/;
     if (value.search(regexp) !== -1) {
       this.setState({
         ...this.state,
