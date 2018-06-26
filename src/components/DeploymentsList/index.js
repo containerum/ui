@@ -77,7 +77,11 @@ const DeploymentsList = ({
                 .reduce((a, b) => a + b, 0);
               const milliseconds = Date.parse(createdAt);
               const dateHours = new Date(milliseconds);
-              const dateValue = ta.ago(dateHours, true);
+              let dateValue;
+              const ts = Date.now() - new Date(dateHours).getTime();
+              if (ts > 1000) {
+                dateValue = ta.ago(dateHours, true);
+              }
               const id = `item_${name}`;
               return (
                 <tr
