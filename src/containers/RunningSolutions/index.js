@@ -126,13 +126,16 @@ export class RunningSolutions extends PureComponent<Props> {
     ) {
       return <p>Oops, Failed to load data of Solutions!</p>;
     }
-
+    const access = getNamespacesReducer.data.find(
+      namespace => namespace.id === match.params.idName
+    );
     return (
       <RunningSolutionsList
         data={getRunningSolutionsReducer.data}
         history={this.props.history}
         idName={match.params.idName}
         handleDeleteSolution={this.handleDeleteSolution}
+        access={access.access}
       />
     );
   };
