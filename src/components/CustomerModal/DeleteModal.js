@@ -78,8 +78,6 @@ const DeleteModal = ({
     const inputValue = e.target.value.trim();
     handleInputName(inputValue);
   };
-  console.log('input', name);
-  console.log('type', typeName);
   const styleSubmit =
     name === typeName
       ? `${buttonsStyles.buttonModalSelect} btn`
