@@ -65,7 +65,8 @@ export class Deployments extends PureComponent<Props> {
     if (
       this.props.getServiceReducer.readyStatus !==
         nextProps.getServiceReducer.readyStatus &&
-      nextProps.getServiceReducer.readyStatus === GET_SERVICE_SUCCESS
+      nextProps.getServiceReducer.readyStatus === GET_SERVICE_SUCCESS &&
+      nextProps.getServiceReducer.data.deploy
     ) {
       this.setState({
         ...this.state,
@@ -109,7 +110,10 @@ export class Deployments extends PureComponent<Props> {
 
     return (
       <DeploymentsList
-        data={this.state.displayedDeployments}
+        data={
+          this.props.getServiceReducer.data.deploy &&
+          this.state.displayedDeployments
+        }
         history={this.props.history}
         idName={match.params.idName}
       />

@@ -48,114 +48,114 @@ const DeploymentsList = ({
   const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   return (
     <div>
-      {data.length >= 1 && (
-        <table className={tableClassName} width="1170">
-          <thead>
-            <tr>
-              <td className={depStyles.td_1_Dep} />
-              <td className={depStyles.td_2_Dep}>Name</td>
-              <td className={depStyles.td_3_Dep}>Pods</td>
-              <td className={depStyles.td_4_Dep}>RAM (MB)</td>
-              <td className={depStyles.td_5_Dep}>CPU (m)</td>
-              <td className={depStyles.td_6_Dep}>Age</td>
-              <td className={depStyles.td_7_Dep} />
-              <td className={depStyles.td_7_Dep} />
-            </tr>
-          </thead>
-          <tbody>
-            {data.map(deploy => {
-              const { name, created_at: createdAt } = deploy;
-              const {
-                available_replicas: podsActive,
-                replicas: podsLimit
-              } = deploy.status;
-              const cpu = deploy.containers
-                .map(container => parseInt(container.limits.cpu, 10))
-                .reduce((a, b) => a + b, 0);
-              const memory = deploy.containers
-                .map(container => parseInt(container.limits.memory, 10))
-                .reduce((a, b) => a + b, 0);
-              const milliseconds = Date.parse(createdAt);
-              const dateHours = new Date(milliseconds);
-              let dateValue;
-              const ts = Date.now() - new Date(dateHours).getTime();
-              if (ts > 1000) {
-                dateValue = ta.ago(dateHours, true);
-              }
-              const id = `item_${name}`;
-              return (
-                <tr
-                  key={id}
-                  className={globalStyles.tableHover}
-                  id={id}
-                  onClick={() => handleClickGetDeployment(name)}
-                >
-                  <td className={depStyles.td_1_Dep}>
-                    <img src={deployPng} alt="deploy" />
-                  </td>
-                  <td className={depStyles.td_2_Dep}>{name}</td>
-                  <td className={depStyles.td_3_Dep}>
-                    {podsActive} / {podsLimit}
-                  </td>
-                  <td className={depStyles.td_4_Dep}>{memory}</td>
-                  <td className={depStyles.td_5_Dep}>{cpu}</td>
-                  <td className={depStyles.td_6_Dep}>{dateValue}</td>
-                  <td className={depStyles.td_7_Dep}>
-                    {/* <div className="warning"> </div> */}
-                  </td>
-                  <td
-                    className={`${depStyles.td_7_Dep} dropdown no-arrow`}
-                    onClick={e => handleClose(e)}
-                    onKeyPress={e => handleClose(e)}
-                    role="presentation"
+      {data &&
+        data.length >= 1 && (
+          <table className={tableClassName} width="1170">
+            <thead>
+              <tr>
+                <td className={depStyles.td_1_Dep} />
+                <td className={depStyles.td_2_Dep}>Name</td>
+                <td className={depStyles.td_3_Dep}>Pods</td>
+                <td className={depStyles.td_4_Dep}>RAM (MB)</td>
+                <td className={depStyles.td_5_Dep}>CPU (m)</td>
+                <td className={depStyles.td_6_Dep}>Age</td>
+                <td className={depStyles.td_7_Dep} />
+                <td className={depStyles.td_7_Dep} />
+              </tr>
+            </thead>
+            <tbody>
+              {data.map(deploy => {
+                const { name, created_at: createdAt } = deploy;
+                const {
+                  available_replicas: podsActive,
+                  replicas: podsLimit
+                } = deploy.status;
+                const cpu = deploy.containers
+                  .map(container => parseInt(container.limits.cpu, 10))
+                  .reduce((a, b) => a + b, 0);
+                const memory = deploy.containers
+                  .map(container => parseInt(container.limits.memory, 10))
+                  .reduce((a, b) => a + b, 0);
+                const milliseconds = Date.parse(createdAt);
+                const dateHours = new Date(milliseconds);
+                const dateValue = ta.ago(dateHours, true);
+                const id = `item_${name}`;
+                return (
+                  <tr
+                    key={id}
+                    className={globalStyles.tableHover}
+                    id={id}
+                    onClick={() => handleClickGetDeployment(name)}
                   >
-                    {handleDeleteDeployment &&
-                      accessToNamespace !== 'read' && (
-                        <i
-                          className={`${globalStyles.contentBlockTableMore} ${
-                            globalStyles.dropdownToggle
-                          }
+                    <td className={depStyles.td_1_Dep}>
+                      <img src={deployPng} alt="deploy" />
+                    </td>
+                    <td className={depStyles.td_2_Dep}>{name}</td>
+                    <td className={depStyles.td_3_Dep}>
+                      {podsActive} / {podsLimit}
+                    </td>
+                    <td className={depStyles.td_4_Dep}>{memory}</td>
+                    <td className={depStyles.td_5_Dep}>{cpu}</td>
+                    <td className={depStyles.td_6_Dep}>{dateValue}</td>
+                    <td className={depStyles.td_7_Dep}>
+                      {/* <div className="warning"> </div> */}
+                    </td>
+                    <td
+                      className={`${depStyles.td_7_Dep} dropdown no-arrow`}
+                      onClick={e => handleClose(e)}
+                      onKeyPress={e => handleClose(e)}
+                      role="presentation"
+                    >
+                      {handleDeleteDeployment &&
+                        accessToNamespace !== 'read' && (
+                          <i
+                            className={`${globalStyles.contentBlockTableMore} ${
+                              globalStyles.dropdownToggle
+                            }
                           ${globalStyles.ellipsisRoleMore} ion-more `}
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        />
-                      )}
-                    {handleDeleteDeployment &&
-                      accessToNamespace !== 'read' && (
-                        <ul
-                          className={` dropdown-menu dropdown-menu-right ${
-                            globalStyles.dropdownMenu
-                          }`}
-                          role="menu"
-                        >
-                          <NavLink
-                            activeClassName="active"
-                            className={`dropdown-item  ${
-                              globalStyles.dropdownItem
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          />
+                        )}
+                      {handleDeleteDeployment &&
+                        accessToNamespace !== 'read' && (
+                          <ul
+                            className={` dropdown-menu dropdown-menu-right ${
+                              globalStyles.dropdownMenu
                             }`}
-                            to={routerLinks.resizeDeploymentLink(idName, name)}
+                            role="menu"
                           >
-                            Update
-                          </NavLink>
-                          <button
-                            className={`dropdown-item text-danger ${
-                              globalStyles.dropdownItem
-                            }`}
-                            onClick={() => handleClickDeleteDeployment(name)}
-                          >
-                            Delete
-                          </button>
-                        </ul>
-                      )}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
-      {!data.length && (
+                            <NavLink
+                              activeClassName="active"
+                              className={`dropdown-item  ${
+                                globalStyles.dropdownItem
+                              }`}
+                              to={routerLinks.resizeDeploymentLink(
+                                idName,
+                                name
+                              )}
+                            >
+                              Update
+                            </NavLink>
+                            <button
+                              className={`dropdown-item text-danger ${
+                                globalStyles.dropdownItem
+                              }`}
+                              onClick={() => handleClickDeleteDeployment(name)}
+                            >
+                              Delete
+                            </button>
+                          </ul>
+                        )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      {(!data || !data.length) && (
         <div className={contentClassName}>
           <div className="tab-content">
             <div className="tab-pane deployments active">
