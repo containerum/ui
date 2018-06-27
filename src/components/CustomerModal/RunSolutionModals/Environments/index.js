@@ -46,7 +46,9 @@ const Environments = ({ envs, handleChangeInputEnvironment }: Props) => (
           <InputControl
             value={envs[env]}
             id={`envValue${env}${index}`}
-            type="text"
+            type={
+              env.includes('RAM') || env.includes('CPU') ? 'number' : 'text'
+            }
             pattern="[-._a-zA-Z][-._a-zA-Z0-9]*|^$"
             baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
             baseClassNameLabel={`${globalStyles.formGroupLabel} ${envs[env] &&
