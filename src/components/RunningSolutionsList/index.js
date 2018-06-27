@@ -99,22 +99,34 @@ const RunningSolutionsList = ({
             })}
           </div>
         )}
-        {!data.length && (
-          <div>
-            <div className={globalStyles.createDeploymentWrapper}>
-              <div className={globalStyles.noCreatedPodMessage}>
-                You have no active Solutions yet.<br />Create your 1st Solution
+        {access !== 'read' &&
+          !data.length && (
+            <div>
+              <div className={globalStyles.createDeploymentWrapper}>
+                <div className={globalStyles.noCreatedPodMessage}>
+                  You have no active Solutions yet.<br />Create your 1st
+                  Solution
+                </div>
+                <NavLink
+                  className={btnClassName}
+                  data-toggle="modal"
+                  to={routerLinks.solutions}
+                >
+                  Create Solution
+                </NavLink>
               </div>
-              <NavLink
-                className={btnClassName}
-                data-toggle="modal"
-                to={routerLinks.solutions}
-              >
-                Create Solution
-              </NavLink>
             </div>
-          </div>
-        )}
+          )}
+        {access === 'read' &&
+          !data.length && (
+            <div>
+              <div className={globalStyles.createDeploymentWrapper}>
+                <div className={globalStyles.noCreatedPodMessage}>
+                  No active Solutions yet
+                </div>
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );
