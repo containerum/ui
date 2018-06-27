@@ -432,7 +432,7 @@ export class Namespace extends PureComponent<Props> {
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
                       <NavLink
-                        to={routerLinks.solutions}
+                        to={routerLinks.solutionsLink(currentNamespace.label)}
                         className={`${
                           buttonsStyles.buttonUICreate
                         } btn btn-outline-primary`}
