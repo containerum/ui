@@ -201,29 +201,30 @@ const RunSolutionModals = ({
                 </div>
               </div>
             </div>
-            {currentView === 'first' &&
-              displayedNamespaces.length && (
-                <div onClick={e => handleSubmitCreatingEssence(e, 'next')}>
-                  <LoadButton
-                    style={
-                      getEnvsSolutionReducer.isFetching
-                        ? {
-                            padding: '4px 41px',
-                            width: 117.08
-                          }
-                        : {
-                            padding: '4px 41px'
-                          }
-                    }
-                    type="submit"
-                    buttonText="Next"
-                    isFetching={getEnvsSolutionReducer.isFetching}
-                    disabled={!solutionName}
-                    mini="miniFont"
-                    baseClassButton="btn blue-btn modal-body-next-btn"
-                  />
-                </div>
-              )}
+            {currentView === 'first' && displayedNamespaces.length ? (
+              <div onClick={e => handleSubmitCreatingEssence(e, 'next')}>
+                <LoadButton
+                  style={
+                    getEnvsSolutionReducer.isFetching
+                      ? {
+                          padding: '4px 41px',
+                          width: 117.08
+                        }
+                      : {
+                          padding: '4px 41px'
+                        }
+                  }
+                  type="submit"
+                  buttonText="Next"
+                  isFetching={getEnvsSolutionReducer.isFetching}
+                  disabled={!solutionName}
+                  mini="miniFont"
+                  baseClassButton="btn blue-btn modal-body-next-btn"
+                />
+              </div>
+            ) : (
+              <div />
+            )}
             {currentView === 'second' && (
               <div onClick={e => handleSubmitCreatingEssence(e, 'deploy')}>
                 <LoadButton
