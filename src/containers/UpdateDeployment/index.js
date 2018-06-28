@@ -11,6 +11,7 @@ import className from 'classnames/bind';
 
 import scrollById from '../../functions/scrollById';
 // import * as actionGetVolumes from '../../actions/volumesActions/getVolumesByNS';
+import * as actionGetConfigMapsByNS from '../../actions/configMapActions/getConfigMapsByNS';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionUpdateDeployment from '../../actions/deploymentActions/updateDeployment';
 import * as actionGetDeployment from '../../actions/deploymentActions/getDeployment';
@@ -38,6 +39,7 @@ import deploymentStyles from '../CreateDeployment/index.scss';
 import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import { UPDATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/updateDeployment';
+import { GET_CONFIG_MAPS_BY_NS_SUCCESS } from '../../constants/configMapConstants/getConfigMapsByNS';
 
 const deploymentStylesClass = className.bind(deploymentStyles);
 const globalClass = className.bind(globalStyles);
@@ -59,6 +61,8 @@ type Props = {
   getDeploymentReducer: Object,
   match: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
+  fetchGetConfigMapsByNSIfNeeded: (idName: string) => void,
+  getConfigMapsByNSReducer: Object,
   // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchUpdateDeploymentIfNeeded: (
     idName: string,
@@ -81,12 +85,14 @@ export class CreateDeployment extends PureComponent<Props> {
   componentDidMount() {
     const {
       // fetchGetVolumesByNSIfNeeded,
+      fetchGetConfigMapsByNSIfNeeded,
       fetchGetNamespaceIfNeeded,
       fetchGetDeploymentIfNeeded,
       getNamespaceReducer,
       match
     } = this.props;
     // fetchGetVolumesByNSIfNeeded(match.params.idName);
+    fetchGetConfigMapsByNSIfNeeded(match.params.idName);
     fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
     if (getNamespaceReducer.readyStatus !== GET_NAMESPACE_SUCCESS) {
       fetchGetNamespaceIfNeeded(match.params.idName);
@@ -110,6 +116,27 @@ export class CreateDeployment extends PureComponent<Props> {
     //   }
     // }
     if (
+      this.props.getConfigMapsByNSReducer.readyStatus !==
+        nextProps.getConfigMapsByNSReducer.readyStatus &&
+      nextProps.getConfigMapsByNSReducer.readyStatus ===
+        GET_CONFIG_MAPS_BY_NS_SUCCESS
+    ) {
+      // if (nextProps.getConfigMapsByNSReducer.data.length) {
+      //   const nextState = Object.assign([], this.state.containers);
+      //   nextState[0].configMaps = nextProps.getConfigMapsByNSReducer.data;
+      //   this.setState({
+      //     ...this.state,
+      //     containers: nextState
+      //   });
+      // }
+      if (nextProps.getConfigMapsByNSReducer.data.length) {
+        this.setState({
+          ...this.state,
+          configMaps: nextProps.getConfigMapsByNSReducer.data
+        });
+      }
+    }
+    if (
       this.props.getDeploymentReducer.readyStatus !==
         nextProps.getDeploymentReducer.readyStatus &&
       nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS
@@ -125,7 +152,8 @@ export class CreateDeployment extends PureComponent<Props> {
           limits,
           ports,
           env,
-          commands
+          commands,
+          config_maps: configMaps
           // volumes
         } = item;
         if (ports) {
@@ -149,6 +177,14 @@ export class CreateDeployment extends PureComponent<Props> {
         //     return null;
         //   });
         // }
+        if (configMaps) {
+          configMaps.map(itemConfigMap => {
+            itemConfigMap.id = _.uniqueId();
+            itemConfigMap.index = index + 1;
+            delete itemConfigMap.mode;
+            return null;
+          });
+        }
         return {
           id: _.uniqueId(),
           image,
@@ -173,7 +209,8 @@ export class CreateDeployment extends PureComponent<Props> {
             }
           ],
           command: commands || [],
-          volumeMounts: []
+          volumeMounts: [],
+          config_maps: configMaps || []
           // volumeMounts: volumes || []
         };
       });
@@ -232,13 +269,40 @@ export class CreateDeployment extends PureComponent<Props> {
           }
         ],
         command: [],
-        volumeMounts: []
+        volumeMounts: [],
+        config_maps: []
       }
     ],
     volumes: [],
+    configMaps: [],
     containersCount: 1,
     isActiveService: false,
-    activeSubMenu: `container${1}`
+    activeSubMenu: `container${1}`,
+
+    currentDeployment: '',
+    isActiveInternal: false,
+    isActiveExternal: false,
+    internalSrvObject: [
+      {
+        internalSrvName: '',
+        internalSrvPort: '',
+        internalSrvTargetPort: '',
+        intServiceType: 'TCP',
+        id: _.uniqueId(),
+        index: 0
+      }
+    ],
+    internalSrvName: '',
+    externalSrvObject: [
+      {
+        externalSrvName: '',
+        externalSrvTargetPort: '',
+        extServiceType: 'TCP',
+        id: _.uniqueId(),
+        index: 0
+      }
+    ],
+    externalSrvName: ''
   });
   handleSubmitDeployment = e => {
     e.preventDefault();
@@ -589,7 +653,8 @@ export class CreateDeployment extends PureComponent<Props> {
             }
           ],
           command: [],
-          volumeMounts: []
+          volumeMounts: [],
+          config_maps: []
         }
       ]
     });
@@ -728,54 +793,53 @@ export class CreateDeployment extends PureComponent<Props> {
     });
   };
   // Volume
-  handleChangeVolumeSelect = (value, id, index, indexVolume) => {
+  handleChangeSelect = (value, id, index, indexVolume, type) => {
     const nextState = Object.assign([], this.state.containers);
-    nextState[index].volumeMounts[indexVolume].name = value;
+    nextState[index][type][indexVolume].name = value;
     this.setState({
       ...this.state,
       containers: nextState
     });
   };
-  handleChangeInputVolumePath = (value, id, index, indexVolume, type) => {
+  handleChangeInputPath = (value, id, index, indexVolume, type, typeList) => {
     const nextState = Object.assign([], this.state.containers);
-    nextState[index].volumeMounts[indexVolume][`${type}`] = value;
+    nextState[index][typeList][indexVolume][`${type}`] = value;
     this.setState({
       ...this.state,
       containers: nextState
     });
   };
-  handleClickRemoveVolume = (id, index) => {
+  handleClickRemove = (id, index, type) => {
     const nextState = Object.assign([], this.state.containers);
-    if (this.state.containers[index].volumeMounts.length > 1) {
-      const match = nextState[index].volumeMounts.filter(
-        volume => volume.id !== id
-      );
-      nextState[index].volumeMounts = match;
+    if (this.state.containers[index][type].length > 1) {
+      const match = nextState[index][type].filter(volume => volume.id !== id);
+      nextState[index][type] = match;
       this.setState({
         ...this.state,
         containers: nextState
       });
     } else {
-      nextState[index].volumeMounts = [
-        {
-          name: this.state.volumes[0].name,
-          mountPath: '',
-          subPath: '',
-          id: _.uniqueId(),
-          index: 0
-        }
-      ];
+      nextState[index][type] = [];
+      // [
+      //   {
+      //     name: this.state[typeList][0].name,
+      //     mount_path: '',
+      //     subPath: '',
+      //     id: _.uniqueId(),
+      //     index: 0
+      //   }
+      // ];
       this.setState({
         ...this.state,
         containers: nextState
       });
     }
   };
-  handleClickAddVolume = index => {
+  handleClickAdd = (index, type, typeList) => {
     const containers = this.state.containers.slice();
-    containers[index].volumeMounts.push({
-      name: this.state.volumes[0].name,
-      mountPath: '',
+    containers[index][type].push({
+      name: this.state[typeList][0].name,
+      mount_path: '',
       subPath: '',
       id: _.uniqueId(),
       index: 0
@@ -1244,7 +1308,13 @@ export class CreateDeployment extends PureComponent<Props> {
       getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS &&
       this.state.containers[0].name
     ) {
-      const { replicas, containers, containersCount, volumes } = this.state;
+      const {
+        replicas,
+        containers,
+        containersCount,
+        configMaps,
+        volumes
+      } = this.state;
       return (
         <div>
           <Replicas
@@ -1257,6 +1327,7 @@ export class CreateDeployment extends PureComponent<Props> {
               key={item.id}
               item={item}
               index={index}
+              configMaps={configMaps}
               volumes={volumes}
               containersCount={containersCount}
               handleClickContainerRemove={this.handleClickContainerRemove}
@@ -1270,10 +1341,10 @@ export class CreateDeployment extends PureComponent<Props> {
               handleChangeInputEnvironment={this.handleChangeInputEnvironment}
               handleClickRemoveEnvironment={this.handleClickRemoveEnvironment}
               handleClickAddEnvironment={this.handleClickAddEnvironment}
-              handleChangeVolumeSelect={this.handleChangeVolumeSelect}
-              handleChangeInputVolumePath={this.handleChangeInputVolumePath}
-              handleClickRemoveVolume={this.handleClickRemoveVolume}
-              handleClickAddVolume={this.handleClickAddVolume}
+              handleChangeSelect={this.handleChangeSelect}
+              handleChangeInputPath={this.handleChangeInputPath}
+              handleClickRemove={this.handleClickRemove}
+              handleClickAdd={this.handleClickAdd}
             />
           ))}
         </div>
@@ -1342,18 +1413,22 @@ const connector: Connector<{}, Props> = connect(
     // getVolumesByNSReducer,
     getNamespaceReducer,
     updateDeploymentReducer,
-    getDeploymentReducer
+    getDeploymentReducer,
+    getConfigMapsByNSReducer
   }: ReduxState) => ({
     // getVolumesByNSReducer,
     getNamespaceReducer,
     updateDeploymentReducer,
-    getDeploymentReducer
+    getDeploymentReducer,
+    getConfigMapsByNSReducer
   }),
   (dispatch: Dispatch) => ({
     // fetchGetVolumesByNSIfNeeded: (idName: string) =>
     //   dispatch(actionGetVolumes.fetchGetVolumesByNSIfNeeded(idName)),
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
+    fetchGetConfigMapsByNSIfNeeded: (idName: string) =>
+      dispatch(actionGetConfigMapsByNS.fetchGetConfigMapsByNSIfNeeded(idName)),
     fetchUpdateDeploymentIfNeeded: (
       idName: string,
       idDep: string,

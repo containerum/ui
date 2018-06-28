@@ -19,21 +19,22 @@ const formClassName = globalClass('formInputText', 'formControl');
 const columnClassName = globalClass('columnCustomVolumes', 'marginLeft_10');
 
 type Props = {
-  volumeMounts: Array<Object>,
+  configMaps: Array<Object>,
+  configMapsMounts: Array<Object>,
   index: number,
-  volumes: Array<Object>,
+  isContainersMore: boolean,
   handleChangeSelect: (
     value: string,
     id: string,
     index: number,
-    indexVolume: number,
+    indexConfigMap: number,
     type: string
   ) => void,
   handleChangeInputPath: (
     value: string,
     id: string,
     index: number,
-    indexVolume: number,
+    indexConfigMap: number,
     type: string,
     typeList: string
   ) => void,
@@ -46,10 +47,11 @@ type Props = {
   handleClickAdd: (index: number, type: string, typeList: string) => void
 };
 
-const Volumes = ({
-  volumeMounts,
+const ConfigMap = ({
+  configMaps,
+  configMapsMounts,
   index,
-  volumes,
+  isContainersMore,
   handleChangeSelect,
   handleChangeInputPath,
   handleClickRemove,
@@ -57,11 +59,14 @@ const Volumes = ({
 }: Props) => (
   <div
     className={`${globalStyles.rowLine} row`}
-    id={`container${index + 1}-volume`}
+    id={`container${index + 1}-configMap`}
+    style={
+      configMaps.length && isContainersMore ? {} : { borderBottom: 'none' }
+    }
   >
     <div className="col-md-12">
       <div className={titleClassName}>
-        Volume
+        ConfigMap
         {/* <Tooltip */}
         {/* placement='top' */}
         {/* trigger={['hover']} */}
@@ -72,10 +77,9 @@ const Volumes = ({
       </div>
     </div>
 
-    {volumes.length && volumeMounts.length
-      ? volumeMounts.map((item, indexVolume) => {
-          // console.log(item);
-          const { id, name, subPath, mount_path: mountPath } = item;
+    {configMaps.length && configMapsMounts.length
+      ? configMapsMounts.map((item, indexConfigMap) => {
+          const { id, name, mount_path: mountPath } = item;
           return (
             <div className="row ml-0" style={{ width: '100%' }} key={id}>
               <div className={`${globalStyles.columnCustomVolumes} col-md-4`}>
@@ -84,7 +88,7 @@ const Volumes = ({
                     <div className={globalStyles.selectArrow} />
                     <div className={globalStyles.selectArrow} />
                     <select
-                      name="volumes"
+                      name="configMaps"
                       className={globalStyles.selectCustom}
                       value={name}
                       onChange={e =>
@@ -92,53 +96,26 @@ const Volumes = ({
                           e.target.value,
                           id,
                           index,
-                          indexVolume,
-                          'volumeMounts'
+                          indexConfigMap,
+                          'config_maps'
                         )
                       }
                       required
                     >
-                      {volumes.map(volumeMount => (
-                        <option
-                          key={volumeMount.label}
-                          value={volumeMount.label}
-                        >
-                          {volumeMount.label}
+                      {configMaps.map(configMap => (
+                        <option key={configMap.name} value={configMap.name}>
+                          {configMap.name}
                         </option>
                       ))}
                     </select>
                   </div>
-                  {indexVolume === 0 && (
+                  {indexConfigMap === 0 && (
                     <div className={globalStyles.formGroupHelper}>
-                      Choose your existing Volume <br />
+                      Choose your existing ConfigMap <br />
                       Path - The Folder into your Container or Pod
                     </div>
                   )}
                 </div>
-              </div>
-              <div className={`${globalStyles.columnCustomVolumes} col-md-4`}>
-                <InputControl
-                  value={subPath}
-                  id={`subPath${id}`}
-                  type="text"
-                  baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
-                  baseClassNameLabel={`${
-                    globalStyles.formGroupLabel
-                  } ${subPath && globalStyles.formGroupLabelOnFocus}`}
-                  labelText="SubPath"
-                  baseClassNameHelper={globalStyles.formGroupHelper}
-                  subPath="true"
-                  handleChangeInput={e =>
-                    handleChangeInputPath(
-                      e.target.value,
-                      id,
-                      index,
-                      indexVolume,
-                      'subPath',
-                      'volumeMounts'
-                    )
-                  }
-                />
               </div>
               <div className={`${columnClassName} col-md-4`}>
                 <InputControl
@@ -159,8 +136,9 @@ const Volumes = ({
                       e.target.value,
                       id,
                       index,
-                      indexVolume,
-                      'mount_path'
+                      indexConfigMap,
+                      'mount_path',
+                      'config_maps'
                     )
                   }
                 />
@@ -168,7 +146,7 @@ const Volumes = ({
               <div
                 className="col-md-1"
                 onClick={() =>
-                  handleClickRemove(id, index, 'volumeMounts', 'volumes')
+                  handleClickRemove(id, index, 'config_maps', 'configMaps')
                 }
                 role="presentation"
               >
@@ -182,20 +160,20 @@ const Volumes = ({
           );
         })
       : ''}
-    {volumes.length ? (
+    {configMaps.length ? (
       <div className="col-md-12">
         <div
           className={`${buttonsStyles.buttonUIAddBlock} ml-0`}
-          onClick={() => handleClickAdd(index, 'volumeMounts', 'volumes')}
+          onClick={() => handleClickAdd(index, 'config_maps', 'configMaps')}
           role="presentation"
         >
-          + Add Volume
+          + Attach ConfigMap
         </div>
       </div>
     ) : (
-      <div style={{ marginLeft: '15px' }}>You don`t have volumes</div>
+      <div style={{ marginLeft: '15px' }}>You don`t have configMaps</div>
     )}
   </div>
 );
 
-export default Volumes;
+export default ConfigMap;

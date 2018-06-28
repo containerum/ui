@@ -25,6 +25,7 @@ import Notification from '../Notification';
 import NavigationHeaderItem from '../NavigationHeader';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import PodsPage from '../Pods';
+import LinkedConfigMapsList from '../LinkedConfigMaps';
 import globalStyles from '../../theme/global.scss';
 import {
   GET_NAMESPACES_FAILURE,
@@ -198,11 +199,29 @@ export class Deployment extends PureComponent<Props> {
                         Pods
                       </NavLink>
                     </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.getDeploymentLinkedConfigMapsLink(
+                          match.params.idName,
+                          match.params.idDep
+                        )}
+                      >
+                        Linked ConfigMaps
+                      </NavLink>
+                    </li>
                   </ul>
                 </div>
               </div>
               <Switch>
                 <Route path={`${match.path}/pods`} exact component={PodsPage} />
+                <Route
+                  path={`${match.path}/linkedConfigMaps`}
+                  exact
+                  component={LinkedConfigMapsList}
+                />
                 <Route
                   path={`${match.url}`}
                   exact
