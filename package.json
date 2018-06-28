@@ -148,6 +148,7 @@
     },
     "rules": {
       "no-alert": 0,
+      "no-unused-expressions": 0,
       "global-require": 0,
       "no-nested-ternary": 0,
       "no-underscore-dangle": 0,

@@ -3,7 +3,7 @@
 import type { Dispatch } from './types';
 import { routerLinks, sourceType } from './config';
 import { fetchGetProfileIfNeeded } from './actions/profileActions/getProfile';
-import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
+// import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
 // import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
 import { fetchGetNamespaceIfNeeded } from './actions/namespaceActions/getNamespace';
 import { fetchGetDeploymentsIfNeeded } from './actions/deploymentsActions/getDeployments';
@@ -87,7 +87,6 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([
-        dispatch(fetchGetNamespacesIfNeeded()),
         dispatch(fetchGetSolutionsIfNeeded()),
         dispatch(fetchGetResourcesIfNeeded()),
         dispatch(fetchGetProfileIfNeeded())
@@ -99,10 +98,7 @@ export default [
     component: NamespacesPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetNamespacesIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.namespace,

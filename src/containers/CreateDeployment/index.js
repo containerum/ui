@@ -11,6 +11,7 @@ import Scrollspy from 'react-scrollspy';
 
 import scrollById from '../../functions/scrollById';
 // import * as actionGetVolumes from '../../actions/volumesActions/getVolumesByNS';
+import * as actionGetConfigMapsByNS from '../../actions/configMapActions/getConfigMapsByNS';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionCreateDeployment from '../../actions/deploymentActions/createDeployment';
 import * as actionCreateInternalService from '../../actions/serviceActions/createInternalService';
@@ -21,6 +22,12 @@ import * as actionCreateExternalService from '../../actions/serviceActions/creat
 //   GET_VOLUMES_BY_NS_FAILURE,
 //   GET_VOLUMES_BY_NS_SUCCESS
 // } from '../../constants/volumesConstants/getVolumesByNS';
+import {
+  GET_CONFIG_MAPS_BY_NS_INVALID,
+  GET_CONFIG_MAPS_BY_NS_REQUESTING,
+  GET_CONFIG_MAPS_BY_NS_FAILURE,
+  GET_CONFIG_MAPS_BY_NS_SUCCESS
+} from '../../constants/configMapConstants/getConfigMapsByNS';
 import { GET_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/getNamespace';
 import { CREATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/createDeployment';
 import type { Dispatch, ReduxState } from '../../types';
@@ -56,9 +63,11 @@ type Props = {
   // getVolumesByNSReducer: Object,
   getNamespaceReducer: Object,
   createDeploymentReducer: Object,
+  getConfigMapsByNSReducer: Object,
   history: Object,
   match: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
+  fetchGetConfigMapsByNSIfNeeded: (idName: string) => void,
   // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchCreateDeploymentIfNeeded: (idName: string, data: Object) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
@@ -74,11 +83,13 @@ export class CreateDeployment extends PureComponent<Props> {
   componentDidMount() {
     const {
       // fetchGetVolumesByNSIfNeeded,
+      fetchGetConfigMapsByNSIfNeeded,
       fetchGetNamespaceIfNeeded,
       getNamespaceReducer,
       match
     } = this.props;
     // fetchGetVolumesByNSIfNeeded(match.params.idName);
+    fetchGetConfigMapsByNSIfNeeded(match.params.idName);
     if (getNamespaceReducer.readyStatus !== GET_NAMESPACE_SUCCESS) {
       fetchGetNamespaceIfNeeded(match.params.idName);
     }
@@ -96,6 +107,27 @@ export class CreateDeployment extends PureComponent<Props> {
     //     });
     //   }
     // }
+    if (
+      this.props.getConfigMapsByNSReducer.readyStatus !==
+        nextProps.getConfigMapsByNSReducer.readyStatus &&
+      nextProps.getConfigMapsByNSReducer.readyStatus ===
+        GET_CONFIG_MAPS_BY_NS_SUCCESS
+    ) {
+      // if (nextProps.getConfigMapsByNSReducer.data.length) {
+      //   const nextState = Object.assign([], this.state.containers);
+      //   nextState[0].configMaps = nextProps.getConfigMapsByNSReducer.data;
+      //   this.setState({
+      //     ...this.state,
+      //     containers: nextState
+      //   });
+      // }
+      if (nextProps.getConfigMapsByNSReducer.data.length) {
+        this.setState({
+          ...this.state,
+          configMaps: nextProps.getConfigMapsByNSReducer.data
+        });
+      }
+    }
     if (
       this.props.createDeploymentReducer.readyStatus !==
         nextProps.createDeploymentReducer.readyStatus &&
@@ -165,10 +197,12 @@ export class CreateDeployment extends PureComponent<Props> {
           }
         ],
         command: [],
-        volumeMounts: []
+        volumeMounts: [],
+        config_maps: []
       }
     ],
     volumes: [],
+    configMaps: [],
     containersCount: 1,
     isActiveService: false,
     activeSubMenu: `container${1}`,
@@ -244,6 +278,10 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-volume-spy`
             ).style.display =
               'block';
+            document.getElementById(
+              `container${item}-configMap-spy`
+            ).style.display =
+              'block';
           } else {
             document.getElementById(`container${item}-info-spy`).style.display =
               'none';
@@ -265,6 +303,10 @@ export class CreateDeployment extends PureComponent<Props> {
               'none';
             document.getElementById(
               `container${item}-volume-spy`
+            ).style.display =
+              'none';
+            document.getElementById(
+              `container${item}-configMap-spy`
             ).style.display =
               'none';
           }
@@ -302,6 +344,10 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-volume-spy`
             ).style.display =
               'block';
+            document.getElementById(
+              `container${item}-configMap-spy`
+            ).style.display =
+              'block';
           } else {
             document.getElementById(`container${item}-info-spy`).style.display =
               'none';
@@ -323,6 +369,10 @@ export class CreateDeployment extends PureComponent<Props> {
               'none';
             document.getElementById(
               `container${item}-volume-spy`
+            ).style.display =
+              'none';
+            document.getElementById(
+              `container${item}-configMap-spy`
             ).style.display =
               'none';
           }
@@ -360,6 +410,10 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-volume-spy`
             ).style.display =
               'block';
+            document.getElementById(
+              `container${item}-configMap-spy`
+            ).style.display =
+              'block';
           } else {
             document.getElementById(`container${item}-info-spy`).style.display =
               'none';
@@ -381,6 +435,10 @@ export class CreateDeployment extends PureComponent<Props> {
               'none';
             document.getElementById(
               `container${item}-volume-spy`
+            ).style.display =
+              'none';
+            document.getElementById(
+              `container${item}-configMap-spy`
             ).style.display =
               'none';
           }
@@ -415,6 +473,10 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-volume-spy`
             ).style.display =
               'block';
+            document.getElementById(
+              `container${item}-configMap-spy`
+            ).style.display =
+              'block';
           } else {
             document.getElementById(`container${item}-info-spy`).style.display =
               'none';
@@ -436,6 +498,10 @@ export class CreateDeployment extends PureComponent<Props> {
               'none';
             document.getElementById(
               `container${item}-volume-spy`
+            ).style.display =
+              'none';
+            document.getElementById(
+              `container${item}-configMap-spy`
             ).style.display =
               'none';
           }
@@ -470,6 +536,10 @@ export class CreateDeployment extends PureComponent<Props> {
               `container${item}-volume-spy`
             ).style.display =
               'block';
+            document.getElementById(
+              `container${item}-configMap-spy`
+            ).style.display =
+              'block';
           } else {
             document.getElementById(`container${item}-info-spy`).style.display =
               'none';
@@ -491,6 +561,10 @@ export class CreateDeployment extends PureComponent<Props> {
               'none';
             document.getElementById(
               `container${item}-volume-spy`
+            ).style.display =
+              'none';
+            document.getElementById(
+              `container${item}-configMap-spy`
             ).style.display =
               'none';
           }
@@ -604,7 +678,8 @@ export class CreateDeployment extends PureComponent<Props> {
             }
           ],
           command: [],
-          volumeMounts: []
+          volumeMounts: [],
+          config_maps: []
         }
       ]
     });
@@ -743,54 +818,53 @@ export class CreateDeployment extends PureComponent<Props> {
     });
   };
   // Volume
-  handleChangeVolumeSelect = (value, id, index, indexVolume) => {
+  handleChangeSelect = (value, id, index, indexVolume, type) => {
     const nextState = Object.assign([], this.state.containers);
-    nextState[index].volumeMounts[indexVolume].name = value;
+    nextState[index][type][indexVolume].name = value;
     this.setState({
       ...this.state,
       containers: nextState
     });
   };
-  handleChangeInputVolumePath = (value, id, index, indexVolume, type) => {
+  handleChangeInputPath = (value, id, index, indexVolume, type, typeList) => {
     const nextState = Object.assign([], this.state.containers);
-    nextState[index].volumeMounts[indexVolume][`${type}`] = value;
+    nextState[index][typeList][indexVolume][`${type}`] = value;
     this.setState({
       ...this.state,
       containers: nextState
     });
   };
-  handleClickRemoveVolume = (id, index) => {
+  handleClickRemove = (id, index, type) => {
     const nextState = Object.assign([], this.state.containers);
-    if (this.state.containers[index].volumeMounts.length > 1) {
-      const match = nextState[index].volumeMounts.filter(
-        volume => volume.id !== id
-      );
-      nextState[index].volumeMounts = match;
+    if (this.state.containers[index][type].length > 1) {
+      const match = nextState[index][type].filter(volume => volume.id !== id);
+      nextState[index][type] = match;
       this.setState({
         ...this.state,
         containers: nextState
       });
     } else {
-      nextState[index].volumeMounts = [
-        {
-          name: this.state.volumes[0].name,
-          mountPath: '',
-          subPath: '',
-          id: _.uniqueId(),
-          index: 0
-        }
-      ];
+      nextState[index][type] = [];
+      // [
+      //   {
+      //     name: this.state[typeList][0].name,
+      //     mount_path: '',
+      //     subPath: '',
+      //     id: _.uniqueId(),
+      //     index: 0
+      //   }
+      // ];
       this.setState({
         ...this.state,
         containers: nextState
       });
     }
   };
-  handleClickAddVolume = index => {
+  handleClickAdd = (index, type, typeList) => {
     const containers = this.state.containers.slice();
-    containers[index].volumeMounts.push({
-      name: this.state.volumes[0].name,
-      mountPath: '',
+    containers[index][type].push({
+      name: this.state[typeList][0].name,
+      mount_path: '',
       subPath: '',
       id: _.uniqueId(),
       index: 0
@@ -853,6 +927,35 @@ export class CreateDeployment extends PureComponent<Props> {
     //   );
     // }
 
+    const { getConfigMapsByNSReducer } = this.props;
+    if (
+      !getConfigMapsByNSReducer.readyStatus ||
+      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_INVALID ||
+      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_REQUESTING
+    ) {
+      return (
+        <div>
+          {new Array(9).fill().map(() => (
+            <img
+              key={_.uniqueId()}
+              src={require('../../images/create-dep-serv.svg')}
+              style={{
+                marginTop: '-2px',
+                marginBottom: '30px',
+                width: '100%'
+              }}
+              alt="create service"
+            />
+          ))}
+        </div>
+      );
+    }
+
+    if (
+      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_FAILURE
+    ) {
+      return <p>Oops, Failed to load data of Deployment!</p>;
+    }
     const arrayOfContainersLinks = [
       'name',
       'labels',
@@ -864,6 +967,7 @@ export class CreateDeployment extends PureComponent<Props> {
       'container1-commands',
       'container1-environments',
       'container1-volume',
+      'container1-configMap',
       'container2',
       'container2-info',
       'container2-parameters',
@@ -871,13 +975,15 @@ export class CreateDeployment extends PureComponent<Props> {
       'container2-commands',
       'container2-environments',
       'container2-volume',
+      'container2-configMap',
       'container3',
       'container3-info',
       'container3-parameters',
       'container3-image-ports',
       'container3-commands',
       'container3-environments',
-      'container3-volume'
+      'container3-volume',
+      'container3-configMap'
     ];
     const { containers } = this.state;
     return (
@@ -1002,6 +1108,19 @@ export class CreateDeployment extends PureComponent<Props> {
             role="presentation"
           >
             Volume
+          </div>
+        </div>
+        <div
+          className={`${styles.sideMenuHeader} m-0`}
+          id={`container${1}-configMap-spy`}
+        >
+          <div
+            className={`${menuItemClassName} nav-link`}
+            onClick={() => scrollById(`container${1}-configMap`)}
+            onKeyPress={() => scrollById(`container${1}-configMap`)}
+            role="presentation"
+          >
+            ConfigMap
           </div>
         </div>
 
@@ -1136,6 +1255,22 @@ export class CreateDeployment extends PureComponent<Props> {
             Volume
           </div>
         </div>
+        <div
+          className={`${styles.sideMenuHeader} m-0`}
+          id={`container${2}-configMap-spy`}
+          style={
+            containers.length === 1 ? { display: 'none' } : { display: 'block' }
+          }
+        >
+          <div
+            className={`${menuItemClassName} nav-link`}
+            onClick={() => scrollById(`container${2}-configMap`)}
+            onKeyPress={() => scrollById(`container${2}-configMap`)}
+            role="presentation"
+          >
+            ConfigMap
+          </div>
+        </div>
 
         <div
           className={styles.sideMenuHeader}
@@ -1248,6 +1383,22 @@ export class CreateDeployment extends PureComponent<Props> {
             Volume
           </div>
         </div>
+        <div
+          className={`${styles.sideMenuHeader} m-0`}
+          id={`container${3}-configMap-spy`}
+          style={
+            containers.length <= 2 ? { display: 'none' } : { display: 'block' }
+          }
+        >
+          <div
+            className={`${menuItemClassName} nav-link`}
+            onClick={() => scrollById(`container${3}-configMap`)}
+            onKeyPress={() => scrollById(`container${3}-configMap`)}
+            role="presentation"
+          >
+            ConfigMap
+          </div>
+        </div>
 
         <div className={styles.sideMenuHeader}>
           <div
@@ -1263,7 +1414,6 @@ export class CreateDeployment extends PureComponent<Props> {
     );
   };
   renderCreateDeployment = () => {
-    const { match } = this.props;
     // const { getVolumesByNSReducer, match } = this.props;
     // if (
     //   !getVolumesByNSReducer.readyStatus ||
@@ -1292,6 +1442,36 @@ export class CreateDeployment extends PureComponent<Props> {
     //   return <p>Oops, Failed to load data of Deployment!</p>;
     // }
 
+    const { getConfigMapsByNSReducer, match } = this.props;
+    if (
+      !getConfigMapsByNSReducer.readyStatus ||
+      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_INVALID ||
+      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_REQUESTING
+    ) {
+      return (
+        <div>
+          {new Array(9).fill().map(() => (
+            <img
+              key={_.uniqueId()}
+              src={require('../../images/create-dep-serv.svg')}
+              style={{
+                marginTop: '-2px',
+                marginBottom: '30px',
+                width: '100%'
+              }}
+              alt="create service"
+            />
+          ))}
+        </div>
+      );
+    }
+
+    if (
+      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_FAILURE
+    ) {
+      return <p>Oops, Failed to load data of Deployment!</p>;
+    }
+
     const {
       name,
       // labels,
@@ -1299,6 +1479,7 @@ export class CreateDeployment extends PureComponent<Props> {
       containers,
       containersCount,
       volumes,
+      configMaps,
       isActiveService
     } = this.state;
     return (
@@ -1324,6 +1505,7 @@ export class CreateDeployment extends PureComponent<Props> {
             item={item}
             index={index}
             volumes={volumes}
+            configMaps={configMaps}
             containersCount={containersCount}
             handleClickContainerRemove={this.handleClickContainerRemove}
             handleClickContainerAdd={this.handleClickContainerAdd}
@@ -1336,10 +1518,10 @@ export class CreateDeployment extends PureComponent<Props> {
             handleChangeInputEnvironment={this.handleChangeInputEnvironment}
             handleClickRemoveEnvironment={this.handleClickRemoveEnvironment}
             handleClickAddEnvironment={this.handleClickAddEnvironment}
-            handleChangeVolumeSelect={this.handleChangeVolumeSelect}
-            handleChangeInputVolumePath={this.handleChangeInputVolumePath}
-            handleClickRemoveVolume={this.handleClickRemoveVolume}
-            handleClickAddVolume={this.handleClickAddVolume}
+            handleChangeSelect={this.handleChangeSelect}
+            handleChangeInputPath={this.handleChangeInputPath}
+            handleClickRemove={this.handleClickRemove}
+            handleClickAdd={this.handleClickAdd}
           />
         ))}
         <div id="linked-services">
@@ -1458,19 +1640,23 @@ const connector: Connector<{}, Props> = connect(
     getNamespaceReducer,
     createDeploymentReducer,
     createExternalDeploymentReducer,
-    createInternalDeploymentReducer
+    createInternalDeploymentReducer,
+    getConfigMapsByNSReducer
   }: ReduxState) => ({
     // getVolumesByNSReducer,
     getNamespaceReducer,
     createDeploymentReducer,
     createExternalDeploymentReducer,
-    createInternalDeploymentReducer
+    createInternalDeploymentReducer,
+    getConfigMapsByNSReducer
   }),
   (dispatch: Dispatch) => ({
     // fetchGetVolumesByNSIfNeeded: (idName: string) =>
     //   dispatch(actionGetVolumes.fetchGetVolumesByNSIfNeeded(idName)),
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
+    fetchGetConfigMapsByNSIfNeeded: (idName: string) =>
+      dispatch(actionGetConfigMapsByNS.fetchGetConfigMapsByNSIfNeeded(idName)),
     fetchCreateDeploymentIfNeeded: (idName: string, data: Object) =>
       dispatch(
         actionCreateDeployment.fetchCreateDeploymentIfNeeded(idName, data)
