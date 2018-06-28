@@ -51,6 +51,7 @@ import {
   GET_PROFILE_INVALID,
   GET_PROFILE_REQUESTING
 } from '../../constants/profileConstants/getProfile';
+import * as actionGetConfigMaps from '../../actions/configMapActions/getConfigMaps';
 
 type Props = {
   history: Object,
@@ -59,6 +60,8 @@ type Props = {
   getBalanceReducer: Object,
   getSolutionsReducer: Object,
   getResourcesReducer: Object,
+  getConfigMapsReducer: Object,
+  fetchGetConfigMapsIfNeeded: Object,
   fetchGetNamespacesIfNeeded: () => void,
   fetchGetSolutionsIfNeeded: () => void,
   fetchGetResourcesIfNeeded: () => void
@@ -78,9 +81,14 @@ export class Dashboard extends PureComponent<Props> {
     };
   }
   componentDidMount() {
-    const { fetchGetSolutionsIfNeeded, fetchGetResourcesIfNeeded } = this.props;
+    const {
+      fetchGetSolutionsIfNeeded,
+      fetchGetResourcesIfNeeded,
+      fetchGetConfigMapsIfNeeded
+    } = this.props;
     fetchGetSolutionsIfNeeded();
     fetchGetResourcesIfNeeded();
+    fetchGetConfigMapsIfNeeded();
   }
   componentWillUpdate(nextProps, nextState) {
     if (
@@ -308,7 +316,8 @@ export class Dashboard extends PureComponent<Props> {
     const {
       getResourcesReducer,
       getBalanceReducer,
-      getNamespacesReducer
+      getNamespacesReducer,
+      getConfigMapsReducer
     } = this.props;
     if (
       (isOnline &&
@@ -370,6 +379,7 @@ export class Dashboard extends PureComponent<Props> {
     }
     return (
       <DashboardBlockTourAndNews
+        configmaps={getConfigMapsReducer}
         resources={getResourcesReducer.data}
         balance={isOnline ? getBalanceReducer.data.balance : null}
         linkToDeployment={
@@ -378,7 +388,7 @@ export class Dashboard extends PureComponent<Props> {
         linkToManageTeam={
           getNamespacesReducer.data.length
             ? getNamespacesReducer.data.find(
-                ns => (ns.access === 'admin' ? ns.access : '')
+                ns => (ns.access === 'owner' ? ns.access : '')
               )
             : ''
         }
@@ -495,13 +505,15 @@ const connector: Connector<{}, Props> = connect(
     getNamespacesReducer,
     getBalanceReducer,
     getSolutionsReducer,
-    getResourcesReducer
+    getResourcesReducer,
+    getConfigMapsReducer
   }: ReduxState) => ({
     getProfileReducer,
     getNamespacesReducer,
     getBalanceReducer,
     getSolutionsReducer,
-    getResourcesReducer
+    getResourcesReducer,
+    getConfigMapsReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: (role: string) =>
@@ -509,7 +521,9 @@ const connector: Connector<{}, Props> = connect(
     fetchGetSolutionsIfNeeded: () =>
       dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
     fetchGetResourcesIfNeeded: () =>
-      dispatch(actionGetResources.fetchGetResourcesIfNeeded())
+      dispatch(actionGetResources.fetchGetResourcesIfNeeded()),
+    fetchGetConfigMapsIfNeeded: () =>
+      dispatch(actionGetConfigMaps.fetchGetConfigMapsIfNeeded())
   })
 );
 

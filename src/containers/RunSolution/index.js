@@ -20,6 +20,7 @@ import {
   RUN_SOLUTION_SUCCESS,
   RUN_SOLUTION_FAILURE
 } from '../../constants/solutionConstants/runSolution';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 import RunSolutionModals from '../../components/CustomerModal/RunSolutionModals/RunSolutionModals';
 import { GET_ENVS_SOLUTION_SUCCESS } from '../../constants/solutionConstants/getEnvsSolution';
 import { GET_DEPLOYMENTS_RUNNING_SOLUTION_SUCCESS } from '../../constants/solutionsConstants/getDeploymentsRunningSolution';
@@ -27,6 +28,7 @@ import { GET_SERVICES_RUNNING_SOLUTION_SUCCESS } from '../../constants/solutions
 
 type Props = {
   history: Object,
+  getProfileReducer: Object,
   isOpenedRunSolution: boolean,
   currentSolutionTemplate: string,
   getSolutionsReducer: Object,
@@ -216,7 +218,7 @@ export class RunSolution extends PureComponent<Props> {
     });
   };
   handleChangeInput = value => {
-    const regexp = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?$|^$/;
+    const regexp = /^[a-z][a-z0-9-]*$|^$/;
     if (value.search(regexp) !== -1) {
       this.setState({
         ...this.state,
@@ -245,9 +247,11 @@ export class RunSolution extends PureComponent<Props> {
     } = this.state;
     return (
       <div>
-        {currentSolution &&
+        {this.props.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS &&
+          currentSolution &&
           currentNamespace && (
             <RunSolutionModals
+              login={this.props.getProfileReducer.data.login}
               currentNamespace={currentNamespace}
               currentView={currentView}
               currentSolution={currentSolution}

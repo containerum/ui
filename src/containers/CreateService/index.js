@@ -54,6 +54,8 @@ const selectClassName = globalClass('selectCustom', 'selectGreyColor');
 
 const textHelperClassName = globalClass('textHelper', 'isHidden');
 
+const regexp = /^[a-z][a-z0-9-]*$|^$/;
+
 type Props = {
   getDeploymentsReducer: Object,
   createExternalServiceReducer: Object,
@@ -244,6 +246,7 @@ export class CreateService extends PureComponent<Props> {
       <CreateServiceCardItem
         deploymentsData={getDeploymentsReducer.data}
         idName={match.params.idName}
+        match={match}
         handleSubmitCreateService={e => this.handleSubmitCreateService(e)}
         handleChangeState={obj => this.handleChangeState(obj)}
         handleChangeActivityInternal={() =>
@@ -404,6 +407,22 @@ export class CreateService extends PureComponent<Props> {
                       baseClassButton={`${buttonsStyles.buttonUILoadButton} ${
                         globalStyles.marginBottom50
                       } ${globalStyles.marginTop10}`}
+                      disabled={
+                        (this.state.internalSrvNameValue &&
+                          this.state.internalSrvNameValue.search(regexp) ===
+                            -1) ||
+                        (this.state.internalSrvObject &&
+                          this.state.internalSrvObject[0].internalSrvName.search(
+                            regexp
+                          ) === -1) ||
+                        (this.state.externalSrvNameValue &&
+                          this.state.externalSrvNameValue.search(regexp) ===
+                            -1) ||
+                        (this.state.externalSrvObject &&
+                          this.state.externalSrvObject[0].externalSrvName.search(
+                            regexp
+                          ) === -1)
+                      }
                     />
                   )}
                 </form>

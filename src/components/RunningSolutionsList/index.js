@@ -15,6 +15,7 @@ type Props = {
   data: Object,
   history: Object,
   idName: string,
+  access: string,
   handleDeleteSolution: (name: string) => void
 };
 
@@ -22,6 +23,7 @@ const RunningSolutionsList = ({
   data,
   history,
   idName,
+  access,
   handleDeleteSolution
 }: Props) => {
   const handleClickGetSolution = name => {
@@ -30,7 +32,6 @@ const RunningSolutionsList = ({
   const handleClose = e => {
     e.stopPropagation();
   };
-
   return (
     <div className="tab-content" id="pills-tabContent" style={{ margin: 30 }}>
       <div
@@ -74,44 +75,58 @@ const RunningSolutionsList = ({
                       branch: <span className="status-active">{branch}</span>
                     </a>
                   </div>
-                  <div
-                    className={`${
-                      globalStyles.membershipItem
-                    } solution-container-delete`}
-                    onClick={handleClose}
-                  >
-                    <i
-                      style={{ verticalAlign: 'middle', paddingRight: 30 }}
+                  {!(access === 'read') && (
+                    <div
                       className={`${
-                        globalStyles.membershipIcon
-                      } material-icons `}
-                      role="presentation"
-                      onClick={() => handleDeleteSolution(name)}
+                        globalStyles.membershipItem
+                      } solution-container-delete`}
+                      onClick={handleClose}
                     >
-                      delete
-                    </i>
-                  </div>
+                      <i
+                        style={{ verticalAlign: 'middle', paddingRight: 30 }}
+                        className={`${
+                          globalStyles.membershipIcon
+                        } material-icons `}
+                        role="presentation"
+                        onClick={() => handleDeleteSolution(name)}
+                      >
+                        delete
+                      </i>
+                    </div>
+                  )}
                 </div>
               );
             })}
           </div>
         )}
-        {!data.length && (
-          <div>
-            <div className={globalStyles.createDeploymentWrapper}>
-              <div className={globalStyles.noCreatedPodMessage}>
-                You have no active Solutions yet.<br />Create your 1st Solution
+        {access !== 'read' &&
+          !data.length && (
+            <div>
+              <div className={globalStyles.createDeploymentWrapper}>
+                <div className={globalStyles.noCreatedPodMessage}>
+                  You have no active Solutions yet.<br />Create your 1st
+                  Solution
+                </div>
+                <NavLink
+                  className={btnClassName}
+                  data-toggle="modal"
+                  to={routerLinks.solutions}
+                >
+                  Create Solution
+                </NavLink>
               </div>
-              <NavLink
-                className={btnClassName}
-                data-toggle="modal"
-                to={routerLinks.solutions}
-              >
-                Create Solution
-              </NavLink>
             </div>
-          </div>
-        )}
+          )}
+        {access === 'read' &&
+          !data.length && (
+            <div>
+              <div className={globalStyles.createDeploymentWrapper}>
+                <div className={globalStyles.noCreatedPodMessage}>
+                  No active Solutions yet
+                </div>
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );

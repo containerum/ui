@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
 import 'rc-tooltip/assets/bootstrap_white.css';
+import Tooltip from 'rc-tooltip';
 
 import { routerLinks } from '../../../config';
 import modalStyles from '../index.scss';
@@ -45,6 +46,7 @@ const customStyles = {
 type Props = {
   currentNamespace: string,
   currentView: string,
+  login: string,
   solutionName: string,
   currentSolution: Object,
   getEnvsData: Object,
@@ -71,6 +73,7 @@ const RunSolutionModals = ({
   currentSolution,
   getEnvsData,
   history,
+  login,
   runSolutionReducer,
   deploymentsRunningSolution,
   getEnvsSolutionReducer,
@@ -104,6 +107,11 @@ const RunSolutionModals = ({
       }`;
     }
   }
+  const filterDisplayedNamespaces = displayedNamespaces.filter(
+    ns => ns.access !== 'read'
+  );
+  const regexp = /^[a-z][a-z0-9-]*$|^$/;
+  const isErrorNameSolutionTooltipClass = solutionName.search(regexp) === -1;
   return (
     <Modal
       isOpen={isOpenedSelectNamespace}
@@ -192,29 +200,30 @@ const RunSolutionModals = ({
                 </div>
               </div>
             </div>
-            {currentView === 'first' &&
-              displayedNamespaces.length && (
-                <div onClick={e => handleSubmitCreatingEssence(e, 'next')}>
-                  <LoadButton
-                    style={
-                      getEnvsSolutionReducer.isFetching
-                        ? {
-                            padding: '4px 41px',
-                            width: 117.08
-                          }
-                        : {
-                            padding: '4px 41px'
-                          }
-                    }
-                    type="submit"
-                    buttonText="Next"
-                    isFetching={getEnvsSolutionReducer.isFetching}
-                    disabled={!solutionName}
-                    mini="miniFont"
-                    baseClassButton="btn blue-btn modal-body-next-btn"
-                  />
-                </div>
-              )}
+            {currentView === 'first' && displayedNamespaces.length ? (
+              <div onClick={e => handleSubmitCreatingEssence(e, 'next')}>
+                <LoadButton
+                  style={
+                    getEnvsSolutionReducer.isFetching
+                      ? {
+                          padding: '4px 41px',
+                          width: 117.08
+                        }
+                      : {
+                          padding: '4px 41px'
+                        }
+                  }
+                  type="submit"
+                  buttonText="Next"
+                  isFetching={getEnvsSolutionReducer.isFetching}
+                  disabled={!solutionName}
+                  mini="miniFont"
+                  baseClassButton="btn blue-btn modal-body-next-btn"
+                />
+              </div>
+            ) : (
+              <div />
+            )}
             {currentView === 'second' && (
               <div onClick={e => handleSubmitCreatingEssence(e, 'deploy')}>
                 <LoadButton
@@ -260,20 +269,31 @@ const RunSolutionModals = ({
                 <div className="main-content-title">Projects</div>
                 {displayedNamespaces.length ? (
                   <div>
-                    <InputControl
-                      value={solutionName}
-                      id="solutionName"
-                      type="text"
-                      required
-                      baseClassName="form-group__input-text form-control customInput"
-                      baseClassNameLabel={`form-group__label ${solutionName &&
-                        'form-group__label-always-onfocus'}`}
-                      labelText="Solution name"
-                      baseClassNameHelper={globalStyles.formGroupHelper}
-                      handleChangeInput={e => {
-                        handleChangeInput(e.target.value);
-                      }}
-                    />
+                    <Tooltip
+                      placement="top"
+                      visible
+                      overlay={<span>Invalid domain name</span>}
+                      overlayClassName={
+                        isErrorNameSolutionTooltipClass
+                          ? ''
+                          : 'rc-tooltip-hidden'
+                      }
+                    >
+                      <InputControl
+                        value={solutionName}
+                        id="solutionName"
+                        type="text"
+                        required
+                        baseClassName="form-group__input-text form-control customInput"
+                        baseClassNameLabel={`form-group__label ${solutionName &&
+                          'form-group__label-always-onfocus'}`}
+                        labelText="Solution name"
+                        baseClassNameHelper={globalStyles.formGroupHelper}
+                        handleChangeInput={e => {
+                          handleChangeInput(e.target.value);
+                        }}
+                      />
+                    </Tooltip>
                     <span className={`${modalStyles.modalRedisText} mt-4 mb-4`}>
                       Please, select the Project for Solution installation
                     </span>
@@ -283,12 +303,18 @@ const RunSolutionModals = ({
                       id="namespaceSelect"
                       name="namespaces"
                       onChange={e => handleSelectNamespace(e.target.value)}
-                      value={currentNamespace.label}
                       required
+                      value={
+                        history.location.search
+                          ? history.location.search.substr(1)
+                          : currentNamespace.label
+                      }
+                      disabled={history.location.search}
                     >
-                      {displayedNamespaces.map(ns => (
+                      {filterDisplayedNamespaces.map(ns => (
                         <option key={_.uniqueId()} value={ns.label}>
                           {ns.label}
+                          {login !== ns.owner_login && ` (${ns.owner_login}) `}
                         </option>
                       ))}
                     </select>
