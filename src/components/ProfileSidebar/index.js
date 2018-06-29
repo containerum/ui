@@ -164,22 +164,25 @@ const ProfileSidebar = ({ type }: Props) => (
               </HashLink>
             )}
           </li>
-          {/* <li className="nav-item"> */}
-          {/* {type === 'billing' ? ( */}
-          {/* <div */}
-          {/* className="nav-link" */}
-          {/* onClick={() => scrollById('coupon')} */}
-          {/* onKeyPress={() => scrollById('coupon')} */}
-          {/* role="presentation" */}
-          {/* > */}
-          {/* Promo code */}
-          {/* </div> */}
-          {/* ) : ( */}
-          {/* <HashLink to="/billing#coupon" className="nav-link"> */}
-          {/* Coupon */}
-          {/* </HashLink> */}
-          {/* )} */}
-          {/* </li> */}
+          <li className={`${accountStyles.navItem} nav-item`}>
+            {type === 'billing' ? (
+              <div
+                className={`${accountStyles.navLink} nav-link`}
+                onClick={() => scrollById('coupon')}
+                onKeyPress={() => scrollById('coupon')}
+                role="presentation"
+              >
+                Promo code
+              </div>
+            ) : (
+              <HashLink
+                to="/billing#coupon"
+                className={`${accountStyles.navLink} nav-link`}
+              >
+                Promo code
+              </HashLink>
+            )}
+          </li>
           <li className={`${accountStyles.navItem} nav-item`}>
             {type === 'billing' ? (
               <div
