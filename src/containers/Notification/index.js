@@ -11,7 +11,6 @@ type Props = {
 
 class Notification extends PureComponent<Props> {
   componentWillReceiveProps(nextProps) {
-    // console.log('Notification', nextProps);
     toastr.options = {
       closeButton: true,
       debug: false,

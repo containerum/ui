@@ -52,7 +52,6 @@ type Props = {
   createInternalServiceReducer: Object
 };
 
-// Export this for unit testing more easily
 export class Namespaces extends PureComponent<Props> {
   constructor() {
     super();

@@ -18,7 +18,7 @@ import { CREATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/c
 import Name from '../../components/CreateDeploymentCards/Name';
 import Replicas from '../../components/CreateDeploymentCards/Replicas';
 import Container from '../../components/CreateDeploymentCards/Container';
-import CreateServiceCardItem from '../CreateService/CreateServiceCard';
+import CreateServiceCardItem from '../CreateUpdateServiceBase';
 import globalStyles from '../../theme/global.scss';
 import styles from '../CreateDeployment/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';

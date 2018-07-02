@@ -53,7 +53,6 @@ type Props = {
   fetchGetDeploymentIfNeeded: (idName: string, idDep: string) => void
 };
 
-// Export this for unit testing more easily
 export class LinkedConfigMaps extends PureComponent<Props> {
   constructor() {
     super();

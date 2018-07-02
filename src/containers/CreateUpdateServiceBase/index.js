@@ -5,31 +5,33 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import _ from 'lodash/fp';
 
-import type { ReduxState } from '../../../types';
-import ServiceForm from '../../../components/ServiceFormCard';
-import UpdateServiceForm from '../../../components/UpdateServiceFormCard';
-import { GET_SERVICE_SUCCESS } from '../../../constants/serviceConstants/getService';
+import type { ReduxState } from '../../types';
+import ServiceForm from '../../components/ServiceFormCard';
+import UpdateServiceForm from '../../components/UpdateServiceFormCard';
+import { GET_SERVICE_SUCCESS } from '../../constants/serviceConstants/getService';
 
 type Props = {
   handleChangeState: () => void,
+  handleChangeActivityInternal: () => void,
+  handleChangeActivityExternal: () => void,
+  match: Object,
   isActiveInternal: boolean,
   isActiveExternal: boolean,
   internalSrvObject: Array<Object>,
   externalSrvObject: Array<Object>,
   getServiceReducer: Object,
-  idSrv: string,
-  handleChangeActivityInternal: () => void,
-  handleChangeActivityExternal: () => void
+  idSrv: string
 };
 
-// Export this for unit testing more easily
-export class CreateServiceCard extends PureComponent<Props> {
+export class CreateUpdateServiceBase extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
       service: '',
       isActiveInternal: false,
       isActiveExternal: false,
+      externalSrvNameValue: '',
+      internalSrvNameValue: '',
       internalSrvObject: [
         {
           internalSrvName: '',
@@ -122,7 +124,7 @@ export class CreateServiceCard extends PureComponent<Props> {
             {
               externalSrvName: '',
               externalSrvTargetPort: '',
-              extServiceType: 'TCP',
+              intServiceType: 'TCP',
               id: _.uniqueId(),
               index: 0
             }
@@ -193,8 +195,21 @@ export class CreateServiceCard extends PureComponent<Props> {
       }
     );
   };
+  handleChangeServiceNameValue = (e, type) => {
+    this.setState(
+      {
+        ...this.state,
+        [type]: e.target.value
+      },
+      () => {
+        this.props.handleChangeState(this.state);
+      }
+    );
+  };
   render() {
     const {
+      externalSrvNameValue,
+      internalSrvNameValue,
       isActiveInternal,
       isActiveExternal,
       externalSrvObject,
@@ -224,6 +239,7 @@ export class CreateServiceCard extends PureComponent<Props> {
           />
         ) : (
           <ServiceForm
+            match={this.props.match}
             handleChangeActivityInternal={() => {
               this.props.handleChangeActivityInternal();
               this.setState({
@@ -270,6 +286,11 @@ export class CreateServiceCard extends PureComponent<Props> {
             handleClickAddExternalPort={() => this.handleClickAddExternalPort()}
             externalSrvObject={externalSrvObject}
             internalSrvObject={internalSrvObject}
+            handleChangeServiceNameValue={(e, type) =>
+              this.handleChangeServiceNameValue(e, type)
+            }
+            externalSrvNameValue={externalSrvNameValue}
+            internalSrvNameValue={internalSrvNameValue}
             isActiveInternal={isActiveInternal}
             isActiveExternal={isActiveExternal}
           />
@@ -291,4 +312,4 @@ const connector: Connector<{}, Props> = connect(
   })
 );
 
-export default connector(CreateServiceCard);
+export default connector(CreateUpdateServiceBase);

@@ -48,7 +48,6 @@ const globalClass = className.bind(globalStyles);
 
 const containerClassName = globalClass('contentBlockContainer', 'container');
 
-// Export this for unit testing more easily
 export class Service extends PureComponent<Props> {
   componentDidMount() {
     const {

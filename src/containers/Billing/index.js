@@ -74,7 +74,6 @@ type Props = {
 
 const globalClassName = classNames.bind(globalStyles);
 
-// Export this for unit testing more easily
 export class Billing extends PureComponent<Props> {
   constructor(props) {
     super(props);

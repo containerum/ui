@@ -74,7 +74,6 @@ const Volumes = ({
 
     {volumes.length && volumeMounts.length
       ? volumeMounts.map((item, indexVolume) => {
-          // console.log(item);
           const { id, name, subPath, mount_path: mountPath } = item;
           return (
             <div className="row ml-0" style={{ width: '100%' }} key={id}>

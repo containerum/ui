@@ -47,7 +47,6 @@ type Props = {
   fetchCreateDomainIfNeeded: (idName: string, data: Object) => void
 };
 
-// Export this for unit testing more easily
 export class CreateDomain extends PureComponent<Props> {
   constructor(props) {
     super(props);

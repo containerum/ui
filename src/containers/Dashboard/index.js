@@ -69,7 +69,6 @@ type Props = {
 
 const isOnline = sourceType === 'ONLINE';
 
-// Export this for unit testing more easily
 const dashboardClassName = classNames.bind(styles);
 
 export class Dashboard extends PureComponent<Props> {

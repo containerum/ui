@@ -73,7 +73,6 @@ export const fetchUpdateCustomNamespace = (
     }
   );
   const { status, data, config } = response;
-  // console.log(status, data);
   switch (status) {
     case 200: {
       dispatch(updateNamespaceSuccess(201, status, config.method));

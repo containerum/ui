@@ -20,7 +20,7 @@ import {
 } from '../../constants/serviceConstants/getService';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
-import UpdateServiceCardItem from './CreateServiceCard';
+import CreateUpdateServiceBaseComponent from '../CreateUpdateServiceBase';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import globalStyles from '../../theme/global.scss';
@@ -46,7 +46,6 @@ type Props = {
   fetchUpdateExternalServiceIfNeeded: (idName: string, data: Object) => void
 };
 
-// Export this for unit testing more easily
 export class UpdateService extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -245,7 +244,7 @@ export class UpdateService extends PureComponent<Props> {
       externalSrvObject
     } = this.state;
     return (
-      <UpdateServiceCardItem
+      <CreateUpdateServiceBaseComponent
         deploymentsData={getServiceReducer.data}
         idName={match.params.idName}
         idSrv={match.params.idSrv}
@@ -296,7 +295,6 @@ export class UpdateService extends PureComponent<Props> {
       updateExternalServiceReducer,
       updateInternalServiceReducer
     } = this.props;
-    // console.log(this.props);
     return (
       <div>
         <Helmet

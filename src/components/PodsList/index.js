@@ -45,8 +45,6 @@ const PodsList = ({
   const handleClose = e => {
     e.stopPropagation();
   };
-  // const ta = timeago();
-  // console.log(data);
   const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   return (
     <div>

@@ -74,7 +74,6 @@ export const fetchCreateCustomNamespace = (
     }
   );
   const { status, data, config } = response;
-  // console.log(status, data);
   switch (status) {
     case 201: {
       dispatch(

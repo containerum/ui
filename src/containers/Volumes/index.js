@@ -45,7 +45,6 @@ type Props = {
   fetchDeleteVolumeIfNeeded: (idVol: string, idName: string) => void
 };
 
-// Export this for unit testing more easily
 export class Volumes extends PureComponent<Props> {
   constructor() {
     super();

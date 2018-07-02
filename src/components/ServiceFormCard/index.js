@@ -90,8 +90,6 @@ const ServiceForm = ({
     match &&
     !match.url.includes('updateService') &&
     externalSrvNameValue.search(regexp) === -1;
-  // console.log('match', match);
-  // console.log('er', isErrorInternalServiceNameTooltipClass);
   return (
     <div>
       <div className={containerClassName} id="internal-service">

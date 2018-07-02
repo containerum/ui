@@ -61,7 +61,6 @@ class RecoveryPassword extends PureComponent<Props> {
       nextProps.recoveryPasswordReducer.readyStatus ===
         RECOVERY_PASSWORD_FAILURE
     ) {
-      // console.log(nextProps.recoveryPasswordReducer);
       if (nextProps.recoveryPasswordReducer.err === 'Invalid link') {
         this.setState({
           ...this.state,
@@ -145,7 +144,6 @@ class RecoveryPassword extends PureComponent<Props> {
     }
   }
   render() {
-    // console.log(this.state);
     const {
       password,
       repeatPassword,

@@ -26,7 +26,7 @@ import {
 import { CREATE_INTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createInternalService';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
-import CreateServiceCardItem from './CreateServiceCard';
+import CreateUpdateServiceBaseComponent from '../CreateUpdateServiceBase';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import { routerLinks } from '../../config';
@@ -67,7 +67,6 @@ type Props = {
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void
 };
 
-// Export this for unit testing more easily
 export class CreateService extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -243,7 +242,7 @@ export class CreateService extends PureComponent<Props> {
     }
 
     return (
-      <CreateServiceCardItem
+      <CreateUpdateServiceBaseComponent
         deploymentsData={getDeploymentsReducer.data}
         idName={match.params.idName}
         match={match}
@@ -296,7 +295,6 @@ export class CreateService extends PureComponent<Props> {
       isActiveInternal,
       isActiveExternal
     } = this.state;
-    // console.log(this.state);
     return (
       <div>
         <Helmet title={`Create Service in ${match.params.idName}`} />

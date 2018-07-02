@@ -27,7 +27,6 @@ type Props = {
   fetchCreateCustomNamespaceIfNeeded: (data: Object) => void
 };
 
-// Export this for unit testing more easily
 export class CreateCustomNamespace extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -47,7 +46,6 @@ export class CreateCustomNamespace extends PureComponent<Props> {
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      // console.log(nextProps.getProfileReducer.data.role);
       if (nextProps.getProfileReducer.data.role !== 'admin') {
         history.push(routerLinks.namespaces);
       }
@@ -121,7 +119,6 @@ export class CreateCustomNamespace extends PureComponent<Props> {
 
   render() {
     const { createCustomNamespaceReducer } = this.props;
-    // console.log(this.state);
     return (
       <div>
         <Helmet title="Create Custom Project" />

@@ -41,7 +41,6 @@ type Props = {
   fetchGetNamespacesIfNeeded: (role: string) => void
 };
 
-// Export this for unit testing more easily
 export class DomainsGlobal extends PureComponent<Props> {
   constructor(props) {
     super(props);

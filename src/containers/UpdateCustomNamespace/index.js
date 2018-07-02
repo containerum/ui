@@ -37,7 +37,6 @@ type Props = {
   fetchUpdateCustomNamespaceIfNeeded: (data: Object, idName: string) => void
 };
 
-// Export this for unit testing more easily
 export class UpdateCustomNamespace extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -65,7 +64,6 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      // console.log(nextProps.getProfileReducer.data.role);
       if (nextProps.getProfileReducer.data.role !== 'admin') {
         history.push(routerLinks.namespaces);
       }

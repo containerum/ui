@@ -9,7 +9,6 @@ type Props = {
 };
 
 const Paginator = ({ countPage, currentPage }: Props) => {
-  // console.log(currentPage);
   const arrayOfPage = Array(countPage)
     .fill()
     .map((v, i) => i + 1);

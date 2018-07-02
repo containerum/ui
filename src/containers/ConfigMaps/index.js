@@ -168,7 +168,6 @@ class ConfigMaps extends PureComponent<Props> {
     //   const clonedStateFiles = JSON.parse(JSON.stringify(this.state.files));
     //   successFiles = clonedStateFiles;
     // }
-    // console.log('filesS', successFiles);
     Object.keys(files).filter(item => {
       if (
         files[item].file.size >= 2000000 ||

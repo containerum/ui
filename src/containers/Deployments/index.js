@@ -47,7 +47,6 @@ type Props = {
   match: Object
 };
 
-// Export this for unit testing more easily
 export class Deployments extends PureComponent<Props> {
   constructor() {
     super();
@@ -94,7 +93,6 @@ export class Deployments extends PureComponent<Props> {
     fetchDeleteDeploymentIfNeeded(match.params.idName, idDep);
   };
   handleDeleteDeployment = idDep => {
-    // console.log(idDep);
     this.setState({
       ...this.state,
       idDep,
@@ -123,7 +121,6 @@ export class Deployments extends PureComponent<Props> {
       deleteDeploymentReducer,
       match
     } = this.props;
-    // console.log('getDeploymentsReducer.data', getDeploymentsReducer.data);
 
     if (
       !getNamespacesReducer.readyStatus ||

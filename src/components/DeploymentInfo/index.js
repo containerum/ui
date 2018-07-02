@@ -49,7 +49,6 @@ const DeploymentInfo = ({
   idDep,
   handleDeleteDeployment
 }: Props) => {
-  // console.log('DeploymentInfo', data);
   const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   const { total_memory: memory, total_cpu: cpu, status } = data;
   return (

@@ -35,7 +35,6 @@ const containerClassNameSidebar = globalClass(
   'containerNoBackground'
 );
 
-// Export this for unit testing more easily
 export class Account extends PureComponent<Props> {
   renderProfileInfo = () => {
     const { getProfileReducer } = this.props;

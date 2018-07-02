@@ -63,7 +63,6 @@ type Props = {
   ) => void
 };
 
-// Export this for unit testing more easily
 export class CreateNamespace extends PureComponent<Props> {
   constructor() {
     super();
@@ -276,7 +275,6 @@ export class CreateNamespace extends PureComponent<Props> {
       errorMessage
     } = this.state;
     const { status, idName, method, err } = createNamespaceReducer;
-    // console.log(this.state);
     return (
       <div>
         <Notification
