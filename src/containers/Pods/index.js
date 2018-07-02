@@ -46,7 +46,6 @@ type Props = {
   match: Object
 };
 
-// Export this for unit testing more easily
 export class Pods extends PureComponent<Props> {
   constructor() {
     super();

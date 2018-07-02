@@ -4,7 +4,6 @@ import { wsApi } from '../config';
 
 const initSocket = (idName, idPod) => {
   const browser = cookie.load('browser');
-  // console.log(idName, idPod);
   if (typeof window !== 'undefined' && window.WebSocket) {
     return new WebSocket(
       // `${wsApi}/namespaces/hosting/pods/kube-api-6b768f94d7-78hpz/log?follow=true&User-Token=${cookie.load(

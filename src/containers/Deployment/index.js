@@ -47,7 +47,6 @@ const globalClass = className.bind(globalStyles);
 
 const containerClassName = globalClass('contentBlockContainer', 'container');
 
-// Export this for unit testing more easily
 export class Deployment extends PureComponent<Props> {
   constructor() {
     super();

@@ -38,7 +38,7 @@ import Name from '../../components/CreateDeploymentCards/Name';
 // import Label from '../../components/CreateDeploymentCards/Label';
 import Replicas from '../../components/CreateDeploymentCards/Replicas';
 import Container from '../../components/CreateDeploymentCards/Container';
-import CreateServiceCardItem from '../CreateService/CreateServiceCard';
+import CreateUpdateServiceBase from '../CreateUpdateServiceBase';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
@@ -74,7 +74,6 @@ type Props = {
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void
 };
 
-// Export this for unit testing more easily
 export class CreateDeployment extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -1526,7 +1525,7 @@ export class CreateDeployment extends PureComponent<Props> {
         ))}
         <div id="linked-services">
           {isActiveService ? (
-            <CreateServiceCardItem
+            <CreateUpdateServiceBase
               deploymentsData={name}
               idName={match.params.idName}
               handleChangeState={this.handleChangeState}

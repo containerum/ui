@@ -41,7 +41,6 @@ type Props = {
   fetchGetServiceIfNeeded: (idName: string, idSrv: string) => void
 };
 
-// Export this for unit testing more easily
 export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
   componentDidMount() {
     const { fetchGetServiceIfNeeded, match, history } = this.props;

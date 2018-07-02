@@ -61,7 +61,6 @@ export const fetchCouponPay = (
     }
   );
   const { status, data, config } = response;
-  // console.log(data);
   switch (status) {
     case 202: {
       dispatch(couponPaySuccess(data, 200, config.method, code));

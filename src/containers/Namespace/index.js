@@ -64,7 +64,6 @@ type Props = {
   history: Object
 };
 
-// Export this for unit testing more easily
 export class Namespace extends PureComponent<Props> {
   constructor() {
     super();

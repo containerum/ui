@@ -53,7 +53,6 @@ export const fetchGetProfileTariffs = (
     }
   );
   const { status, data } = response;
-  // console.log(data);
   switch (status) {
     case 200: {
       dispatch(getProfileTariffsSuccess(data));

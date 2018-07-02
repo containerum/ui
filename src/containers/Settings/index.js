@@ -22,7 +22,6 @@ type Props = {
   match: Object
 };
 
-// Export this for unit testing more easily
 export class Settings extends PureComponent<Props> {
   renderProfileInfo = () => {
     const { getProfileReducer, match } = this.props;

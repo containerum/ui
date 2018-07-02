@@ -60,7 +60,6 @@ type Props = {
   match: Object
 };
 
-// Export this for unit testing more easily
 export class ResizeNamespace extends PureComponent<Props> {
   constructor() {
     super();

@@ -60,7 +60,6 @@ export const fetchGetService = (
     }
   );
   const { status, data } = response;
-  // console.log(data);
   switch (status) {
     case 200: {
       dispatch(getServiceSuccess(data, status, idName, idSrv));

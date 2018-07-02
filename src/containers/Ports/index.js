@@ -26,7 +26,6 @@ type Props = {
   getServiceReducer: Object
 };
 
-// Export this for unit testing more easily
 export class Ports extends PureComponent<Props> {
   renderPortsList = () => {
     const { getServiceReducer } = this.props;

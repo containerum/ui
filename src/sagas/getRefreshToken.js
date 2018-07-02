@@ -22,7 +22,6 @@ export default function* loadRefreshToken() {
           type: 'REFRESH_TOKEN_SUCCESS'
         });
         // if (typeof window !== 'undefined') {
-        //   console.log(window);
         //   window.location.reload();
         // }
         window.location.reload();

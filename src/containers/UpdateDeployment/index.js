@@ -72,7 +72,6 @@ type Props = {
   fetchGetDeploymentIfNeeded: (idName: string, idDep: string) => void
 };
 
-// Export this for unit testing more easily
 export class CreateDeployment extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -141,7 +140,6 @@ export class CreateDeployment extends PureComponent<Props> {
         nextProps.getDeploymentReducer.readyStatus &&
       nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS
     ) {
-      // console.log(nextProps.getDeploymentReducer);
       const { data } = nextProps.getDeploymentReducer;
       const { name, labels, replicas, containers } = data;
       // const containersArr = [];

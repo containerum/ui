@@ -30,7 +30,6 @@ type Props = {
   fetchGetSupportGroupsIfNeeded: (idName: string) => void
 };
 
-// Export this for unit testing more easily
 export class Support extends PureComponent<Props> {
   constructor() {
     super();
@@ -192,7 +191,6 @@ export class Support extends PureComponent<Props> {
       if (files.length) {
         reqObj.case.files = files.map(item => item.name);
       }
-      // console.log(reqObj);
       fetchSendSupportTicketIfNeeded(reqObj);
     }
   };

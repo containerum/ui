@@ -59,7 +59,6 @@ const LinkedConfigMapsList = ({
             </thead>
             <tbody>
               {configMapsData.map(config => {
-                // console.log(idDep, config, displayedContainers);
                 const { name, data } = config;
                 const filtredContainers = displayedContainers.filter(
                   container => container.name === name

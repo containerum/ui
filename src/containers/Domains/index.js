@@ -62,7 +62,6 @@ type Props = {
   fetchGetNamespacesIfNeeded: (role: string) => void
 };
 
-// Export this for unit testing more easily
 export class Domains extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -72,7 +71,6 @@ export class Domains extends PureComponent<Props> {
   }
   componentDidMount() {
     const { fetchGetDomainsIfNeeded } = this.props;
-    // console.log(this.props.match);
     fetchGetDomainsIfNeeded(this.props.match.params.idName);
   }
   componentWillUpdate(nextProps) {

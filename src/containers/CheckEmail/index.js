@@ -27,8 +27,6 @@ class CheckEmail extends PureComponent<Props> {
     }
   }
   render() {
-    // console.log(this.state);
-    // const { email } = this.state;
     const { email } = this.props.forgotReducer;
     return (
       <div>

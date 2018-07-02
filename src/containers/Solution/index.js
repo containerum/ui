@@ -43,7 +43,6 @@ type Props = {
   fetchGetSolutionIfNeeded: (idSol: string) => void
 };
 
-// Export this for unit testing more easily
 export class Solution extends PureComponent<Props> {
   constructor(props) {
     super(props);

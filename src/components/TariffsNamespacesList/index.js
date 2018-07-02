@@ -6,10 +6,9 @@ import className from 'classnames/bind';
 import Tooltip from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap_white.css';
 import { CHANGE_PROFILE_INFO_SUCCESS } from '../../constants/profileConstants/changeProfileInfo';
-
-import createNamespaceStyles from '../../containers/CreateNamespace/index.scss';
 import globalStyles from '../../theme/global.scss';
-// "col-md-6 namespace-plan-block-container-left namespace-plan-block2dollars"
+import createNamespaceStyles from '../../containers/CreateNamespace/index.scss';
+
 const createNamespaceClass = className.bind(createNamespaceStyles);
 const globalClass = className.bind(globalStyles);
 

@@ -46,7 +46,6 @@ type Props = {
   match: Object
 };
 
-// Export this for unit testing more easily
 export class Services extends PureComponent<Props> {
   constructor() {
     super();
@@ -95,7 +94,6 @@ export class Services extends PureComponent<Props> {
       deleteServiceReducer,
       match
     } = this.props;
-    // console.log('getServicesReducer.data', getServicesReducer.data);
 
     if (
       !getNamespacesReducer.readyStatus ||

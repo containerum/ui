@@ -54,7 +54,6 @@ export const fetchGetServices = (
     validateStatus: status => status >= 200 && status <= 505
   });
   const { status, data } = response;
-  // console.log('getServicesRequest', data);
   switch (status) {
     case 200: {
       dispatch(getServicesSuccess(data.services, status, idName));

@@ -59,7 +59,6 @@ export const fetchSignUp = (
     }
   );
   const { data, status } = response;
-  // console.log(data);
   switch (status) {
     case 201: {
       // if (

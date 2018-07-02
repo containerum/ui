@@ -51,7 +51,6 @@ class Forgot extends PureComponent<Props> {
     }
   }
   handleChangeEmail(email) {
-    // console.log(email);
     this.setState({
       ...this.state,
       email
@@ -61,7 +60,6 @@ class Forgot extends PureComponent<Props> {
     e.preventDefault();
     if (isEmail(this.state.email)) {
       const { email } = this.state;
-      // console.log(email, password, this.state);
       this.props.fetchForgotIfNeeded(email);
     } else {
       this.setState({
@@ -72,8 +70,6 @@ class Forgot extends PureComponent<Props> {
     }
   }
   render() {
-    // console.log(this.state);
-    // console.log(this.props.forgotReducer);
     const { email, isValidEmail, errorMessage } = this.state;
     return (
       <div>

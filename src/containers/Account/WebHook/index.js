@@ -41,7 +41,6 @@ type Props = {
   fetchCreateImageTokenIfNeeded: (label: string, regexp: string) => void
 };
 
-// Export this for unit testing more easily
 export class WebHook extends PureComponent<Props> {
   constructor() {
     super();
