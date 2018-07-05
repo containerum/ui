@@ -270,6 +270,7 @@
     "js-base64": "^2.4.3",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.4",
+    "markdown-to-jsx": "^6.6.8",
     "morgan": "1.9.0",
     "opn": "5.2.0",
     "prop-types": "^15.6.0",

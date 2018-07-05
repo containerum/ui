@@ -185,3 +185,8 @@ body{ font-family:'Open Sans',  Arial, Tahoma; font-weight: 400; font-size:15px;
     padding: 6px 1.5rem;
 }
 /* Dropdown end */
+
+.btn-outline-primary:hover {
+  background-color: #29abe2 !important;
+  border-color: #29abe2 !important;
+}

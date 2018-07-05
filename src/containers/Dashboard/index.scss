@@ -244,6 +244,84 @@
   text-transform: uppercase !important;
 }
 
+.GetStartedWrapper {
+  width: 170px;
+  height: 40px;
+  background-color: #29abe2;
+  position: fixed;
+  right: 0;
+  top: 20%;
+  z-index: 10;
+  border-radius: 20px 0 0 20px;
+}
 
+.GetStartedWrapper:hover {
+  cursor: pointer;
+  background-color: #1d87b3;
+}
 
+.GetStarted::before,
+.GetStarted::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+}
 
+.GetStarted::before {
+  background: url(../../images/info-icon.svg) 0 0 no-repeat;
+  margin-left: -33px;
+  width: 23px;
+  height: 23px;
+}
+
+.GetStarted::after {
+  background: url(../../images/roket.svg) 0 0 no-repeat;
+  width: 35px;
+  height: 45px;
+  margin-top: -11px;
+  margin-left: 2px;
+  background-size: 110%;
+}
+
+@keyframes slidein {
+  0% {
+    margin-top: -11px;
+    margin-left: 2px;
+  }
+
+  20% {
+    margin-top: -15px;
+    margin-left: 4px;
+  }
+
+  40% {
+    margin-top: -15px;
+    margin-left: 4px;
+  }
+
+  60% {
+    margin-top: -8px;
+    margin-left: 2px;
+  }
+
+  100% {
+    margin-top: -11px;
+    margin-left: 2px;
+  }
+}
+
+.GetStartedWrapper:hover .GetStarted::before {
+  background: url(../../images/info-icon-hover.svg) 0 0 no-repeat;
+}
+
+.GetStartedWrapper:hover .GetStarted::after {
+  animation: slidein 1s linear 0.1s infinite alternate;
+}
+
+.GetStarted {
+  color: #fff;
+  font-size: 16px;
+  margin-top: 7px;
+  margin-left: 40px;
+  position: absolute;
+}

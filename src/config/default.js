@@ -1,21 +1,21 @@
-const apiHost = process.env.API_HOST || 'api.containerum.io';
-const apiProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'https' : 'http';
-const apiWSProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'wss' : 'ws';
-const apiPort = process.env.API_PORT;
-const api = `${apiProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
-const apiWS = `${apiWSProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
+// const apiHost = process.env.API_HOST || 'api.containerum.io';
+// const apiProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'https' : 'http';
+// const apiWSProtocol = process.env.API_PROTOCOL_TYPE === 'ssl' ? 'wss' : 'ws';
+// const apiPort = process.env.API_PORT;
+// const api = `${apiProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
+// const apiWS = `${apiWSProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
 
 module.exports = {
   host: process.env.NODE_HOST || 'localhost', // Define your host from 'package.json'
   port: process.env.PORT,
-  webApi: api,
-  wsApi: apiWS,
+  // webApi: api,
+  // wsApi: apiWS,
   // webApi: 'http://192.168.88.210:8082',
   // wsApi: 'wss://192.168.88.210:8082',
-  // webApi: 'https://api.containerum.io',
-  // wsApi: 'wss://api.containerum.io',
+  webApi: 'https://api.containerum.io',
+  wsApi: 'wss://api.containerum.io',
   appRecaptcha: process.env.RECAPTCHA || null,
-  sourceType: process.env.SOURCE_TYPE || 'OFFLINE',
+  sourceType: process.env.SOURCE_TYPE || 'ONLINE',
   defaultCountry: process.env.COUNTRY || 'US',
   app: {
     htmlAttributes: { lang: 'en' },
@@ -133,6 +133,7 @@ module.exports = {
     resizeService: `/project/:idName/updateService/:idSrv`,
     resizeServiceLink: (idName: string, idSrv: string) =>
       `/project/${idName}/updateService/${idSrv}`,
+    getStarted: '/getStarted',
     support: '/support',
     successTicket: '/successTicket',
     account: '/account',
