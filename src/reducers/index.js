@@ -88,6 +88,7 @@ import getServicesRunningSolutionReducer from './solutionsReducers/getServicesRu
 import getRunningSolutionReducer from './solutionReducers/getRunningSolution';
 import getEnvsSolutionReducer from './solutionReducers/getEnvsSolution';
 import getConfigMapsByNSReducer from './configMapReducers/getConfigMapsByNS';
+import getStartedReducer from './getStarted';
 
 const reducers = {
   loginReducer,
@@ -174,6 +175,7 @@ const reducers = {
   getRunningSolutionReducer,
   getEnvsSolutionReducer,
   getConfigMapsByNSReducer,
+  getStartedReducer,
   router,
   loadingBar: loadingBarReducer
 };

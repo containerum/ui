@@ -22,8 +22,6 @@ import globalStyles from '../../theme/global.scss';
 import './Account.css';
 import styles from './index.scss';
 
-// import globalStyles from '../../theme/global.scss';
-
 type Props = {
   getProfileReducer: Object
 };

@@ -68,6 +68,7 @@ import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 import GlobalMembershipInfo from './containers/GlobalMembership';
 import RunningSolutionsPage from './containers/RunningSolutions';
 import RunningSolutionPage from './containers/RunningSolution';
+import GetStarted from './components/GetStarted';
 
 const isOnline = sourceType === 'ONLINE';
 
@@ -392,6 +393,12 @@ export default [
         dispatch(fetchGetNamespaceIfNeeded(params.idName)),
         dispatch(fetchGetProfileIfNeeded())
       ])
+  },
+  {
+    path: routerLinks.getStarted,
+    exact: true,
+    component: GetStarted,
+    include: true
   },
   {
     path: routerLinks.tools,

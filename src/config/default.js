@@ -133,6 +133,7 @@ module.exports = {
     resizeService: `/project/:idName/updateService/:idSrv`,
     resizeServiceLink: (idName: string, idSrv: string) =>
       `/project/${idName}/updateService/${idSrv}`,
+    getStarted: '/getStarted',
     support: '/support',
     successTicket: '/successTicket',
     account: '/account',
