@@ -4,8 +4,9 @@ import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
-// import { routerLinks } from '../../config';
+import { routerLinks } from '../../config';
 import Notification from '../Notification';
 import AdminDeleteGroupModal from '../../components/CustomerModal/AdminDeleteUserModal';
 import GlobalGroupsList from '../../components/GlobalGroupsList';
@@ -24,7 +25,6 @@ import globalStyles from '../../theme/global.scss';
 import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
-import { routerLinks } from '../../config';
 import { DELETE_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/deleteGroup';
 
 const globalClass = className.bind(globalStyles);
@@ -75,7 +75,12 @@ class GlobalGroups extends PureComponent<Props> {
       errAdd: null
     };
   }
-
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentWillUpdate(nextProps) {
     const { getProfileReducer, history, fetchGetGroupsIfNeeded } = this.props;
     if (

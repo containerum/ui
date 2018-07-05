@@ -5,7 +5,9 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import _ from 'lodash/fp';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import styles from './index.scss';
 import '../../theme/common.scss';
 import globalStyles from '../../theme/global.scss';
@@ -45,6 +47,12 @@ export class Solutions extends PureComponent<Props> {
       isOpenedRunSolution: false,
       currentSolutionTemplate: null
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetSolutionsIfNeeded, getSolutionsReducer } = this.props;

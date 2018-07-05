@@ -8,9 +8,10 @@ import classNames from 'classnames/bind';
 import _ from 'lodash/fp';
 import queryString from 'query-string';
 import dateFormat from 'dateformat';
+import cookie from 'react-cookies';
 
 import countriesBillingConstants from '../../constants/countriesBillingConstants';
-import config from '../../config';
+import config, { routerLinks } from '../../config';
 import {
   GET_PROFILE_TARIFFS_INVALID,
   GET_PROFILE_TARIFFS_REQUESTING,
@@ -54,6 +55,8 @@ import accountStyles from '../Account/index.scss';
 import { COUPON_PAY_SUCCESS } from '../../constants/billingConstants/couponPay';
 
 type Props = {
+  history: Object,
+  location: Object,
   getProfileTariffsReducer: Object,
   getProfileReportReducer: Object,
   getProfileReducer: Object,
@@ -61,7 +64,6 @@ type Props = {
   payForReducer: Object,
   couponPayReducer: Object,
   changeProfileInfoReducer: Object,
-  location: Object,
   fetchGetProfileTariffsIfNeeded: (monthly: ?string) => void,
   fetchGetProfileReportIfNeeded: (page: string) => void,
   fetchPayForIfNeeded: (amount: number) => void,
@@ -92,7 +94,12 @@ export class Billing extends PureComponent<Props> {
       selectedCountry: defaultCountry[0]
     };
   }
-
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentDidMount() {
     const {
       location,

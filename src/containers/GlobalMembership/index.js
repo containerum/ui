@@ -4,8 +4,9 @@ import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
-// import { routerLinks } from '../../config';
+import { routerLinks } from '../../config';
 import Notification from '../Notification';
 import AdminDeleteUserModal from '../../components/CustomerModal/AdminDeleteUserModal';
 import AddGlobalUserMembershipModal from '../../components/CustomerModal/AddGlobalMembershipModal';
@@ -24,7 +25,6 @@ import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile
 import globalStyles from '../../theme/global.scss';
 import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
-import { routerLinks } from '../../config';
 
 const globalClass = className.bind(globalStyles);
 
@@ -49,7 +49,7 @@ const liClassName = globalClass(
 
 type Props = {
   match: Object,
-  // history: Object,
+  history: Object,
   adminDeleteUserReducer: Object,
   getUserListReducer: Object,
   getProfileReducer: Object,
@@ -74,8 +74,12 @@ class GlobalMembership extends PureComponent<Props> {
       errAdd: null
     };
   }
-  // componentDidMount() {}
-
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentWillUpdate(nextProps) {
     const { fetchGetUserListIfNeeded } = this.props;
     if (

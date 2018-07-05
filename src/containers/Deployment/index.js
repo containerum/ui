@@ -6,6 +6,7 @@ import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import * as actionGetDeployment from '../../actions/deploymentActions/getDeployment';
 import * as actionDeleteDeployment from '../../actions/deploymentActions/deleteDeployment';
@@ -55,6 +56,12 @@ export class Deployment extends PureComponent<Props> {
       idDep: null,
       isOpened: false
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetDeploymentIfNeeded, match } = this.props;

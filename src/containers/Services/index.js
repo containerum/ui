@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetServices from '../../actions/servicesActions/getServices';
 import * as actionDeleteService from '../../actions/serviceActions/deleteService';
@@ -37,13 +39,13 @@ const contentClassName = globalClass(
 );
 
 type Props = {
+  history: Object,
+  match: Object,
   getServicesReducer: Object,
   getNamespacesReducer: Object,
   deleteServiceReducer: Object,
   fetchGetServicesIfNeeded: (idName: string) => void,
-  fetchDeleteServiceIfNeeded: (idName: string, idSvr: string) => void,
-  history: Object,
-  match: Object
+  fetchDeleteServiceIfNeeded: (idName: string, idSvr: string) => void
 };
 
 export class Services extends PureComponent<Props> {
@@ -52,6 +54,12 @@ export class Services extends PureComponent<Props> {
     this.state = {
       displayedService: []
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetServicesIfNeeded, match } = this.props;

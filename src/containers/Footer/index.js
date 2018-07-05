@@ -98,7 +98,7 @@ export class Footer extends PureComponent<Props> {
               className={styles.footerHelp}
               // onClick={() => this.handleClickAnaliticsHowToFooter()}
             >
-              How To
+              Get Started
             </a>
           </div>
         </div>

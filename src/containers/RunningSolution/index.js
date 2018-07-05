@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import classNames from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionGetRunningSolution from '../../actions/solutionActions/getRunningSolution';
@@ -92,6 +94,12 @@ export class RunningSolution extends PureComponent<Props> {
       displayedDeployments: [],
       displayedService: []
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const {

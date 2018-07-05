@@ -7,7 +7,9 @@ import type { Connector } from 'react-redux';
 import className from 'classnames/bind';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import * as actionGetNamespacesTariffs from '../../actions/namespacesActions/getNamespacesTariffs';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionGetNamespaceUsersAccess from '../../actions/namespaceActions/getNamespaceUsersAccess';
@@ -49,6 +51,8 @@ const containerClassName = globalClass(
 );
 
 type Props = {
+  history: Object,
+  match: Object,
   getNamespacesTariffsReducer: NamespacesType,
   getNamespaceReducer: Object,
   getNamespaceUsersAccessReducer: Object,
@@ -56,8 +60,7 @@ type Props = {
   fetchGetNamespacesTariffsIfNeeded: () => void,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetNamespaceUsersAccessIfNeeded: (idName: string) => void,
-  fetchResizeNamespaceIfNeeded: (idName: string, tariff: string) => void,
-  match: Object
+  fetchResizeNamespaceIfNeeded: (idName: string, tariff: string) => void
 };
 
 export class ResizeNamespace extends PureComponent<Props> {
@@ -73,6 +76,12 @@ export class ResizeNamespace extends PureComponent<Props> {
       NSTariffPrice: null,
       NSTariffPricePerDay: null
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const {
