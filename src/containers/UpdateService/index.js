@@ -7,7 +7,9 @@ import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import scrollById from '../../functions/scrollById';
 import * as actionGetService from '../../actions/serviceActions/getService';
 import * as actionUpdateInternalService from '../../actions/serviceActions/updateInternalService';
@@ -37,6 +39,8 @@ const containerClassName = globalClass(
 const regexp = /^[a-z][a-z0-9-]*$|^$/;
 
 type Props = {
+  match: Object,
+  history: Object,
   getServiceReducer: Object,
   updateExternalServiceReducer: Object,
   updateInternalServiceReducer: Object,
@@ -73,6 +77,12 @@ export class UpdateService extends PureComponent<Props> {
         }
       ]
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetServiceIfNeeded, match } = this.props;

@@ -6,6 +6,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 // import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
+import cookie from 'react-cookies';
 
 import scrollById from '../../functions/scrollById';
 import { routerLinks } from '../../config';
@@ -38,6 +39,12 @@ export class CreateCustomNamespace extends PureComponent<Props> {
       maxIntServices: 20,
       maxTraffic: 1024
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentWillUpdate(nextProps) {
     const { getProfileReducer, history } = this.props;

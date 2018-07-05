@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
 
@@ -61,6 +63,12 @@ export class Namespaces extends PureComponent<Props> {
       isOpened: false,
       displayedNamespaces: []
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentWillUpdate(nextProps) {
     if (

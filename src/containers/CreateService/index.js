@@ -8,6 +8,7 @@ import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import scrollById from '../../functions/scrollById';
 import * as actionGetDeployments from '../../actions/deploymentsActions/getDeployments';
@@ -57,11 +58,11 @@ const textHelperClassName = globalClass('textHelper', 'isHidden');
 const regexp = /^[a-z][a-z0-9-]*$|^$/;
 
 type Props = {
+  match: Object,
+  history: Object,
   getDeploymentsReducer: Object,
   createExternalServiceReducer: Object,
   createInternalServiceReducer: Object,
-  match: Object,
-  history: Object,
   fetchGetDeploymentsIfNeeded: (idName: string) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void
@@ -76,6 +77,12 @@ export class CreateService extends PureComponent<Props> {
       isActiveInternal: false,
       isActiveExternal: false
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetDeploymentsIfNeeded, match } = this.props;

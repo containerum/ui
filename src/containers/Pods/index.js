@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetPods from '../../actions/podsActions/getPods';
 import * as actionDeletePod from '../../actions/podActions/deletePod';
@@ -55,6 +57,12 @@ export class Pods extends PureComponent<Props> {
       isOpened: false,
       displayedPods: []
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetPodsIfNeeded, match } = this.props;

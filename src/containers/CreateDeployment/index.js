@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import className from 'classnames/bind';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
+import cookie from 'react-cookies';
+
+import { routerLinks } from '../../config';
 import * as actionGetConfigMapsByNS from '../../actions/configMapActions/getConfigMapsByNS';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionCreateDeployment from '../../actions/deploymentActions/createDeployment';
@@ -44,6 +47,12 @@ type Props = {
 
 // Export this for unit testing more easily
 export class CreateDeployment extends PureComponent<Props> {
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   render() {
     const { match, createDeploymentReducer } = this.props;
     return (

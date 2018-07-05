@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import * as actionGetDomains from '../../actions/servicesActions/getDomains';
 import * as actionDeleteDomain from '../../actions/serviceActions/deleteDomain';
 import type { Dispatch, ReduxState } from '../../types';
@@ -52,11 +54,12 @@ const contentClassName = globalClass(
 // } from '../../constants/deploymentsConstants/getDeployments';
 
 type Props = {
+  match: Object,
+  history: Object,
   getProfileReducer: Object,
   getNamespacesReducer: Object,
   getDomainsReducer: Object,
   deleteDomainReducer: Object,
-  match: Object,
   fetchGetDomainsIfNeeded: (idName: string) => void,
   fetchDeleteDomainIfNeeded: (idName: string, label: string) => void,
   fetchGetNamespacesIfNeeded: (role: string) => void
@@ -68,6 +71,12 @@ export class Domains extends PureComponent<Props> {
     this.state = {
       displayedDomains: {}
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetDomainsIfNeeded } = this.props;

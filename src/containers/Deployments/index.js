@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetDeployments from '../../actions/deploymentsActions/getDeployments';
 import * as actionDeleteDeployment from '../../actions/deploymentActions/deleteDeployment';
@@ -38,13 +40,13 @@ const contentClassName = globalClass(
 );
 
 type Props = {
+  history: Object,
+  match: Object,
   getDeploymentsReducer: Object,
   getNamespacesReducer: Object,
   deleteDeploymentReducer: Object,
   fetchGetDeploymentsIfNeeded: (idName: string) => void,
-  fetchDeleteDeploymentIfNeeded: (idName: string, idDep: string) => void,
-  history: Object,
-  match: Object
+  fetchDeleteDeploymentIfNeeded: (idName: string, idDep: string) => void
 };
 
 export class Deployments extends PureComponent<Props> {
@@ -56,6 +58,12 @@ export class Deployments extends PureComponent<Props> {
       isOpened: false,
       displayedDeployments: []
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetDeploymentsIfNeeded, match } = this.props;

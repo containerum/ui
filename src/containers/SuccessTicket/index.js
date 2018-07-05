@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import cookie from 'react-cookies';
 
 import { routerLinks } from '../../config';
 import { SEND_SUPPORT_TICKET_SUCCESS } from '../../constants/supportConstants/sendSupportTicketConstants';
@@ -11,11 +12,17 @@ import supportCloud from '../../images/support-cloud.png';
 import supportMan from '../../images/support-man.png';
 
 type Props = {
-  sendSupportTicketReducer: Object,
-  history: Object
+  history: Object,
+  sendSupportTicketReducer: Object
 };
 
 class SuccessTicket extends PureComponent<Props> {
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentDidMount() {
     const { history, sendSupportTicketReducer } = this.props;
     if (sendSupportTicketReducer.readyStatus !== SEND_SUPPORT_TICKET_SUCCESS) {

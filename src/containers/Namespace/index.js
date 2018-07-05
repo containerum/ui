@@ -7,6 +7,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionDeleteNamespace from '../../actions/namespaceActions/deleteNamespace';
@@ -55,13 +56,13 @@ const containerClassName = globalClass('contentBlockContainer', 'container');
 const isOnline = sourceType === 'ONLINE';
 
 type Props = {
+  match: Object,
+  history: Object,
   getNamespacesReducer: Object,
   getProfileReducer: Object,
   deleteNamespaceReducer: NamespaceType,
   fetchGetNamespacesIfNeeded: () => void,
-  fetchDeleteNamespaceIfNeeded: (idName: string) => void,
-  match: Object,
-  history: Object
+  fetchDeleteNamespaceIfNeeded: (idName: string) => void
 };
 
 export class Namespace extends PureComponent<Props> {
@@ -72,6 +73,12 @@ export class Namespace extends PureComponent<Props> {
       idName: null,
       isOpened: false
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentWillUpdate(nextProps) {
     if (

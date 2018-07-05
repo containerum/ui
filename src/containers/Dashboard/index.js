@@ -85,6 +85,12 @@ export class Dashboard extends PureComponent<Props> {
       currentSolutionTemplate: null
     };
   }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentDidMount() {
     const {
       fetchGetSolutionsIfNeeded,

@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import * as actionGetConfigMapsByNS from '../../actions/configMapActions/getConfigMapsByNS';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionUpdateDeployment from '../../actions/deploymentActions/updateDeployment';
@@ -25,6 +27,7 @@ const containerClassName = globalClass(
 );
 
 type Props = {
+  history: Object,
   // getVolumesByNSReducer: Object,
   getNamespaceReducer: Object,
   updateDeploymentReducer: Object,
@@ -44,6 +47,12 @@ type Props = {
 
 // Export this for unit testing more easily
 export class CreateDeployment extends PureComponent<Props> {
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   render() {
     const { match, updateDeploymentReducer } = this.props;
     return (

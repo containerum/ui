@@ -6,6 +6,7 @@ import _ from 'lodash/fp';
 import toastr from 'toastr';
 import { Base64 } from 'js-base64';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import { routerLinks } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
@@ -47,6 +48,8 @@ const containerClassName = globalClass('container', 'containerToolsPages');
 const titleClassName = globalClass('blockItemTitle', 'blockItemTitleConfigmap');
 
 type Props = {
+  history: Object,
+  match: Object,
   getProfileReducer: Object,
   getNamespacesReducer: Object,
   getConfigMapsReducer: Object,
@@ -56,8 +59,6 @@ type Props = {
   fetchDeleteConfigMapIfNeeded: (idName: string, configMapName: string) => void,
   createConfigMapReducer: Object,
   fetchCreateConfigMapIfNeeded: (idName: string, data: Object) => void,
-  // history: Object,
-  match: Object,
   getNamespaceReducer: Object
 };
 
@@ -77,6 +78,12 @@ class ConfigMaps extends PureComponent<Props> {
         }
       ]
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetConfigMapsIfNeeded } = this.props;

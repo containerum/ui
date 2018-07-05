@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import { routerLinks } from '../../config';
 import NavigationHeaderItem from '../NavigationHeader';
@@ -42,6 +43,12 @@ type Props = {
 };
 
 export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentDidMount() {
     const { fetchGetServiceIfNeeded, match, history } = this.props;
     fetchGetServiceIfNeeded(match.params.idName, match.params.idSrv);

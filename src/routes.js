@@ -111,28 +111,6 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  isOnline && {
-    path: routerLinks.getRunningSolutions,
-    exact: true,
-    component: RunningSolutionsPage,
-    include: true,
-    loadData: (dispatch: Dispatch, params: Object) =>
-      Promise.all([
-        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  isOnline && {
-    path: routerLinks.getRunningSolution,
-    exact: true,
-    component: RunningSolutionPage,
-    include: true,
-    loadData: (dispatch: Dispatch, params: Object) =>
-      Promise.all([
-        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
   // {
   //   path: routerLinks.getVolumes,
   //   exact: true,
@@ -368,18 +346,32 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
-  {
-    path: routerLinks.createCustomNamespace,
+  isOnline && {
+    path: routerLinks.getRunningSolutions,
     exact: true,
-    component: CreateCustomNamespacePage,
+    component: RunningSolutionsPage,
     include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  isOnline && {
+    path: routerLinks.getRunningSolution,
+    exact: true,
+    component: RunningSolutionPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.createCustomNamespace,
     exact: true,
-    component: UpdateCustomNamespacePage,
+    component: CreateCustomNamespacePage,
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
@@ -437,11 +429,6 @@ export default [
   },
   {
     path: routerLinks.configmap,
-    include: true,
-    component: ConfigMapsInfo
-  },
-  {
-    path: routerLinks.getConfigMaps,
     include: true,
     component: ConfigMapsInfo
   },
