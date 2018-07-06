@@ -52,15 +52,17 @@ export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
   componentDidMount() {
     const { fetchGetServiceIfNeeded, match, history } = this.props;
     fetchGetServiceIfNeeded(match.params.idName, match.params.idSrv);
-    if (
-      this.props.createExternalServiceReducer.data.externalSrvObject[0]
-        .extServiceType === 'UDP'
-    ) {
-      history.push(
-        routerLinks.getServicesLink(
-          this.props.createExternalServiceReducer.idName
-        )
-      );
+    if (this.props.createExternalServiceReducer.data) {
+      if (
+        this.props.createExternalServiceReducer.data.externalSrvObject[0]
+          .extServiceType === 'UDP'
+      ) {
+        history.push(
+          routerLinks.getServicesLink(
+            this.props.createExternalServiceReducer.idName
+          )
+        );
+      }
     }
   }
 

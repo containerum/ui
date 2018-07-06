@@ -29,6 +29,7 @@ import {
   GET_DEPLOYMENT_REQUESTING,
   GET_DEPLOYMENT_SUCCESS
 } from '../../constants/deploymentConstants/getDeployment';
+import { CREATE_EXTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createExternalService';
 
 const stylesClass = className.bind(styles);
 const buttonsClass = className.bind(buttonsStyles);
@@ -50,6 +51,7 @@ type Props = {
   getConfigMapsByNSReducer: Object,
   history: Object,
   match: Object,
+  createExternalServiceReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetConfigMapsByNSIfNeeded: (idName: string) => void,
   // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
@@ -133,6 +135,13 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         });
       }
     }
+    const serviceObject = this.state;
+    const {
+      match,
+      fetchCreateInternalServiceIfNeeded,
+      fetchCreateExternalServiceIfNeeded,
+      createExternalServiceReducer
+    } = this.props;
     if (
       this.props.createDeploymentReducer &&
       (this.props.createDeploymentReducer.readyStatus !==
@@ -140,12 +149,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         nextProps.createDeploymentReducer.readyStatus ===
           CREATE_DEPLOYMENT_SUCCESS)
     ) {
-      const serviceObject = this.state;
-      const {
-        match,
-        fetchCreateInternalServiceIfNeeded,
-        fetchCreateExternalServiceIfNeeded
-      } = this.props;
       if (
         serviceObject.internalSrvObject.length &&
         serviceObject.internalSrvObject[0].internalSrvPort
@@ -157,15 +160,22 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         serviceObject.externalSrvObject[0].externalSrvTargetPort
       ) {
         fetchCreateExternalServiceIfNeeded(match.params.idName, serviceObject);
-        this.props.history.push(
-          routerLinks.createdExternalServiceSuccessfulLink(
-            match.params.idName,
-            serviceObject.externalSrvNameValue
-          )
-        );
       } else {
         this.props.history.push(routerLinks.namespaces);
       }
+    }
+    if (
+      createExternalServiceReducer.readyStatus !==
+        nextProps.createExternalServiceReducer.readyStatus &&
+      nextProps.createExternalServiceReducer.readyStatus ===
+        CREATE_EXTERNAL_SERVICE_SUCCESS
+    ) {
+      this.props.history.push(
+        routerLinks.createdExternalServiceSuccessfulLink(
+          match.params.idName,
+          serviceObject.externalSrvNameValue
+        )
+      );
     }
 
     if (
