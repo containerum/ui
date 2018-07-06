@@ -32,8 +32,8 @@ module.exports = {
     index: '/',
     dashboard: '/dashboard',
     solutions: '/solutions',
-    solutionsLink: (labelNS: string) =>
-      `/solutions${labelNS ? `?${labelNS}` : ` `}`,
+    solutionsLink: (idName: string) =>
+      `/solutions${idName && `?namespace=${idName}`}`,
     solution: '/solution/:idSol',
     solutionLink: (idSol: string) => `/solution/${idSol}`,
     login: '/login',
