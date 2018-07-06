@@ -165,7 +165,7 @@ export class RunningSolutions extends PureComponent<Props> {
         <DeleteModal
           type="Solution"
           inputName={inputName}
-          name={currentSolutionName}
+          name={inputName}
           typeName={currentSolutionName}
           isOpened={isOpenedSol}
           minLengthName={1}
