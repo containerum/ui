@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import { routerLinks } from '../../config';
 import NavigationHeaderItem from '../NavigationHeader';
@@ -41,20 +42,27 @@ type Props = {
   fetchGetServiceIfNeeded: (idName: string, idSrv: string) => void
 };
 
-// Export this for unit testing more easily
 export class CreatedExternalServiceSuccessful extends PureComponent<Props> {
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentDidMount() {
     const { fetchGetServiceIfNeeded, match, history } = this.props;
     fetchGetServiceIfNeeded(match.params.idName, match.params.idSrv);
-    if (
-      this.props.createExternalServiceReducer.data.externalSrvObject[0]
-        .extServiceType === 'UDP'
-    ) {
-      history.push(
-        routerLinks.getServicesLink(
-          this.props.createExternalServiceReducer.idName
-        )
-      );
+    if (this.props.createExternalServiceReducer.data) {
+      if (
+        this.props.createExternalServiceReducer.data.externalSrvObject[0]
+          .extServiceType === 'UDP'
+      ) {
+        history.push(
+          routerLinks.getServicesLink(
+            this.props.createExternalServiceReducer.idName
+          )
+        );
+      }
     }
   }
 

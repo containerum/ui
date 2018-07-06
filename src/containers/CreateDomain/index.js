@@ -7,7 +7,9 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import * as actionGetServices from '../../actions/servicesActions/getServices';
 import * as actionCreateDomain from '../../actions/serviceActions/createDomain';
 import {
@@ -38,16 +40,15 @@ const containerClassName = globalClass(
 );
 
 type Props = {
+  match: Object,
+  history: Object,
   getServicesReducer: Object,
   createDomainReducer: Object,
   getProfileReducer: Object,
-  match: Object,
-  // history: Object,
   fetchGetServicesIfNeeded: (idName: string) => void,
   fetchCreateDomainIfNeeded: (idName: string, data: Object) => void
 };
 
-// Export this for unit testing more easily
 export class CreateDomain extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -61,6 +62,12 @@ export class CreateDomain extends PureComponent<Props> {
       domainPath: '',
       isEnabledSSL: false
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetServicesIfNeeded, match } = this.props;

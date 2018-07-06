@@ -6,7 +6,9 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import {
   GET_PROFILE_INVALID,
   GET_PROFILE_REQUESTING,
@@ -22,9 +24,8 @@ import globalStyles from '../../theme/global.scss';
 import './Account.css';
 import styles from './index.scss';
 
-// import globalStyles from '../../theme/global.scss';
-
 type Props = {
+  history: Object,
   getProfileReducer: Object
 };
 
@@ -35,8 +36,13 @@ const containerClassNameSidebar = globalClass(
   'containerNoBackground'
 );
 
-// Export this for unit testing more easily
 export class Account extends PureComponent<Props> {
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   renderProfileInfo = () => {
     const { getProfileReducer } = this.props;
     const containerClassName = globalClass(

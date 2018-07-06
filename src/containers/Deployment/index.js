@@ -6,6 +6,7 @@ import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import * as actionGetDeployment from '../../actions/deploymentActions/getDeployment';
 import * as actionDeleteDeployment from '../../actions/deploymentActions/deleteDeployment';
@@ -25,6 +26,7 @@ import Notification from '../Notification';
 import NavigationHeaderItem from '../NavigationHeader';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import PodsPage from '../Pods';
+import LinkedConfigMapsList from '../LinkedConfigMaps';
 import globalStyles from '../../theme/global.scss';
 import {
   GET_NAMESPACES_FAILURE,
@@ -46,7 +48,6 @@ const globalClass = className.bind(globalStyles);
 
 const containerClassName = globalClass('contentBlockContainer', 'container');
 
-// Export this for unit testing more easily
 export class Deployment extends PureComponent<Props> {
   constructor() {
     super();
@@ -55,6 +56,12 @@ export class Deployment extends PureComponent<Props> {
       idDep: null,
       isOpened: false
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetDeploymentIfNeeded, match } = this.props;
@@ -198,11 +205,29 @@ export class Deployment extends PureComponent<Props> {
                         Pods
                       </NavLink>
                     </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.getDeploymentLinkedConfigMapsLink(
+                          match.params.idName,
+                          match.params.idDep
+                        )}
+                      >
+                        Linked ConfigMaps
+                      </NavLink>
+                    </li>
                   </ul>
                 </div>
               </div>
               <Switch>
                 <Route path={`${match.path}/pods`} exact component={PodsPage} />
+                <Route
+                  path={`${match.path}/linkedConfigMaps`}
+                  exact
+                  component={LinkedConfigMapsList}
+                />
                 <Route
                   path={`${match.url}`}
                   exact

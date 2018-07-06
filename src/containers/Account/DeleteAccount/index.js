@@ -19,7 +19,6 @@ type Props = {
   fetchDeleteAccountIfNeeded: () => void
 };
 
-// Export this for unit testing more easily
 export class DeleteAccount extends PureComponent<Props> {
   constructor() {
     super();

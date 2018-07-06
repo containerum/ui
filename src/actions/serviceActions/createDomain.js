@@ -81,7 +81,6 @@ export const fetchCreateDomain = (
   const { status, data } = response;
   switch (status) {
     case 201: {
-      // console.log(data);
       idSrv = `Domain ${dataDomain.domainName}`;
       dispatch(createDomainSuccess(data, status, idSrv));
       dispatch(push(routerLinks.namespaceDomainsLink(idName)));

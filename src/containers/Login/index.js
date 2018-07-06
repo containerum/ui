@@ -44,7 +44,6 @@ class Login extends PureComponent<Props> {
   componentWillMount() {
     const { hashParam } = queryString.parse(this.props.location.search);
     if (hashParam) {
-      // console.log(hashParam);
       this.props.fetchConfirmSignUpIfNeeded(hashParam);
     }
     if (
@@ -71,10 +70,6 @@ class Login extends PureComponent<Props> {
         nextProps.confirmSignUpReducer.readyStatus &&
       nextProps.confirmSignUpReducer.readyStatus === CONFIRM_SIGNUP_SUCCESS
     ) {
-      // console.log(
-      //   this.props.confirmSignUpReducer,
-      //   nextProps.confirmSignUpReducer
-      // );
       // this.setState({
       //   ...this.state,
       //   successMessage: 'Your email has been confirmed. Please Log In',
@@ -118,14 +113,12 @@ class Login extends PureComponent<Props> {
     successMessage: null
   });
   handleChangeEmail(email) {
-    // console.log(email);
     this.setState({
       ...this.state,
       email
     });
   }
   handleChangePassword(password) {
-    // console.log(password);
     this.setState({
       ...this.state,
       password
@@ -135,7 +128,6 @@ class Login extends PureComponent<Props> {
     e.preventDefault();
     if (isEmail(this.state.email) && this.state.password.length > 7) {
       const { email, password } = this.state;
-      // console.log(email, password, this.state);
       this.props.fetchLoginIfNeeded(email, password);
     } else {
       this.setState({
@@ -147,7 +139,6 @@ class Login extends PureComponent<Props> {
     }
   }
   render() {
-    // console.log(this.state);
     const {
       email,
       isValidEmail,

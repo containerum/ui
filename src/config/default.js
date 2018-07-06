@@ -12,8 +12,8 @@ module.exports = {
   wsApi: apiWS,
   // webApi: 'http://192.168.88.210:8082',
   // wsApi: 'wss://192.168.88.210:8082',
-  // webApi: 'https://api.containerum.io:8082',
-  // wsApi: 'wss://api.containerum.io:8082',
+  // webApi: 'https://api.containerum.io',
+  // wsApi: 'wss://api.containerum.io',
   appRecaptcha: process.env.RECAPTCHA || null,
   sourceType: process.env.SOURCE_TYPE || 'OFFLINE',
   defaultCountry: process.env.COUNTRY || 'US',
@@ -71,6 +71,8 @@ module.exports = {
     getDeployment: '/project/:idName/deployments/:idDep',
     getDeploymentLink: (idName: string, idDep: string) =>
       `/project/${idName}/deployments/${idDep}/pods`,
+    getDeploymentLinkedConfigMapsLink: (idName: string, idDep: string) =>
+      `/project/${idName}/deployments/${idDep}/linkedConfigMaps`,
     getMembership: '/project/:idName/membership',
     getMembershipLink: (idName: string) => `/project/${idName}/membership`,
     // getGroups: '/project/:idName/groups',
@@ -131,6 +133,7 @@ module.exports = {
     resizeService: `/project/:idName/updateService/:idSrv`,
     resizeServiceLink: (idName: string, idSrv: string) =>
       `/project/${idName}/updateService/${idSrv}`,
+    getStarted: '/getStarted',
     support: '/support',
     successTicket: '/successTicket',
     account: '/account',
@@ -139,10 +142,8 @@ module.exports = {
   },
   externalLinks: {
     exonLV: 'http://exon.lv',
-    documentation: 'https://docs.containerum.com/docs/about',
-    fastDeploy: 'https://docs.containerum.com/how-to',
-    helloWorld:
-      'https://docs.containerum.com/how-to/?_ga=2.48830502.1413750744.1528358625-1916900540.1524062321',
+    documentation: 'https://docs.containerum.com',
+    fastDeploy: 'https://docs.containerum.com/getting-started',
     solutions: 'https://github.com/containerum',
     blog: 'https://medium.com/@containerum',
     startGuide: 'https://docs.containerum.com/docs/start-guide',

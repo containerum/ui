@@ -8,7 +8,9 @@ import Helmet from 'react-helmet';
 import toastr from 'toastr';
 import queryString from 'query-string';
 import decodeUriComponent from 'decode-uri-component';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import * as actionSendSupportTicket from '../../actions/supportActions/sendSupportTicket';
 import * as actionGetSupportGroups from '../../actions/supportActions/getSupportGroups';
 import {
@@ -23,6 +25,7 @@ import globalStyles from '../../theme/global.scss';
 
 type Props = {
   location: Object,
+  history: Object,
   sendSupportTicketReducer: Object,
   getSupportGroupsReducer: Object,
   getProfileReducer: Object,
@@ -30,7 +33,6 @@ type Props = {
   fetchGetSupportGroupsIfNeeded: (idName: string) => void
 };
 
-// Export this for unit testing more easily
 export class Support extends PureComponent<Props> {
   constructor() {
     super();
@@ -40,6 +42,12 @@ export class Support extends PureComponent<Props> {
       files: [],
       base64: []
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetSupportGroupsIfNeeded, location } = this.props;
@@ -192,7 +200,6 @@ export class Support extends PureComponent<Props> {
       if (files.length) {
         reqObj.case.files = files.map(item => item.name);
       }
-      // console.log(reqObj);
       fetchSendSupportTicketIfNeeded(reqObj);
     }
   };

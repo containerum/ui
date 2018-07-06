@@ -5,6 +5,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 // import { Base64 } from 'js-base64';
+import cookie from 'react-cookies';
 
 import type { Dispatch, ReduxState } from '../../types';
 import { routerLinks } from '../../config';
@@ -19,12 +20,19 @@ import ConfigMapFilesSidebar from '../../components/ConfigMapFilesSidebar';
 import arrow from '../../images/arrowBack.svg';
 
 type Props = {
+  history: Object,
+  match: Object,
   getConfigMapReducer: Object,
-  fetchGetConfigMapIfNeeded: (idName: string, idCnf: string) => void,
-  match: Object
+  fetchGetConfigMapIfNeeded: (idName: string, idCnf: string) => void
 };
 
 class ConfigMaps extends PureComponent<Props> {
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentDidMount() {
     const { fetchGetConfigMapIfNeeded, match } = this.props;
     fetchGetConfigMapIfNeeded(match.params.idName, match.params.idCnf);

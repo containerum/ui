@@ -7,6 +7,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionDeleteNamespace from '../../actions/namespaceActions/deleteNamespace';
@@ -55,16 +56,15 @@ const containerClassName = globalClass('contentBlockContainer', 'container');
 const isOnline = sourceType === 'ONLINE';
 
 type Props = {
+  match: Object,
+  history: Object,
   getNamespacesReducer: Object,
   getProfileReducer: Object,
   deleteNamespaceReducer: NamespaceType,
   fetchGetNamespacesIfNeeded: () => void,
-  fetchDeleteNamespaceIfNeeded: (idName: string) => void,
-  match: Object,
-  history: Object
+  fetchDeleteNamespaceIfNeeded: (idName: string) => void
 };
 
-// Export this for unit testing more easily
 export class Namespace extends PureComponent<Props> {
   constructor() {
     super();
@@ -73,6 +73,12 @@ export class Namespace extends PureComponent<Props> {
       idName: null,
       isOpened: false
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentWillUpdate(nextProps) {
     if (
@@ -113,6 +119,10 @@ export class Namespace extends PureComponent<Props> {
       idName,
       isOpened: true
     });
+  };
+  handleDelete = () => {
+    const { match, fetchDeleteNamespaceIfNeeded } = this.props;
+    fetchDeleteNamespaceIfNeeded(match.params.idName);
   };
 
   renderNamespaceInfo = () => {
@@ -193,7 +203,6 @@ export class Namespace extends PureComponent<Props> {
 
   render() {
     const {
-      fetchDeleteNamespaceIfNeeded,
       deleteNamespaceReducer,
       getNamespacesReducer,
       match,
@@ -228,7 +237,7 @@ export class Namespace extends PureComponent<Props> {
     //   additionalPath = volumesPathname;
     // }
     const { status, idLabel, err } = deleteNamespaceReducer;
-    const { idName: currentIdName, inputName, isOpened } = this.state;
+    const { inputName, isOpened } = this.state;
     let currentNamespace;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
       currentNamespace = getNamespacesReducer.data.find(
@@ -246,12 +255,12 @@ export class Namespace extends PureComponent<Props> {
           <DeleteModal
             type="Project"
             inputName={inputName}
-            name={currentIdName}
+            name={inputName}
             typeName={currentNamespace.label}
             isOpened={isOpened}
             handleInputName={this.handleInputName}
             handleOpenCloseModal={this.handleOpenCloseModal}
-            onHandleDelete={fetchDeleteNamespaceIfNeeded}
+            onHandleDelete={this.handleDelete}
           />
         )}
         {deleteNamespaceReducer.readyStatus !== DELETE_NAMESPACE_REQUESTING && (

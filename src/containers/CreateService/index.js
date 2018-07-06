@@ -8,6 +8,7 @@ import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import scrollById from '../../functions/scrollById';
 import * as actionGetDeployments from '../../actions/deploymentsActions/getDeployments';
@@ -26,7 +27,7 @@ import {
 import { CREATE_INTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createInternalService';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
-import CreateServiceCardItem from './CreateServiceCard';
+import CreateUpdateServiceBaseComponent from '../CreateUpdateServiceBase';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import { routerLinks } from '../../config';
@@ -57,17 +58,16 @@ const textHelperClassName = globalClass('textHelper', 'isHidden');
 const regexp = /^[a-z][a-z0-9-]*$|^$/;
 
 type Props = {
+  match: Object,
+  history: Object,
   getDeploymentsReducer: Object,
   createExternalServiceReducer: Object,
   createInternalServiceReducer: Object,
-  match: Object,
-  history: Object,
   fetchGetDeploymentsIfNeeded: (idName: string) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void
 };
 
-// Export this for unit testing more easily
 export class CreateService extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -77,6 +77,12 @@ export class CreateService extends PureComponent<Props> {
       isActiveInternal: false,
       isActiveExternal: false
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetDeploymentsIfNeeded, match } = this.props;
@@ -243,7 +249,7 @@ export class CreateService extends PureComponent<Props> {
     }
 
     return (
-      <CreateServiceCardItem
+      <CreateUpdateServiceBaseComponent
         deploymentsData={getDeploymentsReducer.data}
         idName={match.params.idName}
         match={match}
@@ -296,7 +302,6 @@ export class CreateService extends PureComponent<Props> {
       isActiveInternal,
       isActiveExternal
     } = this.state;
-    // console.log(this.state);
     return (
       <div>
         <Helmet title={`Create Service in ${match.params.idName}`} />

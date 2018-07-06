@@ -8,9 +8,10 @@ import classNames from 'classnames/bind';
 import _ from 'lodash/fp';
 import queryString from 'query-string';
 import dateFormat from 'dateformat';
+import cookie from 'react-cookies';
 
 import countriesBillingConstants from '../../constants/countriesBillingConstants';
-import config from '../../config';
+import config, { routerLinks } from '../../config';
 import {
   GET_PROFILE_TARIFFS_INVALID,
   GET_PROFILE_TARIFFS_REQUESTING,
@@ -47,12 +48,15 @@ import AddInformationModal from '../../components/CustomerModal/AddInformationMo
 import ProfileSidebar from '../../components/ProfileSidebar';
 import BillingInfo from '../../components/BillingInfo';
 import AddFunds from '../../components/AddFunds';
-// import Coupon from '../../components/Coupon';
+import Coupon from '../../components/Coupon';
 import HistoryFunds from '../../components/HistoryFunds';
 import globalStyles from '../../theme/global.scss';
 import accountStyles from '../Account/index.scss';
+import { COUPON_PAY_SUCCESS } from '../../constants/billingConstants/couponPay';
 
 type Props = {
+  history: Object,
+  location: Object,
   getProfileTariffsReducer: Object,
   getProfileReportReducer: Object,
   getProfileReducer: Object,
@@ -60,7 +64,6 @@ type Props = {
   payForReducer: Object,
   couponPayReducer: Object,
   changeProfileInfoReducer: Object,
-  location: Object,
   fetchGetProfileTariffsIfNeeded: (monthly: ?string) => void,
   fetchGetProfileReportIfNeeded: (page: string) => void,
   fetchPayForIfNeeded: (amount: number) => void,
@@ -73,7 +76,6 @@ type Props = {
 
 const globalClassName = classNames.bind(globalStyles);
 
-// Export this for unit testing more easily
 export class Billing extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -92,7 +94,12 @@ export class Billing extends PureComponent<Props> {
       selectedCountry: defaultCountry[0]
     };
   }
-
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentDidMount() {
     const {
       location,
@@ -104,7 +111,11 @@ export class Billing extends PureComponent<Props> {
     fetchGetProfileReportIfNeeded(page && page);
   }
   componentWillUpdate(nextProps) {
-    const { getProfileReducer, changeProfileInfoReducer } = this.props;
+    const {
+      getProfileReducer,
+      changeProfileInfoReducer,
+      couponPayReducer
+    } = this.props;
     const { page } = queryString.parse(this.props.location.search);
     if (Number.isInteger(parseInt(page, 10))) {
       this.setState({
@@ -152,6 +163,15 @@ export class Billing extends PureComponent<Props> {
         isFailed: true
       });
     }
+    if (
+      couponPayReducer.readyStatus !== nextProps.couponPayReducer.readyStatus &&
+      nextProps.couponPayReducer.readyStatus === COUPON_PAY_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        inputCoupon: ''
+      });
+    }
   }
   handleChangeInputFunds = value => {
     const regexp = /^\d+(?:\.\d{0,2})?$|^$/;
@@ -163,11 +183,11 @@ export class Billing extends PureComponent<Props> {
     }
   };
   handleChangeInputCode = value => {
-    const regexp = /^[a-zA-Z0-9]{0,20}$|^$/;
+    const regexp = /^[a-zA-Z0-9-_]{0,20}$|^$/;
     if (value.search(regexp) !== -1) {
       this.setState({
         ...this.state,
-        inputCoupon: value.toUpperCase()
+        inputCoupon: value
       });
     }
   };
@@ -307,10 +327,7 @@ export class Billing extends PureComponent<Props> {
     const { is_active: isActive } = getProfileReducer.data;
     const { pages } = getProfileReportReducer.data;
     const { operations } = getProfileReportReducer.data;
-    const {
-      payForReducer
-      // couponPayReducer
-    } = this.props;
+    const { payForReducer, couponPayReducer } = this.props;
     const statusUser = isActive.toString() === 'true' ? 'Active' : 'Inactive';
     const balance = parseFloat(getBalanceReducer.data.balance);
     const monthUsage = parseFloat(getProfileTariffsReducer.data.monthly_cost);
@@ -348,12 +365,12 @@ export class Billing extends PureComponent<Props> {
           handleChangeInputFunds={value => this.handleChangeInputFunds(value)}
           handleSubmitPay={e => this.handleSubmitPay(e)}
         />
-        {/* <Coupon */}
-        {/* isFetching={couponPayReducer.isFetching} */}
-        {/* inputCoupon={this.state.inputCoupon} */}
-        {/* handleChangeInputCode={value => this.handleChangeInputCode(value)} */}
-        {/* handleSubmitPayCoupon={e => this.handleSubmitPayCoupon(e)} */}
-        {/* /> */}
+        <Coupon
+          isFetching={couponPayReducer.isFetching}
+          inputCoupon={this.state.inputCoupon}
+          handleChangeInputCode={value => this.handleChangeInputCode(value)}
+          handleSubmitPayCoupon={e => this.handleSubmitPayCoupon(e)}
+        />
         <HistoryFunds
           operations={operations}
           countPages={pages}

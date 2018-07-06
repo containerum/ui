@@ -1,0 +1,120 @@
+@import '../../theme/variables';
+
+.BackWebPanel {
+  color: #29abe2;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.OpenNewWindow {
+  color: #29abe2;
+  font-size: 15px;
+  float: right;
+}
+
+.BackWebPanel:hover,
+.OpenNewWindow:hover {
+  cursor: pointer
+}
+
+.ModalMainContent {
+  display: flex;
+  height: auto;
+  min-height: 400px;
+  overflow-y: auto;
+}
+
+.ModalModalList {
+  display: inline-block;
+  width: 27%;
+  background-color: #f6f6f6;
+  border-right: 1px solid #eaeaea;
+  margin-bottom: 0;
+  border-radius: 0 0 0 0.3rem;
+
+  ul {
+    list-style: none;
+  }
+
+  ul li div {
+    display: inline-block;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+
+  ul li div.active {
+    color: #29abe2;
+  }
+}
+
+.ModalModalListWrap {
+  position: fixed;
+  padding: 20px 0 0 30px;
+
+  &NavLink {
+    color:$main-color !important;
+  }
+
+  .NavItem {
+    list-style: none;
+    padding: 0 0 0 0;
+    margin: 0 0 15px 0;
+
+    &:hover {
+      a {
+        color:$main-color;
+      }
+
+      div {
+        color:$main-color;
+      }
+    }
+  }
+
+  .NavLink {
+    font-weight: 300;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color:$ligth-gray-color ;
+  }
+}
+
+.GetStartedText {
+  img {
+    width: 100%;
+  }
+}
+
+.SidebarItem {
+  height: 10%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.MakeMeSticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 0 15px;
+}
+
+.DontShowMe {
+  color: #fe4a49;
+  position: fixed;
+  bottom: 20px;
+  font-size: 12px;
+  margin-left: 35px;
+}
+
+.DontShowMe:hover {
+  cursor: pointer;
+}
+
+.SideBarImages {
+  img {
+    width: 100%;
+  }
+}

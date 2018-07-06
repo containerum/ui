@@ -31,7 +31,6 @@ type Props = {
   ) => void
 };
 
-// Export this for unit testing more easily
 export class Password extends PureComponent<Props> {
   constructor() {
     super();

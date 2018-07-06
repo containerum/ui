@@ -41,7 +41,6 @@ type Props = {
   match: Object
 };
 
-// Export this for unit testing more easily
 export class ResizeVolume extends PureComponent<Props> {
   constructor() {
     super();

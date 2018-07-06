@@ -64,14 +64,12 @@ class SignUp extends PureComponent<Props> {
     }
   }
   handleChangeEmail(email) {
-    // console.log(email);
     this.setState({
       ...this.state,
       email
     });
   }
   handleChangePassword(password) {
-    // console.log(password);
     this.setState({
       ...this.state,
       password

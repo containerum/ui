@@ -6,6 +6,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
+import cookie from 'react-cookies';
 
 import scrollById from '../../functions/scrollById';
 import { routerLinks } from '../../config';
@@ -37,7 +38,6 @@ type Props = {
   fetchUpdateCustomNamespaceIfNeeded: (data: Object, idName: string) => void
 };
 
-// Export this for unit testing more easily
 export class UpdateCustomNamespace extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -49,6 +49,12 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
       maxIntServices: '',
       maxTraffic: ''
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetNamespaceUsersAccessIfNeeded, match } = this.props;
@@ -65,7 +71,6 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      // console.log(nextProps.getProfileReducer.data.role);
       if (nextProps.getProfileReducer.data.role !== 'admin') {
         history.push(routerLinks.namespaces);
       }

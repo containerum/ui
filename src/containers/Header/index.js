@@ -37,7 +37,6 @@ type Props = {
 
 const isOnline = sourceType === 'ONLINE';
 
-// Export this for unit testing more easily
 export class Header extends PureComponent<Props> {
   componentDidMount() {
     const { fetchGetProfileIfNeeded, fetchGetBalanceIfNeeded } = this.props;

@@ -46,7 +46,7 @@ test-build-online:
     - staging
     - tags
 
-test-build-ofline:
+test-build-offline:
   services:
   image: docker:latest
   stage: test
@@ -75,6 +75,20 @@ dev-release:
   only:
     - develop
 
+dev-release-offline:
+  image: docker:latest
+  stage: release
+  tags:
+    - build
+  <<: *docker-login
+  script:
+    - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}-offline --build-arg SOURCE_TYPE=OFFLINE .
+    - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}-offline
+    - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}-offline
+  only:
+    - develop
+
+
 dev-deploy:
   image: exon/helm
   stage: deploy
@@ -91,6 +105,7 @@ dev-deploy:
     - cd charts/ui
     - helm dep up
     - helm upgrade --install --debug --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set tags.db=false --set image.tag=${CI_COMMIT_SHA:0:8} --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=192.168.88.210 --set env.global.SOURCE_TYPE=online --set env.global.API_PROTOCOL_TYPE=ssl --set env.local.RECAPTCHA=${RECAPTCHA_SAND} --set env.local.API_HOST=192.168.88.210 --values values.yaml .
+    - helm upgrade --install --debug --namespace=${NAMESPACE} ${CI_PROJECT_NAME}-offline --set tags.db=false --set image.tag=${CI_COMMIT_SHA:0:8}-offline --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=192.168.88.210 --set env.global.SOURCE_TYPE=OFFLINE --set env.global.API_PROTOCOL_TYPE=ssl --set env.local.RECAPTCHA=${RECAPTCHA_SAND} --set env.local.API_HOST=192.168.88.210 --set service.port=3002 --values values.yaml .
   only:
     - develop
 

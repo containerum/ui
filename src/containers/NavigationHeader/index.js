@@ -48,7 +48,6 @@ const globalClass = className.bind(globalStyles);
 
 const breadcumbsClassName = globalClass('breadcrumbsLi', 'breadcrumbsLiSpacer');
 
-// Export this for unit testing more easily
 export class NavigationHeader extends PureComponent<Props> {
   componentWillUpdate(nextProps) {
     if (

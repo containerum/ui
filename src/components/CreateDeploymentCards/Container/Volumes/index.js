@@ -21,39 +21,43 @@ const columnClassName = globalClass('columnCustomVolumes', 'marginLeft_10');
 type Props = {
   volumeMounts: Array<Object>,
   index: number,
-  isContainersMore: boolean,
   volumes: Array<Object>,
-  handleChangeVolumeSelect: (
-    value: string,
-    id: string,
-    index: number,
-    indexVolume: number
-  ) => void,
-  handleChangeInputVolumePath: (
+  handleChangeSelect: (
     value: string,
     id: string,
     index: number,
     indexVolume: number,
     type: string
   ) => void,
-  handleClickRemoveVolume: (id: string, index: number) => void,
-  handleClickAddVolume: (index: number) => void
+  handleChangeInputPath: (
+    value: string,
+    id: string,
+    index: number,
+    indexVolume: number,
+    type: string,
+    typeList: string
+  ) => void,
+  handleClickRemove: (
+    id: string,
+    index: number,
+    type: string,
+    typeList: string
+  ) => void,
+  handleClickAdd: (index: number, type: string, typeList: string) => void
 };
 
 const Volumes = ({
   volumeMounts,
   index,
   volumes,
-  isContainersMore,
-  handleChangeVolumeSelect,
-  handleChangeInputVolumePath,
-  handleClickRemoveVolume,
-  handleClickAddVolume
+  handleChangeSelect,
+  handleChangeInputPath,
+  handleClickRemove,
+  handleClickAdd
 }: Props) => (
   <div
     className={`${globalStyles.rowLine} row`}
     id={`container${index + 1}-volume`}
-    style={volumes.length && isContainersMore ? {} : { borderBottom: 'none' }}
   >
     <div className="col-md-12">
       <div className={titleClassName}>
@@ -70,8 +74,7 @@ const Volumes = ({
 
     {volumes.length && volumeMounts.length
       ? volumeMounts.map((item, indexVolume) => {
-          // console.log(item);
-          const { id, name, subPath, mountPath } = item;
+          const { id, name, subPath, mount_path: mountPath } = item;
           return (
             <div className="row ml-0" style={{ width: '100%' }} key={id}>
               <div className={`${globalStyles.columnCustomVolumes} col-md-4`}>
@@ -84,11 +87,12 @@ const Volumes = ({
                       className={globalStyles.selectCustom}
                       value={name}
                       onChange={e =>
-                        handleChangeVolumeSelect(
+                        handleChangeSelect(
                           e.target.value,
                           id,
                           index,
-                          indexVolume
+                          indexVolume,
+                          'volumeMounts'
                         )
                       }
                       required
@@ -105,7 +109,7 @@ const Volumes = ({
                   </div>
                   {indexVolume === 0 && (
                     <div className={globalStyles.formGroupHelper}>
-                      Choose your exiscting Volume <br />
+                      Choose your existing Volume <br />
                       Path - The Folder into your Container or Pod
                     </div>
                   )}
@@ -124,12 +128,13 @@ const Volumes = ({
                   baseClassNameHelper={globalStyles.formGroupHelper}
                   subPath="true"
                   handleChangeInput={e =>
-                    handleChangeInputVolumePath(
+                    handleChangeInputPath(
                       e.target.value,
                       id,
                       index,
                       indexVolume,
-                      'subPath'
+                      'subPath',
+                      'volumeMounts'
                     )
                   }
                 />
@@ -149,20 +154,21 @@ const Volumes = ({
                   labelText="Path"
                   baseClassNameHelper={globalStyles.formGroupHelper}
                   handleChangeInput={e =>
-                    handleChangeInputVolumePath(
+                    handleChangeInputPath(
                       e.target.value,
                       id,
                       index,
                       indexVolume,
-                      'mountPath'
+                      'mount_path'
                     )
                   }
                 />
               </div>
               <div
                 className="col-md-1"
-                onClick={() => handleClickRemoveVolume(id, index)}
-                onKeyPress={() => handleClickRemoveVolume(id, index)}
+                onClick={() =>
+                  handleClickRemove(id, index, 'volumeMounts', 'volumes')
+                }
                 role="presentation"
               >
                 <img
@@ -179,8 +185,7 @@ const Volumes = ({
       <div className="col-md-12">
         <div
           className={`${buttonsStyles.buttonUIAddBlock} ml-0`}
-          onClick={() => handleClickAddVolume(index)}
-          onKeyPress={() => handleClickAddVolume(index)}
+          onClick={() => handleClickAdd(index, 'volumeMounts', 'volumes')}
           role="presentation"
         >
           + Add Volume

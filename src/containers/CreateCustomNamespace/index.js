@@ -6,6 +6,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 // import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
+import cookie from 'react-cookies';
 
 import scrollById from '../../functions/scrollById';
 import { routerLinks } from '../../config';
@@ -27,7 +28,6 @@ type Props = {
   fetchCreateCustomNamespaceIfNeeded: (data: Object) => void
 };
 
-// Export this for unit testing more easily
 export class CreateCustomNamespace extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -40,6 +40,12 @@ export class CreateCustomNamespace extends PureComponent<Props> {
       maxTraffic: 1024
     };
   }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentWillUpdate(nextProps) {
     const { getProfileReducer, history } = this.props;
     if (
@@ -47,7 +53,6 @@ export class CreateCustomNamespace extends PureComponent<Props> {
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      // console.log(nextProps.getProfileReducer.data.role);
       if (nextProps.getProfileReducer.data.role !== 'admin') {
         history.push(routerLinks.namespaces);
       }
@@ -121,7 +126,6 @@ export class CreateCustomNamespace extends PureComponent<Props> {
 
   render() {
     const { createCustomNamespaceReducer } = this.props;
-    // console.log(this.state);
     return (
       <div>
         <Helmet title="Create Custom Project" />

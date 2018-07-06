@@ -4,7 +4,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import * as actionGetDomains from '../../actions/servicesActions/getDomainsGlobal';
 import * as actionDeleteDomain from '../../actions/serviceActions/deleteDomain';
 import type { Dispatch, ReduxState } from '../../types';
@@ -32,6 +34,7 @@ import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 
 type Props = {
+  history: Object,
   getProfileReducer: Object,
   getNamespacesReducer: Object,
   getDomainsGlobalReducer: Object,
@@ -41,13 +44,18 @@ type Props = {
   fetchGetNamespacesIfNeeded: (role: string) => void
 };
 
-// Export this for unit testing more easily
 export class DomainsGlobal extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
       displayedDomains: {}
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetDomainsIfNeeded } = this.props;

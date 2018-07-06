@@ -7,6 +7,7 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import * as actionGetNamespacesTariffs from '../../actions/namespacesActions/getNamespacesTariffs';
 import * as actionCreateNamespace from '../../actions/namespaceActions/createNamespace';
@@ -23,7 +24,7 @@ import type {
   Dispatch,
   ReduxState
 } from '../../types';
-import config from '../../config';
+import config, { routerLinks } from '../../config';
 import TariffsNamespacesList from '../../components/TariffsNamespacesList';
 import CreateModal from '../../components/CustomerModal/CreateModal';
 import AddInformationModal from '../../components/CustomerModal/AddInformationModal';
@@ -47,6 +48,7 @@ const containerClassName = globalClass(
 );
 
 type Props = {
+  history: Object,
   getNamespacesTariffsReducer: NamespacesType,
   createNamespaceReducer: Object,
   changeProfileInfoReducer: Object,
@@ -63,7 +65,6 @@ type Props = {
   ) => void
 };
 
-// Export this for unit testing more easily
 export class CreateNamespace extends PureComponent<Props> {
   constructor() {
     super();
@@ -87,6 +88,12 @@ export class CreateNamespace extends PureComponent<Props> {
       errorMessage: 'An unexpected error has occurred! Please try again later.',
       selectedCountry: defaultCountry[0]
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     this.props.fetchGetNamespacesTariffsIfNeeded();
@@ -276,7 +283,6 @@ export class CreateNamespace extends PureComponent<Props> {
       errorMessage
     } = this.state;
     const { status, idName, method, err } = createNamespaceReducer;
-    // console.log(this.state);
     return (
       <div>
         <Notification

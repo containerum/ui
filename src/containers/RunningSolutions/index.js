@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetRunningSolutions from '../../actions/solutionsActions/getRunningSolutions';
@@ -27,6 +28,7 @@ import {
   GET_NAMESPACES_REQUESTING
 } from '../../constants/namespacesConstants/getNamespaces';
 import { DELETE_RUNNING_SOLUTION_REQUESTING } from '../../constants/solutionConstants/deleteRunningSolution';
+import { routerLinks } from '../../config';
 
 const globalClass = className.bind(globalStyles);
 
@@ -36,13 +38,13 @@ const contentClassName = globalClass(
 );
 
 type Props = {
+  history: Object,
+  match: Object,
   getRunningSolutionsReducer: Object,
   getNamespacesReducer: Object,
   deleteRunningSolutionReducer: Object,
   fetchGetRunningSolutionsIfNeeded: (idName: string) => void,
-  fetchDeleteRunningSolutionIfNeeded: (idName: string, idSol: string) => void,
-  history: Object,
-  match: Object
+  fetchDeleteRunningSolutionIfNeeded: (idName: string, idSol: string) => void
 };
 
 export class RunningSolutions extends PureComponent<Props> {
@@ -55,6 +57,12 @@ export class RunningSolutions extends PureComponent<Props> {
       displayedDeployments: [],
       displayedService: []
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetRunningSolutionsIfNeeded, match } = this.props;
@@ -157,7 +165,7 @@ export class RunningSolutions extends PureComponent<Props> {
         <DeleteModal
           type="Solution"
           inputName={inputName}
-          name={currentSolutionName}
+          name={inputName}
           typeName={currentSolutionName}
           isOpened={isOpenedSol}
           minLengthName={1}

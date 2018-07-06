@@ -48,7 +48,6 @@ type Props = {
   ) => void
 };
 
-// Export this for unit testing more easily
 export class CreateVolume extends PureComponent<Props> {
   constructor() {
     super();
@@ -185,7 +184,6 @@ export class CreateVolume extends PureComponent<Props> {
       createVolumeReducer,
       changeProfileInfoReducer
     } = this.props;
-    // console.log(getVolumesTariffsReducer);
     if (
       !getVolumesTariffsReducer.readyStatus ||
       getVolumesTariffsReducer.readyStatus === GET_VOLUMES_TARIFFS_INVALID ||

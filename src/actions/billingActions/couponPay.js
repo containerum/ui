@@ -49,7 +49,7 @@ export const fetchCouponPay = (
   dispatch(couponPayRequest());
 
   const response = await axios.post(
-    `${URL}/coupon/create`,
+    `${URL}/isp/coupon/apply`,
     { code },
     {
       headers: {
@@ -61,10 +61,9 @@ export const fetchCouponPay = (
     }
   );
   const { status, data, config } = response;
-  // console.log(data);
   switch (status) {
-    case 200: {
-      dispatch(couponPaySuccess(data, status, config.method, code));
+    case 202: {
+      dispatch(couponPaySuccess(data, 200, config.method, code));
       break;
     }
     case 400: {

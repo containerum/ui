@@ -64,7 +64,6 @@ export const fetchGetPod = (
     }
   );
   const { status, data } = response;
-  // console.log(data);
   switch (status) {
     case 200: {
       dispatch(getPodSuccess(data, status, idName, idDep, idPod));

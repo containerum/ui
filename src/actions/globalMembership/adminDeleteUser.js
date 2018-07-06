@@ -65,7 +65,6 @@ export const fetchAdminDeleteUser = (
   );
 
   const { status, data, config } = response;
-  // console.log('deleteNamespaceUserAccess', data);
   switch (status) {
     case 200: {
       dispatch(adminDeleteUserSuccess(data, 202, config.method, username));

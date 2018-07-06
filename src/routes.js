@@ -3,7 +3,7 @@
 import type { Dispatch } from './types';
 import { routerLinks, sourceType } from './config';
 import { fetchGetProfileIfNeeded } from './actions/profileActions/getProfile';
-import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
+// import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
 // import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
 import { fetchGetNamespaceIfNeeded } from './actions/namespaceActions/getNamespace';
 import { fetchGetDeploymentsIfNeeded } from './actions/deploymentsActions/getDeployments';
@@ -68,6 +68,7 @@ import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 import GlobalMembershipInfo from './containers/GlobalMembership';
 import RunningSolutionsPage from './containers/RunningSolutions';
 import RunningSolutionPage from './containers/RunningSolution';
+import GetStarted from './components/GetStarted';
 
 const isOnline = sourceType === 'ONLINE';
 
@@ -87,7 +88,6 @@ export default [
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([
-        dispatch(fetchGetNamespacesIfNeeded()),
         dispatch(fetchGetSolutionsIfNeeded()),
         dispatch(fetchGetResourcesIfNeeded()),
         dispatch(fetchGetProfileIfNeeded())
@@ -99,10 +99,7 @@ export default [
     component: NamespacesPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetNamespacesIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.namespace,
@@ -111,28 +108,6 @@ export default [
     loadData: (dispatch: Dispatch, params: Object) =>
       Promise.all([
         dispatch(fetchGetNamespaceIfNeeded(params.idName)),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  isOnline && {
-    path: routerLinks.getRunningSolutions,
-    exact: true,
-    component: RunningSolutionsPage,
-    include: true,
-    loadData: (dispatch: Dispatch, params: Object) =>
-      Promise.all([
-        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  isOnline && {
-    path: routerLinks.getRunningSolution,
-    exact: true,
-    component: RunningSolutionPage,
-    include: true,
-    loadData: (dispatch: Dispatch, params: Object) =>
-      Promise.all([
-        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
@@ -371,18 +346,32 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
-  {
-    path: routerLinks.createCustomNamespace,
+  isOnline && {
+    path: routerLinks.getRunningSolutions,
     exact: true,
-    component: CreateCustomNamespacePage,
+    component: RunningSolutionsPage,
     include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  isOnline && {
+    path: routerLinks.getRunningSolution,
+    exact: true,
+    component: RunningSolutionPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetDeploymentsIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
   },
   {
     path: routerLinks.createCustomNamespace,
     exact: true,
-    component: UpdateCustomNamespacePage,
+    component: CreateCustomNamespacePage,
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
@@ -396,6 +385,12 @@ export default [
         dispatch(fetchGetNamespaceIfNeeded(params.idName)),
         dispatch(fetchGetProfileIfNeeded())
       ])
+  },
+  {
+    path: routerLinks.getStarted,
+    exact: true,
+    component: GetStarted,
+    include: true
   },
   {
     path: routerLinks.tools,
@@ -434,11 +429,6 @@ export default [
   },
   {
     path: routerLinks.configmap,
-    include: true,
-    component: ConfigMapsInfo
-  },
-  {
-    path: routerLinks.getConfigMaps,
     include: true,
     component: ConfigMapsInfo
   },

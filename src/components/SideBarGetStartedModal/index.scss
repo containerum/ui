@@ -1,0 +1,22 @@
+@import '../../theme/variables';
+
+.WrapperBackWebPanel {
+  display: inline-block;
+}
+
+.BackWebPanel {
+  color: #29abe2;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.OpenNewWindow {
+  color: #29abe2;
+  font-size: 15px;
+  float: right;
+}
+
+.WrapperBackWebPanel:hover,
+.OpenNewWindow:hover {
+  cursor: pointer
+}

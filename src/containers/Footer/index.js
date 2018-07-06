@@ -22,7 +22,6 @@ type Props = {
   fetchGetReleasesIfNeeded: () => void
 };
 
-// Export this for unit testing more easily
 export class Footer extends PureComponent<Props> {
   componentDidMount() {
     const { fetchGetReleasesIfNeeded } = this.props;
@@ -95,11 +94,11 @@ export class Footer extends PureComponent<Props> {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href={externalLinks.helloWorld}
+              href={externalLinks.fastDeploy}
               className={styles.footerHelp}
               // onClick={() => this.handleClickAnaliticsHowToFooter()}
             >
-              How To
+              Get Started
             </a>
           </div>
         </div>

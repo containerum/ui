@@ -7,7 +7,9 @@ import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import scrollById from '../../functions/scrollById';
 import * as actionGetService from '../../actions/serviceActions/getService';
 import * as actionUpdateInternalService from '../../actions/serviceActions/updateInternalService';
@@ -20,7 +22,7 @@ import {
 } from '../../constants/serviceConstants/getService';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
-import UpdateServiceCardItem from './CreateServiceCard';
+import CreateUpdateServiceBaseComponent from '../CreateUpdateServiceBase';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import globalStyles from '../../theme/global.scss';
@@ -37,6 +39,8 @@ const containerClassName = globalClass(
 const regexp = /^[a-z][a-z0-9-]*$|^$/;
 
 type Props = {
+  match: Object,
+  history: Object,
   getServiceReducer: Object,
   updateExternalServiceReducer: Object,
   updateInternalServiceReducer: Object,
@@ -46,7 +50,6 @@ type Props = {
   fetchUpdateExternalServiceIfNeeded: (idName: string, data: Object) => void
 };
 
-// Export this for unit testing more easily
 export class UpdateService extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -74,6 +77,12 @@ export class UpdateService extends PureComponent<Props> {
         }
       ]
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const { fetchGetServiceIfNeeded, match } = this.props;
@@ -245,7 +254,7 @@ export class UpdateService extends PureComponent<Props> {
       externalSrvObject
     } = this.state;
     return (
-      <UpdateServiceCardItem
+      <CreateUpdateServiceBaseComponent
         deploymentsData={getServiceReducer.data}
         idName={match.params.idName}
         idSrv={match.params.idSrv}
@@ -296,7 +305,6 @@ export class UpdateService extends PureComponent<Props> {
       updateExternalServiceReducer,
       updateInternalServiceReducer
     } = this.props;
-    // console.log(this.props);
     return (
       <div>
         <Helmet

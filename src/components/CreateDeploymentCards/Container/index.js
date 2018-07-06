@@ -10,6 +10,7 @@ import Parameters from './Parameters';
 // import Commands from './Commands';
 import Environments from './Environments';
 import Volumes from './Volumes';
+import ConfigMap from './ConfigMap';
 
 import globalStyles from '../../../theme/global.scss';
 import buttonsStyles from '../../../theme/buttons.scss';
@@ -28,6 +29,7 @@ type Props = {
   containersCount: number,
   index: number,
   volumes: Array<Object>,
+  configMaps: Array<Object>,
   handleClickContainerRemove: () => void,
   handleClickContainerAdd: () => void,
   handleChangeInputCommon: () => void,
@@ -39,10 +41,10 @@ type Props = {
   handleChangeInputEnvironment: () => void,
   handleClickRemoveEnvironment: () => void,
   handleClickAddEnvironment: () => void,
-  handleChangeVolumeSelect: () => void,
-  handleChangeInputVolumePath: () => void,
-  handleClickRemoveVolume: () => void,
-  handleClickAddVolume: () => void
+  handleChangeSelect: () => void,
+  handleChangeInputPath: () => void,
+  handleClickRemove: () => void,
+  handleClickAdd: () => void
 };
 
 const Container = ({
@@ -50,6 +52,7 @@ const Container = ({
   index,
   containersCount,
   volumes,
+  configMaps,
   handleClickContainerRemove,
   handleClickContainerAdd,
   handleChangeInputCommon,
@@ -61,10 +64,10 @@ const Container = ({
   handleChangeInputEnvironment,
   handleClickRemoveEnvironment,
   handleClickAddEnvironment,
-  handleChangeVolumeSelect,
-  handleChangeInputVolumePath,
-  handleClickRemoveVolume,
-  handleClickAddVolume
+  handleChangeSelect,
+  handleChangeInputPath,
+  handleClickRemove,
+  handleClickAdd
 }: Props) => {
   const fixedIndex = index + 1;
   const { id } = item;
@@ -129,13 +132,23 @@ const Container = ({
           volumes={volumes}
           id={item.id}
           index={index}
+          handleChangeSelect={handleChangeSelect}
+          handleChangeInputPath={handleChangeInputPath}
+          handleClickRemove={handleClickRemove}
+          handleClickAdd={handleClickAdd}
+        />
+        <ConfigMap
+          configMapsMounts={item.config_maps}
+          configMaps={configMaps}
+          id={item.id}
+          index={index}
           isContainersMore={
             containersCount === fixedIndex && containersCount < 3
           }
-          handleChangeVolumeSelect={handleChangeVolumeSelect}
-          handleChangeInputVolumePath={handleChangeInputVolumePath}
-          handleClickRemoveVolume={handleClickRemoveVolume}
-          handleClickAddVolume={handleClickAddVolume}
+          handleChangeSelect={handleChangeSelect}
+          handleChangeInputPath={handleChangeInputPath}
+          handleClickRemove={handleClickRemove}
+          handleClickAdd={handleClickAdd}
         />
 
         {containersCount === fixedIndex &&

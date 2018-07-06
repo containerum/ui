@@ -86,9 +86,22 @@ export const fetchCreateDeployment = (
     } else {
       item.volumeMounts = [];
     }
-    if (!item.command.length) {
-      delete item.command;
+
+    if (item.config_maps.length) {
+      item.config_maps.map(configMapsMountEnvs => {
+        if (!configMapsMountEnvs.subPath) {
+          delete configMapsMountEnvs.subPath;
+        }
+        delete configMapsMountEnvs.id;
+        delete configMapsMountEnvs.index;
+        return null;
+      });
+    } else {
+      item.config_maps = [];
     }
+    // if (!item.command.length) {
+    //   delete item.config_maps;
+    // }
     return null;
   });
 

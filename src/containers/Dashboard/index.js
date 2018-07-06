@@ -7,6 +7,7 @@ import type { Connector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import { routerLinks, sourceType } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
@@ -41,6 +42,8 @@ import CountPodsInfo from '../../components/CountPodsInfo';
 import DashboardBlockInfo from '../../components/DashboardBlockInfo';
 import DashboardBlockTourAndNews from '../../components/DashboardBlockTourAndNews';
 import RunSolutionModal from '../RunSolution';
+import SideBarGetStartedModal from '../../components/SideBarGetStartedModal';
+import HideWidgetModal from '../../components/CustomerModal/HideWidgetModal';
 
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
@@ -69,16 +72,24 @@ type Props = {
 
 const isOnline = sourceType === 'ONLINE';
 
-// Export this for unit testing more easily
 const dashboardClassName = classNames.bind(styles);
 
 export class Dashboard extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      isOpenedSideBarGetStarted: false,
       isOpenedRunSolution: false,
+      isOpenedHideWidget: false,
+      isViewWidget: true,
       currentSolutionTemplate: null
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const {
@@ -89,6 +100,13 @@ export class Dashboard extends PureComponent<Props> {
     fetchGetSolutionsIfNeeded();
     fetchGetResourcesIfNeeded();
     fetchGetConfigMapsIfNeeded();
+    const widget = cookie.load('widget');
+    if (widget === 'hide') {
+      this.setState({
+        ...this.state,
+        isViewWidget: false
+      });
+    }
   }
   componentWillUpdate(nextProps, nextState) {
     if (
@@ -104,6 +122,16 @@ export class Dashboard extends PureComponent<Props> {
       const getHtml = document.querySelector('html');
       getHtml.style.overflow = 'hidden';
     } else if (!nextState.isOpenedRunSolution && typeof document === 'object') {
+      const getHtml = document.querySelector('html');
+      getHtml.style.overflow = 'auto';
+    }
+    if (nextState.isOpenedSideBarGetStarted && typeof document === 'object') {
+      const getHtml = document.querySelector('html');
+      getHtml.style.overflow = 'hidden';
+    } else if (
+      !nextState.isOpenedSideBarGetStarted &&
+      typeof document === 'object'
+    ) {
       const getHtml = document.querySelector('html');
       getHtml.style.overflow = 'auto';
     }
@@ -128,6 +156,34 @@ export class Dashboard extends PureComponent<Props> {
       ...this.state,
       isOpenedRunSolution: false,
       currentSolutionTemplate: null
+    });
+  };
+  handleOpenCloseSidebar = () => {
+    this.setState({
+      ...this.state,
+      isOpenedSideBarGetStarted: false
+    });
+  };
+
+  handleClickDontShow = () => {
+    this.setState({
+      ...this.state,
+      isOpenedSideBarGetStarted: false,
+      isOpenedHideWidget: true
+    });
+  };
+  handleOpenCloseHideWidgetModal = () => {
+    this.setState({
+      ...this.state,
+      isOpenedHideWidget: !this.state.isOpenedHideWidget
+    });
+  };
+  handleSubmitHideWidget = () => {
+    cookie.save('widget', 'hide', { path: '/' });
+    this.setState({
+      ...this.state,
+      isOpenedHideWidget: false,
+      isViewWidget: false
     });
   };
 
@@ -398,18 +454,50 @@ export class Dashboard extends PureComponent<Props> {
   };
 
   render() {
-    const { history } = this.props;
-
     const blockContainer = dashboardClassName('blockContainer', 'blockH');
-
     const blockContainerTabs = dashboardClassName(
       'blockContainer',
       'blockContainerTabs'
     );
 
-    const { isOpenedRunSolution, currentSolutionTemplate } = this.state;
+    const { history } = this.props;
+    const {
+      isOpenedSideBarGetStarted,
+      isOpenedRunSolution,
+      currentSolutionTemplate,
+      isOpenedHideWidget,
+      isViewWidget
+    } = this.state;
     return (
       <div>
+        {!isOpenedSideBarGetStarted &&
+          isViewWidget && (
+            <div
+              className={styles.GetStartedWrapper}
+              onClick={() =>
+                this.setState({
+                  ...this.state,
+                  isOpenedSideBarGetStarted: !isOpenedSideBarGetStarted
+                })
+              }
+            >
+              <span className={styles.GetStarted}>Get Started</span>
+            </div>
+          )}
+        {isOpenedSideBarGetStarted && (
+          <SideBarGetStartedModal
+            handleOpenCloseSidebar={this.handleOpenCloseSidebar}
+            isOpenedSideBarGetStarted={isOpenedSideBarGetStarted}
+            handleClickDontShow={this.handleClickDontShow}
+          />
+        )}
+        {isOpenedHideWidget && (
+          <HideWidgetModal
+            isOpened={isOpenedHideWidget}
+            handleOpenCloseHideWidgetModal={this.handleOpenCloseHideWidgetModal}
+            onHandleHide={this.handleSubmitHideWidget}
+          />
+        )}
         <div>
           {currentSolutionTemplate ? (
             <Helmet title={`Run ${currentSolutionTemplate}`} />

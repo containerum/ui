@@ -1,12 +1,13 @@
 /* @flow */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import globalStyles from '../../theme/global.scss';
 import dashboardStyles from '../../containers/Dashboard/index.scss';
 
-import { externalLinks } from '../../config';
+import { externalLinks, routerLinks } from '../../config';
 
 const infoClassName = classNames.bind(dashboardStyles);
 
@@ -25,22 +26,12 @@ const DashboardBlockInfo = () => (
         >
           - Documentation
         </a>
-        <a
-          className={dashboardStyles.infoLink}
-          href={externalLinks.fastDeploy}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          - How To
-        </a>
-        <a
-          className={dashboardStyles.infoLink}
-          href={externalLinks.solutions}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <Link to={routerLinks.getStarted} className={dashboardStyles.infoLink}>
+          - Get Started
+        </Link>
+        <Link className={dashboardStyles.infoLink} to={routerLinks.solutions}>
           - Solutions
-        </a>
+        </Link>
         <a
           className={dashboardStyles.infoLink}
           href={externalLinks.blog}

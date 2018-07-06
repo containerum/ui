@@ -53,7 +53,6 @@ export const fetchGetReleases = (axios: any): ThunkAction => async (
       }
     );
     const { status, data } = response;
-    // console.log(status);
     switch (status) {
       case 200: {
         if (

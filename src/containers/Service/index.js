@@ -6,6 +6,7 @@ import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import * as actionGetService from '../../actions/serviceActions/getService';
 import * as actionGetDeployments from '../../actions/deploymentsActions/getDeployments';
@@ -35,21 +36,26 @@ import {
 } from '../../constants/namespacesConstants/getNamespaces';
 
 type Props = {
+  match: Object,
+  history: Object,
   getServiceReducer: Object,
   getNamespacesReducer: Object,
   deleteServiceReducer: Object,
   fetchGetServiceIfNeeded: (idName: string, idSrv: string) => void,
   fetchGetDeploymentsIfNeeded: (idName: string) => void,
-  fetchDeleteServiceIfNeeded: (idName: string, idSrv: string) => void,
-  match: Object,
-  history: Object
+  fetchDeleteServiceIfNeeded: (idName: string, idSrv: string) => void
 };
 const globalClass = className.bind(globalStyles);
 
 const containerClassName = globalClass('contentBlockContainer', 'container');
 
-// Export this for unit testing more easily
 export class Service extends PureComponent<Props> {
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
+  }
   componentDidMount() {
     const {
       fetchGetServiceIfNeeded,

@@ -5,14 +5,12 @@ type Props = {
   name: string,
   status: string,
   method: string,
-  data: string,
   token: string,
   errorMessage: string
 };
 
 class Notification extends PureComponent<Props> {
   componentWillReceiveProps(nextProps) {
-    // console.log('Notification', nextProps);
     toastr.options = {
       closeButton: true,
       debug: false,
@@ -54,9 +52,8 @@ class Notification extends PureComponent<Props> {
       toastr.success(`${nextProps.name} was created`, 'Successfully created');
     } else if (
       nextProps.status === 200 &&
-      this.props.name !== nextProps.name &&
-      nextProps.data &&
-      !nextProps.errorMessage
+      nextProps.name &&
+      this.props.name !== nextProps.name
     ) {
       toastr.success(
         `${nextProps.name} was successfully applied`,

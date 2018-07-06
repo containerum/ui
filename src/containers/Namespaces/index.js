@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
 
@@ -52,7 +54,6 @@ type Props = {
   createInternalServiceReducer: Object
 };
 
-// Export this for unit testing more easily
 export class Namespaces extends PureComponent<Props> {
   constructor() {
     super();
@@ -62,6 +63,12 @@ export class Namespaces extends PureComponent<Props> {
       isOpened: false,
       displayedNamespaces: []
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentWillUpdate(nextProps) {
     if (
@@ -139,6 +146,9 @@ export class Namespaces extends PureComponent<Props> {
       });
     }
   };
+  handleDelete = id => {
+    this.props.fetchDeleteNamespaceIfNeeded(id);
+  };
 
   renderNamespacesList = () => {
     const {
@@ -213,7 +223,6 @@ export class Namespaces extends PureComponent<Props> {
 
   render() {
     const {
-      fetchDeleteNamespaceIfNeeded,
       deleteNamespaceReducer,
       createExternalServiceReducer,
       createInternalServiceReducer,
@@ -256,12 +265,12 @@ export class Namespaces extends PureComponent<Props> {
           <DeleteModal
             type="Project"
             inputName={inputName}
-            name={currentIdName}
+            name={inputName}
             typeName={currentNamespace.label}
             isOpened={isOpened}
             handleInputName={this.handleInputName}
             handleOpenCloseModal={this.handleOpenCloseModal}
-            onHandleDelete={fetchDeleteNamespaceIfNeeded}
+            onHandleDelete={() => this.handleDelete(currentNamespace.id)}
           />
         )}
         <div className={globalStyles.contentBlock}>

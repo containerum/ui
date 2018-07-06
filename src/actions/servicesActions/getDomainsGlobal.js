@@ -49,7 +49,6 @@ export const fetchGetDomains = (
     },
     validateStatus: status => status >= 200 && status <= 505
   });
-  // console.log(response);
   const { status, data } = response;
   switch (status) {
     case 200: {

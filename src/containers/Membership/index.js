@@ -4,6 +4,7 @@ import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
+import cookie from 'react-cookies';
 
 import { routerLinks } from '../../config';
 import Notification from '../Notification';
@@ -83,6 +84,12 @@ class Membership extends PureComponent<Props> {
       membersList: [],
       errAdd: null
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const {

@@ -4,7 +4,9 @@ import React, { PureComponent } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
@@ -43,7 +45,6 @@ type Props = {
   fetchGetSolutionIfNeeded: (idSol: string) => void
 };
 
-// Export this for unit testing more easily
 export class Solution extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -51,6 +52,12 @@ export class Solution extends PureComponent<Props> {
       isOpenedRunSolution: false,
       currentSolutionTemplate: null
     };
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
+    }
   }
   componentDidMount() {
     const {
