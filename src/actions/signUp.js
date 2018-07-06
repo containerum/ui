@@ -49,7 +49,7 @@ export const fetchSignUp = (
     {
       login: email,
       password,
-      recaptcha: appRecaptcha ? recaptcha : 'offline'
+      recaptcha: appRecaptcha !== '{{ RECAPTCHA }}' ? recaptcha : 'offline'
     },
     {
       headers: {
