@@ -14,11 +14,16 @@ export const timeago = () => {
   obj.ago = function(nd, s) {
     let r = Math.round,
       pl = function(v, n) {
-        return s === undefined
-          ? `${n} ${v}${n > 1 ? 's' : ''} ago`
-          : v === 'minute'
-          ? n + v.substring(0, 3)
-          : n + v.substring(0, 1);
+      console.log(v);
+        if (s === undefined) {
+          return `${n} ${v}${n > 1 ? 's' : ''} ago`;
+        } else if (v === 'minute') {
+          return n + v.substring(0, 3);
+        } else if (v === 'm') {
+          return '1s';
+        } else {
+          return n + v.substring(0, 1);
+        }
       },
       ts = Date.now() - new Date(nd).getTime(),
       ii;
