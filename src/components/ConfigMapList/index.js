@@ -193,7 +193,7 @@ const ConfigMapList = ({
             )}
           </div>
         ) : (
-          <div>
+          <div style={{ marginBottom: 47 }}>
             {configMapsData.length >= 1 ? (
               <table
                 className={itemClassName}
