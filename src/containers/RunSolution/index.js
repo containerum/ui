@@ -82,7 +82,6 @@ export class RunSolution extends PureComponent<Props> {
         currentNamespace = ifCurrentNamespace;
       }
     }
-    console.log(currentNamespace);
     this.setState({
       ...this.state,
       currentSolution:
