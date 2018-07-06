@@ -4,7 +4,7 @@ import React from 'react';
 import className from 'classnames/bind';
 
 import { routerLinks } from '../../config';
-// import { timeago } from '../../functions/timeago';
+import { timeago } from '../../functions/timeago';
 import podPng from '../../images/pod-3.png';
 
 import globalStyles from '../../theme/global.scss';
@@ -45,6 +45,7 @@ const PodsList = ({
   const handleClose = e => {
     e.stopPropagation();
   };
+  const ta = timeago();
   const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   return (
     <div>
@@ -57,7 +58,7 @@ const PodsList = ({
               <td className={podsStyles.td_3_Pods}>Status</td>
               <td className={podsStyles.td_4_Pods}>Restarts</td>
               <td className={podsStyles.td_5_Pods}>Containers</td>
-              {/* <td className={podsStyles.td_6_Pods}>Age</td> */}
+              <td className={podsStyles.td_6_Pods}>Age</td>
               <td className={podsStyles.td_7_Pods} />
             </tr>
           </thead>
@@ -66,12 +67,12 @@ const PodsList = ({
               const {
                 name,
                 status,
-                containers
-                // created_at: createdAt
+                containers,
+                created_at: createdAt
               } = deploy;
-              // const milliseconds = Date.parse(createdAt);
-              // const dateHours = new Date(milliseconds);
-              // const dateValue = ta.ago(dateHours, true);
+              const milliseconds = Date.parse(createdAt);
+              const dateHours = new Date(milliseconds);
+              const dateValue = ta.ago(dateHours, true);
               const id = `pod_${name}`;
               return (
                 <tr
@@ -89,7 +90,7 @@ const PodsList = ({
                     {status.restart_count} restarts
                   </td>
                   <td className={podsStyles.td_5_Pods}>{containers.length}</td>
-                  {/* <td className={podsStyles.td_6_Pods}>{dateValue}</td> */}
+                  <td className={podsStyles.td_6_Pods}>{dateValue}</td>
                   <td className={podsStyles.td_7_Pods}>
                     {/* <div className="warning"> </div> */}
                   </td>
