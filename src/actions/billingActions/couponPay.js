@@ -71,11 +71,16 @@ export const fetchCouponPay = (
         dispatch(couponPayInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push(routerLinks.login));
-      } else dispatch(couponPayFailure(data.message));
+      } else
+        dispatch(
+          couponPayFailure(data.details.join(), status, config.method, code)
+        );
       break;
     }
     default: {
-      dispatch(couponPayFailure(data.message, status, config.method, code));
+      dispatch(
+        couponPayFailure(data.details.join(), status, config.method, code)
+      );
     }
   }
 };
