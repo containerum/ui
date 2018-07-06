@@ -184,7 +184,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         nextProps.getDeploymentReducer.readyStatus &&
         nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS)
     ) {
-      // console.log(nextProps.getDeploymentReducer);
       const { data } = nextProps.getDeploymentReducer;
       const { name, labels, replicas, containers } = data;
       // const containersArr = [];

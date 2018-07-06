@@ -14,7 +14,6 @@ export const timeago = () => {
   obj.ago = function(nd, s) {
     let r = Math.round,
       pl = function(v, n) {
-      console.log(v);
         if (s === undefined) {
           return `${n} ${v}${n > 1 ? 's' : ''} ago`;
         } else if (v === 'minute') {
