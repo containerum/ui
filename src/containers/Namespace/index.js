@@ -113,6 +113,10 @@ export class Namespace extends PureComponent<Props> {
       isOpened: true
     });
   };
+  handleDelete = () => {
+    const { match, fetchDeleteNamespaceIfNeeded } = this.props;
+    fetchDeleteNamespaceIfNeeded(match.params.idName);
+  };
 
   renderNamespaceInfo = () => {
     const {
@@ -192,7 +196,6 @@ export class Namespace extends PureComponent<Props> {
 
   render() {
     const {
-      fetchDeleteNamespaceIfNeeded,
       deleteNamespaceReducer,
       getNamespacesReducer,
       match,
@@ -227,7 +230,7 @@ export class Namespace extends PureComponent<Props> {
     //   additionalPath = volumesPathname;
     // }
     const { status, idLabel, err } = deleteNamespaceReducer;
-    const { idName: currentIdName, inputName, isOpened } = this.state;
+    const { inputName, isOpened } = this.state;
     let currentNamespace;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
       currentNamespace = getNamespacesReducer.data.find(
@@ -245,12 +248,12 @@ export class Namespace extends PureComponent<Props> {
           <DeleteModal
             type="Project"
             inputName={inputName}
-            name={currentIdName}
+            name={inputName}
             typeName={currentNamespace.label}
             isOpened={isOpened}
             handleInputName={this.handleInputName}
             handleOpenCloseModal={this.handleOpenCloseModal}
-            onHandleDelete={fetchDeleteNamespaceIfNeeded}
+            onHandleDelete={this.handleDelete}
           />
         )}
         {deleteNamespaceReducer.readyStatus !== DELETE_NAMESPACE_REQUESTING && (

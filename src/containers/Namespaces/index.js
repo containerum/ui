@@ -138,6 +138,9 @@ export class Namespaces extends PureComponent<Props> {
       });
     }
   };
+  handleDelete = id => {
+    this.props.fetchDeleteNamespaceIfNeeded(id);
+  };
 
   renderNamespacesList = () => {
     const {
@@ -212,7 +215,6 @@ export class Namespaces extends PureComponent<Props> {
 
   render() {
     const {
-      fetchDeleteNamespaceIfNeeded,
       deleteNamespaceReducer,
       createExternalServiceReducer,
       createInternalServiceReducer,
@@ -255,12 +257,12 @@ export class Namespaces extends PureComponent<Props> {
           <DeleteModal
             type="Project"
             inputName={inputName}
-            name={currentIdName}
+            name={inputName}
             typeName={currentNamespace.label}
             isOpened={isOpened}
             handleInputName={this.handleInputName}
             handleOpenCloseModal={this.handleOpenCloseModal}
-            onHandleDelete={fetchDeleteNamespaceIfNeeded}
+            onHandleDelete={() => this.handleDelete(currentNamespace.id)}
           />
         )}
         <div className={globalStyles.contentBlock}>
