@@ -35,6 +35,7 @@ type Props = {
   getNamespaceReducer: Object,
   createDeploymentReducer: Object,
   getConfigMapsByNSReducer: Object,
+  createExternalServiceReducer: Object,
   history: Object,
   match: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
@@ -79,6 +80,9 @@ export class CreateDeployment extends PureComponent<Props> {
               getNamespaceReducer={this.props.getNamespaceReducer}
               createDeploymentReducer={this.props.createDeploymentReducer}
               getConfigMapsByNSReducer={this.props.getConfigMapsByNSReducer}
+              createExternalServiceReducer={
+                this.props.createExternalServiceReducer
+              }
               history={this.props.history}
               match={this.props.match}
               fetchGetNamespaceIfNeeded={this.props.fetchGetNamespaceIfNeeded}
@@ -108,15 +112,15 @@ const connector: Connector<{}, Props> = connect(
     // getVolumesByNSReducer,
     getNamespaceReducer,
     createDeploymentReducer,
-    createExternalDeploymentReducer,
-    createInternalDeploymentReducer,
+    createExternalServiceReducer,
+    createInternalServiceReducer,
     getConfigMapsByNSReducer
   }: ReduxState) => ({
     // getVolumesByNSReducer,
     getNamespaceReducer,
     createDeploymentReducer,
-    createExternalDeploymentReducer,
-    createInternalDeploymentReducer,
+    createExternalServiceReducer,
+    createInternalServiceReducer,
     getConfigMapsByNSReducer
   }),
   (dispatch: Dispatch) => ({
