@@ -68,6 +68,10 @@ export const fetchGetProfile = (
       }
       break;
     }
+    case 403: {
+      dispatch(push(routerLinks.login));
+      break;
+    }
     default: {
       dispatch(getProfileFailure(data.message));
     }
