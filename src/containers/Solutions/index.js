@@ -32,6 +32,7 @@ import {
 } from '../../constants/namespacesConstants/getNamespaces';
 
 type Props = {
+  location: Object,
   history: Object,
   getProfileReducer: Object,
   getSolutionsReducer: Object,
@@ -152,7 +153,7 @@ export class Solutions extends PureComponent<Props> {
   };
 
   render() {
-    const { history } = this.props;
+    const { history, location } = this.props;
     const { isOpenedRunSolution, currentSolutionTemplate } = this.state;
     return (
       <div>
@@ -164,6 +165,7 @@ export class Solutions extends PureComponent<Props> {
         {isOpenedRunSolution && (
           <RunSolutionModal
             history={history}
+            location={location}
             isOpenedRunSolution={isOpenedRunSolution}
             currentSolutionTemplate={currentSolutionTemplate}
             handleOpenClose={this.handleOpenClose}
