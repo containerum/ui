@@ -113,14 +113,12 @@ const connector: Connector<{}, Props> = connect(
     getNamespaceReducer,
     createDeploymentReducer,
     createExternalServiceReducer,
-    createInternalServiceReducer,
     getConfigMapsByNSReducer
   }: ReduxState) => ({
     // getVolumesByNSReducer,
     getNamespaceReducer,
     createDeploymentReducer,
     createExternalServiceReducer,
-    createInternalServiceReducer,
     getConfigMapsByNSReducer
   }),
   (dispatch: Dispatch) => ({

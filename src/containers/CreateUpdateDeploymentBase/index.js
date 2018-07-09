@@ -165,6 +165,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       }
     }
     if (
+      createExternalServiceReducer &&
       createExternalServiceReducer.readyStatus !==
         nextProps.createExternalServiceReducer.readyStatus &&
       nextProps.createExternalServiceReducer.readyStatus ===
