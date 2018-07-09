@@ -37,21 +37,20 @@ export const fetchGetVolumesByNS = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
+  const accessToken = cookie.load('accessToken');
   const browser = cookie.load('browser');
 
   dispatch(getVolumesByNSRequest());
 
-  const response = await axios.get(`${URL}/api/namespaces/${idName}/volumes`, {
+  const response = await axios.get(`${URL}/namespaces/${idName}/volumes`, {
     headers: {
       'User-Client': browser,
-      'Content-Type': 'application/x-www-form-urlencode',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, max-age=-1, private'
+      'User-Token': accessToken
     },
     validateStatus: status => status >= 200 && status <= 505
   });
   const { status, data } = response;
+  console.log(data);
   switch (status) {
     case 200: {
       dispatch(getVolumesByNSSuccess(data));
@@ -71,36 +70,8 @@ export const fetchGetVolumesByNS = (
   }
 };
 
-// Preventing dobule fetching data
-/* istanbul ignore next */
-// const shouldFetchGetVolumesByNS = (state: ReduxState): boolean => {
-//   // In development, we will allow action dispatching
-//   // or your reducer hot reloading won't updated on the view
-//   if (__DEV__) return true;
-//
-//   if (state.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS) return false; // Preventing double fetching data
-//
-//   return true;
-// };
-
 export const fetchGetVolumesByNSIfNeeded = (idName: string): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
 ) => dispatch(fetchGetVolumesByNS(idName, axios));
-
-/* istanbul ignore next */
-// export const fetchGetVolumesByNSIfNeeded = (): ThunkAction => (
-//   dispatch: Dispatch,
-//   getState: GetState,
-//   axios: any
-// ) => {
-//   /* istanbul ignore next */
-//   if (shouldFetchGetVolumesByNS(getState())) {
-//     /* istanbul ignore next */
-//     return dispatch(fetchGetVolumesByNS(axios));
-//   }
-//
-//   /* istanbul ignore next */
-//   return null;
-// };

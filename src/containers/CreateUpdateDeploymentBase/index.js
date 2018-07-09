@@ -15,6 +15,7 @@ import {
 } from '../../constants/configMapConstants/getConfigMapsByNS';
 import { GET_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/getNamespace';
 import { CREATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/createDeployment';
+import { GET_VOLUMES_BY_NS_SUCCESS } from '../../constants/volumesConstants/getVolumesByNS';
 import Name from '../../components/CreateDeploymentCards/Name';
 import Replicas from '../../components/CreateDeploymentCards/Replicas';
 import Container from '../../components/CreateDeploymentCards/Container';
@@ -54,11 +55,11 @@ type Props = {
   createExternalServiceReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetConfigMapsByNSIfNeeded: (idName: string) => void,
-  // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
+  fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchCreateDeploymentIfNeeded: (idName: string, data: Object) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void,
-  // getVolumesByNSReducer: Object
+  getVolumesByNSReducer: Object,
   updateDeploymentReducer: Object,
   getDeploymentReducer: Object,
   fetchUpdateDeploymentIfNeeded: (
@@ -84,14 +85,14 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
 
   componentDidMount() {
     const {
-      // fetchGetVolumesByNSIfNeeded,
+      fetchGetVolumesByNSIfNeeded,
       fetchGetConfigMapsByNSIfNeeded,
       fetchGetNamespaceIfNeeded,
       fetchGetDeploymentIfNeeded,
       getNamespaceReducer,
       match
     } = this.props;
-    // fetchGetVolumesByNSIfNeeded(match.params.idName);
+    fetchGetVolumesByNSIfNeeded(match.params.idName);
     fetchGetConfigMapsByNSIfNeeded(match.params.idName);
     if (getNamespaceReducer.readyStatus !== GET_NAMESPACE_SUCCESS) {
       fetchGetNamespaceIfNeeded(match.params.idName);
@@ -102,18 +103,19 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
   }
 
   componentWillUpdate(nextProps) {
-    // if (
-    //   this.props.getVolumesByNSReducer.readyStatus !==
-    //     nextProps.getVolumesByNSReducer.readyStatus &&
-    //   nextProps.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS
-    // ) {
-    //   if (nextProps.getVolumesByNSReducer.data[0]) {
-    //     this.setState({
-    //       ...this.state,
-    //       volumes: nextProps.getVolumesByNSReducer.data
-    //     });
-    //   }
-    // }
+    console.log(nextProps.getVolumesByNSReducer);
+    if (
+      this.props.getVolumesByNSReducer.readyStatus !==
+        nextProps.getVolumesByNSReducer.readyStatus &&
+      nextProps.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS
+    ) {
+      if (nextProps.getVolumesByNSReducer.data[0]) {
+        this.setState({
+          ...this.state,
+          volumes: nextProps.getVolumesByNSReducer.data
+        });
+      }
+    }
     if (
       this.props.getConfigMapsByNSReducer.readyStatus !==
         nextProps.getConfigMapsByNSReducer.readyStatus &&
