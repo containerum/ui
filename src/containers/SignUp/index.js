@@ -159,7 +159,7 @@ class SignUp extends PureComponent<Props> {
                   id="password"
                   placeholder="Password"
                 />
-                {appRecaptcha && (
+                {appRecaptcha !== '{{ RECAPTCHA }}' && (
                   <Recaptcha
                     style={{
                       margin: '28px 0 25px',
