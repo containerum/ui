@@ -70,7 +70,6 @@ const ConfigMapList = ({
                   border: 0,
                   cellspacing: 0,
                   cellpadding: 0,
-                  marginTop: '30px',
                   marginBottom: 0
                 }}
               >
@@ -179,7 +178,7 @@ const ConfigMapList = ({
                   border: 0,
                   cellspacing: 0,
                   cellpadding: 0,
-                  marginTop: '30px'
+                  marginLeft: 20
                 }}
               >
                 <thead>
@@ -193,7 +192,7 @@ const ConfigMapList = ({
             )}
           </div>
         ) : (
-          <div style={{ marginBottom: 47 }}>
+          <div style={{ marginLeft: 20, marginBottom: 47 }}>
             {configMapsData.length >= 1 ? (
               <table
                 className={itemClassName}
@@ -202,8 +201,7 @@ const ConfigMapList = ({
                   width: '100%',
                   border: 0,
                   cellspacing: 0,
-                  cellpadding: 0,
-                  marginTop: '30px'
+                  cellpadding: 0
                 }}
               >
                 <thead style={{ height: '30px' }}>
@@ -314,8 +312,7 @@ const ConfigMapList = ({
                   width: '100%',
                   border: 0,
                   cellspacing: 0,
-                  cellpadding: 0,
-                  marginTop: '30px'
+                  cellpadding: 0
                 }}
               >
                 <thead>
