@@ -189,7 +189,7 @@ export class Deployments extends PureComponent<Props> {
           <DeleteModal
             type="Deployment"
             inputName={inputName}
-            name={currentIdDep}
+            name={inputName}
             typeName={currentDepl.name}
             isOpened={isOpened}
             minLengthName={1}
