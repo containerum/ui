@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Helmet from 'react-helmet';
 import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import className from 'classnames/bind';
 import cookie from 'react-cookies';
 
@@ -350,7 +350,12 @@ class Membership extends PureComponent<Props> {
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
                     <div className={globalStyles.contentBlockHeader}>
-                      <div className={labelClassName}>{label}</div>
+                      <Link
+                        to={routerLinks.namespaceLink(idName)}
+                        className={labelClassName}
+                      >
+                        {label}
+                      </Link>
                       <div style={{ marginBottom: 20 }}>
                         <ul
                           className={`${menuClassName} nav nav-pills`}
