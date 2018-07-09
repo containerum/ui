@@ -300,6 +300,7 @@ export class RunningSolution extends PureComponent<Props> {
                 href={openApplication}
                 target="_blank"
                 className={btnClassName}
+                style={{ width: 175, margin: '10px 0' }}
               >
                 open application
               </a>

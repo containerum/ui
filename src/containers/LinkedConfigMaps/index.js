@@ -13,8 +13,8 @@ import * as actionDeletePod from '../../actions/configMapActions/deleteConfigMap
 import {
   GET_DEPLOYMENT_INVALID,
   GET_DEPLOYMENT_REQUESTING,
-  GET_DEPLOYMENT_FAILURE,
-  GET_DEPLOYMENT_SUCCESS
+  GET_DEPLOYMENT_FAILURE
+  // GET_DEPLOYMENT_SUCCESS
 } from '../../constants/deploymentConstants/getDeployment';
 import {
   DELETE_CONFIG_MAP_SUCCESS,
@@ -54,30 +54,24 @@ type Props = {
 };
 
 export class LinkedConfigMaps extends PureComponent<Props> {
-  constructor() {
-    super();
-    this.state = {
-      displayedContainers: []
-    };
-  }
   componentDidMount() {
     const { fetchGetConfigMapsByNSIfNeeded, match } = this.props;
     fetchGetConfigMapsByNSIfNeeded(match.params.idName);
   }
   componentWillUpdate(nextProps) {
-    if (
-      this.props.getDeploymentReducer.readyStatus !==
-        nextProps.getDeploymentReducer.readyStatus &&
-      nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS
-    ) {
-      const configMaps = nextProps.getDeploymentReducer.data.containers.map(
-        container => container.config_maps
-      );
-      this.setState({
-        ...this.state,
-        displayedContainers: configMaps ? configMaps[0] : []
-      });
-    }
+    // if (
+    //   this.props.getDeploymentReducer.readyStatus !==
+    //     nextProps.getDeploymentReducer.readyStatus &&
+    //   nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS
+    // ) {
+    //   const configMaps = nextProps.getDeploymentReducer.data.containers.find(
+    //     container => container.config_maps
+    //   );
+    //   this.setState({
+    //     ...this.state,
+    //     displayedContainers: configMaps[0] ? configMaps.config_maps : []
+    //   });
+    // }
     if (
       this.props.deleteConfigMapReducer.readyStatus !==
         nextProps.deleteConfigMapReducer.readyStatus &&
@@ -134,10 +128,14 @@ export class LinkedConfigMaps extends PureComponent<Props> {
       return <p>Oops, Failed to load data of Pods!</p>;
     }
 
+    const displayedContainers = getDeploymentReducer.data.containers[0]
+      .config_maps
+      ? getDeploymentReducer.data.containers[0].config_maps
+      : [];
     return (
       <ConfigMapsList
         configMapsData={getConfigMapsByNSReducer.data}
-        displayedContainers={this.state.displayedContainers}
+        displayedContainers={displayedContainers}
         dataNamespace={getNamespacesReducer.data.find(
           namespace => namespace.id === match.params.idName
         )}
