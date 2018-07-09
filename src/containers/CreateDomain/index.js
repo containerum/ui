@@ -91,22 +91,24 @@ export class CreateDomain extends PureComponent<Props> {
                 service.ports[0].protocol === 'TCP'))
         );
         let currentService;
-        const serviceFirst = servicesList[0];
-        if (this.props.match.params.idSrv) {
-          currentService = servicesList.find(
-            service => service.name === this.props.match.params.idSrv
-          );
-        } else {
-          currentService = serviceFirst;
-        }
+        if (servicesList.length) {
+          const serviceFirst = servicesList[0];
+          if (this.props.match.params.idSrv) {
+            currentService = servicesList.find(
+              service => service.name === this.props.match.params.idSrv
+            );
+          } else {
+            currentService = serviceFirst;
+          }
 
-        this.setState({
-          ...this.state,
-          currentService,
-          currentPort: currentService ? currentService.ports[0] : undefined,
-          portsList: currentService.ports,
-          servicesList
-        });
+          this.setState({
+            ...this.state,
+            currentService,
+            currentPort: currentService ? currentService.ports[0] : undefined,
+            portsList: currentService.ports,
+            servicesList
+          });
+        }
       }
     }
     if (
