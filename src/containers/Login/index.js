@@ -152,21 +152,6 @@ class Login extends PureComponent<Props> {
         <Helmet title="Login" />
         <div className={`${globalStyles.window} ${styles.windowLogin}`}>
           <div className={globalStyles.windowForm}>
-            <div className={globalStyles.authBlock}>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.signUp}
-              >
-                Sign Up
-              </NavLink>
-              <span className={globalStyles.authDivider}>or</span>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.login}
-              >
-                Log In
-              </NavLink>
-            </div>
             <div className={globalStyles.mainForm}>
               <div
                 className={`${globalStyles.formHeader} ${
@@ -221,6 +206,14 @@ class Login extends PureComponent<Props> {
               >
                 Forgot your password?
               </NavLink>
+              <div className={globalStyles.windowLinksBlock}>
+                <div className={globalStyles.windowLinksBlockText}>
+                  Don’t have an Account? <br />
+                  <NavLink activeClassName="active" to={routerLinks.signUp}>
+                    Sign Up here
+                  </NavLink>
+                </div>
+              </div>
               <div>
                 {false && (
                   <div>
