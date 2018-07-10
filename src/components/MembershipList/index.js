@@ -48,8 +48,8 @@ const MembershipList = ({
         <thead style={{ height: '30px' }}>
           <tr>
             <td style={{ width: 300 }}>Name</td>
-            <td style={{ width: 320 }}>Email</td>
-            <td>Permission</td>
+            <td style={{ width: 330 }}>Email</td>
+            <td style={{ width: 160 }}>Permission</td>
             <td className={membershipStyles.td_1_Membership} />
           </tr>
         </thead>
@@ -72,52 +72,37 @@ const MembershipList = ({
                 </td>
                 <td
                   className={membershipStyles.td_4_Membership}
-                  style={{ overflow: 'initial' }}
+                  style={{ overflow: 'initial', position: 'relative' }}
                 >
-                  <span>
-                    {newAccessLevel !== 'owner' ? (
-                      <span style={{ display: 'inline' }}>
-                        <i
-                          className={`${globalStyles.membershipArrow} ${
-                            globalStyles.dropdownToggleMembership
-                          }  dropdown-toggle`}
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                          style={{ cursor: 'pointer', fontStyle: 'normal' }}
-                        >
-                          {' '}
+                  {newAccessLevel !== 'owner' ? (
+                    <ul className="nav">
+                      <li>
+                        <div className={membershipStyles.firstChildOfNav}>
                           {newAccessLevel}
-                        </i>
-                        <ul
-                          className={` dropdown-menu dropdown-menu-right ${
-                            globalStyles.dropdownMenu
-                          }`}
-                          style={{ width: 160 }}
-                          role="menu"
-                        >
-                          <button
-                            className={`dropdown-item ${
-                              globalStyles.dropdownItem
-                            }`}
-                            onClick={() => changeAccessUser(login, 'write')}
-                          >
-                            Write
-                          </button>
-                          <button
-                            className={`dropdown-item ${
-                              globalStyles.dropdownItem
-                            }`}
-                            onClick={() => changeAccessUser(login, 'read')}
-                          >
-                            Read
-                          </button>
+                        </div>
+                        <ul>
+                          <li>
+                            <div
+                              onClick={() =>
+                                changeAccessUser(
+                                  login,
+                                  newAccessLevel === 'write' ? 'read' : 'write'
+                                )
+                              }
+                            >
+                              {newAccessLevel === 'write' ? 'read' : 'write'}
+                            </div>
+                          </li>
                         </ul>
-                      </span>
-                    ) : (
-                      'owner'
-                    )}
-                  </span>
+                      </li>
+                    </ul>
+                  ) : (
+                    <ul className="nav">
+                      <li>
+                        <div>{newAccessLevel}</div>
+                      </li>
+                    </ul>
+                  )}
                 </td>
                 <td
                   className={`${

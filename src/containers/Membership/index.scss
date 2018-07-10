@@ -1,6 +1,14 @@
 @import '../../theme/variables';
 
-.td {
+tbody tr:hover .td {
+  &_4_Membership {
+    ul li div {
+      background: #f6f6f6;
+    }
+  }
+}
+
+tbody tr .td {
   &_1_Membership {
     width: 52px;
     padding-left: 30px;
@@ -23,9 +31,87 @@
   }
 
   &_4_Membership {
+    text-align: justify;
+    padding: 0 !important;
     width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    ul li div {
+      text-decoration: none;
+      color: #303030;
+      display: block;
+      padding-left: 20px;
+    }
+
+    .nav li div {
+      transition-property: all;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-in-out;
+    }
+
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    ul li {
+      width: 100%;
+      height: 42px;
+      background-color: #fff;
+      text-align: left;
+      line-height: 42px;
+
+      .firstChildOfNav::after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        margin-top: -3px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 5px 5px 0 5px;
+        border-color: #808080 transparent transparent transparent;
+      }
+    }
+
+    ul li div:hover {
+      position: relative;
+      z-index: 1;
+      background: #fff;
+    }
+
+    ul li ul {
+      max-height: 0;
+      overflow: hidden;
+      transition: 0.3s;
+      box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    ul li:hover ul {
+      position: relative;
+      z-index: 1;
+      max-height: 300px;
+
+      li div {
+        box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    ul li:hover {
+      position: relative;
+      z-index: 1;
+
+      .firstChildOfNav::after {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &_4_Membership:hover {
+    background: #fafafa !important;
   }
 
   &_5_Membership {
@@ -41,4 +127,3 @@
     align-items: center;
   }
 }
-
