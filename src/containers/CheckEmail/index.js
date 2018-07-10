@@ -35,21 +35,6 @@ class CheckEmail extends PureComponent<Props> {
           className={`${globalStyles.window} ${styles.windowResetPasswordTwo}`}
         >
           <div className={globalStyles.windowForm}>
-            <div className={globalStyles.authBlock}>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.signUp}
-              >
-                Sign Up
-              </NavLink>
-              <span className={globalStyles.authDivider}>or</span>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.login}
-              >
-                Log In
-              </NavLink>
-            </div>
             <div
               className={globalStyles.mainForm}
               style={{ marginTop: '200px' }}
@@ -62,27 +47,36 @@ class CheckEmail extends PureComponent<Props> {
                 }}
               >
                 Check your inbox {''}
-                <strong>{email}</strong> and follow the password reset link
-                we`ve just sent you.
+                <strong>{email}</strong> and follow the password reset link.
               </div>
               <div
                 style={{
                   textAlign: 'center',
                   fontSize: '15px',
-                  fontWeight: 300,
-                  textTransform: 'initial'
+                  fontWeight: 400,
+                  textTransform: 'initial',
+                  color: '#777',
+                  marginTop: 40
                 }}
               >
                 If you don`t receive an email, and it`s not in your spam folder
                 this could mean you signed up with a different address.
               </div>
-              {/* <NavLink */}
-              {/* activeClassName={globalStyles.authBlockActiveLink} */}
-              {/* className="forg-pass" */}
-              {/* to={routerLinks.login} */}
-              {/* > */}
-              {/* Go to login */}
-              {/* </NavLink> */}
+              <div
+                className={globalStyles.windowLinksBlock}
+                style={{ height: 50, marginTop: 50 }}
+              >
+                <div className={globalStyles.windowLinksBlockText}>
+                  Go to{' '}
+                  <NavLink activeClassName="active" to={routerLinks.login}>
+                    Log In
+                  </NavLink>{' '}
+                  or{' '}
+                  <NavLink activeClassName="active" to={routerLinks.signUp}>
+                    Sign Up
+                  </NavLink>
+                </div>
+              </div>
             </div>
             {sourceType !== 'ONLINE' && (
               <img

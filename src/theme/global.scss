@@ -600,6 +600,27 @@
   .forgetPass:hover {
     color: #29abe2;
   }
+
+  &LinksBlock {
+    width: 355px;
+    height: 70px;
+    border-radius: 2px;
+    background-color: #f6f6f6;
+    border: solid 1px #f6f6f6;
+    margin-top: 20px;
+    display: inline-block;
+    padding-top: 11px;
+
+    &Text {
+      text-align: center;
+      color: #777;
+
+      a {
+        color: #29abe2;
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .errorMessage {

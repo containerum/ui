@@ -28,22 +28,6 @@ class ConfirmEmail extends PureComponent<Props> {
         <Helmet title="Confirm Email" />
         <div className={`${globalStyles.window} ${styles.windowConfirmEmail}`}>
           <div className={globalStyles.windowForm}>
-            <div className={globalStyles.authBlock}>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.signUp}
-              >
-                Sign Up
-              </NavLink>
-              <span className={globalStyles.authDivider}>or</span>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.login}
-              >
-                Log In
-              </NavLink>
-            </div>
-
             <div
               className={globalStyles.mainForm}
               style={{ marginTop: '200px' }}
@@ -63,11 +47,27 @@ class ConfirmEmail extends PureComponent<Props> {
                 style={{
                   textAlign: 'center',
                   fontSize: '18px',
-                  textTransform: 'initial'
+                  textTransform: 'initial',
+                  color: '#777'
                 }}
               >
                 Confirm your email by clicking the verification link we`ve just
                 sent to your inbox.
+              </div>
+              <div
+                className={globalStyles.windowLinksBlock}
+                style={{ height: 50, marginTop: 50 }}
+              >
+                <div className={globalStyles.windowLinksBlockText}>
+                  Go to{' '}
+                  <NavLink activeClassName="active" to={routerLinks.login}>
+                    Log In
+                  </NavLink>{' '}
+                  or{' '}
+                  <NavLink activeClassName="active" to={routerLinks.signUp}>
+                    Sign Up
+                  </NavLink>
+                </div>
               </div>
             </div>
             {sourceType !== 'ONLINE' && (
