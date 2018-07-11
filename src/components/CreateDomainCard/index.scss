@@ -1,0 +1,17 @@
+@import '../../theme/variables';
+
+.InputControlWrapper {
+  div {
+    display: inline-block;
+  }
+}
+
+.RequestCustomDomain {
+  display: inline-block;
+  margin-left: 70px;
+  color: #29abe2;
+  font-size: 15px;
+  font-weight: 300;
+  cursor: pointer;
+  user-select: none;
+}

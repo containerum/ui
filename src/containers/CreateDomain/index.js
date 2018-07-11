@@ -2,7 +2,6 @@
 
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-// import { NavLink } from 'react-router-dom';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
@@ -12,25 +11,28 @@ import cookie from 'react-cookies';
 import { routerLinks } from '../../config';
 import * as actionGetServices from '../../actions/servicesActions/getServices';
 import * as actionCreateDomain from '../../actions/serviceActions/createDomain';
+import * as actionSendSupportTicket from '../../actions/supportActions/sendSupportTicket';
 import {
   GET_SERVICES_INVALID,
   GET_SERVICES_REQUESTING,
   GET_SERVICES_FAILURE,
   GET_SERVICES_SUCCESS
 } from '../../constants/servicesConstants/getServices';
-// import { CREATE_DOMAIN_SUCCESS } from '../../constants/serviceConstants/createDomain';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
 import CreateDomainCard from '../../components/CreateDomainCard';
+import RequestCustomDomainModal from '../../components/CustomerModal/RequestCustomDomainModal';
 import LoadButton from '../../components/LoadButton';
-// import InputControl from '../../components/InputControl';
 import Notification from '../Notification';
-// import { routerLinks } from '../../config';
 
 import sideMenuStyles from '../CreateDeployment/index.scss';
 import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+import {
+  SEND_SUPPORT_TICKET_FAILURE,
+  SEND_SUPPORT_TICKET_SUCCESS
+} from '../../constants/supportConstants/sendSupportTicketConstants';
 
 const globalClass = className.bind(globalStyles);
 
@@ -45,8 +47,10 @@ type Props = {
   getServicesReducer: Object,
   createDomainReducer: Object,
   getProfileReducer: Object,
+  sendSupportTicketReducer: Object,
   fetchGetServicesIfNeeded: (idName: string) => void,
-  fetchCreateDomainIfNeeded: (idName: string, data: Object) => void
+  fetchCreateDomainIfNeeded: (idName: string, data: Object) => void,
+  fetchSendSupportTicketIfNeeded: (data: Object) => void
 };
 
 export class CreateDomain extends PureComponent<Props> {
@@ -60,7 +64,10 @@ export class CreateDomain extends PureComponent<Props> {
       portsList: [],
       domainName: '',
       domainPath: '',
-      isEnabledSSL: false
+      customDomainName: '',
+      statusDomainRequest: undefined,
+      isEnabledSSL: false,
+      isOpenedRequestCustomDomain: false
     };
   }
   componentWillMount() {
@@ -112,6 +119,28 @@ export class CreateDomain extends PureComponent<Props> {
       }
     }
     if (
+      this.props.sendSupportTicketReducer.readyStatus !==
+        nextProps.sendSupportTicketReducer.readyStatus &&
+      nextProps.sendSupportTicketReducer.readyStatus ===
+        SEND_SUPPORT_TICKET_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        statusDomainRequest: 'success'
+      });
+    }
+    if (
+      this.props.sendSupportTicketReducer.readyStatus !==
+        nextProps.sendSupportTicketReducer.readyStatus &&
+      nextProps.sendSupportTicketReducer.readyStatus ===
+        SEND_SUPPORT_TICKET_FAILURE
+    ) {
+      this.setState({
+        ...this.state,
+        statusDomainRequest: nextProps.sendSupportTicketReducer.err
+      });
+    }
+    if (
       this.props.getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
@@ -154,11 +183,48 @@ export class CreateDomain extends PureComponent<Props> {
       isEnabledSSL: !this.state.isEnabledSSL
     });
   };
+  handleClickRequestCustomDomain = () => {
+    this.setState({
+      ...this.state,
+      customDomainName: '',
+      statusDomainRequest: undefined,
+      isOpenedRequestCustomDomain: !this.state.isOpenedRequestCustomDomain
+    });
+  };
+  handleSubmitRequestCustomDomain = e => {
+    e.preventDefault();
+    const { currentService, currentPort, customDomainName } = this.state;
+    const {
+      match,
+      getProfileReducer,
+      fetchSendSupportTicketIfNeeded
+    } = this.props;
+    if (getProfileReducer.data) {
+      const userEmail = getProfileReducer.data.login;
+
+      const reqObj = {
+        case: {
+          user_email: userEmail,
+          subject: 'web-ui',
+          content: `Project: ${match.params.idName}, Service: ${
+            currentService.name
+          }, Port: ${currentPort.port}, Domain: ${customDomainName}`,
+          group_id: 27769,
+          files: [],
+          base64: []
+        }
+      };
+      fetchSendSupportTicketIfNeeded(reqObj);
+    }
+  };
   handleSubmitCreateDomain = e => {
     e.preventDefault();
-    const { fetchCreateDomainIfNeeded, match } = this.props;
-    fetchCreateDomainIfNeeded(match.params.idName, this.state);
+    if (!this.state.customDomainName) {
+      const { fetchCreateDomainIfNeeded, match } = this.props;
+      fetchCreateDomainIfNeeded(match.params.idName, this.state);
+    }
   };
+
   renderCreateDomain = () => {
     if (this.state.servicesList.length > 0 && !this.state.currentService) {
       const currentService = this.state.servicesList[0];
@@ -169,7 +235,7 @@ export class CreateDomain extends PureComponent<Props> {
         portsList: currentService.ports
       });
     }
-    const { getServicesReducer, match } = this.props;
+    const { getServicesReducer, sendSupportTicketReducer, match } = this.props;
     if (
       !getServicesReducer.readyStatus ||
       getServicesReducer.readyStatus === GET_SERVICES_INVALID ||
@@ -204,26 +270,53 @@ export class CreateDomain extends PureComponent<Props> {
       portsList,
       domainName,
       domainPath,
-      isEnabledSSL
+      isOpenedRequestCustomDomain,
+      isEnabledSSL,
+      customDomainName,
+      statusDomainRequest
     } = this.state;
 
     return (
-      <CreateDomainCard
-        currentService={currentService}
-        servicesList={servicesList}
-        currentPort={currentPort}
-        portsList={portsList}
-        domainName={domainName}
-        domainPath={domainPath}
-        isEnabledSSL={isEnabledSSL}
-        handleChangeSelectService={value =>
-          this.handleChangeSelectService(value)
-        }
-        match={match}
-        handleChangeSelectPort={value => this.handleChangeSelectPort(value)}
-        handleChangeInput={(value, type) => this.handleChangeInput(value, type)}
-        handleChangeCheckBox={this.handleChangeCheckBox}
-      />
+      <div>
+        <RequestCustomDomainModal
+          dataServices={servicesList}
+          selectedService={currentService}
+          isOpened={isOpenedRequestCustomDomain}
+          currentPort={currentPort}
+          portsList={portsList}
+          handleInputDomainName={this.handleChangeInput}
+          customDomainName={customDomainName}
+          handleChangeSelectService={value =>
+            this.handleChangeSelectService(value)
+          }
+          handleSubmitRequestCustomDomain={e =>
+            this.handleSubmitRequestCustomDomain(e)
+          }
+          handleOpenCloseModal={this.handleClickRequestCustomDomain}
+          handleChangeSelectPort={value => this.handleChangeSelectPort(value)}
+          isLoading={sendSupportTicketReducer.isFetching}
+          statusDomainRequest={statusDomainRequest}
+        />
+        <CreateDomainCard
+          currentService={currentService}
+          servicesList={servicesList}
+          currentPort={currentPort}
+          portsList={portsList}
+          domainName={domainName}
+          domainPath={domainPath}
+          isEnabledSSL={isEnabledSSL}
+          handleChangeSelectService={value =>
+            this.handleChangeSelectService(value)
+          }
+          match={match}
+          handleChangeSelectPort={value => this.handleChangeSelectPort(value)}
+          handleChangeInput={(value, type) =>
+            this.handleChangeInput(value, type)
+          }
+          handleChangeCheckBox={this.handleChangeCheckBox}
+          handleClickRequestCustomDomain={this.handleClickRequestCustomDomain}
+        />
+      </div>
     );
   };
 
@@ -279,17 +372,21 @@ const connector: Connector<{}, Props> = connect(
   ({
     getServicesReducer,
     createDomainReducer,
-    getProfileReducer
+    getProfileReducer,
+    sendSupportTicketReducer
   }: ReduxState) => ({
     getServicesReducer,
     createDomainReducer,
-    getProfileReducer
+    getProfileReducer,
+    sendSupportTicketReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetServicesIfNeeded: (idName: string) =>
       dispatch(actionGetServices.fetchGetServicesIfNeeded(idName)),
     fetchCreateDomainIfNeeded: (idName: string, data: Object) =>
-      dispatch(actionCreateDomain.fetchCreateDomainIfNeeded(idName, data))
+      dispatch(actionCreateDomain.fetchCreateDomainIfNeeded(idName, data)),
+    fetchSendSupportTicketIfNeeded: (data: Object) =>
+      dispatch(actionSendSupportTicket.fetchSendSupportTicketIfNeeded(data))
   })
 );
 
