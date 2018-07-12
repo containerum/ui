@@ -24,13 +24,19 @@ const containerClassName = globalClass(
 type Props = {
   membersList: Array<Object>,
   changeAccessUser: (login: string, access: string) => void,
-  handleDeleteDMembers: (login: string) => void
+  handleDeleteDMembers: (login: string) => void,
+  handleClickDropDownAccess: (login: string) => void,
+  handleMouseLeaveDropDownAccess: () => void,
+  currentLoginDropDownAccess: string
 };
 
 const MembershipList = ({
   membersList,
   changeAccessUser,
-  handleDeleteDMembers
+  handleDeleteDMembers,
+  handleClickDropDownAccess,
+  handleMouseLeaveDropDownAccess,
+  currentLoginDropDownAccess
 }: Props) => (
   <div>
     {membersList.length ? (
@@ -48,7 +54,7 @@ const MembershipList = ({
         <thead style={{ height: '30px' }}>
           <tr>
             <td style={{ width: 300 }}>Name</td>
-            <td style={{ width: 330 }}>Email</td>
+            <td style={{ width: 310 }}>Email</td>
             <td style={{ width: 160 }}>Permission</td>
             <td className={membershipStyles.td_1_Membership} />
           </tr>
@@ -73,35 +79,45 @@ const MembershipList = ({
                 <td
                   className={membershipStyles.td_4_Membership}
                   style={{ overflow: 'initial', position: 'relative' }}
+                  onClick={() =>
+                    newAccessLevel !== 'owner' &&
+                    handleClickDropDownAccess(login)
+                  }
                 >
                   {newAccessLevel !== 'owner' ? (
-                    <ul className="nav">
-                      <li>
-                        <div className={membershipStyles.firstChildOfNav}>
-                          {newAccessLevel}
-                        </div>
-                        <ul>
-                          <li>
-                            <div
-                              onClick={() =>
-                                changeAccessUser(
-                                  login,
-                                  newAccessLevel === 'write' ? 'read' : 'write'
-                                )
-                              }
-                            >
-                              {newAccessLevel === 'write' ? 'read' : 'write'}
-                            </div>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
+                    <div
+                      className={
+                        currentLoginDropDownAccess === login
+                          ? `${membershipStyles.NavDropDownWrapper} ${
+                              membershipStyles.NavDropDownOpen
+                            }`
+                          : membershipStyles.NavDropDownClose
+                      }
+                      onMouseLeave={() => handleMouseLeaveDropDownAccess()}
+                    >
+                      <div className={membershipStyles.firstChildOfNav}>
+                        {newAccessLevel}
+                      </div>
+                      <div
+                        onClick={() =>
+                          changeAccessUser(
+                            login,
+                            newAccessLevel === 'write' ? 'read' : 'write'
+                          )
+                        }
+                        className={
+                          currentLoginDropDownAccess === login
+                            ? membershipStyles.NavItemDropDownOpen
+                            : membershipStyles.NavItemDropDownClose
+                        }
+                      >
+                        {newAccessLevel === 'write' ? 'read' : 'write'}
+                      </div>
+                    </div>
                   ) : (
-                    <ul className="nav">
-                      <li>
-                        <div>{newAccessLevel}</div>
-                      </li>
-                    </ul>
+                    <div style={{ padding: '10px 0 10px 25px' }}>
+                      {newAccessLevel}
+                    </div>
                   )}
                 </td>
                 <td
@@ -115,7 +131,7 @@ const MembershipList = ({
                   {newAccessLevel !== 'owner' && (
                     <div className={globalStyles.membershipItem}>
                       <i
-                        style={{ verticalAlign: 'middle', paddingRight: 30 }}
+                        style={{ verticalAlign: 'middle' }}
                         className={`${
                           globalStyles.membershipIcon
                         } material-icons `}
