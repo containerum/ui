@@ -27,7 +27,12 @@ import {
   ADD_NAMESPACE_USER_ACCESS_SUCCESS
 } from '../../constants/namespaceConstants/addNamespaceUserAccess';
 import { DELETE_NAMESPACE_USER_ACCESS_SUCCESS } from '../../constants/namespaceConstants/deleteNamespaceUserAccess';
-import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_INVALID,
+  GET_PROFILE_REQUESTING,
+  GET_PROFILE_SUCCESS
+} from '../../constants/profileConstants/getProfile';
 
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
@@ -78,6 +83,7 @@ class Membership extends PureComponent<Props> {
       inputEmailAdd: '',
       isOpen: false,
       isOpenAdd: false,
+      currentLoginDropDownAccess: null,
       idUser: null,
       accessNewUser: 'read',
       accessUser: 'read',
@@ -213,6 +219,18 @@ class Membership extends PureComponent<Props> {
       isOpen: true
     });
   };
+  handleClickDropDownAccess = login => {
+    this.setState({
+      ...this.state,
+      currentLoginDropDownAccess: login
+    });
+  };
+  handleMouseLeaveDropDownAccess = () => {
+    this.setState({
+      ...this.state,
+      currentLoginDropDownAccess: null
+    });
+  };
   handleAddMembersAdd = () => {
     this.setState({
       ...this.state,
@@ -249,13 +267,20 @@ class Membership extends PureComponent<Props> {
   };
 
   renderMembershipList = () => {
-    const { getNamespaceUsersAccessReducer, match } = this.props;
+    const {
+      match,
+      getNamespaceUsersAccessReducer,
+      getProfileReducer
+    } = this.props;
     if (
       !getNamespaceUsersAccessReducer.readyStatus ||
       getNamespaceUsersAccessReducer.readyStatus ===
         GET_NAMESPACE_USERS_ACCESS_INVALID ||
       getNamespaceUsersAccessReducer.readyStatus ===
-        GET_NAMESPACE_USERS_ACCESS_REQUESTING
+        GET_NAMESPACE_USERS_ACCESS_REQUESTING ||
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
     ) {
       return (
         <div
@@ -271,7 +296,8 @@ class Membership extends PureComponent<Props> {
 
     if (
       getNamespaceUsersAccessReducer.readyStatus ===
-      GET_NAMESPACE_USERS_ACCESS_FAILURE
+        GET_NAMESPACE_USERS_ACCESS_FAILURE ||
+      getProfileReducer.readyStatus === GET_PROFILE_FAILURE
     ) {
       return <p>Oops, Failed to load data of Users!</p>;
     }
@@ -282,6 +308,9 @@ class Membership extends PureComponent<Props> {
         membersList={this.state.membersList}
         changeAccessUser={this.changeAccessUser}
         handleDeleteDMembers={this.handleDeleteDMembers}
+        handleClickDropDownAccess={this.handleClickDropDownAccess}
+        handleMouseLeaveDropDownAccess={this.handleMouseLeaveDropDownAccess}
+        currentLoginDropDownAccess={this.state.currentLoginDropDownAccess}
       />
     );
   };
