@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
+import queryString from 'query-string';
 
 import '../../theme/common.scss';
 
@@ -27,6 +28,7 @@ import { GET_DEPLOYMENTS_RUNNING_SOLUTION_SUCCESS } from '../../constants/soluti
 import { GET_SERVICES_RUNNING_SOLUTION_SUCCESS } from '../../constants/solutionsConstants/getServicesRunningSolution';
 
 type Props = {
+  location: Object,
   history: Object,
   getProfileReducer: Object,
   isOpenedRunSolution: boolean,
@@ -67,15 +69,26 @@ export class RunSolution extends PureComponent<Props> {
     const currentSolution = this.props.getSolutionsReducer.data.find(
       solution => solution.name === this.props.currentSolutionTemplate
     );
+    let currentNamespace = {};
+    const { namespace } = queryString.parse(this.props.location.search);
+    if (this.props.getNamespacesReducer.data.length) {
+      [currentNamespace] = this.props.getNamespacesReducer.data;
+    }
+    if (namespace) {
+      const ifCurrentNamespace = this.props.getNamespacesReducer.data.find(
+        ns => ns.id === namespace
+      );
+      if (ifCurrentNamespace) {
+        currentNamespace = ifCurrentNamespace;
+      }
+    }
     this.setState({
       ...this.state,
       currentSolution:
         currentSolution || this.props.getSolutionsReducer.data[0],
       isOpenedSelectNamespace: this.props.isOpenedRunSolution,
       displayedNamespaces: this.props.getNamespacesReducer.data,
-      currentNamespace: this.props.getNamespacesReducer.data.length
-        ? this.props.getNamespacesReducer.data[0]
-        : {}
+      currentNamespace
     });
   }
   componentWillUpdate(nextProps) {
@@ -229,12 +242,13 @@ export class RunSolution extends PureComponent<Props> {
 
   render() {
     const {
+      history,
       getNamespacesReducer,
       getDeploymentsRunningSolutionReducer,
       getServicesRunningSolutionReducer,
       runSolutionReducer,
       getEnvsSolutionReducer,
-      history
+      getProfileReducer
     } = this.props;
     const {
       currentView,
@@ -251,7 +265,8 @@ export class RunSolution extends PureComponent<Props> {
           currentSolution &&
           currentNamespace && (
             <RunSolutionModals
-              login={this.props.getProfileReducer.data.login}
+              history={history}
+              login={getProfileReducer.data.login}
               currentNamespace={currentNamespace}
               currentView={currentView}
               currentSolution={currentSolution}
@@ -260,7 +275,6 @@ export class RunSolution extends PureComponent<Props> {
               statusOfRunSolution={statusOfRunSolution}
               getEnvsData={displayEnvsSolution}
               solutionName={solutionName}
-              history={history}
               getEnvsSolutionReducer={getEnvsSolutionReducer}
               runSolutionReducer={runSolutionReducer}
               deploymentsRunningSolution={

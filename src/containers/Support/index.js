@@ -19,6 +19,7 @@ import {
   GET_SUPPORT_GROUPS_FAILURE,
   GET_SUPPORT_GROUPS_SUCCESS
 } from '../../constants/supportConstants/getSupportGroupsConstants';
+import { SEND_SUPPORT_TICKET_SUCCESS } from '../../constants/supportConstants/sendSupportTicketConstants';
 import type { Dispatch, ReduxState } from '../../types';
 import SupportList from '../../components/SupportList';
 import globalStyles from '../../theme/global.scss';
@@ -71,6 +72,14 @@ export class Support extends PureComponent<Props> {
         ...this.state,
         group: nextProps.getSupportGroupsReducer.data[0].group.group_id
       });
+    }
+    if (
+      this.props.sendSupportTicketReducer.readyStatus !==
+        nextProps.sendSupportTicketReducer.readyStatus &&
+      nextProps.sendSupportTicketReducer.readyStatus ===
+        SEND_SUPPORT_TICKET_SUCCESS
+    ) {
+      this.props.history.push(routerLinks.successTicket);
     }
   }
   handleChangeTextArea = e => {

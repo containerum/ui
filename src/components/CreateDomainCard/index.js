@@ -10,6 +10,7 @@ import InputControl from '../InputControl';
 import CheckBoxControl from '../CheckBoxControl';
 
 import globalStyles from '../../theme/global.scss';
+import styles from './index.scss';
 import inputStyles from '../../components/InputControl/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 
@@ -41,7 +42,8 @@ type Props = {
   handleChangeSelectService: (value: string) => void,
   handleChangeSelectPort: (value: string) => void,
   handleChangeInput: (value: string, type: string) => void,
-  handleChangeCheckBox: () => void
+  handleChangeCheckBox: () => void,
+  handleClickRequestCustomDomain: () => void
 };
 
 const isOnline = sourceType === 'ONLINE';
@@ -59,7 +61,8 @@ const CreateDomainCard = ({
   handleChangeSelectService,
   handleChangeSelectPort,
   handleChangeInput,
-  handleChangeCheckBox
+  handleChangeCheckBox,
+  handleClickRequestCustomDomain
 }: Props) => {
   const regexp = /^[a-z][a-z0-9-]*$|^$/;
   const isErrorNameTooltipClass = domainName.search(regexp) === -1;
@@ -179,69 +182,83 @@ const CreateDomainCard = ({
         className={`${globalStyles.rowLine} row`}
         style={{ borderBottom: 'none', paddingBottom: '20px' }}
       >
-        <div className="col-md-7">
+        <div className="col-md-12">
           <div className={nextContainerClassName}>
             <span className={globalStyles.containerTitleStar}>*</span> Domains
           </div>
-          <Tooltip
-            placement="left"
-            visible
-            overlay={<span>Invalid domain name</span>}
-            overlayClassName={
-              isErrorNameTooltipClass ? '' : 'rc-tooltip-hidden'
-            }
-          >
-            <InputControl
-              value={domainName}
-              id="domainName"
-              type="text"
-              required
-              baseClassName={`form-group__input-text form-control customInput ${isOnline &&
-                'customInputDomain'}`}
-              baseClassNameLabel={`form-group__label ${domainName &&
-                'form-group__label-always-onfocus'}`}
-              labelText="Domain"
-              baseClassNameHelper={globalStyles.formGroupHelper}
-              handleChangeInput={e => {
-                // e.target.setSelectionRange(-domainName.length, -domainName.length);
-                handleChangeInput(e.target.value, 'domainName');
-              }}
-              alwaysVisiblePlaceholder={
-                isOnline && 'customAlwaysVisiblePlaceholder'
+          <div className={styles.InputControlWrapper}>
+            <Tooltip
+              placement="left"
+              visible
+              overlay={<span>Invalid domain name</span>}
+              overlayClassName={
+                isErrorNameTooltipClass ? '' : 'rc-tooltip-hidden'
               }
-            />
-          </Tooltip>
-          <Tooltip
-            placement="right"
-            visible
-            overlay={<span>Invalid path name</span>}
-            overlayClassName={
-              isErrorPathTooltipClass ? '' : 'rc-tooltip-hidden'
-            }
-          >
-            <InputControl
-              value={domainPath}
-              id="domainPath"
-              type="text"
-              baseClassName={`${formClassName} ${inputStyles.Domain} ${
-                inputStyles.DomainPath
-              }`}
-              baseClassNameLabel={`${
-                globalStyles.formGroupLabel
-              } ${domainPath && globalStyles.formGroupLabelOnFocus}`}
-              labelText="Path"
-              title="Path that the External Service watches to route traffic"
-              textHelper="Path that the External Service watches to route traffic"
-              baseClassNameHelper={globalStyles.formGroupHelper}
-              handleChangeInput={e =>
-                handleChangeInput(e.target.value, 'domainPath')
+            >
+              <InputControl
+                value={domainName}
+                id="domainName"
+                type="text"
+                required
+                baseClassName={`form-group__input-text form-control customInput ${isOnline &&
+                  'customInputDomain'}`}
+                baseClassNameLabel={`form-group__label ${domainName &&
+                  'form-group__label-always-onfocus'}`}
+                labelText="Domain"
+                baseClassNameHelper={globalStyles.formGroupHelper}
+                handleChangeInput={e => {
+                  // e.target.setSelectionRange(-domainName.length, -domainName.length);
+                  handleChangeInput(e.target.value, 'domainName');
+                }}
+                alwaysVisiblePlaceholder={
+                  isOnline && 'customAlwaysVisiblePlaceholder'
+                }
+              />
+            </Tooltip>
+            {servicesList.length ? (
+              <div
+                className={styles.RequestCustomDomain}
+                onClick={handleClickRequestCustomDomain}
+              >
+                Request custom Domain connection
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
+          <div style={{ padding: 0, width: '47.5%' }}>
+            <Tooltip
+              placement="right"
+              visible
+              overlay={<span>Invalid path name</span>}
+              overlayClassName={
+                isErrorPathTooltipClass ? '' : 'rc-tooltip-hidden'
               }
-              alwaysVisiblePlaceholder="customAlwaysVisibleInputPathPlaceholder"
-            />
-          </Tooltip>
+            >
+              <InputControl
+                value={domainPath}
+                id="domainPath"
+                type="text"
+                baseClassName={`${formClassName} ${inputStyles.Domain} ${
+                  inputStyles.DomainPath
+                }`}
+                baseClassNameLabel={`${
+                  globalStyles.formGroupLabel
+                } ${domainPath && globalStyles.formGroupLabelOnFocus}`}
+                labelText="Path"
+                title="Path that the External Service watches to route traffic"
+                textHelper="Path that the External Service watches to route traffic"
+                baseClassNameHelper={globalStyles.formGroupHelper}
+                handleChangeInput={e =>
+                  handleChangeInput(e.target.value, 'domainPath')
+                }
+                alwaysVisiblePlaceholder="customAlwaysVisibleInputPathPlaceholder"
+              />
+            </Tooltip>
+          </div>
           <div style={{ marginTop: '40px' }}>
             <div
-              className="col-md-6"
+              className="col-md-3"
               style={{ display: 'inline-block', paddingLeft: 0 }}
             >
               <CheckBoxControl
@@ -254,7 +271,7 @@ const CreateDomainCard = ({
             </div>
             {isEnabledSSL && (
               <div
-                className={`${globalStyles.selectWrapper} col-md-6`}
+                className={`${globalStyles.selectWrapper} col-md-3`}
                 style={{ display: 'inline-block' }}
               >
                 <div className={globalStyles.selectArrow} />

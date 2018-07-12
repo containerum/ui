@@ -113,22 +113,6 @@ class SignUp extends PureComponent<Props> {
         <Helmet title="Sign Up" />
         <div className={`${globalStyles.window} ${styles.windowSignUp}`}>
           <div className={globalStyles.windowForm}>
-            <div className={globalStyles.authBlock}>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.signUp}
-              >
-                Sign Up
-              </NavLink>
-              <span className={globalStyles.authDivider}>or</span>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.login}
-              >
-                Log In
-              </NavLink>
-            </div>
-
             <div className={globalStyles.mainForm}>
               <div
                 className={`${globalStyles.formHeader} ${
@@ -159,7 +143,7 @@ class SignUp extends PureComponent<Props> {
                   id="password"
                   placeholder="Password"
                 />
-                {appRecaptcha && (
+                {appRecaptcha !== '{{ RECAPTCHA }}' && (
                   <Recaptcha
                     style={{
                       margin: '28px 0 25px',
@@ -182,6 +166,14 @@ class SignUp extends PureComponent<Props> {
                   } ${globalStyles.authBtnMargin}`}
                 />
               </form>
+              <div className={globalStyles.windowLinksBlock}>
+                <div className={globalStyles.windowLinksBlockText}>
+                  Already have an Account? <br />
+                  <NavLink activeClassName="active" to={routerLinks.login}>
+                    Log In here
+                  </NavLink>
+                </div>
+              </div>
 
               {false && (
                 <div>

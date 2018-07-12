@@ -59,7 +59,9 @@ const NamespacesList = ({
         data.map(namespace => {
           const { label, id, resources, access } = namespace;
           const currentAccess = role === 'admin' ? 'owner' : access;
-          const { memory, cpu } = resources.used;
+          const { memory, cpu } = resources
+            ? resources.used
+            : { memory: '-', cpu: '-' };
           const { memory: memoryLimit, cpu: cpuLimit } = resources.hard;
           const accessStyleName = currentAccess
             ? currentAccess[0].toUpperCase() + currentAccess.slice(1)

@@ -110,7 +110,7 @@ const RunningSolutionsList = ({
                 <NavLink
                   className={btnClassName}
                   data-toggle="modal"
-                  to={routerLinks.solutions}
+                  to={routerLinks.solutionsLink(idName)}
                 >
                   Create Solution
                 </NavLink>

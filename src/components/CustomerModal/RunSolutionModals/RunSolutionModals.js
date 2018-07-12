@@ -44,13 +44,13 @@ const customStyles = {
 };
 
 type Props = {
+  history: string,
   currentNamespace: string,
   currentView: string,
   login: string,
   solutionName: string,
   currentSolution: Object,
   getEnvsData: Object,
-  history: Object,
   runSolutionReducer: Object,
   getEnvsSolutionReducer: Object,
   isOpenedSelectNamespace: Object,
@@ -67,12 +67,12 @@ type Props = {
 };
 
 const RunSolutionModals = ({
+  history,
   currentNamespace,
   currentView,
   solutionName,
   currentSolution,
   getEnvsData,
-  history,
   login,
   runSolutionReducer,
   deploymentsRunningSolution,
@@ -304,12 +304,7 @@ const RunSolutionModals = ({
                       name="namespaces"
                       onChange={e => handleSelectNamespace(e.target.value)}
                       required
-                      value={
-                        history.location.search
-                          ? history.location.search.substr(1)
-                          : currentNamespace.label
-                      }
-                      disabled={history.location.search}
+                      value={currentNamespace.label}
                     >
                       {filterDisplayedNamespaces.map(ns => (
                         <option key={_.uniqueId()} value={ns.label}>

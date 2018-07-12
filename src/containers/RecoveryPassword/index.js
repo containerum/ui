@@ -161,21 +161,6 @@ class RecoveryPassword extends PureComponent<Props> {
           }`}
         >
           <div className={globalStyles.windowForm}>
-            <div className={globalStyles.authBlock}>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.signUp}
-              >
-                Sign Up
-              </NavLink>
-              <span className={globalStyles.authDivider}>or</span>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.login}
-              >
-                Log In
-              </NavLink>
-            </div>
             <div className={globalStyles.mainForm}>
               <div
                 className={`${globalStyles.formHeader} ${
@@ -218,13 +203,21 @@ class RecoveryPassword extends PureComponent<Props> {
                   } ${globalStyles.authBtnMargin}`}
                 />
               </form>
-              {/* <NavLink */}
-              {/* activeClassName="active" */}
-              {/* className="forg-pass" */}
-              {/* to={routerLinks.forgot} */}
-              {/* > */}
-              {/* Forgot your password? */}
-              {/* </NavLink> */}
+              <div
+                className={globalStyles.windowLinksBlock}
+                style={{ height: 50, marginTop: 50 }}
+              >
+                <div className={globalStyles.windowLinksBlockText}>
+                  Go to{' '}
+                  <NavLink activeClassName="active" to={routerLinks.login}>
+                    Log In
+                  </NavLink>{' '}
+                  or{' '}
+                  <NavLink activeClassName="active" to={routerLinks.signUp}>
+                    Sign Up
+                  </NavLink>
+                </div>
+              </div>
               <div>
                 {false && (
                   <div>

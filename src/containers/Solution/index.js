@@ -35,6 +35,7 @@ import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile
 
 type Props = {
   history: Object,
+  location: Object,
   match: Object,
   getSolutionsReducer: Object,
   getSolutionReducer: Object,
@@ -168,7 +169,7 @@ export class Solution extends PureComponent<Props> {
   };
 
   render() {
-    const { match, history } = this.props;
+    const { match, history, location } = this.props;
     const { isOpenedRunSolution, currentSolutionTemplate } = this.state;
     return (
       <div>
@@ -180,6 +181,7 @@ export class Solution extends PureComponent<Props> {
         {isOpenedRunSolution && (
           <RunSolutionModal
             history={history}
+            location={location}
             isOpenedRunSolution={isOpenedRunSolution}
             currentSolutionTemplate={currentSolutionTemplate}
             handleOpenClose={this.handleOpenClose}
