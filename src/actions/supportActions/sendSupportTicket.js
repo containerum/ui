@@ -1,10 +1,8 @@
 /* @flow */
 
-import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types';
-import { routerLinks } from '../../config';
 import {
   SEND_SUPPORT_TICKET_REQUESTING,
   SEND_SUPPORT_TICKET_SUCCESS,
@@ -56,20 +54,12 @@ export const fetchSendSupportTicket = (
   switch (status) {
     case 200: {
       dispatch(sendSupportTicketSuccess(dataResponse));
-      // if (
-      //   typeof window !== 'undefined' &&
-      //   typeof window.navigator !== 'undefined'
-      // ) {
-      //   ReactGA.event({
-      //     category: 'UI',
-      //     action: 'UI_support_submit'
-      //   });
-      // }
-      dispatch(push(routerLinks.successTicket));
       break;
     }
     default: {
-      dispatch(sendSupportTicketFailure(dataResponse.message));
+      dispatch(
+        sendSupportTicketFailure('An unexpected error! Please try again later.')
+      );
     }
   }
 };

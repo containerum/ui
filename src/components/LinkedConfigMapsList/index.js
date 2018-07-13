@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import className from 'classnames/bind';
+import _ from 'lodash/fp';
 
 import { routerLinks } from '../../config/default';
 import globalStyles from '../../theme/global.scss';
@@ -37,7 +38,7 @@ const LinkedConfigMapsList = ({
   <div className={globalStyles.contentBlock}>
     <div className={`container ${globalStyles.containerNoBackground}`}>
       <div>
-        {configMapsData.length >= 1 ? (
+        {configMapsData.length >= 1 && displayedContainers.length >= 1 ? (
           <table
             className={itemClassName}
             style={{
@@ -76,7 +77,7 @@ const LinkedConfigMapsList = ({
                         margin: 0,
                         boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
                       }}
-                      key={name}
+                      key={_.uniqueId()}
                     >
                       <td className={configmapStyles.td_1_Configmap}>{name}</td>
                       <td className={configmapStyles.td_2_Configmap}>
@@ -100,7 +101,9 @@ const LinkedConfigMapsList = ({
                       </td>
                       <td className={configmapStyles.td_3_Configmap}>
                         {filtredContainers.map(filtredContainer => (
-                          <div>{filtredContainer.mount_path}</div>
+                          <div key={_.uniqueId()}>
+                            {filtredContainer.mount_path}
+                          </div>
                         ))}
                       </td>
                       <td

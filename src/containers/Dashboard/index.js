@@ -57,6 +57,7 @@ import {
 import * as actionGetConfigMaps from '../../actions/configMapActions/getConfigMaps';
 
 type Props = {
+  location: Object,
   history: Object,
   getProfileReducer: Object,
   getNamespacesReducer: Object,
@@ -118,13 +119,6 @@ export class Dashboard extends PureComponent<Props> {
         nextProps.getProfileReducer.data.role
       );
     }
-    if (nextState.isOpenedRunSolution && typeof document === 'object') {
-      const getHtml = document.querySelector('html');
-      getHtml.style.overflow = 'hidden';
-    } else if (!nextState.isOpenedRunSolution && typeof document === 'object') {
-      const getHtml = document.querySelector('html');
-      getHtml.style.overflow = 'auto';
-    }
     if (nextState.isOpenedSideBarGetStarted && typeof document === 'object') {
       const getHtml = document.querySelector('html');
       getHtml.style.overflow = 'hidden';
@@ -132,6 +126,13 @@ export class Dashboard extends PureComponent<Props> {
       !nextState.isOpenedSideBarGetStarted &&
       typeof document === 'object'
     ) {
+      const getHtml = document.querySelector('html');
+      getHtml.style.overflow = 'auto';
+    }
+    if (nextState.isOpenedRunSolution && typeof document === 'object') {
+      const getHtml = document.querySelector('html');
+      getHtml.style.overflow = 'hidden';
+    } else if (!nextState.isOpenedRunSolution && typeof document === 'object') {
       const getHtml = document.querySelector('html');
       getHtml.style.overflow = 'auto';
     }
@@ -460,7 +461,7 @@ export class Dashboard extends PureComponent<Props> {
       'blockContainerTabs'
     );
 
-    const { history } = this.props;
+    const { history, location } = this.props;
     const {
       isOpenedSideBarGetStarted,
       isOpenedRunSolution,
@@ -507,6 +508,7 @@ export class Dashboard extends PureComponent<Props> {
           {isOpenedRunSolution && (
             <RunSolutionModal
               history={history}
+              location={location}
               isOpenedRunSolution={isOpenedRunSolution}
               currentSolutionTemplate={currentSolutionTemplate}
               handleOpenClose={this.handleOpenClose}

@@ -16,6 +16,12 @@
 }
 //////////////////////////////
 
+.customDomainNameWrapper {
+  div {
+    padding: 0;
+  }
+}
+
 .isHidden {
   display: none;
 }
@@ -526,7 +532,7 @@
   max-width: 935px;
   height: 650px;
   border-radius: 4px;
-  box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 3px 3px 200px 0 rgba(0, 0, 0, 0.1);
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
@@ -536,6 +542,7 @@
   align-items: center;
   background: #fff;
   background-size: contain;
+  background-position: -1px 0 !important;
 
   &Form {
     width: 485px;
@@ -599,6 +606,27 @@
 
   .forgetPass:hover {
     color: #29abe2;
+  }
+
+  &LinksBlock {
+    width: 355px;
+    height: 70px;
+    border-radius: 2px;
+    background-color: #f6f6f6;
+    border: solid 1px #f6f6f6;
+    margin-top: 20px;
+    display: inline-block;
+    padding-top: 11px;
+
+    &Text {
+      text-align: center;
+      color: #777;
+
+      a {
+        color: #29abe2;
+        text-decoration: underline;
+      }
+    }
   }
 }
 

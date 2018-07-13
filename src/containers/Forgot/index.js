@@ -76,21 +76,6 @@ class Forgot extends PureComponent<Props> {
         <Helmet title="Forgot" />
         <div className={`${globalStyles.window} ${styles.windowResetPassword}`}>
           <div className={globalStyles.windowForm}>
-            <div className={globalStyles.authBlock}>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.signUp}
-              >
-                Sign Up
-              </NavLink>
-              <span className={globalStyles.authDivider}>or</span>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                to={routerLinks.login}
-              >
-                Log In
-              </NavLink>
-            </div>
             <div className={globalStyles.mainForm}>
               <div
                 className={`${globalStyles.formHeader} ${
@@ -123,13 +108,21 @@ class Forgot extends PureComponent<Props> {
                   } ${globalStyles.authBtnMargin}`}
                 />
               </form>
-              <NavLink
-                activeClassName={globalStyles.authBlockActiveLink}
-                className={globalStyles.forgetPass}
-                to={routerLinks.login}
+              <div
+                className={globalStyles.windowLinksBlock}
+                style={{ height: 50 }}
               >
-                Go to login
-              </NavLink>
+                <div className={globalStyles.windowLinksBlockText}>
+                  Go to{' '}
+                  <NavLink activeClassName="active" to={routerLinks.login}>
+                    Log In
+                  </NavLink>{' '}
+                  or{' '}
+                  <NavLink activeClassName="active" to={routerLinks.signUp}>
+                    Sign Up
+                  </NavLink>
+                </div>
+              </div>
               <div>
                 {false && (
                   <div>
