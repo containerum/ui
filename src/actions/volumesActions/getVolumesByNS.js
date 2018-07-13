@@ -50,7 +50,6 @@ export const fetchGetVolumesByNS = (
     validateStatus: status => status >= 200 && status <= 505
   });
   const { status, data } = response;
-  console.log(data);
   switch (status) {
     case 200: {
       dispatch(getVolumesByNSSuccess(data));

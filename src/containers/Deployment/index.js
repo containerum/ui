@@ -27,6 +27,7 @@ import NavigationHeaderItem from '../NavigationHeader';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import PodsPage from '../Pods';
 import LinkedConfigMapsList from '../LinkedConfigMaps';
+import LinkedVolumesList from '../LinkedVolumes';
 import globalStyles from '../../theme/global.scss';
 import {
   GET_NAMESPACES_FAILURE,
@@ -210,6 +211,19 @@ export class Deployment extends PureComponent<Props> {
                     >
                       <NavLink
                         activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.getDeploymentLinkedVolumesLink(
+                          match.params.idName,
+                          match.params.idDep
+                        )}
+                      >
+                        Linked Volumes
+                      </NavLink>
+                    </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
                         to={routerLinks.getDeploymentLinkedConfigMapsLink(
                           match.params.idName,
                           match.params.idDep
@@ -227,6 +241,11 @@ export class Deployment extends PureComponent<Props> {
                   path={`${match.path}/linkedConfigMaps`}
                   exact
                   component={LinkedConfigMapsList}
+                />
+                <Route
+                  path={`${match.path}/linkedVolumes`}
+                  exact
+                  component={LinkedVolumesList}
                 />
                 <Route
                   path={`${match.url}`}

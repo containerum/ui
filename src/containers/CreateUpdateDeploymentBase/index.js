@@ -13,9 +13,13 @@ import {
   GET_CONFIG_MAPS_BY_NS_FAILURE,
   GET_CONFIG_MAPS_BY_NS_SUCCESS
 } from '../../constants/configMapConstants/getConfigMapsByNS';
+import {
+  GET_VOLUMES_BY_NS_INVALID,
+  GET_VOLUMES_BY_NS_REQUESTING,
+  GET_VOLUMES_BY_NS_SUCCESS
+} from '../../constants/volumesConstants/getVolumesByNS';
 import { GET_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/getNamespace';
 import { CREATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/createDeployment';
-import { GET_VOLUMES_BY_NS_SUCCESS } from '../../constants/volumesConstants/getVolumesByNS';
 import Name from '../../components/CreateDeploymentCards/Name';
 import Replicas from '../../components/CreateDeploymentCards/Replicas';
 import Container from '../../components/CreateDeploymentCards/Container';
@@ -103,7 +107,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
   }
 
   componentWillUpdate(nextProps) {
-    console.log(nextProps.getVolumesByNSReducer);
     if (
       this.props.getVolumesByNSReducer.readyStatus !==
         nextProps.getVolumesByNSReducer.readyStatus &&
@@ -1014,77 +1017,51 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
 
   // Render
   renderDeploymentSidebar = () => {
-    // const { getVolumesByNSReducer } = this.props;
-    // if (
-    //   !getVolumesByNSReducer.readyStatus ||
-    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
-    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING
-    // ) {
-    //   return (
-    //     <div style={{ marginTop: '40px', width: '80%' }}>
-    //       {new Array(4)
-    //         .fill()
-    //         .map(() => (
-    //           <img
-    //             key={_.uniqueId()}
-    //             src={require('../../images/profile-sidebar-big.svg')}
-    //             style={{ width: '100%', marginBottom: '20px' }}
-    //             alt="sidebar"
-    //           />
-    //         ))}
-    //       {new Array(6)
-    //         .fill()
-    //         .map(() => (
-    //           <img
-    //             key={_.uniqueId()}
-    //             src={require('../../images/profile-sidebar-small.svg')}
-    //             style={{ marginBottom: '20px', float: 'right' }}
-    //             alt="sidebar"
-    //           />
-    //         ))}
-    //       {new Array(1)
-    //         .fill()
-    //         .map(() => (
-    //           <img
-    //             key={_.uniqueId()}
-    //             src={require('../../images/profile-sidebar-big.svg')}
-    //             style={{ width: '100%', marginBottom: '20px' }}
-    //             alt="sidebar"
-    //           />
-    //         ))}
-    //     </div>
-    //   );
-    // }
-
-    const { getConfigMapsByNSReducer } = this.props;
+    const { getVolumesByNSReducer, getConfigMapsByNSReducer } = this.props;
     if (
+      !getVolumesByNSReducer.readyStatus ||
+      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
+      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING ||
       !getConfigMapsByNSReducer.readyStatus ||
       getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_INVALID ||
       getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_REQUESTING
     ) {
       return (
-        <div>
-          {new Array(9).fill().map(() => (
-            <img
-              key={_.uniqueId()}
-              src={require('../../images/create-dep-serv.svg')}
-              style={{
-                marginTop: '-2px',
-                marginBottom: '30px',
-                width: '100%'
-              }}
-              alt="create service"
-            />
-          ))}
+        <div style={{ marginTop: '40px', width: '80%' }}>
+          {new Array(4)
+            .fill()
+            .map(() => (
+              <img
+                key={_.uniqueId()}
+                src={require('../../images/profile-sidebar-big.svg')}
+                style={{ width: '100%', marginBottom: '20px' }}
+                alt="sidebar"
+              />
+            ))}
+          {new Array(6)
+            .fill()
+            .map(() => (
+              <img
+                key={_.uniqueId()}
+                src={require('../../images/profile-sidebar-small.svg')}
+                style={{ marginBottom: '20px', float: 'right' }}
+                alt="sidebar"
+              />
+            ))}
+          {new Array(1)
+            .fill()
+            .map(() => (
+              <img
+                key={_.uniqueId()}
+                src={require('../../images/profile-sidebar-big.svg')}
+                style={{ width: '100%', marginBottom: '20px' }}
+                alt="sidebar"
+              />
+            ))}
         </div>
       );
     }
 
-    if (
-      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_FAILURE
-    ) {
-      return <p>Oops, Failed to load data of Deployment!</p>;
-    }
     const arrayOfContainersLinks = [
       'name',
       'labels',
@@ -1187,32 +1164,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             Parameters
           </div>
         </div>
-        {/* <div */}
-        {/* className={`${styles.sideMenuHeader} m-0`} */}
-        {/* id={`container${1}-image-ports-spy`} */}
-        {/* > */}
-        {/* <div */}
-        {/* className={`${menuItemClassName} nav-link`} */}
-        {/* onClick={() => scrollById(`container${1}-image-ports`)} */}
-        {/* onKeyPress={() => scrollById(`container${1}-image-ports`)} */}
-        {/* role="presentation" */}
-        {/* > */}
-        {/* Image Ports */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* <div */}
-        {/* className={`${styles.sideMenuHeader} m-0`} */}
-        {/* id={`container${1}-commands-spy`} */}
-        {/* > */}
-        {/* <div */}
-        {/* className={`${menuItemClassName} nav-link`} */}
-        {/* onClick={() => scrollById(`container${1}-commands`)} */}
-        {/* onKeyPress={() => scrollById(`container${1}-commands`)} */}
-        {/* role="presentation" */}
-        {/* > */}
-        {/* Commands */}
-        {/* </div> */}
-        {/* </div> */}
         <div
           className={`${styles.sideMenuHeader} m-0`}
           id={`container${1}-environments-spy`}
@@ -1305,48 +1256,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             Parameters
           </div>
         </div>
-        {/* <div */}
-        {/* className={`${styles.sideMenuHeader} m-0`} */}
-        {/* id={`container${2}-image-ports-spy`} */}
-        {/* style={ */}
-        {/* containers.length === 1 ? { display: 'none' } : { display: 'block' } */}
-        {/* } */}
-        {/* > */}
-        {/* /!* <div *!/ */}
-        {/* /!* className={`${styles.sideMenuHeader} m-0`} *!/ */}
-        {/* /!* id={`container${2}-image-ports-spy`} *!/ */}
-        {/* /!* > *!/ */}
-        {/* /!* <div *!/ */}
-        {/* /!* className={`${menuItemClassName} nav-link`} *!/ */}
-        {/* /!* onClick={() => scrollById(`container${2}-image-ports`)} *!/ */}
-        {/* /!* onKeyPress={() => scrollById(`container${2}-image-ports`)} *!/ */}
-        {/* /!* role="presentation" *!/ */}
-        {/* /!* > *!/ */}
-        {/* /!* Image Ports *!/ */}
-        {/* /!* </div> *!/ */}
-        {/* /!* </div> *!/ */}
-        {/* /!* </div> *!/ */}
-        {/* /!* <div *!/ */}
-        {/* /!* className={`${styles.sideMenuHeader} m-0`} *!/ */}
-        {/* /!* id={`container${2}-commands-spy`} *!/ */}
-        {/* /!* style={ *!/ */}
-        {/* /!* containers.length === 1 ? { display: 'none' } : { display: 'block' } *!/ */}
-        {/* /!* } *!/ */}
-        {/* /!* > *!/ */}
-        {/* /!* <div *!/ */}
-        {/* /!* className={`${styles.sideMenuHeader} m-0`} *!/ */}
-        {/* /!* id={`container${2}-commands-spy`} *!/ */}
-        {/* /!* > *!/ */}
-        {/* /!* <div *!/ */}
-        {/* /!* className={`${menuItemClassName} nav-link`} *!/ */}
-        {/* /!* onClick={() => scrollById(`container${2}-commands`)} *!/ */}
-        {/* /!* onKeyPress={() => scrollById(`container${2}-commands`)} *!/ */}
-        {/* /!* role="presentation" *!/ */}
-        {/* /!* > *!/ */}
-        {/* /!* Commands *!/ */}
-        {/* /!* </div> *!/ */}
-        {/* /!* </div> *!/ */}
-        {/* </div> */}
         <div
           className={`${styles.sideMenuHeader} m-0`}
           id={`container${2}-environments-spy`}
@@ -1448,38 +1357,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             Parameters
           </div>
         </div>
-        {/* <div */}
-        {/* className={`${styles.sideMenuHeader} m-0`} */}
-        {/* id={`container${3}-image-ports-spy`} */}
-        {/* style={ */}
-        {/* containers.length <= 2 ? { display: 'none' } : { display: 'block' } */}
-        {/* } */}
-        {/* > */}
-        {/* <div */}
-        {/* className={`${menuItemClassName} nav-link`} */}
-        {/* onClick={() => scrollById(`container${3}-image-ports`)} */}
-        {/* onKeyPress={() => scrollById(`container${3}-image-ports`)} */}
-        {/* role="presentation" */}
-        {/* > */}
-        {/* Image Ports */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* <div */}
-        {/* className={`${styles.sideMenuHeader} m-0`} */}
-        {/* id={`container${3}-commands-spy`} */}
-        {/* style={ */}
-        {/* containers.length <= 2 ? { display: 'none' } : { display: 'block' } */}
-        {/* } */}
-        {/* > */}
-        {/* <div */}
-        {/* className={`${menuItemClassName} nav-link`} */}
-        {/* onClick={() => scrollById(`container${3}-commands`)} */}
-        {/* onKeyPress={() => scrollById(`container${3}-commands`)} */}
-        {/* role="presentation" */}
-        {/* > */}
-        {/* Commands */}
-        {/* </div> */}
-        {/* </div> */}
         <div
           className={`${styles.sideMenuHeader} m-0`}
           id={`container${3}-environments-spy`}
@@ -1543,34 +1420,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     );
   };
   renderCreateDeployment = () => {
-    // const { getVolumesByNSReducer, match } = this.props;
-    // if (
-    //   !getVolumesByNSReducer.readyStatus ||
-    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
-    //   getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING
-    // ) {
-    //   return (
-    //     <div>
-    //       {new Array(9).fill().map(() => (
-    //         <img
-    //           key={_.uniqueId()}
-    //           src={require('../../images/create-dep-serv.svg')}
-    //           style={{
-    //             marginTop: '-2px',
-    //             marginBottom: '30px',
-    //             width: '100%'
-    //           }}
-    //           alt="create service"
-    //         />
-    //       ))}
-    //     </div>
-    //   );
-    // }
-    //
-    // if (getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_FAILURE) {
-    //   return <p>Oops, Failed to load data of Deployment!</p>;
-    // }
-
     const {
       getConfigMapsByNSReducer,
       getDeploymentReducer,
@@ -1622,13 +1471,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             inputName={name}
             handleChangeInputName={this.handleChangeInputName}
           />
-          {/* {' '}
-        <Label
-          labels={labels}
-          handleClickRemoveLabel={this.handleClickRemoveLabel}
-          handleClickAddLabel={this.handleClickAddLabel}
-          handleChangeInputLabel={this.handleChangeInputLabel}
-        /> */}
           <Replicas
             inputReplicas={replicas}
             handleChangeInputReplicasName={this.handleChangeInputReplicasName}

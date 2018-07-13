@@ -10,8 +10,8 @@ module.exports = {
   port: process.env.PORT,
   webApi: api,
   wsApi: apiWS,
-  // webApi: 'http://192.168.88.210:8082',
-  // wsApi: 'wss://192.168.88.210:8082',
+  // webApi: 'http://192.168.88.210:18082',
+  // wsApi: 'wss://192.168.88.210:18082',
   // webApi: 'https://api.containerum.io',
   // wsApi: 'wss://api.containerum.io',
   appRecaptcha: process.env.RECAPTCHA || null,
@@ -73,6 +73,8 @@ module.exports = {
       `/project/${idName}/deployments/${idDep}/pods`,
     getDeploymentLinkedConfigMapsLink: (idName: string, idDep: string) =>
       `/project/${idName}/deployments/${idDep}/linkedConfigMaps`,
+    getDeploymentLinkedVolumesLink: (idName: string, idDep: string) =>
+      `/project/${idName}/deployments/${idDep}/linkedVolumes`,
     getMembership: '/project/:idName/membership',
     getMembershipLink: (idName: string) => `/project/${idName}/membership`,
     // getGroups: '/project/:idName/groups',
