@@ -348,7 +348,8 @@ class GlobalMembership extends PureComponent<Props> {
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
                     <div className={globalStyles.contentBlockHeader}>
-                      <div
+                      <NavLink
+                        to={routerLinks.getGlobalGroups}
                         className={labelClassName}
                         style={{
                           textTransform: 'lowercase',
@@ -356,7 +357,7 @@ class GlobalMembership extends PureComponent<Props> {
                         }}
                       >
                         {label}
-                      </div>
+                      </NavLink>
                       <div
                         style={{
                           float: 'right',
@@ -382,10 +383,12 @@ class GlobalMembership extends PureComponent<Props> {
                               style={{ width: 'auto' }}
                             >
                               <NavLink
+                                to={routerLinks.getGroupLink(
+                                  match.params.idGroup
+                                )}
                                 activeClassName={
                                   globalStyles.contentBlockMenuLiActive
                                 }
-                                to="/membership/users"
                               >
                                 Users
                               </NavLink>
