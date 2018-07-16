@@ -186,7 +186,8 @@ class GlobalMembership extends PureComponent<Props> {
       status: statusAdd,
       login: loginAdd,
       isFetching: isFetchingAdd,
-      method: methodAdd
+      method: methodAdd,
+      err: errAdd
     } = addUserReducer;
     const {
       status: statusDelete,
@@ -215,7 +216,12 @@ class GlobalMembership extends PureComponent<Props> {
           errorMessage={errDelete}
         />
 
-        <Notification status={statusAdd} name={loginAdd} method={methodAdd} />
+        <Notification
+          status={statusAdd}
+          name={loginAdd}
+          method={methodAdd}
+          errorMessage={errAdd}
+        />
 
         <AdminDeleteUserModal
           type="Delete User"
