@@ -59,13 +59,13 @@ module.exports = {
       `/resizeCustomProject/${idName}`,
     resizeNamespace: '/project/:idName/resize',
     resizeNamespaceLink: (idName: string) => `/project/${idName}/resize`,
-    getVolumes: '/projects/:idName/volumes',
-    getVolumesLink: (idName: string) => `/projects/${idName}/volumes`,
-    createVolume: '/project/:idName/createVolume',
-    createVolumeLink: (idName: string) => `/project/${idName}/createVolume`,
-    resizeVolume: '/project/:idName/resizeVolume/:idVol',
-    resizeVolumeLink: (idName: string, idVol: string) =>
-      `/project/${idName}/resizeVolume/${idVol}`,
+    // getVolumes: '/projects/:idName/volumes',
+    // getVolumesLink: (idName: string) => `/projects/${idName}/volumes`,
+    // createVolume: '/project/:idName/createVolume',
+    // createVolumeLink: (idName: string) => `/project/${idName}/createVolume`,
+    // resizeVolume: '/project/:idName/resizeVolume/:idVol',
+    // resizeVolumeLink: (idName: string, idVol: string) =>
+    //   `/project/${idName}/resizeVolume/${idVol}`,
     getDeployments: '/projects/:idName/deployments',
     getDeploymentsLink: (idName: string) => `/projects/${idName}/deployments`,
     getDeployment: '/project/:idName/deployments/:idDep',
@@ -73,8 +73,8 @@ module.exports = {
       `/project/${idName}/deployments/${idDep}/pods`,
     getDeploymentLinkedConfigMapsLink: (idName: string, idDep: string) =>
       `/project/${idName}/deployments/${idDep}/linkedConfigMaps`,
-    getDeploymentLinkedVolumesLink: (idName: string, idDep: string) =>
-      `/project/${idName}/deployments/${idDep}/linkedVolumes`,
+    // getDeploymentLinkedVolumesLink: (idName: string, idDep: string) =>
+    //   `/project/${idName}/deployments/${idDep}/linkedVolumes`,
     getMembership: '/project/:idName/membership',
     getMembershipLink: (idName: string) => `/project/${idName}/membership`,
     // getGroups: '/project/:idName/groups',

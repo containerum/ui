@@ -41,7 +41,7 @@ type Props = {
   getDeploymentReducer: Object,
   getNamespacesReducer: Object,
   deleteVolumeReducer: Object,
-  fetchDeleteVolumeIfNeeded: (idName: string, idPod: string) => void,
+  fetchDeleteVolumeIfNeeded: (idName: string, idVol: string) => void,
   fetchGetDeploymentIfNeeded: (idName: string, idDep: string) => void
 };
 
@@ -56,9 +56,9 @@ export class LinkedVolumes extends PureComponent<Props> {
       fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
     }
   }
-  handleDeleteVolume = configMapName => {
+  handleDeleteVolume = volumeName => {
     const { fetchDeleteVolumeIfNeeded, match } = this.props;
-    fetchDeleteVolumeIfNeeded(match.params.idName, configMapName);
+    fetchDeleteVolumeIfNeeded(match.params.idName, volumeName);
   };
 
   renderVolumesList = () => {
@@ -94,7 +94,7 @@ export class LinkedVolumes extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
       getDeploymentReducer.readyStatus === GET_DEPLOYMENT_FAILURE
     ) {
-      return <p>Oops, Failed to load data of Pods!</p>;
+      return <p>Oops, Failed to load data of Volumes!</p>;
     }
 
     const displayedContainers = getDeploymentReducer.data.containers[0]
@@ -141,8 +141,8 @@ const connector: Connector<{}, Props> = connect(
     deleteVolumeReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchDeleteVolumeIfNeeded: (idName: string, idPod: string) =>
-      dispatch(actionDeletePod.fetchDeleteVolumeIfNeeded(idName, idPod)),
+    fetchDeleteVolumeIfNeeded: (idName: string, idVol: string) =>
+      dispatch(actionDeletePod.fetchDeleteVolumeIfNeeded(idName, idVol)),
     fetchGetDeploymentIfNeeded: (idName: string, idDep: string) =>
       dispatch(actionGetDeployment.fetchGetDeploymentIfNeeded(idName, idDep))
   })

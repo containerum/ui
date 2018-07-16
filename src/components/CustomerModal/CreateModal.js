@@ -189,7 +189,7 @@ const CreateModal = ({
                               globalStyles.contentBlockInfoName
                             } inline`}
                           >
-                            RAM :{' '}
+                            RAM :&nbsp;
                           </div>
                           <div
                             className={`${
@@ -205,7 +205,7 @@ const CreateModal = ({
                               globalStyles.contentBlockInfoName
                             } inline`}
                           >
-                            CPU :{' '}
+                            CPU :&nbsp;
                           </div>
                           <div
                             className={`${
@@ -222,7 +222,7 @@ const CreateModal = ({
                                 globalStyles.contentBlockInfoName
                               } inline`}
                             >
-                              Volume :{' '}
+                              Volume :&nbsp;
                             </div>
                             <div
                               className={`${
