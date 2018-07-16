@@ -787,6 +787,28 @@
   }
 }
 
+.dropdownToggleFluid {
+  top: 0;
+  right: 0;
+  width: 143px;
+  padding: 0;
+  position: absolute;
+  z-index: 1000;
+  display: none;
+}
+
+.dropdownToggleFluidElement {
+  display: inline-block;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+  height: 42px;
+  padding: 0;
+  margin: 0;
+  background: #fafafa !important;
+}
+
 
 /////////////////////////buttons///////////////////////
 .button {
