@@ -14,13 +14,15 @@ import {
   GET_RELEASES_FAILURE
 } from '../../constants/getReleasesGithubConstants';
 import arrows from '../../images/arrows.png';
-import { externalLinks } from '../../config';
+import { externalLinks, sourceType } from '../../config';
 import styles from './styles.scss';
 
 type Props = {
   getReleasesGithubReducer: Object,
   fetchGetReleasesIfNeeded: () => void
 };
+
+const isOnline = sourceType === 'ONLINE';
 
 export class Footer extends PureComponent<Props> {
   componentDidMount() {
@@ -91,15 +93,17 @@ export class Footer extends PureComponent<Props> {
             >
               Docs
             </a>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={externalLinks.fastDeploy}
-              className={styles.footerHelp}
-              // onClick={() => this.handleClickAnaliticsHowToFooter()}
-            >
-              Get Started
-            </a>
+            {isOnline && (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={externalLinks.fastDeploy}
+                className={styles.footerHelp}
+                // onClick={() => this.handleClickAnaliticsHowToFooter()}
+              >
+                Get Started
+              </a>
+            )}
           </div>
         </div>
       </footer>
