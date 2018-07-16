@@ -126,7 +126,7 @@ const AdminDeleteUserModal = ({
           {type === 'Delete User' && (
             <span className={modalStyles.modalRedisText}>
               Enter user’s Email (<strong style={{ color: '#29abe2' }}>
-                example@domain.com
+                {typeName}
               </strong>) below to<br />
               confirm you want to permanently delete it:
             </span>
@@ -134,7 +134,7 @@ const AdminDeleteUserModal = ({
           {type === 'Delete User from Group' && (
             <span className={modalStyles.modalRedisText}>
               Enter user’s Email (<strong style={{ color: '#29abe2' }}>
-                example@domain.com
+                {typeName}
               </strong>) below to<br />
               confirm you want to delete it:
             </span>
