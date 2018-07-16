@@ -86,14 +86,16 @@ const DashboardBlockTourAndNews = ({
                 Top up your Balance or enter Promo code
               </Link>
             )}
-            <Link
-              className={
-                linkToDeployment ? dashboardStyles.tourLinkDisabled : ''
-              }
-              to={routerLinks.createNamespace}
-            >
-              Create Project
-            </Link>
+            {isOnline && (
+              <Link
+                className={
+                  linkToDeployment ? dashboardStyles.tourLinkDisabled : ''
+                }
+                to={routerLinks.createNamespace}
+              >
+                Create Project
+              </Link>
+            )}
             {/* <Link to="/createVolume">Create Volume</Link> */}
             <Link
               className={
@@ -137,24 +139,26 @@ const DashboardBlockTourAndNews = ({
             {/* <Link to="/account"> */}
             {/* Set up Web Hooks for Continuous Deployment */}
             {/* </Link> */}
-            <Link
-              to={
-                linkToManageTeam
-                  ? routerLinks.getMembershipLink(linkToManageTeam.id)
-                  : linkToManageTeamAdmin
-                    ? routerLinks.getGlobalMembership
-                    : '/'
-              }
-              style={
-                linkToManageTeam
-                  ? {}
-                  : linkToManageTeamAdmin
+            {isOnline && (
+              <Link
+                to={
+                  linkToManageTeam
+                    ? routerLinks.getMembershipLink(linkToManageTeam.id)
+                    : linkToManageTeamAdmin
+                      ? routerLinks.getGlobalMembership
+                      : '/'
+                }
+                style={
+                  linkToManageTeam
                     ? {}
-                    : { color: '#cecece', cursor: 'not-allowed' }
-              }
-            >
-              Share Project with your team
-            </Link>
+                    : linkToManageTeamAdmin
+                      ? {}
+                      : { color: '#cecece', cursor: 'not-allowed' }
+                }
+              >
+                Share Project with your team
+              </Link>
+            )}
           </div>
 
           {/* <div */}

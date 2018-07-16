@@ -59,7 +59,7 @@ const NamespaceInfo = ({
   const isOnline = sourceType === 'ONLINE';
   const { label, resources } = data;
   const access = role === 'admin' ? 'owner' : data.access;
-  const { memory, cpu } = resources
+  const { memory, cpu } = resources.used
     ? resources.used
     : { memory: '-', cpu: '-' };
   const { memory: memoryLimit, cpu: cpuLimit } = resources.hard;
