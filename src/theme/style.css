@@ -2169,6 +2169,11 @@ select.form-control:not([size]):not([multiple]) {
     border: solid 0.5px #a7a7a7;
 }
 
+.form-control-notvalid {
+    /*background-color: #de3e3d;*/
+    border-color: #de3e3d !important;
+}
+
 .form-control:focus{
     border: solid 0.5px #a7a7a7;
 }

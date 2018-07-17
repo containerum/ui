@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
 import cookie from 'react-cookies';
+import isEmail from 'validator/lib/isEmail';
 
 import { routerLinks } from '../../config';
 import Notification from '../Notification';
@@ -84,7 +85,8 @@ class GlobalMembership extends PureComponent<Props> {
       accessNewUsers: 'read',
       newUsers: [],
       membersList: [],
-      errAdd: null
+      errAdd: null,
+      isEmailValid: true
     };
   }
   componentWillMount() {
@@ -181,10 +183,11 @@ class GlobalMembership extends PureComponent<Props> {
   handleOpenCloseModalAdd = () => {
     this.setState({
       isOpenAdd: !this.state.isOpenAdd,
-      accessNewUser: 'read',
+      accessNewUsers: 'read',
       inputEmailAdd: '',
       errAdd: null,
-      newUsers: []
+      newUsers: [],
+      isEmailValid: true
     });
   };
   handleInputEmailDelete = inputEmailDelete => {
@@ -202,20 +205,29 @@ class GlobalMembership extends PureComponent<Props> {
   handleInputEmailAdd = inputEmailAdd => {
     this.setState({
       ...this.state,
-      inputEmailAdd
+      inputEmailAdd,
+      isEmailValid: true
     });
   };
   handleAddNewUsers = newUsers => {
-    const user = {
-      username: this.state.inputEmailAdd,
-      access: this.state.accessNewUsers
-    };
-    newUsers.push(user);
-    this.setState({
-      ...this.state,
-      newUsers,
-      inputEmailAdd: ''
-    });
+    if (isEmail(this.state.inputEmailAdd)) {
+      const user = {
+        username: this.state.inputEmailAdd,
+        access: this.state.accessNewUsers
+      };
+      newUsers.push(user);
+      this.setState({
+        ...this.state,
+        newUsers,
+        inputEmailAdd: '',
+        isEmailValid: true
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        isEmailValid: false
+      });
+    }
   };
   renderGlobalMembershipList = () => {
     const { match, getGroupReducer } = this.props;
@@ -259,11 +271,13 @@ class GlobalMembership extends PureComponent<Props> {
       fetchDeleteGroupIfNeeded,
       fetchDeleteUserFromGroupIfNeeded
     } = this.props;
+    const { isEmailValid } = this.state;
     const {
       status: statusAdd,
       isFetching: isFetchingAdd,
       labelGroup: labelGroupAdd,
-      method: methodAdd
+      method: methodAdd,
+      err: errAdd
     } = addUserInGroupReducer;
     const {
       status: statusDelete,
@@ -301,6 +315,7 @@ class GlobalMembership extends PureComponent<Props> {
           status={statusAdd}
           name={labelGroupAdd}
           method={methodAdd}
+          errorMessage={errAdd}
         />
 
         <AdminDeleteUserModal
@@ -324,7 +339,7 @@ class GlobalMembership extends PureComponent<Props> {
           onHandleDelete={fetchDeleteGroupIfNeeded}
         />
         <AddUserInGlobalGroupModal
-          type="Add User"
+          type="Add Users"
           accessNewUsers={this.state.accessNewUsers}
           name={this.state.inputEmailAdd}
           isOpened={this.state.isOpenAdd}
@@ -338,6 +353,7 @@ class GlobalMembership extends PureComponent<Props> {
           err={this.state.errAdd}
           idGroup={idGroup}
           labelGroup={label}
+          isEmailValid={isEmailValid}
           handleDeleteNewUser={this.handleDeleteNewUser}
         />
         <div className={globalStyles.contentBlock}>
@@ -401,7 +417,7 @@ class GlobalMembership extends PureComponent<Props> {
                               } btn btn-outline-primary fancybox`}
                               onClick={this.handleAddMembersAdd}
                             >
-                              Add User
+                              Add Users
                             </button>
                           </li>
                         </ul>
