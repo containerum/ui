@@ -69,7 +69,6 @@ type Props = {
   fetchGetDeploymentIfNeeded: (idName: string, idDep: string) => void
 };
 
-// Export this for unit testing more easily
 export class CreateUpdateDeployment extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -81,7 +80,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
     }
   }
-
   componentDidMount() {
     const {
       // fetchGetVolumesByNSIfNeeded,
@@ -100,7 +98,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
     }
   }
-
   componentWillUpdate(nextProps) {
     // if (
     //   this.props.getVolumesByNSReducer.readyStatus !==
@@ -120,19 +117,29 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       nextProps.getConfigMapsByNSReducer.readyStatus ===
         GET_CONFIG_MAPS_BY_NS_SUCCESS
     ) {
-      // if (nextProps.getConfigMapsByNSReducer.data.length) {
-      //   const nextState = Object.assign([], this.state.containers);
-      //   nextState[0].configMaps = nextProps.getConfigMapsByNSReducer.data;
-      //   this.setState({
-      //     ...this.state,
-      //     containers: nextState
-      //   });
-      // }
       if (nextProps.getConfigMapsByNSReducer.data.length) {
         this.setState({
           ...this.state,
           configMaps: nextProps.getConfigMapsByNSReducer.data
         });
+      }
+      if (this.props.updateDeploymentReducer) {
+        nextProps.getDeploymentReducer.data &&
+          nextProps.getDeploymentReducer.data.containers.map(container => {
+            const configMapsNextState = [];
+            nextProps.getConfigMapsByNSReducer.data.map(configMapRed => {
+              container.config_maps.map(configMap => {
+                if (configMapRed.name === configMap.name) {
+                  console.log(configMapRed.name, configMap.name);
+                  configMapsNextState.push(configMap);
+                }
+                return null;
+              });
+              return null;
+            });
+            console.log(configMapsNextState);
+            return null;
+          });
       }
     }
     const serviceObject = this.state;
@@ -187,7 +194,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     ) {
       const { data } = nextProps.getDeploymentReducer;
       const { name, labels, replicas, containers } = data;
-      // const containersArr = [];
       const containersArr = containers.map((item, index) => {
         const {
           image,
@@ -353,7 +359,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     const { fetchCreateDeploymentIfNeeded, match } = this.props;
     fetchCreateDeploymentIfNeeded(match.params.idName, this.state);
   };
-
   handleSubmitUpdateDeployment = e => {
     e.preventDefault();
     const { fetchUpdateDeploymentIfNeeded, match } = this.props;
@@ -363,7 +368,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       this.state
     );
   };
-
   handleChangeState = obj => {
     const state = Object.assign({}, this.state, obj);
     this.setState(state);
