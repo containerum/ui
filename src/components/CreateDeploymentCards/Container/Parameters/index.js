@@ -51,10 +51,10 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           value={limits.cpu}
           id={`cpu${id}`}
           type="number"
-          pattern="(12000|[12][0-9]{3}|[1-9][0-9]{1,2})"
+          pattern="(3000|[12][0-9]{3}|[1-9][0-9]{1,2})"
           required
-          min="300"
-          max="12000"
+          min="10"
+          max="3000"
           baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
           baseClassNameLabel={`${globalStyles.formGroupLabel} ${
             limits.cpu || limits.cpu === 0
@@ -62,8 +62,8 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
               : ''
           }`}
           labelText="CPU"
-          title="Range: 300 - 12000"
-          textHelper="Range: 300 - 12000"
+          title="Range: 10 - 3000"
+          textHelper="Range: 10 - 3000"
           baseClassNameHelper={globalStyles.formGroupHelper}
           handleChangeInput={e => {
             const cpuValue = parseInt(e.target.value, 10);
