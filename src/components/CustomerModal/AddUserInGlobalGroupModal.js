@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 import className from 'classnames/bind';
-import isEmail from 'validator/lib/isEmail';
 
 import LoadButton from '../../components/LoadButton';
 import alert from '../../images/alertAddUserMembership.svg';
@@ -94,7 +93,7 @@ const AddUserInGlobalGroupModal = ({
   };
   const handleSubmitAddingEssence = e => {
     e.preventDefault();
-    if (name && isEmail(name)) {
+    if (name) {
       const user = {
         username: name,
         access: accessNewUsers
@@ -160,7 +159,7 @@ const AddUserInGlobalGroupModal = ({
                 `form-control-notvalid`}`}
               placeholder="Email"
               value={name}
-              required
+              required={name}
               onChange={e => handleChangeNameOfType(e)}
               style={{ marginBottom: '15px', width: '325px' }}
             />

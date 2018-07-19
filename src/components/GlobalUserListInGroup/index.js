@@ -44,7 +44,7 @@ const GlobalMembershipList = ({ membersList, handleDeleteDMembers }: Props) => (
           <tr>
             <td style={{ width: 300 }}>Name</td>
             <td style={{ width: 320 }}>Email</td>
-            <td>Role</td>
+            <td>Permission</td>
             <td className={membershipStyles.td_1_GlobalMembership} />
           </tr>
         </thead>
@@ -77,19 +77,23 @@ const GlobalMembershipList = ({ membersList, handleDeleteDMembers }: Props) => (
                   className={`${
                     membershipStyles.td_5_GlobalMembership
                   } dropdown no-arrow`}
-                  onClick={() => handleDeleteDMembers(username)}
+                  onClick={() =>
+                    access !== 'owner' && handleDeleteDMembers(username)
+                  }
                 >
-                  <div className={globalStyles.membershipItem}>
-                    <i
-                      style={{ verticalAlign: 'middle', paddingRight: 30 }}
-                      className={`${
-                        globalStyles.membershipIcon
-                      } material-icons `}
-                      role="presentation"
-                    >
-                      delete
-                    </i>
-                  </div>
+                  {access !== 'owner' && (
+                    <div className={globalStyles.membershipItem}>
+                      <i
+                        style={{ verticalAlign: 'middle', paddingRight: 30 }}
+                        className={`${
+                          globalStyles.membershipIcon
+                        } material-icons `}
+                        role="presentation"
+                      >
+                        delete
+                      </i>
+                    </div>
+                  )}
                 </td>
               </tr>
             );
