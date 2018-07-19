@@ -33,8 +33,7 @@ const CLIInfo = ({ getReleasesGithubReducer }: Props) => {
       <div className="row">
         <div className="col-md-8">
           <div className={globalStyles.textLight}>
-            You can download our CLI Tool for your operating system. For fast
-            authentication use the token below.
+            You can download our CLI Tool for your operating system.
           </div>
         </div>
         <div className="col-md-4">
