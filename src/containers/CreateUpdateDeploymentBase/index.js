@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import className from 'classnames/bind';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
+import cloneDeep from 'clone-deep';
 
 import scrollById from '../../functions/scrollById';
 import LoadButton from '../../components/LoadButton';
@@ -111,37 +112,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     //     });
     //   }
     // }
-    if (
-      this.props.getConfigMapsByNSReducer.readyStatus !==
-        nextProps.getConfigMapsByNSReducer.readyStatus &&
-      nextProps.getConfigMapsByNSReducer.readyStatus ===
-        GET_CONFIG_MAPS_BY_NS_SUCCESS
-    ) {
-      if (nextProps.getConfigMapsByNSReducer.data.length) {
-        this.setState({
-          ...this.state,
-          configMaps: nextProps.getConfigMapsByNSReducer.data
-        });
-      }
-      if (this.props.updateDeploymentReducer) {
-        nextProps.getDeploymentReducer.data &&
-          nextProps.getDeploymentReducer.data.containers.map(container => {
-            const configMapsNextState = [];
-            nextProps.getConfigMapsByNSReducer.data.map(configMapRed => {
-              container.config_maps.map(configMap => {
-                if (configMapRed.name === configMap.name) {
-                  console.log(configMapRed.name, configMap.name);
-                  configMapsNextState.push(configMap);
-                }
-                return null;
-              });
-              return null;
-            });
-            console.log(configMapsNextState);
-            return null;
-          });
-      }
-    }
     const serviceObject = this.state;
     const {
       match,
@@ -201,8 +171,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           limits,
           ports,
           env,
-          commands,
-          config_maps: configMaps
+          commands
+          // config_maps: configMaps
           // volumes
         } = item;
         if (ports) {
@@ -226,14 +196,14 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         //     return null;
         //   });
         // }
-        if (configMaps) {
-          configMaps.map(itemConfigMap => {
-            itemConfigMap.id = _.uniqueId();
-            itemConfigMap.index = index + 1;
-            delete itemConfigMap.mode;
-            return null;
-          });
-        }
+        // if (configMaps) {
+        //   configMaps.map(itemConfigMap => {
+        //     itemConfigMap.id = _.uniqueId();
+        //     itemConfigMap.index = index + 1;
+        //     delete itemConfigMap.mode;
+        //     return null;
+        //   });
+        // }
         return {
           id: _.uniqueId(),
           image,
@@ -259,7 +229,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           ],
           command: commands || [],
           volumeMounts: [],
-          config_maps: configMaps || []
+          config_maps: []
+          // config_maps: configMaps || []
           // volumeMounts: volumes || []
         };
       });
@@ -280,6 +251,56 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           containers: containersArr,
           containersCount: containersArr.length
         });
+      }
+    }
+    if (
+      this.props.getConfigMapsByNSReducer.readyStatus !==
+        nextProps.getConfigMapsByNSReducer.readyStatus &&
+      nextProps.getConfigMapsByNSReducer.readyStatus ===
+        GET_CONFIG_MAPS_BY_NS_SUCCESS
+    ) {
+      if (nextProps.getConfigMapsByNSReducer.data.length) {
+        this.setState(
+          {
+            ...this.state,
+            configMaps: nextProps.getConfigMapsByNSReducer.data
+          },
+          () => {
+            if (this.props.updateDeploymentReducer) {
+              const configMapsNextState = [];
+              nextProps.getDeploymentReducer.data &&
+                nextProps.getDeploymentReducer.data.containers.map(
+                  container => {
+                    const configMapsInContainer = [];
+                    nextProps.getConfigMapsByNSReducer.data.map(
+                      configMapRed => {
+                        if (container.config_maps) {
+                          container.config_maps.map(configMap => {
+                            if (configMapRed.name === configMap.name) {
+                              configMapsInContainer.push(configMap);
+                            }
+                            return null;
+                          });
+                        }
+                        return null;
+                      }
+                    );
+                    configMapsNextState.push(configMapsInContainer);
+                    return null;
+                  }
+                );
+              const nextContainers = cloneDeep(this.state.containers);
+              nextContainers.map((container, index) => {
+                container.config_maps = configMapsNextState[index];
+                return null;
+              });
+              this.setState({
+                ...this.state,
+                containers: nextContainers
+              });
+            }
+          }
+        );
       }
     }
   }
@@ -1065,19 +1086,37 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_REQUESTING
     ) {
       return (
-        <div>
-          {new Array(9).fill().map(() => (
-            <img
-              key={_.uniqueId()}
-              src={require('../../images/create-dep-serv.svg')}
-              style={{
-                marginTop: '-2px',
-                marginBottom: '30px',
-                width: '100%'
-              }}
-              alt="create service"
-            />
-          ))}
+        <div style={{ marginTop: '40px', width: '80%' }}>
+          {new Array(4)
+            .fill()
+            .map(() => (
+              <img
+                key={_.uniqueId()}
+                src={require('../../images/profile-sidebar-big.svg')}
+                style={{ width: '100%', marginBottom: '20px' }}
+                alt="sidebar"
+              />
+            ))}
+          {new Array(6)
+            .fill()
+            .map(() => (
+              <img
+                key={_.uniqueId()}
+                src={require('../../images/profile-sidebar-small.svg')}
+                style={{ marginBottom: '20px', float: 'right' }}
+                alt="sidebar"
+              />
+            ))}
+          {new Array(1)
+            .fill()
+            .map(() => (
+              <img
+                key={_.uniqueId()}
+                src={require('../../images/profile-sidebar-big.svg')}
+                style={{ width: '100%', marginBottom: '20px' }}
+                alt="sidebar"
+              />
+            ))}
         </div>
       );
     }
