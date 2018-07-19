@@ -98,7 +98,7 @@ export class Dashboard extends PureComponent<Props> {
       fetchGetResourcesIfNeeded,
       fetchGetConfigMapsIfNeeded
     } = this.props;
-    fetchGetSolutionsIfNeeded();
+    isOnline && fetchGetSolutionsIfNeeded();
     fetchGetResourcesIfNeeded();
     fetchGetConfigMapsIfNeeded();
     const widget = cookie.load('widget');
@@ -481,7 +481,8 @@ export class Dashboard extends PureComponent<Props> {
     return (
       <div>
         {!isOpenedSideBarGetStarted &&
-          isViewWidget && (
+          isViewWidget &&
+          isOnline && (
             <div
               className={styles.GetStartedWrapper}
               onClick={() =>

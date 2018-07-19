@@ -267,7 +267,7 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  {
+  isOnline && {
     path: routerLinks.createNamespace,
     exact: true,
     component: CreateNamespacePage,
@@ -386,7 +386,7 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  {
+  isOnline && {
     path: routerLinks.getStarted,
     exact: true,
     component: GetStarted,

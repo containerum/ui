@@ -80,6 +80,7 @@ import adminDeleteUserReducer from './globalMembership/adminDeleteUser';
 import addUserReducer from './globalMembership/addUser';
 import getGroupReducer from './globalMembership/getGroup';
 import addUserInGroupReducer from './globalMembership/addUserInGroup';
+import updateUserInGroupReducer from './globalMembership/updateUserInGroup';
 import deleteUserFromGroupReducer from './globalMembership/deleteUserFromGroup';
 import getRunningSolutionsReducer from './solutionsReducers/getRunningSolutions';
 import deleteRunningSolutionReducer from './solutionReducers/deleteRunningSolution';
@@ -165,6 +166,7 @@ const reducers = {
   adminDeleteUserReducer,
   addUserReducer,
   addUserInGroupReducer,
+  updateUserInGroupReducer,
   getGroupReducer,
   getDomainsReducer,
   deleteUserFromGroupReducer,

@@ -66,6 +66,7 @@ type Props = {
   newUsers: Array<Object>,
   handleAddNewUsers: (newUsers: Array<Object>) => void,
   handleDeleteNewUser: (username: string) => void,
+  isEmailValid: boolean,
   err: string
 };
 
@@ -84,15 +85,25 @@ const AddUserInGlobalGroupModal = ({
   idGroup,
   err,
   handleDeleteNewUser,
-  choiceAccessNewUser
+  choiceAccessNewUser,
+  isEmailValid
 }: Props) => {
   const handleCloseModal = () => {
     handleOpenCloseModal();
   };
   const handleSubmitAddingEssence = e => {
     e.preventDefault();
-    onHandleAdd(idGroup, newUsers, labelGroup);
-    handleOpenCloseModal();
+    if (name) {
+      const user = {
+        username: name,
+        access: accessNewUsers
+      };
+      newUsers.push(user);
+    }
+    if (newUsers.length) {
+      onHandleAdd(idGroup, newUsers, labelGroup);
+      handleOpenCloseModal();
+    }
   };
   const handleChangeNameOfType = e => {
     const inputValue = e.target.value.trim();
@@ -132,23 +143,23 @@ const AddUserInGlobalGroupModal = ({
           <span className={modalStyles.modalRedisText}>
             Fill in the information below to add new user
           </span>
-          {err ? (
+          {err && (
             <div className={modalStyles.membershipAlert}>
               <div className={modalStyles.membershipAlertItem}>
                 <img src={alert} alt="alert" />
               </div>
               <div>{err}</div>
             </div>
-          ) : (
-            ''
           )}
           <span className={modalStyles.modalRedisText}>User Email address</span>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <input
               type="email"
-              className="form-control volume-form-input"
+              className={`form-control volume-form-input ${!isEmailValid &&
+                `form-control-notvalid`}`}
               placeholder="Email"
               value={name}
+              required={name}
               onChange={e => handleChangeNameOfType(e)}
               style={{ marginBottom: '15px', width: '325px' }}
             />
@@ -162,7 +173,8 @@ const AddUserInGlobalGroupModal = ({
                 width: '45px',
                 height: '37px',
                 marginRight: '0',
-                marginLeft: '5px'
+                marginLeft: '5px',
+                borderRadius: '.25rem'
               }}
             >
               +
@@ -176,13 +188,24 @@ const AddUserInGlobalGroupModal = ({
                   style={{
                     color: 'fff',
                     backgroundColor: '#6c757d',
-                    marginLeft: '3px'
+                    marginLeft: '3px',
+                    padding: '6px 17px 7px 7px',
+                    position: 'relative'
                   }}
                   key={user.username}
                 >
-                  {user.username}{' '}
+                  {user.username}
                   <span
-                    style={{ cursor: 'pointer' }}
+                    style={{
+                      cursor: 'pointer',
+                      position: 'absolute',
+                      top: 0,
+                      paddingTop: 6,
+                      paddingRight: 2,
+                      right: 0,
+                      width: 15,
+                      height: 24
+                    }}
                     aria-hidden="true"
                     onClick={() => handleDeleteNewUser(user.username)}
                   >

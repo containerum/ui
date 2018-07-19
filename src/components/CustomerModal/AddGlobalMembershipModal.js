@@ -70,7 +70,17 @@ const AddGlobalUserMembershipModal = ({
     }
   };
   const handleChangeNameOfType = e => {
-    const inputValue = e.target.value.trim();
+    let inputValue = '';
+    if (type !== 'Add User') {
+      const regexp = /^[a-z][a-z0-9-]*$|^$/;
+      if (e.target.value.search(regexp) !== -1) {
+        inputValue = e.target.value;
+      } else {
+        inputValue = name;
+      }
+    } else {
+      inputValue = e.target.value.trim();
+    }
     handleInputEmailAdd(inputValue);
   };
 
@@ -138,6 +148,7 @@ const AddGlobalUserMembershipModal = ({
             className="form-control volume-form-input"
             placeholder={type === 'Add User' ? 'Email' : 'Group'}
             value={name}
+            required
             onChange={e => handleChangeNameOfType(e)}
             style={{ marginBottom: '15px' }}
           />

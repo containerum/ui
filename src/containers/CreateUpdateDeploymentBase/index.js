@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import className from 'classnames/bind';
 import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
+import cloneDeep from 'clone-deep';
 
 import scrollById from '../../functions/scrollById';
 import LoadButton from '../../components/LoadButton';
@@ -13,11 +14,11 @@ import {
   GET_CONFIG_MAPS_BY_NS_FAILURE,
   GET_CONFIG_MAPS_BY_NS_SUCCESS
 } from '../../constants/configMapConstants/getConfigMapsByNS';
-import {
-  GET_VOLUMES_BY_NS_INVALID,
-  GET_VOLUMES_BY_NS_REQUESTING,
-  GET_VOLUMES_BY_NS_SUCCESS
-} from '../../constants/volumesConstants/getVolumesByNS';
+// import {
+//   GET_VOLUMES_BY_NS_INVALID,
+//   GET_VOLUMES_BY_NS_REQUESTING,
+//   GET_VOLUMES_BY_NS_SUCCESS
+// } from '../../constants/volumesConstants/getVolumesByNS';
 import { GET_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/getNamespace';
 import { CREATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/createDeployment';
 import Name from '../../components/CreateDeploymentCards/Name';
@@ -59,11 +60,11 @@ type Props = {
   createExternalServiceReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetConfigMapsByNSIfNeeded: (idName: string) => void,
-  fetchGetVolumesByNSIfNeeded: (idName: string) => void,
+  // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchCreateDeploymentIfNeeded: (idName: string, data: Object) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void,
-  getVolumesByNSReducer: Object,
+  // getVolumesByNSReducer: Object,
   updateDeploymentReducer: Object,
   getDeploymentReducer: Object,
   fetchUpdateDeploymentIfNeeded: (
@@ -74,7 +75,6 @@ type Props = {
   fetchGetDeploymentIfNeeded: (idName: string, idDep: string) => void
 };
 
-// Export this for unit testing more easily
 export class CreateUpdateDeployment extends PureComponent<Props> {
   constructor(props) {
     super(props);
@@ -86,17 +86,16 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
     }
   }
-
   componentDidMount() {
     const {
-      fetchGetVolumesByNSIfNeeded,
+      // fetchGetVolumesByNSIfNeeded,
       fetchGetConfigMapsByNSIfNeeded,
       fetchGetNamespaceIfNeeded,
       fetchGetDeploymentIfNeeded,
       getNamespaceReducer,
       match
     } = this.props;
-    fetchGetVolumesByNSIfNeeded(match.params.idName);
+    // fetchGetVolumesByNSIfNeeded(match.params.idName);
     fetchGetConfigMapsByNSIfNeeded(match.params.idName);
     if (getNamespaceReducer.readyStatus !== GET_NAMESPACE_SUCCESS) {
       fetchGetNamespaceIfNeeded(match.params.idName);
@@ -105,41 +104,19 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
     }
   }
-
   componentWillUpdate(nextProps) {
-    if (
-      this.props.getVolumesByNSReducer.readyStatus !==
-        nextProps.getVolumesByNSReducer.readyStatus &&
-      nextProps.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS
-    ) {
-      if (nextProps.getVolumesByNSReducer.data[0]) {
-        this.setState({
-          ...this.state,
-          volumes: nextProps.getVolumesByNSReducer.data
-        });
-      }
-    }
-    if (
-      this.props.getConfigMapsByNSReducer.readyStatus !==
-        nextProps.getConfigMapsByNSReducer.readyStatus &&
-      nextProps.getConfigMapsByNSReducer.readyStatus ===
-        GET_CONFIG_MAPS_BY_NS_SUCCESS
-    ) {
-      // if (nextProps.getConfigMapsByNSReducer.data.length) {
-      //   const nextState = Object.assign([], this.state.containers);
-      //   nextState[0].configMaps = nextProps.getConfigMapsByNSReducer.data;
-      //   this.setState({
-      //     ...this.state,
-      //     containers: nextState
-      //   });
-      // }
-      if (nextProps.getConfigMapsByNSReducer.data.length) {
-        this.setState({
-          ...this.state,
-          configMaps: nextProps.getConfigMapsByNSReducer.data
-        });
-      }
-    }
+    // if (
+    //   this.props.getVolumesByNSReducer.readyStatus !==
+    //     nextProps.getVolumesByNSReducer.readyStatus &&
+    //   nextProps.getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_SUCCESS
+    // ) {
+    //   if (nextProps.getVolumesByNSReducer.data[0]) {
+    //     this.setState({
+    //       ...this.state,
+    //       volumes: nextProps.getVolumesByNSReducer.data
+    //     });
+    //   }
+    // }
     const serviceObject = this.state;
     const {
       match,
@@ -192,7 +169,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     ) {
       const { data } = nextProps.getDeploymentReducer;
       const { name, labels, replicas, containers } = data;
-      // const containersArr = [];
       const containersArr = containers.map((item, index) => {
         const {
           image,
@@ -200,8 +176,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           limits,
           ports,
           env,
-          commands,
-          config_maps: configMaps
+          commands
+          // config_maps: configMaps
           // volumes
         } = item;
         if (ports) {
@@ -225,14 +201,14 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         //     return null;
         //   });
         // }
-        if (configMaps) {
-          configMaps.map(itemConfigMap => {
-            itemConfigMap.id = _.uniqueId();
-            itemConfigMap.index = index + 1;
-            delete itemConfigMap.mode;
-            return null;
-          });
-        }
+        // if (configMaps) {
+        //   configMaps.map(itemConfigMap => {
+        //     itemConfigMap.id = _.uniqueId();
+        //     itemConfigMap.index = index + 1;
+        //     delete itemConfigMap.mode;
+        //     return null;
+        //   });
+        // }
         return {
           id: _.uniqueId(),
           image,
@@ -258,7 +234,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           ],
           command: commands || [],
           volumeMounts: [],
-          config_maps: configMaps || []
+          config_maps: []
+          // config_maps: configMaps || []
           // volumeMounts: volumes || []
         };
       });
@@ -279,6 +256,56 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           containers: containersArr,
           containersCount: containersArr.length
         });
+      }
+    }
+    if (
+      this.props.getConfigMapsByNSReducer.readyStatus !==
+        nextProps.getConfigMapsByNSReducer.readyStatus &&
+      nextProps.getConfigMapsByNSReducer.readyStatus ===
+        GET_CONFIG_MAPS_BY_NS_SUCCESS
+    ) {
+      if (nextProps.getConfigMapsByNSReducer.data.length) {
+        this.setState(
+          {
+            ...this.state,
+            configMaps: nextProps.getConfigMapsByNSReducer.data
+          },
+          () => {
+            if (this.props.updateDeploymentReducer) {
+              const configMapsNextState = [];
+              nextProps.getDeploymentReducer.data &&
+                nextProps.getDeploymentReducer.data.containers.map(
+                  container => {
+                    const configMapsInContainer = [];
+                    nextProps.getConfigMapsByNSReducer.data.map(
+                      configMapRed => {
+                        if (container.config_maps) {
+                          container.config_maps.map(configMap => {
+                            if (configMapRed.name === configMap.name) {
+                              configMapsInContainer.push(configMap);
+                            }
+                            return null;
+                          });
+                        }
+                        return null;
+                      }
+                    );
+                    configMapsNextState.push(configMapsInContainer);
+                    return null;
+                  }
+                );
+              const nextContainers = cloneDeep(this.state.containers);
+              nextContainers.map((container, index) => {
+                container.config_maps = configMapsNextState[index];
+                return null;
+              });
+              this.setState({
+                ...this.state,
+                containers: nextContainers
+              });
+            }
+          }
+        );
       }
     }
   }
@@ -358,7 +385,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     const { fetchCreateDeploymentIfNeeded, match } = this.props;
     fetchCreateDeploymentIfNeeded(match.params.idName, this.state);
   };
-
   handleSubmitUpdateDeployment = e => {
     e.preventDefault();
     const { fetchUpdateDeploymentIfNeeded, match } = this.props;
@@ -368,7 +394,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       this.state
     );
   };
-
   handleChangeState = obj => {
     const state = Object.assign({}, this.state, obj);
     this.setState(state);
@@ -1017,11 +1042,11 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
 
   // Render
   renderDeploymentSidebar = () => {
-    const { getVolumesByNSReducer, getConfigMapsByNSReducer } = this.props;
+    const { getConfigMapsByNSReducer } = this.props;
     if (
-      !getVolumesByNSReducer.readyStatus ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
-      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING ||
+      // !getVolumesByNSReducer.readyStatus ||
+      // getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
+      // getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING ||
       !getConfigMapsByNSReducer.readyStatus ||
       getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_INVALID ||
       getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_REQUESTING
@@ -1064,7 +1089,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
 
     const arrayOfContainersLinks = [
       'name',
-      'labels',
       'replicas',
       'container1',
       'container1-info',
@@ -1108,15 +1132,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             role="presentation"
           >
             name
-          </div>
-        </div>
-        <div className={styles.sideMenuHeader}>
-          <div
-            onClick={() => scrollById('labels')}
-            onKeyPress={() => scrollById('labels')}
-            role="presentation"
-          >
-            labels
           </div>
         </div>
         <div className={styles.sideMenuHeader}>
