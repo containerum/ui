@@ -4,6 +4,7 @@ import className from 'classnames/bind';
 
 import globalStyles from '../../theme/global.scss';
 import membershipStyles from './index.scss';
+import globalMembershipStyles from '../../containers/Membership/index.scss';
 
 const globalClass = className.bind(globalStyles);
 
@@ -23,10 +24,21 @@ const containerClassName = globalClass(
 
 type Props = {
   membersList: Array<Object>,
-  handleDeleteDMembers: (login: string) => void
+  handleDeleteDMembers: (login: string) => void,
+  changeAccessUser: (login: string, access: string) => void,
+  handleClickDropDownAccess: (login: string) => void,
+  handleMouseLeaveDropDownAccess: () => void,
+  currentLoginDropDownAccess: string
 };
 
-const GlobalMembershipList = ({ membersList, handleDeleteDMembers }: Props) => (
+const GlobalMembershipList = ({
+  membersList,
+  handleDeleteDMembers,
+  changeAccessUser,
+  handleClickDropDownAccess,
+  handleMouseLeaveDropDownAccess,
+  currentLoginDropDownAccess
+}: Props) => (
   <div>
     {membersList.length ? (
       <table
@@ -68,10 +80,45 @@ const GlobalMembershipList = ({ membersList, handleDeleteDMembers }: Props) => (
                   <div className={globalStyles.overflow}>{username}</div>
                 </td>
                 <td
-                  className={membershipStyles.td_4_GlobalMembership}
-                  style={{ overflow: 'initial' }}
+                  className={globalMembershipStyles.td_4_Membership}
+                  style={{ overflow: 'initial', position: 'relative' }}
+                  onClick={() =>
+                    access !== 'owner' && handleClickDropDownAccess(username)
+                  }
                 >
-                  {access}
+                  {access !== 'owner' ? (
+                    <div
+                      className={
+                        currentLoginDropDownAccess === username
+                          ? `${globalMembershipStyles.NavDropDownWrapper} ${
+                              globalMembershipStyles.NavDropDownOpen
+                            }`
+                          : globalMembershipStyles.NavDropDownClose
+                      }
+                      onMouseLeave={() => handleMouseLeaveDropDownAccess()}
+                    >
+                      <div className={globalMembershipStyles.firstChildOfNav}>
+                        {access}
+                      </div>
+                      <div
+                        onClick={() =>
+                          changeAccessUser(
+                            username,
+                            access === 'write' ? 'read' : 'write'
+                          )
+                        }
+                        className={
+                          currentLoginDropDownAccess === username
+                            ? globalMembershipStyles.NavItemDropDownOpen
+                            : globalMembershipStyles.NavItemDropDownClose
+                        }
+                      >
+                        {access === 'write' ? 'read' : 'write'}
+                      </div>
+                    </div>
+                  ) : (
+                    <div style={{ padding: '10px 0 10px 25px' }}>{access}</div>
+                  )}
                 </td>
                 <td
                   className={`${
@@ -79,17 +126,19 @@ const GlobalMembershipList = ({ membersList, handleDeleteDMembers }: Props) => (
                   } dropdown no-arrow`}
                   onClick={() => handleDeleteDMembers(username)}
                 >
-                  <div className={globalStyles.membershipItem}>
-                    <i
-                      style={{ verticalAlign: 'middle', paddingRight: 30 }}
-                      className={`${
-                        globalStyles.membershipIcon
-                      } material-icons `}
-                      role="presentation"
-                    >
-                      delete
-                    </i>
-                  </div>
+                  {access !== 'owner' && (
+                    <div className={globalStyles.membershipItem}>
+                      <i
+                        style={{ verticalAlign: 'middle', paddingRight: 30 }}
+                        className={`${
+                          globalStyles.membershipIcon
+                        } material-icons `}
+                        role="presentation"
+                      >
+                        delete
+                      </i>
+                    </div>
+                  )}
                 </td>
               </tr>
             );
