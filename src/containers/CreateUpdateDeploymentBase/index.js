@@ -1128,7 +1128,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     }
     const arrayOfContainersLinks = [
       'name',
-      'labels',
       'replicas',
       'container1',
       'container1-info',
@@ -1172,15 +1171,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             role="presentation"
           >
             name
-          </div>
-        </div>
-        <div className={styles.sideMenuHeader}>
-          <div
-            onClick={() => scrollById('labels')}
-            onKeyPress={() => scrollById('labels')}
-            role="presentation"
-          >
-            labels
           </div>
         </div>
         <div className={styles.sideMenuHeader}>
