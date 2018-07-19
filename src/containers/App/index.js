@@ -29,7 +29,8 @@ const App = () => {
       excludeAvailableScreenResolution: true,
       excludeCanvas: true,
       excludeWebGL: true,
-      excludeWebGLVendorAndRenderer: true
+      excludeWebGLVendorAndRenderer: true,
+      excludePixelRatio: true
     };
     const Fingerprint2 = require('fingerprintjs2');
     new Fingerprint2(options).get(print => {
