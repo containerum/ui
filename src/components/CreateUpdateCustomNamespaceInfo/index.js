@@ -51,7 +51,9 @@ const CreateCustomNamespaceInfo = ({
             {/* <span className="myTooltip" data-toggle="tooltip">?</span> */}
             {/* </Tooltip> */}
           </div>
-          <div className="containerSubTitle">Enter Project name</div>
+          <div className="containerSubTitle" style={{ marginBottom: 20 }}>
+            Enter Project name
+          </div>
           <InputControl
             value={label}
             id="deploymentName"
@@ -82,7 +84,7 @@ const CreateCustomNamespaceInfo = ({
           {/* </Tooltip> */}
         </div>
       </div>
-      <div className="col-md-5 myColumn">
+      <div className="col-md-5 myColumn" style={{ marginBottom: 20 }}>
         <InputControl
           value={cpu}
           id="cpu"
