@@ -51,7 +51,7 @@ const Parameters = ({ item, index, handleChangeInputParameters }: Props) => {
           value={limits.cpu}
           id={`cpu${id}`}
           type="number"
-          pattern="(12000|[12][0-9]{3}|[1-9][0-9]{1,2})"
+          pattern="(3000|[12][0-9]{3}|[1-9][0-9]{1,2})"
           required
           min="10"
           max="3000"
