@@ -152,7 +152,6 @@ class GlobalMembership extends PureComponent<Props> {
       newUsers
     });
   };
-
   handleDeleteNewUser = username => {
     const newUsers = this.state.newUsers.map(user => user);
     const index = newUsers.findIndex(newUser => newUser.username === username);
@@ -162,7 +161,6 @@ class GlobalMembership extends PureComponent<Props> {
       newUsers
     });
   };
-
   handleDeleteDMembers = idUser => {
     this.setState({
       ...this.state,
@@ -222,7 +220,14 @@ class GlobalMembership extends PureComponent<Props> {
     });
   };
   handleAddNewUsers = newUsers => {
-    if (isEmail(this.state.inputEmailAdd)) {
+    const sameUser = this.state.newUsers.find(
+      newUser => newUser.username === this.state.inputEmailAdd
+    );
+    if (
+      isEmail(this.state.inputEmailAdd) &&
+      !sameUser &&
+      this.state.newUsers.length < 9
+    ) {
       const user = {
         username: this.state.inputEmailAdd,
         access: this.state.accessNewUsers
@@ -371,14 +376,12 @@ class GlobalMembership extends PureComponent<Props> {
           name={idNameDeleteGroup}
           errorMessage={errDeleteGroup}
         />
-
         <Notification
           status={statusAdd}
           name={labelGroupAdd}
           method={methodAdd}
           errorMessage={errAdd}
         />
-
         <Notification
           status={statusUpdate}
           name={labelGroupUpdate}
