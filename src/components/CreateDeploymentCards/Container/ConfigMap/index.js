@@ -77,7 +77,7 @@ const ConfigMap = ({
       </div>
     </div>
 
-    {configMaps.length && configMapsMounts.length
+    {configMaps.length && configMapsMounts
       ? configMapsMounts.map((item, indexConfigMap) => {
           const { id, name, mount_path: mountPath } = item;
           return (

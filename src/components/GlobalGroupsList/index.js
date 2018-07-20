@@ -84,11 +84,11 @@ const GlobalMembershipList = ({
                     } dropdown no-arrow`}
                     onClick={e => handleDeleteGroup(id, e)}
                   >
-                    <div className={globalStyles.groupshipItem}>
+                    <div className={globalStyles.membershipItem}>
                       <i
                         style={{ verticalAlign: 'middle', paddingRight: 30 }}
                         className={`${
-                          globalStyles.groupshipIcon
+                          globalStyles.membershipIcon
                         } material-icons `}
                         role="presentation"
                       >

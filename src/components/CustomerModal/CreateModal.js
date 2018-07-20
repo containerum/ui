@@ -189,7 +189,7 @@ const CreateModal = ({
                               globalStyles.contentBlockInfoName
                             } inline`}
                           >
-                            RAM :{' '}
+                            RAM :&nbsp;
                           </div>
                           <div
                             className={`${
@@ -205,7 +205,7 @@ const CreateModal = ({
                               globalStyles.contentBlockInfoName
                             } inline`}
                           >
-                            CPU :{' '}
+                            CPU :&nbsp;
                           </div>
                           <div
                             className={`${
@@ -222,7 +222,7 @@ const CreateModal = ({
                                 globalStyles.contentBlockInfoName
                               } inline`}
                             >
-                              Volume :{' '}
+                              Volume :&nbsp;
                             </div>
                             <div
                               className={`${
@@ -237,12 +237,10 @@ const CreateModal = ({
                     </div>
                   )}
                 {data.storageLimit && (
-                  <div
-                    className={`col-md-6 ${
-                      createNamespaceStyles.namespacePlanBlockContainerRight
-                    }`}
-                  >
-                    <div>{data.storageLimit} GB</div>
+                  <div className="col-md-6  volume-plan-container-right">
+                    <div className="hard-drive-size">
+                      {data.storageLimit} GB
+                    </div>
                   </div>
                 )}
               </div>

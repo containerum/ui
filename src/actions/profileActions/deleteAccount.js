@@ -58,6 +58,8 @@ export const fetchDeleteAccount = (
   const { status, data } = response;
   switch (status) {
     case 202: {
+      cookie.remove('accessToken', { path: '/' });
+      cookie.remove('browser', { path: '/' });
       dispatch(deleteAccountSuccess(data, status));
       if (typeof window !== 'undefined') {
         window.location.replace('https://containerum.com/');

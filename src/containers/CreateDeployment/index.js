@@ -8,6 +8,7 @@ import Helmet from 'react-helmet';
 import cookie from 'react-cookies';
 
 import { routerLinks } from '../../config';
+import * as actionGetVolumesByNS from '../../actions/volumesActions/getVolumesByNS';
 import * as actionGetConfigMapsByNS from '../../actions/configMapActions/getConfigMapsByNS';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionCreateDeployment from '../../actions/deploymentActions/createDeployment';
@@ -31,7 +32,7 @@ const containerClassName = globalClass(
 );
 
 type Props = {
-  // getVolumesByNSReducer: Object,
+  getVolumesByNSReducer: Object,
   getNamespaceReducer: Object,
   createDeploymentReducer: Object,
   getConfigMapsByNSReducer: Object,
@@ -40,7 +41,7 @@ type Props = {
   match: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetConfigMapsByNSIfNeeded: (idName: string) => void,
-  // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
+  fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchCreateDeploymentIfNeeded: (idName: string, data: Object) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void
@@ -80,6 +81,7 @@ export class CreateDeployment extends PureComponent<Props> {
               getNamespaceReducer={this.props.getNamespaceReducer}
               createDeploymentReducer={this.props.createDeploymentReducer}
               getConfigMapsByNSReducer={this.props.getConfigMapsByNSReducer}
+              getVolumesByNSReducer={this.props.getVolumesByNSReducer}
               createExternalServiceReducer={
                 this.props.createExternalServiceReducer
               }
@@ -89,7 +91,9 @@ export class CreateDeployment extends PureComponent<Props> {
               fetchGetConfigMapsByNSIfNeeded={
                 this.props.fetchGetConfigMapsByNSIfNeeded
               }
-              // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
+              fetchGetVolumesByNSIfNeeded={
+                this.props.fetchGetVolumesByNSIfNeeded
+              }
               fetchCreateDeploymentIfNeeded={
                 this.props.fetchCreateDeploymentIfNeeded
               }
@@ -109,21 +113,21 @@ export class CreateDeployment extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
-    // getVolumesByNSReducer,
+    getVolumesByNSReducer,
     getNamespaceReducer,
     createDeploymentReducer,
     createExternalServiceReducer,
     getConfigMapsByNSReducer
   }: ReduxState) => ({
-    // getVolumesByNSReducer,
+    getVolumesByNSReducer,
     getNamespaceReducer,
     createDeploymentReducer,
     createExternalServiceReducer,
     getConfigMapsByNSReducer
   }),
   (dispatch: Dispatch) => ({
-    // fetchGetVolumesByNSIfNeeded: (idName: string) =>
-    //   dispatch(actionGetVolumes.fetchGetVolumesByNSIfNeeded(idName)),
+    fetchGetVolumesByNSIfNeeded: (idName: string) =>
+      dispatch(actionGetVolumesByNS.fetchGetVolumesByNSIfNeeded(idName)),
     fetchGetNamespaceIfNeeded: (idName: string) =>
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
     fetchGetConfigMapsByNSIfNeeded: (idName: string) =>

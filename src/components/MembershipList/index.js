@@ -24,13 +24,19 @@ const containerClassName = globalClass(
 type Props = {
   membersList: Array<Object>,
   changeAccessUser: (login: string, access: string) => void,
-  handleDeleteDMembers: (login: string) => void
+  handleDeleteDMembers: (login: string) => void,
+  handleClickDropDownAccess: (login: string) => void,
+  handleMouseLeaveDropDownAccess: () => void,
+  currentLoginDropDownAccess: string
 };
 
 const MembershipList = ({
   membersList,
   changeAccessUser,
-  handleDeleteDMembers
+  handleDeleteDMembers,
+  handleClickDropDownAccess,
+  handleMouseLeaveDropDownAccess,
+  currentLoginDropDownAccess
 }: Props) => (
   <div>
     {membersList.length ? (
@@ -48,8 +54,8 @@ const MembershipList = ({
         <thead style={{ height: '30px' }}>
           <tr>
             <td style={{ width: 300 }}>Name</td>
-            <td style={{ width: 320 }}>Email</td>
-            <td>Permission</td>
+            <td style={{ width: 310 }}>Email</td>
+            <td style={{ width: 160 }}>Permission</td>
             <td className={membershipStyles.td_1_Membership} />
           </tr>
         </thead>
@@ -72,52 +78,47 @@ const MembershipList = ({
                 </td>
                 <td
                   className={membershipStyles.td_4_Membership}
-                  style={{ overflow: 'initial' }}
+                  style={{ overflow: 'initial', position: 'relative' }}
+                  onClick={() =>
+                    newAccessLevel !== 'owner' &&
+                    handleClickDropDownAccess(login)
+                  }
                 >
-                  <span>
-                    {newAccessLevel !== 'owner' ? (
-                      <span style={{ display: 'inline' }}>
-                        <i
-                          className={`${globalStyles.membershipArrow} ${
-                            globalStyles.dropdownToggleMembership
-                          }  dropdown-toggle`}
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                          style={{ cursor: 'pointer', fontStyle: 'normal' }}
-                        >
-                          {' '}
-                          {newAccessLevel}
-                        </i>
-                        <ul
-                          className={` dropdown-menu dropdown-menu-right ${
-                            globalStyles.dropdownMenu
-                          }`}
-                          style={{ width: 160 }}
-                          role="menu"
-                        >
-                          <button
-                            className={`dropdown-item ${
-                              globalStyles.dropdownItem
-                            }`}
-                            onClick={() => changeAccessUser(login, 'write')}
-                          >
-                            Write
-                          </button>
-                          <button
-                            className={`dropdown-item ${
-                              globalStyles.dropdownItem
-                            }`}
-                            onClick={() => changeAccessUser(login, 'read')}
-                          >
-                            Read
-                          </button>
-                        </ul>
-                      </span>
-                    ) : (
-                      'owner'
-                    )}
-                  </span>
+                  {newAccessLevel !== 'owner' ? (
+                    <div
+                      className={
+                        currentLoginDropDownAccess === login
+                          ? `${membershipStyles.NavDropDownWrapper} ${
+                              membershipStyles.NavDropDownOpen
+                            }`
+                          : membershipStyles.NavDropDownClose
+                      }
+                      onMouseLeave={() => handleMouseLeaveDropDownAccess()}
+                    >
+                      <div className={membershipStyles.firstChildOfNav}>
+                        {newAccessLevel}
+                      </div>
+                      <div
+                        onClick={() =>
+                          changeAccessUser(
+                            login,
+                            newAccessLevel === 'write' ? 'read' : 'write'
+                          )
+                        }
+                        className={
+                          currentLoginDropDownAccess === login
+                            ? membershipStyles.NavItemDropDownOpen
+                            : membershipStyles.NavItemDropDownClose
+                        }
+                      >
+                        {newAccessLevel === 'write' ? 'read' : 'write'}
+                      </div>
+                    </div>
+                  ) : (
+                    <div style={{ padding: '10px 0 10px 25px' }}>
+                      {newAccessLevel}
+                    </div>
+                  )}
                 </td>
                 <td
                   className={`${
@@ -130,7 +131,7 @@ const MembershipList = ({
                   {newAccessLevel !== 'owner' && (
                     <div className={globalStyles.membershipItem}>
                       <i
-                        style={{ verticalAlign: 'middle', paddingRight: 30 }}
+                        style={{ verticalAlign: 'middle' }}
                         className={`${
                           globalStyles.membershipIcon
                         } material-icons `}
