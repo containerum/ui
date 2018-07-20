@@ -129,6 +129,10 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap-grid.min.css"
         />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/react-selectize@3.0.1/dist/index.min.css"
+        />
         <script src="https://www.google.com/recaptcha/api.js" async defer />
         {head.title.toComponent()}
         {head.base.toComponent()}

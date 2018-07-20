@@ -40,6 +40,7 @@ export const fetchGetUserList = (
   const accessToken = cookie.load('accessToken');
   dispatch(getUserListRequest());
 
+  // ?page=1&per_page=10
   const response = await axios.get(`${URL}/user/list`, {
     headers: {
       'User-Client': browser,

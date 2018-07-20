@@ -51,7 +51,9 @@ const CreateCustomNamespaceInfo = ({
             {/* <span className="myTooltip" data-toggle="tooltip">?</span> */}
             {/* </Tooltip> */}
           </div>
-          <div className="containerSubTitle">Enter Project name</div>
+          <div className="containerSubTitle" style={{ marginBottom: 20 }}>
+            Enter Project name
+          </div>
           <InputControl
             value={label}
             id="deploymentName"
@@ -82,23 +84,18 @@ const CreateCustomNamespaceInfo = ({
           {/* </Tooltip> */}
         </div>
       </div>
-      <div className="col-md-5 myColumn">
+      <div className="col-md-5 myColumn" style={{ marginBottom: 20 }}>
         <InputControl
           value={cpu}
           id="cpu"
           type="number"
-          pattern="(3000|[12][0-9]{3}|[1-9][0-9]{1,2})"
           required
-          min="10"
-          max="3000"
+          min="1"
           baseClassName="form-group__input-text form-control customInput"
           baseClassNameLabel={`form-group__label ${
             cpu || cpu === 0 ? 'form-group__label-always-onfocus' : ''
           }`}
           labelText="CPU"
-          title="Range: 10 - 3000"
-          textHelper="Range: 10 - 3000"
-          baseClassNameHelper="form-group__helper"
           handleChangeInput={e => {
             const cpuValue = parseInt(e.target.value, 10);
             handleChangeInput(
@@ -113,18 +110,13 @@ const CreateCustomNamespaceInfo = ({
           value={memory}
           id="memory"
           type="number"
-          pattern="(8000|[1-7][0-9]{3}|[1-9][0-9]{1,2})"
           required
-          min="10"
-          max="8000"
+          min="1"
           baseClassName="form-group__input-text form-control customInput"
           baseClassNameLabel={`form-group__label ${
             memory || memory === 0 ? 'form-group__label-always-onfocus' : ''
           }`}
           labelText="RAM"
-          title="Range: 10 - 8000"
-          textHelper="Range: 10 - 8000"
-          baseClassNameHelper="form-group__helper"
           handleChangeInput={e => {
             const cpuValue = parseInt(e.target.value, 10);
             handleChangeInput(
@@ -140,10 +132,8 @@ const CreateCustomNamespaceInfo = ({
           value={maxExtServices}
           id="maxExtServices"
           type="number"
-          pattern="(1000|[12][0-9]{3}|[1-9][0-9]{1,2})"
           required
           min="1"
-          max="1000"
           baseClassName="form-group__input-text form-control customInput"
           baseClassNameLabel={`form-group__label ${
             maxExtServices || maxExtServices === 0
@@ -151,9 +141,6 @@ const CreateCustomNamespaceInfo = ({
               : ''
           }`}
           labelText="Max Ext Services"
-          title="Range: 10 - 3000"
-          textHelper="Range: 10 - 3000"
-          baseClassNameHelper="form-group__helper"
           handleChangeInput={e => {
             const maxExtServicesValue = parseInt(e.target.value, 10);
             handleChangeInput(
@@ -168,10 +155,8 @@ const CreateCustomNamespaceInfo = ({
           value={maxIntServices}
           id="maxIntServices"
           type="number"
-          pattern="(1000|[12][0-9]{3}|[1-9][0-9]{1,2})"
           required
           min="1"
-          max="1000"
           baseClassName="form-group__input-text form-control customInput"
           baseClassNameLabel={`form-group__label ${
             maxIntServices || maxIntServices === 0
@@ -179,9 +164,6 @@ const CreateCustomNamespaceInfo = ({
               : ''
           }`}
           labelText="Max Int Services"
-          title="Range: 10 - 8000"
-          textHelper="Range: 10 - 8000"
-          baseClassNameHelper="form-group__helper"
           handleChangeInput={e => {
             const maxIntServicesValue = parseInt(e.target.value, 10);
             handleChangeInput(
@@ -196,10 +178,8 @@ const CreateCustomNamespaceInfo = ({
           value={maxTraffic}
           id="maxTraffic"
           type="number"
-          pattern="(8000|[12][0-9]{3}|[1-9][0-9]{1,2})"
           required
           min="1"
-          max="8000"
           baseClassName="form-group__input-text form-control customInput"
           baseClassNameLabel={`form-group__label ${
             maxTraffic || maxTraffic === 0
@@ -207,9 +187,6 @@ const CreateCustomNamespaceInfo = ({
               : ''
           }`}
           labelText="Max Traffic"
-          title="Range: 10 - 8000"
-          textHelper="Range: 10 - 8000"
-          baseClassNameHelper="form-group__helper"
           handleChangeInput={e => {
             const cpuValue = parseInt(e.target.value, 10);
             handleChangeInput(

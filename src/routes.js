@@ -4,7 +4,6 @@ import type { Dispatch } from './types';
 import { routerLinks, sourceType } from './config';
 import { fetchGetProfileIfNeeded } from './actions/profileActions/getProfile';
 // import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
-// import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
 import { fetchGetNamespaceIfNeeded } from './actions/namespaceActions/getNamespace';
 import { fetchGetDeploymentsIfNeeded } from './actions/deploymentsActions/getDeployments';
 import { fetchGetDeploymentIfNeeded } from './actions/deploymentActions/getDeployment';
@@ -13,6 +12,7 @@ import { fetchGetPodIfNeeded } from './actions/podActions/getPod';
 import { fetchGetServicesIfNeeded } from './actions/servicesActions/getServices';
 import { fetchGetServiceIfNeeded } from './actions/serviceActions/getService';
 import { fetchGetNamespacesTariffsIfNeeded } from './actions/namespacesActions/getNamespacesTariffs';
+// import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
 // import { fetchGetVolumesTariffsIfNeeded } from './actions/volumesActions/getVolumesTariffs';
 import { fetchGetSupportGroupsIfNeeded } from './actions/supportActions/getSupportGroups';
 import { fetchGetResourcesIfNeeded } from './actions/statisticsActions/getResources';
@@ -267,7 +267,7 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  {
+  isOnline && {
     path: routerLinks.createNamespace,
     exact: true,
     component: CreateNamespacePage,
@@ -386,7 +386,7 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  {
+  isOnline && {
     path: routerLinks.getStarted,
     exact: true,
     component: GetStarted,

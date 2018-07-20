@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
 import cookie from 'react-cookies';
+import isEmail from 'validator/lib/isEmail';
 
 import { routerLinks } from '../../config';
 import Notification from '../Notification';
@@ -12,7 +13,8 @@ import AdminDeleteUserModal from '../../components/CustomerModal/AdminDeleteUser
 import GlobalUserListInGroup from '../../components/GlobalUserListInGroup';
 import AddUserInGlobalGroupModal from '../../components/CustomerModal/AddUserInGlobalGroupModal';
 import type { Dispatch, ReduxState } from '../../types';
-import * as actionAddGlobalUserIfNeeded from '../../actions/globalMembership/addUserInGroup';
+import * as actionAddGlobalUser from '../../actions/globalMembership/addUserInGroup';
+import * as actionUpdateUserInGroup from '../../actions/globalMembership/updateUserInGroup';
 import * as actionfetchDeleteUserFromGroupIfNeeded from '../../actions/globalMembership/deleteUserFromGroup';
 import * as actionGetGroup from '../../actions/globalMembership/getGroup';
 import {
@@ -22,6 +24,7 @@ import {
   GET_GROUP_SUCCESS
 } from '../../constants/globalMembershipConstants/getGroup';
 import { ADD_GLOBAL_USER_IN_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/addGlobalUserInGroup';
+import { UPDATE_GLOBAL_USER_IN_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/updateGlobalUserInGroup';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 import globalStyles from '../../theme/global.scss';
@@ -29,7 +32,6 @@ import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import { DELETE_USER_FROM_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/deleteUserFromGroup';
 import * as actionDeleteGroupIfNeeded from '../../actions/globalMembership/deleteGroup';
-// import { fetchAddGlobalUser } from '../../actions/globalMembership/addUser';
 
 const globalClass = className.bind(globalStyles);
 
@@ -66,7 +68,13 @@ type Props = {
     members: Array<Object>,
     labelGroup: string
   ) => void,
+  fetchUpdateGlobalUserIfNeeded: (
+    idGroup: string,
+    userName: string,
+    access: string
+  ) => void,
   addUserInGroupReducer: Object,
+  updateUserInGroupReducer: Object,
   fetchDeleteUserFromGroupIfNeeded: (idGroup: string, username: string) => void
 };
 
@@ -82,9 +90,11 @@ class GlobalMembership extends PureComponent<Props> {
       isOpenAdd: false,
       idUser: null,
       accessNewUsers: 'read',
+      currentLoginDropDownAccess: null,
       newUsers: [],
       membersList: [],
-      errAdd: null
+      errAdd: null,
+      isEmailValid: true
     };
   }
   componentWillMount() {
@@ -107,10 +117,14 @@ class GlobalMembership extends PureComponent<Props> {
       }
     }
     if (
-      this.props.addUserInGroupReducer.readyStatus !==
+      (this.props.addUserInGroupReducer.readyStatus !==
         nextProps.addUserInGroupReducer.readyStatus &&
-      nextProps.addUserInGroupReducer.readyStatus ===
-        ADD_GLOBAL_USER_IN_GROUP_SUCCESS
+        nextProps.addUserInGroupReducer.readyStatus ===
+          ADD_GLOBAL_USER_IN_GROUP_SUCCESS) ||
+      (this.props.updateUserInGroupReducer.readyStatus !==
+        nextProps.updateUserInGroupReducer.readyStatus &&
+        nextProps.updateUserInGroupReducer.readyStatus ===
+          UPDATE_GLOBAL_USER_IN_GROUP_SUCCESS)
     ) {
       fetchGetGroupIfNeeded(match.params.idGroup);
     }
@@ -181,10 +195,11 @@ class GlobalMembership extends PureComponent<Props> {
   handleOpenCloseModalAdd = () => {
     this.setState({
       isOpenAdd: !this.state.isOpenAdd,
-      accessNewUser: 'read',
+      accessNewUsers: 'read',
       inputEmailAdd: '',
       errAdd: null,
-      newUsers: []
+      newUsers: [],
+      isEmailValid: true
     });
   };
   handleInputEmailDelete = inputEmailDelete => {
@@ -202,21 +217,69 @@ class GlobalMembership extends PureComponent<Props> {
   handleInputEmailAdd = inputEmailAdd => {
     this.setState({
       ...this.state,
-      inputEmailAdd
+      inputEmailAdd,
+      isEmailValid: true
     });
   };
   handleAddNewUsers = newUsers => {
-    const user = {
-      username: this.state.inputEmailAdd,
-      access: this.state.accessNewUsers
-    };
-    newUsers.push(user);
+    if (isEmail(this.state.inputEmailAdd)) {
+      const user = {
+        username: this.state.inputEmailAdd,
+        access: this.state.accessNewUsers
+      };
+      newUsers.push(user);
+      this.setState({
+        ...this.state,
+        newUsers,
+        inputEmailAdd: '',
+        isEmailValid: true
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        isEmailValid: false
+      });
+    }
+  };
+  handleClickDropDownAccess = login => {
     this.setState({
       ...this.state,
-      newUsers,
-      inputEmailAdd: ''
+      currentLoginDropDownAccess: login
     });
   };
+  handleMouseLeaveDropDownAccess = () => {
+    this.setState({
+      ...this.state,
+      currentLoginDropDownAccess: null
+    });
+  };
+  changeAccessUser = (login, access) => {
+    const { fetchUpdateGlobalUserIfNeeded, match } = this.props;
+    fetchUpdateGlobalUserIfNeeded(match.params.idGroup, login, access);
+    // const user = this.state.membersList.find(
+    //   member => member.username === login
+    // );
+    // const { access_level: newAccessLevel } = user;
+    // if (access !== newAccessLevel) {
+    //   this.setState(
+    //     {
+    //       ...this.state,
+    //       accessUser: access
+    //     },
+    //     () => {
+    //       fetchAddNamespaceUserAccessIfNeeded(
+    //         match.params.idName,
+    //         {
+    //           username: login,
+    //           access
+    //         },
+    //         'change'
+    //       );
+    //     }
+    //   );
+    // }
+  };
+
   renderGlobalMembershipList = () => {
     const { match, getGroupReducer } = this.props;
     if (
@@ -245,6 +308,9 @@ class GlobalMembership extends PureComponent<Props> {
         membersList={getGroupReducer.data.members}
         changeAccessUser={this.changeAccessUser}
         handleDeleteDMembers={this.handleDeleteDMembers}
+        handleClickDropDownAccess={this.handleClickDropDownAccess}
+        handleMouseLeaveDropDownAccess={this.handleMouseLeaveDropDownAccess}
+        currentLoginDropDownAccess={this.state.currentLoginDropDownAccess}
       />
     );
   };
@@ -254,17 +320,26 @@ class GlobalMembership extends PureComponent<Props> {
       deleteUserFromGroupReducer,
       getGroupReducer,
       addUserInGroupReducer,
+      updateUserInGroupReducer,
       deleteGroupReducer,
       fetchAddGlobalUserIfNeeded,
       fetchDeleteGroupIfNeeded,
       fetchDeleteUserFromGroupIfNeeded
     } = this.props;
+    const { isEmailValid } = this.state;
     const {
       status: statusAdd,
       isFetching: isFetchingAdd,
       labelGroup: labelGroupAdd,
-      method: methodAdd
+      method: methodAdd,
+      err: errAdd
     } = addUserInGroupReducer;
+    const {
+      status: statusUpdate,
+      members: labelGroupUpdate,
+      method: methodUpdate,
+      err: errUpdate
+    } = updateUserInGroupReducer;
     const {
       status: statusDelete,
       username: idNameDelete,
@@ -301,6 +376,14 @@ class GlobalMembership extends PureComponent<Props> {
           status={statusAdd}
           name={labelGroupAdd}
           method={methodAdd}
+          errorMessage={errAdd}
+        />
+
+        <Notification
+          status={statusUpdate}
+          name={labelGroupUpdate}
+          method={methodUpdate}
+          errorMessage={errUpdate}
         />
 
         <AdminDeleteUserModal
@@ -324,7 +407,7 @@ class GlobalMembership extends PureComponent<Props> {
           onHandleDelete={fetchDeleteGroupIfNeeded}
         />
         <AddUserInGlobalGroupModal
-          type="Add User"
+          type="Add Users"
           accessNewUsers={this.state.accessNewUsers}
           name={this.state.inputEmailAdd}
           isOpened={this.state.isOpenAdd}
@@ -338,6 +421,7 @@ class GlobalMembership extends PureComponent<Props> {
           err={this.state.errAdd}
           idGroup={idGroup}
           labelGroup={label}
+          isEmailValid={isEmailValid}
           handleDeleteNewUser={this.handleDeleteNewUser}
         />
         <div className={globalStyles.contentBlock}>
@@ -348,7 +432,8 @@ class GlobalMembership extends PureComponent<Props> {
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
                     <div className={globalStyles.contentBlockHeader}>
-                      <div
+                      <NavLink
+                        to={routerLinks.getGlobalGroups}
                         className={labelClassName}
                         style={{
                           textTransform: 'lowercase',
@@ -356,7 +441,7 @@ class GlobalMembership extends PureComponent<Props> {
                         }}
                       >
                         {label}
-                      </div>
+                      </NavLink>
                       <div
                         style={{
                           float: 'right',
@@ -382,10 +467,12 @@ class GlobalMembership extends PureComponent<Props> {
                               style={{ width: 'auto' }}
                             >
                               <NavLink
+                                to={routerLinks.getGroupLink(
+                                  match.params.idGroup
+                                )}
                                 activeClassName={
                                   globalStyles.contentBlockMenuLiActive
                                 }
-                                to="/membership/users"
                               >
                                 Users
                               </NavLink>
@@ -398,7 +485,7 @@ class GlobalMembership extends PureComponent<Props> {
                               } btn btn-outline-primary fancybox`}
                               onClick={this.handleAddMembersAdd}
                             >
-                              Add User
+                              Add Users
                             </button>
                           </li>
                         </ul>
@@ -427,6 +514,7 @@ const connector: Connector<{}, Props> = connect(
     adminDeleteUserReducer,
     addUserReducer,
     addUserInGroupReducer,
+    updateUserInGroupReducer,
     deleteUserFromGroupReducer,
     deleteGroupReducer
   }: ReduxState) => ({
@@ -438,6 +526,7 @@ const connector: Connector<{}, Props> = connect(
     adminDeleteUserReducer,
     addUserReducer,
     addUserInGroupReducer,
+    updateUserInGroupReducer,
     deleteUserFromGroupReducer,
     deleteGroupReducer
   }),
@@ -450,10 +539,22 @@ const connector: Connector<{}, Props> = connect(
       labelGroup: string
     ) =>
       dispatch(
-        actionAddGlobalUserIfNeeded.fetchAddGlobalUserIfNeeded(
+        actionAddGlobalUser.fetchAddGlobalUserIfNeeded(
           idGroup,
           members,
           labelGroup
+        )
+      ),
+    fetchUpdateGlobalUserIfNeeded: (
+      idGroup: string,
+      userName: string,
+      access: string
+    ) =>
+      dispatch(
+        actionUpdateUserInGroup.fetchUpdateGlobalUserIfNeeded(
+          idGroup,
+          userName,
+          access
         )
       ),
     fetchDeleteUserFromGroupIfNeeded: (idGroup: string, username: string) =>

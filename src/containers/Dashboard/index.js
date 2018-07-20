@@ -98,7 +98,7 @@ export class Dashboard extends PureComponent<Props> {
       fetchGetResourcesIfNeeded,
       fetchGetConfigMapsIfNeeded
     } = this.props;
-    fetchGetSolutionsIfNeeded();
+    isOnline && fetchGetSolutionsIfNeeded();
     fetchGetResourcesIfNeeded();
     fetchGetConfigMapsIfNeeded();
     const widget = cookie.load('widget');
@@ -374,6 +374,7 @@ export class Dashboard extends PureComponent<Props> {
       getResourcesReducer,
       getBalanceReducer,
       getNamespacesReducer,
+      getProfileReducer,
       getConfigMapsReducer
     } = this.props;
     if (
@@ -384,6 +385,9 @@ export class Dashboard extends PureComponent<Props> {
           !getBalanceReducer.readyStatus ||
           getBalanceReducer.readyStatus === GET_BALANCE_INVALID ||
           getBalanceReducer.readyStatus === GET_BALANCE_REQUESTING ||
+          !getProfileReducer.readyStatus ||
+          getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+          getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
           !getResourcesReducer.readyStatus ||
           getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
           getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING)) ||
@@ -391,6 +395,9 @@ export class Dashboard extends PureComponent<Props> {
         (!getNamespacesReducer.readyStatus ||
           getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
           getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+          !getProfileReducer.readyStatus ||
+          getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+          getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
           !getResourcesReducer.readyStatus ||
           getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
           getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING))
@@ -419,9 +426,11 @@ export class Dashboard extends PureComponent<Props> {
       (isOnline &&
         (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
           getBalanceReducer.readyStatus === GET_BALANCE_FAILURE ||
+          getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
           getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE)) ||
       (!isOnline &&
         (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+          getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
           getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE))
     ) {
       return <p>Oops, Failed to load data of Tour!</p>;
@@ -431,7 +440,7 @@ export class Dashboard extends PureComponent<Props> {
       ns => ns.access !== 'read'
     );
     let linkTo = false;
-    if (this.props.getProfileReducer.data.role === 'admin') {
+    if (getProfileReducer.data.role === 'admin') {
       linkTo = true;
     }
     return (
@@ -472,7 +481,8 @@ export class Dashboard extends PureComponent<Props> {
     return (
       <div>
         {!isOpenedSideBarGetStarted &&
-          isViewWidget && (
+          isViewWidget &&
+          isOnline && (
             <div
               className={styles.GetStartedWrapper}
               onClick={() =>

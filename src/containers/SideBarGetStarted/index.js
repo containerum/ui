@@ -98,6 +98,8 @@ export class SideBarGetStarted extends PureComponent<Props> {
 
     if (getStartedReducer.readyStatus === GET_STARTED_SUCCESS) {
       let text = getStartedReducer.data.substring(225);
+      const regexpAbsoluteWebPanelLink = /(\/web-panel\/)/gi;
+      const regexpAbsoluteCliLink = /(\/cli\/)/gi;
       const regexpImg = /<img src="\/img\/content\/getting-started\/online\//gi;
       const regexpImgWithOut = /" width="100%"\/>/gi;
       text = text
@@ -105,7 +107,13 @@ export class SideBarGetStarted extends PureComponent<Props> {
           regexpImg,
           `![](https://raw.githubusercontent.com/containerum/containerum-docs/master/static_src/img/content/getting-started/online/`
         )
-        .replace(regexpImgWithOut, ')');
+        .replace(regexpImgWithOut, ')')
+        .replace(
+          regexpAbsoluteWebPanelLink,
+          'https://docs.containerum.com/web-panel/'
+        )
+        .replace(regexpAbsoluteCliLink, 'https://docs.containerum.com/cli/');
+      console.log(text);
       return <Markdown>{text}</Markdown>;
     }
     return null;

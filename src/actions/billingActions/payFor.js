@@ -40,19 +40,17 @@ export const fetchPayFor = (
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
+  const accessToken = cookie.load('accessToken');
 
   dispatch(payForRequest());
 
   const response = await axios.post(
-    `${URL}/api/pay_for`,
+    `${URL}/isp/paypal`,
     { amount },
     {
       headers: {
         'User-Client': browser,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, max-age=-1, private'
+        'User-Token': accessToken
       },
       validateStatus: status => status >= 200 && status <= 505
     }
