@@ -76,9 +76,9 @@ export class NavigationHeader extends PureComponent<Props> {
     let currentNs;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
       currentNs =
-        idName !== 'new'
+        idName !== 'new' && getNamespacesReducer.data.length
           ? getNamespacesReducer.data.find(ns => ns.id === idName)
-          : getNamespacesReducer.data[0];
+          : null;
     }
     if (
       !getNamespacesReducer.readyStatus ||
@@ -115,40 +115,52 @@ export class NavigationHeader extends PureComponent<Props> {
       if (idName) {
         isIdName = (
           <li className={`${globalStyles.breadcrumbsLi} nav-item dropdown`}>
-            <div
-              style={{ cursor: 'pointer' }}
-              className={`${globalStyles.dropdownToggle} dropdown-toggle`}
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              {currentNs ? currentNs.label : ''}
-            </div>
-            <ul
-              className={`${globalStyles.dropdownMenu} dropdown-menu`}
-              style={{
-                maxHeight: 500,
-                overflowY: 'auto'
-              }}
-              role="menu"
-            >
-              {getNamespacesReducer.data.map(item => (
-                <NavLink
-                  key={_.uniqueId()}
-                  className="dropdown-item"
-                  to={routerLinks.namespaceLink(item.id, additionalPath)}
-                >
-                  {item.label}
-                </NavLink>
-              ))}
-            </ul>
+            {currentNs ? (
+              <div
+                style={{ cursor: 'pointer' }}
+                className={`${globalStyles.dropdownToggle} dropdown-toggle`}
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {currentNs ? currentNs.label : 'New'}
+              </div>
+            ) : (
+              'New'
+            )}
+            {currentNs ? (
+              <ul
+                className={`${globalStyles.dropdownMenu} dropdown-menu`}
+                style={{
+                  maxHeight: 500,
+                  overflowY: 'auto'
+                }}
+                role="menu"
+              >
+                {getNamespacesReducer.data.map(item => (
+                  <NavLink
+                    key={_.uniqueId()}
+                    className="dropdown-item"
+                    to={routerLinks.namespaceLink(item.id, additionalPath)}
+                  >
+                    {item.label}
+                  </NavLink>
+                ))}
+              </ul>
+            ) : (
+              ''
+            )}
           </li>
         );
         isIdOutName = (
           <li className={`${globalStyles.breadcrumbsLi} nav-item dropdown`}>
-            <NavLink to={routerLinks.namespaceLink(currentNs.id)}>
-              {currentNs ? currentNs.label : ''}
-            </NavLink>
+            {currentNs ? (
+              <NavLink to={routerLinks.namespaceLink(currentNs.id)}>
+                {currentNs.label}
+              </NavLink>
+            ) : (
+              'New'
+            )}
           </li>
         );
       }
@@ -158,9 +170,15 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
-              <NavLink to={routerLinks.getServiceLink(currentNs.id, idService)}>
-                {idService}
-              </NavLink>
+              {currentNs ? (
+                <NavLink
+                  to={routerLinks.getServiceLink(currentNs.id, idService)}
+                >
+                  {idService}
+                </NavLink>
+              ) : (
+                'New'
+              )}
             </li>
           </div>
         );
@@ -171,9 +189,15 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <NavLink to={routerLinks.getDeploymentLink(currentNs.id, idDep)}>
-                {idDep}
-              </NavLink>
+              {currentNs ? (
+                <NavLink
+                  to={routerLinks.getDeploymentLink(currentNs.id, idDep)}
+                >
+                  {idDep}
+                </NavLink>
+              ) : (
+                'New'
+              )}
             </li>
           </div>
         );
@@ -184,17 +208,27 @@ export class NavigationHeader extends PureComponent<Props> {
           <div style={{ display: 'flex' }}>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <NavLink to={routerLinks.getDeploymentLink(currentNs.id, idDep)}>
-                {idDep}
-              </NavLink>
+              {currentNs ? (
+                <NavLink
+                  to={routerLinks.getDeploymentLink(currentNs.id, idDep)}
+                >
+                  {idDep}
+                </NavLink>
+              ) : (
+                'New'
+              )}
             </li>
             <li className={`${breadcumbsClassName} nav-item`}>/</li>
             <li className={`${globalStyles.breadcrumbsLi} nav-item`}>
-              <NavLink
-                to={routerLinks.getPodLink(currentNs.id, idDep, idPod, false)}
-              >
-                {idPod}
-              </NavLink>
+              {currentNs ? (
+                <NavLink
+                  to={routerLinks.getPodLink(currentNs.id, idDep, idPod, false)}
+                >
+                  {idPod}
+                </NavLink>
+              ) : (
+                'New'
+              )}
             </li>
           </div>
         );
