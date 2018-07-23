@@ -8,6 +8,7 @@ type Props = {
   handleChangeInput: Function,
   value: string,
   id: string,
+  style: string,
   labelId: string,
   labelText: string,
   required: ?string,
@@ -33,6 +34,7 @@ const InputControl = ({
   value,
   placeholder,
   id,
+  style,
   required,
   pattern,
   type,
@@ -60,6 +62,7 @@ const InputControl = ({
     <input
       className={baseClassName}
       id={id}
+      style={style}
       value={value}
       type={type}
       title={title}
