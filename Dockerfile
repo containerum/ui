@@ -16,6 +16,7 @@ ENV API_HOST="api.containerum.io" \
     COUNTRY="US" \
     RECAPTCHA="6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS" \
     SOURCE_TYPE=$SOURCE_TYPE
+    LATEST_RELEASE=""
 
 RUN yarn build
 

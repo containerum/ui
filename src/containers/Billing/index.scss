@@ -15,6 +15,10 @@
       text-transform: uppercase;
     }
 
+    &InactiveInfo {
+      color: $none-access-color;
+    }
+
     &Data {
       white-space: nowrap;
       font-weight: 300;

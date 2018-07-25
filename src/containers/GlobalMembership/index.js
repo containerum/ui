@@ -12,6 +12,8 @@ import AdminDeleteUserModal from '../../components/CustomerModal/AdminDeleteUser
 import AddGlobalUserMembershipModal from '../../components/CustomerModal/AddGlobalMembershipModal';
 import GlobalMembershipList from '../../components/GlobalMembershipList';
 import type { Dispatch, ReduxState } from '../../types';
+import * as actionActivateUser from '../../actions/userManagement/activateUser';
+import * as actionDeactivateUser from '../../actions/userManagement/deactivateUser';
 import * as actionAddGlobalUserIfNeeded from '../../actions/globalMembership/addUser';
 import * as actionAdminDeleteUserIfNeeded from '../../actions/globalMembership/adminDeleteUser';
 import * as actionGetUserListIfNeeded from '../../actions/globalMembership/getUserList';
@@ -56,6 +58,8 @@ type Props = {
   addUserReducer: Object,
   fetchGetUserListIfNeeded: () => void,
   fetchAddGlobalUserIfNeeded: (login: string) => void,
+  fetchActivateUserIfNeeded: (login: string) => void,
+  fetchDeactivateUserIfNeeded: (login: string) => void,
   fetchAdminDeleteUserIfNeeded: (username: string) => void
 };
 
@@ -71,7 +75,8 @@ class GlobalMembership extends PureComponent<Props> {
       accessNewUser: 'read',
       accessUser: 'read',
       membersList: [],
-      errAdd: null
+      errAdd: null,
+      currentLoginDropDownAccess: null
     };
   }
   componentWillMount() {
@@ -103,6 +108,28 @@ class GlobalMembership extends PureComponent<Props> {
       ...this.state,
       idUser,
       isOpen: true
+    });
+  };
+  handleClickGetAccount = login => {
+    this.props.history.push(routerLinks.accountByIdLink(login));
+  };
+  changeAccessUser = (login, activity) => {
+    if (activity === 'active') {
+      this.props.fetchActivateUserIfNeeded(login);
+    } else {
+      this.props.fetchDeactivateUserIfNeeded(login);
+    }
+  };
+  handleClickDropDownAccess = login => {
+    this.setState({
+      ...this.state,
+      currentLoginDropDownAccess: login
+    });
+  };
+  handleMouseLeaveDropDownAccess = () => {
+    this.setState({
+      ...this.state,
+      currentLoginDropDownAccess: null
     });
   };
   handleAddMembersAdd = () => {
@@ -167,8 +194,12 @@ class GlobalMembership extends PureComponent<Props> {
       <GlobalMembershipList
         idName={match.params.idName}
         membersList={getUserListReducer.data.users}
-        changeAccessUser={this.changeAccessUser}
         handleDeleteDMembers={this.handleDeleteDMembers}
+        handleClickGetAccount={this.handleClickGetAccount}
+        changeAccessUser={this.changeAccessUser}
+        handleClickDropDownAccess={this.handleClickDropDownAccess}
+        handleMouseLeaveDropDownAccess={this.handleMouseLeaveDropDownAccess}
+        currentLoginDropDownAccess={this.state.currentLoginDropDownAccess}
       />
     );
   };
@@ -341,6 +372,10 @@ const connector: Connector<{}, Props> = connect(
       dispatch(actionGetUserListIfNeeded.fetchGetUserListIfNeeded()),
     fetchAddGlobalUserIfNeeded: (login: string) =>
       dispatch(actionAddGlobalUserIfNeeded.fetchAddGlobalUserIfNeeded(login)),
+    fetchActivateUserIfNeeded: (login: string) =>
+      dispatch(actionActivateUser.fetchActivateUserIfNeeded(login)),
+    fetchDeactivateUserIfNeeded: (login: string) =>
+      dispatch(actionDeactivateUser.fetchDeactivateUserIfNeeded(login)),
     fetchAdminDeleteUserIfNeeded: (idName: string, username: string) =>
       dispatch(
         actionAdminDeleteUserIfNeeded.fetchAdminDeleteUserIfNeeded(

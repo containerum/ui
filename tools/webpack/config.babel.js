@@ -84,6 +84,9 @@ const getPlugins = () => {
         SOURCE_TYPE: process.env.SOURCE_TYPE
           ? `"${process.env.SOURCE_TYPE}"`
           : undefined,
+        LATEST_RELEASE: process.env.LATEST_RELEASE
+          ? `"${process.env.LATEST_RELEASE}"`
+          : undefined,
         COUNTRY: process.env.COUNTRY ? `"${process.env.COUNTRY}"` : undefined
       }
     }),

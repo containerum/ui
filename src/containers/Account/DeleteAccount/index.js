@@ -14,7 +14,8 @@ import globalStyles from '../../../theme/global.scss';
 import buttonsStyles from '../../../theme/buttons.scss';
 
 type Props = {
-  getProfileReducer: Object,
+  login: string,
+  type: string,
   deleteAccountReducer: Object,
   fetchDeleteAccountIfNeeded: () => void
 };
@@ -50,7 +51,7 @@ export class DeleteAccount extends PureComponent<Props> {
     });
   };
   render() {
-    const { getProfileReducer, deleteAccountReducer } = this.props;
+    const { deleteAccountReducer, login, type } = this.props;
     const { isOpened, inputName } = this.state;
     return (
       <div>
@@ -62,7 +63,7 @@ export class DeleteAccount extends PureComponent<Props> {
           type="Account"
           inputName={inputName}
           name={inputName}
-          typeName={getProfileReducer.data.login}
+          typeName={login}
           isOpened={isOpened}
           handleInputName={this.handleInputName}
           handleOpenCloseModal={this.handleOpenCloseModal}
@@ -71,7 +72,8 @@ export class DeleteAccount extends PureComponent<Props> {
         <div className={globalStyles.blockItem} id="delete-account">
           <div className={globalStyles.blockItemTitle}>Delete Account</div>
           <div className={globalStyles.textLight}>
-            This action will delete your Apps and Data
+            This action will delete {type === 'local' ? 'user' : 'your'} Apps
+            and Data
           </div>
           <div className={globalStyles.blockItemButtons}>
             <button
@@ -90,8 +92,7 @@ export class DeleteAccount extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getProfileReducer, deleteAccountReducer }: ReduxState) => ({
-    getProfileReducer,
+  ({ deleteAccountReducer }: ReduxState) => ({
     deleteAccountReducer
   }),
   (dispatch: Dispatch) => ({

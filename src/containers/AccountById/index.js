@@ -17,14 +17,13 @@ import {
 import type { ReduxState } from '../../types';
 import ProfileInfo from '../../components/ProfileInfo';
 import ProfileSidebar from '../../components/ProfileSidebar';
-import ProfilePassword from './Password';
-import DeleteAccountInfo from './DeleteAccount';
-import CLI from '../../components/CLIInfo';
+import DeleteAccountInfo from '../Account/DeleteAccount';
 import globalStyles from '../../theme/global.scss';
 import './Account.css';
 import styles from './index.scss';
 
 type Props = {
+  match: Object,
   history: Object,
   getProfileReducer: Object
 };
@@ -36,7 +35,7 @@ const containerClassNameSidebar = globalClass(
   'containerNoBackground'
 );
 
-export class Account extends PureComponent<Props> {
+export class AccountById extends PureComponent<Props> {
   componentWillMount() {
     const accessToken = cookie.load('accessToken');
     if (!accessToken) {
@@ -44,7 +43,7 @@ export class Account extends PureComponent<Props> {
     }
   }
   renderProfileInfo = () => {
-    const { getProfileReducer } = this.props;
+    const { match, getProfileReducer } = this.props;
     const containerClassName = globalClass(
       'contentBlockContainer',
       'containerFluid'
@@ -69,13 +68,8 @@ export class Account extends PureComponent<Props> {
 
     return (
       <div className={`${containerClassName} container`}>
-        <ProfileInfo
-          firstName={getProfileReducer.data.data.first_name}
-          login={getProfileReducer.data.login}
-        />
-        <ProfilePassword />
-        <CLI />
-        <DeleteAccountInfo login={getProfileReducer.data.login} />
+        <ProfileInfo login={match.params.idUser} statusUser="inactive" />
+        <DeleteAccountInfo login={match.params.idUser} type="local" />
       </div>
     );
   };
@@ -145,7 +139,7 @@ export class Account extends PureComponent<Props> {
                   <div
                     className={`${containerClassNameSidebar} container pl-0 pr-0`}
                   >
-                    {this.renderProfileSideBar()}
+                    {/* {this.renderProfileSideBar()} */}
                   </div>
                 </div>
               </div>
@@ -167,4 +161,4 @@ const connector: Connector<{}, Props> = connect(
   ({ getProfileReducer }: ReduxState) => ({ getProfileReducer })
 );
 
-export default connector(Account);
+export default connector(AccountById);

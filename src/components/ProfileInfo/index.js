@@ -5,9 +5,11 @@ import Blockies from 'react-blockies';
 import className from 'classnames/bind';
 
 import InputControl from '../InputControl';
+import CheckBoxControl from '../CheckBoxControl';
 import './Profile.css';
 
 import globalStyles from '../../theme/global.scss';
+import billingStyles from '../../containers/Billing/index.scss';
 import inputStyles from '../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
@@ -15,10 +17,12 @@ const globalClass = className.bind(globalStyles);
 const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
-  data: Object
+  firstName: string,
+  login: string,
+  statusUser: string
 };
 
-const ProfileInfo = ({ data }: Props) => (
+const ProfileInfo = ({ firstName, login, statusUser }: Props) => (
   <div className={globalStyles.blockItem} id="profile">
     <div className={globalStyles.blockItemTitle}>Profile</div>
     <form>
@@ -29,14 +33,14 @@ const ProfileInfo = ({ data }: Props) => (
               className={globalStyles.formGroupLabelImage}
               htmlFor="avatar"
             >
-              <Blockies seed={data.login} size={9} scale={7} bgColor="#fff" />
+              <Blockies seed={login} size={9} scale={7} bgColor="#fff" />
             </label>
           </div>
         </div>
-        {data.data && (
+        {firstName && (
           <div className="col-md-5">
             <InputControl
-              value={data.data.first_name}
+              value={firstName}
               id="name"
               type="text"
               baseClassName={`${formClassName} ${
@@ -52,7 +56,7 @@ const ProfileInfo = ({ data }: Props) => (
         )}
         <div className="col-md-5">
           <InputControl
-            value={data.login}
+            value={login}
             id="email"
             type="text"
             baseClassName={`${formClassName} ${
@@ -66,6 +70,56 @@ const ProfileInfo = ({ data }: Props) => (
           />
         </div>
       </div>
+      {statusUser && (
+        <div className="row" style={{ marginTop: 60 }}>
+          <div className="col-md-3">
+            <div className={`${globalStyles.formGroup} pt-0`}>
+              <div className={billingStyles.billingContentText}>
+                Status:&nbsp;
+              </div>
+              <div
+                className={`${
+                  billingStyles.billingInformationStatusInfo
+                } ${statusUser !== 'active' &&
+                  billingStyles.billingInformationInactiveInfo}`}
+              >
+                {statusUser}
+              </div>
+            </div>
+          </div>
+          <div className="col-md-4" />
+          <div className="col-md-5">
+            <div className={`${globalStyles.formGroup} pt-0`}>
+              <div style={{ float: 'right' }}>
+                <button type="button" className="btn btn-outline-primary">
+                  Reset Password
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  style={{ marginLeft: 20 }}
+                >
+                  Active
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-7">
+            <div className={`${globalStyles.formGroup} pt-0`}>
+              <CheckBoxControl
+                id="ssl"
+                // value={isEnabledSSL}
+                labelText="Enable Admin Status"
+                labelClassName={globalStyles.labelCustom}
+                // handleChangeCheckBox={handleChangeCheckBox}
+              />
+              <div style={{ fontSize: 12, color: '#a7a7a7' }}>
+                Admin status allows user to manage resource and other users
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   </div>
 );

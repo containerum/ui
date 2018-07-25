@@ -90,6 +90,7 @@ import getRunningSolutionReducer from './solutionReducers/getRunningSolution';
 import getEnvsSolutionReducer from './solutionReducers/getEnvsSolution';
 import getConfigMapsByNSReducer from './configMapReducers/getConfigMapsByNS';
 import getStartedReducer from './getStarted';
+import activateUserReducer from './userManagement/activateUser';
 
 const reducers = {
   loginReducer,
@@ -178,6 +179,7 @@ const reducers = {
   getEnvsSolutionReducer,
   getConfigMapsByNSReducer,
   getStartedReducer,
+  activateUserReducer,
   router,
   loadingBar: loadingBarReducer
 };
