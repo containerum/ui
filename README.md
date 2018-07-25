@@ -15,7 +15,7 @@ Containerum UI project is Web User Interface for [Containerum](https://github.co
 ```
 
 ## Contributions
-Please submit all contributions concerning UI component to this repository.
+Please submit all contributions concerning UI component to this repository. Contributing guidelines are available [here](https://github.com/containerum/containerum/blob/master/CONTRIBUTING.md).
 
 ## Development notes
 Please refer to [development.md](development.md) to see development notes for UI project.
