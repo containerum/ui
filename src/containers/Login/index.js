@@ -199,13 +199,15 @@ class Login extends PureComponent<Props> {
                   } ${globalStyles.authBtnMargin}`}
                 />
               </form>
-              <NavLink
-                activeClassName="active"
-                className={globalStyles.forgetPass}
-                to={routerLinks.forgot}
-              >
-                Forgot your password?
-              </NavLink>
+              {sourceType === 'ONLINE' && (
+                <NavLink
+                  activeClassName="active"
+                  className={globalStyles.forgetPass}
+                  to={routerLinks.forgot}
+                >
+                  Forgot your password?
+                </NavLink>
+              )}
               <div className={globalStyles.windowLinksBlock}>
                 <div className={globalStyles.windowLinksBlockText}>
                   Don’t have an Account? <br />
