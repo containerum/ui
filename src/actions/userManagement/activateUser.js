@@ -62,7 +62,7 @@ export const fetchActivateUser = (
   );
   const { status, data } = response;
   switch (status) {
-    case 200: {
+    case 202: {
       dispatch(activateUserSuccess(login, status, 'put'));
       break;
     }

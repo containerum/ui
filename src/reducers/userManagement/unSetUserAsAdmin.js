@@ -3,15 +3,15 @@
 import _ from 'lodash/fp';
 
 import {
-  ACTIVATE_USER_INVALID,
-  ACTIVATE_USER_REQUESTING,
-  ACTIVATE_USER_SUCCESS,
-  ACTIVATE_USER_FAILURE
-} from '../../constants/userManagement/activateUser';
+  UNSET_USER_AS_ADMIN_INVALID,
+  UNSET_USER_AS_ADMIN_REQUESTING,
+  UNSET_USER_AS_ADMIN_SUCCESS,
+  UNSET_USER_AS_ADMIN_FAILURE
+} from '../../constants/userManagement/unSetUserAsAdmin';
 import type { Action } from '../../types';
 
 const initialState = {
-  readyStatus: ACTIVATE_USER_INVALID,
+  readyStatus: UNSET_USER_AS_ADMIN_INVALID,
   isFetching: false,
   login: null,
   status: null,
@@ -21,27 +21,27 @@ const initialState = {
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
-    case ACTIVATE_USER_REQUESTING:
+    case UNSET_USER_AS_ADMIN_REQUESTING:
       return _.assign(state, {
-        readyStatus: ACTIVATE_USER_REQUESTING,
+        readyStatus: UNSET_USER_AS_ADMIN_REQUESTING,
         isFetching: action.isFetching,
         login: null,
         status: null,
         method: null,
         err: null
       });
-    case ACTIVATE_USER_SUCCESS:
+    case UNSET_USER_AS_ADMIN_SUCCESS:
       return _.assign(state, {
-        readyStatus: ACTIVATE_USER_SUCCESS,
+        readyStatus: UNSET_USER_AS_ADMIN_SUCCESS,
         isFetching: action.isFetching,
         login: action.login,
         status: action.status,
         method: action.method,
         err: null
       });
-    case ACTIVATE_USER_FAILURE:
+    case UNSET_USER_AS_ADMIN_FAILURE:
       return _.assign(state, {
-        readyStatus: ACTIVATE_USER_FAILURE,
+        readyStatus: UNSET_USER_AS_ADMIN_FAILURE,
         isFetching: action.isFetching,
         login: null,
         status: action.status,

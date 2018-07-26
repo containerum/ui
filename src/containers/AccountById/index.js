@@ -9,23 +9,36 @@ import classNames from 'classnames/bind';
 import cookie from 'react-cookies';
 
 import { routerLinks } from '../../config';
+import * as actionGetUserProfileByEmail from '../../actions/profileActions/getUserProfileByEmail';
+import * as actionSetUserAsAdmin from '../../actions/userManagement/setUserAsAdmin';
+import * as actionUnSetUserAsAdmin from '../../actions/userManagement/unSetUserAsAdmin';
+import * as actionResetPasswordOfUser from '../../actions/userManagement/resetPasswordOfUser';
 import {
-  GET_PROFILE_INVALID,
-  GET_PROFILE_REQUESTING,
-  GET_PROFILE_FAILURE
-} from '../../constants/profileConstants/getProfile';
-import type { ReduxState } from '../../types';
+  GET_USER_PROFILE_BY_EMAIL_INVALID,
+  GET_USER_PROFILE_BY_EMAIL_REQUESTING,
+  GET_USER_PROFILE_BY_EMAIL_FAILURE,
+  GET_USER_PROFILE_BY_EMAIL_SUCCESS
+} from '../../constants/profileConstants/getUserProfileByEmail';
+import type { Dispatch, ReduxState } from '../../types';
 import ProfileInfo from '../../components/ProfileInfo';
 import ProfileSidebar from '../../components/ProfileSidebar';
 import DeleteAccountInfo from '../Account/DeleteAccount';
 import globalStyles from '../../theme/global.scss';
 import './Account.css';
 import styles from './index.scss';
+import { RESET_PASSWORD_OF_USER_SUCCESS } from '../../constants/userManagement/resetPasswordOfUser';
 
 type Props = {
   match: Object,
   history: Object,
-  getProfileReducer: Object
+  getUserProfileByEmailReducer: Object,
+  unSetUserAsAdminReducer: Object,
+  setUserAsAdminReducer: Object,
+  resetPasswordOfUserReducer: Object,
+  fetchGetUserProfileByEmailIfNeeded: (login: string) => void,
+  fetchSetUserAsAdminIfNeeded: (login: string) => void,
+  fetchUnSetUserAsAdminIfNeeded: (login: string) => void,
+  fetchResetPasswordOfUserIfNeeded: (login: string) => void
 };
 
 const globalClass = classNames.bind(globalStyles);
@@ -36,22 +49,88 @@ const containerClassNameSidebar = globalClass(
 );
 
 export class AccountById extends PureComponent<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isChecked: false
+    };
+  }
   componentWillMount() {
     const accessToken = cookie.load('accessToken');
     if (!accessToken) {
       this.props.history.push(routerLinks.login);
     }
   }
+  componentDidMount() {
+    const { match, fetchGetUserProfileByEmailIfNeeded } = this.props;
+    fetchGetUserProfileByEmailIfNeeded(match.params.idUser);
+  }
+  componentWillUpdate(nextProps) {
+    if (
+      this.props.getUserProfileByEmailReducer.readyStatus !==
+        nextProps.getUserProfileByEmailReducer.readyStatus &&
+      nextProps.getUserProfileByEmailReducer.readyStatus ===
+        GET_USER_PROFILE_BY_EMAIL_SUCCESS
+    ) {
+      if (nextProps.getUserProfileByEmailReducer.data.role === 'admin') {
+        this.setState({
+          ...this.state,
+          isChecked: true
+        });
+      }
+    }
+    if (
+      this.props.resetPasswordOfUserReducer.readyStatus !==
+        nextProps.resetPasswordOfUserReducer.readyStatus &&
+      nextProps.resetPasswordOfUserReducer.readyStatus ===
+        RESET_PASSWORD_OF_USER_SUCCESS
+    ) {
+      // console.log(nextProps.resetPasswordOfUserReducer);
+    }
+  }
+
+  handleChangeCheckBox = () => {
+    const {
+      match,
+      fetchSetUserAsAdminIfNeeded,
+      fetchUnSetUserAsAdminIfNeeded
+    } = this.props;
+    this.setState(
+      {
+        ...this.state,
+        isChecked: !this.state.isChecked
+      },
+      () => {
+        if (this.state.isChecked) {
+          fetchSetUserAsAdminIfNeeded(match.params.idUser);
+        } else {
+          fetchUnSetUserAsAdminIfNeeded(match.params.idUser);
+        }
+      }
+    );
+  };
+  handleClickResetPassword = () => {
+    const { match, fetchResetPasswordOfUserIfNeeded } = this.props;
+    fetchResetPasswordOfUserIfNeeded(match.params.idUser);
+  };
+
   renderProfileInfo = () => {
-    const { match, getProfileReducer } = this.props;
+    const {
+      match,
+      getUserProfileByEmailReducer,
+      unSetUserAsAdminReducer,
+      setUserAsAdminReducer
+    } = this.props;
     const containerClassName = globalClass(
       'contentBlockContainer',
       'containerFluid'
     );
     if (
-      !getProfileReducer.readyStatus ||
-      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
-      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
+      !getUserProfileByEmailReducer.readyStatus ||
+      getUserProfileByEmailReducer.readyStatus ===
+        GET_USER_PROFILE_BY_EMAIL_INVALID ||
+      getUserProfileByEmailReducer.readyStatus ===
+        GET_USER_PROFILE_BY_EMAIL_REQUESTING
     ) {
       return (
         <img
@@ -62,23 +141,41 @@ export class AccountById extends PureComponent<Props> {
       );
     }
 
-    if (getProfileReducer.readyStatus === GET_PROFILE_FAILURE) {
+    if (
+      getUserProfileByEmailReducer.readyStatus ===
+      GET_USER_PROFILE_BY_EMAIL_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Account!</p>;
     }
 
+    const { data } = getUserProfileByEmailReducer;
+    const { first_name: firstName } = data.data || { first_name: null };
+    const { is_active: isActive } = data;
+    const isFetchingAdmin =
+      setUserAsAdminReducer.isFetching || unSetUserAsAdminReducer.isFetching;
     return (
       <div className={`${containerClassName} container`}>
-        <ProfileInfo login={match.params.idUser} statusUser="inactive" />
+        <ProfileInfo
+          login={match.params.idUser}
+          firstName={firstName}
+          name={match.params.idUser}
+          statusUser={isActive ? 'active' : 'inactive'}
+          isChecked={this.state.isChecked}
+          isDisabledCheckBox={isFetchingAdmin}
+          handleChangeCheckBox={this.handleChangeCheckBox}
+        />
         <DeleteAccountInfo login={match.params.idUser} type="local" />
       </div>
     );
   };
   renderProfileSideBar = () => {
-    const { getProfileReducer } = this.props;
+    const { getUserProfileByEmailReducer } = this.props;
     if (
-      !getProfileReducer.readyStatus ||
-      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
-      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
+      !getUserProfileByEmailReducer.readyStatus ||
+      getUserProfileByEmailReducer.readyStatus ===
+        GET_USER_PROFILE_BY_EMAIL_INVALID ||
+      getUserProfileByEmailReducer.readyStatus ===
+        GET_USER_PROFILE_BY_EMAIL_REQUESTING
     ) {
       return (
         <div>
@@ -116,7 +213,10 @@ export class AccountById extends PureComponent<Props> {
       );
     }
 
-    if (getProfileReducer.readyStatus === GET_PROFILE_FAILURE) {
+    if (
+      getUserProfileByEmailReducer.readyStatus ===
+      GET_USER_PROFILE_BY_EMAIL_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Account!</p>;
     }
 
@@ -158,7 +258,31 @@ export class AccountById extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getProfileReducer }: ReduxState) => ({ getProfileReducer })
+  ({
+    getUserProfileByEmailReducer,
+    unSetUserAsAdminReducer,
+    setUserAsAdminReducer,
+    resetPasswordOfUserReducer
+  }: ReduxState) => ({
+    getUserProfileByEmailReducer,
+    unSetUserAsAdminReducer,
+    setUserAsAdminReducer,
+    resetPasswordOfUserReducer
+  }),
+  (dispatch: Dispatch) => ({
+    fetchGetUserProfileByEmailIfNeeded: (login: string) =>
+      dispatch(
+        actionGetUserProfileByEmail.fetchGetUserProfileByEmailIfNeeded(login)
+      ),
+    fetchSetUserAsAdminIfNeeded: (login: string) =>
+      dispatch(actionSetUserAsAdmin.fetchSetUserAsAdminIfNeeded(login)),
+    fetchUnSetUserAsAdminIfNeeded: (login: string) =>
+      dispatch(actionUnSetUserAsAdmin.fetchUnSetUserAsAdminIfNeeded(login)),
+    fetchResetPasswordOfUserIfNeeded: (login: string) =>
+      dispatch(
+        actionResetPasswordOfUser.fetchResetPasswordOfUserIfNeeded(login)
+      )
+  })
 );
 
 export default connector(AccountById);

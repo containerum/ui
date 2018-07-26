@@ -5,7 +5,7 @@ import _ from 'lodash/fp';
 import className from 'classnames/bind';
 
 import Paginator from '../Paginator';
-
+import { routerLinks } from '../../config';
 import globalStyles from '../../theme/global.scss';
 import billingStyles from '../../containers/Billing/index.scss';
 
@@ -66,6 +66,7 @@ const HistoryFunds = ({ operations, countPages, currentPage }: Props) => (
           <Paginator
             countPage={countPages > 25 ? 25 : countPages}
             currentPage={currentPage}
+            routeTo={routerLinks.billing}
           />
         ) : (
           ''

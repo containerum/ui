@@ -19,10 +19,20 @@ const formClassName = globalClass('formInputText', 'formControl');
 type Props = {
   firstName: string,
   login: string,
-  statusUser: string
+  statusUser: string,
+  isChecked: boolean,
+  isDisabledCheckBox: boolean,
+  handleChangeCheckBox: () => void
 };
 
-const ProfileInfo = ({ firstName, login, statusUser }: Props) => (
+const ProfileInfo = ({
+  firstName,
+  login,
+  statusUser,
+  isChecked,
+  isDisabledCheckBox,
+  handleChangeCheckBox
+}: Props) => (
   <div className={globalStyles.blockItem} id="profile">
     <div className={globalStyles.blockItemTitle}>Profile</div>
     <form>
@@ -99,7 +109,7 @@ const ProfileInfo = ({ firstName, login, statusUser }: Props) => (
                   className="btn btn-outline-primary"
                   style={{ marginLeft: 20 }}
                 >
-                  Active
+                  Activate
                 </button>
               </div>
             </div>
@@ -107,11 +117,13 @@ const ProfileInfo = ({ firstName, login, statusUser }: Props) => (
           <div className="col-md-7">
             <div className={`${globalStyles.formGroup} pt-0`}>
               <CheckBoxControl
-                id="ssl"
-                // value={isEnabledSSL}
+                id="admin"
+                value={isChecked}
+                checked={isChecked}
+                disabled={isDisabledCheckBox}
                 labelText="Enable Admin Status"
                 labelClassName={globalStyles.labelCustom}
-                // handleChangeCheckBox={handleChangeCheckBox}
+                handleChangeCheckBox={handleChangeCheckBox}
               />
               <div style={{ fontSize: 12, color: '#a7a7a7' }}>
                 Admin status allows user to manage resource and other users

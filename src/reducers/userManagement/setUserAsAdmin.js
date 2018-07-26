@@ -3,17 +3,17 @@
 import _ from 'lodash/fp';
 
 import {
-  DEACTIVATE_USER_INVALID,
-  DEACTIVATE_USER_REQUESTING,
-  DEACTIVATE_USER_SUCCESS,
-  DEACTIVATE_USER_FAILURE
-} from '../../constants/userManagement/deactivateUser';
+  SET_USER_AS_ADMIN_INVALID,
+  SET_USER_AS_ADMIN_REQUESTING,
+  SET_USER_AS_ADMIN_SUCCESS,
+  SET_USER_AS_ADMIN_FAILURE
+} from '../../constants/userManagement/setUserAsAdmin';
 import type { Action } from '../../types';
 
 const initialState = {
-  readyStatus: DEACTIVATE_USER_INVALID,
+  readyStatus: SET_USER_AS_ADMIN_INVALID,
   isFetching: false,
-  data: null,
+  login: null,
   status: null,
   method: null,
   err: null
@@ -21,29 +21,29 @@ const initialState = {
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
-    case DEACTIVATE_USER_REQUESTING:
+    case SET_USER_AS_ADMIN_REQUESTING:
       return _.assign(state, {
-        readyStatus: DEACTIVATE_USER_REQUESTING,
+        readyStatus: SET_USER_AS_ADMIN_REQUESTING,
         isFetching: action.isFetching,
-        data: null,
+        login: null,
         status: null,
         method: null,
         err: null
       });
-    case DEACTIVATE_USER_SUCCESS:
+    case SET_USER_AS_ADMIN_SUCCESS:
       return _.assign(state, {
-        readyStatus: DEACTIVATE_USER_SUCCESS,
+        readyStatus: SET_USER_AS_ADMIN_SUCCESS,
         isFetching: action.isFetching,
-        data: action.data,
+        login: action.login,
         status: action.status,
         method: action.method,
         err: null
       });
-    case DEACTIVATE_USER_FAILURE:
+    case SET_USER_AS_ADMIN_FAILURE:
       return _.assign(state, {
-        readyStatus: DEACTIVATE_USER_FAILURE,
+        readyStatus: SET_USER_AS_ADMIN_FAILURE,
         isFetching: action.isFetching,
-        data: null,
+        login: null,
         status: action.status,
         method: null,
         err: action.err
