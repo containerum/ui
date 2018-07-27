@@ -6,23 +6,27 @@ import { connect } from 'react-redux';
 // import { push } from 'react-router-redux';
 import { NavLink } from 'react-router-dom';
 import Helmet from 'react-helmet';
+import queryString from 'query-string';
 
 import { routerLinks, sourceType } from '../../config';
+import { SIGNUP_SUCCESS } from '../../constants/signUpConstants';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
 import logoContainerum from '../../images/logo_containerum_exon_lv.svg';
 
 type Props = {
+  location: Object,
   signUpReducer: Object,
   history: Object
 };
 
 class ConfirmEmail extends PureComponent<Props> {
   render() {
-    const { signUpReducer, history } = this.props;
-    if (signUpReducer.readyStatus !== 'SIGNUP_SUCCESS') {
+    const { history, signUpReducer } = this.props;
+    if (signUpReducer.readyStatus !== SIGNUP_SUCCESS) {
       history.push(routerLinks.signUp);
     }
+    const { smtp } = queryString.parse(this.props.location.search);
     return (
       <div>
         <Helmet title="Confirm Email" />
@@ -39,8 +43,14 @@ class ConfirmEmail extends PureComponent<Props> {
                   textTransform: 'initial'
                 }}
               >
-                <b>Confirm Email:</b> <br />
-                {signUpReducer.email}
+                {smtp ? (
+                  <span>Contact the administrator</span>
+                ) : (
+                  <span>
+                    <b>Confirm Email:</b> <br />
+                    {signUpReducer.email}
+                  </span>
+                )}
               </div>
               <div
                 className={globalStyles.formHeader}
@@ -51,8 +61,14 @@ class ConfirmEmail extends PureComponent<Props> {
                   color: '#777'
                 }}
               >
-                Confirm your email by clicking the verification link we`ve just
-                sent to your inbox.
+                {smtp ? (
+                  <span>Contact the administrator to obtain permission</span>
+                ) : (
+                  <span>
+                    Confirm your email by clicking the verification link we`ve
+                    just sent to your inbox.
+                  </span>
+                )}
               </div>
               <div
                 className={globalStyles.windowLinksBlock}

@@ -71,11 +71,18 @@ export const fetchSignUp = (
       //   });
       // }
       dispatch(signUpSuccess(data));
-      dispatch(push(routerLinks.confirmEmail));
+      dispatch(push(routerLinks.confirmEmailLink));
+      break;
+    }
+    case 503: {
+      if (data.message === 'Service not available') {
+        dispatch(signUpSuccess(data));
+        dispatch(push(routerLinks.confirmEmailLink('notAvailable')));
+      } else dispatch(signUpFailure(data.message));
       break;
     }
     default: {
-      dispatch(signUpFailure(response.data.message));
+      dispatch(signUpFailure(data.message));
     }
   }
 };

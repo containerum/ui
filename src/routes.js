@@ -475,18 +475,18 @@ export default [
     component: SignUp
   },
   {
-    path: routerLinks.recoveryPassword,
-    component: RecoveryPassword
-  },
-  {
     path: routerLinks.confirmEmail,
     component: ConfirmEmail
   },
-  {
+  isOnline && {
+    path: routerLinks.recoveryPassword,
+    component: RecoveryPassword
+  },
+  isOnline && {
     path: routerLinks.forgot,
     component: Forgot
   },
-  {
+  isOnline && {
     path: routerLinks.checkEmail,
     component: CheckEmail
   },

@@ -44,6 +44,8 @@ module.exports = {
     configmap: '/configmap',
     signUp: '/signUp',
     confirmEmail: '/confirmEmail',
+    confirmEmailLink: (query: string) =>
+      `/confirmEmail${query ? `?smtp=${query}` : ''}`,
     forgot: '/forgot',
     checkEmail: '/checkEmail',
     recoveryPassword: '/recoveryPassword',
