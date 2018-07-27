@@ -13,6 +13,7 @@ import type { Action } from '../../types';
 const initialState = {
   readyStatus: RESET_PASSWORD_OF_USER_INVALID,
   isFetching: false,
+  data: null,
   login: null,
   status: null,
   method: null,
@@ -25,6 +26,7 @@ export default (state = initialState, action: Action) => {
       return _.assign(state, {
         readyStatus: RESET_PASSWORD_OF_USER_REQUESTING,
         isFetching: action.isFetching,
+        data: null,
         login: null,
         status: null,
         method: null,
@@ -34,6 +36,7 @@ export default (state = initialState, action: Action) => {
       return _.assign(state, {
         readyStatus: RESET_PASSWORD_OF_USER_SUCCESS,
         isFetching: action.isFetching,
+        data: action.data,
         login: action.login,
         status: action.status,
         method: action.method,
@@ -43,6 +46,7 @@ export default (state = initialState, action: Action) => {
       return _.assign(state, {
         readyStatus: RESET_PASSWORD_OF_USER_FAILURE,
         isFetching: action.isFetching,
+        data: null,
         login: null,
         status: action.status,
         method: null,

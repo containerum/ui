@@ -17,7 +17,8 @@ type Props = {
   login: string,
   type: string,
   deleteAccountReducer: Object,
-  fetchDeleteAccountIfNeeded: () => void
+  fetchDeleteAccountIfNeeded: () => void,
+  handleOnDeleteProfile: (login: string) => void
 };
 
 export class DeleteAccount extends PureComponent<Props> {
@@ -29,7 +30,17 @@ export class DeleteAccount extends PureComponent<Props> {
     };
   }
   onHandleDelete = () => {
-    this.props.fetchDeleteAccountIfNeeded();
+    const {
+      type,
+      login,
+      handleOnDeleteProfile,
+      fetchDeleteAccountIfNeeded
+    } = this.props;
+    if (type === 'local') {
+      handleOnDeleteProfile(login);
+    } else {
+      fetchDeleteAccountIfNeeded();
+    }
   };
   handleClickDeleteAccount = () => {
     this.setState({

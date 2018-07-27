@@ -13,6 +13,8 @@ import * as actionGetUserProfileByEmail from '../../actions/profileActions/getUs
 import * as actionSetUserAsAdmin from '../../actions/userManagement/setUserAsAdmin';
 import * as actionUnSetUserAsAdmin from '../../actions/userManagement/unSetUserAsAdmin';
 import * as actionResetPasswordOfUser from '../../actions/userManagement/resetPasswordOfUser';
+import * as actionActivateUser from '../../actions/userManagement/activateUser';
+import * as actionAdminDeleteUser from '../../actions/globalMembership/adminDeleteUser';
 import {
   GET_USER_PROFILE_BY_EMAIL_INVALID,
   GET_USER_PROFILE_BY_EMAIL_REQUESTING,
@@ -22,11 +24,14 @@ import {
 import type { Dispatch, ReduxState } from '../../types';
 import ProfileInfo from '../../components/ProfileInfo';
 import ProfileSidebar from '../../components/ProfileSidebar';
+import Notification from '../Notification';
+import ResetPasswordModal from '../../components/CustomerModal/ResetPasswordModal';
 import DeleteAccountInfo from '../Account/DeleteAccount';
 import globalStyles from '../../theme/global.scss';
-import './Account.css';
 import styles from './index.scss';
 import { RESET_PASSWORD_OF_USER_SUCCESS } from '../../constants/userManagement/resetPasswordOfUser';
+import { ACTIVATE_USER_SUCCESS } from '../../constants/userManagement/activateUser';
+import { ADMIN_DELETE_USER_SUCCESS } from '../../constants/globalMembershipConstants/adminDeleteUser';
 
 type Props = {
   match: Object,
@@ -35,10 +40,14 @@ type Props = {
   unSetUserAsAdminReducer: Object,
   setUserAsAdminReducer: Object,
   resetPasswordOfUserReducer: Object,
+  activateUserReducer: Object,
+  adminDeleteUserReducer: Object,
   fetchGetUserProfileByEmailIfNeeded: (login: string) => void,
   fetchSetUserAsAdminIfNeeded: (login: string) => void,
   fetchUnSetUserAsAdminIfNeeded: (login: string) => void,
-  fetchResetPasswordOfUserIfNeeded: (login: string) => void
+  fetchResetPasswordOfUserIfNeeded: (login: string) => void,
+  fetchActivateUserIfNeeded: (login: string) => void,
+  fetchAdminDeleteUserIfNeeded: (login: string) => void
 };
 
 const globalClass = classNames.bind(globalStyles);
@@ -52,7 +61,10 @@ export class AccountById extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: false
+      isChecked: false,
+      isOpened: false,
+      passwordResetView: false,
+      newPassword: null
     };
   }
   componentWillMount() {
@@ -85,7 +97,34 @@ export class AccountById extends PureComponent<Props> {
       nextProps.resetPasswordOfUserReducer.readyStatus ===
         RESET_PASSWORD_OF_USER_SUCCESS
     ) {
-      // console.log(nextProps.resetPasswordOfUserReducer);
+      this.setState({
+        ...this.state,
+        passwordResetView: true,
+        newPassword: nextProps.resetPasswordOfUserReducer.data.password
+      });
+    }
+    if (
+      this.props.activateUserReducer.readyStatus !==
+        nextProps.activateUserReducer.readyStatus &&
+      nextProps.activateUserReducer.readyStatus === ACTIVATE_USER_SUCCESS
+    ) {
+      const { match, fetchGetUserProfileByEmailIfNeeded } = this.props;
+      fetchGetUserProfileByEmailIfNeeded(match.params.idUser);
+    }
+    if (
+      this.props.activateUserReducer.readyStatus !==
+        nextProps.activateUserReducer.readyStatus &&
+      nextProps.activateUserReducer.readyStatus === ACTIVATE_USER_SUCCESS
+    ) {
+      const { match, fetchGetUserProfileByEmailIfNeeded } = this.props;
+      fetchGetUserProfileByEmailIfNeeded(match.params.idUser);
+    }
+    if (
+      this.props.adminDeleteUserReducer.readyStatus !==
+        nextProps.adminDeleteUserReducer.readyStatus &&
+      nextProps.adminDeleteUserReducer.readyStatus === ADMIN_DELETE_USER_SUCCESS
+    ) {
+      this.props.history.push(routerLinks.getGlobalMembership);
     }
   }
 
@@ -112,6 +151,27 @@ export class AccountById extends PureComponent<Props> {
   handleClickResetPassword = () => {
     const { match, fetchResetPasswordOfUserIfNeeded } = this.props;
     fetchResetPasswordOfUserIfNeeded(match.params.idUser);
+  };
+  handleClickCopyPassword = () => {
+    const newPassword = document.getElementById('newPassword');
+    newPassword.select();
+    document.execCommand('copy');
+  };
+  handleOpenCloseModal = () => {
+    this.setState({
+      ...this.state,
+      isOpened: !this.state.isOpened,
+      passwordResetView: false,
+      newPassword: null
+    });
+  };
+  handleDeleteUser = () => {
+    const { match, fetchAdminDeleteUserIfNeeded } = this.props;
+    fetchAdminDeleteUserIfNeeded(match.params.idUser);
+  };
+  handleClickActivateUser = () => {
+    const { match, fetchActivateUserIfNeeded } = this.props;
+    fetchActivateUserIfNeeded(match.params.idUser);
   };
 
   renderProfileInfo = () => {
@@ -163,8 +223,14 @@ export class AccountById extends PureComponent<Props> {
           isChecked={this.state.isChecked}
           isDisabledCheckBox={isFetchingAdmin}
           handleChangeCheckBox={this.handleChangeCheckBox}
+          handleOpenCloseModal={this.handleOpenCloseModal}
+          handleClickActivateUser={this.handleClickActivateUser}
         />
-        <DeleteAccountInfo login={match.params.idUser} type="local" />
+        <DeleteAccountInfo
+          login={match.params.idUser}
+          type="local"
+          handleOnDeleteProfile={this.handleDeleteUser}
+        />
       </div>
     );
   };
@@ -224,9 +290,45 @@ export class AccountById extends PureComponent<Props> {
   };
 
   render() {
+    const {
+      match,
+      resetPasswordOfUserReducer,
+      adminDeleteUserReducer
+    } = this.props;
+    const {
+      statusReset,
+      loginReset,
+      errReset,
+      methodReset
+    } = resetPasswordOfUserReducer;
+    const {
+      status: statusDelete,
+      idName: idNameDelete,
+      err: errDelete
+    } = adminDeleteUserReducer;
     return (
       <div>
         <Helmet title="Account" />
+        <Notification
+          status={statusReset}
+          name={loginReset}
+          errorMessage={errReset}
+          method={methodReset}
+        />
+        <Notification
+          status={statusDelete}
+          name={idNameDelete}
+          errorMessage={errDelete}
+        />
+        <ResetPasswordModal
+          isUser={match.params.idUser}
+          isOpened={this.state.isOpened}
+          passwordResetView={this.state.passwordResetView}
+          newPassword={this.state.newPassword}
+          handleOpenCloseModal={this.handleOpenCloseModal}
+          onHandleResetPassword={() => this.handleClickResetPassword()}
+          handleClickCopyPassword={() => this.handleClickCopyPassword()}
+        />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">
@@ -262,12 +364,16 @@ const connector: Connector<{}, Props> = connect(
     getUserProfileByEmailReducer,
     unSetUserAsAdminReducer,
     setUserAsAdminReducer,
-    resetPasswordOfUserReducer
+    resetPasswordOfUserReducer,
+    activateUserReducer,
+    adminDeleteUserReducer
   }: ReduxState) => ({
     getUserProfileByEmailReducer,
     unSetUserAsAdminReducer,
     setUserAsAdminReducer,
-    resetPasswordOfUserReducer
+    resetPasswordOfUserReducer,
+    activateUserReducer,
+    adminDeleteUserReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetUserProfileByEmailIfNeeded: (login: string) =>
@@ -281,7 +387,11 @@ const connector: Connector<{}, Props> = connect(
     fetchResetPasswordOfUserIfNeeded: (login: string) =>
       dispatch(
         actionResetPasswordOfUser.fetchResetPasswordOfUserIfNeeded(login)
-      )
+      ),
+    fetchActivateUserIfNeeded: (login: string) =>
+      dispatch(actionActivateUser.fetchActivateUserIfNeeded(login)),
+    fetchAdminDeleteUserIfNeeded: (login: string) =>
+      dispatch(actionAdminDeleteUser.fetchAdminDeleteUserIfNeeded(login))
   })
 );
 

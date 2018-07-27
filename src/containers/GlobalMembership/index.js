@@ -64,7 +64,7 @@ type Props = {
   fetchGetUserListIfNeeded: (page: string) => void,
   fetchAddGlobalUserIfNeeded: (login: string) => void,
   fetchActivateUserIfNeeded: (login: string) => void,
-  fetchAdminDeleteUserIfNeeded: (username: string) => void
+  fetchAdminDeleteUserIfNeeded: (login: string) => void
 };
 
 class GlobalMembership extends PureComponent<Props> {
@@ -415,12 +415,9 @@ const connector: Connector<{}, Props> = connect(
       dispatch(actionAddGlobalUserIfNeeded.fetchAddGlobalUserIfNeeded(login)),
     fetchActivateUserIfNeeded: (login: string) =>
       dispatch(actionActivateUser.fetchActivateUserIfNeeded(login)),
-    fetchAdminDeleteUserIfNeeded: (idName: string, username: string) =>
+    fetchAdminDeleteUserIfNeeded: (login: string) =>
       dispatch(
-        actionAdminDeleteUserIfNeeded.fetchAdminDeleteUserIfNeeded(
-          idName,
-          username
-        )
+        actionAdminDeleteUserIfNeeded.fetchAdminDeleteUserIfNeeded(login)
       )
   })
 );

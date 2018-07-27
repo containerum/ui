@@ -19,9 +19,10 @@ const resetPasswordOfUserRequest = () => ({
   isFetching: true
 });
 
-const resetPasswordOfUserSuccess = (login, status, method) => ({
+const resetPasswordOfUserSuccess = (data, status, method, login) => ({
   type: RESET_PASSWORD_OF_USER_SUCCESS,
   isFetching: false,
+  data,
   login,
   status,
   method
@@ -63,7 +64,7 @@ export const fetchResetPasswordOfUser = (
   const { status, data } = response;
   switch (status) {
     case 202: {
-      dispatch(resetPasswordOfUserSuccess(login, status, 'put'));
+      dispatch(resetPasswordOfUserSuccess(data, status, 'put', login));
       break;
     }
     case 400: {

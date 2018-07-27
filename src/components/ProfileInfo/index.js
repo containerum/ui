@@ -22,7 +22,9 @@ type Props = {
   statusUser: string,
   isChecked: boolean,
   isDisabledCheckBox: boolean,
-  handleChangeCheckBox: () => void
+  handleChangeCheckBox: () => void,
+  handleOpenCloseModal: () => void,
+  handleClickActivateUser: () => void
 };
 
 const ProfileInfo = ({
@@ -31,7 +33,9 @@ const ProfileInfo = ({
   statusUser,
   isChecked,
   isDisabledCheckBox,
-  handleChangeCheckBox
+  handleChangeCheckBox,
+  handleOpenCloseModal,
+  handleClickActivateUser
 }: Props) => (
   <div className={globalStyles.blockItem} id="profile">
     <div className={globalStyles.blockItemTitle}>Profile</div>
@@ -101,16 +105,24 @@ const ProfileInfo = ({
           <div className="col-md-5">
             <div className={`${globalStyles.formGroup} pt-0`}>
               <div style={{ float: 'right' }}>
-                <button type="button" className="btn btn-outline-primary">
-                  Reset Password
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-primary"
-                  style={{ marginLeft: 20 }}
-                >
-                  Activate
-                </button>
+                {statusUser === 'active' ? (
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={handleOpenCloseModal}
+                  >
+                    Reset Password
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    style={{ marginLeft: 20 }}
+                    onClick={handleClickActivateUser}
+                  >
+                    Activate
+                  </button>
+                )}
               </div>
             </div>
           </div>
