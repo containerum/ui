@@ -14,6 +14,7 @@ const api = `${apiProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
 const apiWS = `${apiWSProtocol}://${apiHost}${apiPort ? `:${apiPort}` : ''}`;
 const recaptcha = process.env.RECAPTCHA || null;
 const defaultCountry = process.env.COUNTRY || 'US';
+const latestRelease = process.env.LATEST_RELEASE || '';
 const pathToPublic = path.join(process.cwd(), './public');
 const pathToJS = `${pathToPublic}/assets/main.*.js`;
 
@@ -48,6 +49,13 @@ glob(pathToJS, {}, (err, files) => {
   replace({
     regex: '{{ DEFAULT_COUNTRY }}',
     replacement: defaultCountry,
+    paths: files,
+    recursive: true,
+    silent: true
+  });
+  replace({
+    regex: '{{ LATEST_RELEASE }}',
+    replacement: latestRelease,
     paths: files,
     recursive: true,
     silent: true

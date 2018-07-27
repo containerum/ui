@@ -8,12 +8,15 @@ import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
 import cookie from 'react-cookies';
+import * as Recharts from 'recharts';
 
 import { routerLinks, sourceType } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
 import * as actionGetResources from '../../actions/statisticsActions/getResources';
+import * as actionGetCpuStatistic from '../../actions/statisticsActions/getCpuStatistic';
+import * as actionGetMemoryStatistic from '../../actions/statisticsActions/getMemoryStatistic';
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
@@ -55,6 +58,20 @@ import {
   GET_PROFILE_REQUESTING
 } from '../../constants/profileConstants/getProfile';
 import * as actionGetConfigMaps from '../../actions/configMapActions/getConfigMaps';
+import {
+  GET_CPU_STATISTIC_FAILURE,
+  GET_CPU_STATISTIC_INVALID,
+  GET_CPU_STATISTIC_REQUESTING,
+  GET_CPU_STATISTIC_SUCCESS
+} from '../../constants/statisticsConstants/getCpuStatistic';
+import {
+  GET_MEMORY_STATISTIC_FAILURE,
+  GET_MEMORY_STATISTIC_INVALID,
+  GET_MEMORY_STATISTIC_REQUESTING,
+  GET_MEMORY_STATISTIC_SUCCESS
+} from '../../constants/statisticsConstants/getMemoryStatistic';
+
+const { PieChart, Pie, Cell } = Recharts;
 
 type Props = {
   location: Object,
@@ -65,10 +82,14 @@ type Props = {
   getSolutionsReducer: Object,
   getResourcesReducer: Object,
   getConfigMapsReducer: Object,
-  fetchGetConfigMapsIfNeeded: Object,
+  getCpuStatisticReducer: Object,
+  getMemoryStatisticReducer: Object,
+  fetchGetConfigMapsIfNeeded: () => void,
   fetchGetNamespacesIfNeeded: () => void,
   fetchGetSolutionsIfNeeded: () => void,
-  fetchGetResourcesIfNeeded: () => void
+  fetchGetResourcesIfNeeded: () => void,
+  fetchGetCpuStatisticIfNeeded: () => void,
+  fetchGetMemoryStatisticIfNeeded: () => void
 };
 
 const isOnline = sourceType === 'ONLINE';
@@ -83,7 +104,10 @@ export class Dashboard extends PureComponent<Props> {
       isOpenedRunSolution: false,
       isOpenedHideWidget: false,
       isViewWidget: true,
-      currentSolutionTemplate: null
+      currentSolutionTemplate: null,
+      dataOfCpu: [{ name: 'Group A', value: 0 }],
+      dataOfMemory: [{ name: 'Group B', value: 0 }],
+      data3: [{ name: 'Group C', value: 0 }]
     };
   }
   componentWillMount() {
@@ -96,11 +120,15 @@ export class Dashboard extends PureComponent<Props> {
     const {
       fetchGetSolutionsIfNeeded,
       fetchGetResourcesIfNeeded,
-      fetchGetConfigMapsIfNeeded
+      fetchGetConfigMapsIfNeeded,
+      fetchGetCpuStatisticIfNeeded,
+      fetchGetMemoryStatisticIfNeeded
     } = this.props;
     isOnline && fetchGetSolutionsIfNeeded();
     fetchGetResourcesIfNeeded();
     fetchGetConfigMapsIfNeeded();
+    fetchGetCpuStatisticIfNeeded();
+    fetchGetMemoryStatisticIfNeeded();
     const widget = cookie.load('widget');
     if (widget === 'hide') {
       this.setState({
@@ -118,6 +146,39 @@ export class Dashboard extends PureComponent<Props> {
       this.props.fetchGetNamespacesIfNeeded(
         nextProps.getProfileReducer.data.role
       );
+    }
+    if (
+      this.props.getCpuStatisticReducer.readyStatus !==
+        nextProps.getCpuStatisticReducer.readyStatus &&
+      nextProps.getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        dataOfCpu: [
+          { name: 'Group A', value: nextProps.getCpuStatisticReducer.data.cpu }
+        ]
+      });
+    }
+    if (
+      this.props.getMemoryStatisticReducer.readyStatus !==
+        nextProps.getMemoryStatisticReducer.readyStatus &&
+      nextProps.getMemoryStatisticReducer.readyStatus ===
+        GET_MEMORY_STATISTIC_SUCCESS
+    ) {
+      const valueOfMemory =
+        nextProps.getMemoryStatisticReducer.data.cpu *
+        1024 /
+        (32768 * 1024) *
+        10;
+      this.setState({
+        ...this.state,
+        dataOfMemory: [
+          {
+            name: 'Group A',
+            value: valueOfMemory + 10
+          }
+        ]
+      });
     }
     if (nextState.isOpenedSideBarGetStarted && typeof document === 'object') {
       const getHtml = document.querySelector('html');
@@ -187,6 +248,35 @@ export class Dashboard extends PureComponent<Props> {
       isViewWidget: false
     });
   };
+  simplePieChart = (dataType, angel) => (
+    <PieChart width={160} height={160} onMouseEnter={this.onPieEnter}>
+      <Pie
+        data={dataType}
+        cx={75}
+        cy={75}
+        labelLine={false}
+        label={this.renderCustomizedLabel}
+        startAngle={angel}
+        endAngle={0}
+        outerRadius={80}
+        innerRadius={60}
+        fill="#8884d8"
+      >
+        <Cell fill="#29abe2" />
+      </Pie>
+    </PieChart>
+  );
+  renderCustomizedLabel = percentages => (
+    <text
+      x="51%"
+      y="51%"
+      alignmentBaseline="middle"
+      textAnchor="middle"
+      fontSize="40"
+    >
+      {`${percentages.payload.value.toFixed(0)}%`}
+    </text>
+  );
 
   renderNamespacesList = () => {
     const { getNamespacesReducer, getProfileReducer, history } = this.props;
@@ -462,6 +552,93 @@ export class Dashboard extends PureComponent<Props> {
       />
     );
   };
+  renderStatistics = () => {
+    const { getCpuStatisticReducer, getMemoryStatisticReducer } = this.props;
+    if (
+      !getCpuStatisticReducer.readyStatus ||
+      getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_INVALID ||
+      getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_REQUESTING ||
+      !getMemoryStatisticReducer.readyStatus ||
+      getMemoryStatisticReducer.readyStatus === GET_MEMORY_STATISTIC_INVALID ||
+      getMemoryStatisticReducer.readyStatus === GET_MEMORY_STATISTIC_REQUESTING
+    ) {
+      return (
+        <div className="col-md-3 pr-0">
+          <div
+            className="block-container"
+            style={{
+              padding: 23
+            }}
+          >
+            <div
+              style={{
+                height: 298,
+                width: '100%',
+                borderRadius: '2px',
+                backgroundColor: 'rgb(246, 246, 246)'
+              }}
+            />
+          </div>
+        </div>
+      );
+    }
+    if (
+      getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_FAILURE ||
+      getMemoryStatisticReducer.readyStatus === GET_MEMORY_STATISTIC_FAILURE
+    ) {
+      return <p>Oops, Failed to load data of cpu statistic!</p>;
+    }
+
+    const cpuRadius = 3.6 * getCpuStatisticReducer.data.cpu;
+    const memoryRadius =
+      3.6 * (getMemoryStatisticReducer.data.cpu * 1024 / (32768 * 1024) * 10);
+    return (
+      <div>
+        <div
+          style={{
+            textAlign: 'center',
+            width: '33%',
+            display: 'inline-block'
+          }}
+        >
+          <div className="nav-item">
+            <div
+              className={`${styles.customSolutionNavLink} nav-link`}
+              style={{
+                width: 60,
+                margin: '0 auto',
+                marginBottom: 30
+              }}
+            >
+              CPU
+            </div>
+          </div>
+          {this.simplePieChart(this.state.dataOfCpu, cpuRadius)}
+        </div>
+        <div
+          style={{
+            textAlign: 'center',
+            width: '33%',
+            display: 'inline-block'
+          }}
+        >
+          <div className="nav-item">
+            <div
+              className={`${styles.customSolutionNavLink} nav-link`}
+              style={{
+                width: 60,
+                margin: '0 auto',
+                marginBottom: 30
+              }}
+            >
+              Memory
+            </div>
+          </div>
+          {this.simplePieChart(this.state.dataOfMemory, memoryRadius)}
+        </div>
+      </div>
+    );
+  };
 
   render() {
     const blockContainer = dashboardClassName('blockContainer', 'blockH');
@@ -550,8 +727,51 @@ export class Dashboard extends PureComponent<Props> {
 
               {this.renderDashboardBlockTourAndNews()}
             </div>
+            {!isOnline && (
+              <div className="row">
+                <div className="col-md-12 pl-0 pr-0">
+                  <div className={blockContainerTabs}>
+                    <div className={styles.blockContainerTabsHeader}>
+                      Statistics
+                    </div>
+                    <ul
+                      className="nav nav-pills mb-3"
+                      id="pills-tab"
+                      role="tablist"
+                    >
+                      <li className="nav-item">
+                        <NavLink
+                          className={`${styles.customSolutionNavLink} nav-link`}
+                          id="first-tab"
+                          data-toggle="pill"
+                          to={routerLinks.dashboard}
+                          role="tab"
+                          aria-controls="pills-home"
+                          aria-selected="true"
+                        >
+                          All
+                        </NavLink>
+                      </li>
+                    </ul>
 
-            {sourceType === 'ONLINE' && (
+                    <div className="tab-content" id="pills-tabContent">
+                      <div
+                        className="tab-pane fade show active"
+                        id="first"
+                        role="tabpanel"
+                        aria-labelledby="first-tab"
+                      >
+                        <div style={{ margin: 40, textAlign: 'justify' }}>
+                          <div>{this.renderStatistics()}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {isOnline && (
               <div className="row">
                 <div className="col-md-12 pl-0 pr-0">
                   <div className={blockContainerTabs}>
@@ -606,14 +826,18 @@ const connector: Connector<{}, Props> = connect(
     getBalanceReducer,
     getSolutionsReducer,
     getResourcesReducer,
-    getConfigMapsReducer
+    getConfigMapsReducer,
+    getCpuStatisticReducer,
+    getMemoryStatisticReducer
   }: ReduxState) => ({
     getProfileReducer,
     getNamespacesReducer,
     getBalanceReducer,
     getSolutionsReducer,
     getResourcesReducer,
-    getConfigMapsReducer
+    getConfigMapsReducer,
+    getCpuStatisticReducer,
+    getMemoryStatisticReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: (role: string) =>
@@ -623,7 +847,11 @@ const connector: Connector<{}, Props> = connect(
     fetchGetResourcesIfNeeded: () =>
       dispatch(actionGetResources.fetchGetResourcesIfNeeded()),
     fetchGetConfigMapsIfNeeded: () =>
-      dispatch(actionGetConfigMaps.fetchGetConfigMapsIfNeeded())
+      dispatch(actionGetConfigMaps.fetchGetConfigMapsIfNeeded()),
+    fetchGetCpuStatisticIfNeeded: () =>
+      dispatch(actionGetCpuStatistic.fetchGetCpuStatisticIfNeeded()),
+    fetchGetMemoryStatisticIfNeeded: () =>
+      dispatch(actionGetMemoryStatistic.fetchGetMemoryStatisticIfNeeded())
   })
 );
 

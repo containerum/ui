@@ -95,6 +95,8 @@ import getUserProfileByEmailReducer from './profileReducers/getUserProfileByEmai
 import setUserAsAdminReducer from './userManagement/setUserAsAdmin';
 import unSetUserAsAdminReducer from './userManagement/unSetUserAsAdmin';
 import resetPasswordOfUserReducer from './userManagement/resetPasswordOfUser';
+import getCpuStatisticReducer from './statisticsReducers/getCpuStatistic';
+import getMemoryStatisticReducer from './statisticsReducers/getMemoryStatistic';
 
 const reducers = {
   loginReducer,
@@ -188,6 +190,8 @@ const reducers = {
   unSetUserAsAdminReducer,
   setUserAsAdminReducer,
   resetPasswordOfUserReducer,
+  getCpuStatisticReducer,
+  getMemoryStatisticReducer,
   router,
   loadingBar: loadingBarReducer
 };
