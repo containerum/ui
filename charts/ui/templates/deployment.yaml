@@ -34,6 +34,12 @@ spec:
             {{- end }}
             - name: API_PORT
               value: {{ .Values.env.local.API_PORT | quote }}
+            {{- if .Values.env.local.LATEST_RELEASE }}
+            - name: LATEST_RELEASE
+              value: "{{ .Values.env.local.LATEST_RELEASE }}"
+            {{- else }}
+            - name: LATEST_RELEASE
+              value: {{ .Chart.Version | quote }}
             - name: RECAPTCHA
               valueFrom:
                 secretKeyRef:
