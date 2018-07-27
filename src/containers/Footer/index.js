@@ -14,7 +14,7 @@ import {
   GET_RELEASES_FAILURE
 } from '../../constants/getReleasesGithubConstants';
 import arrows from '../../images/arrows.png';
-import { externalLinks, sourceType } from '../../config';
+import { externalLinks, sourceType, latestRelease } from '../../config';
 import styles from './styles.scss';
 
 type Props = {
@@ -81,8 +81,24 @@ export class Footer extends PureComponent<Props> {
               className={styles.footerLogo}
               href={externalLinks.exonLV}
             >
-              &copy; Created by Exon Lab
+              &copy; Created by ExonLV
             </a>
+            {!isOnline &&
+              latestRelease && (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    position: 'absolute',
+                    top: 20,
+                    right: '48%',
+                    fontSize: 12
+                  }}
+                  href={externalLinks.containerumReleases}
+                >
+                  latestRelease
+                </a>
+              )}
             {this.renderFooterInfo()}
             <a
               target="_blank"

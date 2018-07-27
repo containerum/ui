@@ -90,6 +90,11 @@ import getRunningSolutionReducer from './solutionReducers/getRunningSolution';
 import getEnvsSolutionReducer from './solutionReducers/getEnvsSolution';
 import getConfigMapsByNSReducer from './configMapReducers/getConfigMapsByNS';
 import getStartedReducer from './getStarted';
+import activateUserReducer from './userManagement/activateUser';
+import getUserProfileByEmailReducer from './profileReducers/getUserProfileByEmail';
+import setUserAsAdminReducer from './userManagement/setUserAsAdmin';
+import unSetUserAsAdminReducer from './userManagement/unSetUserAsAdmin';
+import resetPasswordOfUserReducer from './userManagement/resetPasswordOfUser';
 
 const reducers = {
   loginReducer,
@@ -178,6 +183,11 @@ const reducers = {
   getEnvsSolutionReducer,
   getConfigMapsByNSReducer,
   getStartedReducer,
+  activateUserReducer,
+  getUserProfileByEmailReducer,
+  unSetUserAsAdminReducer,
+  setUserAsAdminReducer,
+  resetPasswordOfUserReducer,
   router,
   loadingBar: loadingBarReducer
 };

@@ -53,6 +53,7 @@ import CheckEmail from './containers/CheckEmail';
 import SupportPage from './containers/Support';
 import SuccessTicket from './containers/SuccessTicket';
 import AccountPage from './containers/Account';
+import AccountByIdPage from './containers/AccountById';
 import BillingPage from './containers/Billing';
 import NotFoundPage from './containers/NotFound';
 import MembershipInfo from './containers/Membership';
@@ -293,6 +294,14 @@ export default [
     path: routerLinks.account,
     exact: true,
     component: AccountPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.accountById,
+    exact: true,
+    component: AccountByIdPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])

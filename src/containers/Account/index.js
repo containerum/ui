@@ -69,10 +69,13 @@ export class Account extends PureComponent<Props> {
 
     return (
       <div className={`${containerClassName} container`}>
-        <ProfileInfo data={getProfileReducer.data} />
+        <ProfileInfo
+          firstName={getProfileReducer.data.data.first_name}
+          login={getProfileReducer.data.login}
+        />
         <ProfilePassword />
         <CLI />
-        <DeleteAccountInfo />
+        <DeleteAccountInfo login={getProfileReducer.data.login} />
       </div>
     );
   };

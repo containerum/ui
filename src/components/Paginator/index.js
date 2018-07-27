@@ -1,14 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
-import { routerLinks } from '../../config';
 
 type Props = {
   countPage: number,
-  currentPage: number
+  currentPage: number,
+  routeTo: string
 };
 
-const Paginator = ({ countPage, currentPage }: Props) => {
+const Paginator = ({ countPage, currentPage, routeTo }: Props) => {
   const arrayOfPage = Array(countPage)
     .fill()
     .map((v, i) => i + 1);
@@ -17,7 +17,7 @@ const Paginator = ({ countPage, currentPage }: Props) => {
       <li className={currentPage === 1 ? 'page-item disabled' : 'page-item'}>
         <NavLink
           to={
-            currentPage === 1 ? '/billing' : `/billing?page=${currentPage - 1}`
+            currentPage === 1 ? routeTo : `${routeTo}?page=${currentPage - 1}`
           }
           disabled={currentPage === 1}
           className="page-link"
@@ -30,10 +30,7 @@ const Paginator = ({ countPage, currentPage }: Props) => {
           className={item === currentPage ? 'page-item active' : 'page-item'}
           key={_.uniqueId()}
         >
-          <NavLink
-            to={`${routerLinks.billing}?page=${item}`}
-            className="page-link"
-          >
+          <NavLink to={`${routeTo}?page=${item}`} className="page-link">
             {item}
           </NavLink>
         </li>
@@ -46,8 +43,8 @@ const Paginator = ({ countPage, currentPage }: Props) => {
         <NavLink
           to={
             currentPage === countPage
-              ? '/billing'
-              : `/billing?page=${currentPage + 1}`
+              ? routeTo
+              : `${routeTo}?page=${currentPage + 1}`
           }
           disabled={currentPage === countPage}
           className="page-link"
