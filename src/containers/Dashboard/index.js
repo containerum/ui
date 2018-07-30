@@ -105,9 +105,8 @@ export class Dashboard extends PureComponent<Props> {
       isOpenedHideWidget: false,
       isViewWidget: true,
       currentSolutionTemplate: null,
-      dataOfCpu: [{ name: 'Group A', value: 0 }],
-      dataOfMemory: [{ name: 'Group B', value: 0 }],
-      data3: [{ name: 'Group C', value: 0 }]
+      dataOfCpu: [{ name: 'cpu', value: 0 }],
+      dataOfMemory: [{ name: 'memory', value: 0 }]
     };
   }
   componentWillMount() {
@@ -155,7 +154,7 @@ export class Dashboard extends PureComponent<Props> {
       this.setState({
         ...this.state,
         dataOfCpu: [
-          { name: 'Group A', value: nextProps.getCpuStatisticReducer.data.cpu }
+          { name: 'cpu', value: nextProps.getCpuStatisticReducer.data.cpu }
         ]
       });
     }
@@ -166,16 +165,15 @@ export class Dashboard extends PureComponent<Props> {
         GET_MEMORY_STATISTIC_SUCCESS
     ) {
       const valueOfMemory =
-        nextProps.getMemoryStatisticReducer.data.cpu *
-        1024 /
-        (32768 * 1024) *
-        10;
+        nextProps.getMemoryStatisticReducer.data.cpu === 1
+          ? 1
+          : nextProps.getMemoryStatisticReducer.data.cpu * 100 / 32768;
       this.setState({
         ...this.state,
         dataOfMemory: [
           {
-            name: 'Group A',
-            value: valueOfMemory + 10
+            name: 'memory',
+            value: valueOfMemory
           }
         ]
       });
@@ -272,9 +270,13 @@ export class Dashboard extends PureComponent<Props> {
       y="51%"
       alignmentBaseline="middle"
       textAnchor="middle"
-      fontSize="40"
+      fontSize={percentages.payload.value === 1 ? '30' : '40'}
     >
-      {`${percentages.payload.value.toFixed(0)}%`}
+      {`${
+        percentages.payload.value === 1
+          ? 'no data'
+          : `${percentages.payload.value.toFixed(0)}%`
+      }`}
     </text>
   );
 
@@ -589,9 +591,14 @@ export class Dashboard extends PureComponent<Props> {
       return <p>Oops, Failed to load data of cpu statistic!</p>;
     }
 
-    const cpuRadius = 3.6 * getCpuStatisticReducer.data.cpu;
+    const cpuRadius =
+      getCpuStatisticReducer.data.cpu === 1
+        ? 360
+        : getCpuStatisticReducer.data.cpu * 3.6;
     const memoryRadius =
-      3.6 * (getMemoryStatisticReducer.data.cpu * 1024 / (32768 * 1024) * 10);
+      getMemoryStatisticReducer.data.cpu === 1
+        ? 360
+        : getMemoryStatisticReducer.data.cpu * 100 / 32768 * 3.6;
     return (
       <div>
         <div

@@ -6,8 +6,8 @@ import cookie from 'react-cookies';
 import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
   GET_CPU_STATISTIC_REQUESTING,
-  GET_CPU_STATISTIC_SUCCESS,
-  GET_CPU_STATISTIC_FAILURE
+  GET_CPU_STATISTIC_SUCCESS
+  // GET_CPU_STATISTIC_FAILURE
 } from '../../constants/statisticsConstants/getCpuStatistic';
 import { webApi, routerLinks } from '../../config';
 
@@ -22,11 +22,11 @@ const getCpuStatisticSuccess = data => ({
   data
 });
 
-const getCpuStatisticFailure = err => ({
-  type: GET_CPU_STATISTIC_FAILURE,
-  isFetching: false,
-  err
-});
+// const getCpuStatisticFailure = err => ({
+//   type: GET_CPU_STATISTIC_FAILURE,
+//   isFetching: false,
+//   err
+// });
 
 const getCpuStatisticInvalidToken = () => ({
   type: 'GET_INVALID_TOKEN'
@@ -41,31 +41,40 @@ export const fetchGetCpuStatistic = (
 
   dispatch(getCpuStatisticRequest());
 
-  const response = await axios.get(`${URL}/cpu/current`, {
-    headers: {
-      'User-Client': browser,
-      'User-Token': accessToken
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
-  const { status, data } = response;
-  switch (status) {
-    case 200: {
-      dispatch(getCpuStatisticSuccess(data));
-      break;
+  const response = await axios
+    .get(`${URL}/cpu/current`, {
+      headers: {
+        'User-Client': browser,
+        'User-Token': accessToken
+      },
+      validateStatus: status => status >= 200 && status <= 505
+    })
+    .catch(error => {
+      console.log('error', error);
+      return 'catch';
+    });
+  if (response !== 'catch') {
+    const { status, data } = response;
+    switch (status) {
+      case 200: {
+        dispatch(getCpuStatisticSuccess(data));
+        break;
+      }
+      case 400: {
+        if (data.message === 'invalid token received') {
+          dispatch(getCpuStatisticInvalidToken());
+        } else if (data.message === 'invalid request body format') {
+          dispatch(push(routerLinks.login));
+        } else dispatch(getCpuStatisticSuccess({ cpu: 1 }));
+        // else dispatch(getCpuStatisticFailure(data.message));
+        break;
+      }
+      default: {
+        dispatch(getCpuStatisticSuccess({ cpu: 1 }));
+        // dispatch(getCpuStatisticFailure(data.message));
+      }
     }
-    case 400: {
-      if (data.message === 'invalid token received') {
-        dispatch(getCpuStatisticInvalidToken());
-      } else if (data.message === 'invalid request body format') {
-        dispatch(push(routerLinks.login));
-      } else dispatch(getCpuStatisticFailure(data.message));
-      break;
-    }
-    default: {
-      dispatch(getCpuStatisticFailure(data.message));
-    }
-  }
+  } else dispatch(getCpuStatisticSuccess({ cpu: 1 }));
 };
 
 export const fetchGetCpuStatisticIfNeeded = (): ThunkAction => (
