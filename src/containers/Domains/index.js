@@ -12,10 +12,10 @@ import * as actionGetDomains from '../../actions/servicesActions/getDomains';
 import * as actionDeleteDomain from '../../actions/serviceActions/deleteDomain';
 import type { Dispatch, ReduxState } from '../../types';
 import {
-  GET_DOMAINS_INVALID,
-  GET_DOMAINS_REQUESTING,
-  GET_DOMAINS_SUCCESS,
-  GET_DOMAINS_FAILURE
+  GET_INGRESSES_INVALID,
+  GET_INGRESSES_REQUESTING,
+  GET_INGRESSES_SUCCESS,
+  GET_INGRESSES_FAILURE
 } from '../../constants/serviceConstants/getDomains';
 import {
   DELETE_DOMAIN_SUCCESS,
@@ -58,9 +58,9 @@ type Props = {
   history: Object,
   getProfileReducer: Object,
   getNamespacesReducer: Object,
-  getDomainsReducer: Object,
+  getIngressesReducer: Object,
   deleteDomainReducer: Object,
-  fetchGetDomainsIfNeeded: (idName: string) => void,
+  fetchGetIngressesIfNeeded: (idName: string) => void,
   fetchDeleteDomainIfNeeded: (idName: string, label: string) => void,
   fetchGetNamespacesIfNeeded: (role: string) => void
 };
@@ -79,8 +79,8 @@ export class Domains extends PureComponent<Props> {
     }
   }
   componentDidMount() {
-    const { fetchGetDomainsIfNeeded } = this.props;
-    fetchGetDomainsIfNeeded(this.props.match.params.idName);
+    const { fetchGetIngressesIfNeeded } = this.props;
+    fetchGetIngressesIfNeeded(this.props.match.params.idName);
   }
   componentWillUpdate(nextProps) {
     if (
@@ -94,14 +94,14 @@ export class Domains extends PureComponent<Props> {
     }
 
     if (
-      this.props.getDomainsReducer.readyStatus !==
-        nextProps.getDomainsReducer.readyStatus &&
-      nextProps.getDomainsReducer.readyStatus === GET_DOMAINS_SUCCESS
+      this.props.getIngressesReducer.readyStatus !==
+        nextProps.getIngressesReducer.readyStatus &&
+      nextProps.getIngressesReducer.readyStatus === GET_INGRESSES_SUCCESS
     ) {
-      // this.props.fetchGetDomainsIfNeeded(this.props.match.params.idName);
+      // this.props.fetchGetIngressesIfNeeded(this.props.match.params.idName);
       this.setState({
         ...this.state,
-        displayedDomains: nextProps.getDomainsReducer.data.ingresses
+        displayedDomains: nextProps.getIngressesReducer.data.ingresses
       });
     }
     if (
@@ -109,7 +109,7 @@ export class Domains extends PureComponent<Props> {
         nextProps.deleteDomainReducer.readyStatus &&
       nextProps.deleteDomainReducer.readyStatus === DELETE_DOMAIN_SUCCESS
     ) {
-      this.props.fetchGetDomainsIfNeeded(
+      this.props.fetchGetIngressesIfNeeded(
         // this.props.getNamespacesReducer.data.id
         this.props.match.params.idName
       );
@@ -121,7 +121,7 @@ export class Domains extends PureComponent<Props> {
 
   renderDomainsList = () => {
     const {
-      getDomainsReducer,
+      getIngressesReducer,
       deleteDomainReducer,
       getNamespacesReducer,
       match
@@ -135,9 +135,9 @@ export class Domains extends PureComponent<Props> {
     }
 
     if (
-      !getDomainsReducer.readyStatus ||
-      getDomainsReducer.readyStatus === GET_DOMAINS_INVALID ||
-      getDomainsReducer.readyStatus === GET_DOMAINS_REQUESTING ||
+      !getIngressesReducer.readyStatus ||
+      getIngressesReducer.readyStatus === GET_INGRESSES_INVALID ||
+      getIngressesReducer.readyStatus === GET_INGRESSES_REQUESTING ||
       deleteDomainReducer.readyStatus === DELETE_DOMAIN_REQUESTING ||
       (!getNamespacesReducer.readyStatus ||
         getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
@@ -162,7 +162,7 @@ export class Domains extends PureComponent<Props> {
       );
     }
 
-    if (getDomainsReducer.readyStatus === GET_DOMAINS_FAILURE) {
+    if (getIngressesReducer.readyStatus === GET_INGRESSES_FAILURE) {
       return <p>Oops, Failed to load data of Domains!</p>;
     }
 
@@ -171,7 +171,7 @@ export class Domains extends PureComponent<Props> {
         match={match}
         namespacesLabels={namespacesLabels}
         namespacesData={getNamespacesReducer.data}
-        data={getDomainsReducer.data.ingresses}
+        data={getIngressesReducer.data.ingresses}
         handleDeleteDomain={(idName, label) =>
           this.handleDeleteDomain(idName, label)
         }
@@ -201,12 +201,12 @@ export class Domains extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
-    getDomainsReducer,
+    getIngressesReducer,
     deleteDomainReducer,
     getNamespacesReducer,
     getProfileReducer
   }: ReduxState) => ({
-    getDomainsReducer,
+    getIngressesReducer,
     deleteDomainReducer,
     getNamespacesReducer,
     getProfileReducer
@@ -214,8 +214,8 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: (role: string) =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
-    fetchGetDomainsIfNeeded: (idName: string) =>
-      dispatch(actionGetDomains.fetchGetDomainsIfNeeded(idName)),
+    fetchGetIngressesIfNeeded: (idName: string) =>
+      dispatch(actionGetDomains.fetchGetIngressesIfNeeded(idName)),
     fetchDeleteDomainIfNeeded: (idName: string, label: string) =>
       dispatch(actionDeleteDomain.fetchDeleteDomainIfNeeded(idName, label))
   })

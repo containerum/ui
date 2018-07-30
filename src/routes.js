@@ -55,6 +55,7 @@ import SuccessTicket from './containers/SuccessTicket';
 import AccountPage from './containers/Account';
 import AccountByIdPage from './containers/AccountById';
 import BillingPage from './containers/Billing';
+import SettingsPage from './containers/Settings';
 import NotFoundPage from './containers/NotFound';
 import MembershipInfo from './containers/Membership';
 import GlobalGroupsInfo from './containers/GlobalGroups';
@@ -332,6 +333,14 @@ export default [
     path: routerLinks.billing,
     exact: true,
     component: BillingPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  !isOnline && {
+    path: routerLinks.settings,
+    exact: true,
+    component: SettingsPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])

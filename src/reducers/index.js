@@ -63,7 +63,7 @@ import getSolutionsReducer from './solutionsReducers/getSolutions';
 import getSolutionReducer from './solutionReducers/getSolution';
 import runSolutionReducer from './solutionReducers/runSolution';
 import getDomainsGlobalReducer from './servicesReducers/getDomainsGlobal';
-import getDomainsReducer from './servicesReducers/getDomains';
+import getIngressesReducer from './servicesReducers/getDomains';
 import deleteDomainReducer from './serviceReducers/deleteDomain';
 import getConfigMapsReducer from './configMapReducers/getConfigMaps';
 import getConfigMapReducer from './configMapReducers/getConfigMap';
@@ -95,6 +95,7 @@ import getUserProfileByEmailReducer from './profileReducers/getUserProfileByEmai
 import setUserAsAdminReducer from './userManagement/setUserAsAdmin';
 import unSetUserAsAdminReducer from './userManagement/unSetUserAsAdmin';
 import resetPasswordOfUserReducer from './userManagement/resetPasswordOfUser';
+import getDomainsReducer from './domainsReducers/getDomains';
 
 const reducers = {
   loginReducer,
@@ -173,7 +174,7 @@ const reducers = {
   addUserInGroupReducer,
   updateUserInGroupReducer,
   getGroupReducer,
-  getDomainsReducer,
+  getIngressesReducer,
   deleteUserFromGroupReducer,
   getRunningSolutionsReducer,
   deleteRunningSolutionReducer,
@@ -188,6 +189,7 @@ const reducers = {
   unSetUserAsAdminReducer,
   setUserAsAdminReducer,
   resetPasswordOfUserReducer,
+  getDomainsReducer,
   router,
   loadingBar: loadingBarReducer
 };

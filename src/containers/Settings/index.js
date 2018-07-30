@@ -4,61 +4,56 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
+import classNames from 'classnames/bind';
 import _ from 'lodash/fp';
+import cookie from 'react-cookies';
 
+import { routerLinks } from '../../config';
 import {
-  GET_PROFILE_INVALID,
-  GET_PROFILE_REQUESTING,
-  GET_PROFILE_FAILURE
-} from '../../constants/profileConstants/getProfile';
-import type { ReduxState } from '../../types';
+  GET_DOMAINS_INVALID,
+  GET_DOMAINS_REQUESTING,
+  GET_DOMAINS_FAILURE
+} from '../../constants/domainsConstants/getDomains';
+import * as actionGetDomains from '../../actions/DomainsActions/getDomains';
+import type { Dispatch, ReduxState } from '../../types';
+// import Notification from '../Notification';
 import ProfileSidebar from '../../components/ProfileSidebar';
-// import ProfileWebHook from './WebHook';
-import ProfileDomains from '../DomainsGlobal';
-import CLIInfo from '../../components/CLIInfo';
+import globalStyles from '../../theme/global.scss';
+import accountStyles from '../Account/index.scss';
 
 type Props = {
-  getProfileReducer: Object,
-  match: Object
+  history: Object,
+  getDomainsReducer: Object,
+  fetchGetDomainsIfNeeded: () => void
 };
 
+const globalClassName = classNames.bind(globalStyles);
+
 export class Settings extends PureComponent<Props> {
-  renderProfileInfo = () => {
-    const { getProfileReducer, match } = this.props;
-
-    if (
-      !getProfileReducer.readyStatus ||
-      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
-      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
-    ) {
-      return (
-        <img
-          src={require('../../images/acc-main.svg')}
-          style={{ marginTop: '28px', width: '100%' }}
-          alt="account"
-        />
-      );
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  componentWillMount() {
+    const accessToken = cookie.load('accessToken');
+    if (!accessToken) {
+      this.props.history.push(routerLinks.login);
     }
+  }
+  componentDidMount() {
+    const { fetchGetDomainsIfNeeded } = this.props;
+    fetchGetDomainsIfNeeded();
+  }
+  // componentWillUpdate(nextProps) {
+  // }
 
-    if (getProfileReducer.readyStatus === GET_PROFILE_FAILURE) {
-      return <p>Oops, Failed to load data of Settings!</p>;
-    }
-
-    return (
-      <div className="content-block-container container container-fluid">
-        {/* <ProfileWebHook /> */}
-        <ProfileDomains match={match} />
-        <CLIInfo />
-      </div>
-    );
-  };
   renderProfileSideBar = () => {
-    const { getProfileReducer } = this.props;
+    const { getDomainsReducer } = this.props;
 
     if (
-      !getProfileReducer.readyStatus ||
-      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
-      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
+      !getDomainsReducer.readyStatus ||
+      getDomainsReducer.readyStatus === GET_DOMAINS_INVALID ||
+      getDomainsReducer.readyStatus === GET_DOMAINS_REQUESTING
     ) {
       return (
         <div>
@@ -96,29 +91,84 @@ export class Settings extends PureComponent<Props> {
       );
     }
 
-    if (getProfileReducer.readyStatus === GET_PROFILE_FAILURE) {
+    return <ProfileSidebar type="settings" />;
+  };
+  renderProfileInfo = () => {
+    const { getDomainsReducer } = this.props;
+
+    if (
+      !getDomainsReducer.readyStatus ||
+      getDomainsReducer.readyStatus === GET_DOMAINS_INVALID ||
+      getDomainsReducer.readyStatus === GET_DOMAINS_REQUESTING
+    ) {
+      return (
+        <img
+          src={require('../../images/billing-main.svg')}
+          style={{ marginTop: '28px', width: '100%' }}
+          alt="billing"
+        />
+      );
+    }
+
+    if (getDomainsReducer.readyStatus === GET_DOMAINS_FAILURE) {
       return <p>Oops, Failed to load data of Settings!</p>;
     }
 
-    return <ProfileSidebar type="settings" />;
+    const containerClassName = globalClassName(
+      'contentBlockContainer',
+      'containerFluid'
+    );
+
+    return (
+      <div className={`${containerClassName} container`}>
+        <div className={globalStyles.blockItem} id="information">
+          <div className={globalStyles.blockItemTitle}>Settings</div>
+          <div className="row">
+            <div className="col-md-4">qwer</div>
+
+            <div className="col-md-8">
+              <div className="row">rewq</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   render() {
+    const containerClassNameSidebar = globalClassName(
+      'contentBlockContainer',
+      'containerFluid',
+      'containerNoBackground'
+    );
+
     return (
       <div>
         <Helmet title="Settings" />
-        <div className="content-block">
-          <div className="container no-back">
+        <div className={globalStyles.contentBlock}>
+          <div
+            className={`container ${
+              globalStyles.containerNoBackground
+            } pl-0 pr-0`}
+          >
             <div className="row double two-columns">
               <div className="col-md-3 col-lg-3 col-xl-2">
-                <div className="content-block account-info">
-                  <div className="content-block-container container no-back pl-0 pr-0 container-fluid">
+                <div
+                  className={`${globalStyles.contentBlock} ${
+                    accountStyles.accountInfo
+                  }`}
+                >
+                  <div
+                    className={`${containerClassNameSidebar} container pl-0 pr-0`}
+                  >
                     {this.renderProfileSideBar()}
                   </div>
                 </div>
               </div>
               <div className="col-md-9 col-lg-9 col-xl-10">
-                <div className="content-block">{this.renderProfileInfo()}</div>
+                <div className={globalStyles.contentBlock}>
+                  {this.renderProfileInfo()}
+                </div>
               </div>
               <div className="clearfix" />
             </div>
@@ -130,7 +180,13 @@ export class Settings extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getProfileReducer }: ReduxState) => ({ getProfileReducer })
+  ({ getDomainsReducer }: ReduxState) => ({
+    getDomainsReducer
+  }),
+  (dispatch: Dispatch) => ({
+    fetchGetDomainsIfNeeded: () =>
+      dispatch(actionGetDomains.fetchGetDomainsIfNeeded())
+  })
 );
 
 export default connector(Settings);
