@@ -1,0 +1,119 @@
+@import '../../theme/variables.scss';
+
+.dropZoneItemConfig {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileForm {
+  background-color: $color-white;
+  border: 1px solid $main-color;
+  height: 38px;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+  vertical-align: middle;
+  width: 190px;
+  padding: 5px 30px;
+  border-radius: 2px;
+
+  input[type='file'] {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    -moz-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    font-size: 150px;
+    height: 30px;
+    z-index: 20;
+  }
+
+  .selectBtn {
+    color: $main-color;
+    float: right;
+    font-size: 16px;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    padding: 1px 6px;
+    text-align: center;
+    vertical-align: middle;
+    width: 128px
+  }
+
+  &:hover {
+    background: $main-color;
+    border-color: $main-color;
+
+    .selectBtn {
+      color: $color-white;
+    }
+  }
+
+  &:focus {
+    background: $btn-active-color;
+    border-color: $btn-active-color;
+
+    .selectBtn {
+      color: $color-white;
+    }
+  }
+
+  &:active {
+    background: $btn-active-color;
+    border-color: $btn-active-color;
+
+    .selectBtn {
+      color: $color-white;
+    }
+  }
+}
+
+.td {
+  &_1_Configmap {
+    width: 115px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 25px !important;
+  }
+
+  &_2_Configmap {
+    width: 280px;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &_3_Configmap {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &_4_Configmap {
+    width: 45px;
+    vertical-align: top !important;
+    text-align: center !important;
+    height: 43px;
+  }
+
+  &_5_Configmap {
+    width: 255px;
+    padding: 3px 12px 3px 12px !important;
+    font-weight: 400 !important;
+  }
+}
+
+.configmap {
+  &Overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
