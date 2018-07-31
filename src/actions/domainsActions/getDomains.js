@@ -5,44 +5,43 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
-  GET_INGRESSES_REQUESTING,
-  GET_INGRESSES_SUCCESS,
-  GET_INGRESSES_FAILURE
-} from '../../constants/serviceConstants/getDomains';
+  GET_DOMAINS_REQUESTING,
+  GET_DOMAINS_SUCCESS,
+  GET_DOMAINS_FAILURE
+} from '../../constants/domainsConstants/getDomains';
 import { webApi, routerLinks } from '../../config/index';
 
-const getIngressesRequest = () => ({
-  type: GET_INGRESSES_REQUESTING,
+const getDomainsRequest = () => ({
+  type: GET_DOMAINS_REQUESTING,
   isFetching: true
 });
 
-const getIngressesSuccess = data => ({
-  type: GET_INGRESSES_SUCCESS,
+const getDomainsSuccess = data => ({
+  type: GET_DOMAINS_SUCCESS,
   isFetching: false,
   data
 });
 
-const getIngressesFailure = err => ({
-  type: GET_INGRESSES_FAILURE,
+const getDomainsFailure = err => ({
+  type: GET_DOMAINS_FAILURE,
   isFetching: false,
   err
 });
 
-const getIngressesInvalidToken = () => ({
+const getDomainsInvalidToken = () => ({
   type: 'GET_INVALID_TOKEN'
 });
 
-export const fetchGetIngresses = (
-  idName: string,
+export const fetchGetDomains = (
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const accessToken = cookie.load('accessToken');
   const browser = cookie.load('browser');
 
-  dispatch(getIngressesRequest());
+  dispatch(getDomainsRequest());
 
-  const response = await axios.get(`${URL}/namespaces/${idName}/ingresses`, {
+  const response = await axios.get(`${URL}/domains`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken
@@ -52,25 +51,25 @@ export const fetchGetIngresses = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getIngressesSuccess(data));
+      dispatch(getDomainsSuccess(data.domains));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
-        dispatch(getIngressesInvalidToken());
+        dispatch(getDomainsInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push(routerLinks.login));
-      } else dispatch(getIngressesFailure(data.message));
+      } else dispatch(getDomainsFailure(data.message));
       break;
     }
     default: {
-      dispatch(getIngressesFailure(data.message));
+      dispatch(getDomainsFailure(data.message));
     }
   }
 };
 
-export const fetchGetIngressesIfNeeded = (idName: string): ThunkAction => (
+export const fetchGetDomainsIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetIngresses(idName, axios));
+) => dispatch(fetchGetDomains(axios));

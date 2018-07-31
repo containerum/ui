@@ -3,53 +3,53 @@
 import _ from 'lodash/fp';
 
 import {
-  DELETE_DOMAIN_INVALID,
-  DELETE_DOMAIN_REQUESTING,
-  DELETE_DOMAIN_SUCCESS,
-  DELETE_DOMAIN_FAILURE
-} from '../../constants/serviceConstants/deleteDomain';
-import type { Action } from '../../types';
+  ADD_DOMAIN_INVALID,
+  ADD_DOMAIN_REQUESTING,
+  ADD_DOMAIN_SUCCESS,
+  ADD_DOMAIN_FAILURE
+} from '../../constants/domainConstants/addDomain';
+import type { Action } from '../../types/index';
 
 const initialState = {
-  readyStatus: DELETE_DOMAIN_INVALID,
+  readyStatus: ADD_DOMAIN_INVALID,
   isFetching: false,
   data: null,
   status: null,
   method: null,
-  label: null,
+  ips: null,
   err: null
 };
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
-    case DELETE_DOMAIN_REQUESTING:
+    case ADD_DOMAIN_REQUESTING:
       return _.assign(state, {
-        readyStatus: DELETE_DOMAIN_REQUESTING,
+        readyStatus: ADD_DOMAIN_REQUESTING,
         isFetching: action.isFetching,
         data: null,
         status: null,
         method: null,
-        label: null,
+        ips: null,
         err: null
       });
-    case DELETE_DOMAIN_SUCCESS:
+    case ADD_DOMAIN_SUCCESS:
       return _.assign(state, {
-        readyStatus: DELETE_DOMAIN_SUCCESS,
+        readyStatus: ADD_DOMAIN_SUCCESS,
         isFetching: action.isFetching,
         data: action.data,
         status: action.status,
         method: action.method,
-        label: action.label,
+        ips: action.ips,
         err: null
       });
-    case DELETE_DOMAIN_FAILURE:
+    case ADD_DOMAIN_FAILURE:
       return _.assign(state, {
-        readyStatus: DELETE_DOMAIN_FAILURE,
+        readyStatus: ADD_DOMAIN_FAILURE,
         isFetching: action.isFetching,
         data: null,
         status: action.status,
         method: null,
-        label: action.label,
+        ips: null,
         err: action.err
       });
     default:

@@ -63,8 +63,8 @@ import getSolutionsReducer from './solutionsReducers/getSolutions';
 import getSolutionReducer from './solutionReducers/getSolution';
 import runSolutionReducer from './solutionReducers/runSolution';
 import getDomainsGlobalReducer from './servicesReducers/getDomainsGlobal';
-import getDomainsReducer from './servicesReducers/getDomains';
-import deleteDomainReducer from './serviceReducers/deleteDomain';
+import getIngressesReducer from './servicesReducers/getDomains';
+import deleteIngressReducer from './serviceReducers/deleteIngress';
 import getConfigMapsReducer from './configMapReducers/getConfigMaps';
 import getConfigMapReducer from './configMapReducers/getConfigMap';
 import createConfigMapReducer from './configMapReducers/createConfigMap';
@@ -95,6 +95,9 @@ import getUserProfileByEmailReducer from './profileReducers/getUserProfileByEmai
 import setUserAsAdminReducer from './userManagement/setUserAsAdmin';
 import unSetUserAsAdminReducer from './userManagement/unSetUserAsAdmin';
 import resetPasswordOfUserReducer from './userManagement/resetPasswordOfUser';
+import getDomainsReducer from './domainsReducers/getDomains';
+import deleteDomainReducer from './domainReducers/deleteDomain';
+import addDomainReducer from './domainReducers/addDomain';
 
 const reducers = {
   loginReducer,
@@ -156,7 +159,7 @@ const reducers = {
   getSolutionReducer,
   runSolutionReducer,
   getDomainsGlobalReducer,
-  deleteDomainReducer,
+  deleteIngressReducer,
   getConfigMapsReducer,
   getConfigMapReducer,
   createConfigMapReducer,
@@ -173,7 +176,7 @@ const reducers = {
   addUserInGroupReducer,
   updateUserInGroupReducer,
   getGroupReducer,
-  getDomainsReducer,
+  getIngressesReducer,
   deleteUserFromGroupReducer,
   getRunningSolutionsReducer,
   deleteRunningSolutionReducer,
@@ -188,6 +191,9 @@ const reducers = {
   unSetUserAsAdminReducer,
   setUserAsAdminReducer,
   resetPasswordOfUserReducer,
+  getDomainsReducer,
+  deleteDomainReducer,
+  addDomainReducer,
   router,
   loadingBar: loadingBarReducer
 };
