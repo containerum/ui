@@ -51,7 +51,7 @@ export const fetchGetDomains = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getDomainsSuccess(data));
+      dispatch(getDomainsSuccess(data.domains));
       break;
     }
     case 400: {

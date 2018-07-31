@@ -8,7 +8,7 @@ import cookie from 'react-cookies';
 
 import { routerLinks } from '../../config';
 import * as actionGetDomains from '../../actions/servicesActions/getDomainsGlobal';
-import * as actionDeleteDomain from '../../actions/serviceActions/deleteDomain';
+import * as actionDeleteDomain from '../../actions/serviceActions/deleteIngress';
 import type { Dispatch, ReduxState } from '../../types';
 import {
   GET_DOMAINS_GLOBAL_INVALID,
@@ -17,9 +17,9 @@ import {
   GET_DOMAINS_GLOBAL_FAILURE
 } from '../../constants/serviceConstants/getDomainsGlobal';
 import {
-  DELETE_DOMAIN_SUCCESS,
-  DELETE_DOMAIN_REQUESTING
-} from '../../constants/serviceConstants/deleteDomain';
+  DELETE_INGRESS_SUCCESS,
+  DELETE_INGRESS_REQUESTING
+} from '../../constants/serviceConstants/deleteIngress';
 import DomainsList from '../../components/DomainsGlobalList';
 import Notification from '../Notification';
 
@@ -38,9 +38,9 @@ type Props = {
   getProfileReducer: Object,
   getNamespacesReducer: Object,
   getDomainsGlobalReducer: Object,
-  deleteDomainReducer: Object,
+  deleteIngressReducer: Object,
   fetchGetDomainsIfNeeded: (idName: string) => void,
-  fetchDeleteDomainIfNeeded: (idName: string, label: string) => void,
+  fetchDeleteIngressIfNeeded: (idName: string, label: string) => void,
   fetchGetNamespacesIfNeeded: (role: string) => void
 };
 
@@ -84,21 +84,21 @@ export class DomainsGlobal extends PureComponent<Props> {
       });
     }
     if (
-      this.props.deleteDomainReducer.readyStatus !==
-        nextProps.deleteDomainReducer.readyStatus &&
-      nextProps.deleteDomainReducer.readyStatus === DELETE_DOMAIN_SUCCESS
+      this.props.deleteIngressReducer.readyStatus !==
+        nextProps.deleteIngressReducer.readyStatus &&
+      nextProps.deleteIngressReducer.readyStatus === DELETE_INGRESS_SUCCESS
     ) {
       this.props.fetchGetDomainsIfNeeded();
     }
   }
   handleDeleteDomain = (idName, label) => {
-    this.props.fetchDeleteDomainIfNeeded(idName, label);
+    this.props.fetchDeleteIngressIfNeeded(idName, label);
   };
 
   renderDomainsList = () => {
     const {
       getDomainsGlobalReducer,
-      deleteDomainReducer,
+      deleteIngressReducer,
       getNamespacesReducer
     } = this.props;
     let namespacesLabels;
@@ -113,7 +113,7 @@ export class DomainsGlobal extends PureComponent<Props> {
       !getDomainsGlobalReducer.readyStatus ||
       getDomainsGlobalReducer.readyStatus === GET_DOMAINS_GLOBAL_INVALID ||
       getDomainsGlobalReducer.readyStatus === GET_DOMAINS_GLOBAL_REQUESTING ||
-      deleteDomainReducer.readyStatus === DELETE_DOMAIN_REQUESTING ||
+      deleteIngressReducer.readyStatus === DELETE_INGRESS_REQUESTING ||
       (!getNamespacesReducer.readyStatus ||
         getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
         getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING)
@@ -153,7 +153,7 @@ export class DomainsGlobal extends PureComponent<Props> {
     );
   };
   render() {
-    const { status, method, label, err } = this.props.deleteDomainReducer;
+    const { status, method, label, err } = this.props.deleteIngressReducer;
     return (
       <div>
         <Helmet title="Domains" />
@@ -211,12 +211,12 @@ export class DomainsGlobal extends PureComponent<Props> {
 const connector: Connector<{}, Props> = connect(
   ({
     getDomainsGlobalReducer,
-    deleteDomainReducer,
+    deleteIngressReducer,
     getNamespacesReducer,
     getProfileReducer
   }: ReduxState) => ({
     getDomainsGlobalReducer,
-    deleteDomainReducer,
+    deleteIngressReducer,
     getNamespacesReducer,
     getProfileReducer
   }),
@@ -225,8 +225,8 @@ const connector: Connector<{}, Props> = connect(
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
     fetchGetDomainsIfNeeded: () =>
       dispatch(actionGetDomains.fetchGetDomainsIfNeeded()),
-    fetchDeleteDomainIfNeeded: (idName: string, label: string) =>
-      dispatch(actionDeleteDomain.fetchDeleteDomainIfNeeded(idName, label))
+    fetchDeleteIngressIfNeeded: (idName: string, label: string) =>
+      dispatch(actionDeleteDomain.fetchDeleteIngressIfNeeded(idName, label))
   })
 );
 
