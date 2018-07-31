@@ -3,15 +3,15 @@
 import _ from 'lodash/fp';
 
 import {
-  GET_DOMAINS_INVALID,
-  GET_DOMAINS_REQUESTING,
-  GET_DOMAINS_SUCCESS,
-  GET_DOMAINS_FAILURE
+  GET_INGRESSES_INVALID,
+  GET_INGRESSES_REQUESTING,
+  GET_INGRESSES_SUCCESS,
+  GET_INGRESSES_FAILURE
 } from '../../constants/serviceConstants/getDomains';
 import type { Action } from '../../types/index';
 
 const initialState = {
-  readyStatus: GET_DOMAINS_INVALID,
+  readyStatus: GET_INGRESSES_INVALID,
   isFetching: false,
   data: [],
   err: null
@@ -19,23 +19,23 @@ const initialState = {
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
-    case GET_DOMAINS_REQUESTING:
+    case GET_INGRESSES_REQUESTING:
       return _.assign(state, {
-        readyStatus: GET_DOMAINS_REQUESTING,
+        readyStatus: GET_INGRESSES_REQUESTING,
         isFetching: action.isFetching,
         data: null,
         err: null
       });
-    case GET_DOMAINS_SUCCESS:
+    case GET_INGRESSES_SUCCESS:
       return _.assign(state, {
-        readyStatus: GET_DOMAINS_SUCCESS,
+        readyStatus: GET_INGRESSES_SUCCESS,
         isFetching: action.isFetching,
         data: action.data,
         err: null
       });
-    case GET_DOMAINS_FAILURE:
+    case GET_INGRESSES_FAILURE:
       return _.assign(state, {
-        readyStatus: GET_DOMAINS_FAILURE,
+        readyStatus: GET_INGRESSES_FAILURE,
         isFetching: action.isFetching,
         data: null,
         err: action.err

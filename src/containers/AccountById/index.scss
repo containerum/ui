@@ -1,0 +1,64 @@
+@import '../../theme/variables';
+
+.account {
+  &Info {
+    position: sticky;
+    top: 15px;
+    overflow: visible;
+    max-height: calc(100vh - 50px);
+    margin-bottom: 50px;
+  }
+
+  &Menu {
+    margin: -25px 0 0 0;
+
+    &Nav {
+      display: block;
+
+      &Active {
+        .navLink {
+          color:$main-color !important;
+        }
+      }
+    }
+
+    .navRootItem{
+      text-transform: uppercase;
+      font-weight: 300;
+      margin: 20px 0 0 0;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sub-navbar{
+      padding: 20px 0 0 20px;
+    }
+
+    .navItem {
+      list-style: none;
+      padding: 0 0 0 0;
+      margin: 0 0 15px 0;
+
+
+
+      &:hover {
+        a {
+          color:$main-color;
+        }
+
+        div {
+          color:$main-color;
+        }
+      }
+    }
+
+    .navLink {
+      font-weight: 300;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      color:$ligth-gray-color ;
+    }
+  }
+}

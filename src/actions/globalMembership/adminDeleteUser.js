@@ -41,8 +41,7 @@ const adminDeleteUserInvalidToken = () => ({
 });
 
 export const fetchAdminDeleteUser = (
-  idName: string,
-  username: string,
+  login: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
@@ -53,7 +52,7 @@ export const fetchAdminDeleteUser = (
   const response = await axios.post(
     `${URL}/admin/user/deactivation`,
 
-    { login: username },
+    { login },
     {
       headers: {
         'User-Client': browser,
@@ -66,8 +65,8 @@ export const fetchAdminDeleteUser = (
 
   const { status, data, config } = response;
   switch (status) {
-    case 200: {
-      dispatch(adminDeleteUserSuccess(data, 202, config.method, username));
+    case 202: {
+      dispatch(adminDeleteUserSuccess(data, 202, config.method, login));
       break;
     }
     case 400: {
@@ -75,18 +74,18 @@ export const fetchAdminDeleteUser = (
         dispatch(adminDeleteUserInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push('/login'));
-      } else dispatch(adminDeleteUserFailure(data.message, status, username));
+      } else dispatch(adminDeleteUserFailure(data.message, status, login));
       break;
     }
     default: {
-      dispatch(adminDeleteUserFailure(data.message, status, username));
+      dispatch(adminDeleteUserFailure(data.message, status, login));
     }
   }
   dispatch(adminDeleteUserInvalid());
 };
 
-export const fetchAdminDeleteUserIfNeeded = (
-  idName: string,
-  username: string
-): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchAdminDeleteUser(idName, username, axios));
+export const fetchAdminDeleteUserIfNeeded = (login: string): ThunkAction => (
+  dispatch: Dispatch,
+  getState: GetState,
+  axios: any
+) => dispatch(fetchAdminDeleteUser(login, axios));

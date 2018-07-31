@@ -21,3 +21,4 @@ env:
     API_HOST: null
     API_PORT: "8082"
     RECAPTCHA: null
+    LATEST_RELEASE: null

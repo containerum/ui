@@ -3,53 +3,49 @@
 import _ from 'lodash/fp';
 
 import {
-  DELETE_DOMAIN_INVALID,
-  DELETE_DOMAIN_REQUESTING,
-  DELETE_DOMAIN_SUCCESS,
-  DELETE_DOMAIN_FAILURE
-} from '../../constants/serviceConstants/deleteDomain';
+  SET_USER_AS_ADMIN_INVALID,
+  SET_USER_AS_ADMIN_REQUESTING,
+  SET_USER_AS_ADMIN_SUCCESS,
+  SET_USER_AS_ADMIN_FAILURE
+} from '../../constants/userManagement/setUserAsAdmin';
 import type { Action } from '../../types';
 
 const initialState = {
-  readyStatus: DELETE_DOMAIN_INVALID,
+  readyStatus: SET_USER_AS_ADMIN_INVALID,
   isFetching: false,
-  data: null,
+  login: null,
   status: null,
   method: null,
-  label: null,
   err: null
 };
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
-    case DELETE_DOMAIN_REQUESTING:
+    case SET_USER_AS_ADMIN_REQUESTING:
       return _.assign(state, {
-        readyStatus: DELETE_DOMAIN_REQUESTING,
+        readyStatus: SET_USER_AS_ADMIN_REQUESTING,
         isFetching: action.isFetching,
-        data: null,
+        login: null,
         status: null,
         method: null,
-        label: null,
         err: null
       });
-    case DELETE_DOMAIN_SUCCESS:
+    case SET_USER_AS_ADMIN_SUCCESS:
       return _.assign(state, {
-        readyStatus: DELETE_DOMAIN_SUCCESS,
+        readyStatus: SET_USER_AS_ADMIN_SUCCESS,
         isFetching: action.isFetching,
-        data: action.data,
+        login: action.login,
         status: action.status,
         method: action.method,
-        label: action.label,
         err: null
       });
-    case DELETE_DOMAIN_FAILURE:
+    case SET_USER_AS_ADMIN_FAILURE:
       return _.assign(state, {
-        readyStatus: DELETE_DOMAIN_FAILURE,
+        readyStatus: SET_USER_AS_ADMIN_FAILURE,
         isFetching: action.isFetching,
-        data: null,
+        login: null,
         status: action.status,
         method: null,
-        label: action.label,
         err: action.err
       });
     default:

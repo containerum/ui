@@ -33,6 +33,7 @@ const getUserListInvalidToken = () => ({
 });
 
 export const fetchGetUserList = (
+  page: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
@@ -41,13 +42,16 @@ export const fetchGetUserList = (
   dispatch(getUserListRequest());
 
   // ?page=1&per_page=10
-  const response = await axios.get(`${URL}/user/list`, {
-    headers: {
-      'User-Client': browser,
-      'User-Token': accessToken
-    },
-    validateStatus: status => status >= 200 && status <= 505
-  });
+  const response = await axios.get(
+    `${URL}/user/list?per_page=12&page=${page}`,
+    {
+      headers: {
+        'User-Client': browser,
+        'User-Token': accessToken
+      },
+      validateStatus: status => status >= 200 && status <= 505
+    }
+  );
   const { status, data } = response;
   switch (status) {
     case 200: {
@@ -73,8 +77,8 @@ export const fetchGetUserList = (
   }
 };
 
-export const fetchGetUserListIfNeeded = (): ThunkAction => (
+export const fetchGetUserListIfNeeded = (page: string): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetUserList(axios));
+) => dispatch(fetchGetUserList(page, axios));

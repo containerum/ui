@@ -39,7 +39,6 @@ import styles from './index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
-
 const containerClassName = globalClass(
   'contentBlockContainer',
   'contentBlockContainerMembership'
@@ -306,8 +305,8 @@ class Membership extends PureComponent<Props> {
       <MembershipList
         idName={match.params.idName}
         membersList={this.state.membersList}
-        changeAccessUser={this.changeAccessUser}
         handleDeleteDMembers={this.handleDeleteDMembers}
+        changeAccessUser={this.changeAccessUser}
         handleClickDropDownAccess={this.handleClickDropDownAccess}
         handleMouseLeaveDropDownAccess={this.handleMouseLeaveDropDownAccess}
         currentLoginDropDownAccess={this.state.currentLoginDropDownAccess}

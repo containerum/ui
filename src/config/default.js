@@ -17,6 +17,7 @@ module.exports = {
   appRecaptcha: process.env.RECAPTCHA || null,
   sourceType: process.env.SOURCE_TYPE || 'OFFLINE',
   defaultCountry: process.env.COUNTRY || 'US',
+  latestRelease: process.env.LATEST_RELEASE || null,
   app: {
     htmlAttributes: { lang: 'en' },
     title: 'Cloud Docker Hosting for Fast Deploy',
@@ -43,6 +44,8 @@ module.exports = {
     configmap: '/configmap',
     signUp: '/signUp',
     confirmEmail: '/confirmEmail',
+    confirmEmailLink: (query: string) =>
+      `/confirmEmail${query ? `?smtp=${query}` : ''}`,
     forgot: '/forgot',
     checkEmail: '/checkEmail',
     recoveryPassword: '/recoveryPassword',
@@ -139,12 +142,15 @@ module.exports = {
     support: '/support',
     successTicket: '/successTicket',
     account: '/account',
+    accountById: '/accounts/:idUser',
+    accountByIdLink: idUser => `/accounts/${idUser}`,
     billing: '/billing',
     settings: '/settings'
   },
   externalLinks: {
     exonLV: 'http://exon.lv',
     documentation: 'https://docs.containerum.com',
+    containerumReleases: 'https://github.com/containerum/containerum/releases',
     fastDeploy: 'https://docs.containerum.com/getting-started',
     solutions: 'https://github.com/containerum',
     blog: 'https://medium.com/@containerum',

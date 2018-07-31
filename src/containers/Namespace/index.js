@@ -42,7 +42,7 @@ import DeploymentsPage from '../Deployments';
 import RunningSolutionsPage from '../RunningSolutions';
 import ServicesPage from '../Services';
 // import VolumesPage from '../Volumes';
-import ConfigMapsPage from '../ConfigMaps';
+import ConfigMapsPage from '../ConfigMapsInNamespace';
 import DomainsList from '../Domains';
 import ns from '../../images/ns-1.svg';
 

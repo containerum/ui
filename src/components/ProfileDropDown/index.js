@@ -34,7 +34,7 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
             aria-haspopup="true"
             aria-expanded="false"
             style={
-              isOnline
+              isOnline || role === 'admin'
                 ? {}
                 : {
                     marginTop: 6
@@ -66,6 +66,15 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
                 Billing
               </NavLink>
             )}
+            {!isOnline && (
+              <NavLink
+                activeClassName="active"
+                className="dropdown-item"
+                to={routerLinks.settings}
+              >
+                Settings
+              </NavLink>
+            )}
             {role === 'admin' && (
               <NavLink
                 activeClassName="active"
@@ -91,6 +100,10 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
             {balance ? parseFloat(balance).toFixed(2) : 0}$
           </div>
         )}
+        {!isOnline &&
+          role === 'admin' && (
+            <div className={styles.headerTopAccountDeposit}>(admin)</div>
+          )}
       </div>
     </div>
     <div className="clearfix" />

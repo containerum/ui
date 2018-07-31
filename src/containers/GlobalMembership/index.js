@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
 import cookie from 'react-cookies';
+import queryString from 'query-string';
 
 import { routerLinks } from '../../config';
 import Notification from '../Notification';
@@ -12,6 +13,7 @@ import AdminDeleteUserModal from '../../components/CustomerModal/AdminDeleteUser
 import AddGlobalUserMembershipModal from '../../components/CustomerModal/AddGlobalMembershipModal';
 import GlobalMembershipList from '../../components/GlobalMembershipList';
 import type { Dispatch, ReduxState } from '../../types';
+import * as actionActivateUser from '../../actions/userManagement/activateUser';
 import * as actionAddGlobalUserIfNeeded from '../../actions/globalMembership/addUser';
 import * as actionAdminDeleteUserIfNeeded from '../../actions/globalMembership/adminDeleteUser';
 import * as actionGetUserListIfNeeded from '../../actions/globalMembership/getUserList';
@@ -25,6 +27,9 @@ import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile
 import globalStyles from '../../theme/global.scss';
 import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+import { ACTIVATE_USER_SUCCESS } from '../../constants/userManagement/activateUser';
+import { ADD_GLOBAL_USER_SUCCESS } from '../../constants/globalMembershipConstants/addGlobalUser';
+import { ADMIN_DELETE_USER_SUCCESS } from '../../constants/globalMembershipConstants/adminDeleteUser';
 
 const globalClass = className.bind(globalStyles);
 
@@ -49,14 +54,17 @@ const liClassName = globalClass(
 
 type Props = {
   match: Object,
+  location: Object,
   history: Object,
   adminDeleteUserReducer: Object,
   getUserListReducer: Object,
   getProfileReducer: Object,
   addUserReducer: Object,
-  fetchGetUserListIfNeeded: () => void,
+  activateUserReducer: Object,
+  fetchGetUserListIfNeeded: (page: string) => void,
   fetchAddGlobalUserIfNeeded: (login: string) => void,
-  fetchAdminDeleteUserIfNeeded: (username: string) => void
+  fetchActivateUserIfNeeded: (login: string) => void,
+  fetchAdminDeleteUserIfNeeded: (login: string) => void
 };
 
 class GlobalMembership extends PureComponent<Props> {
@@ -71,7 +79,9 @@ class GlobalMembership extends PureComponent<Props> {
       accessNewUser: 'read',
       accessUser: 'read',
       membersList: [],
-      errAdd: null
+      errAdd: null,
+      currentLoginDropDownAccess: null,
+      currentPage: 1
     };
   }
   componentWillMount() {
@@ -81,13 +91,37 @@ class GlobalMembership extends PureComponent<Props> {
     }
   }
   componentWillUpdate(nextProps) {
-    const { fetchGetUserListIfNeeded } = this.props;
+    const { fetchGetUserListIfNeeded, location } = this.props;
+    const { page } = queryString.parse(location.search);
+    if (Number.isInteger(parseInt(page, 10))) {
+      this.setState({
+        currentPage: parseInt(page, 10)
+      });
+    }
     if (
       this.props.getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
       nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
-      fetchGetUserListIfNeeded();
+      if (nextProps.getProfileReducer.data.role === 'admin') {
+        fetchGetUserListIfNeeded(page && page);
+      } else {
+        this.props.history.push(routerLinks.namespaces);
+      }
+    }
+    if (
+      (this.props.activateUserReducer.readyStatus !==
+        nextProps.activateUserReducer.readyStatus &&
+        nextProps.activateUserReducer.readyStatus === ACTIVATE_USER_SUCCESS) ||
+      (this.props.addUserReducer.readyStatus !==
+        nextProps.addUserReducer.readyStatus &&
+        nextProps.addUserReducer.readyStatus === ADD_GLOBAL_USER_SUCCESS) ||
+      (this.props.adminDeleteUserReducer.readyStatus !==
+        nextProps.adminDeleteUserReducer.readyStatus &&
+        nextProps.adminDeleteUserReducer.readyStatus ===
+          ADMIN_DELETE_USER_SUCCESS)
+    ) {
+      fetchGetUserListIfNeeded(page && page);
     }
   }
 
@@ -97,12 +131,29 @@ class GlobalMembership extends PureComponent<Props> {
       accessNewUser: access
     });
   };
-
   handleDeleteDMembers = idUser => {
     this.setState({
       ...this.state,
       idUser,
       isOpen: true
+    });
+  };
+  handleClickGetAccount = login => {
+    this.props.history.push(routerLinks.accountByIdLink(login));
+  };
+  changeAccessUser = login => {
+    this.props.fetchActivateUserIfNeeded(login);
+  };
+  handleClickDropDownAccess = login => {
+    this.setState({
+      ...this.state,
+      currentLoginDropDownAccess: login
+    });
+  };
+  handleMouseLeaveDropDownAccess = () => {
+    this.setState({
+      ...this.state,
+      currentLoginDropDownAccess: null
     });
   };
   handleAddMembersAdd = () => {
@@ -167,8 +218,14 @@ class GlobalMembership extends PureComponent<Props> {
       <GlobalMembershipList
         idName={match.params.idName}
         membersList={getUserListReducer.data.users}
-        changeAccessUser={this.changeAccessUser}
         handleDeleteDMembers={this.handleDeleteDMembers}
+        handleClickGetAccount={this.handleClickGetAccount}
+        changeAccessUser={this.changeAccessUser}
+        handleClickDropDownAccess={this.handleClickDropDownAccess}
+        handleMouseLeaveDropDownAccess={this.handleMouseLeaveDropDownAccess}
+        currentLoginDropDownAccess={this.state.currentLoginDropDownAccess}
+        countPages={getUserListReducer.data.pages}
+        currentPage={this.state.currentPage}
       />
     );
   };
@@ -180,7 +237,8 @@ class GlobalMembership extends PureComponent<Props> {
       getProfileReducer,
       addUserReducer,
       fetchAddGlobalUserIfNeeded,
-      fetchAdminDeleteUserIfNeeded
+      fetchAdminDeleteUserIfNeeded,
+      activateUserReducer
     } = this.props;
     const {
       status: statusAdd,
@@ -189,6 +247,12 @@ class GlobalMembership extends PureComponent<Props> {
       method: methodAdd,
       err: errAdd
     } = addUserReducer;
+    const {
+      status: statusActivate,
+      method: methodActivate,
+      login: loginActivate,
+      err: errActivate
+    } = activateUserReducer;
     const {
       status: statusDelete,
       idName: idNameDelete,
@@ -215,7 +279,12 @@ class GlobalMembership extends PureComponent<Props> {
           name={idNameDelete}
           errorMessage={errDelete}
         />
-
+        <Notification
+          status={statusActivate}
+          method={methodActivate}
+          name={loginActivate}
+          errorMessage={errActivate}
+        />
         <Notification
           status={statusAdd}
           name={loginAdd}
@@ -326,7 +395,9 @@ const connector: Connector<{}, Props> = connect(
     getProfileReducer,
     getUserListReducer,
     adminDeleteUserReducer,
-    addUserReducer
+    addUserReducer,
+
+    activateUserReducer
   }: ReduxState) => ({
     getNamespaceUsersAccessReducer,
     getNamespaceReducer,
@@ -334,19 +405,19 @@ const connector: Connector<{}, Props> = connect(
     getProfileReducer,
     getUserListReducer,
     adminDeleteUserReducer,
-    addUserReducer
+    addUserReducer,
+    activateUserReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetUserListIfNeeded: () =>
-      dispatch(actionGetUserListIfNeeded.fetchGetUserListIfNeeded()),
+    fetchGetUserListIfNeeded: (page: string = 1) =>
+      dispatch(actionGetUserListIfNeeded.fetchGetUserListIfNeeded(page)),
     fetchAddGlobalUserIfNeeded: (login: string) =>
       dispatch(actionAddGlobalUserIfNeeded.fetchAddGlobalUserIfNeeded(login)),
-    fetchAdminDeleteUserIfNeeded: (idName: string, username: string) =>
+    fetchActivateUserIfNeeded: (login: string) =>
+      dispatch(actionActivateUser.fetchActivateUserIfNeeded(login)),
+    fetchAdminDeleteUserIfNeeded: (login: string) =>
       dispatch(
-        actionAdminDeleteUserIfNeeded.fetchAdminDeleteUserIfNeeded(
-          idName,
-          username
-        )
+        actionAdminDeleteUserIfNeeded.fetchAdminDeleteUserIfNeeded(login)
       )
   })
 );

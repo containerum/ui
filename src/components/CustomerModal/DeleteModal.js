@@ -114,8 +114,8 @@ const DeleteModal = ({
             {type}
           </h4>
           <span className={modalStyles.modalRedisText}>
-            Deleting your {type} is irreversible.<br />
-            Enter your {type} name (<strong style={{ color: '#29abe2' }}>
+            Deleting {type} is irreversible.<br />
+            Enter {type} name (<strong style={{ color: '#29abe2' }}>
               {typeName}
             </strong>) below to confirm you want to permanently delete it:
           </span>

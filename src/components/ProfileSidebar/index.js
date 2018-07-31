@@ -176,7 +176,7 @@ const ProfileSidebar = ({ type }: Props) => (
               </div>
             ) : (
               <HashLink
-                to="/billing#coupon"
+                to={`${routerLinks.billing}#coupon`}
                 className={`${accountStyles.navLink} nav-link`}
               >
                 Promo code
@@ -199,6 +199,40 @@ const ProfileSidebar = ({ type }: Props) => (
                 className={`${accountStyles.navLink} nav-link`}
               >
                 History
+              </HashLink>
+            )}
+          </li>
+        </Scrollspy>
+      </li>
+    )}
+    {sourceType !== 'ONLINE' && (
+      <li>
+        <div className={`${accountStyles.navRootItem} nav-root-item`}>
+          Settings
+        </div>
+        <Scrollspy
+          items={['ips']}
+          style={{
+            padding: '20px 0 0 20px'
+          }}
+          currentClassName={accountStyles.accountMenuNavActive}
+        >
+          <li className={`${accountStyles.navItem} nav-item`}>
+            {type === 'settings' ? (
+              <div
+                className={`${accountStyles.navLink} nav-link`}
+                onClick={() => scrollById('ips')}
+                onKeyPress={() => scrollById('ips')}
+                role="presentation"
+              >
+                IP`s
+              </div>
+            ) : (
+              <HashLink
+                to={`${routerLinks.settings}#ips`}
+                className={`${accountStyles.navLink} nav-link`}
+              >
+                IP`s
               </HashLink>
             )}
           </li>

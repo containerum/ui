@@ -186,7 +186,10 @@ const CreateDomainCard = ({
           <div className={nextContainerClassName}>
             <span className={globalStyles.containerTitleStar}>*</span> Domains
           </div>
-          <div className={styles.InputControlWrapper}>
+          <div
+            className={isOnline && styles.InputControlWrapper}
+            style={!isOnline ? { width: '47.5%', display: 'inline' } : {}}
+          >
             <Tooltip
               placement="left"
               visible
@@ -213,9 +216,10 @@ const CreateDomainCard = ({
                 alwaysVisiblePlaceholder={
                   isOnline && 'customAlwaysVisiblePlaceholder'
                 }
+                style={!isOnline ? { width: '47.5%' } : {}}
               />
             </Tooltip>
-            {servicesList.length ? (
+            {servicesList.length && isOnline ? (
               <div
                 className={styles.RequestCustomDomain}
                 onClick={handleClickRequestCustomDomain}
