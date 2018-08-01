@@ -67,10 +67,12 @@ export class Account extends PureComponent<Props> {
       return <p>Oops, Failed to load data of Account!</p>;
     }
 
+    const { data } = getProfileReducer;
+    const { first_name: firstName } = data.data || { first_name: null };
     return (
       <div className={`${containerClassName} container`}>
         <ProfileInfo
-          firstName={getProfileReducer.data.data.first_name}
+          firstName={firstName}
           login={getProfileReducer.data.login}
         />
         <ProfilePassword />
