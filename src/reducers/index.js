@@ -96,7 +96,9 @@ import setUserAsAdminReducer from './userManagement/setUserAsAdmin';
 import unSetUserAsAdminReducer from './userManagement/unSetUserAsAdmin';
 import resetPasswordOfUserReducer from './userManagement/resetPasswordOfUser';
 import getCpuStatisticReducer from './statisticsReducers/getCpuStatistic';
+import getCpuHistoryStatisticReducer from './statisticsReducers/getCpuHistoryStatistic';
 import getMemoryStatisticReducer from './statisticsReducers/getMemoryStatistic';
+import getMemoryHistoryStatisticReducer from './statisticsReducers/getMemoryHistoryStatistic';
 
 const reducers = {
   loginReducer,
@@ -191,7 +193,9 @@ const reducers = {
   setUserAsAdminReducer,
   resetPasswordOfUserReducer,
   getCpuStatisticReducer,
+  getCpuHistoryStatisticReducer,
   getMemoryStatisticReducer,
+  getMemoryHistoryStatisticReducer,
   router,
   loadingBar: loadingBarReducer
 };

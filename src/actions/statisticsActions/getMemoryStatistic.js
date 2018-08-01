@@ -57,7 +57,7 @@ export const fetchGetMemoryStatistic = (
     const { status, data } = response;
     switch (status) {
       case 200: {
-        dispatch(getMemoryStatisticSuccess(data));
+        dispatch(getMemoryStatisticSuccess(data.cpu ? data : { cpu: 1 }));
         break;
       }
       case 400: {

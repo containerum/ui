@@ -42,7 +42,7 @@ export const fetchGetCpuHistoryStatistic = (
   dispatch(getCpuHistoryStatisticRequest());
 
   const response = await axios
-    .get(`${URL}/cpu/history?step=1h`, {
+    .get(`${URL}/cpu/history?step=45m`, {
       headers: {
         'User-Client': browser,
         'User-Token': accessToken
