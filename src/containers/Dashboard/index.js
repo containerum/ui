@@ -16,6 +16,7 @@ import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespa
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
 import * as actionGetResources from '../../actions/statisticsActions/getResources';
 import * as actionGetCpuStatistic from '../../actions/statisticsActions/getCpuStatistic';
+import * as actionGetCpuHistoryStatistic from '../../actions/statisticsActions/getCpuHistoryStatistic';
 import * as actionGetMemoryStatistic from '../../actions/statisticsActions/getMemoryStatistic';
 import {
   GET_SOLUTIONS_INVALID,
@@ -71,7 +72,18 @@ import {
   GET_MEMORY_STATISTIC_SUCCESS
 } from '../../constants/statisticsConstants/getMemoryStatistic';
 
-const { PieChart, Pie, Cell } = Recharts;
+const {
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend
+} = Recharts;
 
 type Props = {
   location: Object,
@@ -89,12 +101,28 @@ type Props = {
   fetchGetSolutionsIfNeeded: () => void,
   fetchGetResourcesIfNeeded: () => void,
   fetchGetCpuStatisticIfNeeded: () => void,
+  fetchGetCpuHistoryStatisticIfNeeded: () => void,
   fetchGetMemoryStatisticIfNeeded: () => void
 };
 
 const isOnline = sourceType === 'ONLINE';
 
 const dashboardClassName = classNames.bind(styles);
+
+const data = [
+  { name: 'Page A', cpu: 2400 },
+  { name: 'Page B', cpu: 1398 },
+  { name: 'Page C', cpu: 9800 },
+  { name: 'Page D', cpu: 3908 },
+  { name: 'Page E', cpu: 4800 },
+  { name: 'Page F', cpu: 3800 },
+  { name: 'Page G', cpu: 4300 }
+];
+
+const d = new Date();
+const ms = Date.parse(d.toISOString());
+const date = new Date(ms - 432000000); // 120 hours
+console.log(date.toISOString());
 
 export class Dashboard extends PureComponent<Props> {
   constructor(props) {
@@ -121,13 +149,15 @@ export class Dashboard extends PureComponent<Props> {
       fetchGetResourcesIfNeeded,
       fetchGetConfigMapsIfNeeded,
       fetchGetCpuStatisticIfNeeded,
-      fetchGetMemoryStatisticIfNeeded
+      fetchGetMemoryStatisticIfNeeded,
+      fetchGetCpuHistoryStatisticIfNeeded
     } = this.props;
     isOnline && fetchGetSolutionsIfNeeded();
     fetchGetResourcesIfNeeded();
     fetchGetConfigMapsIfNeeded();
-    fetchGetCpuStatisticIfNeeded();
-    fetchGetMemoryStatisticIfNeeded();
+    !isOnline && fetchGetCpuStatisticIfNeeded();
+    !isOnline && fetchGetMemoryStatisticIfNeeded();
+    !isOnline && fetchGetCpuHistoryStatisticIfNeeded();
     const widget = cookie.load('widget');
     if (widget === 'hide') {
       this.setState({
@@ -224,7 +254,6 @@ export class Dashboard extends PureComponent<Props> {
       isOpenedSideBarGetStarted: false
     });
   };
-
   handleClickDontShow = () => {
     this.setState({
       ...this.state,
@@ -770,6 +799,31 @@ export class Dashboard extends PureComponent<Props> {
                       >
                         <div style={{ margin: 40, textAlign: 'justify' }}>
                           <div>{this.renderStatistics()}</div>
+                          <div style={{ marginTop: 60 }}>
+                            <LineChart
+                              width={600}
+                              height={300}
+                              data={data}
+                              margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5
+                              }}
+                            >
+                              <XAxis dataKey="name" />
+                              <YAxis />
+                              <CartesianGrid strokeDasharray="3 3" />
+                              <Tooltip />
+                              <Legend />
+                              <Line
+                                type="monotone"
+                                dataKey="cpu"
+                                stroke="#29abe2"
+                                activeDot={{ r: 8 }}
+                              />
+                            </LineChart>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -857,6 +911,10 @@ const connector: Connector<{}, Props> = connect(
       dispatch(actionGetConfigMaps.fetchGetConfigMapsIfNeeded()),
     fetchGetCpuStatisticIfNeeded: () =>
       dispatch(actionGetCpuStatistic.fetchGetCpuStatisticIfNeeded()),
+    fetchGetCpuHistoryStatisticIfNeeded: () =>
+      dispatch(
+        actionGetCpuHistoryStatistic.fetchGetCpuHistoryStatisticIfNeeded()
+      ),
     fetchGetMemoryStatisticIfNeeded: () =>
       dispatch(actionGetMemoryStatistic.fetchGetMemoryStatisticIfNeeded())
   })
