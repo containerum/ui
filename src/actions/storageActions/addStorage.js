@@ -16,21 +16,21 @@ const addStorageRequest = () => ({
   isFetching: true
 });
 
-const addStorageSuccess = (data, status, method, dataObj) => ({
+const addStorageSuccess = (data, status, method, name) => ({
   type: ADD_STORAGE_SUCCESS,
   isFetching: false,
   data,
   status,
   method,
-  dataObj
+  name
 });
 
-const addStorageFailure = (err, status, dataObj) => ({
+const addStorageFailure = (err, status, name) => ({
   type: ADD_STORAGE_FAILURE,
   isFetching: false,
   err,
   status,
-  dataObj
+  name
 });
 
 const addStorageInvalidToken = () => ({
@@ -65,7 +65,7 @@ export const fetchAddStorage = (
   const { status, data, config } = response;
   switch (status) {
     case 201: {
-      dispatch(addStorageSuccess(data, 201, config.method, dataObj));
+      dispatch(addStorageSuccess(data, 201, config.method, dataObj.name));
       break;
     }
     case 400: {
@@ -73,11 +73,11 @@ export const fetchAddStorage = (
         dispatch(addStorageInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push(routerLinks.login));
-      } else dispatch(addStorageFailure(data.message, status, dataObj));
+      } else dispatch(addStorageFailure(data.message, status, dataObj.name));
       break;
     }
     default: {
-      dispatch(addStorageFailure(data.message, status, dataObj));
+      dispatch(addStorageFailure(data.message, status, dataObj.name));
     }
   }
 };

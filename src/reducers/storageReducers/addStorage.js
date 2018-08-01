@@ -16,7 +16,7 @@ const initialState = {
   data: null,
   status: null,
   method: null,
-  ips: null,
+  name: null,
   err: null
 };
 
@@ -29,7 +29,7 @@ export default (state = initialState, action: Action) => {
         data: null,
         status: null,
         method: null,
-        ips: null,
+        name: null,
         err: null
       });
     case ADD_STORAGE_SUCCESS:
@@ -39,7 +39,7 @@ export default (state = initialState, action: Action) => {
         data: action.data,
         status: action.status,
         method: action.method,
-        ips: action.ips,
+        name: action.name,
         err: null
       });
     case ADD_STORAGE_FAILURE:
@@ -49,7 +49,7 @@ export default (state = initialState, action: Action) => {
         data: null,
         status: action.status,
         method: null,
-        ips: null,
+        name: null,
         err: action.err
       });
     default:

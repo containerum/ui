@@ -27,11 +27,13 @@ const StoragesViewList = ({
   getStoragesReducer,
   handleDeleteStorage
 }: Props) => (
-  <div className={globalStyles.blockItem} id="storages">
-    <div className={globalStyles.blockItemTitle}>Storages</div>
+  <div className={globalStyles.blockItem}>
+    {/* <div className={globalStyles.blockItemTitle}>Storages</div> */}
     <div className="row">
       <div className="col-md-10">
-        <div className={globalStyles.textLight}>External IP list</div>
+        <div className={globalStyles.textLight} style={{ fontSize: 20 }}>
+          Storages
+        </div>
       </div>
     </div>
     <div className="row">

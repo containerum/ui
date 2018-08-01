@@ -230,18 +230,27 @@ export class Settings extends PureComponent<Props> {
     }
 
     return (
-      <div>
+      <div
+        id="ips"
+        style={{
+          marginBottom: 50,
+          borderBottom: '1px solid #f6f6f6'
+        }}
+      >
         <SettingsViewList
           getDomainsReducer={getDomainsReducer.data}
           handleDeleteIP={this.handleDeleteIP}
         />
         <form
-          style={{ marginTop: 30 }}
+          style={{ margin: 30 }}
           onSubmit={this.handleSubmitAddIP}
           className={globalStyles.blockItem}
           id="addIP"
         >
-          <div className={globalStyles.blockItemTitle}>Add IP</div>
+          <div className={globalStyles.textLight} style={{ fontSize: 20 }}>
+            Add IP
+          </div>
+          {/* <div className={globalStyles.blockItemTitle}>Add IP</div> */}
           <div className="row">
             <div className="col-md-4">
               <InputControl
@@ -251,6 +260,7 @@ export class Settings extends PureComponent<Props> {
                 pattern="^[0-9][0-9.]*$"
                 required
                 title="Example: 192.168.88.210"
+                textHelper="Add external IP of your host machine"
                 baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
                 baseClassNameLabel={`${globalStyles.formGroupLabel} ${this.state
                   .ip && globalStyles.formGroupLabelOnFocus}`}
@@ -306,7 +316,7 @@ export class Settings extends PureComponent<Props> {
     }
 
     return (
-      <div>
+      <div id="storages">
         <StoragesViewList
           getStoragesReducer={getStoragesReducer.data}
           handleDeleteStorage={this.handleDeleteStorage}
@@ -317,7 +327,10 @@ export class Settings extends PureComponent<Props> {
           className={globalStyles.blockItem}
           id="addStorage"
         >
-          <div className={globalStyles.blockItemTitle}>Add Storage</div>
+          <div className={globalStyles.textLight} style={{ fontSize: 20 }}>
+            Add Storage class
+          </div>
+          {/* <div className={globalStyles.blockItemTitle}>Add Storage</div> */}
           <div className="row">
             <div className="col-md-4">
               <InputControl
@@ -327,6 +340,7 @@ export class Settings extends PureComponent<Props> {
                 pattern="^[-._a-zA-Z0-9]+$"
                 required
                 title="Example: gluster-heketi"
+                textHelper="To turn on volumes, add storage classes you have in kubernetes"
                 baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
                 baseClassNameLabel={`${globalStyles.formGroupLabel} ${this.state
                   .name && globalStyles.formGroupLabelOnFocus}`}
@@ -400,33 +414,62 @@ export class Settings extends PureComponent<Props> {
   };
 
   render() {
-    const { deleteDomainReducer, addDomainReducer } = this.props;
     const {
-      status: statusDelete,
-      method: methodDelete,
-      ips: ipDelete,
-      err: errDelete
+      deleteDomainReducer,
+      addDomainReducer,
+      addStorageReducer,
+      deleteStorageReducer
+    } = this.props;
+    const {
+      status: statusDomainDelete,
+      method: methodDomainDelete,
+      ips: ipDomainDelete,
+      err: errDomainDelete
     } = deleteDomainReducer;
     const {
-      status: statusAdd,
-      method: methodAdd,
-      ips: ipAdd,
-      err: errAdd
+      status: statusDomainAdd,
+      method: methodDomainAdd,
+      ips: ipDomainAdd,
+      err: errDomainAdd
     } = addDomainReducer;
+    const {
+      status: statusStorageDelete,
+      method: methodStorageDelete,
+      name: nameStorageDelete,
+      err: errStorageDelete
+    } = deleteStorageReducer;
+    const {
+      status: statusStorageAdd,
+      method: methodStorageAdd,
+      name: nameStorageAdd,
+      err: errStorageAdd
+    } = addStorageReducer;
     return (
       <div>
         <Helmet title="Settings" />
         <Notification
-          status={statusDelete}
-          name={ipDelete}
-          method={methodDelete}
-          errorMessage={errDelete}
+          status={statusDomainDelete}
+          name={ipDomainDelete}
+          method={methodDomainDelete}
+          errorMessage={errDomainDelete}
         />
         <Notification
-          status={statusAdd}
-          name={ipAdd}
-          method={methodAdd}
-          errorMessage={errAdd}
+          status={statusDomainAdd}
+          name={ipDomainAdd}
+          method={methodDomainAdd}
+          errorMessage={errDomainAdd}
+        />
+        <Notification
+          status={statusStorageDelete}
+          name={nameStorageDelete}
+          method={methodStorageDelete}
+          errorMessage={errStorageDelete}
+        />
+        <Notification
+          status={statusStorageAdd}
+          name={nameStorageAdd}
+          method={methodStorageAdd}
+          errorMessage={errStorageAdd}
         />
         <div className={globalStyles.contentBlock}>
           <div

@@ -28,7 +28,9 @@ const SettingsViewList = ({ getDomainsReducer, handleDeleteIP }: Props) => (
     <div className={globalStyles.blockItemTitle}>Settings</div>
     <div className="row">
       <div className="col-md-10">
-        <div className={globalStyles.textLight}>External IP list</div>
+        <div className={globalStyles.textLight} style={{ fontSize: 20 }}>
+          External IP list
+        </div>
       </div>
     </div>
     <div className="row">
