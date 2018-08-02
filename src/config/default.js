@@ -58,17 +58,23 @@ module.exports = {
     createNamespace: '/createProject',
     createCustomNamespace: '/createCustomProject',
     resizeCustomNamespace: '/resizeCustomProject/:idName',
+    createCustomVolume: '/project/:idName/createCustomVolume',
+    createCustomVolumeLink: (idName: string) =>
+      `/project/${idName}/createCustomVolume`,
+    updateCustomVolume: '/project/:idName/updateCustomVolume/:idVol',
+    updateCustomVolumeLink: (idName: string, idVol: string) =>
+      `/project/${idName}/updateCustomVolume/${idVol}`,
     resizeCustomNamespaceLink: (idName: string) =>
       `/resizeCustomProject/${idName}`,
     resizeNamespace: '/project/:idName/resize',
     resizeNamespaceLink: (idName: string) => `/project/${idName}/resize`,
-    // getVolumes: '/projects/:idName/volumes',
-    // getVolumesLink: (idName: string) => `/projects/${idName}/volumes`,
-    // createVolume: '/project/:idName/createVolume',
-    // createVolumeLink: (idName: string) => `/project/${idName}/createVolume`,
-    // resizeVolume: '/project/:idName/resizeVolume/:idVol',
-    // resizeVolumeLink: (idName: string, idVol: string) =>
-    //   `/project/${idName}/resizeVolume/${idVol}`,
+    getVolumes: '/projects/:idName/volumes',
+    getVolumesLink: (idName: string) => `/projects/${idName}/volumes`,
+    createVolume: '/project/:idName/createVolume',
+    createVolumeLink: (idName: string) => `/project/${idName}/createVolume`,
+    resizeVolume: '/project/:idName/resizeVolume/:idVol',
+    resizeVolumeLink: (idName: string, idVol: string) =>
+      `/project/${idName}/resizeVolume/${idVol}`,
     getDeployments: '/projects/:idName/deployments',
     getDeploymentsLink: (idName: string) => `/projects/${idName}/deployments`,
     getDeployment: '/project/:idName/deployments/:idDep',

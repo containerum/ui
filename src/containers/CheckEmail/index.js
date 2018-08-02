@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 import cookie from 'react-cookies';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
-import logoContainerum from '../../images/logo_containerum_exon_lv.svg';
+import logoContainerum from '../../images/logo_containerum_lv.svg';
 
 import { routerLinks, sourceType } from '../../config';
 

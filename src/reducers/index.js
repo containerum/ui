@@ -98,6 +98,8 @@ import resetPasswordOfUserReducer from './userManagement/resetPasswordOfUser';
 import getDomainsReducer from './domainsReducers/getDomains';
 import deleteDomainReducer from './domainReducers/deleteDomain';
 import addDomainReducer from './domainReducers/addDomain';
+import createCustomVolumeReducer from './volumeReducers/createCustomVolume';
+import updateCustomVolumeReducer from './volumeReducers/updateCustomVolume';
 import getStoragesReducer from './storagesReducers/getStorages';
 import addStorageReducer from './storageReducers/addStorage';
 import deleteStorageReducer from './storageReducers/deleteStorage';
@@ -197,6 +199,8 @@ const reducers = {
   getDomainsReducer,
   deleteDomainReducer,
   addDomainReducer,
+  createCustomVolumeReducer,
+  updateCustomVolumeReducer,
   getStoragesReducer,
   addStorageReducer,
   deleteStorageReducer,

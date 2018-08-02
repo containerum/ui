@@ -17,7 +17,7 @@ import { FORGOT_FAILURE } from '../../constants/forgotConstants';
 import globalStyles from '../../theme/global.scss';
 import buttonStyles from '../../theme/buttons.scss';
 import styles from './index.scss';
-import logoContainerum from '../../images/logo_containerum_exon_lv.svg';
+import logoContainerum from '../../images/logo_containerum_lv.svg';
 
 type Props = {
   forgotReducer: Object,

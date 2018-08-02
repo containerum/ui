@@ -104,6 +104,7 @@ export class Namespaces extends PureComponent<Props> {
       });
     }
   }
+
   handleOpenCloseModal = () => {
     this.setState({
       ...this.state,

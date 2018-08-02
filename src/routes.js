@@ -12,8 +12,8 @@ import { fetchGetPodIfNeeded } from './actions/podActions/getPod';
 import { fetchGetServicesIfNeeded } from './actions/servicesActions/getServices';
 import { fetchGetServiceIfNeeded } from './actions/serviceActions/getService';
 import { fetchGetNamespacesTariffsIfNeeded } from './actions/namespacesActions/getNamespacesTariffs';
-// import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
-// import { fetchGetVolumesTariffsIfNeeded } from './actions/volumesActions/getVolumesTariffs';
+import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
+import { fetchGetVolumesTariffsIfNeeded } from './actions/volumesActions/getVolumesTariffs';
 import { fetchGetSupportGroupsIfNeeded } from './actions/supportActions/getSupportGroups';
 import { fetchGetResourcesIfNeeded } from './actions/statisticsActions/getResources';
 import { fetchGetSolutionsIfNeeded } from './actions/solutionsActions/getSolutions';
@@ -26,9 +26,9 @@ import NamespacesPage from './containers/Namespaces';
 import NamespacePage from './containers/Namespace';
 import ResizeNamespacePage from './containers/ResizeNamespace';
 import CreateNamespacePage from './containers/CreateNamespace';
-// import VolumesPage from './containers/Volumes';
-// import CreateVolumePage from './containers/CreateVolume';
-// import ResizeVolumePage from './containers/ResizeVolume';
+import VolumesPage from './containers/Volumes';
+import CreateVolumePage from './containers/CreateVolume';
+import ResizeVolumePage from './containers/ResizeVolume';
 import DeploymentsPage from './containers/Deployments';
 import PodsPage from './containers/Pods';
 import PodPage from './containers/Pod';
@@ -42,6 +42,8 @@ import UpdateServicePage from './containers/UpdateService';
 import DeploymentPage from './containers/Deployment';
 import CreateCustomNamespacePage from './containers/CreateCustomNamespace';
 import UpdateCustomNamespacePage from './containers/UpdateCustomNamespace';
+import CreateCustomVolumePage from './containers/CreateCustomVolume';
+import UpdateCustomVolumePage from './containers/UpdateCustomVolume';
 import CreateDeploymentPage from './containers/CreateDeployment';
 import UpdateDeploymentPage from './containers/UpdateDeployment';
 import Login from './containers/Login';
@@ -113,39 +115,39 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  // {
-  //   path: routerLinks.getVolumes,
-  //   exact: true,
-  //   component: VolumesPage,
-  //   include: true,
-  //   loadData: (dispatch: Dispatch, params: Object) =>
-  //     Promise.all([
-  //       dispatch(fetchGetVolumesIfNeeded(params.idName)),
-  //       dispatch(fetchGetProfileIfNeeded())
-  //     ])
-  // },
-  // {
-  //   path: routerLinks.createVolume,
-  //   exact: true,
-  //   component: CreateVolumePage,
-  //   include: true,
-  //   loadData: (dispatch: Dispatch) =>
-  //     Promise.all([
-  //       dispatch(fetchGetVolumesTariffsIfNeeded()),
-  //       dispatch(fetchGetProfileIfNeeded())
-  //     ])
-  // },
-  // {
-  //   path: routerLinks.resizeVolume,
-  //   exact: true,
-  //   component: ResizeVolumePage,
-  //   include: true,
-  //   loadData: (dispatch: Dispatch) =>
-  //     Promise.all([
-  //       dispatch(fetchGetVolumesTariffsIfNeeded()),
-  //       dispatch(fetchGetProfileIfNeeded())
-  //     ])
-  // },
+  {
+    path: routerLinks.getVolumes,
+    exact: true,
+    component: VolumesPage,
+    include: true,
+    loadData: (dispatch: Dispatch, params: Object) =>
+      Promise.all([
+        dispatch(fetchGetVolumesIfNeeded(params.idName)),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  {
+    path: routerLinks.createVolume,
+    exact: true,
+    component: CreateVolumePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([
+        dispatch(fetchGetVolumesTariffsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  {
+    path: routerLinks.resizeVolume,
+    exact: true,
+    component: ResizeVolumePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([
+        dispatch(fetchGetVolumesTariffsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
   {
     path: routerLinks.getDeployments,
     exact: true,
@@ -403,6 +405,20 @@ export default [
         dispatch(fetchGetNamespaceIfNeeded(params.idName)),
         dispatch(fetchGetProfileIfNeeded())
       ])
+  },
+  {
+    path: routerLinks.createCustomVolume,
+    component: CreateCustomVolumePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
+  },
+  {
+    path: routerLinks.updateCustomVolume,
+    component: UpdateCustomVolumePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   isOnline && {
     path: routerLinks.getStarted,
