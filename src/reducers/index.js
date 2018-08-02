@@ -98,6 +98,8 @@ import resetPasswordOfUserReducer from './userManagement/resetPasswordOfUser';
 import getDomainsReducer from './domainsReducers/getDomains';
 import deleteDomainReducer from './domainReducers/deleteDomain';
 import addDomainReducer from './domainReducers/addDomain';
+import createCustomVolumeReducer from './volumeReducers/createCustomVolume';
+import updateCustomVolumeReducer from './volumeReducers/updateCustomVolume';
 
 const reducers = {
   loginReducer,
@@ -194,6 +196,8 @@ const reducers = {
   getDomainsReducer,
   deleteDomainReducer,
   addDomainReducer,
+  createCustomVolumeReducer,
+  updateCustomVolumeReducer,
   router,
   loadingBar: loadingBarReducer
 };

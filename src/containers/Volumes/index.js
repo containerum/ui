@@ -29,6 +29,7 @@ import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING
 } from '../../constants/namespacesConstants/getNamespaces';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 const globalClass = className.bind(globalStyles);
 const contentClassName = globalClass(
@@ -40,6 +41,7 @@ type Props = {
   match: Object,
   getVolumesReducer: Object,
   getNamespacesReducer: Object,
+  getProfileReducer: Object,
   deleteVolumeReducer: Object,
   fetchGetVolumesIfNeeded: (id: string) => void,
   fetchDeleteVolumeIfNeeded: (idVol: string, idName: string) => void
@@ -52,7 +54,8 @@ export class Volumes extends PureComponent<Props> {
       inputName: '',
       idVol: null,
       isOpened: false,
-      displayedVolumes: []
+      displayedVolumes: [],
+      role: null
     };
   }
   componentDidMount() {
@@ -71,6 +74,16 @@ export class Volumes extends PureComponent<Props> {
       });
     }
     if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        role: nextProps.getProfileReducer.data.role
+      });
+    }
+    if (
       this.props.deleteVolumeReducer.readyStatus !==
         nextProps.deleteVolumeReducer.readyStatus &&
       nextProps.deleteVolumeReducer.readyStatus === DELETE_VOLUME_SUCCESS
@@ -84,6 +97,7 @@ export class Volumes extends PureComponent<Props> {
       });
     }
   }
+
   handleOpenCloseModal = () => {
     this.setState({
       ...this.state,
@@ -149,6 +163,7 @@ export class Volumes extends PureComponent<Props> {
           namespace => namespace.id === match.params.idName
         )}
         idName={match.params.idName}
+        role={this.state.role}
         handleDeleteVolume={idVol => this.handleDeleteVolume(idVol)}
       />
     );
@@ -190,11 +205,13 @@ const connector: Connector<{}, Props> = connect(
   ({
     getVolumesReducer,
     getNamespacesReducer,
-    deleteVolumeReducer
+    deleteVolumeReducer,
+    getProfileReducer
   }: ReduxState) => ({
     getVolumesReducer,
     getNamespacesReducer,
-    deleteVolumeReducer
+    deleteVolumeReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetVolumesIfNeeded: (id: string) =>
