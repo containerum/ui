@@ -42,7 +42,7 @@ export const fetchGetMemoryHistoryStatistic = (
   dispatch(getMemoryHistoryStatisticRequest());
 
   const response = await axios
-    .get(`${URL}/memory/history?step=45m`, {
+    .get(`${URL}/memory/history`, {
       headers: {
         'User-Client': browser,
         'User-Token': accessToken
@@ -65,16 +65,33 @@ export const fetchGetMemoryHistoryStatistic = (
           dispatch(getMemoryHistoryStatisticInvalidToken());
         } else if (data.message === 'invalid request body format') {
           dispatch(push(routerLinks.login));
-        } else dispatch(getMemoryHistoryStatisticSuccess({ cpu: 1 }));
+        } else
+          dispatch(
+            getMemoryHistoryStatisticSuccess({
+              values: [1],
+              labels: [new Date().toISOString()]
+            })
+          );
         // else dispatch(getMemoryHistoryStatisticFailure(data.message));
         break;
       }
       default: {
-        dispatch(getMemoryHistoryStatisticSuccess({ cpu: 1 }));
+        dispatch(
+          getMemoryHistoryStatisticSuccess({
+            values: [1],
+            labels: [new Date().toISOString()]
+          })
+        );
         // dispatch(getMemoryHistoryStatisticFailure(data.message));
       }
     }
-  } else dispatch(getMemoryHistoryStatisticSuccess({ cpu: 1 }));
+  } else
+    dispatch(
+      getMemoryHistoryStatisticSuccess({
+        values: [1],
+        labels: [new Date().toISOString()]
+      })
+    );
 };
 
 export const fetchGetMemoryHistoryStatisticIfNeeded = (): ThunkAction => (

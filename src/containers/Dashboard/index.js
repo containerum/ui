@@ -87,13 +87,13 @@ const {
   PieChart,
   Pie,
   Cell,
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
+  Legend,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   Brush
 } = Recharts;
 
@@ -201,16 +201,12 @@ export class Dashboard extends PureComponent<Props> {
       nextProps.getMemoryStatisticReducer.readyStatus ===
         GET_MEMORY_STATISTIC_SUCCESS
     ) {
-      const valueOfMemory =
-        nextProps.getMemoryStatisticReducer.data.cpu === 1
-          ? 1
-          : nextProps.getMemoryStatisticReducer.data.cpu * 100 / 32768;
       this.setState({
         ...this.state,
         dataOfMemory: [
           {
             name: 'memory',
-            value: valueOfMemory
+            value: nextProps.getMemoryStatisticReducer.data.memory
           }
         ]
       });
@@ -632,9 +628,9 @@ export class Dashboard extends PureComponent<Props> {
         ? 360
         : getCpuStatisticReducer.data.cpu * 3.6;
     const memoryRadius =
-      getMemoryStatisticReducer.data.cpu === 1
+      getMemoryStatisticReducer.data.memory === 1
         ? 360
-        : getMemoryStatisticReducer.data.cpu * 100 / 32768 * 3.6;
+        : getMemoryStatisticReducer.data.memory * 3.6;
     return (
       <div>
         <div
@@ -718,34 +714,53 @@ export class Dashboard extends PureComponent<Props> {
       return <p>Oops, Failed to load data of cpu statistic!</p>;
     }
 
-    const dataOfCpuHistory = getCpuHistoryStatisticReducer.data.memory.map(
-      statistic => ({ cpu: parseInt((statistic * 100).toFixed(0), 10) })
+    const dataOfCpuHistory = getCpuHistoryStatisticReducer.data.values.map(
+      (statistic, index) => {
+        const date = new Date(
+          Date.parse(getCpuHistoryStatisticReducer.data.labels[index])
+        );
+        return {
+          cpu: statistic,
+          name: `${`${date.getHours()}:${date.getMinutes()}`}`
+        };
+      }
     );
     return (
-      <LineChart
-        width={1000}
-        height={300}
-        data={dataOfCpuHistory}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5
-        }}
-      >
-        <XAxis dataKey="name" />
-        <YAxis />
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
-        <Legend />
-        <Brush dataKey="name" height={30} stroke="#29abe2" />
-        <Line
-          type="monotone"
-          dataKey="cpu"
-          stroke="#29abe2"
-          activeDot={{ r: 8 }}
-        />
-      </LineChart>
+      <div>
+        <div
+          style={{
+            marginLeft: 70,
+            marginBottom: 10
+          }}
+        >
+          %
+        </div>
+        <AreaChart
+          width={1030}
+          height={350}
+          data={dataOfCpuHistory}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="cpu"
+            stroke="#29abe2"
+            fill="#29abe2"
+            fillOpacity="0.2"
+          />
+          <Legend />
+          <Brush dataKey="name" height={30} stroke="#29abe2" />
+        </AreaChart>
+      </div>
     );
   };
   renderMemoryHistoryStatistics = () => {
@@ -784,34 +799,54 @@ export class Dashboard extends PureComponent<Props> {
       return <p>Oops, Failed to load data of cpu statistic!</p>;
     }
 
-    const dataOfMemoryHistory = getMemoryHistoryStatisticReducer.data.memory.map(
-      statistic => ({ memory: statistic })
+    const dataOfMemoryHistory = getMemoryHistoryStatisticReducer.data.values.map(
+      (statistic, index) => {
+        const date = new Date(
+          Date.parse(getMemoryHistoryStatisticReducer.data.labels[index])
+        );
+        return {
+          memory: statistic,
+          name: `${`${date.getHours()}:${date.getMinutes()}`}`
+        };
+      }
     );
+
     return (
-      <LineChart
-        width={1000}
-        height={300}
-        data={dataOfMemoryHistory}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5
-        }}
-      >
-        <XAxis dataKey="name" />
-        <YAxis />
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
-        <Legend />
-        <Brush dataKey="name" height={30} stroke="#29abe2" />
-        <Line
-          type="monotone"
-          dataKey="memory"
-          stroke="#29abe2"
-          activeDot={{ r: 8 }}
-        />
-      </LineChart>
+      <div>
+        <div
+          style={{
+            marginLeft: 70,
+            marginBottom: 10
+          }}
+        >
+          %
+        </div>
+        <AreaChart
+          width={1030}
+          height={350}
+          data={dataOfMemoryHistory}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="memory"
+            stroke="#29abe2"
+            fill="#29abe2"
+            fillOpacity="0.2"
+          />
+          <Legend />
+          <Brush dataKey="name" height={30} stroke="#29abe2" />
+        </AreaChart>
+      </div>
     );
   };
 

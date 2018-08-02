@@ -42,7 +42,7 @@ export const fetchGetCpuHistoryStatistic = (
   dispatch(getCpuHistoryStatisticRequest());
 
   const response = await axios
-    .get(`${URL}/cpu/history?step=45m`, {
+    .get(`${URL}/cpu/history`, {
       headers: {
         'User-Client': browser,
         'User-Token': accessToken
@@ -65,16 +65,33 @@ export const fetchGetCpuHistoryStatistic = (
           dispatch(getCpuHistoryStatisticInvalidToken());
         } else if (data.message === 'invalid request body format') {
           dispatch(push(routerLinks.login));
-        } else dispatch(getCpuHistoryStatisticSuccess({ cpu: 1 }));
+        } else
+          dispatch(
+            getCpuHistoryStatisticSuccess({
+              values: [1],
+              labels: [new Date().toISOString()]
+            })
+          );
         // else dispatch(getCpuHistoryStatisticFailure(data.message));
         break;
       }
       default: {
-        dispatch(getCpuHistoryStatisticSuccess({ cpu: 1 }));
+        dispatch(
+          getCpuHistoryStatisticSuccess({
+            values: [1],
+            labels: [new Date().toISOString()]
+          })
+        );
         // dispatch(getCpuHistoryStatisticFailure(data.message));
       }
     }
-  } else dispatch(getCpuHistoryStatisticSuccess({ cpu: 1 }));
+  } else
+    dispatch(
+      getCpuHistoryStatisticSuccess({
+        values: [1],
+        labels: [new Date().toISOString()]
+      })
+    );
 };
 
 export const fetchGetCpuHistoryStatisticIfNeeded = (): ThunkAction => (

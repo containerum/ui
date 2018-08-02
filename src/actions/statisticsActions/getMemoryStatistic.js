@@ -57,7 +57,7 @@ export const fetchGetMemoryStatistic = (
     const { status, data } = response;
     switch (status) {
       case 200: {
-        dispatch(getMemoryStatisticSuccess(data.cpu ? data : { cpu: 1 }));
+        dispatch(getMemoryStatisticSuccess(data.memory ? data : { memory: 1 }));
         break;
       }
       case 400: {
@@ -65,16 +65,16 @@ export const fetchGetMemoryStatistic = (
           dispatch(getMemoryStatisticInvalidToken());
         } else if (data.message === 'invalid request body format') {
           dispatch(push(routerLinks.login));
-        } else dispatch(getMemoryStatisticSuccess({ cpu: 1 }));
+        } else dispatch(getMemoryStatisticSuccess({ memory: 1 }));
         // else dispatch(getMemoryStatisticFailure(data.message));
         break;
       }
       default: {
-        dispatch(getMemoryStatisticSuccess({ cpu: 1 }));
+        dispatch(getMemoryStatisticSuccess({ memory: 1 }));
         // dispatch(getMemoryStatisticFailure(data.message));
       }
     }
-  } else dispatch(getMemoryStatisticSuccess({ cpu: 1 }));
+  } else dispatch(getMemoryStatisticSuccess({ memory: 1 }));
 };
 
 export const fetchGetMemoryStatisticIfNeeded = (): ThunkAction => (
