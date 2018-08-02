@@ -98,6 +98,9 @@ import resetPasswordOfUserReducer from './userManagement/resetPasswordOfUser';
 import getDomainsReducer from './domainsReducers/getDomains';
 import deleteDomainReducer from './domainReducers/deleteDomain';
 import addDomainReducer from './domainReducers/addDomain';
+import getStoragesReducer from './storagesReducers/getStorages';
+import addStorageReducer from './storageReducers/addStorage';
+import deleteStorageReducer from './storageReducers/deleteStorage';
 
 const reducers = {
   loginReducer,
@@ -194,6 +197,9 @@ const reducers = {
   getDomainsReducer,
   deleteDomainReducer,
   addDomainReducer,
+  getStoragesReducer,
+  addStorageReducer,
+  deleteStorageReducer,
   router,
   loadingBar: loadingBarReducer
 };
