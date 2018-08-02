@@ -100,6 +100,9 @@ import deleteDomainReducer from './domainReducers/deleteDomain';
 import addDomainReducer from './domainReducers/addDomain';
 import createCustomVolumeReducer from './volumeReducers/createCustomVolume';
 import updateCustomVolumeReducer from './volumeReducers/updateCustomVolume';
+import getStoragesReducer from './storagesReducers/getStorages';
+import addStorageReducer from './storageReducers/addStorage';
+import deleteStorageReducer from './storageReducers/deleteStorage';
 
 const reducers = {
   loginReducer,
@@ -198,6 +201,9 @@ const reducers = {
   addDomainReducer,
   createCustomVolumeReducer,
   updateCustomVolumeReducer,
+  getStoragesReducer,
+  addStorageReducer,
+  deleteStorageReducer,
   router,
   loadingBar: loadingBarReducer
 };
