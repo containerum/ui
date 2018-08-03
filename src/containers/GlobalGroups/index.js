@@ -225,7 +225,7 @@ class GlobalGroups extends PureComponent<Props> {
     const {
       deleteGroupReducer,
       addGroupReducer,
-      getProfileReducer,
+      // getProfileReducer,
       fetchAddGroupIfNeeded,
       fetchDeleteGroupIfNeeded,
       getGroupsReducer
@@ -250,7 +250,7 @@ class GlobalGroups extends PureComponent<Props> {
         group => group.id === this.state.idUser
       );
     }
-    const label = getProfileReducer.data ? getProfileReducer.data.login : '';
+    // const label = getProfileReducer.data ? getProfileReducer.data.login : '';
     return (
       <div>
         <Helmet title="Groups" />
@@ -290,12 +290,7 @@ class GlobalGroups extends PureComponent<Props> {
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
                     <div className={globalStyles.contentBlockHeader}>
-                      <div
-                        className={labelClassName}
-                        style={{ textTransform: 'lowercase' }}
-                      >
-                        {label}
-                      </div>
+                      <div className={labelClassName}>Membership</div>
                       <div style={{ marginBottom: 20 }}>
                         <ul
                           className={`${menuClassName} nav nav-pills`}

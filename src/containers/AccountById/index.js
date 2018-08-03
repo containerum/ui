@@ -26,6 +26,7 @@ import ProfileInfo from '../../components/ProfileInfo';
 import ProfileSidebar from '../../components/ProfileSidebar';
 import Notification from '../Notification';
 import ResetPasswordModal from '../../components/CustomerModal/ResetPasswordModal';
+import BackButton from '../../components/BackButton';
 import DeleteAccountInfo from '../Account/DeleteAccount';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
@@ -307,7 +308,7 @@ export class AccountById extends PureComponent<Props> {
       err: errDelete
     } = adminDeleteUserReducer;
     return (
-      <div>
+      <div style={{ position: 'relative' }}>
         <Helmet title="Account" />
         <Notification
           status={statusReset}
@@ -329,6 +330,7 @@ export class AccountById extends PureComponent<Props> {
           onHandleResetPassword={() => this.handleClickResetPassword()}
           handleClickCopyPassword={() => this.handleClickCopyPassword()}
         />
+        <BackButton path={routerLinks.getGlobalMembership} />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">

@@ -60,7 +60,7 @@
       }
     },
     "build": {
-      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "node --max_old_space_size=4096 node_modules/.bin/webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
       "env": {
         "NODE_ENV": "production",
         "STATS": "disabled"
@@ -174,7 +174,9 @@
           ]
         }
       ],
-      "jsx-a11y/mouse-events-have-key-events": [0],
+      "jsx-a11y/mouse-events-have-key-events": [
+        0
+      ],
       "react/no-did-mount-set-state": [
         0
       ],
@@ -298,6 +300,7 @@
     "react-router-hash-link": "^1.2.0",
     "react-router-redux": "5.0.0-alpha.8",
     "react-scrollspy": "^3.3.5",
+    "recharts": "^1.1.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",

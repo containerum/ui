@@ -37,6 +37,7 @@ import {
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+import BackButton from '../../components/BackButton';
 
 const globalClass = className.bind(globalStyles);
 const containerClassName = globalClass(
@@ -339,7 +340,7 @@ class Membership extends PureComponent<Props> {
       ? getNamespaceUsersAccessReducer.data.label
       : idName;
     return (
-      <div>
+      <div style={{ position: 'relative' }}>
         <Helmet title={`Membership of ${label}`} />
         <Notification
           status={statusDelete}
@@ -370,6 +371,7 @@ class Membership extends PureComponent<Props> {
           namespaceId={idName}
           err={this.state.errAdd}
         />
+        <BackButton path={routerLinks.namespaceLink(idName)} />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">

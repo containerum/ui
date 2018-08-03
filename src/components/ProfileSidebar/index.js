@@ -211,7 +211,7 @@ const ProfileSidebar = ({ type }: Props) => (
           Settings
         </div>
         <Scrollspy
-          items={['ips']}
+          items={['ips', 'storages']}
           style={{
             padding: '20px 0 0 20px'
           }}
@@ -233,6 +233,25 @@ const ProfileSidebar = ({ type }: Props) => (
                 className={`${accountStyles.navLink} nav-link`}
               >
                 IP`s
+              </HashLink>
+            )}
+          </li>
+          <li className={`${accountStyles.navItem} nav-item`}>
+            {type === 'settings' ? (
+              <div
+                className={`${accountStyles.navLink} nav-link`}
+                onClick={() => scrollById('storages')}
+                onKeyPress={() => scrollById('storages')}
+                role="presentation"
+              >
+                Storages
+              </div>
+            ) : (
+              <HashLink
+                to={`${routerLinks.settings}#storages`}
+                className={`${accountStyles.navLink} nav-link`}
+              >
+                Storages
               </HashLink>
             )}
           </li>

@@ -57,7 +57,7 @@ export const fetchGetVolumes = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getVolumesSuccess(data));
+      dispatch(getVolumesSuccess(data.volumes));
       break;
     }
     case 400: {

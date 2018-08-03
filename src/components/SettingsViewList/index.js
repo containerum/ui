@@ -23,12 +23,14 @@ const containerClassName = globalClass(
   'hoverAction'
 );
 
-const ConfigMapList = ({ getDomainsReducer, handleDeleteIP }: Props) => (
+const SettingsViewList = ({ getDomainsReducer, handleDeleteIP }: Props) => (
   <div className={globalStyles.blockItem} id="settings">
     <div className={globalStyles.blockItemTitle}>Settings</div>
     <div className="row">
       <div className="col-md-10">
-        <div className={globalStyles.textLight}>External IP list</div>
+        <div className={globalStyles.textLight} style={{ fontSize: 20 }}>
+          External IP list
+        </div>
       </div>
     </div>
     <div className="row">
@@ -134,4 +136,4 @@ const ConfigMapList = ({ getDomainsReducer, handleDeleteIP }: Props) => (
   </div>
 );
 
-export default ConfigMapList;
+export default SettingsViewList;

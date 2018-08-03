@@ -4,25 +4,26 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import volumePng from '../../images/volume.svg';
 import globalStyles from '../../theme/global.scss';
 import depStyles from '../../containers/Deployments/index.scss';
 import { timeago } from '../../functions/timeago';
 
 const globalClass = className.bind(globalStyles);
-
 const tableClassName = globalClass('contentBlockTable', 'table');
-
 const contentClassName = globalClass(
   'contentBlockContent',
   'contentBlockContentFull'
 );
 
+const isOnline = sourceType === 'ONLINE';
+
 type Props = {
   data: Array<Object>,
   dataNamespace: Object,
   idName: string,
+  role: string,
   handleDeleteVolume: (idVol: string) => void
 };
 
@@ -30,6 +31,7 @@ const VolumesList = ({
   data,
   dataNamespace,
   idName,
+  role,
   handleDeleteVolume
 }: Props) => {
   const handleClickDeleteVolume = name => {
@@ -78,18 +80,23 @@ const VolumesList = ({
                     onKeyPress={e => handleClose(e)}
                     role="presentation"
                   >
-                    {handleClickDeleteVolume &&
-                      accessToNamespace !== 'read' && (
-                        <i
-                          className={`${globalStyles.contentBlockTableMore} ${
-                            globalStyles.dropdownToggle
-                          }
+                    {((handleClickDeleteVolume &&
+                      accessToNamespace !== 'read' &&
+                      isOnline &&
+                      role === 'user') ||
+                      (handleClickDeleteVolume &&
+                        accessToNamespace !== 'read' &&
+                        role === 'admin')) && (
+                      <i
+                        className={`${globalStyles.contentBlockTableMore} ${
+                          globalStyles.dropdownToggle
+                        }
                           ${globalStyles.ellipsisRoleMore} ion-more `}
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        />
-                      )}
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      />
+                    )}
                     {handleClickDeleteVolume &&
                       accessToNamespace !== 'read' && (
                         <ul
@@ -98,23 +105,53 @@ const VolumesList = ({
                           }`}
                           role="menu"
                         >
-                          <NavLink
-                            activeClassName="active"
-                            className={`dropdown-item  ${
-                              globalStyles.dropdownItem
-                            }`}
-                            to={routerLinks.resizeVolumeLink(idName, name)}
-                          >
-                            Resize
-                          </NavLink>
-                          <button
-                            className={`dropdown-item text-danger ${
-                              globalStyles.dropdownItem
-                            }`}
-                            onClick={() => handleClickDeleteVolume(name)}
-                          >
-                            Delete
-                          </button>
+                          {isOnline &&
+                            role === 'user' && (
+                              <NavLink
+                                activeClassName="active"
+                                className={`dropdown-item  ${
+                                  globalStyles.dropdownItem
+                                }`}
+                                to={routerLinks.resizeVolumeLink(idName, name)}
+                              >
+                                Resize
+                              </NavLink>
+                            )}
+                          {role === 'admin' && (
+                            <NavLink
+                              activeClassName="active"
+                              className={`dropdown-item  ${
+                                globalStyles.dropdownItem
+                              }`}
+                              to={routerLinks.updateCustomVolumeLink(
+                                idName,
+                                name
+                              )}
+                            >
+                              Resize
+                            </NavLink>
+                          )}
+                          {isOnline &&
+                            role === 'user' && (
+                              <button
+                                className={`dropdown-item text-danger ${
+                                  globalStyles.dropdownItem
+                                }`}
+                                onClick={() => handleClickDeleteVolume(name)}
+                              >
+                                Delete
+                              </button>
+                            )}
+                          {role === 'admin' && (
+                            <button
+                              className={`dropdown-item text-danger ${
+                                globalStyles.dropdownItem
+                              }`}
+                              onClick={() => handleClickDeleteVolume(name)}
+                            >
+                              Delete
+                            </button>
+                          )}
                         </ul>
                       )}
                   </td>

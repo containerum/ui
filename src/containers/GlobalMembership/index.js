@@ -321,12 +321,7 @@ class GlobalMembership extends PureComponent<Props> {
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
                     <div className={globalStyles.contentBlockHeader}>
-                      <div
-                        className={labelClassName}
-                        style={{ textTransform: 'lowercase' }}
-                      >
-                        {label}
-                      </div>
+                      <div className={labelClassName}>Membership</div>
                       <div style={{ marginBottom: 20 }}>
                         <ul
                           className={`${menuClassName} nav nav-pills`}
