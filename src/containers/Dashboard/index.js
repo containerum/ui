@@ -16,8 +16,9 @@ import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespa
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
 import * as actionGetResources from '../../actions/statisticsActions/getResources';
 import * as actionGetCpuStatistic from '../../actions/statisticsActions/getCpuStatistic';
-import * as actionGetCpuHistoryStatistic from '../../actions/statisticsActions/getCpuHistoryStatistic';
 import * as actionGetMemoryStatistic from '../../actions/statisticsActions/getMemoryStatistic';
+import * as actionGetStorageStatistic from '../../actions/statisticsActions/getStorageStatistic';
+import * as actionGetCpuHistoryStatistic from '../../actions/statisticsActions/getCpuHistoryStatistic';
 import * as actionGetMemoryHistoryStatistic from '../../actions/statisticsActions/getMemoryHistoryStatistic';
 import {
   GET_SOLUTIONS_INVALID,
@@ -82,6 +83,12 @@ import {
   GET_MEMORY_HISTORY_STATISTIC_INVALID,
   GET_MEMORY_HISTORY_STATISTIC_REQUESTING
 } from '../../constants/statisticsConstants/getMemoryHistoryStatistic';
+import {
+  GET_STORAGE_STATISTIC_FAILURE,
+  GET_STORAGE_STATISTIC_INVALID,
+  GET_STORAGE_STATISTIC_REQUESTING,
+  GET_STORAGE_STATISTIC_SUCCESS
+} from '../../constants/statisticsConstants/getStorageStatistic';
 
 const {
   PieChart,
@@ -110,6 +117,7 @@ type Props = {
   getCpuHistoryStatisticReducer: Object,
   getMemoryStatisticReducer: Object,
   getMemoryHistoryStatisticReducer: Object,
+  getStorageStatisticReducer: Object,
   fetchGetConfigMapsIfNeeded: () => void,
   fetchGetNamespacesIfNeeded: () => void,
   fetchGetSolutionsIfNeeded: () => void,
@@ -117,6 +125,7 @@ type Props = {
   fetchGetCpuStatisticIfNeeded: () => void,
   fetchGetCpuHistoryStatisticIfNeeded: () => void,
   fetchGetMemoryStatisticIfNeeded: () => void,
+  fetchGetStorageStatisticIfNeeded: () => void,
   fetchGetMemoryHistoryStatisticIfNeeded: () => void
 };
 
@@ -139,7 +148,8 @@ export class Dashboard extends PureComponent<Props> {
       isViewWidget: true,
       currentSolutionTemplate: null,
       dataOfCpu: [{ name: 'cpu', value: 0 }],
-      dataOfMemory: [{ name: 'memory', value: 0 }]
+      dataOfMemory: [{ name: 'memory', value: 0 }],
+      dataOfStorage: [{ name: 'storage', value: 0 }]
     };
   }
   componentWillMount() {
@@ -155,6 +165,7 @@ export class Dashboard extends PureComponent<Props> {
       fetchGetConfigMapsIfNeeded,
       fetchGetCpuStatisticIfNeeded,
       fetchGetMemoryStatisticIfNeeded,
+      fetchGetStorageStatisticIfNeeded,
       fetchGetCpuHistoryStatisticIfNeeded,
       fetchGetMemoryHistoryStatisticIfNeeded
     } = this.props;
@@ -163,6 +174,7 @@ export class Dashboard extends PureComponent<Props> {
     fetchGetConfigMapsIfNeeded();
     !isOnline && fetchGetCpuStatisticIfNeeded();
     !isOnline && fetchGetMemoryStatisticIfNeeded();
+    !isOnline && fetchGetStorageStatisticIfNeeded();
     !isOnline && fetchGetMemoryHistoryStatisticIfNeeded();
     !isOnline && fetchGetCpuHistoryStatisticIfNeeded();
     const widget = cookie.load('widget');
@@ -207,6 +219,22 @@ export class Dashboard extends PureComponent<Props> {
           {
             name: 'memory',
             value: nextProps.getMemoryStatisticReducer.data.memory
+          }
+        ]
+      });
+    }
+    if (
+      this.props.getStorageStatisticReducer.readyStatus !==
+        nextProps.getStorageStatisticReducer.readyStatus &&
+      nextProps.getStorageStatisticReducer.readyStatus ===
+        GET_STORAGE_STATISTIC_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        dataOfStorage: [
+          {
+            name: 'storage',
+            value: nextProps.getStorageStatisticReducer.data.storage
           }
         ]
       });
@@ -286,13 +314,14 @@ export class Dashboard extends PureComponent<Props> {
         cy={75}
         labelLine={false}
         label={this.renderCustomizedLabel}
-        startAngle={angel}
-        endAngle={0}
+        startAngle={0}
+        endAngle={angel}
         outerRadius={80}
         innerRadius={60}
-        fill="#8884d8"
       >
-        <Cell fill="#29abe2" />
+        <Cell
+          fill={angel <= 180 ? '#29abe2' : angel >= 288 ? '#ff0c0a' : '#FFEB00'}
+        />
       </Pie>
     </PieChart>
   );
@@ -587,17 +616,27 @@ export class Dashboard extends PureComponent<Props> {
     );
   };
   renderStatistics = () => {
-    const { getCpuStatisticReducer, getMemoryStatisticReducer } = this.props;
+    const {
+      getCpuStatisticReducer,
+      getMemoryStatisticReducer,
+      getStorageStatisticReducer
+    } = this.props;
     if (
       !getCpuStatisticReducer.readyStatus ||
       getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_INVALID ||
       getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_REQUESTING ||
       !getMemoryStatisticReducer.readyStatus ||
       getMemoryStatisticReducer.readyStatus === GET_MEMORY_STATISTIC_INVALID ||
-      getMemoryStatisticReducer.readyStatus === GET_MEMORY_STATISTIC_REQUESTING
+      getMemoryStatisticReducer.readyStatus ===
+        GET_MEMORY_STATISTIC_REQUESTING ||
+      !getStorageStatisticReducer.readyStatus ||
+      getStorageStatisticReducer.readyStatus ===
+        GET_STORAGE_STATISTIC_INVALID ||
+      getStorageStatisticReducer.readyStatus ===
+        GET_STORAGE_STATISTIC_REQUESTING
     ) {
       return (
-        <div className="col-md-3 pr-0">
+        <div className="col-md-12 pr-0">
           <div
             className="block-container"
             style={{
@@ -618,7 +657,8 @@ export class Dashboard extends PureComponent<Props> {
     }
     if (
       getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_FAILURE ||
-      getMemoryStatisticReducer.readyStatus === GET_MEMORY_STATISTIC_FAILURE
+      getMemoryStatisticReducer.readyStatus === GET_MEMORY_STATISTIC_FAILURE ||
+      getStorageStatisticReducer.readyStatus === GET_STORAGE_STATISTIC_FAILURE
     ) {
       return <p>Oops, Failed to load data of cpu statistic!</p>;
     }
@@ -631,6 +671,10 @@ export class Dashboard extends PureComponent<Props> {
       getMemoryStatisticReducer.data.memory === 1
         ? 360
         : getMemoryStatisticReducer.data.memory * 3.6;
+    const storageRadius =
+      getStorageStatisticReducer.data.storage === 1
+        ? 360
+        : getStorageStatisticReducer.data.storage * 3.6;
     return (
       <div>
         <div
@@ -675,6 +719,27 @@ export class Dashboard extends PureComponent<Props> {
           </div>
           {this.simplePieChart(this.state.dataOfMemory, memoryRadius)}
         </div>
+        <div
+          style={{
+            textAlign: 'center',
+            width: '33%',
+            display: 'inline-block'
+          }}
+        >
+          <div className="nav-item">
+            <div
+              className={`${styles.customSolutionNavLink} nav-link`}
+              style={{
+                width: 60,
+                margin: '0 auto',
+                marginBottom: 30
+              }}
+            >
+              Storage
+            </div>
+          </div>
+          {this.simplePieChart(this.state.dataOfStorage, storageRadius)}
+        </div>
       </div>
     );
   };
@@ -688,7 +753,7 @@ export class Dashboard extends PureComponent<Props> {
         GET_CPU_HISTORY_STATISTIC_REQUESTING
     ) {
       return (
-        <div className="col-md-3 pr-0">
+        <div className="col-md-12 pr-0">
           <div
             className="block-container"
             style={{
@@ -773,7 +838,7 @@ export class Dashboard extends PureComponent<Props> {
         GET_MEMORY_HISTORY_STATISTIC_REQUESTING
     ) {
       return (
-        <div className="col-md-3 pr-0">
+        <div className="col-md-12 pr-0">
           <div
             className="block-container"
             style={{
@@ -1046,7 +1111,8 @@ const connector: Connector<{}, Props> = connect(
     getCpuStatisticReducer,
     getCpuHistoryStatisticReducer,
     getMemoryStatisticReducer,
-    getMemoryHistoryStatisticReducer
+    getMemoryHistoryStatisticReducer,
+    getStorageStatisticReducer
   }: ReduxState) => ({
     getProfileReducer,
     getNamespacesReducer,
@@ -1057,7 +1123,8 @@ const connector: Connector<{}, Props> = connect(
     getCpuStatisticReducer,
     getCpuHistoryStatisticReducer,
     getMemoryStatisticReducer,
-    getMemoryHistoryStatisticReducer
+    getMemoryHistoryStatisticReducer,
+    getStorageStatisticReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: (role: string) =>
@@ -1076,6 +1143,8 @@ const connector: Connector<{}, Props> = connect(
       ),
     fetchGetMemoryStatisticIfNeeded: () =>
       dispatch(actionGetMemoryStatistic.fetchGetMemoryStatisticIfNeeded()),
+    fetchGetStorageStatisticIfNeeded: () =>
+      dispatch(actionGetStorageStatistic.fetchGetStorageStatisticIfNeeded()),
     fetchGetMemoryHistoryStatisticIfNeeded: () =>
       dispatch(
         actionGetMemoryHistoryStatistic.fetchGetMemoryHistoryStatisticIfNeeded()

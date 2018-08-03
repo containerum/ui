@@ -113,7 +113,6 @@ export class SideBarGetStarted extends PureComponent<Props> {
           'https://docs.containerum.com/web-panel/'
         )
         .replace(regexpAbsoluteCliLink, 'https://docs.containerum.com/cli/');
-      console.log(text);
       return <Markdown>{text}</Markdown>;
     }
     return null;

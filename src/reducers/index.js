@@ -99,6 +99,7 @@ import getCpuStatisticReducer from './statisticsReducers/getCpuStatistic';
 import getCpuHistoryStatisticReducer from './statisticsReducers/getCpuHistoryStatistic';
 import getMemoryStatisticReducer from './statisticsReducers/getMemoryStatistic';
 import getMemoryHistoryStatisticReducer from './statisticsReducers/getMemoryHistoryStatistic';
+import getStorageStatisticReducer from './statisticsReducers/getStorageStatistic';
 
 const reducers = {
   loginReducer,
@@ -196,6 +197,7 @@ const reducers = {
   getCpuHistoryStatisticReducer,
   getMemoryStatisticReducer,
   getMemoryHistoryStatisticReducer,
+  getStorageStatisticReducer,
   router,
   loadingBar: loadingBarReducer
 };
