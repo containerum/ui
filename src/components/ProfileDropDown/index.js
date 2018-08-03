@@ -66,6 +66,15 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
                 Billing
               </NavLink>
             )}
+            {!isOnline && (
+              <NavLink
+                activeClassName="active"
+                className="dropdown-item"
+                to={routerLinks.settings}
+              >
+                Settings
+              </NavLink>
+            )}
             {role === 'admin' && (
               <NavLink
                 activeClassName="active"

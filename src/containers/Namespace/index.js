@@ -41,8 +41,8 @@ import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import DeploymentsPage from '../Deployments';
 import RunningSolutionsPage from '../RunningSolutions';
 import ServicesPage from '../Services';
-// import VolumesPage from '../Volumes';
-import ConfigMapsPage from '../ConfigMaps';
+import VolumesPage from '../Volumes';
+import ConfigMapsPage from '../ConfigMapsInNamespace';
 import DomainsList from '../Domains';
 import ns from '../../images/ns-1.svg';
 
@@ -71,7 +71,8 @@ export class Namespace extends PureComponent<Props> {
     this.state = {
       inputName: '',
       idName: null,
-      isOpened: false
+      isOpened: false,
+      role: null
     };
   }
   componentWillMount() {
@@ -89,6 +90,10 @@ export class Namespace extends PureComponent<Props> {
       this.props.fetchGetNamespacesIfNeeded(
         nextProps.getProfileReducer.data.role
       );
+      this.setState({
+        ...this.state,
+        role: nextProps.getProfileReducer.data.role
+      });
     }
 
     if (
@@ -99,6 +104,7 @@ export class Namespace extends PureComponent<Props> {
       this.props.history.push('/');
     }
   }
+
   handleOpenCloseModal = () => {
     this.setState({
       ...this.state,
@@ -212,13 +218,13 @@ export class Namespace extends PureComponent<Props> {
     let additionalPath = null;
     const solutionsPathname = '/solutions';
     const servicesPathname = '/services';
-    // const volumesPathname = '/volumes';
+    const volumesPathname = '/volumes';
     const configMapsPathname = '/configMaps';
     const deploymentsPathname = '/deployments';
     const ingressesPathname = '/ingresses';
     const isSolutionsPathname = pathname.indexOf(solutionsPathname) + 1;
     const isServicesPathname = pathname.indexOf(servicesPathname) + 1;
-    // const isVolumesPathname = pathname.indexOf(volumesPathname) + 1;
+    const isVolumesPathname = pathname.indexOf(volumesPathname) + 1;
     const isConfigMapsPathname = pathname.indexOf(configMapsPathname) + 1;
     const isDeploymentsPathname = pathname.indexOf(deploymentsPathname) + 1;
     const isIngressesPathname = pathname.indexOf(ingressesPathname) + 1;
@@ -232,12 +238,11 @@ export class Namespace extends PureComponent<Props> {
       additionalPath = deploymentsPathname;
     } else if (isIngressesPathname) {
       additionalPath = ingressesPathname;
+    } else if (isVolumesPathname) {
+      additionalPath = volumesPathname;
     }
-    // else if (isVolumesPathname) {
-    //   additionalPath = volumesPathname;
-    // }
     const { status, idLabel, err } = deleteNamespaceReducer;
-    const { inputName, isOpened } = this.state;
+    const { inputName, isOpened, role } = this.state;
     let currentNamespace;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
       currentNamespace = getNamespacesReducer.data.find(
@@ -339,16 +344,16 @@ export class Namespace extends PureComponent<Props> {
                         </NavLink>
                       </li>
                     )}
-                    {/* <li */}
-                    {/* className={`${globalStyles.contentBlockMenuLi} nav-item`} */}
-                    {/* > */}
-                    {/* <NavLink */}
-                    {/* activeClassName={globalStyles.contentBlockMenuLiActive} */}
-                    {/* to={routerLinks.getVolumesLink(match.params.idName)} */}
-                    {/* > */}
-                    {/* Volumes */}
-                    {/* </NavLink> */}
-                    {/* </li> */}
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.getVolumesLink(match.params.idName)}
+                      >
+                        Volumes
+                      </NavLink>
+                    </li>
                   </ul>
                 </div>
                 {isServicesPathname && isReadAccess ? (
@@ -367,22 +372,39 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
-                {/* {isVolumesPathname && isReadAccess ? ( */}
-                {/* <div className={globalStyles.contentBlockHeaderExtraPanel}> */}
-                {/* <div className={globalStyles.contentBlockHeaderExtraPanel}> */}
-                {/* <NavLink */}
-                {/* to={routerLinks.createVolumeLink(match.params.idName)} */}
-                {/* className={`${ */}
-                {/* buttonsStyles.buttonUICreate */}
-                {/* } btn btn-outline-primary`} */}
-                {/* > */}
-                {/* Create */}
-                {/* </NavLink> */}
-                {/* </div> */}
-                {/* </div> */}
-                {/* ) : ( */}
-                {/* '' */}
-                {/* )} */}
+                {isVolumesPathname && isReadAccess ? (
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                      {isOnline &&
+                        role === 'user' && (
+                          <NavLink
+                            to={routerLinks.createVolumeLink(
+                              match.params.idName
+                            )}
+                            className={`${
+                              buttonsStyles.buttonUICreate
+                            } btn btn-outline-primary`}
+                          >
+                            Create
+                          </NavLink>
+                        )}
+                      {role === 'admin' && (
+                        <NavLink
+                          to={routerLinks.createCustomVolumeLink(
+                            match.params.idName
+                          )}
+                          className={`${
+                            buttonsStyles.buttonUICreate
+                          } btn btn-outline-primary`}
+                        >
+                          Create
+                        </NavLink>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
                 {isDeploymentsPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
@@ -470,11 +492,11 @@ export class Namespace extends PureComponent<Props> {
                   exact
                   component={ServicesPage}
                 />
-                {/* <Route */}
-                {/* path={`${match.path}/volumes`} */}
-                {/* exact */}
-                {/* component={VolumesPage} */}
-                {/* /> */}
+                <Route
+                  path={`${match.path}/volumes`}
+                  exact
+                  component={VolumesPage}
+                />
                 <Route
                   path={`${match.path}/configMaps`}
                   exact

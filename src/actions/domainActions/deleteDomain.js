@@ -3,34 +3,34 @@
 import { push } from 'react-router-redux';
 import cookie from 'react-cookies';
 
-import type { Dispatch, GetState, ThunkAction } from '../../types';
+import type { Dispatch, GetState, ThunkAction } from '../../types/index';
 import {
   DELETE_DOMAIN_REQUESTING,
   DELETE_DOMAIN_SUCCESS,
   DELETE_DOMAIN_FAILURE
-} from '../../constants/serviceConstants/deleteDomain';
-import { webApi, routerLinks } from '../../config';
+} from '../../constants/domainConstants/deleteDomain';
+import { webApi, routerLinks } from '../../config/index';
 
 const deleteDomainRequest = () => ({
   type: DELETE_DOMAIN_REQUESTING,
   isFetching: true
 });
 
-const deleteDomainSuccess = (data, status, method, label) => ({
+const deleteDomainSuccess = (data, status, method, ips) => ({
   type: DELETE_DOMAIN_SUCCESS,
   isFetching: false,
   data,
   status,
   method,
-  label
+  ips
 });
 
-const deleteDomainFailure = (err, status, label) => ({
+const deleteDomainFailure = (err, status, ips) => ({
   type: DELETE_DOMAIN_FAILURE,
   isFetching: false,
   err,
   status,
-  label
+  ips
 });
 
 const deleteDomainInvalidToken = () => ({
@@ -38,8 +38,8 @@ const deleteDomainInvalidToken = () => ({
 });
 
 export const fetchDeleteDomain = (
-  idName: string,
-  label: string,
+  id: string,
+  ips: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
@@ -48,20 +48,17 @@ export const fetchDeleteDomain = (
 
   dispatch(deleteDomainRequest());
 
-  const response = await axios.delete(
-    `${URL}/namespaces/${idName}/ingresses/${label}`,
-    {
-      headers: {
-        'User-Client': browser,
-        'User-Token': accessToken
-      },
-      validateStatus: status => status >= 200 && status <= 505
-    }
-  );
+  const response = await axios.delete(`${URL}/domains/${id}`, {
+    headers: {
+      'User-Client': browser,
+      'User-Token': accessToken
+    },
+    validateStatus: status => status >= 200 && status <= 505
+  });
   const { status, data, config } = response;
   switch (status) {
     case 202: {
-      dispatch(deleteDomainSuccess(data, 202, config.method, label));
+      dispatch(deleteDomainSuccess(data.domains, status, config.method, ips));
       break;
     }
     case 400: {
@@ -69,17 +66,18 @@ export const fetchDeleteDomain = (
         dispatch(deleteDomainInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push(routerLinks.login));
-      } else dispatch(deleteDomainFailure(data.message, status, label));
+      } else dispatch(deleteDomainFailure(data.message, status, ips));
+
       break;
     }
     default: {
-      dispatch(deleteDomainFailure(data.message, status, label));
+      dispatch(deleteDomainFailure(data.message, status, ips));
     }
   }
 };
 
 export const fetchDeleteDomainIfNeeded = (
-  idName: string,
-  label: string
+  id: string,
+  ips: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchDeleteDomain(idName, label, axios));
+  dispatch(fetchDeleteDomain(id, ips, axios));
