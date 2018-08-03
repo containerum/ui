@@ -6,5 +6,6 @@ module.exports = merge(defaultConfig, {
   webApi: '{{ API }}',
   wsApi: '{{ API_WS }}',
   appRecaptcha: '{{ RECAPTCHA }}',
-  defaultCountry: '{{ DEFAULT_COUNTRY }}'
+  defaultCountry: '{{ DEFAULT_COUNTRY }}',
+  latestRelease: '{{ LATEST_RELEASE }}'
 });

@@ -190,3 +190,7 @@ body{ font-family:'Open Sans',  Arial, Tahoma; font-weight: 400; font-size:15px;
   background-color: #29abe2 !important;
   border-color: #29abe2 !important;
 }
+
+.recharts-wrapper {
+  display: inline-block;
+}

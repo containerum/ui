@@ -8,12 +8,18 @@ import { NavLink } from 'react-router-dom';
 import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
 import cookie from 'react-cookies';
+import * as Recharts from 'recharts';
 
 import { routerLinks, sourceType } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
 import * as actionGetResources from '../../actions/statisticsActions/getResources';
+import * as actionGetCpuStatistic from '../../actions/statisticsActions/getCpuStatistic';
+import * as actionGetMemoryStatistic from '../../actions/statisticsActions/getMemoryStatistic';
+import * as actionGetStorageStatistic from '../../actions/statisticsActions/getStorageStatistic';
+import * as actionGetCpuHistoryStatistic from '../../actions/statisticsActions/getCpuHistoryStatistic';
+import * as actionGetMemoryHistoryStatistic from '../../actions/statisticsActions/getMemoryHistoryStatistic';
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
@@ -55,6 +61,48 @@ import {
   GET_PROFILE_REQUESTING
 } from '../../constants/profileConstants/getProfile';
 import * as actionGetConfigMaps from '../../actions/configMapActions/getConfigMaps';
+import {
+  GET_CPU_STATISTIC_FAILURE,
+  GET_CPU_STATISTIC_INVALID,
+  GET_CPU_STATISTIC_REQUESTING,
+  GET_CPU_STATISTIC_SUCCESS
+} from '../../constants/statisticsConstants/getCpuStatistic';
+import {
+  GET_MEMORY_STATISTIC_FAILURE,
+  GET_MEMORY_STATISTIC_INVALID,
+  GET_MEMORY_STATISTIC_REQUESTING,
+  GET_MEMORY_STATISTIC_SUCCESS
+} from '../../constants/statisticsConstants/getMemoryStatistic';
+import {
+  GET_CPU_HISTORY_STATISTIC_FAILURE,
+  GET_CPU_HISTORY_STATISTIC_INVALID,
+  GET_CPU_HISTORY_STATISTIC_REQUESTING
+} from '../../constants/statisticsConstants/getCpuHistoryStatistic';
+import {
+  GET_MEMORY_HISTORY_STATISTIC_FAILURE,
+  GET_MEMORY_HISTORY_STATISTIC_INVALID,
+  GET_MEMORY_HISTORY_STATISTIC_REQUESTING
+} from '../../constants/statisticsConstants/getMemoryHistoryStatistic';
+import {
+  GET_STORAGE_STATISTIC_FAILURE,
+  GET_STORAGE_STATISTIC_INVALID,
+  GET_STORAGE_STATISTIC_REQUESTING,
+  GET_STORAGE_STATISTIC_SUCCESS
+} from '../../constants/statisticsConstants/getStorageStatistic';
+
+const {
+  PieChart,
+  Pie,
+  Cell,
+  AreaChart,
+  Area,
+  Legend,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Brush
+} = Recharts;
 
 type Props = {
   location: Object,
@@ -65,15 +113,30 @@ type Props = {
   getSolutionsReducer: Object,
   getResourcesReducer: Object,
   getConfigMapsReducer: Object,
-  fetchGetConfigMapsIfNeeded: Object,
+  getCpuStatisticReducer: Object,
+  getCpuHistoryStatisticReducer: Object,
+  getMemoryStatisticReducer: Object,
+  getMemoryHistoryStatisticReducer: Object,
+  getStorageStatisticReducer: Object,
+  fetchGetConfigMapsIfNeeded: () => void,
   fetchGetNamespacesIfNeeded: () => void,
   fetchGetSolutionsIfNeeded: () => void,
-  fetchGetResourcesIfNeeded: () => void
+  fetchGetResourcesIfNeeded: () => void,
+  fetchGetCpuStatisticIfNeeded: () => void,
+  fetchGetCpuHistoryStatisticIfNeeded: () => void,
+  fetchGetMemoryStatisticIfNeeded: () => void,
+  fetchGetStorageStatisticIfNeeded: () => void,
+  fetchGetMemoryHistoryStatisticIfNeeded: () => void
 };
 
 const isOnline = sourceType === 'ONLINE';
 
 const dashboardClassName = classNames.bind(styles);
+
+// const d = new Date();
+// const ms = Date.parse(d.toISOString());
+// const date = new Date(ms - 432000000); // 120 hours
+// console.log(date.toISOString());
 
 export class Dashboard extends PureComponent<Props> {
   constructor(props) {
@@ -83,7 +146,10 @@ export class Dashboard extends PureComponent<Props> {
       isOpenedRunSolution: false,
       isOpenedHideWidget: false,
       isViewWidget: true,
-      currentSolutionTemplate: null
+      currentSolutionTemplate: null,
+      dataOfCpu: [{ name: 'cpu', value: 0 }],
+      dataOfMemory: [{ name: 'memory', value: 0 }],
+      dataOfStorage: [{ name: 'storage', value: 0 }]
     };
   }
   componentWillMount() {
@@ -96,11 +162,21 @@ export class Dashboard extends PureComponent<Props> {
     const {
       fetchGetSolutionsIfNeeded,
       fetchGetResourcesIfNeeded,
-      fetchGetConfigMapsIfNeeded
+      fetchGetConfigMapsIfNeeded,
+      fetchGetCpuStatisticIfNeeded,
+      fetchGetMemoryStatisticIfNeeded,
+      fetchGetStorageStatisticIfNeeded,
+      fetchGetCpuHistoryStatisticIfNeeded,
+      fetchGetMemoryHistoryStatisticIfNeeded
     } = this.props;
     isOnline && fetchGetSolutionsIfNeeded();
     fetchGetResourcesIfNeeded();
     fetchGetConfigMapsIfNeeded();
+    !isOnline && fetchGetCpuStatisticIfNeeded();
+    !isOnline && fetchGetMemoryStatisticIfNeeded();
+    !isOnline && fetchGetStorageStatisticIfNeeded();
+    !isOnline && fetchGetMemoryHistoryStatisticIfNeeded();
+    !isOnline && fetchGetCpuHistoryStatisticIfNeeded();
     const widget = cookie.load('widget');
     if (widget === 'hide') {
       this.setState({
@@ -118,6 +194,50 @@ export class Dashboard extends PureComponent<Props> {
       this.props.fetchGetNamespacesIfNeeded(
         nextProps.getProfileReducer.data.role
       );
+    }
+    if (
+      this.props.getCpuStatisticReducer.readyStatus !==
+        nextProps.getCpuStatisticReducer.readyStatus &&
+      nextProps.getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        dataOfCpu: [
+          { name: 'cpu', value: nextProps.getCpuStatisticReducer.data.cpu }
+        ]
+      });
+    }
+    if (
+      this.props.getMemoryStatisticReducer.readyStatus !==
+        nextProps.getMemoryStatisticReducer.readyStatus &&
+      nextProps.getMemoryStatisticReducer.readyStatus ===
+        GET_MEMORY_STATISTIC_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        dataOfMemory: [
+          {
+            name: 'memory',
+            value: nextProps.getMemoryStatisticReducer.data.memory
+          }
+        ]
+      });
+    }
+    if (
+      this.props.getStorageStatisticReducer.readyStatus !==
+        nextProps.getStorageStatisticReducer.readyStatus &&
+      nextProps.getStorageStatisticReducer.readyStatus ===
+        GET_STORAGE_STATISTIC_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        dataOfStorage: [
+          {
+            name: 'storage',
+            value: nextProps.getStorageStatisticReducer.data.storage
+          }
+        ]
+      });
     }
     if (nextState.isOpenedSideBarGetStarted && typeof document === 'object') {
       const getHtml = document.querySelector('html');
@@ -165,7 +285,6 @@ export class Dashboard extends PureComponent<Props> {
       isOpenedSideBarGetStarted: false
     });
   };
-
   handleClickDontShow = () => {
     this.setState({
       ...this.state,
@@ -187,6 +306,40 @@ export class Dashboard extends PureComponent<Props> {
       isViewWidget: false
     });
   };
+  simplePieChart = (dataType, angel) => (
+    <PieChart width={160} height={160} onMouseEnter={this.onPieEnter}>
+      <Pie
+        data={dataType}
+        cx={75}
+        cy={75}
+        labelLine={false}
+        label={this.renderCustomizedLabel}
+        startAngle={0}
+        endAngle={angel}
+        outerRadius={80}
+        innerRadius={60}
+      >
+        <Cell
+          fill={angel <= 180 ? '#29abe2' : angel >= 288 ? '#ff0c0a' : '#FFEB00'}
+        />
+      </Pie>
+    </PieChart>
+  );
+  renderCustomizedLabel = percentages => (
+    <text
+      x="51%"
+      y="51%"
+      alignmentBaseline="middle"
+      textAnchor="middle"
+      fontSize={percentages.payload.value === 1 ? '30' : '40'}
+    >
+      {`${
+        percentages.payload.value === 1
+          ? 'no data'
+          : `${percentages.payload.value.toFixed(0)}%`
+      }`}
+    </text>
+  );
 
   renderNamespacesList = () => {
     const { getNamespacesReducer, getProfileReducer, history } = this.props;
@@ -462,6 +615,305 @@ export class Dashboard extends PureComponent<Props> {
       />
     );
   };
+  renderStatistics = () => {
+    const {
+      getCpuStatisticReducer,
+      getMemoryStatisticReducer,
+      getStorageStatisticReducer
+    } = this.props;
+    if (
+      !getCpuStatisticReducer.readyStatus ||
+      getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_INVALID ||
+      getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_REQUESTING ||
+      !getMemoryStatisticReducer.readyStatus ||
+      getMemoryStatisticReducer.readyStatus === GET_MEMORY_STATISTIC_INVALID ||
+      getMemoryStatisticReducer.readyStatus ===
+        GET_MEMORY_STATISTIC_REQUESTING ||
+      !getStorageStatisticReducer.readyStatus ||
+      getStorageStatisticReducer.readyStatus ===
+        GET_STORAGE_STATISTIC_INVALID ||
+      getStorageStatisticReducer.readyStatus ===
+        GET_STORAGE_STATISTIC_REQUESTING
+    ) {
+      return (
+        <div className="col-md-12 pr-0">
+          <div
+            className="block-container"
+            style={{
+              padding: 23
+            }}
+          >
+            <div
+              style={{
+                height: 298,
+                width: '100%',
+                borderRadius: '2px',
+                backgroundColor: 'rgb(246, 246, 246)'
+              }}
+            />
+          </div>
+        </div>
+      );
+    }
+    if (
+      getCpuStatisticReducer.readyStatus === GET_CPU_STATISTIC_FAILURE ||
+      getMemoryStatisticReducer.readyStatus === GET_MEMORY_STATISTIC_FAILURE ||
+      getStorageStatisticReducer.readyStatus === GET_STORAGE_STATISTIC_FAILURE
+    ) {
+      return <p>Oops, Failed to load data of cpu statistic!</p>;
+    }
+
+    const cpuRadius =
+      getCpuStatisticReducer.data.cpu === 1
+        ? 360
+        : getCpuStatisticReducer.data.cpu * 3.6;
+    const memoryRadius =
+      getMemoryStatisticReducer.data.memory === 1
+        ? 360
+        : getMemoryStatisticReducer.data.memory * 3.6;
+    const storageRadius =
+      getStorageStatisticReducer.data.storage === 1
+        ? 360
+        : getStorageStatisticReducer.data.storage * 3.6;
+    return (
+      <div>
+        <div
+          style={{
+            textAlign: 'center',
+            width: '33%',
+            display: 'inline-block'
+          }}
+        >
+          <div className="nav-item">
+            <div
+              className={`${styles.customSolutionNavLink} nav-link`}
+              style={{
+                width: 60,
+                margin: '0 auto',
+                marginBottom: 30
+              }}
+            >
+              CPU
+            </div>
+          </div>
+          {this.simplePieChart(this.state.dataOfCpu, cpuRadius)}
+        </div>
+        <div
+          style={{
+            textAlign: 'center',
+            width: '33%',
+            display: 'inline-block'
+          }}
+        >
+          <div className="nav-item">
+            <div
+              className={`${styles.customSolutionNavLink} nav-link`}
+              style={{
+                width: 60,
+                margin: '0 auto',
+                marginBottom: 30
+              }}
+            >
+              Memory
+            </div>
+          </div>
+          {this.simplePieChart(this.state.dataOfMemory, memoryRadius)}
+        </div>
+        <div
+          style={{
+            textAlign: 'center',
+            width: '33%',
+            display: 'inline-block'
+          }}
+        >
+          <div className="nav-item">
+            <div
+              className={`${styles.customSolutionNavLink} nav-link`}
+              style={{
+                width: 60,
+                margin: '0 auto',
+                marginBottom: 30
+              }}
+            >
+              Storage
+            </div>
+          </div>
+          {this.simplePieChart(this.state.dataOfStorage, storageRadius)}
+        </div>
+      </div>
+    );
+  };
+  renderCpuHistoryStatistics = () => {
+    const { getCpuHistoryStatisticReducer } = this.props;
+    if (
+      !getCpuHistoryStatisticReducer.readyStatus ||
+      getCpuHistoryStatisticReducer.readyStatus ===
+        GET_CPU_HISTORY_STATISTIC_INVALID ||
+      getCpuHistoryStatisticReducer.readyStatus ===
+        GET_CPU_HISTORY_STATISTIC_REQUESTING
+    ) {
+      return (
+        <div className="col-md-12 pr-0">
+          <div
+            className="block-container"
+            style={{
+              padding: 23
+            }}
+          >
+            <div
+              style={{
+                height: 298,
+                width: '100%',
+                borderRadius: '2px',
+                backgroundColor: 'rgb(246, 246, 246)'
+              }}
+            />
+          </div>
+        </div>
+      );
+    }
+    if (
+      getCpuHistoryStatisticReducer.readyStatus ===
+      GET_CPU_HISTORY_STATISTIC_FAILURE
+    ) {
+      return <p>Oops, Failed to load data of cpu statistic!</p>;
+    }
+
+    const dataOfCpuHistory = getCpuHistoryStatisticReducer.data.values.map(
+      (statistic, index) => {
+        const date = new Date(
+          Date.parse(getCpuHistoryStatisticReducer.data.labels[index])
+        );
+        return {
+          cpu: statistic,
+          name: `${`${date.getHours()}:${date.getMinutes()}`}`
+        };
+      }
+    );
+    return (
+      <div>
+        <div
+          style={{
+            marginLeft: 70,
+            marginBottom: 10
+          }}
+        >
+          %
+        </div>
+        <AreaChart
+          width={1030}
+          height={350}
+          data={dataOfCpuHistory}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="cpu"
+            stroke="#29abe2"
+            fill="#29abe2"
+            fillOpacity="0.2"
+          />
+          <Legend />
+          <Brush dataKey="name" height={30} stroke="#29abe2" />
+        </AreaChart>
+      </div>
+    );
+  };
+  renderMemoryHistoryStatistics = () => {
+    const { getMemoryHistoryStatisticReducer } = this.props;
+    if (
+      !getMemoryHistoryStatisticReducer.readyStatus ||
+      getMemoryHistoryStatisticReducer.readyStatus ===
+        GET_MEMORY_HISTORY_STATISTIC_INVALID ||
+      getMemoryHistoryStatisticReducer.readyStatus ===
+        GET_MEMORY_HISTORY_STATISTIC_REQUESTING
+    ) {
+      return (
+        <div className="col-md-12 pr-0">
+          <div
+            className="block-container"
+            style={{
+              padding: 23
+            }}
+          >
+            <div
+              style={{
+                height: 298,
+                width: '100%',
+                borderRadius: '2px',
+                backgroundColor: 'rgb(246, 246, 246)'
+              }}
+            />
+          </div>
+        </div>
+      );
+    }
+    if (
+      getMemoryHistoryStatisticReducer.readyStatus ===
+      GET_MEMORY_HISTORY_STATISTIC_FAILURE
+    ) {
+      return <p>Oops, Failed to load data of cpu statistic!</p>;
+    }
+
+    const dataOfMemoryHistory = getMemoryHistoryStatisticReducer.data.values.map(
+      (statistic, index) => {
+        const date = new Date(
+          Date.parse(getMemoryHistoryStatisticReducer.data.labels[index])
+        );
+        return {
+          memory: statistic,
+          name: `${`${date.getHours()}:${date.getMinutes()}`}`
+        };
+      }
+    );
+
+    return (
+      <div>
+        <div
+          style={{
+            marginLeft: 70,
+            marginBottom: 10
+          }}
+        >
+          %
+        </div>
+        <AreaChart
+          width={1030}
+          height={350}
+          data={dataOfMemoryHistory}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="memory"
+            stroke="#29abe2"
+            fill="#29abe2"
+            fillOpacity="0.2"
+          />
+          <Legend />
+          <Brush dataKey="name" height={30} stroke="#29abe2" />
+        </AreaChart>
+      </div>
+    );
+  };
 
   render() {
     const blockContainer = dashboardClassName('blockContainer', 'blockH');
@@ -550,8 +1002,57 @@ export class Dashboard extends PureComponent<Props> {
 
               {this.renderDashboardBlockTourAndNews()}
             </div>
+            {!isOnline && (
+              <div className="row">
+                <div className="col-md-12 pl-0 pr-0">
+                  <div className={blockContainerTabs}>
+                    <div className={styles.blockContainerTabsHeader}>
+                      Statistics
+                    </div>
+                    <ul
+                      className="nav nav-pills mb-3"
+                      id="pills-tab"
+                      role="tablist"
+                    >
+                      <li className="nav-item">
+                        <NavLink
+                          className={`${styles.customSolutionNavLink} nav-link`}
+                          id="first-tab"
+                          data-toggle="pill"
+                          to={routerLinks.dashboard}
+                          role="tab"
+                          aria-controls="pills-home"
+                          aria-selected="true"
+                        >
+                          All
+                        </NavLink>
+                      </li>
+                    </ul>
 
-            {sourceType === 'ONLINE' && (
+                    <div className="tab-content" id="pills-tabContent">
+                      <div
+                        className="tab-pane fade show active"
+                        id="first"
+                        role="tabpanel"
+                        aria-labelledby="first-tab"
+                      >
+                        <div style={{ margin: 40, textAlign: 'justify' }}>
+                          <div>{this.renderStatistics()}</div>
+                          <div style={{ marginTop: 60 }}>
+                            <div>{this.renderCpuHistoryStatistics()}</div>
+                          </div>
+                          <div style={{ marginTop: 60 }}>
+                            <div>{this.renderMemoryHistoryStatistics()}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {isOnline && (
               <div className="row">
                 <div className="col-md-12 pl-0 pr-0">
                   <div className={blockContainerTabs}>
@@ -606,14 +1107,24 @@ const connector: Connector<{}, Props> = connect(
     getBalanceReducer,
     getSolutionsReducer,
     getResourcesReducer,
-    getConfigMapsReducer
+    getConfigMapsReducer,
+    getCpuStatisticReducer,
+    getCpuHistoryStatisticReducer,
+    getMemoryStatisticReducer,
+    getMemoryHistoryStatisticReducer,
+    getStorageStatisticReducer
   }: ReduxState) => ({
     getProfileReducer,
     getNamespacesReducer,
     getBalanceReducer,
     getSolutionsReducer,
     getResourcesReducer,
-    getConfigMapsReducer
+    getConfigMapsReducer,
+    getCpuStatisticReducer,
+    getCpuHistoryStatisticReducer,
+    getMemoryStatisticReducer,
+    getMemoryHistoryStatisticReducer,
+    getStorageStatisticReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: (role: string) =>
@@ -623,7 +1134,21 @@ const connector: Connector<{}, Props> = connect(
     fetchGetResourcesIfNeeded: () =>
       dispatch(actionGetResources.fetchGetResourcesIfNeeded()),
     fetchGetConfigMapsIfNeeded: () =>
-      dispatch(actionGetConfigMaps.fetchGetConfigMapsIfNeeded())
+      dispatch(actionGetConfigMaps.fetchGetConfigMapsIfNeeded()),
+    fetchGetCpuStatisticIfNeeded: () =>
+      dispatch(actionGetCpuStatistic.fetchGetCpuStatisticIfNeeded()),
+    fetchGetCpuHistoryStatisticIfNeeded: () =>
+      dispatch(
+        actionGetCpuHistoryStatistic.fetchGetCpuHistoryStatisticIfNeeded()
+      ),
+    fetchGetMemoryStatisticIfNeeded: () =>
+      dispatch(actionGetMemoryStatistic.fetchGetMemoryStatisticIfNeeded()),
+    fetchGetStorageStatisticIfNeeded: () =>
+      dispatch(actionGetStorageStatistic.fetchGetStorageStatisticIfNeeded()),
+    fetchGetMemoryHistoryStatisticIfNeeded: () =>
+      dispatch(
+        actionGetMemoryHistoryStatistic.fetchGetMemoryHistoryStatisticIfNeeded()
+      )
   })
 );
 

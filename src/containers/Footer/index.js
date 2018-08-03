@@ -85,19 +85,23 @@ export class Footer extends PureComponent<Props> {
             </a>
             {!isOnline &&
               latestRelease && (
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <div
                   style={{
                     position: 'absolute',
-                    top: 20,
+                    top: 13,
                     right: '48%',
                     fontSize: 12
                   }}
-                  href={externalLinks.containerumReleases}
                 >
-                  latestRelease
-                </a>
+                  Version:&nbsp;
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={externalLinks.containerumReleases}
+                  >
+                    {latestRelease}
+                  </a>
+                </div>
               )}
             {this.renderFooterInfo()}
             <a
