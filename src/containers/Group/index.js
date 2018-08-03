@@ -32,6 +32,7 @@ import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import { DELETE_USER_FROM_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/deleteUserFromGroup';
 import * as actionDeleteGroupIfNeeded from '../../actions/globalMembership/deleteGroup';
+import BackButton from '../../components/BackButton';
 
 const globalClass = className.bind(globalStyles);
 
@@ -364,7 +365,7 @@ class GlobalMembership extends PureComponent<Props> {
         ? getGroupReducer.data.id
         : match.params.idGroup;
     return (
-      <div>
+      <div style={{ position: 'relative' }}>
         <Helmet title={`Users of ${label}`} />
         <Notification
           status={statusDelete}
@@ -427,6 +428,7 @@ class GlobalMembership extends PureComponent<Props> {
           isEmailValid={isEmailValid}
           handleDeleteNewUser={this.handleDeleteNewUser}
         />
+        <BackButton path={routerLinks.getGlobalGroups} />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">
