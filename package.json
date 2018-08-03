@@ -60,7 +60,7 @@
       }
     },
     "build": {
-      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "node --max_old_space_size=4096 node_modules/.bin/webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
       "env": {
         "NODE_ENV": "production",
         "STATS": "disabled"
