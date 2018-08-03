@@ -112,7 +112,7 @@ dev-deploy:
 
 pub-github:
   image: alpine
-  stage: deploy
+  stage: release
   tags:
     - build
   before_script:
