@@ -55,6 +55,33 @@ const NamespacesList = ({
   const isOnline = sourceType === 'ONLINE';
   return (
     <div className="row double">
+      {isOnline &&
+        role === 'user' && (
+          <div className="col-md-4 align-middle">
+            <NavLink
+              activeClassName="active"
+              to={routerLinks.createNamespace}
+              className={`${addNewBlockClassName} ${styles.addNewBlock}`}
+            >
+              <div className={styles.action}>
+                <i>+</i> Add a Project
+              </div>
+            </NavLink>
+          </div>
+        )}
+      {role === 'admin' && (
+        <div className="col-md-4 align-middle">
+          <NavLink
+            activeClassName="active"
+            to={routerLinks.createCustomNamespace}
+            className={`${addNewBlockClassName} ${styles.addNewBlock}`}
+          >
+            <div className={styles.action}>
+              <i>+</i> Add a Project
+            </div>
+          </NavLink>
+        </div>
+      )}
       {data &&
         data.map(namespace => {
           const { label, id, resources, access } = namespace;
@@ -210,33 +237,6 @@ const NamespacesList = ({
           );
         })}
 
-      {isOnline &&
-        role === 'user' && (
-          <div className="col-md-4 align-middle">
-            <NavLink
-              activeClassName="active"
-              to={routerLinks.createNamespace}
-              className={`${addNewBlockClassName} ${styles.addNewBlock}`}
-            >
-              <div className={styles.action}>
-                <i>+</i> Add a Project
-              </div>
-            </NavLink>
-          </div>
-        )}
-      {role === 'admin' && (
-        <div className="col-md-4 align-middle">
-          <NavLink
-            activeClassName="active"
-            to={routerLinks.createCustomNamespace}
-            className={`${addNewBlockClassName} ${styles.addNewBlock}`}
-          >
-            <div className={styles.action}>
-              <i>+</i> Add a Project
-            </div>
-          </NavLink>
-        </div>
-      )}
       {!isOnline &&
         !data.length &&
         role === 'user' && (

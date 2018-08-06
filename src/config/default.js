@@ -37,6 +37,7 @@ module.exports = {
       `/solutions${idName && `?namespace=${idName}`}`,
     solution: '/solution/:idSol',
     solutionLink: (idSol: string) => `/solution/${idSol}`,
+    addSolution: '/addSolution',
     login: '/login',
     tools: '/tools',
     domains: '/domains',

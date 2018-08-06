@@ -61,6 +61,7 @@ import changeProfileInfoReducer from './profileReducers/changeProfileInfo';
 import getResourcesReducer from './statisticsReducers/getResources';
 import getSolutionsReducer from './solutionsReducers/getSolutions';
 import getSolutionReducer from './solutionReducers/getSolution';
+import addSolutionReducer from './solutionReducers/addSolution';
 import runSolutionReducer from './solutionReducers/runSolution';
 import getDomainsGlobalReducer from './servicesReducers/getDomainsGlobal';
 import getIngressesReducer from './servicesReducers/getDomains';
@@ -167,6 +168,7 @@ const reducers = {
   getResourcesReducer,
   getSolutionsReducer,
   getSolutionReducer,
+  addSolutionReducer,
   runSolutionReducer,
   getDomainsGlobalReducer,
   deleteIngressReducer,

@@ -40,6 +40,7 @@ import {
 } from '../../constants/storagesConstants/getStorages';
 import { ADD_STORAGE_SUCCESS } from '../../constants/storageConstants/addStorage';
 import { DELETE_STORAGE_SUCCESS } from '../../constants/storageConstants/deleteStorage';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 const globalClass = className.bind(globalStyles);
 const containerClassName = globalClass(
@@ -55,6 +56,7 @@ const formClassName = globalClass('formInputText', 'formControl');
 
 type Props = {
   history: Object,
+  getProfileReducer: Object,
   getDomainsReducer: Object,
   deleteDomainReducer: Object,
   addDomainReducer: Object,
@@ -85,12 +87,24 @@ export class Settings extends PureComponent<Props> {
       this.props.history.push(routerLinks.login);
     }
   }
-  componentDidMount() {
-    const { fetchGetDomainsIfNeeded, fetchGetStoragesIfNeeded } = this.props;
-    fetchGetDomainsIfNeeded();
-    fetchGetStoragesIfNeeded();
-  }
   componentWillUpdate(nextProps) {
+    const {
+      fetchGetDomainsIfNeeded,
+      fetchGetStoragesIfNeeded,
+      history
+    } = this.props;
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      if (nextProps.getProfileReducer.data.role === 'admin') {
+        fetchGetDomainsIfNeeded();
+        fetchGetStoragesIfNeeded();
+      } else {
+        history.push(routerLinks.namespaces);
+      }
+    }
     if (
       this.props.deleteDomainReducer.readyStatus !==
         nextProps.deleteDomainReducer.readyStatus &&
@@ -510,6 +524,7 @@ export class Settings extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
+    getProfileReducer,
     getDomainsReducer,
     deleteDomainReducer,
     addDomainReducer,
@@ -517,6 +532,7 @@ const connector: Connector<{}, Props> = connect(
     addStorageReducer,
     deleteStorageReducer
   }: ReduxState) => ({
+    getProfileReducer,
     getDomainsReducer,
     deleteDomainReducer,
     addDomainReducer,
