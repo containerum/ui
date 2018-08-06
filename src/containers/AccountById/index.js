@@ -29,7 +29,6 @@ import ResetPasswordModal from '../../components/CustomerModal/ResetPasswordModa
 import BackButton from '../../components/BackButton';
 import DeleteAccountInfo from '../Account/DeleteAccount';
 import globalStyles from '../../theme/global.scss';
-import styles from './index.scss';
 import { RESET_PASSWORD_OF_USER_SUCCESS } from '../../constants/userManagement/resetPasswordOfUser';
 import { ACTIVATE_USER_SUCCESS } from '../../constants/userManagement/activateUser';
 import { ADMIN_DELETE_USER_SUCCESS } from '../../constants/globalMembershipConstants/adminDeleteUser';
@@ -52,11 +51,6 @@ type Props = {
 };
 
 const globalClass = classNames.bind(globalStyles);
-const containerClassNameSidebar = globalClass(
-  'contentBlockContainer',
-  'containerFluid',
-  'containerNoBackground'
-);
 
 export class AccountById extends PureComponent<Props> {
   constructor(props) {
@@ -330,22 +324,11 @@ export class AccountById extends PureComponent<Props> {
           onHandleResetPassword={() => this.handleClickResetPassword()}
           handleClickCopyPassword={() => this.handleClickCopyPassword()}
         />
-        <BackButton path={routerLinks.getGlobalMembership} />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">
               <div className="col-md-3 col-lg-3 col-xl-2">
-                <div
-                  className={`${globalStyles.contentBlock} ${
-                    styles.accountInfo
-                  }`}
-                >
-                  <div
-                    className={`${containerClassNameSidebar} container pl-0 pr-0`}
-                  >
-                    {/* {this.renderProfileSideBar()} */}
-                  </div>
-                </div>
+                <BackButton path={routerLinks.getGlobalMembership} />
               </div>
               <div className="col-md-9 col-lg-9 col-xl-10">
                 <div className={globalStyles.contentBlock}>

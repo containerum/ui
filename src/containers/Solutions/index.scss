@@ -187,5 +187,33 @@
   }
 }
 
+.AddSolutionLink {
+  border-color: #1d87b3;
+  color: #1d87b3;
+  margin-top: 30px;
+}
 
+.AddSolutionWrapper {
+  line-height: 305px;
+  display: block;
+  border-radius: 4px;
+  border: solid 1px #29abe2;
+  font-size: 20px;
+  text-align: center;
+  color: #29abe2;
+  text-transform: uppercase;
+  cursor: pointer;
+}
 
+.AddSolutionWrapper:hover {
+  box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+.AddSolutionPlus {
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 300;
+  vertical-align: top;
+  display: inline-block;
+  margin-right: 10px;
+}

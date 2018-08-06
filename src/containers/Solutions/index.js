@@ -23,7 +23,12 @@ import {
 } from '../../constants/solutionsConstants/getSolutions';
 import SolutionsList from '../../components/SolutionsList';
 import RunSolutionModal from '../RunSolution';
-import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_INVALID,
+  GET_PROFILE_REQUESTING,
+  GET_PROFILE_SUCCESS
+} from '../../constants/profileConstants/getProfile';
 import {
   GET_NAMESPACES_FAILURE,
   GET_NAMESPACES_INVALID,
@@ -85,6 +90,7 @@ export class Solutions extends PureComponent<Props> {
       getHtml.style.overflow = 'auto';
     }
   }
+
   handleClickRunSolution = solutionTemplate => {
     this.setState({
       ...this.state,
@@ -102,8 +108,16 @@ export class Solutions extends PureComponent<Props> {
   };
 
   renderSolutionsList = () => {
-    const { getSolutionsReducer, getNamespacesReducer, history } = this.props;
+    const {
+      getProfileReducer,
+      getSolutionsReducer,
+      getNamespacesReducer,
+      history
+    } = this.props;
     if (
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_REQUESTING ||
@@ -129,6 +143,7 @@ export class Solutions extends PureComponent<Props> {
       );
     }
     if (
+      getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_FAILURE ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE
     ) {
@@ -137,10 +152,12 @@ export class Solutions extends PureComponent<Props> {
 
     if (
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_SUCCESS &&
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS &&
+      getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
       return (
         <SolutionsList
+          role={getProfileReducer.data.role}
           data={getSolutionsReducer.data}
           history={history}
           handleClickRunSolution={solutionTemplate =>

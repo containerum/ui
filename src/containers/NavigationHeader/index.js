@@ -270,6 +270,15 @@ export class NavigationHeader extends PureComponent<Props> {
             </li>
           </div>
         );
+      } else if (IdCreate === 'solution') {
+        IdCreateContent = (
+          <div style={{ display: 'flex' }}>
+            <li className={`${breadcumbsClassName} nav-item`}>/</li>
+            <li className={`${globalStyles.breadcrumbsLi} nav-item `}>
+              <div>Create Solution</div>
+            </li>
+          </div>
+        );
       }
       let IdUpdateContent = '';
       if (IdUpdate === 'service') {

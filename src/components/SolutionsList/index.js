@@ -1,19 +1,21 @@
 /* @flow */
 
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
 
-import { routerLinks } from '../../config';
+import { routerLinks, sourceType } from '../../config';
 import githubIcon from '../../images/githubIcon.svg';
-
 import styles from '../../containers/Solutions/index.scss';
 import globalStyles from '../../theme/global.scss';
 import '../../theme/common.scss';
 
+const isOnline = sourceType === 'ONLINE';
+
 type Props = {
   data: Array<Object>,
+  role: string,
   history: Object,
   handleClickRunSolution: (name: string) => void
 };
@@ -24,8 +26,26 @@ const handleClose = e => {
 
 const styleSolutions = classNames.bind(styles);
 const iconClassName = styleSolutions('icon', 'iconGitHub');
-const SolutionsList = ({ data, history, handleClickRunSolution }: Props) => (
+const SolutionsList = ({
+  data,
+  role,
+  history,
+  handleClickRunSolution
+}: Props) => (
   <div className="row">
+    {!isOnline &&
+      role === 'admin' && (
+        <Link
+          to={routerLinks.addSolution}
+          className={`col-md-4 ${styles.AddSolutionLink}`}
+          key={_.uniqueId()}
+          style={{ cursor: 'pointer' }}
+        >
+          <div className={styles.AddSolutionWrapper}>
+            <i className={styles.AddSolutionPlus}>+</i> Add a Solution
+          </div>
+        </Link>
+      )}
     {data.map(solution => {
       const { name, url, limits } = solution;
       const { cpu, ram } = limits;

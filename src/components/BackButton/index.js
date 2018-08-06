@@ -12,9 +12,7 @@ type Props = {
 const BackButton = ({ path }: Props) => (
   <div
     style={{
-      position: 'absolute',
-      top: 30,
-      left: 110,
+      marginTop: 25,
       zIndex: 1000
     }}
   >
