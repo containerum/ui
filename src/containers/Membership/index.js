@@ -385,7 +385,7 @@ class Membership extends PureComponent<Props> {
                         to={routerLinks.namespaceLink(idName)}
                         className={labelClassName}
                       >
-                        {label}
+                        Manage Team
                       </Link>
                       <div style={{ marginBottom: 20 }}>
                         <ul
