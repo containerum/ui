@@ -19,10 +19,10 @@ const addGlobalUserRequest = () => ({
   isFetching: true
 });
 
-const addGlobalUserSuccess = (login, status, method) => ({
+const addGlobalUserSuccess = (data, status, method) => ({
   type: ADD_GLOBAL_USER_SUCCESS,
   isFetching: false,
-  login,
+  data,
   status,
   method
 });
@@ -59,7 +59,7 @@ export const fetchAddGlobalUser = (
   const { status, data } = response;
   switch (status) {
     case 201: {
-      dispatch(addGlobalUserSuccess(login, status, 'put'));
+      dispatch(addGlobalUserSuccess(data, status, 'put'));
       break;
     }
     case 400: {
@@ -71,7 +71,7 @@ export const fetchAddGlobalUser = (
       break;
     }
     default: {
-      dispatch(addGlobalUserFailure(data.message, status, login));
+      dispatch(addGlobalUserFailure(data.message, status));
     }
   }
   dispatch(addGlobalUserInvalid());

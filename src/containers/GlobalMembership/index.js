@@ -81,7 +81,9 @@ class GlobalMembership extends PureComponent<Props> {
       membersList: [],
       errAdd: null,
       currentLoginDropDownAccess: null,
-      currentPage: 1
+      currentPage: 1,
+      passwordResetView: false,
+      newPassword: null
     };
   }
   componentWillMount() {
@@ -113,15 +115,23 @@ class GlobalMembership extends PureComponent<Props> {
       (this.props.activateUserReducer.readyStatus !==
         nextProps.activateUserReducer.readyStatus &&
         nextProps.activateUserReducer.readyStatus === ACTIVATE_USER_SUCCESS) ||
-      (this.props.addUserReducer.readyStatus !==
-        nextProps.addUserReducer.readyStatus &&
-        nextProps.addUserReducer.readyStatus === ADD_GLOBAL_USER_SUCCESS) ||
       (this.props.adminDeleteUserReducer.readyStatus !==
         nextProps.adminDeleteUserReducer.readyStatus &&
         nextProps.adminDeleteUserReducer.readyStatus ===
           ADMIN_DELETE_USER_SUCCESS)
     ) {
       fetchGetUserListIfNeeded(page && page);
+    }
+    if (
+      this.props.addUserReducer.readyStatus !==
+        nextProps.addUserReducer.readyStatus &&
+      nextProps.addUserReducer.readyStatus === ADD_GLOBAL_USER_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        passwordResetView: true,
+        newPassword: nextProps.addUserReducer.data.password
+      });
     }
   }
 
@@ -175,8 +185,15 @@ class GlobalMembership extends PureComponent<Props> {
       isOpenAdd: !this.state.isOpenAdd,
       accessNewUser: 'read',
       inputEmailAdd: '',
-      errAdd: null
+      errAdd: null,
+      passwordResetView: false,
+      newPassword: null
     });
+  };
+  handleClickCopyPassword = () => {
+    const newPassword = document.getElementById('newPassword');
+    newPassword.select();
+    document.execCommand('copy');
   };
   handleInputEmailDelete = inputEmailDelete => {
     this.setState({
@@ -189,6 +206,9 @@ class GlobalMembership extends PureComponent<Props> {
       ...this.state,
       inputEmailAdd
     });
+  };
+  handleAdminDeleteUser = (idName, name) => {
+    this.props.fetchAdminDeleteUserIfNeeded(name);
   };
 
   renderGlobalMembershipList = () => {
@@ -237,16 +257,16 @@ class GlobalMembership extends PureComponent<Props> {
       getProfileReducer,
       addUserReducer,
       fetchAddGlobalUserIfNeeded,
-      fetchAdminDeleteUserIfNeeded,
       activateUserReducer
     } = this.props;
     const {
       status: statusAdd,
-      login: loginAdd,
+      data: userData,
       isFetching: isFetchingAdd,
       method: methodAdd,
       err: errAdd
     } = addUserReducer;
+    const { login: loginAdd } = userData || { login: null };
     const {
       status: statusActivate,
       method: methodActivate,
@@ -300,7 +320,7 @@ class GlobalMembership extends PureComponent<Props> {
           idName={idUserDelete}
           handleInputEmailDelete={this.handleInputEmailDelete}
           handleOpenCloseModal={this.handleOpenCloseModal}
-          onHandleDelete={fetchAdminDeleteUserIfNeeded}
+          onHandleDelete={this.handleAdminDeleteUser}
         />
         <AddGlobalUserMembershipModal
           type="Add User"
@@ -312,6 +332,9 @@ class GlobalMembership extends PureComponent<Props> {
           isFetchingAdd={isFetchingAdd}
           namespaceId={idUserDelete}
           err={this.state.errAdd}
+          passwordResetView={this.state.passwordResetView}
+          newPassword={this.state.newPassword}
+          handleClickCopyPassword={() => this.handleClickCopyPassword()}
         />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>

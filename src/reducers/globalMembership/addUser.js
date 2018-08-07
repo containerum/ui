@@ -14,6 +14,7 @@ const initialState = {
   readyStatus: ADD_GLOBAL_USER_INVALID,
   isFetching: false,
   status: null,
+  data: null,
   login: null,
   err: null
 };
@@ -25,6 +26,7 @@ export default (state = initialState, action: Action) => {
         readyStatus: ADD_GLOBAL_USER_REQUESTING,
         isFetching: action.isFetching,
         status: null,
+        data: null,
         login: null,
         method: null,
         err: null
@@ -34,7 +36,8 @@ export default (state = initialState, action: Action) => {
         readyStatus: ADD_GLOBAL_USER_SUCCESS,
         isFetching: action.isFetching,
         status: action.status,
-        login: action.login.login,
+        data: action.data,
+        login: null,
         method: action.method,
         err: null
       });
@@ -43,6 +46,7 @@ export default (state = initialState, action: Action) => {
         readyStatus: ADD_GLOBAL_USER_FAILURE,
         isFetching: action.isFetching,
         status: action.status,
+        data: null,
         login: action.login,
         method: null,
         err: action.err
