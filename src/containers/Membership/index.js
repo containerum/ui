@@ -341,7 +341,7 @@ class Membership extends PureComponent<Props> {
       : idName;
     return (
       <div style={{ position: 'relative' }}>
-        <Helmet title={`Membership of ${label}`} />
+        <Helmet title={`Manage Team of ${label}`} />
         <Notification
           status={statusDelete}
           name={idNameDelete}
@@ -385,7 +385,7 @@ class Membership extends PureComponent<Props> {
                         to={routerLinks.namespaceLink(idName)}
                         className={labelClassName}
                       >
-                        Manage Team
+                        Manage project {label} team
                       </Link>
                       <div style={{ marginBottom: 20 }}>
                         <ul
