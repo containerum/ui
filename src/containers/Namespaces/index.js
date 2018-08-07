@@ -148,7 +148,10 @@ export class Namespaces extends PureComponent<Props> {
     }
   };
   handleDelete = id => {
-    this.props.fetchDeleteNamespaceIfNeeded(id);
+    const currentNS = this.state.displayedNamespaces.find(
+      namespace => id === namespace.id
+    );
+    this.props.fetchDeleteNamespaceIfNeeded(id, currentNS.label);
   };
 
   renderNamespacesList = () => {
@@ -229,7 +232,7 @@ export class Namespaces extends PureComponent<Props> {
       createInternalServiceReducer,
       getNamespacesReducer
     } = this.props;
-    const { status, idLabel, err } = deleteNamespaceReducer;
+    const { status, idLabel, err, method: methodDel } = deleteNamespaceReducer;
     const {
       status: statusExt,
       idSrv: idSrvExt,
@@ -251,7 +254,12 @@ export class Namespaces extends PureComponent<Props> {
     return (
       <div>
         <Helmet title="Projects" />
-        <Notification status={status} name={idLabel} errorMessage={err} />
+        <Notification
+          status={status}
+          name={idLabel}
+          errorMessage={err}
+          method={methodDel}
+        />
         <Notification
           status={statusExt}
           name={idSrvExt}
