@@ -109,6 +109,7 @@ import updateCustomVolumeReducer from './volumeReducers/updateCustomVolume';
 import getStoragesReducer from './storagesReducers/getStorages';
 import addStorageReducer from './storageReducers/addStorage';
 import deleteStorageReducer from './storageReducers/deleteStorage';
+import getSecretsReducer from './secretsReducers/getSecrets';
 
 const reducers = {
   loginReducer,
@@ -216,6 +217,7 @@ const reducers = {
   getMemoryStatisticReducer,
   getMemoryHistoryStatisticReducer,
   getStorageStatisticReducer,
+  getSecretsReducer,
   router,
   loadingBar: loadingBarReducer
 };
