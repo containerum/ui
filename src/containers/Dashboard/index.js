@@ -612,6 +612,8 @@ export class Dashboard extends PureComponent<Props> {
             : ''
         }
         linkToManageTeamAdmin={linkTo}
+        namespacesReducerLength={getNamespacesReducer.data.length}
+        role={getProfileReducer.data.role}
       />
     );
   };
