@@ -22,7 +22,12 @@ import {
   GET_USER_LIST_REQUESTING,
   GET_USER_LIST_INVALID
 } from '../../constants/globalMembershipConstants/getUserList';
-import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_INVALID,
+  GET_PROFILE_REQUESTING,
+  GET_PROFILE_SUCCESS
+} from '../../constants/profileConstants/getProfile';
 
 import globalStyles from '../../theme/global.scss';
 import styles from '../Membership/index.scss';
@@ -83,7 +88,8 @@ class GlobalMembership extends PureComponent<Props> {
       currentLoginDropDownAccess: null,
       currentPage: 1,
       passwordResetView: false,
-      newPassword: null
+      newPassword: null,
+      currentLogin: null
     };
   }
   componentWillMount() {
@@ -110,6 +116,10 @@ class GlobalMembership extends PureComponent<Props> {
       } else {
         this.props.history.push(routerLinks.namespaces);
       }
+      this.setState({
+        ...this.state,
+        currentLogin: nextProps.getProfileReducer.data.login
+      });
     }
     if (
       (this.props.activateUserReducer.readyStatus !==
@@ -149,7 +159,10 @@ class GlobalMembership extends PureComponent<Props> {
     });
   };
   handleClickGetAccount = login => {
-    this.props.history.push(routerLinks.accountByIdLink(login));
+    const { currentLogin } = this.state;
+    if (currentLogin === login) {
+      this.props.history.push(routerLinks.account);
+    } else this.props.history.push(routerLinks.accountByIdLink(login));
   };
   changeAccessUser = login => {
     this.props.fetchActivateUserIfNeeded(login);
@@ -212,8 +225,11 @@ class GlobalMembership extends PureComponent<Props> {
   };
 
   renderGlobalMembershipList = () => {
-    const { match, getUserListReducer } = this.props;
+    const { match, getUserListReducer, getProfileReducer } = this.props;
     if (
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
       !getUserListReducer.readyStatus ||
       getUserListReducer.readyStatus === GET_USER_LIST_INVALID ||
       getUserListReducer.readyStatus === GET_USER_LIST_REQUESTING
@@ -230,13 +246,17 @@ class GlobalMembership extends PureComponent<Props> {
       );
     }
 
-    if (getUserListReducer.readyStatus === GET_USER_LIST_FAILURE) {
+    if (
+      getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
+      getUserListReducer.readyStatus === GET_USER_LIST_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Users!</p>;
     }
 
     return (
       <GlobalMembershipList
         idName={match.params.idName}
+        currentLogin={this.state.currentLogin}
         membersList={getUserListReducer.data.users}
         handleDeleteDMembers={this.handleDeleteDMembers}
         handleClickGetAccount={this.handleClickGetAccount}
