@@ -12,6 +12,8 @@ module.exports = {
   wsApi: apiWS,
   // webApi: 'http://192.168.88.210:18082',
   // wsApi: 'wss://192.168.88.210:18082',
+  // webApi: 'http://88.99.247.59:8082',
+  // wsApi: 'wss://88.99.247.59:8082',
   // webApi: 'https://api.containerum.io',
   // wsApi: 'wss://api.containerum.io',
   appRecaptcha: process.env.RECAPTCHA || null,
