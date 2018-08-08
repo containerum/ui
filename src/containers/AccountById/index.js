@@ -32,6 +32,7 @@ import globalStyles from '../../theme/global.scss';
 import { RESET_PASSWORD_OF_USER_SUCCESS } from '../../constants/userManagement/resetPasswordOfUser';
 import { ACTIVATE_USER_SUCCESS } from '../../constants/userManagement/activateUser';
 import { ADMIN_DELETE_USER_SUCCESS } from '../../constants/globalMembershipConstants/adminDeleteUser';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 
 type Props = {
   match: Object,
@@ -42,6 +43,7 @@ type Props = {
   resetPasswordOfUserReducer: Object,
   activateUserReducer: Object,
   adminDeleteUserReducer: Object,
+  getProfileReducer: Object,
   fetchGetUserProfileByEmailIfNeeded: (login: string) => void,
   fetchSetUserAsAdminIfNeeded: (login: string) => void,
   fetchUnSetUserAsAdminIfNeeded: (login: string) => void,
@@ -59,7 +61,8 @@ export class AccountById extends PureComponent<Props> {
       isChecked: false,
       isOpened: false,
       passwordResetView: false,
-      newPassword: null
+      newPassword: null,
+      currentLogin: null
     };
   }
   componentWillMount() {
@@ -73,8 +76,18 @@ export class AccountById extends PureComponent<Props> {
     fetchGetUserProfileByEmailIfNeeded(match.params.idUser);
   }
   componentWillUpdate(nextProps) {
+    const {
+      match,
+      history,
+      getUserProfileByEmailReducer,
+      getProfileReducer,
+      resetPasswordOfUserReducer,
+      adminDeleteUserReducer,
+      activateUserReducer,
+      fetchGetUserProfileByEmailIfNeeded
+    } = this.props;
     if (
-      this.props.getUserProfileByEmailReducer.readyStatus !==
+      getUserProfileByEmailReducer.readyStatus !==
         nextProps.getUserProfileByEmailReducer.readyStatus &&
       nextProps.getUserProfileByEmailReducer.readyStatus ===
         GET_USER_PROFILE_BY_EMAIL_SUCCESS
@@ -87,7 +100,16 @@ export class AccountById extends PureComponent<Props> {
       }
     }
     if (
-      this.props.resetPasswordOfUserReducer.readyStatus !==
+      getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      if (nextProps.getProfileReducer.data.login === match.params.idUser) {
+        history.push(routerLinks.account);
+      }
+    }
+    if (
+      resetPasswordOfUserReducer.readyStatus !==
         nextProps.resetPasswordOfUserReducer.readyStatus &&
       nextProps.resetPasswordOfUserReducer.readyStatus ===
         RESET_PASSWORD_OF_USER_SUCCESS
@@ -99,27 +121,25 @@ export class AccountById extends PureComponent<Props> {
       });
     }
     if (
-      this.props.activateUserReducer.readyStatus !==
+      activateUserReducer.readyStatus !==
         nextProps.activateUserReducer.readyStatus &&
       nextProps.activateUserReducer.readyStatus === ACTIVATE_USER_SUCCESS
     ) {
-      const { match, fetchGetUserProfileByEmailIfNeeded } = this.props;
       fetchGetUserProfileByEmailIfNeeded(match.params.idUser);
     }
     if (
-      this.props.activateUserReducer.readyStatus !==
+      activateUserReducer.readyStatus !==
         nextProps.activateUserReducer.readyStatus &&
       nextProps.activateUserReducer.readyStatus === ACTIVATE_USER_SUCCESS
     ) {
-      const { match, fetchGetUserProfileByEmailIfNeeded } = this.props;
       fetchGetUserProfileByEmailIfNeeded(match.params.idUser);
     }
     if (
-      this.props.adminDeleteUserReducer.readyStatus !==
+      adminDeleteUserReducer.readyStatus !==
         nextProps.adminDeleteUserReducer.readyStatus &&
       nextProps.adminDeleteUserReducer.readyStatus === ADMIN_DELETE_USER_SUCCESS
     ) {
-      this.props.history.push(routerLinks.getGlobalMembership);
+      history.push(routerLinks.getGlobalMembership);
     }
   }
 
@@ -346,6 +366,7 @@ export class AccountById extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
+    getProfileReducer,
     getUserProfileByEmailReducer,
     unSetUserAsAdminReducer,
     setUserAsAdminReducer,
@@ -353,6 +374,7 @@ const connector: Connector<{}, Props> = connect(
     activateUserReducer,
     adminDeleteUserReducer
   }: ReduxState) => ({
+    getProfileReducer,
     getUserProfileByEmailReducer,
     unSetUserAsAdminReducer,
     setUserAsAdminReducer,

@@ -32,6 +32,7 @@ type Props = {
   handleClickDropDownAccess: (login: string) => void,
   handleMouseLeaveDropDownAccess: () => void,
   currentLoginDropDownAccess: string,
+  currentLogin: string,
   countPages: number,
   currentPage: number
 };
@@ -44,6 +45,7 @@ const GlobalMembershipList = ({
   handleClickDropDownAccess,
   handleMouseLeaveDropDownAccess,
   currentLoginDropDownAccess,
+  currentLogin,
   countPages,
   currentPage
 }: Props) => {
@@ -152,33 +154,41 @@ const GlobalMembershipList = ({
                         </div>
                       )}
                     </td>
-                    <td
-                      className={`${
-                        membershipStyles.td_5_GlobalMembership
-                      } dropdown no-arrow`}
-                      onClick={e => {
-                        newAccessLevel !== 'owner' &&
-                          handleDeleteDMembers(login);
-                        handleClose(e);
-                      }}
-                    >
-                      {newAccessLevel !== 'owner' && (
-                        <div className={globalStyles.membershipItem}>
-                          <i
-                            style={{
-                              verticalAlign: 'middle',
-                              paddingRight: 30
-                            }}
-                            className={`${
-                              globalStyles.membershipIcon
-                            } material-icons `}
-                            role="presentation"
-                          >
-                            delete
-                          </i>
-                        </div>
-                      )}
-                    </td>
+                    {currentLogin === login ? (
+                      <td
+                        className={`${
+                          membershipStyles.td_5_GlobalMembership
+                        } dropdown no-arrow`}
+                      />
+                    ) : (
+                      <td
+                        className={`${
+                          membershipStyles.td_5_GlobalMembership
+                        } dropdown no-arrow`}
+                        onClick={e => {
+                          newAccessLevel !== 'owner' &&
+                            handleDeleteDMembers(login);
+                          handleClose(e);
+                        }}
+                      >
+                        {newAccessLevel !== 'owner' && (
+                          <div className={globalStyles.membershipItem}>
+                            <i
+                              style={{
+                                verticalAlign: 'middle',
+                                paddingRight: 30
+                              }}
+                              className={`${
+                                globalStyles.membershipIcon
+                              } material-icons `}
+                              role="presentation"
+                            >
+                              delete
+                            </i>
+                          </div>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 );
               })}
