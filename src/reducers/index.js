@@ -109,6 +109,7 @@ import updateCustomVolumeReducer from './volumeReducers/updateCustomVolume';
 import getStoragesReducer from './storagesReducers/getStorages';
 import addStorageReducer from './storageReducers/addStorage';
 import deleteStorageReducer from './storageReducers/deleteStorage';
+import deleteSolutionTemplateReducer from './solutionReducers/deleteSolutionTemplate';
 
 const reducers = {
   loginReducer,
@@ -216,6 +217,7 @@ const reducers = {
   getMemoryStatisticReducer,
   getMemoryHistoryStatisticReducer,
   getStorageStatisticReducer,
+  deleteSolutionTemplateReducer,
   router,
   loadingBar: loadingBarReducer
 };

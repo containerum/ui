@@ -17,7 +17,8 @@ type Props = {
   data: Array<Object>,
   role: string,
   history: Object,
-  handleClickRunSolution: (name: string) => void
+  handleClickRunSolution: (name: string) => void,
+  handleDeleteSolutionTemplate: (name: string) => void
 };
 
 const handleClose = e => {
@@ -30,7 +31,8 @@ const SolutionsList = ({
   data,
   role,
   history,
-  handleClickRunSolution
+  handleClickRunSolution,
+  handleDeleteSolutionTemplate
 }: Props) => (
   <div className="row">
     {!isOnline &&
@@ -49,10 +51,9 @@ const SolutionsList = ({
     {data.map(solution => {
       const { name, url, limits } = solution;
       const { cpu, ram } = limits;
-      const imageHref = `${url}/master/${name}.png`.replace(
-        'github.com',
-        'raw.githubusercontent.com'
-      );
+      const imageHref = `${url}/master/${url.substring(
+        url.lastIndexOf('/') + 1
+      )}.png`.replace('github.com', 'raw.githubusercontent.com');
       return (
         <div
           className="col-md-4"
@@ -60,6 +61,19 @@ const SolutionsList = ({
           onClick={() => history.push(routerLinks.solutionLink(name))}
           style={{ cursor: 'pointer' }}
         >
+          <button
+            type="button"
+            className="close"
+            style={{
+              position: 'absolute',
+              top: 40,
+              right: 30
+            }}
+            onClick={e => handleDeleteSolutionTemplate(e, name)}
+            // onClick={() => handleCloseModal()}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
           <div className={globalStyles.contentBlockContainerSolution}>
             <div className={globalStyles.contentBlockVolumeHeader}>
               <img
