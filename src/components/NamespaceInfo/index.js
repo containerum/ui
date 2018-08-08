@@ -158,11 +158,17 @@ const NamespaceInfo = ({
           </div>
         </div>
         <div className={globalStyles.contentBlockInfoItemMargin50}>
-          <div className={infoNameClassName}>Volume ( Usage / Total ) :</div>
-          <div className={globalStyles.contentBlockInfoText}>- / -</div>
+          {/* <div className={infoNameClassName}>Volume ( Usage / Total ) :</div> */}
+          {/* <div className={globalStyles.contentBlockInfoText}>- / -</div> */}
         </div>
         {ownerPermissions && (
-          <div className={manageTeamClassName} style={{ paddingLeft: 80 }}>
+          <div
+            className={manageTeamClassName}
+            style={{
+              position: 'absolute',
+              right: 0
+            }}
+          >
             <Link to={routerLinks.getMembershipLink(idName)}>
               <div className={manageTeamTextClassName}>Manage Team</div>
             </Link>

@@ -219,18 +219,18 @@ const NamespacesList = ({
                       {cpu} / {cpuLimit}
                     </div>
                   </div>
-                  <div className={globalStyles.contentBlockInfoItem}>
-                    <div
-                      className={`${globalStyles.contentBlockInfoName} inline`}
-                    >
-                      Volume ( Usage / Total ) :&nbsp;
-                    </div>
-                    <div
-                      className={`${globalStyles.contentBlockInfoText} inline`}
-                    >
-                      - / -
-                    </div>
-                  </div>
+                  {/* <div className={globalStyles.contentBlockInfoItem}> */}
+                  {/* <div */}
+                  {/* className={`${globalStyles.contentBlockInfoName} inline`} */}
+                  {/* > */}
+                  {/* Volume ( Usage / Total ) :&nbsp; */}
+                  {/* </div> */}
+                  {/* <div */}
+                  {/* className={`${globalStyles.contentBlockInfoText} inline`} */}
+                  {/* > */}
+                  {/* - / -*/}
+                  {/* </div> */}
+                  {/* </div> */}
                 </div>
               </div>
             </div>
