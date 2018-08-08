@@ -60,7 +60,7 @@ export const fetchDeleteSolutionTemplate = (
   );
   const { status, data, config } = response;
   switch (status) {
-    case 201: {
+    case 202: {
       dispatch(
         deleteSolutionTemplateSuccess(data, status, config.method, template)
       );

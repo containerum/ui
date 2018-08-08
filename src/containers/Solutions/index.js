@@ -23,6 +23,7 @@ import {
   GET_SOLUTIONS_SUCCESS
 } from '../../constants/solutionsConstants/getSolutions';
 import SolutionsList from '../../components/SolutionsList';
+import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import Notification from '../Notification';
 import RunSolutionModal from '../RunSolution';
 import {
@@ -56,7 +57,10 @@ export class Solutions extends PureComponent<Props> {
     super(props);
     this.state = {
       isOpenedRunSolution: false,
-      currentSolutionTemplate: null
+      isOpened: false,
+      currentSolutionTemplate: null,
+      currentSolution: null,
+      inputName: ''
     };
   }
   componentWillMount() {
@@ -66,10 +70,8 @@ export class Solutions extends PureComponent<Props> {
     }
   }
   componentDidMount() {
-    const { fetchGetSolutionsIfNeeded, getSolutionsReducer } = this.props;
-    if (getSolutionsReducer.readyStatus !== GET_SOLUTIONS_SUCCESS) {
-      fetchGetSolutionsIfNeeded();
-    }
+    const { fetchGetSolutionsIfNeeded } = this.props;
+    fetchGetSolutionsIfNeeded();
   }
   componentWillUpdate(nextProps, nextState) {
     if (
@@ -111,15 +113,37 @@ export class Solutions extends PureComponent<Props> {
       currentSolutionTemplate: solutionTemplate
     });
   };
-  handleDeleteSolutionTemplate = (e, solutionTemplate) => {
-    e.stopPropagation();
-    this.props.fetchDeleteSolutionTemplateIfNeeded(solutionTemplate);
+  handleDeleteSolutionTemplate = () => {
+    this.props.fetchDeleteSolutionTemplateIfNeeded(this.state.currentSolution);
   };
   handleOpenClose = () => {
     this.setState({
       ...this.state,
       isOpenedRunSolution: false,
       currentSolutionTemplate: null
+    });
+  };
+  handleInputName = inputName => {
+    this.setState({
+      ...this.state,
+      inputName
+    });
+  };
+  handleOpenSolutionModal = (e, solutionTemplate) => {
+    e.stopPropagation();
+    this.setState({
+      ...this.state,
+      isOpened: !this.state.isOpened,
+      currentSolution: solutionTemplate,
+      inputName: ''
+    });
+  };
+  handleOpenCloseModal = () => {
+    this.setState({
+      ...this.state,
+      isOpened: !this.state.isOpened,
+      currentSolution: null,
+      inputName: ''
     });
   };
 
@@ -179,7 +203,7 @@ export class Solutions extends PureComponent<Props> {
           handleClickRunSolution={solutionTemplate =>
             this.handleClickRunSolution(solutionTemplate)
           }
-          handleDeleteSolutionTemplate={this.handleDeleteSolutionTemplate}
+          handleDeleteSolutionTemplate={this.handleOpenSolutionModal}
         />
       );
     }
@@ -188,7 +212,13 @@ export class Solutions extends PureComponent<Props> {
 
   render() {
     const { history, location, deleteSolutionTemplateReducer } = this.props;
-    const { isOpenedRunSolution, currentSolutionTemplate } = this.state;
+    const {
+      isOpenedRunSolution,
+      currentSolutionTemplate,
+      currentSolution,
+      inputName,
+      isOpened
+    } = this.state;
     return (
       <div>
         {currentSolutionTemplate ? (
@@ -209,6 +239,18 @@ export class Solutions extends PureComponent<Props> {
             isOpenedRunSolution={isOpenedRunSolution}
             currentSolutionTemplate={currentSolutionTemplate}
             handleOpenClose={this.handleOpenClose}
+          />
+        )}
+        {currentSolution && (
+          <DeleteModal
+            type="Solution"
+            inputName={inputName}
+            name={inputName}
+            typeName={currentSolution}
+            isOpened={isOpened}
+            handleInputName={this.handleInputName}
+            handleOpenCloseModal={this.handleOpenCloseModal}
+            onHandleDelete={this.handleDeleteSolutionTemplate}
           />
         )}
         <div className={globalStyles.contentBlock}>
