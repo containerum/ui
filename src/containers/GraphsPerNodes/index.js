@@ -137,7 +137,7 @@ class GraphsPerNodes extends PureComponent<Props> {
               </div>
               <AreaChart
                 width={400}
-                height={200}
+                height={210}
                 data={dataOfCpuHistory}
                 margin={{ top: 0, right: 0, left: -27, bottom: 0 }}
               >
@@ -210,6 +210,11 @@ class GraphsPerNodes extends PureComponent<Props> {
           );
           return (
             <div>
+              <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li className="nav-item">
+                  <div className="nav-link">&nbsp;</div>
+                </li>
+              </ul>
               <div
                 style={{
                   marginLeft: 20,
@@ -220,7 +225,7 @@ class GraphsPerNodes extends PureComponent<Props> {
               </div>
               <AreaChart
                 width={400}
-                height={200}
+                height={210}
                 data={dataOfMemoryHistory}
                 margin={{ top: 0, right: 0, left: -27, bottom: 0 }}
               >
