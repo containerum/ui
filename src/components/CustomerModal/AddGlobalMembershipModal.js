@@ -38,21 +38,27 @@ const customStyles = {
 type Props = {
   type: string,
   name: string,
+  newPassword: string,
   isOpened: boolean,
   isFetchingAdd: boolean,
+  passwordResetView: boolean,
   handleInputEmailAdd: () => void,
   onHandleAdd: (idName: string) => void,
   handleOpenCloseModal: () => void,
+  handleClickCopyPassword: () => void,
   err: string
 };
 
 const AddGlobalUserMembershipModal = ({
   type,
   name,
+  newPassword,
   isOpened,
   isFetchingAdd,
+  passwordResetView,
   handleInputEmailAdd,
   handleOpenCloseModal,
+  handleClickCopyPassword,
   onHandleAdd,
   err
 }: Props) => {
@@ -66,7 +72,6 @@ const AddGlobalUserMembershipModal = ({
         login: name
       };
       onHandleAdd(addData);
-      handleCloseModal();
     }
   };
   const handleChangeNameOfType = e => {
@@ -106,72 +111,140 @@ const AddGlobalUserMembershipModal = ({
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div className={`${modalStyles.modalBody} modal-body text-left`}>
-          <h4
-            className={`${modalStyles.modalTitle} ${
-              globalStyles.marginBottom30
-            } modal-title`}
-            id="modalLabel"
-          >
-            {type}
-          </h4>
-          {(type === 'Add User' || type === 'Add User in Group') && (
-            <span className={modalStyles.modalRedisText}>
-              Fill in the information below to add new user
+        {passwordResetView ? (
+          <div className={`${modalStyles.modalBody} modal-body text-left`}>
+            <h4
+              className={`${modalStyles.modalTitle} ${
+                globalStyles.marginBottom30
+              } modal-title`}
+              style={{
+                textAlign: 'center',
+                marginTop: 20
+              }}
+            >
+              Reset password
+            </h4>
+            <span
+              className={modalStyles.modalRedisText}
+              style={{ textAlign: 'center', display: 'block' }}
+            >
+              <span>
+                New password for the{' '}
+                <strong style={{ color: '#29abe2' }}>{name}</strong>
+              </span>
             </span>
-          )}
-          {type === 'Add Group' && (
-            <span className={modalStyles.modalRedisText}>
-              Fill in the information below to add new group
-            </span>
-          )}
-          {err ? (
-            <div className={modalStyles.membershipAlert}>
-              <div className={modalStyles.membershipAlertItem}>
-                <img src={alert} alt="alert" />
+          </div>
+        ) : (
+          <div className={`${modalStyles.modalBody} modal-body text-left`}>
+            <h4
+              className={`${modalStyles.modalTitle} ${
+                globalStyles.marginBottom30
+              } modal-title`}
+              id="modalLabel"
+            >
+              {type}
+            </h4>
+            {(type === 'Add User' || type === 'Add User in Group') && (
+              <span className={modalStyles.modalRedisText}>
+                Fill in the information below to add new user
+              </span>
+            )}
+            {type === 'Add Group' && (
+              <span className={modalStyles.modalRedisText}>
+                Fill in the information below to add new group
+              </span>
+            )}
+            {err ? (
+              <div className={modalStyles.membershipAlert}>
+                <div className={modalStyles.membershipAlertItem}>
+                  <img src={alert} alt="alert" />
+                </div>
+                <div>{err}</div>
               </div>
-              <div>{err}</div>
-            </div>
-          ) : (
-            ''
-          )}
-          {type === 'Add User' && (
-            <span className={modalStyles.modalRedisText}>
-              User Email address
-            </span>
-          )}
-          {type === 'Add Group' && (
-            <span className={modalStyles.modalRedisText}>Group Name</span>
-          )}
-          <input
-            type={type === 'Add User' ? 'email' : 'text'}
-            className="form-control volume-form-input"
-            placeholder={type === 'Add User' ? 'Email' : 'Group'}
-            value={name}
-            required
-            onChange={e => handleChangeNameOfType(e)}
-            style={{ marginBottom: '15px' }}
-          />
-        </div>
+            ) : (
+              ''
+            )}
+            {type === 'Add User' && (
+              <span className={modalStyles.modalRedisText}>
+                User Email address
+              </span>
+            )}
+            {type === 'Add Group' && (
+              <span className={modalStyles.modalRedisText}>Group Name</span>
+            )}
+            <input
+              type={type === 'Add User' ? 'email' : 'text'}
+              className="form-control volume-form-input"
+              placeholder={type === 'Add User' ? 'Email' : 'Group'}
+              value={name}
+              required
+              onChange={e => handleChangeNameOfType(e)}
+              style={{ marginBottom: '15px' }}
+            />
+          </div>
+        )}
 
-        <div className={`${modalStyles.modalFooter} modal-footer`}>
-          <button
-            type="button"
-            className={`${buttonsStyles.buttonModalCancel} btn`}
-            onClick={() => handleCloseModal()}
-          >
-            Cancel
-          </button>
-          <LoadButton
-            style={{
-              height: '40px'
-            }}
-            type="submit"
-            buttonText="Add"
-            isFetching={isFetchingAdd}
-            baseClassButton={`${buttonsStyles.buttonModalSelect} btn`}
-          />
-        </div>
+        {passwordResetView ? (
+          <div className={`${modalStyles.modalFooter} modal-footer`}>
+            <div
+              style={{
+                width: 350,
+                height: 40,
+                borderRadius: 2,
+                backgroundColor: '#eaeaea',
+                textAlign: 'center',
+                position: 'relative'
+              }}
+            >
+              <input
+                type="text"
+                id="newPassword"
+                value={newPassword}
+                onChange={() => console.log()}
+                style={{
+                  display: 'inline-block',
+                  width: 95,
+                  color: '#29abe2',
+                  marginTop: 7,
+                  backgroundColor: 'transparent',
+                  border: 'none'
+                }}
+              />
+              <i
+                className="material-icons"
+                style={{
+                  position: 'absolute',
+                  top: 7,
+                  right: 10,
+                  color: '#29abe2',
+                  cursor: 'pointer'
+                }}
+                onClick={() => handleClickCopyPassword()}
+              >
+                file_copy
+              </i>
+            </div>
+          </div>
+        ) : (
+          <div className={`${modalStyles.modalFooter} modal-footer`}>
+            <button
+              type="button"
+              className={`${buttonsStyles.buttonModalCancel} btn`}
+              onClick={() => handleCloseModal()}
+            >
+              Cancel
+            </button>
+            <LoadButton
+              style={{
+                height: '40px'
+              }}
+              type="submit"
+              buttonText="Add"
+              isFetching={isFetchingAdd}
+              baseClassButton={`${buttonsStyles.buttonModalSelect} btn`}
+            />
+          </div>
+        )}
       </form>
     </Modal>
   );

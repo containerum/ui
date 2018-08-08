@@ -61,6 +61,7 @@ import changeProfileInfoReducer from './profileReducers/changeProfileInfo';
 import getResourcesReducer from './statisticsReducers/getResources';
 import getSolutionsReducer from './solutionsReducers/getSolutions';
 import getSolutionReducer from './solutionReducers/getSolution';
+import addSolutionReducer from './solutionReducers/addSolution';
 import runSolutionReducer from './solutionReducers/runSolution';
 import getDomainsGlobalReducer from './servicesReducers/getDomainsGlobal';
 import getIngressesReducer from './servicesReducers/getDomains';
@@ -108,6 +109,7 @@ import updateCustomVolumeReducer from './volumeReducers/updateCustomVolume';
 import getStoragesReducer from './storagesReducers/getStorages';
 import addStorageReducer from './storageReducers/addStorage';
 import deleteStorageReducer from './storageReducers/deleteStorage';
+import deleteSolutionTemplateReducer from './solutionReducers/deleteSolutionTemplate';
 
 const reducers = {
   loginReducer,
@@ -167,6 +169,7 @@ const reducers = {
   getResourcesReducer,
   getSolutionsReducer,
   getSolutionReducer,
+  addSolutionReducer,
   runSolutionReducer,
   getDomainsGlobalReducer,
   deleteIngressReducer,
@@ -214,6 +217,7 @@ const reducers = {
   getMemoryStatisticReducer,
   getMemoryHistoryStatisticReducer,
   getStorageStatisticReducer,
+  deleteSolutionTemplateReducer,
   router,
   loadingBar: loadingBarReducer
 };

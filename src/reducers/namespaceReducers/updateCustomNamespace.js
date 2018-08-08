@@ -16,7 +16,7 @@ const initialState = {
   data: null,
   status: null,
   method: null,
-  idName: null,
+  label: null,
   err: null
 };
 
@@ -29,7 +29,7 @@ export default (state = initialState, action: Action) => {
         data: null,
         status: null,
         method: null,
-        idName: null,
+        label: null,
         err: null
       });
     case UPDATE_CUSTOM_NAMESPACE_SUCCESS:
@@ -39,7 +39,7 @@ export default (state = initialState, action: Action) => {
         data: action.data,
         status: action.status,
         method: action.method,
-        idName: action.idName,
+        label: action.label,
         err: null
       });
     case UPDATE_CUSTOM_NAMESPACE_FAILURE:
@@ -49,7 +49,7 @@ export default (state = initialState, action: Action) => {
         data: null,
         status: action.status,
         method: null,
-        idName: action.idName,
+        label: action.label,
         err: action.err
       });
     default:

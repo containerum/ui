@@ -16,11 +16,12 @@ const updateNamespaceRequest = () => ({
   isFetching: true
 });
 
-const updateNamespaceSuccess = (data, status, method) => ({
+const updateNamespaceSuccess = (data, status, method, label) => ({
   type: UPDATE_CUSTOM_NAMESPACE_SUCCESS,
   isFetching: false,
   data,
   status,
+  label,
   method
 });
 
@@ -75,16 +76,7 @@ export const fetchUpdateCustomNamespace = (
   const { status, data, config } = response;
   switch (status) {
     case 200: {
-      dispatch(updateNamespaceSuccess(201, status, config.method));
-      // if (
-      //   typeof window !== 'undefined' &&
-      //   typeof window.navigator !== 'undefined'
-      // ) {
-      //   ReactGA.event({
-      //     category: 'UI',
-      //     action: `UI_update_ns_${price}`
-      //   });
-      // }
+      dispatch(updateNamespaceSuccess(data, 202, config.method, label));
       dispatch(push(routerLinks.namespaces));
       break;
     }

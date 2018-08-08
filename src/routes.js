@@ -22,6 +22,7 @@ import Main from './containers/Main';
 import DashboardPage from './containers/Dashboard';
 import SolutionsPage from './containers/Solutions';
 import SolutionPage from './containers/Solution';
+import AddSolutionPage from './containers/AddSolution';
 import NamespacesPage from './containers/Namespaces';
 import NamespacePage from './containers/Namespace';
 import ResizeNamespacePage from './containers/ResizeNamespace';
@@ -309,7 +310,7 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
-  isOnline && {
+  {
     path: routerLinks.solutions,
     // exact: true,
     component: SolutionsPage,
@@ -320,7 +321,7 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  isOnline && {
+  {
     path: routerLinks.solution,
     exact: true,
     component: SolutionPage,
@@ -330,6 +331,14 @@ export default [
         dispatch(fetchGetSolutionIfNeeded()),
         dispatch(fetchGetProfileIfNeeded())
       ])
+  },
+  {
+    path: routerLinks.addSolution,
+    exact: true,
+    component: AddSolutionPage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   isOnline && {
     path: routerLinks.billing,

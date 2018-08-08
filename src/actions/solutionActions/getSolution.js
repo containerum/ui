@@ -70,7 +70,7 @@ export const fetchGetSolution = (
         break;
       }
       case 404: {
-        dispatch(getSolutionSuccess([]));
+        dispatch(getSolutionSuccess('You need to add README.md'));
         break;
       }
       case 400: {

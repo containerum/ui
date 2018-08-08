@@ -15,6 +15,7 @@ import globalStyles from '../../theme/global.scss';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
+import * as actionDeleteSolutionTemplate from '../../actions/solutionActions/deleteSolutionTemplate';
 import {
   GET_SOLUTIONS_INVALID,
   GET_SOLUTIONS_REQUESTING,
@@ -22,14 +23,22 @@ import {
   GET_SOLUTIONS_SUCCESS
 } from '../../constants/solutionsConstants/getSolutions';
 import SolutionsList from '../../components/SolutionsList';
+import DeleteModal from '../../components/CustomerModal/DeleteModal';
+import Notification from '../Notification';
 import RunSolutionModal from '../RunSolution';
-import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_INVALID,
+  GET_PROFILE_REQUESTING,
+  GET_PROFILE_SUCCESS
+} from '../../constants/profileConstants/getProfile';
 import {
   GET_NAMESPACES_FAILURE,
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
   GET_NAMESPACES_SUCCESS
 } from '../../constants/namespacesConstants/getNamespaces';
+import { DELETE_SOLUTION_SUCCESS } from '../../constants/solutionConstants/deleteSolutionTemplate';
 
 type Props = {
   location: Object,
@@ -37,7 +46,9 @@ type Props = {
   getProfileReducer: Object,
   getSolutionsReducer: Object,
   getNamespacesReducer: Object,
+  deleteSolutionTemplateReducer: Object,
   fetchGetNamespacesIfNeeded: () => void,
+  fetchDeleteSolutionTemplateIfNeeded: (template: string) => void,
   fetchGetSolutionsIfNeeded: () => void
 };
 
@@ -46,7 +57,10 @@ export class Solutions extends PureComponent<Props> {
     super(props);
     this.state = {
       isOpenedRunSolution: false,
-      currentSolutionTemplate: null
+      isOpened: false,
+      currentSolutionTemplate: null,
+      currentSolution: null,
+      inputName: ''
     };
   }
   componentWillMount() {
@@ -56,10 +70,8 @@ export class Solutions extends PureComponent<Props> {
     }
   }
   componentDidMount() {
-    const { fetchGetSolutionsIfNeeded, getSolutionsReducer } = this.props;
-    if (getSolutionsReducer.readyStatus !== GET_SOLUTIONS_SUCCESS) {
-      fetchGetSolutionsIfNeeded();
-    }
+    const { fetchGetSolutionsIfNeeded } = this.props;
+    fetchGetSolutionsIfNeeded();
   }
   componentWillUpdate(nextProps, nextState) {
     if (
@@ -70,6 +82,14 @@ export class Solutions extends PureComponent<Props> {
       this.props.fetchGetNamespacesIfNeeded(
         nextProps.getProfileReducer.data.role
       );
+    }
+    if (
+      this.props.deleteSolutionTemplateReducer.readyStatus !==
+        nextProps.deleteSolutionTemplateReducer.readyStatus &&
+      nextProps.deleteSolutionTemplateReducer.readyStatus ===
+        DELETE_SOLUTION_SUCCESS
+    ) {
+      this.props.fetchGetSolutionsIfNeeded();
     }
     if (nextState.isOpenedRunSolution && typeof document === 'object') {
       const getHtml = document.querySelector('html');
@@ -85,13 +105,16 @@ export class Solutions extends PureComponent<Props> {
       getHtml.style.overflow = 'auto';
     }
   }
+
   handleClickRunSolution = solutionTemplate => {
     this.setState({
       ...this.state,
       isOpenedRunSolution: true,
       currentSolutionTemplate: solutionTemplate
     });
-    // this.props.history.push(`/solutions/${solutionTemplate}/runSolution`);
+  };
+  handleDeleteSolutionTemplate = () => {
+    this.props.fetchDeleteSolutionTemplateIfNeeded(this.state.currentSolution);
   };
   handleOpenClose = () => {
     this.setState({
@@ -100,10 +123,41 @@ export class Solutions extends PureComponent<Props> {
       currentSolutionTemplate: null
     });
   };
+  handleInputName = inputName => {
+    this.setState({
+      ...this.state,
+      inputName
+    });
+  };
+  handleOpenSolutionModal = (e, solutionTemplate) => {
+    e.stopPropagation();
+    this.setState({
+      ...this.state,
+      isOpened: !this.state.isOpened,
+      currentSolution: solutionTemplate,
+      inputName: ''
+    });
+  };
+  handleOpenCloseModal = () => {
+    this.setState({
+      ...this.state,
+      isOpened: !this.state.isOpened,
+      currentSolution: null,
+      inputName: ''
+    });
+  };
 
   renderSolutionsList = () => {
-    const { getSolutionsReducer, getNamespacesReducer, history } = this.props;
+    const {
+      getProfileReducer,
+      getSolutionsReducer,
+      getNamespacesReducer,
+      history
+    } = this.props;
     if (
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
       !getSolutionsReducer.readyStatus ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_REQUESTING ||
@@ -129,6 +183,7 @@ export class Solutions extends PureComponent<Props> {
       );
     }
     if (
+      getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_FAILURE ||
       getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE
     ) {
@@ -137,15 +192,18 @@ export class Solutions extends PureComponent<Props> {
 
     if (
       getSolutionsReducer.readyStatus === GET_SOLUTIONS_SUCCESS &&
-      getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS &&
+      getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
     ) {
       return (
         <SolutionsList
+          role={getProfileReducer.data.role}
           data={getSolutionsReducer.data}
           history={history}
           handleClickRunSolution={solutionTemplate =>
             this.handleClickRunSolution(solutionTemplate)
           }
+          handleDeleteSolutionTemplate={this.handleOpenSolutionModal}
         />
       );
     }
@@ -153,8 +211,14 @@ export class Solutions extends PureComponent<Props> {
   };
 
   render() {
-    const { history, location } = this.props;
-    const { isOpenedRunSolution, currentSolutionTemplate } = this.state;
+    const { history, location, deleteSolutionTemplateReducer } = this.props;
+    const {
+      isOpenedRunSolution,
+      currentSolutionTemplate,
+      currentSolution,
+      inputName,
+      isOpened
+    } = this.state;
     return (
       <div>
         {currentSolutionTemplate ? (
@@ -162,6 +226,12 @@ export class Solutions extends PureComponent<Props> {
         ) : (
           <Helmet title="Solutions" />
         )}
+        <Notification
+          status={deleteSolutionTemplateReducer.status}
+          name={deleteSolutionTemplateReducer.template}
+          method={deleteSolutionTemplateReducer.method}
+          errorMessage={deleteSolutionTemplateReducer.err}
+        />
         {isOpenedRunSolution && (
           <RunSolutionModal
             history={history}
@@ -169,6 +239,18 @@ export class Solutions extends PureComponent<Props> {
             isOpenedRunSolution={isOpenedRunSolution}
             currentSolutionTemplate={currentSolutionTemplate}
             handleOpenClose={this.handleOpenClose}
+          />
+        )}
+        {currentSolution && (
+          <DeleteModal
+            type="Solution"
+            inputName={inputName}
+            name={inputName}
+            typeName={currentSolution}
+            isOpened={isOpened}
+            handleInputName={this.handleInputName}
+            handleOpenCloseModal={this.handleOpenCloseModal}
+            onHandleDelete={this.handleDeleteSolutionTemplate}
           />
         )}
         <div className={globalStyles.contentBlock}>
@@ -185,17 +267,25 @@ const connector: Connector<{}, Props> = connect(
   ({
     getProfileReducer,
     getSolutionsReducer,
-    getNamespacesReducer
+    getNamespacesReducer,
+    deleteSolutionTemplateReducer
   }: ReduxState) => ({
     getProfileReducer,
     getSolutionsReducer,
-    getNamespacesReducer
+    getNamespacesReducer,
+    deleteSolutionTemplateReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSolutionsIfNeeded: () =>
       dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
     fetchGetNamespacesIfNeeded: (role: string) =>
-      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role))
+      dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
+    fetchDeleteSolutionTemplateIfNeeded: (template: string) =>
+      dispatch(
+        actionDeleteSolutionTemplate.fetchDeleteSolutionTemplateIfNeeded(
+          template
+        )
+      )
   })
 );
 

@@ -428,11 +428,12 @@ class GlobalMembership extends PureComponent<Props> {
           isEmailValid={isEmailValid}
           handleDeleteNewUser={this.handleDeleteNewUser}
         />
-        <BackButton path={routerLinks.getGlobalGroups} />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
             <div className="row double two-columns">
-              <div className="col-md-3 col-lg-3 col-xl-2" />
+              <div className="col-md-3 col-lg-3 col-xl-2">
+                <BackButton path={routerLinks.getGlobalGroups} />
+              </div>
               <div className="col-md-9 col-lg-9 col-xl-10">
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
@@ -441,11 +442,10 @@ class GlobalMembership extends PureComponent<Props> {
                         to={routerLinks.getGlobalGroups}
                         className={labelClassName}
                         style={{
-                          textTransform: 'lowercase',
                           display: 'inline-block'
                         }}
                       >
-                        {label}
+                        Group: {label}
                       </NavLink>
                       <div
                         style={{

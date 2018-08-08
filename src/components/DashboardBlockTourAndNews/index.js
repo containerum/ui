@@ -18,7 +18,9 @@ type Props = {
   configmaps: Object,
   linkToDeployment: string,
   linkToManageTeam: string,
-  linkToManageTeamAdmin: boolean
+  linkToManageTeamAdmin: boolean,
+  role: string,
+  namespacesReducerLength: number
 };
 
 const isOnline = sourceType === 'ONLINE';
@@ -29,7 +31,9 @@ const DashboardBlockTourAndNews = ({
   configmaps,
   linkToDeployment,
   linkToManageTeam,
-  linkToManageTeamAdmin
+  linkToManageTeamAdmin,
+  role,
+  namespacesReducerLength
 }: Props) => (
   <div className="col-md-3 pr-0">
     <div className={blockClassName}>
@@ -75,91 +79,101 @@ const DashboardBlockTourAndNews = ({
           role="tabpanel"
           aria-labelledby="first-tab"
         >
-          <div className={dashboardStyles.tourWrapper}>
-            {isOnline && (
+          {!namespacesReducerLength && role === 'user' && !isOnline ? (
+            <div className={dashboardStyles.tourWrapper}>
+              You don`t have permission to projects
+            </div>
+          ) : (
+            <div className={dashboardStyles.tourWrapper}>
+              {isOnline && (
+                <Link
+                  className={
+                    balance !== 0 ? dashboardStyles.tourLinkDisabled : ''
+                  }
+                  to={routerLinks.billing}
+                >
+                  Top up your Balance or enter Promo code
+                </Link>
+              )}
+              {isOnline && (
+                <Link
+                  className={
+                    linkToDeployment ? dashboardStyles.tourLinkDisabled : ''
+                  }
+                  to={routerLinks.createNamespace}
+                >
+                  Create Project
+                </Link>
+              )}
+              {/* <Link to="/createVolume">Create Volume</Link> */}
               <Link
                 className={
-                  balance !== 0 ? dashboardStyles.tourLinkDisabled : ''
+                  resources.deployments !== 0
+                    ? dashboardStyles.tourLinkDisabled
+                    : ''
                 }
-                to={routerLinks.billing}
-              >
-                Top up your Balance or enter Promo code
-              </Link>
-            )}
-            {isOnline && (
-              <Link
-                className={
-                  linkToDeployment ? dashboardStyles.tourLinkDisabled : ''
-                }
-                to={routerLinks.createNamespace}
-              >
-                Create Project
-              </Link>
-            )}
-            {/* <Link to="/createVolume">Create Volume</Link> */}
-            <Link
-              className={
-                resources.deployments !== 0
-                  ? dashboardStyles.tourLinkDisabled
-                  : ''
-              }
-              to={
-                linkToDeployment
-                  ? routerLinks.createDeploymentLink(linkToDeployment)
-                  : '/createNamespace'
-              }
-            >
-              Launch 1st Deployment
-            </Link>
-            <Link
-              className={
-                resources.external_services !== 0 ||
-                resources.internal_services !== 0
-                  ? dashboardStyles.tourLinkDisabled
-                  : ''
-              }
-              to={
-                linkToDeployment
-                  ? routerLinks.createServiceLink(linkToDeployment)
-                  : '/createNamespace'
-              }
-            >
-              Launch 1st Service
-            </Link>
-            <Link
-              className={
-                configmaps.data.length > 0
-                  ? dashboardStyles.tourLinkDisabled
-                  : ''
-              }
-              to={routerLinks.configmap}
-            >
-              Launch 1st ConfigMap
-            </Link>
-            {/* <Link to="/account"> */}
-            {/* Set up Web Hooks for Continuous Deployment */}
-            {/* </Link> */}
-            {isOnline && (
-              <Link
                 to={
-                  linkToManageTeam
-                    ? routerLinks.getMembershipLink(linkToManageTeam.id)
-                    : linkToManageTeamAdmin
-                      ? routerLinks.getGlobalMembership
-                      : '/'
-                }
-                style={
-                  linkToManageTeam
-                    ? {}
-                    : linkToManageTeamAdmin
-                      ? {}
-                      : { color: '#cecece', cursor: 'not-allowed' }
+                  linkToDeployment
+                    ? routerLinks.createDeploymentLink(linkToDeployment)
+                    : role === 'admin'
+                      ? routerLinks.createCustomNamespace
+                      : routerLinks.createNamespace
                 }
               >
-                Share Project with your team
+                Launch 1st Deployment
               </Link>
-            )}
-          </div>
+              <Link
+                className={
+                  resources.external_services !== 0 ||
+                  resources.internal_services !== 0
+                    ? dashboardStyles.tourLinkDisabled
+                    : ''
+                }
+                to={
+                  linkToDeployment
+                    ? routerLinks.createServiceLink(linkToDeployment)
+                    : role === 'admin'
+                      ? routerLinks.createCustomNamespace
+                      : routerLinks.createNamespace
+                }
+              >
+                Launch 1st Service
+              </Link>
+              <Link
+                className={
+                  configmaps.data.length > 0
+                    ? dashboardStyles.tourLinkDisabled
+                    : ''
+                }
+                to={routerLinks.configmap}
+              >
+                Launch 1st ConfigMap
+              </Link>
+              {/* <Link to="/account"> */}
+              {/* Set up Web Hooks for Continuous Deployment */}
+              {/* </Link> */}
+              {isOnline && (
+                <Link
+                  to={
+                    linkToManageTeam
+                      ? routerLinks.getMembershipLink(linkToManageTeam.id)
+                      : linkToManageTeamAdmin
+                        ? routerLinks.getGlobalMembership
+                        : '/'
+                  }
+                  style={
+                    linkToManageTeam
+                      ? {}
+                      : linkToManageTeamAdmin
+                        ? {}
+                        : { color: '#cecece', cursor: 'not-allowed' }
+                  }
+                >
+                  Share Project with your team
+                </Link>
+              )}
+            </div>
+          )}
 
           {/* <div */}
           {/* className="tab-pane fade" */}
