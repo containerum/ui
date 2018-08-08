@@ -98,8 +98,10 @@ import unSetUserAsAdminReducer from './userManagement/unSetUserAsAdmin';
 import resetPasswordOfUserReducer from './userManagement/resetPasswordOfUser';
 import getCpuStatisticReducer from './statisticsReducers/getCpuStatistic';
 import getCpuHistoryStatisticReducer from './statisticsReducers/getCpuHistoryStatistic';
+import getCpuHistoryPerNodesStatisticReducer from './statisticsReducers/getCpuHistoryPerNodesStatistic';
 import getMemoryStatisticReducer from './statisticsReducers/getMemoryStatistic';
 import getMemoryHistoryStatisticReducer from './statisticsReducers/getMemoryHistoryStatistic';
+import getMemoryHistoryPerNodesStatisticReducer from './statisticsReducers/getMemoryHistoryPerNodesStatistic';
 import getStorageStatisticReducer from './statisticsReducers/getStorageStatistic';
 import getDomainsReducer from './domainsReducers/getDomains';
 import deleteDomainReducer from './domainReducers/deleteDomain';
@@ -214,8 +216,10 @@ const reducers = {
   deleteStorageReducer,
   getCpuStatisticReducer,
   getCpuHistoryStatisticReducer,
+  getCpuHistoryPerNodesStatisticReducer,
   getMemoryStatisticReducer,
   getMemoryHistoryStatisticReducer,
+  getMemoryHistoryPerNodesStatisticReducer,
   getStorageStatisticReducer,
   deleteSolutionTemplateReducer,
   router,
