@@ -32,6 +32,7 @@ module.exports = {
   routerLinks: {
     index: '/',
     dashboard: '/dashboard',
+    graphsPerNodes: '/graphsPerNodes',
     solutions: '/solutions',
     solutionsLink: (idName: string) =>
       `/solutions${idName && `?namespace=${idName}`}`,
