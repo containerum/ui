@@ -5,48 +5,52 @@ import cookie from 'react-cookies';
 
 import type { Dispatch, GetState, ThunkAction } from '../../types';
 import {
-  GET_SECRETS_REQUESTING,
-  GET_SECRETS_SUCCESS,
-  GET_SECRETS_FAILURE
-} from '../../constants/secretsConstants/getSecrets';
-// import isTokenExist from '../functions/isTokenExist';
+  GET_SECRET_REQUESTING,
+  GET_SECRET_SUCCESS,
+  GET_SECRET_FAILURE
+} from '../../constants/secretConstants/getSecret';
 import { webApi, routerLinks } from '../../config';
 
-const getSecretsRequest = () => ({
-  type: GET_SECRETS_REQUESTING,
+const getSecretRequest = () => ({
+  type: GET_SECRET_REQUESTING,
   isFetching: true
 });
 
-const getSecretsSuccess = (data, status) => ({
-  type: GET_SECRETS_SUCCESS,
+const getSecretSuccess = (data, status, idName, idSecret) => ({
+  type: GET_SECRET_SUCCESS,
   isFetching: false,
   data,
-  status
+  status,
+  idName,
+  idSecret
 });
 
-const getSecretsFailure = (err, status) => ({
-  type: GET_SECRETS_FAILURE,
+const getSecretFailure = (err, status, idName, idSecret) => ({
+  type: GET_SECRET_FAILURE,
   isFetching: false,
   err,
-  status
+  status,
+  idName,
+  idSecret
 });
 
-const getSecretsInvalidToken = () => ({
+const getSecretInvalidToken = () => ({
   type: 'GET_INVALID_TOKEN'
 });
 
-export const fetchGetSecrets = (
+export const fetchGetSecret = (
   idName: string,
+  idSecret: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
   const browser = cookie.load('browser');
   const accessToken = cookie.load('accessToken');
 
-  dispatch(getSecretsRequest());
+  dispatch(getSecretRequest());
 
   const response = await axios.get(
-    `${URL}/namespaces/${idName}/secrets?docker`,
+    `${URL}/namespaces/${idName}/secrets/${idSecret}`,
     {
       headers: {
         'User-Client': browser,
@@ -58,26 +62,26 @@ export const fetchGetSecrets = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getSecretsSuccess(data.secrets, status));
+      dispatch(getSecretSuccess(data, status, idName, idSecret));
       break;
     }
     case 400: {
       if (data.message === 'invalid token received') {
-        dispatch(getSecretsInvalidToken());
+        dispatch(getSecretInvalidToken());
       } else if (data.message === 'invalid request body format') {
         dispatch(push(routerLinks.login));
-      } else dispatch(getSecretsFailure(data.message, status));
+      } else dispatch(getSecretFailure(data.message, status, idName, idSecret));
       break;
     }
     default: {
-      dispatch(getSecretsFailure(data.message, status));
+      dispatch(getSecretFailure(data.message, status, idName, idSecret));
       dispatch(push(routerLinks.namespaces));
     }
   }
 };
 
-export const fetchGetSecretsIfNeeded = (idName: string): ThunkAction => (
-  dispatch: Dispatch,
-  getState: GetState,
-  axios: any
-) => dispatch(fetchGetSecrets(idName, axios));
+export const fetchGetSecretIfNeeded = (
+  idName: string,
+  idSecret: string
+): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
+  dispatch(fetchGetSecret(idName, idSecret, axios));

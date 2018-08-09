@@ -420,6 +420,24 @@ export class Namespace extends PureComponent<Props> {
                 ) : (
                   ''
                 )}
+                {isSecretsPathname && isReadAccess ? (
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                      {role === 'admin' && (
+                        <NavLink
+                          to={routerLinks.createSecretLink(match.params.idName)}
+                          className={`${
+                            buttonsStyles.buttonUICreate
+                          } btn btn-outline-primary`}
+                        >
+                          Create
+                        </NavLink>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
                 {isDeploymentsPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>

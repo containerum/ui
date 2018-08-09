@@ -31,6 +31,7 @@ import VolumesPage from './containers/Volumes';
 import CreateVolumePage from './containers/CreateVolume';
 import ResizeVolumePage from './containers/ResizeVolume';
 import DeploymentsPage from './containers/Deployments';
+import CreateSecretPage from './containers/CreateSecret';
 import PodsPage from './containers/Pods';
 import PodPage from './containers/Pod';
 import PodLogsPage from './containers/Pod/PodLogs';
@@ -41,6 +42,7 @@ import CreateDomainPage from './containers/CreateDomain';
 import CreatedExternalServiceSuccessfulPage from './containers/CreatedExternalServiceSuccessful';
 import UpdateServicePage from './containers/UpdateService';
 import DeploymentPage from './containers/Deployment';
+import SecretPage from './containers/Secret';
 import CreateCustomNamespacePage from './containers/CreateCustomNamespace';
 import UpdateCustomNamespacePage from './containers/UpdateCustomNamespace';
 import CreateCustomVolumePage from './containers/CreateCustomVolume';
@@ -131,6 +133,17 @@ export default [
     path: routerLinks.createVolume,
     exact: true,
     component: CreateVolumePage,
+    include: true,
+    loadData: (dispatch: Dispatch) =>
+      Promise.all([
+        dispatch(fetchGetVolumesTariffsIfNeeded()),
+        dispatch(fetchGetProfileIfNeeded())
+      ])
+  },
+  {
+    path: routerLinks.createSecret,
+    exact: true,
+    component: CreateSecretPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([
@@ -293,6 +306,11 @@ export default [
         dispatch(fetchGetNamespacesTariffsIfNeeded()),
         dispatch(fetchGetProfileIfNeeded())
       ])
+  },
+  {
+    path: routerLinks.getSecret,
+    component: SecretPage,
+    include: true
   },
   {
     path: routerLinks.account,
