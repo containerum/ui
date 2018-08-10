@@ -36,30 +36,27 @@ import {
   GET_DEPLOYMENT_SUCCESS
 } from '../../constants/deploymentConstants/getDeployment';
 import { CREATE_EXTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createExternalService';
+import { GET_SECRETS_SUCCESS } from '../../constants/secretsConstants/getSecrets';
 
 const stylesClass = className.bind(styles);
 const buttonsClass = className.bind(buttonsStyles);
-
 const addClass = buttonsClass('buttonUIAddBlock', 'buttonUIAddBlockBig');
-
 const menuItemClassName = stylesClass(
   'sideMenuItem',
   'sideMenuItemTransformInit'
 );
-// const containerClassName = globalClass(
-//   'containerFluid',
-//   'breadcrumbsNavigation'
-// );
 
 type Props = {
   getNamespaceReducer: Object,
   createDeploymentReducer: Object,
   getConfigMapsByNSReducer: Object,
+  getSecretsReducer: Object,
   history: Object,
   match: Object,
   createExternalServiceReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetConfigMapsByNSIfNeeded: (idName: string) => void,
+  fetchGetSecretsIfNeeded: (idName: string) => void,
   // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchCreateDeploymentIfNeeded: (idName: string, data: Object) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
@@ -90,6 +87,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     const {
       // fetchGetVolumesByNSIfNeeded,
       fetchGetConfigMapsByNSIfNeeded,
+      fetchGetSecretsIfNeeded,
       fetchGetNamespaceIfNeeded,
       fetchGetDeploymentIfNeeded,
       getNamespaceReducer,
@@ -97,6 +95,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     } = this.props;
     // fetchGetVolumesByNSIfNeeded(match.params.idName);
     fetchGetConfigMapsByNSIfNeeded(match.params.idName);
+    fetchGetSecretsIfNeeded(match.params.idName);
     if (getNamespaceReducer.readyStatus !== GET_NAMESPACE_SUCCESS) {
       fetchGetNamespaceIfNeeded(match.params.idName);
     }
@@ -308,6 +307,56 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         );
       }
     }
+    if (
+      this.props.getSecretsReducer.readyStatus !==
+        nextProps.getSecretsReducer.readyStatus &&
+      nextProps.getSecretsReducer.readyStatus === GET_SECRETS_SUCCESS
+    ) {
+      console.log(nextProps.getSecretsReducer.data);
+      // if (nextProps.getSecretsReducer.data.length) {
+      //   this.setState(
+      //     {
+      //       ...this.state,
+      //       configMaps: nextProps.getSecretsReducer.data
+      //     },
+      //     () => {
+      //       if (this.props.updateDeploymentReducer) {
+      //         const configMapsNextState = [];
+      //         nextProps.getDeploymentReducer.data &&
+      //           nextProps.getDeploymentReducer.data.containers.map(
+      //             container => {
+      //               const configMapsInContainer = [];
+      //               nextProps.getSecretsReducer.data.map(
+      //                 configMapRed => {
+      //                   if (container.config_maps) {
+      //                     container.config_maps.map(configMap => {
+      //                       if (configMapRed.name === configMap.name) {
+      //                         configMapsInContainer.push(configMap);
+      //                       }
+      //                       return null;
+      //                     });
+      //                   }
+      //                   return null;
+      //                 }
+      //               );
+      //               configMapsNextState.push(configMapsInContainer);
+      //               return null;
+      //             }
+      //           );
+      //         const nextContainers = cloneDeep(this.state.containers);
+      //         nextContainers.map((container, index) => {
+      //           container.config_maps = configMapsNextState[index];
+      //           return null;
+      //         });
+      //         this.setState({
+      //           ...this.state,
+      //           containers: nextContainers
+      //         });
+      //       }
+      //     }
+      //   );
+      // }
+    }
   }
 
   initialState = () => ({
@@ -320,6 +369,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       }
     ],
     replicas: 1,
+    secrets: [],
     containers: [
       {
         id: _.uniqueId(),
