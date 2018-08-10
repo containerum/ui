@@ -1,22 +1,34 @@
 /* @flow */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
+import className from 'classnames/bind';
 
+import { routerLinks } from '../../config';
 import InputControl from '../InputControl';
 import globalStyles from '../../theme/global.scss';
 
+const globalClass = className.bind(globalStyles);
+const selectClassName = globalClass('selectCustom', 'selectGreyColor');
+
 type Props = {
   type: string,
+  linkedStorage: Array<Object>,
+  currentStorage: string,
   label: string,
   storage: number,
-  handleChangeInput: (type: string, value: string) => void
+  handleChangeInput: (type: string, value: string) => void,
+  handleChange: (e: Object) => void
 };
 
 const CreateCustomNamespaceInfo = ({
   type,
+  linkedStorage,
   label,
+  currentStorage,
   storage,
-  handleChangeInput
+  handleChangeInput,
+  handleChange
 }: Props) => (
   <div>
     <div
@@ -67,14 +79,42 @@ const CreateCustomNamespaceInfo = ({
       <div className="col-md-12">
         <div className="containerTitle containerBlockTitle">
           <span>*</span> Parameters
-          {/* <Tooltip */}
-          {/* placement='top' */}
-          {/* trigger={['hover']} */}
-          {/* overlay={<span>Text of notificatiorem ipsum alist delor set. Text of <br/>notification. Lore ipsum delor upset ore ipsum delor <br/>upset</span>} */}
-          {/* > */}
-          {/* <span className="myTooltip" data-toggle="tooltip">?</span> */}
-          {/* </Tooltip> */}
         </div>
+      </div>
+      <div className="col-md-7" style={{ marginBottom: 20 }}>
+        {currentStorage ? (
+          <div className={globalStyles.selectWrapper}>
+            <div className={globalStyles.selectArrow} />
+            <div className={globalStyles.selectArrow} />
+            <select
+              name="storage"
+              className={selectClassName}
+              value={currentStorage}
+              onChange={e => handleChange(e)}
+              disabled={!handleChange}
+              required
+            >
+              {linkedStorage.map(item => (
+                <option key={item.name} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : (
+          <div className={globalStyles.selectWrapper}>
+            <Link
+              className="blue-btn depl-btn"
+              to={routerLinks.settings}
+              style={{
+                margin: 0,
+                width: 160
+              }}
+            >
+              Create Storage
+            </Link>
+          </div>
+        )}
       </div>
       <div className="col-md-5 myColumn" style={{ marginBottom: 20 }}>
         <InputControl

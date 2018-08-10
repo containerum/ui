@@ -31,6 +31,7 @@ export default (state = initialState, action: Action) => {
         status: null,
         method: null,
         idName: null,
+        idLabel: null,
         err: null
       });
     case DELETE_NAMESPACE_SUCCESS:
@@ -52,6 +53,7 @@ export default (state = initialState, action: Action) => {
         status: action.status,
         method: null,
         idName: action.idName,
+        idLabel: null,
         err: action.err
       });
     default:

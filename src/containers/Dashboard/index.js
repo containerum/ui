@@ -612,6 +612,8 @@ export class Dashboard extends PureComponent<Props> {
             : ''
         }
         linkToManageTeamAdmin={linkTo}
+        namespacesReducerLength={getNamespacesReducer.data.length}
+        role={getProfileReducer.data.role}
       />
     );
   };
@@ -784,9 +786,13 @@ export class Dashboard extends PureComponent<Props> {
         const date = new Date(
           Date.parse(getCpuHistoryStatisticReducer.data.labels[index])
         );
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
         return {
           cpu: statistic,
-          name: `${`${date.getHours()}:${date.getMinutes()}`}`
+          name: `${`${hours < 10 ? `0${hours}` : hours}:${
+            minutes < 10 ? `0${minutes}` : minutes
+          }`}`
         };
       }
     );
@@ -794,22 +800,17 @@ export class Dashboard extends PureComponent<Props> {
       <div>
         <div
           style={{
-            marginLeft: 70,
+            marginLeft: 20,
             marginBottom: 10
           }}
         >
           %
         </div>
         <AreaChart
-          width={1030}
-          height={350}
+          width={500}
+          height={300}
           data={dataOfCpuHistory}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
+          margin={{ top: 0, right: 0, left: -20, bottom: 0 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
@@ -869,9 +870,13 @@ export class Dashboard extends PureComponent<Props> {
         const date = new Date(
           Date.parse(getMemoryHistoryStatisticReducer.data.labels[index])
         );
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
         return {
           memory: statistic,
-          name: `${`${date.getHours()}:${date.getMinutes()}`}`
+          name: `${`${hours < 10 ? `0${hours}` : hours}:${
+            minutes < 10 ? `0${minutes}` : minutes
+          }`}`
         };
       }
     );
@@ -880,22 +885,17 @@ export class Dashboard extends PureComponent<Props> {
       <div>
         <div
           style={{
-            marginLeft: 70,
+            marginLeft: 20,
             marginBottom: 10
           }}
         >
           %
         </div>
         <AreaChart
-          width={1030}
-          height={350}
+          width={500}
+          height={300}
           data={dataOfMemoryHistory}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
+          margin={{ top: 0, right: 0, left: -20, bottom: 0 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
@@ -1017,14 +1017,19 @@ export class Dashboard extends PureComponent<Props> {
                       <li className="nav-item">
                         <NavLink
                           className={`${styles.customSolutionNavLink} nav-link`}
-                          id="first-tab"
-                          data-toggle="pill"
                           to={routerLinks.dashboard}
-                          role="tab"
-                          aria-controls="pills-home"
-                          aria-selected="true"
                         >
                           All
+                        </NavLink>
+                      </li>
+                      <li className="nav-item">
+                        <NavLink
+                          className={`nav-link ${
+                            styles.customSolutionNavLinkNotActive
+                          }`}
+                          to={routerLinks.graphsPerNodes}
+                        >
+                          Per Node
                         </NavLink>
                       </li>
                     </ul>
@@ -1038,10 +1043,16 @@ export class Dashboard extends PureComponent<Props> {
                       >
                         <div style={{ margin: 40, textAlign: 'justify' }}>
                           <div>{this.renderStatistics()}</div>
-                          <div style={{ marginTop: 60 }}>
+                          <div
+                            className="col-md-6"
+                            style={{ display: 'inline-block', padding: 0 }}
+                          >
                             <div>{this.renderCpuHistoryStatistics()}</div>
                           </div>
-                          <div style={{ marginTop: 60 }}>
+                          <div
+                            className="col-md-6"
+                            style={{ display: 'inline-block', padding: 0 }}
+                          >
                             <div>{this.renderMemoryHistoryStatistics()}</div>
                           </div>
                         </div>

@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
-import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
 import cookie from 'react-cookies';
 
@@ -83,19 +82,20 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
     ) {
       const {
         label,
-        cpu,
-        max_external_services,
-        max_internal_services,
+        max_ext_service,
+        max_int_service,
         max_traffic,
-        ram
+        resources
       } = nextProps.getNamespaceUsersAccessReducer.data;
+      const { hard } = resources || { cpu: 0, memory: 0 };
+      const { cpu, memory: ram } = hard;
       this.setState({
         ...this.state,
         label,
         cpu,
         memory: ram,
-        maxExtServices: max_external_services,
-        maxIntServices: max_internal_services,
+        maxExtServices: max_ext_service,
+        maxIntServices: max_int_service,
         maxTraffic: max_traffic
       });
     }
@@ -155,16 +155,13 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
     ) {
       return (
         <div className="row">
-          {new Array(8).fill().map(() => (
-            <div key={_.uniqueId()} className="col-md-3">
-              <div className="namespace-plan-block-placeholder">
-                <img
-                  src={require('../../images/add-ns-block.svg')}
-                  alt="add-ns"
-                />
-              </div>
-            </div>
-          ))}
+          <div
+            className="col-md-12"
+            style={{
+              height: '370px',
+              backgroundColor: '#f6f6f6'
+            }}
+          />
         </div>
       );
     }
@@ -211,7 +208,7 @@ export class UpdateCustomNamespace extends PureComponent<Props> {
         </div>
         <Notification
           status={updateCustomNamespaceReducer.status}
-          name={updateCustomNamespaceReducer.idDep}
+          name={updateCustomNamespaceReducer.label}
           method={updateCustomNamespaceReducer.method}
           errorMessage={updateCustomNamespaceReducer.err}
         />

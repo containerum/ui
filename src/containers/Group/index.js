@@ -442,11 +442,10 @@ class GlobalMembership extends PureComponent<Props> {
                         to={routerLinks.getGlobalGroups}
                         className={labelClassName}
                         style={{
-                          textTransform: 'lowercase',
                           display: 'inline-block'
                         }}
                       >
-                        {label}
+                        Group: {label}
                       </NavLink>
                       <div
                         style={{

@@ -4,29 +4,35 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
-// import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
 import cookie from 'react-cookies';
 
 import scrollById from '../../functions/scrollById';
 import { routerLinks } from '../../config';
 import * as actionCreateCustomVolume from '../../actions/volumeActions/createCustomVolume';
+import * as actionGetStorages from '../../actions/storagesActions/getStorages';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
-// import { CREATE_CUSTOM_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/createCustomVolume';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import CreateCustomVolumeInfo from '../../components/CreateUpdateCustomVolumeInfo';
-// import Name from '../../components/CreateNamespaceCards/Name';
 import globalStyles from '../../theme/global.scss';
+import {
+  GET_STORAGES_FAILURE,
+  GET_STORAGES_INVALID,
+  GET_STORAGES_REQUESTING,
+  GET_STORAGES_SUCCESS
+} from '../../constants/storagesConstants/getStorages';
 
 type Props = {
   match: Object,
   history: Object,
   getProfileReducer: Object,
+  getStoragesReducer: Object,
   createCustomVolumeReducer: Object,
-  fetchCreateCustomVolumeIfNeeded: (idName: string, data: Object) => void
+  fetchCreateCustomVolumeIfNeeded: (idName: string, data: Object) => void,
+  fetchGetStoragesIfNeeded: () => void
 };
 
 export class CreateCustomVolume extends PureComponent<Props> {
@@ -34,7 +40,9 @@ export class CreateCustomVolume extends PureComponent<Props> {
     super(props);
     this.state = {
       label: '',
-      storage: 500
+      linkedStorage: [],
+      currentStorage: '',
+      storage: 50
     };
   }
   componentWillMount() {
@@ -43,8 +51,11 @@ export class CreateCustomVolume extends PureComponent<Props> {
       this.props.history.push(routerLinks.login);
     }
   }
+  componentDidMount() {
+    this.props.fetchGetStoragesIfNeeded();
+  }
   componentWillUpdate(nextProps) {
-    const { getProfileReducer, history } = this.props;
+    const { getProfileReducer, getStoragesReducer, history } = this.props;
     if (
       getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
@@ -54,7 +65,20 @@ export class CreateCustomVolume extends PureComponent<Props> {
         history.push(routerLinks.namespaces);
       }
     }
+    if (
+      getStoragesReducer.readyStatus !==
+        nextProps.getStoragesReducer.readyStatus &&
+      nextProps.getStoragesReducer.readyStatus === GET_STORAGES_SUCCESS
+    ) {
+      const storagesReducer = nextProps.getStoragesReducer.data;
+      this.setState({
+        ...this.state,
+        linkedStorage: storagesReducer,
+        currentStorage: storagesReducer.length ? storagesReducer[0].name : ''
+      });
+    }
   }
+
   handleSubmitCreateCustomVolume = e => {
     e.preventDefault();
     const { match, fetchCreateCustomVolumeIfNeeded } = this.props;
@@ -64,6 +88,12 @@ export class CreateCustomVolume extends PureComponent<Props> {
     this.setState({
       ...this.state,
       [`${type}`]: value
+    });
+  };
+  handleChange = e => {
+    this.setState({
+      ...this.state,
+      currentStorage: e.target.value
     });
   };
 
@@ -100,12 +130,38 @@ export class CreateCustomVolume extends PureComponent<Props> {
     );
   };
   renderCreateCustomVolume = () => {
-    const { label, storage } = this.state;
+    const { getStoragesReducer } = this.props;
+    if (
+      !getStoragesReducer.readyStatus ||
+      getStoragesReducer.readyStatus === GET_STORAGES_INVALID ||
+      getStoragesReducer.readyStatus === GET_STORAGES_REQUESTING
+    ) {
+      return (
+        <div className="row">
+          <div
+            className="col-md-12"
+            style={{
+              height: '370px',
+              backgroundColor: '#f6f6f6'
+            }}
+          />
+        </div>
+      );
+    }
+
+    if (getStoragesReducer.readyStatus === GET_STORAGES_FAILURE) {
+      return <p>Oops, Failed to load data of Project!</p>;
+    }
+
+    const { label, linkedStorage, currentStorage, storage } = this.state;
     return (
       <CreateCustomVolumeInfo
         label={label}
+        linkedStorage={linkedStorage}
+        currentStorage={currentStorage}
         storage={storage}
         handleChangeInput={(type, value) => this.handleChangeInput(type, value)}
+        handleChange={this.handleChange}
       />
     );
   };
@@ -145,6 +201,7 @@ export class CreateCustomVolume extends PureComponent<Props> {
                     buttonText="Create volume"
                     isFetching={createCustomVolumeReducer.isFetching}
                     baseClassButton="btnDeployment btnService"
+                    disabled={!this.state.currentStorage}
                   />
                 </form>
               </div>
@@ -157,15 +214,22 @@ export class CreateCustomVolume extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ createCustomVolumeReducer, getProfileReducer }: ReduxState) => ({
+  ({
     createCustomVolumeReducer,
-    getProfileReducer
+    getProfileReducer,
+    getStoragesReducer
+  }: ReduxState) => ({
+    createCustomVolumeReducer,
+    getProfileReducer,
+    getStoragesReducer
   }),
   (dispatch: Dispatch) => ({
     fetchCreateCustomVolumeIfNeeded: (idName: string, data: Object) =>
       dispatch(
         actionCreateCustomVolume.fetchCreateCustomVolumeIfNeeded(idName, data)
-      )
+      ),
+    fetchGetStoragesIfNeeded: () =>
+      dispatch(actionGetStorages.fetchGetStoragesIfNeeded())
   })
 );
 

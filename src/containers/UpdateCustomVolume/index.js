@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
-import _ from 'lodash/fp';
 import Scrollspy from 'react-scrollspy';
 import cookie from 'react-cookies';
 
@@ -19,13 +18,11 @@ import {
   GET_VOLUME_SUCCESS
 } from '../../constants/volumeConstants/getVolume';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
-// import { CREATE_CUSTOM_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/updateCustomNamespace';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
 import UpdateCustomVolumeInfo from '../../components/CreateUpdateCustomVolumeInfo';
-// import Name from '../../components/UpdateNamespaceCards/Name';
 import globalStyles from '../../theme/global.scss';
 
 type Props = {
@@ -43,7 +40,8 @@ export class UpdateCustomVolume extends PureComponent<Props> {
     super(props);
     this.state = {
       label: '',
-      storage: ''
+      currentStorage: '',
+      storage: 50
     };
   }
   componentWillMount() {
@@ -71,14 +69,20 @@ export class UpdateCustomVolume extends PureComponent<Props> {
       getVolumeReducer.readyStatus !== nextProps.getVolumeReducer.readyStatus &&
       nextProps.getVolumeReducer.readyStatus === GET_VOLUME_SUCCESS
     ) {
-      const { capacity, name } = nextProps.getVolumeReducer.data;
+      const {
+        capacity,
+        name,
+        storage_name: storageName
+      } = nextProps.getVolumeReducer.data;
       this.setState({
         ...this.state,
         label: name,
+        currentStorage: storageName,
         storage: capacity
       });
     }
   }
+
   handleSubmitUpdateCustomVolume = e => {
     e.preventDefault();
     const { fetchUpdateCustomVolumeIfNeeded, match } = this.props;
@@ -88,6 +92,12 @@ export class UpdateCustomVolume extends PureComponent<Props> {
     this.setState({
       ...this.state,
       [`${type}`]: value
+    });
+  };
+  handleChange = e => {
+    this.setState({
+      ...this.state,
+      currentStorage: e.target.value
     });
   };
 
@@ -132,16 +142,13 @@ export class UpdateCustomVolume extends PureComponent<Props> {
     ) {
       return (
         <div className="row">
-          {new Array(8).fill().map(() => (
-            <div key={_.uniqueId()} className="col-md-3">
-              <div className="namespace-plan-block-placeholder">
-                <img
-                  src={require('../../images/add-ns-block.svg')}
-                  alt="add-ns"
-                />
-              </div>
-            </div>
-          ))}
+          <div
+            className="col-md-12"
+            style={{
+              height: '370px',
+              backgroundColor: '#f6f6f6'
+            }}
+          />
         </div>
       );
     }
@@ -150,11 +157,13 @@ export class UpdateCustomVolume extends PureComponent<Props> {
       return <p>Oops, Failed to load data of Project!</p>;
     }
 
-    const { label, storage } = this.state;
+    const { label, currentStorage, storage } = this.state;
     return (
       <UpdateCustomVolumeInfo
         type="update"
         label={label}
+        linkedStorage={[{ name: currentStorage }]}
+        currentStorage={currentStorage}
         storage={storage}
         handleChangeInput={(type, value) => this.handleChangeInput(type, value)}
       />
@@ -214,11 +223,13 @@ const connector: Connector<{}, Props> = connect(
   ({
     updateCustomVolumeReducer,
     getVolumeReducer,
-    getProfileReducer
+    getProfileReducer,
+    getStoragesReducer
   }: ReduxState) => ({
     updateCustomVolumeReducer,
     getVolumeReducer,
-    getProfileReducer
+    getProfileReducer,
+    getStoragesReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetVolumeIfNeeded: (idName: string, idVol: string) =>

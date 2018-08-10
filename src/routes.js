@@ -73,6 +73,7 @@ import DomainsInfo from './containers/DomainsGlobal';
 import ConfigMapsInfo from './containers/ConfigMaps';
 import ViewConfigMapsFilesInfo from './containers/ViewConfigMapsFiles';
 import GlobalMembershipInfo from './containers/GlobalMembership';
+import GraphsPerNodesInfo from './containers/GraphsPerNodes';
 import RunningSolutionsPage from './containers/RunningSolutions';
 import RunningSolutionPage from './containers/RunningSolution';
 import GetStarted from './components/GetStarted';
@@ -487,6 +488,11 @@ export default [
     path: routerLinks.getGroup,
     include: true,
     component: GroupInfo
+  },
+  {
+    path: routerLinks.graphsPerNodes,
+    include: true,
+    component: GraphsPerNodesInfo
   },
   {
     path: routerLinks.configmap,
