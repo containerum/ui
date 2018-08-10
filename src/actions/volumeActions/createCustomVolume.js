@@ -48,12 +48,13 @@ export const fetchCreateCustomVolume = (
 
   dispatch(createCustomVolumeRequest());
 
-  const { label, storage } = dataVol;
+  const { label, storage, currentStorage } = dataVol;
   const response = await axios.post(
     `${URL}/limits/namespaces/${idName}/volumes`,
     {
       label,
-      capacity: storage
+      capacity: storage,
+      storage: currentStorage
     },
     {
       headers: {
