@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import cookie from 'react-cookies';
+import className from 'classnames/bind';
 
 import * as actionGetSecret from '../../actions/secretActions/getSecret';
 import * as actionDeleteSecret from '../../actions/secretActions/deleteSecret';
@@ -28,6 +29,20 @@ import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING
 } from '../../constants/namespacesConstants/getNamespaces';
+import BackButton from '../../components/BackButton';
+
+const globalClass = className.bind(globalStyles);
+
+const containerClassName = globalClass(
+  'contentBlockContainer',
+  'contentBlockContainerMembership'
+);
+const labelClassName = globalClass(
+  'contentBlockHeaderLabelText',
+  'contentBlockHeaderLabelMembership',
+  'contentBlockHeaderLabelMain',
+  'contentBlockHeaderLabelNamespaceInfo'
+);
 
 type Props = {
   getSecretReducer: Object,
@@ -129,7 +144,36 @@ export class Secret extends PureComponent<Props> {
           idName={match.params.idName}
           idSecret={match.params.idSecret}
         />
-        {this.renderSecretInfo()}
+        <div className={globalStyles.contentBlock}>
+          <div className={`container ${globalStyles.containerNoBackground}`}>
+            <div className="row double two-columns">
+              <div className="col-md-3 col-lg-3 col-xl-2">
+                <BackButton
+                  path={`${routerLinks.namespaceLink(
+                    match.params.idName
+                  )}/secrets`}
+                />
+              </div>
+              <div className="col-md-9 col-lg-9 col-xl-10">
+                <div className={globalStyles.contentBlock}>
+                  <div className={`${containerClassName} container`}>
+                    <div className={globalStyles.contentBlockHeader}>
+                      <div
+                        className={labelClassName}
+                        style={{
+                          display: 'inline-block'
+                        }}
+                      >
+                        {match.params.idSecret}
+                      </div>
+                      {this.renderSecretInfo()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
