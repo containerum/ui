@@ -112,6 +112,10 @@ import getStoragesReducer from './storagesReducers/getStorages';
 import addStorageReducer from './storageReducers/addStorage';
 import deleteStorageReducer from './storageReducers/deleteStorage';
 import deleteSolutionTemplateReducer from './solutionReducers/deleteSolutionTemplate';
+import getSecretsReducer from './secretsReducers/getSecrets';
+import createSecretReducer from './secretReducers/createSecret';
+import deleteSecretReducer from './secretReducers/deleteSecret';
+import getSecretReducer from './secretReducers/getSecret';
 
 const reducers = {
   loginReducer,
@@ -222,6 +226,10 @@ const reducers = {
   getMemoryHistoryPerNodesStatisticReducer,
   getStorageStatisticReducer,
   deleteSolutionTemplateReducer,
+  getSecretsReducer,
+  createSecretReducer,
+  deleteSecretReducer,
+  getSecretReducer,
   router,
   loadingBar: loadingBarReducer
 };

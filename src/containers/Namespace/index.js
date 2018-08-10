@@ -44,6 +44,7 @@ import ServicesPage from '../Services';
 import VolumesPage from '../Volumes';
 import ConfigMapsPage from '../ConfigMapsInNamespace';
 import DomainsList from '../Domains';
+import SecretsList from '../Secrets';
 import ns from '../../images/ns-1.svg';
 
 import globalStyles from '../../theme/global.scss';
@@ -222,12 +223,14 @@ export class Namespace extends PureComponent<Props> {
     const configMapsPathname = '/configMaps';
     const deploymentsPathname = '/deployments';
     const ingressesPathname = '/ingresses';
+    const secretsPathname = '/secrets';
     const isSolutionsPathname = pathname.indexOf(solutionsPathname) + 1;
     const isServicesPathname = pathname.indexOf(servicesPathname) + 1;
     const isVolumesPathname = pathname.indexOf(volumesPathname) + 1;
     const isConfigMapsPathname = pathname.indexOf(configMapsPathname) + 1;
     const isDeploymentsPathname = pathname.indexOf(deploymentsPathname) + 1;
     const isIngressesPathname = pathname.indexOf(ingressesPathname) + 1;
+    const isSecretsPathname = pathname.indexOf(secretsPathname) + 1;
     if (isSolutionsPathname) {
       additionalPath = solutionsPathname;
     } else if (isServicesPathname) {
@@ -240,6 +243,8 @@ export class Namespace extends PureComponent<Props> {
       additionalPath = ingressesPathname;
     } else if (isVolumesPathname) {
       additionalPath = volumesPathname;
+    } else if (isSecretsPathname) {
+      additionalPath = secretsPathname;
     }
     const { status, idLabel, err } = deleteNamespaceReducer;
     const { inputName, isOpened, role } = this.state;
@@ -348,6 +353,16 @@ export class Namespace extends PureComponent<Props> {
                         Volumes
                       </NavLink>
                     </li>
+                    <li
+                      className={`${globalStyles.contentBlockMenuLi} nav-item`}
+                    >
+                      <NavLink
+                        activeClassName={globalStyles.contentBlockMenuLiActive}
+                        to={routerLinks.getSecretsLink(match.params.idName)}
+                      >
+                        Secrets
+                      </NavLink>
+                    </li>
                   </ul>
                 </div>
                 {isServicesPathname && isReadAccess ? (
@@ -387,6 +402,24 @@ export class Namespace extends PureComponent<Props> {
                           to={routerLinks.createCustomVolumeLink(
                             match.params.idName
                           )}
+                          className={`${
+                            buttonsStyles.buttonUICreate
+                          } btn btn-outline-primary`}
+                        >
+                          Create
+                        </NavLink>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
+                {isSecretsPathname && isReadAccess ? (
+                  <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                    <div className={globalStyles.contentBlockHeaderExtraPanel}>
+                      {role === 'admin' && (
+                        <NavLink
+                          to={routerLinks.createSecretLink(match.params.idName)}
                           className={`${
                             buttonsStyles.buttonUICreate
                           } btn btn-outline-primary`}
@@ -500,6 +533,11 @@ export class Namespace extends PureComponent<Props> {
                   path={`${match.path}/ingresses`}
                   exact
                   component={DomainsList}
+                />
+                <Route
+                  path={`${match.path}/secrets`}
+                  exact
+                  component={SecretsList}
                 />
                 <Route
                   path={`${match.url}`}
