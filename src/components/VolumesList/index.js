@@ -50,6 +50,7 @@ const VolumesList = ({
             <tr>
               <td className={depStyles.td_1_Dep} />
               <td className={depStyles.td_2_Dep}>Name</td>
+              <td className={depStyles.td_3_Dep}>Storage</td>
               <td className={depStyles.td_5_Dep}>Total (GB)</td>
               <td className={depStyles.td_6_Dep}>Age</td>
               <td className={depStyles.td_7_Dep} />
@@ -58,7 +59,12 @@ const VolumesList = ({
           </thead>
           <tbody>
             {data.map(volume => {
-              const { name, created_at: createdAt, capacity } = volume;
+              const {
+                name,
+                created_at: createdAt,
+                capacity,
+                storage_name: storageName
+              } = volume;
               const milliseconds = Date.parse(createdAt);
               const dateHours = new Date(milliseconds);
               const dateValue = ta.ago(dateHours, true);
@@ -69,6 +75,7 @@ const VolumesList = ({
                     <img src={volumePng} alt="volume" />
                   </td>
                   <td className={depStyles.td_2_Dep}>{name}</td>
+                  <td className={depStyles.td_3_Dep}>{storageName}</td>
                   <td className={depStyles.td_4_Dep}>{capacity}</td>
                   <td className={depStyles.td_6_Dep}>{dateValue}</td>
                   <td className={depStyles.td_7_Dep}>

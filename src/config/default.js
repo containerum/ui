@@ -74,6 +74,12 @@ module.exports = {
     resizeNamespaceLink: (idName: string) => `/project/${idName}/resize`,
     getVolumes: '/projects/:idName/volumes',
     getVolumesLink: (idName: string) => `/projects/${idName}/volumes`,
+    getSecretsLink: (idName: string) => `/projects/${idName}/secrets`,
+    createSecret: '/project/:idName/createSecret',
+    createSecretLink: (idName: string) => `/project/${idName}/createSecret`,
+    getSecret: '/project/:idName/secrets/:idSecret',
+    getSecretLink: (idName: string, idSecret: string) =>
+      `/project/${idName}/secrets/${idSecret}`,
     createVolume: '/project/:idName/createVolume',
     createVolumeLink: (idName: string) => `/project/${idName}/createVolume`,
     resizeVolume: '/project/:idName/resizeVolume/:idVol',
