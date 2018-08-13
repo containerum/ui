@@ -23,6 +23,7 @@ import { GET_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/getNam
 import { CREATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/createDeployment';
 import Name from '../../components/CreateDeploymentCards/Name';
 import Replicas from '../../components/CreateDeploymentCards/Replicas';
+import Secrets from '../../components/CreateDeploymentCards/Secrets';
 import Container from '../../components/CreateDeploymentCards/Container';
 import CreateServiceCardItem from '../CreateUpdateServiceBase';
 import globalStyles from '../../theme/global.scss';
@@ -167,7 +168,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS)
     ) {
       const { data } = nextProps.getDeploymentReducer;
-      const { name, labels, replicas, containers } = data;
+      const { name, labels, replicas, linkedSecrets, containers } = data;
       const containersArr = containers.map((item, index) => {
         const {
           image,
@@ -233,6 +234,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           ],
           command: commands || [],
           volumeMounts: [],
+          linkedSecrets: linkedSecrets || [],
           config_maps: []
           // config_maps: configMaps || []
           // volumeMounts: volumes || []
@@ -313,49 +315,49 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       nextProps.getSecretsReducer.readyStatus === GET_SECRETS_SUCCESS
     ) {
       console.log(nextProps.getSecretsReducer.data);
-      // if (nextProps.getSecretsReducer.data.length) {
-      //   this.setState(
-      //     {
-      //       ...this.state,
-      //       configMaps: nextProps.getSecretsReducer.data
-      //     },
-      //     () => {
-      //       if (this.props.updateDeploymentReducer) {
-      //         const configMapsNextState = [];
-      //         nextProps.getDeploymentReducer.data &&
-      //           nextProps.getDeploymentReducer.data.containers.map(
-      //             container => {
-      //               const configMapsInContainer = [];
-      //               nextProps.getSecretsReducer.data.map(
-      //                 configMapRed => {
-      //                   if (container.config_maps) {
-      //                     container.config_maps.map(configMap => {
-      //                       if (configMapRed.name === configMap.name) {
-      //                         configMapsInContainer.push(configMap);
-      //                       }
-      //                       return null;
-      //                     });
-      //                   }
-      //                   return null;
-      //                 }
-      //               );
-      //               configMapsNextState.push(configMapsInContainer);
-      //               return null;
-      //             }
-      //           );
-      //         const nextContainers = cloneDeep(this.state.containers);
-      //         nextContainers.map((container, index) => {
-      //           container.config_maps = configMapsNextState[index];
-      //           return null;
-      //         });
-      //         this.setState({
-      //           ...this.state,
-      //           containers: nextContainers
-      //         });
-      //       }
-      //     }
-      //   );
-      // }
+      if (nextProps.getSecretsReducer.data.length) {
+        this.setState(
+          {
+            ...this.state,
+            secrets: nextProps.getSecretsReducer.data
+          },
+          () => {
+            // if (this.props.updateDeploymentReducer) {
+            //   const configMapsNextState = [];
+            //   nextProps.getDeploymentReducer.data &&
+            //     nextProps.getDeploymentReducer.data.containers.map(
+            //       container => {
+            //         const configMapsInContainer = [];
+            //         nextProps.getSecretsReducer.data.map(
+            //           configMapRed => {
+            //             if (container.config_maps) {
+            //               container.config_maps.map(configMap => {
+            //                 if (configMapRed.name === configMap.name) {
+            //                   configMapsInContainer.push(configMap);
+            //                 }
+            //                 return null;
+            //               });
+            //             }
+            //             return null;
+            //           }
+            //         );
+            //         configMapsNextState.push(configMapsInContainer);
+            //         return null;
+            //       }
+            //     );
+            //   const nextContainers = cloneDeep(this.state.containers);
+            //   nextContainers.map((container, index) => {
+            //     container.config_maps = configMapsNextState[index];
+            //     return null;
+            //   });
+            //   this.setState({
+            //     ...this.state,
+            //     containers: nextContainers
+            //   });
+            // }
+          }
+        );
+      }
     }
   }
 
@@ -370,6 +372,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     ],
     replicas: 1,
     secrets: [],
+    linkedSecrets: [],
     containers: [
       {
         id: _.uniqueId(),
@@ -795,6 +798,25 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       replicas: value
     });
   };
+  // SecretsName
+  handleChangeSelectSecret = value => {
+    const secrets = Object.assign([], this.state.linkedSecrets);
+    const nextState = secrets.filter(secret => secret.name === value);
+    console.log(nextState);
+    // this.setState({
+    //   ...this.state,
+    //   linkedSecrets: value
+    // });
+  };
+  handleClickRemoveSecrets = value => {
+    console.log(value);
+  };
+  handleClickAddSecrets = () => {
+    this.setState({
+      ...this.state,
+      linkedSecrets: [...this.state.linkedSecrets, '']
+    });
+  };
   // Label
   handleClickRemoveLabel = id => {
     if (this.state.labels.length > 1) {
@@ -1140,6 +1162,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     const arrayOfContainersLinks = [
       'name',
       'replicas',
+      'secrets',
       'container1',
       'container1-info',
       'container1-parameters',
@@ -1191,6 +1214,15 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             role="presentation"
           >
             replicas
+          </div>
+        </div>
+        <div className={styles.sideMenuHeader}>
+          <div
+            onClick={() => scrollById('secrets')}
+            onKeyPress={() => scrollById('secrets')}
+            role="presentation"
+          >
+            secrets
           </div>
         </div>
 
@@ -1524,6 +1556,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         name,
         // labels,
         replicas,
+        secrets,
+        linkedSecrets,
         containers,
         containersCount,
         volumes,
@@ -1539,6 +1573,17 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           <Replicas
             inputReplicas={replicas}
             handleChangeInputReplicasName={this.handleChangeInputReplicasName}
+          />
+          <Secrets
+            secrets={secrets}
+            linkedSecrets={linkedSecrets}
+            handleChangeSelectSecret={value =>
+              this.handleChangeSelectSecret(value)
+            }
+            handleClickRemoveSecrets={value =>
+              this.handleClickRemoveSecrets(value)
+            }
+            handleClickAddSecrets={this.handleClickAddSecrets}
           />
           {containers.map((item, index) => (
             <Container
@@ -1655,6 +1700,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     if (getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS) {
       const {
         replicas,
+        secrets,
+        linkedSecrets,
         containers,
         containersCount,
         configMaps,
@@ -1666,6 +1713,17 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             inputReplicas={replicas}
             idDep={match.params.idDep}
             handleChangeInputReplicasName={this.handleChangeInputReplicasName}
+          />
+          <Secrets
+            secrets={secrets}
+            linkedSecrets={linkedSecrets}
+            handleChangeSelectSecret={value =>
+              this.handleChangeSelectSecret(value)
+            }
+            handleClickRemoveSecrets={value =>
+              this.handleClickRemoveSecrets(value)
+            }
+            handleClickAddSecrets={this.handleClickAddSecrets}
           />
           {containers.map((item, index) => (
             <Container
