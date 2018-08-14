@@ -124,6 +124,7 @@ export const fetchCreateDeployment = (
       name: dataObj.name,
       labels,
       replicas: dataObj.replicas,
+      image_pull_secret: dataObj.linkedSecrets,
       containers: splitContainers
     },
     {

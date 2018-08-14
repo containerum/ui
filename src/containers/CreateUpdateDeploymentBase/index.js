@@ -23,6 +23,7 @@ import { GET_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/getNam
 import { CREATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/createDeployment';
 import Name from '../../components/CreateDeploymentCards/Name';
 import Replicas from '../../components/CreateDeploymentCards/Replicas';
+import Secrets from '../../components/CreateDeploymentCards/Secrets';
 import Container from '../../components/CreateDeploymentCards/Container';
 import CreateServiceCardItem from '../CreateUpdateServiceBase';
 import globalStyles from '../../theme/global.scss';
@@ -36,30 +37,27 @@ import {
   GET_DEPLOYMENT_SUCCESS
 } from '../../constants/deploymentConstants/getDeployment';
 import { CREATE_EXTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createExternalService';
+import { GET_SECRETS_SUCCESS } from '../../constants/secretsConstants/getSecrets';
 
 const stylesClass = className.bind(styles);
 const buttonsClass = className.bind(buttonsStyles);
-
 const addClass = buttonsClass('buttonUIAddBlock', 'buttonUIAddBlockBig');
-
 const menuItemClassName = stylesClass(
   'sideMenuItem',
   'sideMenuItemTransformInit'
 );
-// const containerClassName = globalClass(
-//   'containerFluid',
-//   'breadcrumbsNavigation'
-// );
 
 type Props = {
   getNamespaceReducer: Object,
   createDeploymentReducer: Object,
   getConfigMapsByNSReducer: Object,
+  getSecretsReducer: Object,
   history: Object,
   match: Object,
   createExternalServiceReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetConfigMapsByNSIfNeeded: (idName: string) => void,
+  fetchGetSecretsIfNeeded: (idName: string) => void,
   // fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchCreateDeploymentIfNeeded: (idName: string, data: Object) => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
@@ -90,6 +88,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     const {
       // fetchGetVolumesByNSIfNeeded,
       fetchGetConfigMapsByNSIfNeeded,
+      fetchGetSecretsIfNeeded,
       fetchGetNamespaceIfNeeded,
       fetchGetDeploymentIfNeeded,
       getNamespaceReducer,
@@ -97,6 +96,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     } = this.props;
     // fetchGetVolumesByNSIfNeeded(match.params.idName);
     fetchGetConfigMapsByNSIfNeeded(match.params.idName);
+    fetchGetSecretsIfNeeded(match.params.idName);
     if (getNamespaceReducer.readyStatus !== GET_NAMESPACE_SUCCESS) {
       fetchGetNamespaceIfNeeded(match.params.idName);
     }
@@ -168,7 +168,13 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS)
     ) {
       const { data } = nextProps.getDeploymentReducer;
-      const { name, labels, replicas, containers } = data;
+      const {
+        name,
+        labels,
+        replicas,
+        image_pull_secret: linkedSecrets,
+        containers
+      } = data;
       const containersArr = containers.map((item, index) => {
         const {
           image,
@@ -253,6 +259,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
                 }
               ],
           replicas,
+          linkedSecrets: linkedSecrets || [],
           containers: containersArr,
           containersCount: containersArr.length
         });
@@ -308,6 +315,46 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         );
       }
     }
+    if (
+      this.props.getSecretsReducer.readyStatus !==
+        nextProps.getSecretsReducer.readyStatus &&
+      nextProps.getSecretsReducer.readyStatus === GET_SECRETS_SUCCESS
+    ) {
+      // console.log(nextProps.getSecretsReducer.data);
+      if (nextProps.getSecretsReducer.data.length) {
+        this.setState(
+          {
+            ...this.state,
+            secrets: nextProps.getSecretsReducer.data
+          },
+          () => {
+            if (this.props.updateDeploymentReducer) {
+              const secretInDeploy = [];
+              nextProps.getDeploymentReducer.data &&
+                nextProps.getDeploymentReducer.data.image_pull_secret &&
+                nextProps.getDeploymentReducer.data.image_pull_secret.map(
+                  secret => {
+                    nextProps.getSecretsReducer.data.map(secretReducer => {
+                      if (secretReducer.name) {
+                        if (secretReducer.name === secret) {
+                          secretInDeploy.push(secretReducer.name);
+                        }
+                        return null;
+                      }
+                      return null;
+                    });
+                    return null;
+                  }
+                );
+              this.setState({
+                ...this.state,
+                linkedSecrets: secretInDeploy
+              });
+            }
+          }
+        );
+      }
+    }
   }
 
   initialState = () => ({
@@ -320,6 +367,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       }
     ],
     replicas: 1,
+    secrets: [],
+    linkedSecrets: [],
     containers: [
       {
         id: _.uniqueId(),
@@ -745,6 +794,29 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       replicas: value
     });
   };
+  // SecretsName
+  handleChangeSelectSecret = (value, index) => {
+    const linkedSecrets = Object.assign([], this.state.linkedSecrets);
+    linkedSecrets[index] = value;
+    this.setState({
+      ...this.state,
+      linkedSecrets
+    });
+  };
+  handleClickRemoveSecrets = index => {
+    const linkedSecrets = Object.assign([], this.state.linkedSecrets);
+    linkedSecrets.splice(index, 1);
+    this.setState({
+      ...this.state,
+      linkedSecrets
+    });
+  };
+  handleClickAddSecrets = () => {
+    this.setState({
+      ...this.state,
+      linkedSecrets: [this.state.secrets[0].name]
+    });
+  };
   // Label
   handleClickRemoveLabel = id => {
     if (this.state.labels.length > 1) {
@@ -1090,6 +1162,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     const arrayOfContainersLinks = [
       'name',
       'replicas',
+      'secrets',
       'container1',
       'container1-info',
       'container1-parameters',
@@ -1141,6 +1214,15 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             role="presentation"
           >
             replicas
+          </div>
+        </div>
+        <div className={styles.sideMenuHeader}>
+          <div
+            onClick={() => scrollById('secrets')}
+            onKeyPress={() => scrollById('secrets')}
+            role="presentation"
+          >
+            secrets
           </div>
         </div>
 
@@ -1474,6 +1556,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         name,
         // labels,
         replicas,
+        secrets,
+        linkedSecrets,
         containers,
         containersCount,
         volumes,
@@ -1489,6 +1573,17 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           <Replicas
             inputReplicas={replicas}
             handleChangeInputReplicasName={this.handleChangeInputReplicasName}
+          />
+          <Secrets
+            secrets={secrets}
+            linkedSecrets={linkedSecrets}
+            handleChangeSelectSecret={(value, index) =>
+              this.handleChangeSelectSecret(value, index)
+            }
+            handleClickRemoveSecrets={(value, index) =>
+              this.handleClickRemoveSecrets(value, index)
+            }
+            handleClickAddSecrets={this.handleClickAddSecrets}
           />
           {containers.map((item, index) => (
             <Container
@@ -1605,6 +1700,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     if (getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS) {
       const {
         replicas,
+        secrets,
+        linkedSecrets,
         containers,
         containersCount,
         configMaps,
@@ -1616,6 +1713,17 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             inputReplicas={replicas}
             idDep={match.params.idDep}
             handleChangeInputReplicasName={this.handleChangeInputReplicasName}
+          />
+          <Secrets
+            secrets={secrets}
+            linkedSecrets={linkedSecrets}
+            handleChangeSelectSecret={(value, index) =>
+              this.handleChangeSelectSecret(value, index)
+            }
+            handleClickRemoveSecrets={index =>
+              this.handleClickRemoveSecrets(index)
+            }
+            handleClickAddSecrets={this.handleClickAddSecrets}
           />
           {containers.map((item, index) => (
             <Container
