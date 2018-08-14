@@ -10,6 +10,7 @@ import cookie from 'react-cookies';
 import { routerLinks } from '../../config';
 import * as actionGetVolumes from '../../actions/volumesActions/getVolumesByNS';
 import * as actionGetConfigMapsByNS from '../../actions/configMapActions/getConfigMapsByNS';
+import * as actionGetSecrets from '../../actions/secretsActions/getSecrets';
 import * as actionGetNamespace from '../../actions/namespaceActions/getNamespace';
 import * as actionUpdateDeployment from '../../actions/deploymentActions/updateDeployment';
 import * as actionGetDeployment from '../../actions/deploymentActions/getDeployment';
@@ -29,14 +30,16 @@ const containerClassName = globalClass(
 
 type Props = {
   history: Object,
+  match: Object,
   getVolumesByNSReducer: Object,
   getNamespaceReducer: Object,
   updateDeploymentReducer: Object,
   getDeploymentReducer: Object,
-  match: Object,
+  getConfigMapsByNSReducer: Object,
+  getSecretsReducer: Object,
   fetchGetNamespaceIfNeeded: (idName: string) => void,
   fetchGetConfigMapsByNSIfNeeded: (idName: string) => void,
-  getConfigMapsByNSReducer: Object,
+  fetchGetSecretsIfNeeded: (idName: string) => void,
   fetchGetVolumesByNSIfNeeded: (idName: string) => void,
   fetchUpdateDeploymentIfNeeded: (
     idName: string,
@@ -85,12 +88,14 @@ export class CreateDeployment extends PureComponent<Props> {
               updateDeploymentReducer={this.props.updateDeploymentReducer}
               getDeploymentReducer={this.props.getDeploymentReducer}
               getVolumesByNSReducer={this.props.getVolumesByNSReducer}
+              getConfigMapsByNSReducer={this.props.getConfigMapsByNSReducer}
+              getSecretsReducer={this.props.getSecretsReducer}
               match={this.props.match}
               fetchGetNamespaceIfNeeded={this.props.fetchGetNamespaceIfNeeded}
               fetchGetConfigMapsByNSIfNeeded={
                 this.props.fetchGetConfigMapsByNSIfNeeded
               }
-              getConfigMapsByNSReducer={this.props.getConfigMapsByNSReducer}
+              fetchGetSecretsIfNeeded={this.props.fetchGetSecretsIfNeeded}
               fetchGetVolumesByNSIfNeeded={
                 this.props.fetchGetVolumesByNSIfNeeded
               }
@@ -112,13 +117,15 @@ const connector: Connector<{}, Props> = connect(
     getNamespaceReducer,
     updateDeploymentReducer,
     getDeploymentReducer,
-    getConfigMapsByNSReducer
+    getConfigMapsByNSReducer,
+    getSecretsReducer
   }: ReduxState) => ({
     getVolumesByNSReducer,
     getNamespaceReducer,
     updateDeploymentReducer,
     getDeploymentReducer,
-    getConfigMapsByNSReducer
+    getConfigMapsByNSReducer,
+    getSecretsReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetVolumesByNSIfNeeded: (idName: string) =>
@@ -127,6 +134,8 @@ const connector: Connector<{}, Props> = connect(
       dispatch(actionGetNamespace.fetchGetNamespaceIfNeeded(idName)),
     fetchGetConfigMapsByNSIfNeeded: (idName: string) =>
       dispatch(actionGetConfigMapsByNS.fetchGetConfigMapsByNSIfNeeded(idName)),
+    fetchGetSecretsIfNeeded: (idName: string) =>
+      dispatch(actionGetSecrets.fetchGetSecretsIfNeeded(idName)),
     fetchUpdateDeploymentIfNeeded: (
       idName: string,
       idDep: string,

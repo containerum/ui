@@ -168,7 +168,13 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         nextProps.getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS)
     ) {
       const { data } = nextProps.getDeploymentReducer;
-      const { name, labels, replicas, linkedSecrets, containers } = data;
+      const {
+        name,
+        labels,
+        replicas,
+        image_pull_secret: linkedSecrets,
+        containers
+      } = data;
       const containersArr = containers.map((item, index) => {
         const {
           image,
@@ -234,7 +240,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           ],
           command: commands || [],
           volumeMounts: [],
-          linkedSecrets: linkedSecrets || [],
           config_maps: []
           // config_maps: configMaps || []
           // volumeMounts: volumes || []
@@ -254,6 +259,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
                 }
               ],
           replicas,
+          linkedSecrets: linkedSecrets || [],
           containers: containersArr,
           containersCount: containersArr.length
         });
@@ -314,7 +320,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         nextProps.getSecretsReducer.readyStatus &&
       nextProps.getSecretsReducer.readyStatus === GET_SECRETS_SUCCESS
     ) {
-      console.log(nextProps.getSecretsReducer.data);
+      // console.log(nextProps.getSecretsReducer.data);
       if (nextProps.getSecretsReducer.data.length) {
         this.setState(
           {
@@ -322,39 +328,29 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
             secrets: nextProps.getSecretsReducer.data
           },
           () => {
-            // if (this.props.updateDeploymentReducer) {
-            //   const configMapsNextState = [];
-            //   nextProps.getDeploymentReducer.data &&
-            //     nextProps.getDeploymentReducer.data.containers.map(
-            //       container => {
-            //         const configMapsInContainer = [];
-            //         nextProps.getSecretsReducer.data.map(
-            //           configMapRed => {
-            //             if (container.config_maps) {
-            //               container.config_maps.map(configMap => {
-            //                 if (configMapRed.name === configMap.name) {
-            //                   configMapsInContainer.push(configMap);
-            //                 }
-            //                 return null;
-            //               });
-            //             }
-            //             return null;
-            //           }
-            //         );
-            //         configMapsNextState.push(configMapsInContainer);
-            //         return null;
-            //       }
-            //     );
-            //   const nextContainers = cloneDeep(this.state.containers);
-            //   nextContainers.map((container, index) => {
-            //     container.config_maps = configMapsNextState[index];
-            //     return null;
-            //   });
-            //   this.setState({
-            //     ...this.state,
-            //     containers: nextContainers
-            //   });
-            // }
+            if (this.props.updateDeploymentReducer) {
+              const secretInDeploy = [];
+              nextProps.getDeploymentReducer.data &&
+                nextProps.getDeploymentReducer.data.image_pull_secret &&
+                nextProps.getDeploymentReducer.data.image_pull_secret.map(
+                  secret => {
+                    nextProps.getSecretsReducer.data.map(secretReducer => {
+                      if (secretReducer.name) {
+                        if (secretReducer.name === secret) {
+                          secretInDeploy.push(secretReducer.name);
+                        }
+                        return null;
+                      }
+                      return null;
+                    });
+                    return null;
+                  }
+                );
+              this.setState({
+                ...this.state,
+                linkedSecrets: secretInDeploy
+              });
+            }
           }
         );
       }
@@ -799,22 +795,26 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     });
   };
   // SecretsName
-  handleChangeSelectSecret = value => {
-    const secrets = Object.assign([], this.state.linkedSecrets);
-    const nextState = secrets.filter(secret => secret.name === value);
-    console.log(nextState);
-    // this.setState({
-    //   ...this.state,
-    //   linkedSecrets: value
-    // });
+  handleChangeSelectSecret = (value, index) => {
+    const linkedSecrets = Object.assign([], this.state.linkedSecrets);
+    linkedSecrets[index] = value;
+    this.setState({
+      ...this.state,
+      linkedSecrets
+    });
   };
-  handleClickRemoveSecrets = value => {
-    console.log(value);
+  handleClickRemoveSecrets = index => {
+    const linkedSecrets = Object.assign([], this.state.linkedSecrets);
+    linkedSecrets.splice(index, 1);
+    this.setState({
+      ...this.state,
+      linkedSecrets
+    });
   };
   handleClickAddSecrets = () => {
     this.setState({
       ...this.state,
-      linkedSecrets: [...this.state.linkedSecrets, '']
+      linkedSecrets: [this.state.secrets[0].name]
     });
   };
   // Label
@@ -1577,11 +1577,11 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           <Secrets
             secrets={secrets}
             linkedSecrets={linkedSecrets}
-            handleChangeSelectSecret={value =>
-              this.handleChangeSelectSecret(value)
+            handleChangeSelectSecret={(value, index) =>
+              this.handleChangeSelectSecret(value, index)
             }
-            handleClickRemoveSecrets={value =>
-              this.handleClickRemoveSecrets(value)
+            handleClickRemoveSecrets={(value, index) =>
+              this.handleClickRemoveSecrets(value, index)
             }
             handleClickAddSecrets={this.handleClickAddSecrets}
           />
@@ -1717,11 +1717,11 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           <Secrets
             secrets={secrets}
             linkedSecrets={linkedSecrets}
-            handleChangeSelectSecret={value =>
-              this.handleChangeSelectSecret(value)
+            handleChangeSelectSecret={(value, index) =>
+              this.handleChangeSelectSecret(value, index)
             }
-            handleClickRemoveSecrets={value =>
-              this.handleClickRemoveSecrets(value)
+            handleClickRemoveSecrets={index =>
+              this.handleClickRemoveSecrets(index)
             }
             handleClickAddSecrets={this.handleClickAddSecrets}
           />

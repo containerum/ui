@@ -2,6 +2,7 @@
 
 import React from 'react';
 import className from 'classnames/bind';
+import _ from 'lodash/fp';
 
 import icon from '../../../images/icon-create-dep.svg';
 import globalStyles from '../../../theme/global.scss';
@@ -16,8 +17,8 @@ const containerClassName = globalClass(
 type Props = {
   secrets: Array,
   linkedSecrets: Array,
-  handleChangeSelectSecret: (value: string) => void,
-  handleClickRemoveSecrets: (name: string) => void,
+  handleChangeSelectSecret: (value: string, index: number) => void,
+  handleClickRemoveSecrets: (index: number) => void,
   handleClickAddSecrets: () => void
 };
 
@@ -34,51 +35,54 @@ const CreateDeploymentSecrets = ({
     </div>
     {secrets.length ? (
       <div>
-        {linkedSecrets.map((linkedSecret, indexSecret) => {
-          const { id, name } = linkedSecret;
-          return (
-            <div className="row ml-0" key={id} style={{ width: '100%' }}>
-              <div className={`${globalStyles.columnCustomSecrets} col-md-6`}>
-                <div className={globalStyles.formGroup}>
-                  <div className={globalStyles.selectWrapper}>
-                    <div className={globalStyles.selectArrow} />
-                    <div className={globalStyles.selectArrow} />
-                    <select
-                      name="secrets"
-                      className={globalStyles.selectCustom}
-                      value={name}
-                      onChange={e => handleChangeSelectSecret(e.target.value)}
-                      required
-                    >
-                      {secrets.map(secret => (
-                        <option key={secret.name} value={secret.name}>
-                          {secret.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  {indexSecret === 0 && (
-                    <div className={globalStyles.formGroupHelper}>
-                      Choose your existing Secret
-                    </div>
-                  )}
+        {linkedSecrets.map((linkedSecret, indexSecret) => (
+          <div
+            className="row ml-0"
+            key={_.uniqueId()}
+            style={{ width: '100%' }}
+          >
+            <div className={`${globalStyles.columnCustomSecrets} col-md-6`}>
+              <div className={globalStyles.formGroup}>
+                <div className={globalStyles.selectWrapper}>
+                  <div className={globalStyles.selectArrow} />
+                  <div className={globalStyles.selectArrow} />
+                  <select
+                    name="secrets"
+                    className={globalStyles.selectCustom}
+                    value={linkedSecret}
+                    onChange={e =>
+                      handleChangeSelectSecret(e.target.value, indexSecret)
+                    }
+                    required
+                  >
+                    {secrets.map(secret => (
+                      <option key={secret.name} value={secret.name}>
+                        {secret.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              </div>
-              <div className="col-md-5" />
-              <div
-                className="col-md-1"
-                onClick={() => handleClickRemoveSecrets(name)}
-              >
-                <img
-                  src={icon}
-                  alt="delete"
-                  className={globalStyles.iconBasket}
-                />
+                {indexSecret === 0 && (
+                  <div className={globalStyles.formGroupHelper}>
+                    Choose your existing Secret
+                  </div>
+                )}
               </div>
             </div>
-          );
-        })}
-        {secrets.length ? (
+            <div className="col-md-5" />
+            <div
+              className="col-md-1"
+              onClick={() => handleClickRemoveSecrets(indexSecret)}
+            >
+              <img
+                src={icon}
+                alt="delete"
+                className={globalStyles.iconBasket}
+              />
+            </div>
+          </div>
+        ))}
+        {linkedSecrets.length < 1 ? (
           <div className="col-md-12">
             <div
               className={`${buttonsStyles.buttonUIAddBlock} ml-0`}
