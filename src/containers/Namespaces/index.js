@@ -40,7 +40,6 @@ import Notification from '../Notification';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import NamespacesList from '../../components/NamespacesList';
 import ns from '../../images/ns-1.svg';
-// import { sourceType } from '../../config';
 
 type Props = {
   history: Object,

@@ -7,7 +7,7 @@ import classNames from 'classnames/bind';
 import styles from '../../containers/Namespaces/index.scss';
 import globalStyles from '../../theme/global.scss';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import deployment from '../../images/deployment.png';
 
 type Props = {
@@ -52,23 +52,8 @@ const NamespacesList = ({
     'contentBlockContent',
     'containerCard'
   );
-  const isOnline = sourceType === 'ONLINE';
   return (
     <div className="row double">
-      {isOnline &&
-        role === 'user' && (
-          <div className="col-md-4 align-middle">
-            <NavLink
-              activeClassName="active"
-              to={routerLinks.createNamespace}
-              className={`${addNewBlockClassName} ${styles.addNewBlock}`}
-            >
-              <div className={styles.action}>
-                <i>+</i> Add a Project
-              </div>
-            </NavLink>
-          </div>
-        )}
       {role === 'admin' && (
         <div className="col-md-4 align-middle">
           <NavLink
@@ -156,18 +141,6 @@ const NamespacesList = ({
                           }`}
                           role="menu"
                         >
-                          {isOnline &&
-                            role === 'user' && (
-                              <NavLink
-                                activeClassName="active"
-                                className={`dropdown-item ${
-                                  globalStyles.dropdownItem
-                                }`}
-                                to={routerLinks.resizeNamespaceLink(id)}
-                              >
-                                Resize
-                              </NavLink>
-                            )}
                           {role === 'admin' && (
                             <NavLink
                               activeClassName="active"
@@ -237,8 +210,7 @@ const NamespacesList = ({
           );
         })}
 
-      {!isOnline &&
-        !data.length &&
+      {!data.length &&
         role === 'user' && (
           <div className="col-md-4 align-middle">
             <div className="content-block-container card-container hover-action">

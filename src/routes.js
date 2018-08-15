@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { Dispatch } from './types';
-import { routerLinks, sourceType } from './config';
+import { routerLinks } from './config';
 import { fetchGetProfileIfNeeded } from './actions/profileActions/getProfile';
 import { fetchGetNamespaceIfNeeded } from './actions/namespaceActions/getNamespace';
 import { fetchGetDeploymentsIfNeeded } from './actions/deploymentsActions/getDeployments';
@@ -50,7 +50,6 @@ import CheckEmail from './containers/CheckEmail';
 import AccountPage from './containers/Account';
 import AccountByIdPage from './containers/AccountById';
 import SettingsPage from './containers/Settings';
-import NotFoundPage from './containers/NotFound';
 import MembershipInfo from './containers/Membership';
 import GlobalGroupsInfo from './containers/GlobalGroups';
 import GroupInfo from './containers/Group';
@@ -64,10 +63,9 @@ import GraphsPerNodesInfo from './containers/GraphsPerNodes';
 import RunningSolutionsPage from './containers/RunningSolutions';
 import RunningSolutionPage from './containers/RunningSolution';
 import GetStarted from './components/GetStarted';
+import NotFoundPage from './containers/NotFound';
 // import GroupsInfo from './containers/Groups';
 // import WebHookInfo from './containers/Webhook';
-
-const isOnline = sourceType === 'ONLINE';
 
 export default [
   {
@@ -140,7 +138,6 @@ export default [
   },
   {
     path: routerLinks.getDeployment,
-    // exact: true,
     component: DeploymentPage,
     include: true,
     loadData: (dispatch: Dispatch, params: Object) =>
@@ -301,7 +298,7 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
-  !isOnline && {
+  {
     path: routerLinks.settings,
     exact: true,
     component: SettingsPage,
@@ -309,7 +306,7 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
-  isOnline && {
+  {
     path: routerLinks.getRunningSolutions,
     exact: true,
     component: RunningSolutionsPage,
@@ -320,7 +317,7 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  isOnline && {
+  {
     path: routerLinks.getRunningSolution,
     exact: true,
     component: RunningSolutionPage,
@@ -363,7 +360,7 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
-  isOnline && {
+  {
     path: routerLinks.getStarted,
     exact: true,
     component: GetStarted,
@@ -451,15 +448,15 @@ export default [
     path: routerLinks.confirmEmail,
     component: ConfirmEmail
   },
-  isOnline && {
+  {
     path: routerLinks.recoveryPassword,
     component: RecoveryPassword
   },
-  isOnline && {
+  {
     path: routerLinks.forgot,
     component: Forgot
   },
-  isOnline && {
+  {
     path: routerLinks.checkEmail,
     component: CheckEmail
   },

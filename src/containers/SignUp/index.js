@@ -10,12 +10,7 @@ import cookie from 'react-cookies';
 import isEmail from 'validator/lib/isEmail';
 import Recaptcha from 'react-google-recaptcha';
 
-import {
-  appRecaptcha,
-  externalLinks,
-  routerLinks,
-  sourceType
-} from '../../config';
+import { appRecaptcha, routerLinks } from '../../config';
 import * as signUpLogin from '../../actions/signUp';
 import InputEmail from '../../components/InputEmail';
 import InputPassword from '../../components/InputPassword';
@@ -203,39 +198,16 @@ class SignUp extends PureComponent<Props> {
                   </div>
                 </div>
               )}
-
-              {sourceType === 'ONLINE' && (
-                <div className={styles.SignUpFooter}>
-                  By signing up, you agree to the{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={externalLinks.termsOfService}
-                  >
-                    Terms Of Service
-                  </a>{' '}
-                  and{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={externalLinks.privacyPolicy}
-                  >
-                    Privacy Policy
-                  </a>
-                </div>
-              )}
             </div>
-            {sourceType !== 'ONLINE' && (
-              <img
-                src={logoContainerum}
-                alt="logo containerum"
-                style={{
-                  bottom: 30,
-                  position: 'absolute',
-                  right: 170
-                }}
-              />
-            )}
+            <img
+              src={logoContainerum}
+              alt="logo containerum"
+              style={{
+                bottom: 30,
+                position: 'absolute',
+                right: 170
+              }}
+            />
           </div>
         </div>
       </div>

@@ -6,22 +6,19 @@ import className from 'classnames/bind';
 import 'rc-tooltip/assets/bootstrap_white.css';
 import Tooltip from 'rc-tooltip';
 
-import { routerLinks, sourceType } from '../../../config';
+import { routerLinks } from '../../../config';
 import modalStyles from '../index.scss';
-
 import Environments from './Environments';
 import LoadButton from '../../LoadButton';
 import InputControl from '../../InputControl';
 import DeploymentsList from '../../DeploymentsList';
 import ServicesList from '../../ServicesList';
-
 import globalStyles from '../../../theme/global.scss';
 import buttonsStyles from '../../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
 const selectClassName = globalClass('formControl', 'selectCustomModal');
 const btnClassName = globalClass('btnBlue', 'btnDepl');
-const isOnline = sourceType === 'ONLINE';
 
 const customStyles = {
   overlay: {
@@ -321,7 +318,7 @@ const RunSolutionModals = ({
                     <Link
                       className={btnClassName}
                       data-toggle="modal"
-                      to={routerLinks.createNamespace}
+                      to={routerLinks.createCustomNamespace}
                       style={{ display: 'inline-block' }}
                     >
                       Create Project
@@ -437,24 +434,14 @@ const RunSolutionModals = ({
               </div>
 
               <div className="error-page-btn-wrap">
-                {isOnline && (
-                  <Link
-                    to={routerLinks.support}
-                    className="white-btn white-btn-error"
-                  >
-                    Support
-                  </Link>
-                )}
-                {!isOnline && (
-                  <button
-                    onClick={() => handleOpenCloseModal(currentView)}
-                    className="white-btn modal-body-cancel-btn"
-                    data-dismiss="modal"
-                    type="button"
-                  >
-                    Cancel
-                  </button>
-                )}
+                <button
+                  onClick={() => handleOpenCloseModal(currentView)}
+                  className="white-btn modal-body-cancel-btn"
+                  data-dismiss="modal"
+                  type="button"
+                >
+                  Cancel
+                </button>
                 <button
                   onClick={openFirstModal}
                   className="blue-btn white-btn-error"

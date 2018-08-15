@@ -4,7 +4,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Blockies from 'react-blockies';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 // import deployment from '../../images/deployment.png';
 
 import styles from '../../containers/Header/index.scss';
@@ -13,13 +13,10 @@ import globalStyles from '../../theme/global.scss';
 type Props = {
   role: string,
   email: string,
-  balance: string,
   handleLogout: () => void
 };
 
-const isOnline = sourceType === 'ONLINE';
-
-const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
+const ProfileDropDown = ({ email, handleLogout, role }: Props) => (
   <div>
     <div className={styles.headerTopAccount}>
       <div className={styles.headerTopAccountAvatar}>
@@ -34,7 +31,7 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
             aria-haspopup="true"
             aria-expanded="false"
             style={
-              isOnline || role === 'admin'
+              role === 'admin'
                 ? {}
                 : {
                     marginTop: 6
@@ -57,25 +54,15 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
             >
               Account
             </NavLink>
-            {isOnline && (
+            {role === 'admin' && (
               <NavLink
                 activeClassName="active"
                 className="dropdown-item"
-                to={routerLinks.billing}
+                to={routerLinks.settings}
               >
-                Billing
+                Settings
               </NavLink>
             )}
-            {role === 'admin' &&
-              !isOnline && (
-                <NavLink
-                  activeClassName="active"
-                  className="dropdown-item"
-                  to={routerLinks.settings}
-                >
-                  Settings
-                </NavLink>
-              )}
             {role === 'admin' && (
               <NavLink
                 activeClassName="active"
@@ -96,15 +83,9 @@ const ProfileDropDown = ({ email, balance, handleLogout, role }: Props) => (
           </ul>
         </div>
 
-        {isOnline && (
-          <div className={styles.headerTopAccountDeposit}>
-            {balance ? parseFloat(balance).toFixed(2) : 0}$
-          </div>
+        {role === 'admin' && (
+          <div className={styles.headerTopAccountDeposit}>(admin)</div>
         )}
-        {!isOnline &&
-          role === 'admin' && (
-            <div className={styles.headerTopAccountDeposit}>(admin)</div>
-          )}
       </div>
     </div>
     <div className="clearfix" />

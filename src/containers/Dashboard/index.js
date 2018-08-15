@@ -5,26 +5,19 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import _ from 'lodash/fp';
 import classNames from 'classnames/bind';
 import cookie from 'react-cookies';
 import * as Recharts from 'recharts';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetNamespaces from '../../actions/namespacesActions/getNamespaces';
-import * as actionGetSolutions from '../../actions/solutionsActions/getSolutions';
 import * as actionGetResources from '../../actions/statisticsActions/getResources';
 import * as actionGetCpuStatistic from '../../actions/statisticsActions/getCpuStatistic';
 import * as actionGetMemoryStatistic from '../../actions/statisticsActions/getMemoryStatistic';
 import * as actionGetStorageStatistic from '../../actions/statisticsActions/getStorageStatistic';
 import * as actionGetCpuHistoryStatistic from '../../actions/statisticsActions/getCpuHistoryStatistic';
 import * as actionGetMemoryHistoryStatistic from '../../actions/statisticsActions/getMemoryHistoryStatistic';
-import {
-  GET_SOLUTIONS_INVALID,
-  GET_SOLUTIONS_REQUESTING,
-  GET_SOLUTIONS_FAILURE
-} from '../../constants/solutionsConstants/getSolutions';
 import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
@@ -36,7 +29,6 @@ import {
   GET_RESOURCES_FAILURE
 } from '../../constants/statisticsConstants/getResourcesConstants';
 import NamespacesDashboardList from '../../components/NamespacesDashboardList';
-import SolutionsDashboardList from '../../components/SolutionsDashboardList';
 import CountDeploymentsInfo from '../../components/CountDeploymentsInfo';
 import CountServicesInfo from '../../components/CountServicesInfo';
 import CountPodsInfo from '../../components/CountPodsInfo';
@@ -48,7 +40,6 @@ import HideWidgetModal from '../../components/CustomerModal/HideWidgetModal';
 
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
-import solutionStyles from '../Solutions/index.scss';
 import {
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE,
@@ -104,7 +95,6 @@ type Props = {
   history: Object,
   getProfileReducer: Object,
   getNamespacesReducer: Object,
-  getSolutionsReducer: Object,
   getResourcesReducer: Object,
   getConfigMapsReducer: Object,
   getCpuStatisticReducer: Object,
@@ -114,7 +104,6 @@ type Props = {
   getStorageStatisticReducer: Object,
   fetchGetConfigMapsIfNeeded: () => void,
   fetchGetNamespacesIfNeeded: () => void,
-  fetchGetSolutionsIfNeeded: () => void,
   fetchGetResourcesIfNeeded: () => void,
   fetchGetCpuStatisticIfNeeded: () => void,
   fetchGetCpuHistoryStatisticIfNeeded: () => void,
@@ -122,8 +111,6 @@ type Props = {
   fetchGetStorageStatisticIfNeeded: () => void,
   fetchGetMemoryHistoryStatisticIfNeeded: () => void
 };
-
-const isOnline = sourceType === 'ONLINE';
 
 const dashboardClassName = classNames.bind(styles);
 
@@ -154,7 +141,6 @@ export class Dashboard extends PureComponent<Props> {
   }
   componentDidMount() {
     const {
-      fetchGetSolutionsIfNeeded,
       fetchGetResourcesIfNeeded,
       fetchGetConfigMapsIfNeeded,
       fetchGetCpuStatisticIfNeeded,
@@ -163,14 +149,13 @@ export class Dashboard extends PureComponent<Props> {
       fetchGetCpuHistoryStatisticIfNeeded,
       fetchGetMemoryHistoryStatisticIfNeeded
     } = this.props;
-    isOnline && fetchGetSolutionsIfNeeded();
     fetchGetResourcesIfNeeded();
     fetchGetConfigMapsIfNeeded();
-    !isOnline && fetchGetCpuStatisticIfNeeded();
-    !isOnline && fetchGetMemoryStatisticIfNeeded();
-    !isOnline && fetchGetStorageStatisticIfNeeded();
-    !isOnline && fetchGetMemoryHistoryStatisticIfNeeded();
-    !isOnline && fetchGetCpuHistoryStatisticIfNeeded();
+    fetchGetCpuStatisticIfNeeded();
+    fetchGetMemoryStatisticIfNeeded();
+    fetchGetStorageStatisticIfNeeded();
+    fetchGetMemoryHistoryStatisticIfNeeded();
+    fetchGetCpuHistoryStatisticIfNeeded();
     const widget = cookie.load('widget');
     if (widget === 'hide') {
       this.setState({
@@ -370,50 +355,6 @@ export class Dashboard extends PureComponent<Props> {
       />
     );
   };
-  renderSolutionsList = () => {
-    const { getSolutionsReducer, history } = this.props;
-    const solutionClassName = classNames.bind(solutionStyles);
-    const solutionContainer = solutionClassName(
-      'solutionContainer',
-      'preSolutionContainer'
-    );
-    if (
-      !getSolutionsReducer.readyStatus ||
-      getSolutionsReducer.readyStatus === GET_SOLUTIONS_INVALID ||
-      getSolutionsReducer.readyStatus === GET_SOLUTIONS_REQUESTING
-    ) {
-      return (
-        <div
-          className={`${solutionStyles.solutionContainerWrapper} ${
-            globalStyles.marginTop30
-          }`}
-        >
-          {new Array(8).fill().map(() => (
-            <div
-              key={_.uniqueId()}
-              className={solutionContainer}
-              style={{
-                height: '240px',
-                backgroundColor: '#f6f6f6'
-              }}
-            />
-          ))}
-        </div>
-      );
-    }
-    if (getSolutionsReducer.readyStatus === GET_SOLUTIONS_FAILURE) {
-      return <p>Oops, Failed to load data of Solutions!</p>;
-    }
-    return (
-      <SolutionsDashboardList
-        data={getSolutionsReducer.data}
-        history={history}
-        handleClickRunSolution={solutionName =>
-          this.handleClickRunSolution(solutionName)
-        }
-      />
-    );
-  };
   renderCountDeploymentsInfo = () => {
     const { getResourcesReducer } = this.props;
 
@@ -524,26 +465,15 @@ export class Dashboard extends PureComponent<Props> {
       getConfigMapsReducer
     } = this.props;
     if (
-      (isOnline &&
-        (!getNamespacesReducer.readyStatus ||
-          getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-          getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
-          !getProfileReducer.readyStatus ||
-          getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
-          getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
-          !getResourcesReducer.readyStatus ||
-          getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
-          getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING)) ||
-      (!isOnline &&
-        (!getNamespacesReducer.readyStatus ||
-          getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
-          getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
-          !getProfileReducer.readyStatus ||
-          getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
-          getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
-          !getResourcesReducer.readyStatus ||
-          getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
-          getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING))
+      !getNamespacesReducer.readyStatus ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
+      !getResourcesReducer.readyStatus ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_INVALID ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_REQUESTING
     ) {
       return (
         <div className="col-md-3 pr-0">
@@ -566,14 +496,9 @@ export class Dashboard extends PureComponent<Props> {
       );
     }
     if (
-      (isOnline &&
-        (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
-          getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
-          getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE)) ||
-      (!isOnline &&
-        (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
-          getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
-          getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE))
+      getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
+      getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
+      getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE
     ) {
       return <p>Oops, Failed to load data of Tour!</p>;
     }
@@ -787,23 +712,15 @@ export class Dashboard extends PureComponent<Props> {
     );
     return (
       <div>
-        <div
-          style={{
-            marginLeft: 20,
-            marginBottom: 10
-          }}
-        >
-          %
-        </div>
         <AreaChart
           width={500}
           height={300}
           data={dataOfCpuHistory}
-          margin={{ top: 0, right: 0, left: -20, bottom: 0 }}
+          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis type="number" domain={[0, 100]} unit=" %" />
           <Tooltip />
           <Area
             type="monotone"
@@ -872,23 +789,15 @@ export class Dashboard extends PureComponent<Props> {
 
     return (
       <div>
-        <div
-          style={{
-            marginLeft: 20,
-            marginBottom: 10
-          }}
-        >
-          %
-        </div>
         <AreaChart
           width={500}
           height={300}
           data={dataOfMemoryHistory}
-          margin={{ top: 0, right: 0, left: -20, bottom: 0 }}
+          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis type="number" domain={[0, 100]} unit=" %" />
           <Tooltip />
           <Area
             type="monotone"
@@ -922,8 +831,7 @@ export class Dashboard extends PureComponent<Props> {
     return (
       <div>
         {!isOpenedSideBarGetStarted &&
-          isViewWidget &&
-          isOnline && (
+          isViewWidget && (
             <div
               className={styles.GetStartedWrapper}
               onClick={() =>
@@ -991,108 +899,64 @@ export class Dashboard extends PureComponent<Props> {
 
               {this.renderDashboardBlockTourAndNews()}
             </div>
-            {!isOnline && (
-              <div className="row">
-                <div className="col-md-12 pl-0 pr-0">
-                  <div className={blockContainerTabs}>
-                    <div className={styles.blockContainerTabsHeader}>
-                      Statistics
-                    </div>
-                    <ul
-                      className="nav nav-pills mb-3"
-                      id="pills-tab"
-                      role="tablist"
-                    >
-                      <li className="nav-item">
-                        <NavLink
-                          className={`${styles.customSolutionNavLink} nav-link`}
-                          to={routerLinks.dashboard}
-                        >
-                          All
-                        </NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink
-                          className={`nav-link ${
-                            styles.customSolutionNavLinkNotActive
-                          }`}
-                          to={routerLinks.graphsPerNodes}
-                        >
-                          Per Node
-                        </NavLink>
-                      </li>
-                    </ul>
-
-                    <div className="tab-content" id="pills-tabContent">
-                      <div
-                        className="tab-pane fade show active"
-                        id="first"
-                        role="tabpanel"
-                        aria-labelledby="first-tab"
+            <div className="row">
+              <div className="col-md-12 pl-0 pr-0">
+                <div className={blockContainerTabs}>
+                  <div className={styles.blockContainerTabsHeader}>
+                    Statistics
+                  </div>
+                  <ul
+                    className="nav nav-pills mb-3"
+                    id="pills-tab"
+                    role="tablist"
+                  >
+                    <li className="nav-item">
+                      <NavLink
+                        className={`${styles.customSolutionNavLink} nav-link`}
+                        to={routerLinks.dashboard}
                       >
-                        <div style={{ margin: 40, textAlign: 'justify' }}>
-                          <div>{this.renderStatistics()}</div>
-                          <div
-                            className="col-md-6"
-                            style={{ display: 'inline-block', padding: 0 }}
-                          >
-                            <div>{this.renderCpuHistoryStatistics()}</div>
-                          </div>
-                          <div
-                            className="col-md-6"
-                            style={{ display: 'inline-block', padding: 0 }}
-                          >
-                            <div>{this.renderMemoryHistoryStatistics()}</div>
-                          </div>
+                        All
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink
+                        className={`nav-link ${
+                          styles.customSolutionNavLinkNotActive
+                        }`}
+                        to={routerLinks.graphsPerNodes}
+                      >
+                        Per Node
+                      </NavLink>
+                    </li>
+                  </ul>
+
+                  <div className="tab-content" id="pills-tabContent">
+                    <div
+                      className="tab-pane fade show active"
+                      id="first"
+                      role="tabpanel"
+                      aria-labelledby="first-tab"
+                    >
+                      <div style={{ margin: 40, textAlign: 'justify' }}>
+                        <div>{this.renderStatistics()}</div>
+                        <div
+                          className="col-md-6"
+                          style={{ display: 'inline-block', padding: 0 }}
+                        >
+                          <div>{this.renderCpuHistoryStatistics()}</div>
+                        </div>
+                        <div
+                          className="col-md-6"
+                          style={{ display: 'inline-block', padding: 0 }}
+                        >
+                          <div>{this.renderMemoryHistoryStatistics()}</div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            )}
-
-            {isOnline && (
-              <div className="row">
-                <div className="col-md-12 pl-0 pr-0">
-                  <div className={blockContainerTabs}>
-                    <div className={styles.blockContainerTabsHeader}>
-                      PRE-BUILT SOLUTIONS
-                    </div>
-                    <ul
-                      className="nav nav-pills mb-3"
-                      id="pills-tab"
-                      role="tablist"
-                    >
-                      <li className="nav-item">
-                        <NavLink
-                          className={`${styles.customSolutionNavLink} nav-link`}
-                          id="first-tab"
-                          data-toggle="pill"
-                          to={routerLinks.dashboard}
-                          role="tab"
-                          aria-controls="pills-home"
-                          aria-selected="true"
-                        >
-                          All
-                        </NavLink>
-                      </li>
-                    </ul>
-
-                    <div className="tab-content" id="pills-tabContent">
-                      <div
-                        className="tab-pane fade show active"
-                        id="first"
-                        role="tabpanel"
-                        aria-labelledby="first-tab"
-                      >
-                        {this.renderSolutionsList()}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
@@ -1104,7 +968,6 @@ const connector: Connector<{}, Props> = connect(
   ({
     getProfileReducer,
     getNamespacesReducer,
-    getSolutionsReducer,
     getResourcesReducer,
     getConfigMapsReducer,
     getCpuStatisticReducer,
@@ -1115,7 +978,6 @@ const connector: Connector<{}, Props> = connect(
   }: ReduxState) => ({
     getProfileReducer,
     getNamespacesReducer,
-    getSolutionsReducer,
     getResourcesReducer,
     getConfigMapsReducer,
     getCpuStatisticReducer,
@@ -1127,8 +989,6 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetNamespacesIfNeeded: (role: string) =>
       dispatch(actionGetNamespaces.fetchGetNamespacesIfNeeded(role)),
-    fetchGetSolutionsIfNeeded: () =>
-      dispatch(actionGetSolutions.fetchGetSolutionsIfNeeded()),
     fetchGetResourcesIfNeeded: () =>
       dispatch(actionGetResources.fetchGetResourcesIfNeeded()),
     fetchGetConfigMapsIfNeeded: () =>
