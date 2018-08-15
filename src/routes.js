@@ -3,7 +3,6 @@
 import type { Dispatch } from './types';
 import { routerLinks, sourceType } from './config';
 import { fetchGetProfileIfNeeded } from './actions/profileActions/getProfile';
-// import { fetchGetNamespacesIfNeeded } from './actions/namespacesActions/getNamespaces';
 import { fetchGetNamespaceIfNeeded } from './actions/namespaceActions/getNamespace';
 import { fetchGetDeploymentsIfNeeded } from './actions/deploymentsActions/getDeployments';
 import { fetchGetDeploymentIfNeeded } from './actions/deploymentActions/getDeployment';
@@ -11,10 +10,7 @@ import { fetchGetPodsIfNeeded } from './actions/podsActions/getPods';
 import { fetchGetPodIfNeeded } from './actions/podActions/getPod';
 import { fetchGetServicesIfNeeded } from './actions/servicesActions/getServices';
 import { fetchGetServiceIfNeeded } from './actions/serviceActions/getService';
-import { fetchGetNamespacesTariffsIfNeeded } from './actions/namespacesActions/getNamespacesTariffs';
 import { fetchGetVolumesIfNeeded } from './actions/volumesActions/getVolumes';
-import { fetchGetVolumesTariffsIfNeeded } from './actions/volumesActions/getVolumesTariffs';
-import { fetchGetSupportGroupsIfNeeded } from './actions/supportActions/getSupportGroups';
 import { fetchGetResourcesIfNeeded } from './actions/statisticsActions/getResources';
 import { fetchGetSolutionsIfNeeded } from './actions/solutionsActions/getSolutions';
 import { fetchGetSolutionIfNeeded } from './actions/solutionActions/getSolution';
@@ -25,11 +21,7 @@ import SolutionPage from './containers/Solution';
 import AddSolutionPage from './containers/AddSolution';
 import NamespacesPage from './containers/Namespaces';
 import NamespacePage from './containers/Namespace';
-import ResizeNamespacePage from './containers/ResizeNamespace';
-import CreateNamespacePage from './containers/CreateNamespace';
 import VolumesPage from './containers/Volumes';
-import CreateVolumePage from './containers/CreateVolume';
-import ResizeVolumePage from './containers/ResizeVolume';
 import DeploymentsPage from './containers/Deployments';
 import CreateSecretPage from './containers/CreateSecret';
 import PodsPage from './containers/Pods';
@@ -55,19 +47,14 @@ import ConfirmEmail from './containers/ConfirmEmail';
 import RecoveryPassword from './containers/RecoveryPassword';
 import Forgot from './containers/Forgot';
 import CheckEmail from './containers/CheckEmail';
-import SupportPage from './containers/Support';
-import SuccessTicket from './containers/SuccessTicket';
 import AccountPage from './containers/Account';
 import AccountByIdPage from './containers/AccountById';
-import BillingPage from './containers/Billing';
 import SettingsPage from './containers/Settings';
 import NotFoundPage from './containers/NotFound';
 import MembershipInfo from './containers/Membership';
 import GlobalGroupsInfo from './containers/GlobalGroups';
 import GroupInfo from './containers/Group';
-// import GroupsInfo from './containers/Groups';
 import Tools from './components/Tools';
-// import WebHookInfo from './containers/Webhook';
 import namespaceDomainsInfo from './containers/Domains';
 import DomainsInfo from './containers/DomainsGlobal';
 import ConfigMapsInfo from './containers/ConfigMaps';
@@ -77,6 +64,8 @@ import GraphsPerNodesInfo from './containers/GraphsPerNodes';
 import RunningSolutionsPage from './containers/RunningSolutions';
 import RunningSolutionPage from './containers/RunningSolution';
 import GetStarted from './components/GetStarted';
+// import GroupsInfo from './containers/Groups';
+// import WebHookInfo from './containers/Webhook';
 
 const isOnline = sourceType === 'ONLINE';
 
@@ -131,37 +120,12 @@ export default [
       ])
   },
   {
-    path: routerLinks.createVolume,
-    exact: true,
-    component: CreateVolumePage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetVolumesTariffsIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  {
     path: routerLinks.createSecret,
     exact: true,
     component: CreateSecretPage,
     include: true,
     loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetVolumesTariffsIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  {
-    path: routerLinks.resizeVolume,
-    exact: true,
-    component: ResizeVolumePage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetVolumesTariffsIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
+      Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
   {
     path: routerLinks.getDeployments,
@@ -286,28 +250,6 @@ export default [
         dispatch(fetchGetProfileIfNeeded())
       ])
   },
-  isOnline && {
-    path: routerLinks.createNamespace,
-    exact: true,
-    component: CreateNamespacePage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetNamespacesTariffsIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  {
-    path: routerLinks.resizeNamespace,
-    // exact: true,
-    component: ResizeNamespacePage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetNamespacesTariffsIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
   {
     path: routerLinks.getSecret,
     component: SecretPage,
@@ -359,37 +301,10 @@ export default [
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])
   },
-  isOnline && {
-    path: routerLinks.billing,
-    exact: true,
-    component: BillingPage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetProfileIfNeeded())])
-  },
   !isOnline && {
     path: routerLinks.settings,
     exact: true,
     component: SettingsPage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([dispatch(fetchGetProfileIfNeeded())])
-  },
-  isOnline && {
-    path: routerLinks.support,
-    exact: true,
-    component: SupportPage,
-    include: true,
-    loadData: (dispatch: Dispatch) =>
-      Promise.all([
-        dispatch(fetchGetSupportGroupsIfNeeded()),
-        dispatch(fetchGetProfileIfNeeded())
-      ])
-  },
-  isOnline && {
-    path: routerLinks.successTicket,
-    exact: true,
-    component: SuccessTicket,
     include: true,
     loadData: (dispatch: Dispatch) =>
       Promise.all([dispatch(fetchGetProfileIfNeeded())])

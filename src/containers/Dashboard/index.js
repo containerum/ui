@@ -26,11 +26,6 @@ import {
   GET_SOLUTIONS_FAILURE
 } from '../../constants/solutionsConstants/getSolutions';
 import {
-  GET_BALANCE_INVALID,
-  GET_BALANCE_FAILURE,
-  GET_BALANCE_REQUESTING
-} from '../../constants/billingConstants/getBalance';
-import {
   GET_NAMESPACES_INVALID,
   GET_NAMESPACES_REQUESTING,
   GET_NAMESPACES_FAILURE
@@ -109,7 +104,6 @@ type Props = {
   history: Object,
   getProfileReducer: Object,
   getNamespacesReducer: Object,
-  getBalanceReducer: Object,
   getSolutionsReducer: Object,
   getResourcesReducer: Object,
   getConfigMapsReducer: Object,
@@ -525,7 +519,6 @@ export class Dashboard extends PureComponent<Props> {
   renderDashboardBlockTourAndNews = () => {
     const {
       getResourcesReducer,
-      getBalanceReducer,
       getNamespacesReducer,
       getProfileReducer,
       getConfigMapsReducer
@@ -535,9 +528,6 @@ export class Dashboard extends PureComponent<Props> {
         (!getNamespacesReducer.readyStatus ||
           getNamespacesReducer.readyStatus === GET_NAMESPACES_INVALID ||
           getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
-          !getBalanceReducer.readyStatus ||
-          getBalanceReducer.readyStatus === GET_BALANCE_INVALID ||
-          getBalanceReducer.readyStatus === GET_BALANCE_REQUESTING ||
           !getProfileReducer.readyStatus ||
           getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
           getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
@@ -578,7 +568,6 @@ export class Dashboard extends PureComponent<Props> {
     if (
       (isOnline &&
         (getNamespacesReducer.readyStatus === GET_NAMESPACES_FAILURE ||
-          getBalanceReducer.readyStatus === GET_BALANCE_FAILURE ||
           getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
           getResourcesReducer.readyStatus === GET_RESOURCES_FAILURE)) ||
       (!isOnline &&
@@ -600,7 +589,7 @@ export class Dashboard extends PureComponent<Props> {
       <DashboardBlockTourAndNews
         configmaps={getConfigMapsReducer}
         resources={getResourcesReducer.data}
-        balance={isOnline ? getBalanceReducer.data.balance : null}
+        balance={null}
         linkToDeployment={
           getNamespacesReducer.data.length && currentNS ? currentNS.id : ''
         }
@@ -1115,7 +1104,6 @@ const connector: Connector<{}, Props> = connect(
   ({
     getProfileReducer,
     getNamespacesReducer,
-    getBalanceReducer,
     getSolutionsReducer,
     getResourcesReducer,
     getConfigMapsReducer,
@@ -1127,7 +1115,6 @@ const connector: Connector<{}, Props> = connect(
   }: ReduxState) => ({
     getProfileReducer,
     getNamespacesReducer,
-    getBalanceReducer,
     getSolutionsReducer,
     getResourcesReducer,
     getConfigMapsReducer,
