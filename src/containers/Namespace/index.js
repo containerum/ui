@@ -33,7 +33,7 @@ import type {
   Namespace as NamespaceType,
   ReduxState
 } from '../../types';
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import NamespaceInfo from '../../components/NamespaceInfo';
 import Notification from '../Notification';
 import NavigationHeaderItem from '../NavigationHeader';
@@ -53,8 +53,6 @@ import buttonsStyles from '../../theme/buttons.scss';
 const globalClass = className.bind(globalStyles);
 const containerNoBack = globalClass('container', 'containerNoBackground');
 const containerClassName = globalClass('contentBlockContainer', 'container');
-
-const isOnline = sourceType === 'ONLINE';
 
 type Props = {
   match: Object,
@@ -384,19 +382,6 @@ export class Namespace extends PureComponent<Props> {
                 {isVolumesPathname && isReadAccess ? (
                   <div className={globalStyles.contentBlockHeaderExtraPanel}>
                     <div className={globalStyles.contentBlockHeaderExtraPanel}>
-                      {isOnline &&
-                        role === 'user' && (
-                          <NavLink
-                            to={routerLinks.createVolumeLink(
-                              match.params.idName
-                            )}
-                            className={`${
-                              buttonsStyles.buttonUICreate
-                            } btn btn-outline-primary`}
-                          >
-                            Create
-                          </NavLink>
-                        )}
                       {role === 'admin' && (
                         <NavLink
                           to={routerLinks.createCustomVolumeLink(

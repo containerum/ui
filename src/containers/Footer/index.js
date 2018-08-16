@@ -14,15 +14,13 @@ import {
   GET_RELEASES_FAILURE
 } from '../../constants/getReleasesGithubConstants';
 import arrows from '../../images/arrows.png';
-import { externalLinks, sourceType, latestRelease } from '../../config';
+import { externalLinks, latestRelease } from '../../config';
 import styles from './styles.scss';
 
 type Props = {
   getReleasesGithubReducer: Object,
   fetchGetReleasesIfNeeded: () => void
 };
-
-const isOnline = sourceType === 'ONLINE';
 
 export class Footer extends PureComponent<Props> {
   componentDidMount() {
@@ -83,26 +81,25 @@ export class Footer extends PureComponent<Props> {
             >
               &copy; Created by ExonLV
             </a>
-            {!isOnline &&
-              latestRelease && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 13,
-                    right: '48%',
-                    fontSize: 12
-                  }}
+            {latestRelease && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 13,
+                  right: '48%',
+                  fontSize: 12
+                }}
+              >
+                Version:&nbsp;
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={externalLinks.containerumReleases}
                 >
-                  Version:&nbsp;
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={externalLinks.containerumReleases}
-                  >
-                    {latestRelease}
-                  </a>
-                </div>
-              )}
+                  {latestRelease}
+                </a>
+              </div>
+            )}
             {this.renderFooterInfo()}
             <a
               target="_blank"
@@ -113,17 +110,15 @@ export class Footer extends PureComponent<Props> {
             >
               Docs
             </a>
-            {isOnline && (
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={externalLinks.fastDeploy}
-                className={styles.footerHelp}
-                // onClick={() => this.handleClickAnaliticsHowToFooter()}
-              >
-                Get Started
-              </a>
-            )}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={externalLinks.fastDeploy}
+              className={styles.footerHelp}
+              // onClick={() => this.handleClickAnaliticsHowToFooter()}
+            >
+              Get Started
+            </a>
           </div>
         </div>
       </footer>

@@ -125,6 +125,7 @@ const CreateUpdateSecretInfo = ({
                   globalStyles.formGroupLabelOnFocus}`}
                 labelText="Value"
                 title="Value can only contain letters, numbers and characters"
+                maxLength={150}
                 handleChangeInput={e =>
                   handleChangeInputRecord(e.target.value, index, 'value')
                 }

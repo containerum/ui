@@ -5,7 +5,7 @@ import Tooltip from 'rc-tooltip';
 import _ from 'lodash/fp';
 import className from 'classnames/bind';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import LoadButton from '../../components/LoadButton';
 import InputControl from '../../components/InputControl';
 import AddConfigMapFileManuallyView from '../../components/AddConfigMapFileManually';
@@ -54,7 +54,6 @@ const itemClassName = globalClass(
   'blockItemTitleNoUppercase'
 );
 const lightText = globalClass('textLight', 'textLightConfigmap');
-const isOnline = sourceType === 'ONLINE';
 
 const ConfigMapCreateForm = ({
   role,
@@ -117,22 +116,6 @@ const ConfigMapCreateForm = ({
           </div>
         ) : (
           <div>
-            {isOnline &&
-              role === 'user' && (
-                <div style={{ marginBottom: 10 }}>
-                  <div style={{ marginBottom: 10 }}>
-                    You have no active projects yet.
-                  </div>
-                  <Link
-                    to={routerLinks.createNamespace}
-                    className={`${
-                      buttonsStyles.buttonUIDeployDashboard
-                    } btn btn-outline-primary`}
-                  >
-                    Create Project
-                  </Link>
-                </div>
-              )}
             {role === 'admin' && (
               <div style={{ marginBottom: 10 }}>
                 <div style={{ marginBottom: 10 }}>
@@ -150,8 +133,7 @@ const ConfigMapCreateForm = ({
             )}
           </div>
         )}
-        {!isOnline &&
-          !namespacesData.length &&
+        {!namespacesData.length &&
           role === 'user' && (
             <div style={{ marginBottom: 10 }}>
               <div style={{ marginBottom: 10 }}>

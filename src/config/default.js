@@ -17,7 +17,6 @@ module.exports = {
   // webApi: 'https://api.containerum.io',
   // wsApi: 'wss://api.containerum.io',
   appRecaptcha: process.env.RECAPTCHA || null,
-  sourceType: process.env.SOURCE_TYPE || 'OFFLINE',
   defaultCountry: process.env.COUNTRY || 'US',
   latestRelease: process.env.LATEST_RELEASE || null,
   app: {
@@ -59,19 +58,16 @@ module.exports = {
       `/projects/${idName}${additionalPath || ''}`,
     namespaceDomains: '/projects/:idName/ingresses',
     namespaceDomainsLink: (idName: string) => `/projects/${idName}/ingresses`,
-    createNamespace: '/createProject',
     createCustomNamespace: '/createCustomProject',
     resizeCustomNamespace: '/resizeCustomProject/:idName',
+    resizeCustomNamespaceLink: (idName: string) =>
+      `/resizeCustomProject/${idName}`,
     createCustomVolume: '/project/:idName/createCustomVolume',
     createCustomVolumeLink: (idName: string) =>
       `/project/${idName}/createCustomVolume`,
     updateCustomVolume: '/project/:idName/updateCustomVolume/:idVol',
     updateCustomVolumeLink: (idName: string, idVol: string) =>
       `/project/${idName}/updateCustomVolume/${idVol}`,
-    resizeCustomNamespaceLink: (idName: string) =>
-      `/resizeCustomProject/${idName}`,
-    resizeNamespace: '/project/:idName/resize',
-    resizeNamespaceLink: (idName: string) => `/project/${idName}/resize`,
     getVolumes: '/projects/:idName/volumes',
     getVolumesLink: (idName: string) => `/projects/${idName}/volumes`,
     getSecretsLink: (idName: string) => `/projects/${idName}/secrets`,
@@ -80,11 +76,6 @@ module.exports = {
     getSecret: '/project/:idName/secrets/:idSecret',
     getSecretLink: (idName: string, idSecret: string) =>
       `/project/${idName}/secrets/${idSecret}`,
-    createVolume: '/project/:idName/createVolume',
-    createVolumeLink: (idName: string) => `/project/${idName}/createVolume`,
-    resizeVolume: '/project/:idName/resizeVolume/:idVol',
-    resizeVolumeLink: (idName: string, idVol: string) =>
-      `/project/${idName}/resizeVolume/${idVol}`,
     getDeployments: '/projects/:idName/deployments',
     getDeploymentsLink: (idName: string) => `/projects/${idName}/deployments`,
     getDeployment: '/project/:idName/deployments/:idDep',
@@ -155,12 +146,9 @@ module.exports = {
     resizeServiceLink: (idName: string, idSrv: string) =>
       `/project/${idName}/updateService/${idSrv}`,
     getStarted: '/getStarted',
-    support: '/support',
-    successTicket: '/successTicket',
     account: '/account',
     accountById: '/accounts/:idUser',
     accountByIdLink: idUser => `/accounts/${idUser}`,
-    billing: '/billing',
     settings: '/settings'
   },
   externalLinks: {

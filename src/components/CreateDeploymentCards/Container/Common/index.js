@@ -70,6 +70,7 @@ const Common = ({ item, index, handleChangeInputCommon }: Props) => {
           title="Example: redis or redis:latest or redis:4.0.7-alpine"
           textHelper="Example: redis or redis:latest or redis:4.0.7-alpine"
           baseClassNameHelper={globalStyles.formGroupHelper}
+          maxLength={150}
           handleChangeInput={e =>
             handleChangeInputCommon(e.target.value, id, index, 'image')
           }

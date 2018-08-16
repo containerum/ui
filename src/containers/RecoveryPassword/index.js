@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 import cookie from 'react-cookies';
 import queryString from 'query-string';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import * as actionRecoveryPassword from '../../actions/recoveryPassword';
 // import * as actionCheckHashPassword from '../../actions/checkHashPassword';
 import InputPassword from '../../components/InputPassword';
@@ -249,17 +249,15 @@ class RecoveryPassword extends PureComponent<Props> {
                 )}
               </div>
             </div>
-            {sourceType !== 'ONLINE' && (
-              <img
-                src={logoContainerum}
-                alt="logo containerum"
-                style={{
-                  bottom: 30,
-                  position: 'absolute',
-                  right: 170
-                }}
-              />
-            )}
+            <img
+              src={logoContainerum}
+              alt="logo containerum"
+              style={{
+                bottom: 30,
+                position: 'absolute',
+                right: 170
+              }}
+            />
           </div>
         </div>
       </div>

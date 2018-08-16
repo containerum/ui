@@ -81,9 +81,6 @@ const getPlugins = () => {
         RECAPTCHA: process.env.RECAPTCHA
           ? `"${process.env.RECAPTCHA}"`
           : undefined,
-        SOURCE_TYPE: process.env.SOURCE_TYPE
-          ? `"${process.env.SOURCE_TYPE}"`
-          : undefined,
         LATEST_RELEASE: process.env.LATEST_RELEASE
           ? `"${process.env.LATEST_RELEASE}"`
           : undefined,

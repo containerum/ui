@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import className from 'classnames/bind';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 
 import dashboardStyles from '../../containers/Dashboard/index.scss';
 
@@ -14,24 +14,16 @@ const blockClassName = dashboardClassName('blockContainer', 'blockHTabs');
 
 type Props = {
   resources: Object,
-  balance: string,
   configmaps: Object,
   linkToDeployment: string,
-  linkToManageTeam: string,
-  linkToManageTeamAdmin: boolean,
   role: string,
   namespacesReducerLength: number
 };
 
-const isOnline = sourceType === 'ONLINE';
-
 const DashboardBlockTourAndNews = ({
   resources,
-  balance,
   configmaps,
   linkToDeployment,
-  linkToManageTeam,
-  linkToManageTeamAdmin,
   role,
   namespacesReducerLength
 }: Props) => (
@@ -79,28 +71,18 @@ const DashboardBlockTourAndNews = ({
           role="tabpanel"
           aria-labelledby="first-tab"
         >
-          {!namespacesReducerLength && role === 'user' && !isOnline ? (
+          {!namespacesReducerLength && role === 'user' ? (
             <div className={dashboardStyles.tourWrapper}>
               You don`t have permission to projects
             </div>
           ) : (
             <div className={dashboardStyles.tourWrapper}>
-              {isOnline && (
-                <Link
-                  className={
-                    balance !== 0 ? dashboardStyles.tourLinkDisabled : ''
-                  }
-                  to={routerLinks.billing}
-                >
-                  Top up your Balance or enter Promo code
-                </Link>
-              )}
-              {isOnline && (
+              {role === 'admin' && (
                 <Link
                   className={
                     linkToDeployment ? dashboardStyles.tourLinkDisabled : ''
                   }
-                  to={routerLinks.createNamespace}
+                  to={routerLinks.createCustomNamespace}
                 >
                   Create Project
                 </Link>
@@ -117,7 +99,7 @@ const DashboardBlockTourAndNews = ({
                     ? routerLinks.createDeploymentLink(linkToDeployment)
                     : role === 'admin'
                       ? routerLinks.createCustomNamespace
-                      : routerLinks.createNamespace
+                      : routerLinks.dashboard
                 }
               >
                 Launch 1st Deployment
@@ -134,7 +116,7 @@ const DashboardBlockTourAndNews = ({
                     ? routerLinks.createServiceLink(linkToDeployment)
                     : role === 'admin'
                       ? routerLinks.createCustomNamespace
-                      : routerLinks.createNamespace
+                      : routerLinks.dashboard
                 }
               >
                 Launch 1st Service
@@ -149,29 +131,6 @@ const DashboardBlockTourAndNews = ({
               >
                 Launch 1st ConfigMap
               </Link>
-              {/* <Link to="/account"> */}
-              {/* Set up Web Hooks for Continuous Deployment */}
-              {/* </Link> */}
-              {isOnline && (
-                <Link
-                  to={
-                    linkToManageTeam
-                      ? routerLinks.getMembershipLink(linkToManageTeam.id)
-                      : linkToManageTeamAdmin
-                        ? routerLinks.getGlobalMembership
-                        : '/'
-                  }
-                  style={
-                    linkToManageTeam
-                      ? {}
-                      : linkToManageTeamAdmin
-                        ? {}
-                        : { color: '#cecece', cursor: 'not-allowed' }
-                  }
-                >
-                  Share Project with your team
-                </Link>
-              )}
             </div>
           )}
 

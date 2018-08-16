@@ -127,23 +127,15 @@ class GraphsPerNodes extends PureComponent<Props> {
                   </NavLink>
                 </li>
               </ul>
-              <div
-                style={{
-                  marginLeft: 20,
-                  marginBottom: 10
-                }}
-              >
-                %
-              </div>
               <AreaChart
                 width={400}
                 height={210}
                 data={dataOfCpuHistory}
-                margin={{ top: 0, right: 0, left: -27, bottom: 0 }}
+                margin={{ top: 0, right: 0, left: -10, bottom: 0 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis />
+                <YAxis type="number" domain={[0, 100]} unit=" %" />
                 <Tooltip />
                 <Area
                   type="monotone"
@@ -190,6 +182,7 @@ class GraphsPerNodes extends PureComponent<Props> {
     }
 
     const { data: memoryReducer } = getMemoryHistoryPerNodesStatisticReducer;
+    console.log(memoryReducer);
     return (
       <div>
         {Object.keys(memoryReducer).map(node => {
@@ -215,23 +208,15 @@ class GraphsPerNodes extends PureComponent<Props> {
                   <div className="nav-link">&nbsp;</div>
                 </li>
               </ul>
-              <div
-                style={{
-                  marginLeft: 20,
-                  marginBottom: 10
-                }}
-              >
-                %
-              </div>
               <AreaChart
                 width={400}
                 height={210}
                 data={dataOfMemoryHistory}
-                margin={{ top: 0, right: 0, left: -27, bottom: 0 }}
+                margin={{ top: 0, right: 0, left: -10, bottom: 0 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis />
+                <YAxis type="number" domain={[0, 100]} unit=" %" />
                 <Tooltip />
                 <Area
                   type="monotone"

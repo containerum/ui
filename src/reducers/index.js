@@ -15,7 +15,6 @@ import getNamespacesReducer from './namespacesReducers/getNamespaces';
 import getUsageNamespacesReducer from './namespacesReducers/getUsageNamespaces';
 import getNamespaceReducer from './namespaceReducers/getNamespace';
 import deleteNamespaceReducer from './namespaceReducers/deleteNamespace';
-import getNamespacesTariffsReducer from './namespacesReducers/getNamespacesTariffs';
 import createNamespaceReducer from './namespaceReducers/createNamespace';
 import createCustomNamespaceReducer from './namespaceReducers/createCustomNamespace';
 import updateCustomNamespaceReducer from './namespaceReducers/updateCustomNamespace';
@@ -38,20 +37,11 @@ import updateInternalServiceReducer from './serviceReducers/updateInternalServic
 import updateExternalServiceReducer from './serviceReducers/updateExternalService';
 import getReleasesGithubReducer from './getReleasesGithubReducer';
 import getProfileReducer from './profileReducers/getProfile';
-import getBalanceReducer from './billingReducers/getBalance';
-import payForReducer from './billingReducers/payFor';
-import couponPayReducer from './billingReducers/couponPay';
 import getVolumesReducer from './volumesReducers/getVolumes';
 import getVolumesByNSReducer from './volumesReducers/getVolumesByNS';
-import getVolumesTariffsReducer from './volumesReducers/getVolumesTariffs';
 import deleteVolumeReducer from './volumeReducers/deleteVolume';
-import createVolumeReducer from './volumeReducers/createVolume';
-import resizeVolumeReducer from './volumeReducers/resizeVolume';
 import getVolumeReducer from './volumeReducers/getVolume';
-import getSupportGroupsReducer from './supportReducers/getSupportGroups';
-import sendSupportTicketReducer from './supportReducers/sendSupportTicket';
 import changePasswordReducer from './profileReducers/changePassword';
-import getProfileTariffsReducer from './profileReducers/getProfileTariffs';
 import getProfileReportReducer from './profileReducers/getProfileReport';
 import getImagesTokenReducer from './webHookReducers/getImagesToken';
 import deleteImageTokenReducer from './webHookReducers/deleteImageToken';
@@ -129,7 +119,6 @@ const reducers = {
   getUsageNamespacesReducer,
   getNamespaceReducer,
   deleteNamespaceReducer,
-  getNamespacesTariffsReducer,
   createNamespaceReducer,
   createCustomNamespaceReducer,
   updateCustomNamespaceReducer,
@@ -148,20 +137,11 @@ const reducers = {
   getReleasesGithubReducer,
   getProfileReducer,
   changeProfileInfoReducer,
-  getProfileTariffsReducer,
   getProfileReportReducer,
-  getBalanceReducer,
-  payForReducer,
-  couponPayReducer,
   getVolumesReducer,
   getVolumesByNSReducer,
-  getVolumesTariffsReducer,
   deleteVolumeReducer,
-  createVolumeReducer,
-  resizeVolumeReducer,
   getVolumeReducer,
-  getSupportGroupsReducer,
-  sendSupportTicketReducer,
   changePasswordReducer,
   getImagesTokenReducer,
   deleteImageTokenReducer,

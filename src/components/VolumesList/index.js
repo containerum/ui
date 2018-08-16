@@ -4,7 +4,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import volumePng from '../../images/volume.svg';
 import globalStyles from '../../theme/global.scss';
 import depStyles from '../../containers/Deployments/index.scss';
@@ -16,8 +16,6 @@ const contentClassName = globalClass(
   'contentBlockContent',
   'contentBlockContentFull'
 );
-
-const isOnline = sourceType === 'ONLINE';
 
 type Props = {
   data: Array<Object>,
@@ -87,23 +85,6 @@ const VolumesList = ({
                     onKeyPress={e => handleClose(e)}
                     role="presentation"
                   >
-                    {((handleClickDeleteVolume &&
-                      accessToNamespace !== 'read' &&
-                      isOnline &&
-                      role === 'user') ||
-                      (handleClickDeleteVolume &&
-                        accessToNamespace !== 'read' &&
-                        role === 'admin')) && (
-                      <i
-                        className={`${globalStyles.contentBlockTableMore} ${
-                          globalStyles.dropdownToggle
-                        }
-                          ${globalStyles.ellipsisRoleMore} ion-more `}
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      />
-                    )}
                     {handleClickDeleteVolume &&
                       accessToNamespace !== 'read' && (
                         <ul
@@ -112,18 +93,6 @@ const VolumesList = ({
                           }`}
                           role="menu"
                         >
-                          {isOnline &&
-                            role === 'user' && (
-                              <NavLink
-                                activeClassName="active"
-                                className={`dropdown-item  ${
-                                  globalStyles.dropdownItem
-                                }`}
-                                to={routerLinks.resizeVolumeLink(idName, name)}
-                              >
-                                Resize
-                              </NavLink>
-                            )}
                           {role === 'admin' && (
                             <NavLink
                               activeClassName="active"
@@ -138,17 +107,6 @@ const VolumesList = ({
                               Resize
                             </NavLink>
                           )}
-                          {isOnline &&
-                            role === 'user' && (
-                              <button
-                                className={`dropdown-item text-danger ${
-                                  globalStyles.dropdownItem
-                                }`}
-                                onClick={() => handleClickDeleteVolume(name)}
-                              >
-                                Delete
-                              </button>
-                            )}
                           {role === 'admin' && (
                             <button
                               className={`dropdown-item text-danger ${

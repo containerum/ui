@@ -68,8 +68,10 @@ export const fetchGetMemoryHistoryPerNodesStatistic = (
         } else
           dispatch(
             getMemoryHistoryPerNodesStatisticSuccess({
-              values: [1],
-              labels: [new Date().toISOString()]
+              noData: {
+                values: [1],
+                labels: [new Date().toISOString()]
+              }
             })
           );
         // else dispatch(getMemoryHistoryPerNodesStatisticFailure(data.message));
@@ -78,8 +80,10 @@ export const fetchGetMemoryHistoryPerNodesStatistic = (
       default: {
         dispatch(
           getMemoryHistoryPerNodesStatisticSuccess({
-            values: [1],
-            labels: [new Date().toISOString()]
+            noData: {
+              values: [1],
+              labels: [new Date().toISOString()]
+            }
           })
         );
         // dispatch(getMemoryHistoryPerNodesStatisticFailure(data.message));
@@ -88,8 +92,10 @@ export const fetchGetMemoryHistoryPerNodesStatistic = (
   } else
     dispatch(
       getMemoryHistoryPerNodesStatisticSuccess({
-        values: [1],
-        labels: [new Date().toISOString()]
+        noData: {
+          values: [1],
+          labels: [new Date().toISOString()]
+        }
       })
     );
 };

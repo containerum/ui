@@ -9,19 +9,13 @@ import styles from './index.scss';
 
 import * as actionLogout from '../../actions/logout';
 import * as actionGetProfile from '../../actions/profileActions/getProfile';
-import * as actionGetBalance from '../../actions/billingActions/getBalance';
 import {
   GET_PROFILE_INVALID,
   GET_PROFILE_REQUESTING,
   GET_PROFILE_FAILURE
 } from '../../constants/profileConstants/getProfile';
-import {
-  GET_BALANCE_INVALID,
-  GET_BALANCE_REQUESTING,
-  GET_BALANCE_FAILURE
-} from '../../constants/billingConstants/getBalance';
 import type { Dispatch, ReduxState } from '../../types';
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import ProfileDropDown from '../../components/ProfileDropDown';
 import logo from '../../images/logo.svg';
 import imageLogo from '../../images/imageLogo.svg';
@@ -29,42 +23,23 @@ import profilePlace from '../../images/profilePlace.svg';
 
 type Props = {
   getProfileReducer: Object,
-  getBalanceReducer: Object,
-  fetchGetBalanceIfNeeded: () => void,
   fetchGetProfileIfNeeded: () => void,
   fetchLogoutIfNeeded: () => void
 };
 
-const isOnline = sourceType === 'ONLINE';
-
 export class Header extends PureComponent<Props> {
   componentDidMount() {
-    const { fetchGetProfileIfNeeded, fetchGetBalanceIfNeeded } = this.props;
+    const { fetchGetProfileIfNeeded } = this.props;
     fetchGetProfileIfNeeded();
-    if (isOnline) {
-      fetchGetBalanceIfNeeded();
-    }
   }
 
   renderProfileDropDown = () => {
-    const {
-      getProfileReducer,
-      getBalanceReducer,
-      fetchLogoutIfNeeded
-    } = this.props;
+    const { getProfileReducer, fetchLogoutIfNeeded } = this.props;
 
     if (
-      (isOnline &&
-        (!getProfileReducer.readyStatus ||
-          getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
-          getProfileReducer.readyStatus === GET_PROFILE_REQUESTING ||
-          !getBalanceReducer.readyStatus ||
-          getBalanceReducer.readyStatus === GET_BALANCE_INVALID ||
-          getBalanceReducer.readyStatus === GET_BALANCE_REQUESTING)) ||
-      (!isOnline &&
-        (!getProfileReducer.readyStatus ||
-          getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
-          getProfileReducer.readyStatus === GET_PROFILE_REQUESTING))
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
     ) {
       return (
         <div>
@@ -81,19 +56,13 @@ export class Header extends PureComponent<Props> {
       );
     }
 
-    if (
-      (isOnline &&
-        (getProfileReducer.readyStatus === GET_PROFILE_FAILURE ||
-          getBalanceReducer.readyStatus === GET_BALANCE_FAILURE)) ||
-      (!isOnline && getProfileReducer.readyStatus === GET_PROFILE_FAILURE)
-    ) {
+    if (getProfileReducer.readyStatus === GET_PROFILE_FAILURE) {
       return <p>Oops, Failed to load data of Header!</p>;
     }
 
     return (
       <ProfileDropDown
         role={getProfileReducer.data.role}
-        balance={isOnline ? getBalanceReducer.data.balance : null}
         email={getProfileReducer.data.login}
         handleLogout={() => fetchLogoutIfNeeded()}
       />
@@ -148,17 +117,6 @@ export class Header extends PureComponent<Props> {
                     Tools
                   </NavLink>
                 </li>
-                {isOnline && (
-                  <li className={`${styles.headerTopMenuLi} nav-item`}>
-                    <NavLink
-                      activeClassName={styles.headerTopMenuLiActive}
-                      to={routerLinks.support}
-                      className={styles.headerTopMenuLink}
-                    >
-                      Support
-                    </NavLink>
-                  </li>
-                )}
               </ul>
               {/* <div className="header-top-admin-mode"> */}
               {/* <div className="header-top-admin-mode__label">Admin<br />mode</div> */}
@@ -174,15 +132,12 @@ export class Header extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({ getProfileReducer, getBalanceReducer }: ReduxState) => ({
-    getProfileReducer,
-    getBalanceReducer
+  ({ getProfileReducer }: ReduxState) => ({
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetProfileIfNeeded: () =>
       dispatch(actionGetProfile.fetchGetProfileIfNeeded()),
-    fetchGetBalanceIfNeeded: () =>
-      dispatch(actionGetBalance.fetchGetBalanceIfNeeded()),
     fetchLogoutIfNeeded: () => dispatch(actionLogout.fetchLogoutIfNeeded())
   })
 );
