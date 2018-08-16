@@ -8,7 +8,6 @@ import { routerLinks } from '../../config';
 import volumePng from '../../images/volume.svg';
 import globalStyles from '../../theme/global.scss';
 import depStyles from '../../containers/Deployments/index.scss';
-import { timeago } from '../../functions/timeago';
 
 const globalClass = className.bind(globalStyles);
 
@@ -22,23 +21,13 @@ const contentClassName = globalClass(
 type Props = {
   data: Array<Object>,
   dataNamespace: Object,
-  idName: string,
-  handleDeleteVolume: (idVol: string) => void
+  idName: string
 };
 
-const LinkedVolumesList = ({
-  data,
-  dataNamespace,
-  idName,
-  handleDeleteVolume
-}: Props) => {
-  const handleClickDeleteVolume = name => {
-    handleDeleteVolume(name);
-  };
+const LinkedVolumesList = ({ data, dataNamespace, idName }: Props) => {
   const handleClose = e => {
     e.stopPropagation();
   };
-  const ta = timeago();
   const accessToNamespace = dataNamespace ? dataNamespace.access : 'read';
   return (
     <div>
@@ -48,18 +37,14 @@ const LinkedVolumesList = ({
             <tr>
               <td className={depStyles.td_1_Dep} />
               <td className={depStyles.td_2_Dep}>Name</td>
-              <td className={depStyles.td_5_Dep}>Total (GB)</td>
-              <td className={depStyles.td_6_Dep}>Age</td>
-              <td className={depStyles.td_7_Dep} />
+              <td className={depStyles.td_5_Dep}>Mount path</td>
+              <td className={depStyles.td_6_Dep}>Sub path</td>
               <td className={depStyles.td_7_Dep} />
             </tr>
           </thead>
           <tbody>
             {data.map(volume => {
-              const { name, created_at: createdAt, capacity } = volume;
-              const milliseconds = Date.parse(createdAt);
-              const dateHours = new Date(milliseconds);
-              const dateValue = ta.ago(dateHours, true);
+              const { name, mount_path: mountPath, sub_path: subPath } = volume;
               const id = `item_${name}`;
               return (
                 <tr key={id} className={globalStyles.tableHover} id={id}>
@@ -67,56 +52,41 @@ const LinkedVolumesList = ({
                     <img src={volumePng} alt="volume" />
                   </td>
                   <td className={depStyles.td_2_Dep}>{name}</td>
-                  <td className={depStyles.td_4_Dep}>{capacity}</td>
-                  <td className={depStyles.td_6_Dep}>{dateValue}</td>
-                  <td className={depStyles.td_7_Dep}>
-                    {/* <div className="warning"> </div> */}
-                  </td>
+                  <td className={depStyles.td_4_Dep}>{mountPath}</td>
+                  <td className={depStyles.td_6_Dep}>{subPath || '-'}</td>
                   <td
                     className={`${depStyles.td_7_Dep} dropdown no-arrow`}
                     onClick={e => handleClose(e)}
-                    onKeyPress={e => handleClose(e)}
-                    role="presentation"
                   >
-                    {handleClickDeleteVolume &&
-                      accessToNamespace !== 'read' && (
-                        <i
-                          className={`${globalStyles.contentBlockTableMore} ${
-                            globalStyles.dropdownToggle
-                          }
+                    {accessToNamespace !== 'read' && (
+                      <i
+                        className={`${globalStyles.contentBlockTableMore} ${
+                          globalStyles.dropdownToggle
+                        }
                           ${globalStyles.ellipsisRoleMore} ion-more `}
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        />
-                      )}
-                    {handleClickDeleteVolume &&
-                      accessToNamespace !== 'read' && (
-                        <ul
-                          className={` dropdown-menu dropdown-menu-right ${
-                            globalStyles.dropdownMenu
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      />
+                    )}
+                    {accessToNamespace !== 'read' && (
+                      <ul
+                        className={` dropdown-menu dropdown-menu-right ${
+                          globalStyles.dropdownMenu
+                        }`}
+                        role="menu"
+                      >
+                        <NavLink
+                          activeClassName="active"
+                          className={`dropdown-item  ${
+                            globalStyles.dropdownItem
                           }`}
-                          role="menu"
+                          to={routerLinks.updateCustomVolumeLink(idName, name)}
                         >
-                          <NavLink
-                            activeClassName="active"
-                            className={`dropdown-item  ${
-                              globalStyles.dropdownItem
-                            }`}
-                            to={routerLinks.resizeVolumeLink(idName, name)}
-                          >
-                            Resize
-                          </NavLink>
-                          <button
-                            className={`dropdown-item text-danger ${
-                              globalStyles.dropdownItem
-                            }`}
-                            onClick={() => handleClickDeleteVolume(name)}
-                          >
-                            Delete
-                          </button>
-                        </ul>
-                      )}
+                          Resize
+                        </NavLink>
+                      </ul>
+                    )}
                   </td>
                 </tr>
               );

@@ -38,8 +38,8 @@ const deleteVolumeInvalidToken = () => ({
 });
 
 export const fetchDeleteVolume = (
-  idVol: string,
   idName: string,
+  idVol: string,
   axios: any,
   URL: string = webApi
 ): ThunkAction => async (dispatch: Dispatch) => {
@@ -79,7 +79,7 @@ export const fetchDeleteVolume = (
 };
 
 export const fetchDeleteVolumeIfNeeded = (
-  idVol: string,
-  idName: string
+  idName: string,
+  idVol: string
 ): ThunkAction => (dispatch: Dispatch, getState: GetState, axios: any) =>
-  dispatch(fetchDeleteVolume(idVol, idName, axios));
+  dispatch(fetchDeleteVolume(idName, idVol, axios));
