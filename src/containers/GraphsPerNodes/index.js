@@ -182,7 +182,6 @@ class GraphsPerNodes extends PureComponent<Props> {
     }
 
     const { data: memoryReducer } = getMemoryHistoryPerNodesStatisticReducer;
-    console.log(memoryReducer);
     return (
       <div>
         {Object.keys(memoryReducer).map(node => {

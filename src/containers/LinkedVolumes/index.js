@@ -8,19 +8,13 @@ import className from 'classnames/bind';
 
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionGetDeployment from '../../actions/deploymentActions/getDeployment';
-import * as actionDeletePod from '../../actions/volumeActions/deleteVolume';
 import {
   GET_DEPLOYMENT_INVALID,
   GET_DEPLOYMENT_REQUESTING,
   GET_DEPLOYMENT_FAILURE
   // GET_DEPLOYMENT_SUCCESS
 } from '../../constants/deploymentConstants/getDeployment';
-import {
-  DELETE_VOLUME_SUCCESS,
-  DELETE_VOLUME_REQUESTING
-} from '../../constants/volumeConstants/deleteVolume';
 import LinkedVolumesList from '../../components/LinkedVolumesList';
-import Notification from '../Notification';
 
 import globalStyles from '../../theme/global.scss';
 import {
@@ -39,35 +33,12 @@ const contentClassName = globalClass(
 type Props = {
   match: Object,
   getDeploymentReducer: Object,
-  getNamespacesReducer: Object,
-  deleteVolumeReducer: Object,
-  fetchDeleteVolumeIfNeeded: (idName: string, idVol: string) => void,
-  fetchGetDeploymentIfNeeded: (idName: string, idDep: string) => void
+  getNamespacesReducer: Object
 };
 
 export class LinkedVolumes extends PureComponent<Props> {
-  componentWillUpdate(nextProps) {
-    if (
-      this.props.deleteVolumeReducer.readyStatus !==
-        nextProps.deleteVolumeReducer.readyStatus &&
-      nextProps.deleteVolumeReducer.readyStatus === DELETE_VOLUME_SUCCESS
-    ) {
-      const { fetchGetDeploymentIfNeeded, match } = this.props;
-      fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
-    }
-  }
-  handleDeleteVolume = volumeName => {
-    const { fetchDeleteVolumeIfNeeded, match } = this.props;
-    fetchDeleteVolumeIfNeeded(match.params.idName, volumeName);
-  };
-
   renderVolumesList = () => {
-    const {
-      match,
-      getDeploymentReducer,
-      getNamespacesReducer,
-      deleteVolumeReducer
-    } = this.props;
+    const { match, getDeploymentReducer, getNamespacesReducer } = this.props;
 
     if (
       !getNamespacesReducer.readyStatus ||
@@ -75,8 +46,7 @@ export class LinkedVolumes extends PureComponent<Props> {
       getNamespacesReducer.readyStatus === GET_NAMESPACES_REQUESTING ||
       !getDeploymentReducer.readyStatus ||
       getDeploymentReducer.readyStatus === GET_DEPLOYMENT_INVALID ||
-      getDeploymentReducer.readyStatus === GET_DEPLOYMENT_REQUESTING ||
-      deleteVolumeReducer.readyStatus === DELETE_VOLUME_REQUESTING
+      getDeploymentReducer.readyStatus === GET_DEPLOYMENT_REQUESTING
     ) {
       return (
         <div
@@ -98,26 +68,23 @@ export class LinkedVolumes extends PureComponent<Props> {
     }
 
     const displayedContainers = getDeploymentReducer.data.containers[0]
-      .config_maps
-      ? getDeploymentReducer.data.containers[0].config_maps
+      .volume_mounts
+      ? getDeploymentReducer.data.containers[0].volume_mounts
       : [];
     return (
       <LinkedVolumesList
-        displayedContainers={displayedContainers}
+        data={displayedContainers}
         dataNamespace={getNamespacesReducer.data.find(
           namespace => namespace.id === match.params.idName
         )}
-        idDep={match.params.idDep}
-        handleDeleteVolume={this.handleDeleteVolume}
+        idName={match.params.idName}
       />
     );
   };
 
   render() {
-    const { status, configMapName, err } = this.props.deleteVolumeReducer;
     return (
       <div>
-        <Notification status={status} name={configMapName} errorMessage={err} />
         <div className={contentClassName}>
           <div className="tab-content">
             <div className="tab-pane pods active">
@@ -131,18 +98,11 @@ export class LinkedVolumes extends PureComponent<Props> {
 }
 
 const connector: Connector<{}, Props> = connect(
-  ({
+  ({ getDeploymentReducer, getNamespacesReducer }: ReduxState) => ({
     getDeploymentReducer,
-    getNamespacesReducer,
-    deleteVolumeReducer
-  }: ReduxState) => ({
-    getDeploymentReducer,
-    getNamespacesReducer,
-    deleteVolumeReducer
+    getNamespacesReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchDeleteVolumeIfNeeded: (idName: string, idVol: string) =>
-      dispatch(actionDeletePod.fetchDeleteVolumeIfNeeded(idName, idVol)),
     fetchGetDeploymentIfNeeded: (idName: string, idDep: string) =>
       dispatch(actionGetDeployment.fetchGetDeploymentIfNeeded(idName, idDep))
   })

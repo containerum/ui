@@ -83,8 +83,8 @@ module.exports = {
       `/project/${idName}/deployments/${idDep}/pods`,
     getDeploymentLinkedConfigMapsLink: (idName: string, idDep: string) =>
       `/project/${idName}/deployments/${idDep}/linkedConfigMaps`,
-    // getDeploymentLinkedVolumesLink: (idName: string, idDep: string) =>
-    //   `/project/${idName}/deployments/${idDep}/linkedVolumes`,
+    getDeploymentLinkedVolumesLink: (idName: string, idDep: string) =>
+      `/project/${idName}/deployments/${idDep}/linkedVolumes`,
     getMembership: '/project/:idName/membership',
     getMembershipLink: (idName: string) => `/project/${idName}/membership`,
     // getGroups: '/project/:idName/groups',

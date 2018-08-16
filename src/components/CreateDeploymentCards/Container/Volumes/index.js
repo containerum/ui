@@ -74,7 +74,7 @@ const Volumes = ({
 
     {volumes.length && volumeMounts.length
       ? volumeMounts.map((item, indexVolume) => {
-          const { id, name, subPath, mount_path: mountPath } = item;
+          const { id, name, sub_path: subPath, mount_path: mountPath } = item;
           return (
             <div className="row ml-0" style={{ width: '100%' }} key={id}>
               <div className={`${globalStyles.columnCustomVolumes} col-md-4`}>
@@ -92,17 +92,14 @@ const Volumes = ({
                           id,
                           index,
                           indexVolume,
-                          'volumeMounts'
+                          'volume_mounts'
                         )
                       }
                       required
                     >
                       {volumes.map(volumeMount => (
-                        <option
-                          key={volumeMount.label}
-                          value={volumeMount.label}
-                        >
-                          {volumeMount.label}
+                        <option key={volumeMount.name} value={volumeMount.name}>
+                          {volumeMount.name}
                         </option>
                       ))}
                     </select>
@@ -133,8 +130,8 @@ const Volumes = ({
                       id,
                       index,
                       indexVolume,
-                      'subPath',
-                      'volumeMounts'
+                      'sub_path',
+                      'volume_mounts'
                     )
                   }
                 />
@@ -159,7 +156,8 @@ const Volumes = ({
                       id,
                       index,
                       indexVolume,
-                      'mount_path'
+                      'mount_path',
+                      'volume_mounts'
                     )
                   }
                 />
@@ -167,7 +165,7 @@ const Volumes = ({
               <div
                 className="col-md-1"
                 onClick={() =>
-                  handleClickRemove(id, index, 'volumeMounts', 'volumes')
+                  handleClickRemove(id, index, 'volume_mounts', 'volumes')
                 }
                 role="presentation"
               >
@@ -185,7 +183,7 @@ const Volumes = ({
       <div className="col-md-12">
         <div
           className={`${buttonsStyles.buttonUIAddBlock} ml-0`}
-          onClick={() => handleClickAdd(index, 'volumeMounts', 'volumes')}
+          onClick={() => handleClickAdd(index, 'volume_mounts', 'volumes')}
           role="presentation"
         >
           + Add Volume

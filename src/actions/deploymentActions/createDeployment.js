@@ -74,23 +74,23 @@ export const fetchCreateDeployment = (
       item.env = [];
     }
 
-    if (item.volumeMounts.length) {
-      item.volumeMounts.map(volumeMountsEnvs => {
-        if (!volumeMountsEnvs.subPath) {
-          delete volumeMountsEnvs.subPath;
+    if (item.volume_mounts.length) {
+      item.volume_mounts.map(volumeMountsEnvs => {
+        if (!volumeMountsEnvs.sub_path) {
+          delete volumeMountsEnvs.sub_path;
         }
         delete volumeMountsEnvs.id;
         delete volumeMountsEnvs.index;
         return null;
       });
     } else {
-      item.volumeMounts = [];
+      item.volume_mounts = [];
     }
 
     if (item.config_maps.length) {
       item.config_maps.map(configMapsMountEnvs => {
-        if (!configMapsMountEnvs.subPath) {
-          delete configMapsMountEnvs.subPath;
+        if (!configMapsMountEnvs.sub_path) {
+          delete configMapsMountEnvs.sub_path;
         }
         delete configMapsMountEnvs.id;
         delete configMapsMountEnvs.index;

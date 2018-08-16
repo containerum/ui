@@ -44,7 +44,7 @@ type Props = {
   getProfileReducer: Object,
   deleteVolumeReducer: Object,
   fetchGetVolumesIfNeeded: (id: string) => void,
-  fetchDeleteVolumeIfNeeded: (idVol: string, idName: string) => void
+  fetchDeleteVolumeIfNeeded: (idName: string, idVol: string) => void
 };
 
 export class Volumes extends PureComponent<Props> {
@@ -98,6 +98,10 @@ export class Volumes extends PureComponent<Props> {
     }
   }
 
+  onHandleDelete = idVol => {
+    const { fetchDeleteVolumeIfNeeded, match } = this.props;
+    fetchDeleteVolumeIfNeeded(match.params.idName, idVol);
+  };
   handleOpenCloseModal = () => {
     this.setState({
       ...this.state,
@@ -170,13 +174,18 @@ export class Volumes extends PureComponent<Props> {
   };
 
   render() {
-    const { status, idVol, err } = this.props.deleteVolumeReducer;
-    const { fetchDeleteVolumeIfNeeded, match } = this.props;
+    const { status, idVol, method, err } = this.props.deleteVolumeReducer;
+    const { match } = this.props;
     const { inputName, isOpened, idVol: currentIdVol } = this.state;
     return (
       <div>
         <Helmet title="Volumes" />
-        <Notification status={status} name={idVol} errorMessage={err} />
+        <Notification
+          status={status}
+          name={idVol}
+          errorMessage={err}
+          method={method}
+        />
         <DeleteModal
           type="Volume"
           inputName={inputName}
@@ -186,7 +195,7 @@ export class Volumes extends PureComponent<Props> {
           isOpened={isOpened}
           handleInputName={this.handleInputName}
           handleOpenCloseModal={this.handleOpenCloseModal}
-          onHandleDelete={fetchDeleteVolumeIfNeeded}
+          onHandleDelete={this.onHandleDelete}
         />
 
         <div className={contentClassName}>
@@ -216,8 +225,8 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetVolumesIfNeeded: (id: string) =>
       dispatch(actionGetVolumes.fetchGetVolumesIfNeeded(id)),
-    fetchDeleteVolumeIfNeeded: (idVol: string, idName: string) =>
-      dispatch(actionDeleteVolumes.fetchDeleteVolumeIfNeeded(idVol, idName))
+    fetchDeleteVolumeIfNeeded: (idName: string, idVol: string) =>
+      dispatch(actionDeleteVolumes.fetchDeleteVolumeIfNeeded(idName, idVol))
   })
 );
 
