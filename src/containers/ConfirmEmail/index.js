@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import queryString from 'query-string';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import { SIGNUP_SUCCESS } from '../../constants/signUpConstants';
 import globalStyles from '../../theme/global.scss';
 import styles from './index.scss';
@@ -86,17 +86,15 @@ class ConfirmEmail extends PureComponent<Props> {
                 </div>
               </div>
             </div>
-            {sourceType !== 'ONLINE' && (
-              <img
-                src={logoContainerum}
-                alt="logo containerum"
-                style={{
-                  bottom: 30,
-                  position: 'absolute',
-                  right: 170
-                }}
-              />
-            )}
+            <img
+              src={logoContainerum}
+              alt="logo containerum"
+              style={{
+                bottom: 30,
+                position: 'absolute',
+                right: 170
+              }}
+            />
           </div>
         </div>
       </div>

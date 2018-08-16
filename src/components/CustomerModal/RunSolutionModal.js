@@ -5,9 +5,8 @@ import _ from 'lodash/fp';
 import 'rc-tooltip/assets/bootstrap_white.css';
 import className from 'classnames/bind';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import modalStyles from './index.scss';
-
 // import getSolutionImage from '../../functions/getSolutionImage';
 import {
   RUN_SOLUTION_REQUESTING,
@@ -18,10 +17,7 @@ import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
-
 const selectClassName = globalClass('formControl', 'selectCustomModal');
-
-const isOnline = sourceType === 'ONLINE';
 
 const customStyles = {
   overlay: {
@@ -177,7 +173,7 @@ const SelectNamespaceModal = ({
                     <Link
                       className={buttonsStyles.buttonModalCreateNamespace}
                       data-toggle="modal"
-                      to={routerLinks.createNamespace}
+                      to={routerLinks.createCustomNamespace}
                     >
                       Create Project
                     </Link>
@@ -264,17 +260,6 @@ const SelectNamespaceModal = ({
             >
               Cancel
             </button>
-            {isOnline && (
-              <div className="float-left">
-                <Link
-                  to={routerLinks.support}
-                  className="footer-links-deploy-btn"
-                  style={{ padding: '8px 55px' }}
-                >
-                  Support
-                </Link>
-              </div>
-            )}
           </div>
         </div>
       )}

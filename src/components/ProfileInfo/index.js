@@ -9,7 +9,7 @@ import CheckBoxControl from '../CheckBoxControl';
 import './Profile.css';
 
 import globalStyles from '../../theme/global.scss';
-import billingStyles from '../../containers/Billing/index.scss';
+import profileInfoStyles from './index.scss';
 import inputStyles from '../../components/InputControl/index.scss';
 
 const globalClass = className.bind(globalStyles);
@@ -88,14 +88,14 @@ const ProfileInfo = ({
         <div className="row" style={{ marginTop: 60 }}>
           <div className="col-md-3">
             <div className={`${globalStyles.formGroup} pt-0`}>
-              <div className={billingStyles.billingContentText}>
+              <div className={profileInfoStyles.billingContentText}>
                 Status:&nbsp;
               </div>
               <div
                 className={`${
-                  billingStyles.billingInformationStatusInfo
+                  profileInfoStyles.billingInformationStatusInfo
                 } ${statusUser !== 'active' &&
-                  billingStyles.billingInformationInactiveInfo}`}
+                  profileInfoStyles.billingInformationInactiveInfo}`}
               >
                 {statusUser}
               </div>

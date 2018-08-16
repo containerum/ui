@@ -6,13 +6,10 @@ import classNames from 'classnames/bind';
 
 import globalStyles from '../../theme/global.scss';
 import dashboardStyles from '../../containers/Dashboard/index.scss';
-
-import { externalLinks, routerLinks, sourceType } from '../../config';
+import { externalLinks, routerLinks } from '../../config';
 
 const infoClassName = classNames.bind(dashboardStyles);
-
 const block = infoClassName('blockContainer', 'blockH');
-const isOnline = sourceType === 'ONLINE';
 
 const DashboardBlockInfo = () => (
   <div className={`col-md-3 ${globalStyles.colInfo}`}>
@@ -27,29 +24,12 @@ const DashboardBlockInfo = () => (
         >
           - Documentation
         </a>
-        {isOnline && (
-          <Link
-            to={routerLinks.getStarted}
-            className={dashboardStyles.infoLink}
-          >
-            - Get Started
-          </Link>
-        )}
-        {isOnline && (
-          <Link className={dashboardStyles.infoLink} to={routerLinks.solutions}>
-            - Solutions
-          </Link>
-        )}
-        {isOnline && (
-          <a
-            className={dashboardStyles.infoLink}
-            href={externalLinks.blog}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            - Blog
-          </a>
-        )}
+        <Link to={routerLinks.getStarted} className={dashboardStyles.infoLink}>
+          - Get Started
+        </Link>
+        <Link className={dashboardStyles.infoLink} to={routerLinks.solutions}>
+          - Solutions
+        </Link>
       </div>
     </div>
   </div>

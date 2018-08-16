@@ -4,7 +4,7 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import className from 'classnames/bind';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import ns from '../../images/n.png';
 
 import globalStyles from '../../theme/global.scss';
@@ -56,7 +56,6 @@ const NamespaceInfo = ({
   idName,
   handleDeleteNamespace
 }: Props) => {
-  const isOnline = sourceType === 'ONLINE';
   const { label, resources } = data;
   const access = role === 'admin' ? 'owner' : data.access;
   const { memory, cpu } = resources.used
@@ -109,16 +108,6 @@ const NamespaceInfo = ({
                 }`}
                 role="menu"
               >
-                {isOnline &&
-                  role === 'user' && (
-                    <NavLink
-                      activeClassName="active"
-                      className={`dropdown-item ${globalStyles.dropdownItem}`}
-                      to={routerLinks.resizeNamespaceLink(idName)}
-                    >
-                      Resize
-                    </NavLink>
-                  )}
                 {role === 'admin' && (
                   <NavLink
                     activeClassName="active"

@@ -5,12 +5,11 @@ import className from 'classnames/bind';
 import { NavLink } from 'react-router-dom';
 import Tooltip from 'rc-tooltip';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import InputControl from '../InputControl';
 import CheckBoxControl from '../CheckBoxControl';
 
 import globalStyles from '../../theme/global.scss';
-import styles from './index.scss';
 import inputStyles from '../../components/InputControl/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 
@@ -42,11 +41,8 @@ type Props = {
   handleChangeSelectService: (value: string) => void,
   handleChangeSelectPort: (value: string) => void,
   handleChangeInput: (value: string, type: string) => void,
-  handleChangeCheckBox: () => void,
-  handleClickRequestCustomDomain: () => void
+  handleChangeCheckBox: () => void
 };
-
-const isOnline = sourceType === 'ONLINE';
 
 const CreateDomainCard = ({
   currentService,
@@ -61,8 +57,7 @@ const CreateDomainCard = ({
   handleChangeSelectService,
   handleChangeSelectPort,
   handleChangeInput,
-  handleChangeCheckBox,
-  handleClickRequestCustomDomain
+  handleChangeCheckBox
 }: Props) => {
   const regexp = /^[a-z][a-z0-9-]*$|^$/;
   const isErrorNameTooltipClass = domainName.search(regexp) === -1;
@@ -186,10 +181,7 @@ const CreateDomainCard = ({
           <div className={nextContainerClassName}>
             <span className={globalStyles.containerTitleStar}>*</span> Domains
           </div>
-          <div
-            className={isOnline && styles.InputControlWrapper}
-            style={!isOnline ? { width: '47.5%', display: 'inline' } : {}}
-          >
+          <div style={{ width: '47.5%', display: 'inline' }}>
             <Tooltip
               placement="left"
               visible
@@ -203,8 +195,7 @@ const CreateDomainCard = ({
                 id="domainName"
                 type="text"
                 required
-                baseClassName={`form-group__input-text form-control customInput ${isOnline &&
-                  'customInputDomain'}`}
+                baseClassName="form-group__input-text form-control customInput"
                 baseClassNameLabel={`form-group__label ${domainName &&
                   'form-group__label-always-onfocus'}`}
                 labelText="Domain"
@@ -213,22 +204,9 @@ const CreateDomainCard = ({
                   // e.target.setSelectionRange(-domainName.length, -domainName.length);
                   handleChangeInput(e.target.value, 'domainName');
                 }}
-                alwaysVisiblePlaceholder={
-                  isOnline && 'customAlwaysVisiblePlaceholder'
-                }
-                style={!isOnline ? { width: '47.5%' } : {}}
+                style={{ width: '47.5%' }}
               />
             </Tooltip>
-            {servicesList.length && isOnline ? (
-              <div
-                className={styles.RequestCustomDomain}
-                onClick={handleClickRequestCustomDomain}
-              >
-                Request custom Domain connection
-              </div>
-            ) : (
-              ''
-            )}
           </div>
           <div style={{ padding: 0, width: '47.5%' }}>
             <Tooltip

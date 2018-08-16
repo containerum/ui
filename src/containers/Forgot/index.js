@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 import cookie from 'react-cookies';
 import isEmail from 'validator/lib/isEmail';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import * as actionForgot from '../../actions/forgot';
 import InputEmail from '../../components/InputEmail';
 import LoadButton from '../../components/LoadButton';
@@ -154,17 +154,15 @@ class Forgot extends PureComponent<Props> {
                 )}
               </div>
             </div>
-            {sourceType !== 'ONLINE' && (
-              <img
-                src={logoContainerum}
-                alt="logo containerum"
-                style={{
-                  bottom: 30,
-                  position: 'absolute',
-                  right: 170
-                }}
-              />
-            )}
+            <img
+              src={logoContainerum}
+              alt="logo containerum"
+              style={{
+                bottom: 30,
+                position: 'absolute',
+                right: 170
+              }}
+            />
           </div>
         </div>
       </div>

@@ -4,9 +4,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import deployment from '../../images/deployment.png';
-
 import globalStyles from '../../theme/global.scss';
 import dashboardStyles from '../../containers/Dashboard/index.scss';
 
@@ -23,7 +22,6 @@ const tableClassName = globalClassName('contentBlockTable', 'table');
 const btnClassName = globalClassName('btnBlue', 'btnDepl');
 
 const NamespacesDashboardList = ({ data, role, history }: Props) => {
-  const isOnline = sourceType === 'ONLINE';
   const handleClickGetNamespace = idName => {
     history.push(routerLinks.namespaceLink(idName));
   };
@@ -86,19 +84,6 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                       onKeyPress={e => handleClose(e)}
                       role="presentation"
                     >
-                      {isOnline &&
-                        role === 'user' &&
-                        access === 'owner' && (
-                          <i
-                            className={`${globalStyles.contentBlockTableMore} ${
-                              globalStyles.dropdownToggle
-                            }
-                          ${globalStyles.ellipsisRoleMore} ion-more `}
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          />
-                        )}
                       {role === 'admin' && (
                         <i
                           className={`${globalStyles.contentBlockTableMore} ${
@@ -110,24 +95,6 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                           aria-expanded="false"
                         />
                       )}
-                      {isOnline &&
-                        role === 'user' && (
-                          <ul
-                            className={` dropdown-menu dropdown-menu-right ${
-                              globalStyles.dropdownMenu
-                            }`}
-                            role="menu"
-                          >
-                            <Link
-                              to={routerLinks.resizeNamespaceLink(id)}
-                              className={`dropdown-item ${
-                                globalStyles.dropdownItem
-                              }`}
-                            >
-                              Resize
-                            </Link>
-                          </ul>
-                        )}
                       {role === 'admin' && (
                         <ul
                           className={` dropdown-menu dropdown-menu-right ${
@@ -154,21 +121,6 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
       )}
       {!data.length && (
         <div>
-          {isOnline &&
-            role === 'user' && (
-              <div className={globalStyles.createDeploymentWrapper}>
-                <div className={globalStyles.noCreatedPodMessage}>
-                  You have no active projects yet.
-                </div>
-                <Link
-                  className={btnClassName}
-                  data-toggle="modal"
-                  to={routerLinks.createNamespace}
-                >
-                  Create Project
-                </Link>
-              </div>
-            )}
           {role === 'admin' && (
             <div className={globalStyles.createDeploymentWrapper}>
               <div className={globalStyles.noCreatedPodMessage}>
@@ -185,8 +137,7 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
           )}
         </div>
       )}
-      {!isOnline &&
-        !data.length &&
+      {!data.length &&
         role === 'user' && (
           <div className={globalStyles.createDeploymentWrapper}>
             <div className={globalStyles.noCreatedPodMessage}>

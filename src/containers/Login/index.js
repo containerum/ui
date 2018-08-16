@@ -10,7 +10,7 @@ import cookie from 'react-cookies';
 import isEmail from 'validator/lib/isEmail';
 import queryString from 'query-string';
 
-import { routerLinks, sourceType } from '../../config';
+import { routerLinks } from '../../config';
 import * as actionLogin from '../../actions/login';
 import * as actionConfirmSignUp from '../../actions/confirmSignUp';
 import {
@@ -199,15 +199,13 @@ class Login extends PureComponent<Props> {
                   } ${globalStyles.authBtnMargin}`}
                 />
               </form>
-              {sourceType === 'ONLINE' && (
-                <NavLink
-                  activeClassName="active"
-                  className={globalStyles.forgetPass}
-                  to={routerLinks.forgot}
-                >
-                  Forgot your password?
-                </NavLink>
-              )}
+              <NavLink
+                activeClassName="active"
+                className={globalStyles.forgetPass}
+                to={routerLinks.forgot}
+              >
+                Forgot your password?
+              </NavLink>
               <div className={globalStyles.windowLinksBlock}>
                 <div className={globalStyles.windowLinksBlockText}>
                   Don’t have an Account? <br />
@@ -247,17 +245,15 @@ class Login extends PureComponent<Props> {
                 )}
               </div>
             </div>
-            {sourceType !== 'ONLINE' && (
-              <img
-                src={logoContainerum}
-                alt="logo containerum"
-                style={{
-                  bottom: 30,
-                  position: 'absolute',
-                  right: 170
-                }}
-              />
-            )}
+            <img
+              src={logoContainerum}
+              alt="logo containerum"
+              style={{
+                bottom: 30,
+                position: 'absolute',
+                right: 170
+              }}
+            />
           </div>
         </div>
       </div>
