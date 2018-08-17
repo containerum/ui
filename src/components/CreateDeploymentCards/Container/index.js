@@ -128,7 +128,7 @@ const Container = ({
           handleClickAddEnvironment={handleClickAddEnvironment}
         />
         <Volumes
-          volumeMounts={item.volumeMounts}
+          volumeMounts={item.volume_mounts}
           volumes={volumes}
           id={item.id}
           index={index}

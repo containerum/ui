@@ -87,6 +87,18 @@ const VolumesList = ({
                   >
                     {handleClickDeleteVolume &&
                       accessToNamespace !== 'read' && (
+                        <i
+                          className={`${globalStyles.contentBlockTableMore} ${
+                            globalStyles.dropdownToggle
+                          }
+                             ${globalStyles.ellipsisRoleMore} ion-more `}
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        />
+                      )}
+                    {handleClickDeleteVolume &&
+                      accessToNamespace !== 'read' && (
                         <ul
                           className={` dropdown-menu dropdown-menu-right ${
                             globalStyles.dropdownMenu

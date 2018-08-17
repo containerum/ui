@@ -52,7 +52,7 @@ export const fetchGetVolumesByNS = (
   const { status, data } = response;
   switch (status) {
     case 200: {
-      dispatch(getVolumesByNSSuccess(data));
+      dispatch(getVolumesByNSSuccess(data.volumes));
       break;
     }
     case 400: {
