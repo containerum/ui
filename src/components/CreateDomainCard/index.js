@@ -8,24 +8,18 @@ import Tooltip from 'rc-tooltip';
 import { routerLinks } from '../../config';
 import InputControl from '../InputControl';
 import CheckBoxControl from '../CheckBoxControl';
-
 import globalStyles from '../../theme/global.scss';
 import inputStyles from '../../components/InputControl/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 
 const globalClass = className.bind(globalStyles);
-
 const formClassName = globalClass('formInputText', 'formControl');
-
 const containerClassName = globalClass('blockContainer', 'paddingX20');
-
 const nextContainerClassName = globalClass(
   'containerTitle',
   'containerTitleBlock'
 );
-
 const selectClassName = globalClass('selectCustom', 'selectGreyColor');
-
 const textHelperClassName = globalClass('textHelper', 'isHidden');
 
 type Props = {
@@ -59,7 +53,7 @@ const CreateDomainCard = ({
   handleChangeInput,
   handleChangeCheckBox
 }: Props) => {
-  const regexp = /^[a-z][a-z0-9-]*$|^$/;
+  const regexp = /^[a-z][a-z0-9-.]*$|^$/;
   const isErrorNameTooltipClass = domainName.search(regexp) === -1;
   const isErrorPathTooltipClass = domainPath.search(regexp) === -1;
   return (
