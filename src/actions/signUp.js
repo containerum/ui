@@ -12,7 +12,6 @@ import {
 import { webApi, appRecaptcha, routerLinks } from '../config';
 
 // const isServer = typeof window === 'undefined';
-// const ReactGA = isServer ? require('react-ga') : null;
 
 const signUpRequest = (email, password, recaptcha) => ({
   type: SIGNUP_REQUESTING,
@@ -61,15 +60,6 @@ export const fetchSignUp = (
   const { data, status } = response;
   switch (status) {
     case 201: {
-      // if (
-      //   typeof window !== 'undefined' &&
-      //   typeof window.navigator !== 'undefined'
-      // ) {
-      //   ReactGA.event({
-      //     category: 'UI',
-      //     action: 'UI_SUp_request'
-      //   });
-      // }
       dispatch(signUpSuccess(data));
       dispatch(push(routerLinks.confirmEmailLink));
       break;

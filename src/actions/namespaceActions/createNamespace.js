@@ -13,7 +13,6 @@ import {
 import { webApi, routerLinks } from '../../config';
 
 // const isServer = typeof window === 'undefined';
-// const ReactGA = isServer ? require('react-ga') : null;
 
 const createNamespaceRequest = () => ({
   type: CREATE_NAMESPACE_REQUESTING,
@@ -72,15 +71,6 @@ export const fetchCreateNamespace = (
   switch (status) {
     case 201: {
       dispatch(createNamespaceSuccess(data, 201, config.method, idName));
-      // if (
-      //   typeof window !== 'undefined' &&
-      //   typeof window.navigator !== 'undefined'
-      // ) {
-      //   ReactGA.event({
-      //     category: 'UI',
-      //     action: `UI_create_ns_${price}`
-      //   });
-      // }
       dispatch(push(routerLinks.namespaces));
       break;
     }

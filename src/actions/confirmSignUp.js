@@ -12,7 +12,6 @@ import {
 import { webApi } from '../config';
 
 // const isServer = typeof window === 'undefined';
-// const ReactGA = isServer ? require('react-ga') : null;
 
 const confirmSignUpRequest = hashParam => ({
   type: CONFIRM_SIGNUP_REQUESTING,
