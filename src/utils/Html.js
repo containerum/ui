@@ -90,11 +90,13 @@ const Html = ({ store, htmlContent }: Props): Element<'html'> => {
                 require('../containers/RecoveryPassword/index.scss')._style +
                 require('../containers/Footer/styles.scss')._style +
                 require('../containers/NotFound/styles.scss')._style +
+                require('../containers/Header/index.scss')._style +
                 require('../components/MiniSpinner/MiniSpinner.css')._style +
                 require('../components/ProfileInfo/Profile.css')._style +
                 require('../components/ProfileInfo/index.scss')._style +
                 require('../components/CustomerModal/index.scss')._style +
                 require('../components/InputControl/index.scss')._style +
+                require('../components/InfoMessage/index.scss')._style +
                 require('../containers/DomainsGlobal/index.scss')._style +
                 require('../theme/custom.css')._style +
                 require('../theme/individual.css')._style +
