@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import Scrollspy from 'react-scrollspy';
+import className from 'classnames/bind';
 import cookie from 'react-cookies';
 
 import scrollById from '../../functions/scrollById';
@@ -24,6 +25,13 @@ import {
   GET_STORAGES_REQUESTING,
   GET_STORAGES_SUCCESS
 } from '../../constants/storagesConstants/getStorages';
+import InfoMessageItem from '../../components/InfoMessage';
+
+const globalClass = className.bind(globalStyles);
+const containerClassName = globalClass(
+  'containerFluid',
+  'breadcrumbsNavigation'
+);
 
 type Props = {
   match: Object,
@@ -39,6 +47,7 @@ export class CreateCustomVolume extends PureComponent<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      isVisibleMessage: false,
       label: '',
       linkedStorage: [],
       currentStorage: '',
@@ -73,6 +82,7 @@ export class CreateCustomVolume extends PureComponent<Props> {
       const storagesReducer = nextProps.getStoragesReducer.data;
       this.setState({
         ...this.state,
+        isVisibleMessage: !storagesReducer.length,
         linkedStorage: storagesReducer,
         currentStorage: storagesReducer.length ? storagesReducer[0].name : ''
       });
@@ -167,13 +177,24 @@ export class CreateCustomVolume extends PureComponent<Props> {
   };
 
   render() {
-    const { createCustomVolumeReducer } = this.props;
+    const { createCustomVolumeReducer, getProfileReducer } = this.props;
+    const { isVisibleMessage } = this.state;
+    const role = getProfileReducer.data ? getProfileReducer.data.role : null;
     return (
       <div>
         <Helmet title="Create Custom Volume" />
-        <div className="container-fluid breadcrumbNavigation">
+        <div
+          className="container-fluid breadcrumbNavigation"
+          style={isVisibleMessage ? { marginBottom: 0 } : {}}
+        >
           <NavigationHeaderItem IdCreate="volume" idName="new" />
         </div>
+        {role &&
+          isVisibleMessage && (
+            <div className={containerClassName}>
+              <InfoMessageItem type="volume" role={role} />
+            </div>
+          )}
         <Notification
           status={createCustomVolumeReducer.status}
           name={createCustomVolumeReducer.idVol}

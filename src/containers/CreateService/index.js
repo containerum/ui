@@ -12,6 +12,7 @@ import cookie from 'react-cookies';
 
 import scrollById from '../../functions/scrollById';
 import * as actionGetDeployments from '../../actions/deploymentsActions/getDeployments';
+import * as actionGetDomains from '../../actions/domainsActions/getDomains';
 import * as actionCreateInternalService from '../../actions/serviceActions/createInternalService';
 import * as actionCreateExternalService from '../../actions/serviceActions/createExternalService';
 import {
@@ -27,6 +28,7 @@ import {
 import { CREATE_INTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createInternalService';
 import type { Dispatch, ReduxState } from '../../types';
 import NavigationHeaderItem from '../NavigationHeader';
+import InfoMessageItem from '../../components/InfoMessage';
 import CreateUpdateServiceBaseComponent from '../CreateUpdateServiceBase';
 import LoadButton from '../../components/LoadButton';
 import Notification from '../Notification';
@@ -34,14 +36,18 @@ import { routerLinks } from '../../config';
 import globalStyles from '../../theme/global.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import sideMenuStyles from '../CreateDeployment/index.scss';
+import {
+  GET_DOMAINS_FAILURE,
+  GET_DOMAINS_INVALID,
+  GET_DOMAINS_REQUESTING,
+  GET_DOMAINS_SUCCESS
+} from '../../constants/domainsConstants/getDomains';
 
 const globalClass = className.bind(globalStyles);
-
 const containerClassName = globalClass(
   'containerFluid',
   'breadcrumbsNavigation'
 );
-
 const nextContainerClassName = globalClass(
   'blockContainer',
   'blockContainerOtherPadding'
@@ -50,20 +56,20 @@ const subTitleClassName = globalClass(
   'marginBottom30',
   'containerSubTitleCreate'
 );
-
 const selectClassName = globalClass('selectCustom', 'selectGreyColor');
-
 const textHelperClassName = globalClass('textHelper', 'isHidden');
-
 const regexp = /^[a-z][a-z0-9-]*$|^$/;
 
 type Props = {
   match: Object,
   history: Object,
+  getProfileReducer: Object,
   getDeploymentsReducer: Object,
+  getDomainsReducer: Object,
   createExternalServiceReducer: Object,
   createInternalServiceReducer: Object,
   fetchGetDeploymentsIfNeeded: (idName: string) => void,
+  fetchGetDomainsIfNeeded: () => void,
   fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) => void,
   fetchCreateExternalServiceIfNeeded: (idName: string, data: Object) => void
 };
@@ -74,6 +80,7 @@ export class CreateService extends PureComponent<Props> {
     this.state = {
       currentDeployment: '',
       deploymentList: [],
+      isVisibleMessage: false,
       isActiveInternal: false,
       isActiveExternal: false
     };
@@ -85,8 +92,13 @@ export class CreateService extends PureComponent<Props> {
     }
   }
   componentDidMount() {
-    const { fetchGetDeploymentsIfNeeded, match } = this.props;
+    const {
+      fetchGetDeploymentsIfNeeded,
+      fetchGetDomainsIfNeeded,
+      match
+    } = this.props;
     fetchGetDeploymentsIfNeeded(match.params.idName);
+    fetchGetDomainsIfNeeded();
   }
   componentWillUpdate(nextProps) {
     const { match } = this.props;
@@ -95,13 +107,23 @@ export class CreateService extends PureComponent<Props> {
         nextProps.getDeploymentsReducer.readyStatus &&
       nextProps.getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_SUCCESS
     ) {
-      if (nextProps.getDeploymentsReducer.data[0]) {
+      if (nextProps.getDeploymentsReducer.data.length) {
         this.setState({
           ...this.state,
           currentDeployment: nextProps.getDeploymentsReducer.data[0].name,
           deploymentList: nextProps.getDeploymentsReducer.data
         });
       }
+    }
+    if (
+      this.props.getDomainsReducer.readyStatus !==
+        nextProps.getDomainsReducer.readyStatus &&
+      nextProps.getDomainsReducer.readyStatus === GET_DOMAINS_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        isVisibleMessage: !nextProps.getDomainsReducer.data.length
+      });
     }
     if (
       this.props.createInternalServiceReducer.readyStatus !==
@@ -126,6 +148,7 @@ export class CreateService extends PureComponent<Props> {
       );
     }
   }
+
   handleSubmitCreateService = e => {
     e.preventDefault();
     const serviceObject = this.state;
@@ -157,6 +180,7 @@ export class CreateService extends PureComponent<Props> {
     const state = Object.assign({}, this.state, obj);
     this.setState(state);
   };
+
   renderServiceSidebar = () => {
     const { getDeploymentsReducer } = this.props;
     if (
@@ -220,11 +244,14 @@ export class CreateService extends PureComponent<Props> {
     );
   };
   renderCreateService = () => {
-    const { getDeploymentsReducer, match } = this.props;
+    const { getDeploymentsReducer, getDomainsReducer, match } = this.props;
     if (
       !getDeploymentsReducer.readyStatus ||
       getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_INVALID ||
-      getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_REQUESTING
+      getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_REQUESTING ||
+      !getDomainsReducer.readyStatus ||
+      getDomainsReducer.readyStatus === GET_DOMAINS_INVALID ||
+      getDomainsReducer.readyStatus === GET_DOMAINS_REQUESTING
     ) {
       return (
         <div>
@@ -244,7 +271,10 @@ export class CreateService extends PureComponent<Props> {
       );
     }
 
-    if (getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_FAILURE) {
+    if (
+      getDeploymentsReducer.readyStatus === GET_DEPLOYMENTS_FAILURE ||
+      getDomainsReducer.readyStatus === GET_DOMAINS_FAILURE
+    ) {
       return <p>Oops, Failed to load data of Service!</p>;
     }
 
@@ -294,23 +324,35 @@ export class CreateService extends PureComponent<Props> {
     const {
       match,
       createExternalServiceReducer,
-      createInternalServiceReducer
+      createInternalServiceReducer,
+      getProfileReducer
     } = this.props;
+    const role = getProfileReducer.data ? getProfileReducer.data.role : null;
     const {
       currentDeployment,
       deploymentList,
+      isVisibleMessage,
       isActiveInternal,
       isActiveExternal
     } = this.state;
     return (
       <div>
         <Helmet title={`Create Service in ${match.params.idName}`} />
-        <div className={containerClassName}>
+        <div
+          className={containerClassName}
+          style={isVisibleMessage ? { marginBottom: 0 } : {}}
+        >
           <NavigationHeaderItem
             idName={match.params.idName}
             IdCreate="service"
           />
         </div>
+        {role &&
+          isVisibleMessage && (
+            <div className={containerClassName}>
+              <InfoMessageItem type="service" role={role} />
+            </div>
+          )}
         <Notification
           status={createInternalServiceReducer.status}
           name={createInternalServiceReducer.idSrv}
@@ -442,10 +484,14 @@ export class CreateService extends PureComponent<Props> {
 
 const connector: Connector<{}, Props> = connect(
   ({
+    getProfileReducer,
+    getDomainsReducer,
     getDeploymentsReducer,
     createExternalServiceReducer,
     createInternalServiceReducer
   }: ReduxState) => ({
+    getProfileReducer,
+    getDomainsReducer,
     getDeploymentsReducer,
     createExternalServiceReducer,
     createInternalServiceReducer
@@ -453,6 +499,8 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetDeploymentsIfNeeded: (idName: string) =>
       dispatch(actionGetDeployments.fetchGetDeploymentsIfNeeded(idName)),
+    fetchGetDomainsIfNeeded: () =>
+      dispatch(actionGetDomains.fetchGetDomainsIfNeeded()),
     fetchCreateInternalServiceIfNeeded: (idName: string, data: Object) =>
       dispatch(
         actionCreateInternalService.fetchCreateInternalServiceIfNeeded(
