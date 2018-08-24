@@ -46,6 +46,7 @@ type Props = {
   currentNamespace: string,
   currentView: string,
   login: string,
+  role: string,
   solutionName: string,
   currentSolution: Object,
   getEnvsData: Object,
@@ -72,6 +73,7 @@ const RunSolutionModals = ({
   currentSolution,
   getEnvsData,
   login,
+  role,
   runSolutionReducer,
   deploymentsRunningSolution,
   getEnvsSolutionReducer,
@@ -314,15 +316,21 @@ const RunSolutionModals = ({
                   </div>
                 ) : (
                   <div>
-                    <div>You have no active projects yet.</div>
-                    <Link
-                      className={btnClassName}
-                      data-toggle="modal"
-                      to={routerLinks.createCustomNamespace}
-                      style={{ display: 'inline-block' }}
-                    >
-                      Create Project
-                    </Link>
+                    {role === 'admin' ? (
+                      <div>
+                        <div>You have no active projects yet.</div>
+                        <Link
+                          className={btnClassName}
+                          data-toggle="modal"
+                          to={routerLinks.createCustomNamespace}
+                          style={{ display: 'inline-block' }}
+                        >
+                          Create Project
+                        </Link>
+                      </div>
+                    ) : (
+                      <div>You don`t have any project</div>
+                    )}
                   </div>
                 )}
               </div>

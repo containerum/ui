@@ -1,0 +1,29 @@
+@import '../../theme/variables';
+
+.MessageInfoHeaderBottom {
+  background-color: #1d87b3;
+  height: 40px;
+}
+
+.MessageInfoHeaderBottomContainer {
+  background-color: #1d87b3;
+  padding-top: 8px;
+}
+
+.MessageInfoHeaderBottomTextWrapper {
+  margin-bottom: -5px;
+  text-align: center;
+}
+
+.MessageInfoItem {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  color: #fff;
+}
+
+.MessageInfoItem:hover {
+  text-decoration: underline;
+  color: #fff;
+}

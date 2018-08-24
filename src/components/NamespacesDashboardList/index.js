@@ -47,7 +47,9 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
               <td className={dashboardStyles.td_2_Dashboard}>Name</td>
               <td className={dashboardStyles.td_3_Dashboard}>RAM</td>
               <td className={dashboardStyles.td_4_Dashboard}>CPU</td>
-              <td className={dashboardStyles.td_4_Dashboard}>Permission</td>
+              <td className={dashboardStyles.td_4_Dashboard}>
+                {role !== 'admin' && <div>Permission</div>}
+              </td>
               <td className={dashboardStyles.td_7_Dashboard} />
             </tr>
           </thead>
@@ -75,7 +77,9 @@ const NamespacesDashboardList = ({ data, role, history }: Props) => {
                     <td className={dashboardStyles.td_2_Dashboard}>{label}</td>
                     <td className={dashboardStyles.td_3_Dashboard}>{memory}</td>
                     <td className={dashboardStyles.td_4_Dashboard}>{cpu}</td>
-                    <td className={dashboardStyles.td_4_Dashboard}>{access}</td>
+                    <td className={dashboardStyles.td_4_Dashboard}>
+                      {role !== 'admin' && <div>{access}</div>}
+                    </td>
                     <td
                       className={`${
                         dashboardStyles.td_7_Dashboard

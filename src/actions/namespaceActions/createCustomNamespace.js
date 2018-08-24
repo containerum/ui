@@ -79,15 +79,6 @@ export const fetchCreateCustomNamespace = (
       dispatch(
         createCustomNamespaceSuccess(data, status, config.method, label)
       );
-      // if (
-      //   typeof window !== 'undefined' &&
-      //   typeof window.navigator !== 'undefined'
-      // ) {
-      //   ReactGA.event({
-      //     category: 'UI',
-      //     action: `UI_create_ns_${price}`
-      //   });
-      // }
       dispatch(push(routerLinks.namespaces));
       break;
     }

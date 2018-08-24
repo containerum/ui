@@ -354,7 +354,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
         nextProps.getSecretsReducer.readyStatus &&
       nextProps.getSecretsReducer.readyStatus === GET_SECRETS_SUCCESS
     ) {
-      // console.log(nextProps.getSecretsReducer.data);
       if (nextProps.getSecretsReducer.data.length) {
         this.setState(
           {

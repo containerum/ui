@@ -235,7 +235,7 @@ export class CreateDomain extends PureComponent<Props> {
 
   render() {
     const { match, createDomainReducer } = this.props;
-    const regexp = /^[a-z][a-z0-9-]*$|^$/;
+    const regexp = /^[a-z][a-z0-9-.]*$|^$/;
     const { domainName, domainPath } = this.state;
     return (
       <div>

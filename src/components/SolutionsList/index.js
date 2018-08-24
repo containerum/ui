@@ -58,19 +58,21 @@ const SolutionsList = ({
           onClick={() => history.push(routerLinks.solutionLink(name))}
           style={{ cursor: 'pointer' }}
         >
-          <button
-            type="button"
-            className="close"
-            style={{
-              position: 'absolute',
-              top: 40,
-              right: 30
-            }}
-            onClick={e => handleDeleteSolutionTemplate(e, name)}
-            // onClick={() => handleCloseModal()}
-          >
-            <span aria-hidden="true">×</span>
-          </button>
+          {role === 'admin' && (
+            <button
+              type="button"
+              className="close"
+              style={{
+                position: 'absolute',
+                top: 40,
+                right: 30
+              }}
+              onClick={e => handleDeleteSolutionTemplate(e, name)}
+              // onClick={() => handleCloseModal()}
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          )}
           <div className={globalStyles.contentBlockContainerSolution}>
             <div className={globalStyles.contentBlockVolumeHeader}>
               <img

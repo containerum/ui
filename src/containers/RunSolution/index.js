@@ -267,6 +267,7 @@ export class RunSolution extends PureComponent<Props> {
             <RunSolutionModals
               history={history}
               login={getProfileReducer.data.login}
+              role={getProfileReducer.data.role}
               currentNamespace={currentNamespace}
               currentView={currentView}
               currentSolution={currentSolution}
