@@ -177,6 +177,9 @@
       "jsx-a11y/mouse-events-have-key-events": [
         0
       ],
+      "jsx-a11y/role-supports-aria-props": [
+        0
+      ],
       "react/no-did-mount-set-state": [
         0
       ],

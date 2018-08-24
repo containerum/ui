@@ -6,12 +6,13 @@ import { NavLink } from 'react-router-dom';
 import className from 'classnames/bind';
 import cookie from 'react-cookies';
 import isEmail from 'validator/lib/isEmail';
+import cloneDeep from 'clone-deep';
 
 import { routerLinks } from '../../config';
 import Notification from '../Notification';
 import AdminDeleteUserModal from '../../components/CustomerModal/AdminDeleteUserModal';
 import GlobalUserListInGroup from '../../components/GlobalUserListInGroup';
-import AddUserInGlobalGroupModal from '../../components/CustomerModal/AddUserInGlobalGroupModal';
+import AddUserInGroupGlobalMembershipModal from '../../components/CustomerModal/AddUserInGroupGlobalMembershipModal';
 import type { Dispatch, ReduxState } from '../../types';
 import * as actionAddGlobalUser from '../../actions/globalMembership/addUserInGroup';
 import * as actionUpdateUserInGroup from '../../actions/globalMembership/updateUserInGroup';
@@ -32,10 +33,11 @@ import styles from '../Membership/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import { DELETE_USER_FROM_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/deleteUserFromGroup';
 import * as actionDeleteGroupIfNeeded from '../../actions/globalMembership/deleteGroup';
+import * as actionGetUserListIfNeeded from '../../actions/globalMembership/getUserList';
 import BackButton from '../../components/BackButton';
+import { GET_USER_LIST_SUCCESS } from '../../constants/globalMembershipConstants/getUserList';
 
 const globalClass = className.bind(globalStyles);
-
 const containerClassName = globalClass(
   'contentBlockContainer',
   'contentBlockContainerMembership'
@@ -62,7 +64,9 @@ type Props = {
   deleteGroupReducer: Object,
   getGroupReducer: Object,
   getProfileReducer: Object,
+  getUserListReducer: Object,
   fetchGetGroupIfNeeded: (idGroup: string) => void,
+  fetchGetUserListIfNeeded: (page: string, perPage: string) => void,
   fetchDeleteGroupIfNeeded: (id: string, name: string) => void,
   fetchAddGlobalUserIfNeeded: (
     idGroup: string,
@@ -95,7 +99,9 @@ class GlobalMembership extends PureComponent<Props> {
       newUsers: [],
       membersList: [],
       errAdd: null,
-      isEmailValid: true
+      isEmailValid: true,
+      usersList: [],
+      displayedUsersList: []
     };
   }
   componentWillMount() {
@@ -105,7 +111,13 @@ class GlobalMembership extends PureComponent<Props> {
     }
   }
   componentWillUpdate(nextProps) {
-    const { fetchGetGroupIfNeeded, match, history } = this.props;
+    const {
+      fetchGetGroupIfNeeded,
+      getUserListReducer,
+      fetchGetUserListIfNeeded,
+      match,
+      history
+    } = this.props;
     if (
       this.props.getProfileReducer.readyStatus !==
         nextProps.getProfileReducer.readyStatus &&
@@ -113,9 +125,21 @@ class GlobalMembership extends PureComponent<Props> {
     ) {
       if (nextProps.getProfileReducer.data.role === 'admin') {
         fetchGetGroupIfNeeded(match.params.idGroup);
+        fetchGetUserListIfNeeded();
       } else {
         history.push(routerLinks.namespaces);
       }
+    }
+    if (
+      getUserListReducer.readyStatus !==
+        nextProps.getUserListReducer.readyStatus &&
+      nextProps.getUserListReducer.readyStatus === GET_USER_LIST_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        usersList: nextProps.getUserListReducer.data.users,
+        displayedUsersList: nextProps.getUserListReducer.data.users
+      });
     }
     if (
       (this.props.addUserInGroupReducer.readyStatus !==
@@ -214,10 +238,14 @@ class GlobalMembership extends PureComponent<Props> {
     });
   };
   handleInputEmailAdd = inputEmailAdd => {
+    const displayedUsersList = cloneDeep(this.state.usersList).filter(
+      user => user.login.search(inputEmailAdd) !== -1
+    );
     this.setState({
       ...this.state,
       inputEmailAdd,
-      isEmailValid: true
+      isEmailValid: true,
+      displayedUsersList
     });
   };
   handleAddNewUsers = newUsers => {
@@ -238,12 +266,14 @@ class GlobalMembership extends PureComponent<Props> {
         ...this.state,
         newUsers,
         inputEmailAdd: '',
-        isEmailValid: true
+        isEmailValid: true,
+        displayedUsersList: this.state.usersList
       });
     } else {
       this.setState({
         ...this.state,
-        isEmailValid: false
+        isEmailValid: false,
+        displayedUsersList: this.state.usersList
       });
     }
   };
@@ -410,11 +440,12 @@ class GlobalMembership extends PureComponent<Props> {
           handleOpenCloseModal={this.handleOpenCloseModalDeleteGroup}
           onHandleDelete={fetchDeleteGroupIfNeeded}
         />
-        <AddUserInGlobalGroupModal
+        <AddUserInGroupGlobalMembershipModal
           type="Add Users"
           accessNewUsers={this.state.accessNewUsers}
           name={this.state.inputEmailAdd}
           isOpened={this.state.isOpenAdd}
+          displayedUsersList={this.state.displayedUsersList}
           handleInputEmailAdd={this.handleInputEmailAdd}
           handleAddNewUsers={this.handleAddNewUsers}
           handleOpenCloseModal={this.handleOpenCloseModalAdd}
@@ -515,6 +546,7 @@ const connector: Connector<{}, Props> = connect(
     getNamespaceReducer,
     addNamespaceUserAccessReducer,
     getProfileReducer,
+    getUserListReducer,
     getGroupReducer,
     adminDeleteUserReducer,
     addUserReducer,
@@ -527,6 +559,7 @@ const connector: Connector<{}, Props> = connect(
     getNamespaceReducer,
     addNamespaceUserAccessReducer,
     getProfileReducer,
+    getUserListReducer,
     getGroupReducer,
     adminDeleteUserReducer,
     addUserReducer,
@@ -538,6 +571,10 @@ const connector: Connector<{}, Props> = connect(
   (dispatch: Dispatch) => ({
     fetchGetGroupIfNeeded: (idGroup: string) =>
       dispatch(actionGetGroup.fetchGetGroupIfNeeded(idGroup)),
+    fetchGetUserListIfNeeded: (page: string = 1, perPage: string = 10000) =>
+      dispatch(
+        actionGetUserListIfNeeded.fetchGetUserListIfNeeded(page, perPage)
+      ),
     fetchAddGlobalUserIfNeeded: (
       idGroup: string,
       members: Array<Object>,
