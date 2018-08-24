@@ -158,7 +158,7 @@ module.exports = {
     fastDeploy: 'https://docs.containerum.com/getting-started',
     solutions: 'https://github.com/containerum',
     blog: 'https://medium.com/@containerum',
-    startGuide: 'https://docs.containerum.com/docs/start-guide',
+    startGuide: 'https://docs.containerum.com/objects',
     releasesChkit: 'https://github.com/containerum/chkit/releases/latest',
     termsOfService: 'https://containerum.com/terms',
     privacyPolicy: 'https://containerum.com/policy'
