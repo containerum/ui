@@ -28,7 +28,6 @@ import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile
 import { DELETE_GROUP_SUCCESS } from '../../constants/globalMembershipConstants/deleteGroup';
 
 const globalClass = className.bind(globalStyles);
-
 const containerClassName = globalClass(
   'contentBlockContainer',
   'contentBlockContainerMembership'
@@ -41,7 +40,6 @@ const liClassName = globalClass(
   'contentBlockMenuLi',
   'contentBlockMenuLiMembership'
 );
-
 const labelClassName = globalClass(
   'contentBlockHeaderLabelText',
   'contentBlockHeaderLabelMembership',
@@ -105,6 +103,7 @@ class GlobalGroups extends PureComponent<Props> {
       nextProps.addGroupReducer.readyStatus === ADD_GROUP_SUCCESS
     ) {
       fetchGetGroupsIfNeeded();
+      this.handleOpenCloseModalAdd();
     }
     if (
       this.props.deleteGroupReducer.readyStatus !==
@@ -114,6 +113,7 @@ class GlobalGroups extends PureComponent<Props> {
       fetchGetGroupsIfNeeded();
     }
   }
+
   choiceAccessNewUser = access => {
     this.setState({
       ...this.state,
