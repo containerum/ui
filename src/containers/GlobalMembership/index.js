@@ -66,7 +66,7 @@ type Props = {
   getProfileReducer: Object,
   addUserReducer: Object,
   activateUserReducer: Object,
-  fetchGetUserListIfNeeded: (page: string) => void,
+  fetchGetUserListIfNeeded: (page: string, perPage: string) => void,
   fetchAddGlobalUserIfNeeded: (login: string) => void,
   fetchActivateUserIfNeeded: (login: string) => void,
   fetchAdminDeleteUserIfNeeded: (login: string) => void
@@ -447,8 +447,10 @@ const connector: Connector<{}, Props> = connect(
     activateUserReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetUserListIfNeeded: (page: string = 1) =>
-      dispatch(actionGetUserListIfNeeded.fetchGetUserListIfNeeded(page)),
+    fetchGetUserListIfNeeded: (page: string = 1, perPage: string = 12) =>
+      dispatch(
+        actionGetUserListIfNeeded.fetchGetUserListIfNeeded(page, perPage)
+      ),
     fetchAddGlobalUserIfNeeded: (login: string) =>
       dispatch(actionAddGlobalUserIfNeeded.fetchAddGlobalUserIfNeeded(login)),
     fetchActivateUserIfNeeded: (login: string) =>
