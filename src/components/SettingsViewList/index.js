@@ -25,7 +25,6 @@ const containerClassName = globalClass(
 
 const SettingsViewList = ({ getDomainsReducer, handleDeleteIP }: Props) => (
   <div className={globalStyles.blockItem} id="settings">
-    <div className={globalStyles.blockItemTitle}>Settings</div>
     <div className="row">
       <div className="col-md-10">
         <div className={globalStyles.textLight} style={{ fontSize: 20 }}>
