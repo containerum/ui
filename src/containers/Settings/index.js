@@ -7,6 +7,7 @@ import Helmet from 'react-helmet';
 import className from 'classnames/bind';
 import _ from 'lodash/fp';
 import cookie from 'react-cookies';
+import Tooltip from 'rc-tooltip';
 
 import { routerLinks } from '../../config';
 import {
@@ -20,6 +21,7 @@ import * as actionAddDomain from '../../actions/domainActions/addDomain';
 import * as actionGetStorages from '../../actions/storagesActions/getStorages';
 import * as actionAddStorage from '../../actions/storageActions/addStorage';
 import * as actionDeleteStorage from '../../actions/storageActions/deleteStorage';
+import * as actionGetStatus from '../../actions/statusActions/getStatus';
 import type { Dispatch, ReduxState } from '../../types';
 import Notification from '../Notification';
 import ProfileSidebar from '../../components/ProfileSidebar';
@@ -33,14 +35,22 @@ import { DELETE_DOMAIN_SUCCESS } from '../../constants/domainConstants/deleteDom
 import { ADD_DOMAIN_SUCCESS } from '../../constants/domainConstants/addDomain';
 import inputStyles from '../../components/InputControl/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
+import configmapStyles from '../../containers/ConfigMaps/index.scss';
 import {
   GET_STORAGES_FAILURE,
   GET_STORAGES_INVALID,
   GET_STORAGES_REQUESTING
 } from '../../constants/storagesConstants/getStorages';
+import {
+  GET_STATUS_FAILURE,
+  GET_STATUS_INVALID,
+  GET_STATUS_REQUESTING
+} from '../../constants/statusConstants/getStatus';
 import { ADD_STORAGE_SUCCESS } from '../../constants/storageConstants/addStorage';
 import { DELETE_STORAGE_SUCCESS } from '../../constants/storageConstants/deleteStorage';
 import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+import successImg from '../../images/success.svg';
+import warningImg from '../../images/warning.svg';
 
 const globalClass = className.bind(globalStyles);
 const containerClassName = globalClass(
@@ -54,6 +64,17 @@ const containerClassNameSidebar = globalClass(
 );
 const formClassName = globalClass('formInputText', 'formControl');
 
+const itemClassName = globalClass(
+  'blockItemTokensTable',
+  'contentBlockTable',
+  'table'
+);
+const containerClassNameTable = globalClass(
+  'contentBlcokContainer',
+  'containerCard',
+  'hoverAction'
+);
+
 type Props = {
   history: Object,
   getProfileReducer: Object,
@@ -63,12 +84,14 @@ type Props = {
   getStoragesReducer: Object,
   addStorageReducer: Object,
   deleteStorageReducer: Object,
+  getStatusReducer: Object,
   fetchGetDomainsIfNeeded: () => void,
   fetchDeleteDomainIfNeeded: (id: string, ip: string) => void,
   fetchAddDomainIfNeeded: (id: Array) => void,
   fetchGetStoragesIfNeeded: () => void,
   fetchAddStorageIfNeeded: (data: Object) => void,
-  fetchDeleteStorageIfNeeded: (name: string) => void
+  fetchDeleteStorageIfNeeded: (name: string) => void,
+  fetchGetStatusIfNeeded: () => void
 };
 
 export class Settings extends PureComponent<Props> {
@@ -91,6 +114,7 @@ export class Settings extends PureComponent<Props> {
     const {
       fetchGetDomainsIfNeeded,
       fetchGetStoragesIfNeeded,
+      fetchGetStatusIfNeeded,
       history
     } = this.props;
     if (
@@ -101,6 +125,7 @@ export class Settings extends PureComponent<Props> {
       if (nextProps.getProfileReducer.data.role === 'admin') {
         fetchGetDomainsIfNeeded();
         fetchGetStoragesIfNeeded();
+        fetchGetStatusIfNeeded();
       } else {
         history.push(routerLinks.namespaces);
       }
@@ -221,6 +246,169 @@ export class Settings extends PureComponent<Props> {
     }
 
     return <ProfileSidebar type="settings" />;
+  };
+  renderStatus = () => {
+    const { getStatusReducer } = this.props;
+
+    if (
+      !getStatusReducer.readyStatus ||
+      getStatusReducer.readyStatus === GET_STATUS_INVALID ||
+      getStatusReducer.readyStatus === GET_STATUS_REQUESTING
+    ) {
+      return (
+        <img
+          src={require('../../images/billing-main.svg')}
+          style={{ marginTop: '28px', width: '100%' }}
+          alt="billing"
+        />
+      );
+    }
+
+    if (getStatusReducer.readyStatus === GET_STATUS_FAILURE) {
+      return <p>Oops, Failed to load data of Settings!</p>;
+    }
+
+    return (
+      <div
+        style={{
+          marginBottom: 50,
+          borderBottom: '1px solid #f6f6f6'
+        }}
+      >
+        <div
+          className={globalStyles.blockItem}
+          style={{
+            marginBottom: 20
+          }}
+        >
+          <div className={globalStyles.blockItemTitle}>Settings</div>
+          <div className="row">
+            <div className="col-md-10">
+              <div
+                className={globalStyles.textLight}
+                style={{ fontSize: 20 }}
+                id="status"
+              >
+                Status of services
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div style={{ marginTop: 30 }}>
+              {getStatusReducer.data.length ? (
+                <table
+                  className={itemClassName}
+                  style={{
+                    tableLayout: 'fixed',
+                    width: '100%',
+                    border: 0,
+                    cellspacing: 0,
+                    cellpadding: 0,
+                    marginBottom: 0
+                  }}
+                >
+                  <thead style={{ height: '30px' }}>
+                    <tr>
+                      <td
+                        className={configmapStyles.td_1_Configmap}
+                        style={{ width: 300 }}
+                      >
+                        Name
+                      </td>
+                      <td className={configmapStyles.td_2_Configmap}>
+                        Version
+                      </td>
+                      <td className={configmapStyles.td_3_Configmap}>Status</td>
+                      <td className={configmapStyles.td_4_Configmap} />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {getStatusReducer.data.map(status => {
+                      const demo = status.details
+                        ? Object.keys(status.details).map(detail => (
+                            <li>{status.details[detail]}</li>
+                          ))
+                        : null;
+                      return (
+                        <Tooltip
+                          placement="bottomRight"
+                          trigger={['hover']}
+                          // visible
+                          overlay={
+                            <span>
+                              <ul
+                                style={{
+                                  margin: 0,
+                                  padding: '0 0 0 10px',
+                                  maxWidth: 230,
+                                  listStyleType: 'square'
+                                }}
+                              >
+                                {demo || null}
+                              </ul>
+                            </span>
+                          }
+                          overlayClassName={
+                            status.details ? '' : 'rc-tooltip-hidden'
+                          }
+                        >
+                          <tr
+                            className={containerClassNameTable}
+                            style={{
+                              margin: 0
+                            }}
+                            key={status.name}
+                          >
+                            <td className={configmapStyles.td_1_Configmap}>
+                              {status.name}
+                            </td>
+                            <td className={configmapStyles.td_2_Configmap}>
+                              {status.version ? status.version : '-'}
+                            </td>
+                            <td className={configmapStyles.td_3_Configmap}>
+                              <img
+                                src={status.ok ? successImg : warningImg}
+                                alt="status"
+                                style={{
+                                  width: 20,
+                                  marginRight: 10
+                                }}
+                              />
+                              {status.ok ? 'Ok' : 'Error'}
+                            </td>
+                            <td className={configmapStyles.td_4_Configmap} />
+                          </tr>
+                        </Tooltip>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <table
+                  className={itemClassName}
+                  style={{
+                    tableLayout: 'fixed',
+                    width: '100%',
+                    border: 0,
+                    cellspacing: 0,
+                    cellpadding: 0,
+                    marginLeft: 20
+                  }}
+                >
+                  <thead>
+                    <tr>
+                      <td className={configmapStyles.td_5_Configmap}>
+                        Not found information about any services
+                      </td>
+                    </tr>
+                  </thead>
+                </table>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
   renderIP = () => {
     const { getDomainsReducer, addDomainReducer } = this.props;
@@ -508,6 +696,7 @@ export class Settings extends PureComponent<Props> {
               <div className="col-md-9 col-lg-9 col-xl-10">
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
+                    {this.renderStatus()}
                     {this.renderIP()}
                     {this.renderStorageClass()}
                   </div>
@@ -530,7 +719,8 @@ const connector: Connector<{}, Props> = connect(
     addDomainReducer,
     getStoragesReducer,
     addStorageReducer,
-    deleteStorageReducer
+    deleteStorageReducer,
+    getStatusReducer
   }: ReduxState) => ({
     getProfileReducer,
     getDomainsReducer,
@@ -538,7 +728,8 @@ const connector: Connector<{}, Props> = connect(
     addDomainReducer,
     getStoragesReducer,
     addStorageReducer,
-    deleteStorageReducer
+    deleteStorageReducer,
+    getStatusReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetDomainsIfNeeded: () =>
@@ -552,7 +743,9 @@ const connector: Connector<{}, Props> = connect(
     fetchAddStorageIfNeeded: (data: Object) =>
       dispatch(actionAddStorage.fetchAddStorageIfNeeded(data)),
     fetchDeleteStorageIfNeeded: (name: string) =>
-      dispatch(actionDeleteStorage.fetchDeleteStorageIfNeeded(name))
+      dispatch(actionDeleteStorage.fetchDeleteStorageIfNeeded(name)),
+    fetchGetStatusIfNeeded: () =>
+      dispatch(actionGetStatus.fetchGetStatusIfNeeded())
   })
 );
 

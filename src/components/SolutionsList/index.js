@@ -48,9 +48,10 @@ const SolutionsList = ({
     {data.map(solution => {
       const { name, url, limits } = solution;
       const { cpu, ram } = limits;
-      const imageHref = `${url}/master/${url.substring(
-        url.lastIndexOf('/') + 1
-      )}.png`.replace('github.com', 'raw.githubusercontent.com');
+      const imageHref = `${url}/master/${name}.png`.replace(
+        'github.com',
+        'raw.githubusercontent.com'
+      );
       return (
         <div
           className="col-md-4"
