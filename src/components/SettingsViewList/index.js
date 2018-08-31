@@ -95,7 +95,7 @@ const SettingsViewList = ({ getDomainsReducer, handleDeleteIP }: Props) => (
                     >
                       <button
                         onClick={() =>
-                          handleDeleteIP(domain._id, domain.ip.join())
+                          handleDeleteIP(domain.ip[0], domain.ip.join())
                         }
                         className={`dropdown-item text-danger ${
                           globalStyles.dropdownItem
