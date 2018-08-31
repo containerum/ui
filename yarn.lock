@@ -2505,7 +2505,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.6.0:
+create-react-class@^15.5.2, create-react-class@^15.6.0:
   version "15.6.3"
   resolved "https://registry.npmjs.org/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   dependencies:
@@ -8176,6 +8176,12 @@ react-hot-loader@4.0.0-beta.18:
     global "^4.3.0"
     hoist-non-react-statics "^2.3.1"
     react-stand-in "^4.0.0-beta.18"
+
+react-json-pretty@^1.7.9:
+  version "1.7.9"
+  resolved "https://registry.npmjs.org/react-json-pretty/-/react-json-pretty-1.7.9.tgz#d153c52579fda9e245c81fceb3da22fdf1d93c1e"
+  dependencies:
+    create-react-class "^15.5.2"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
