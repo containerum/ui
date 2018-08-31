@@ -2633,3 +2633,9 @@ a.blue-btn.white-btn-error:hover{
 .prev-btn{
   display: none;
 }
+
+.json-pretty {
+  color: #fff;
+  margin: 0;
+  overflow: visible;
+}

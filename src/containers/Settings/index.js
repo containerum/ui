@@ -8,6 +8,9 @@ import className from 'classnames/bind';
 import _ from 'lodash/fp';
 import cookie from 'react-cookies';
 import Tooltip from 'rc-tooltip';
+import { Scrollbars } from 'react-custom-scrollbars';
+import JSONPretty from 'react-json-pretty';
+import cloneDeep from 'clone-deep';
 
 import { routerLinks } from '../../config';
 import {
@@ -22,6 +25,7 @@ import * as actionGetStorages from '../../actions/storagesActions/getStorages';
 import * as actionAddStorage from '../../actions/storageActions/addStorage';
 import * as actionDeleteStorage from '../../actions/storageActions/deleteStorage';
 import * as actionGetStatus from '../../actions/statusActions/getStatus';
+import getImportLogs from '../../functions/WS/getImportLogs';
 import type { Dispatch, ReduxState } from '../../types';
 import Notification from '../Notification';
 import ProfileSidebar from '../../components/ProfileSidebar';
@@ -36,6 +40,7 @@ import { ADD_DOMAIN_SUCCESS } from '../../constants/domainConstants/addDomain';
 import inputStyles from '../../components/InputControl/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import configmapStyles from '../../containers/ConfigMaps/index.scss';
+import podStyles from '../../containers/Pod/index.scss';
 import {
   GET_STORAGES_FAILURE,
   GET_STORAGES_INVALID,
@@ -101,7 +106,9 @@ export class Settings extends PureComponent<Props> {
       ip: '',
       name: '',
       used: 1,
-      size: 1
+      size: 1,
+      errorMessage: '',
+      logs: []
     };
   }
   componentWillMount() {
@@ -173,7 +180,29 @@ export class Settings extends PureComponent<Props> {
       );
     }
   }
+  componentWillUnmount() {
+    if (this.clientSocket) {
+      this.clientSocket.close();
+    }
+    if (
+      typeof window !== 'undefined' &&
+      typeof window.document !== 'undefined'
+    ) {
+      document.removeEventListener('keydown', e => this._handleKeyPress(e));
+    }
+  }
 
+  onMessageFailure = () => {
+    this.setState({
+      ...this.state,
+      errorMessage: 'Failed to connect to server'
+    });
+  };
+  onMessageReceived = data => {
+    const nextLogs = cloneDeep(this.state.logs);
+    nextLogs.push(data);
+    this.setState({ ...this.state, logs: nextLogs });
+  };
   handleDeleteIP = (id, ip) => {
     this.props.fetchDeleteDomainIfNeeded(id, ip);
   };
@@ -199,6 +228,19 @@ export class Settings extends PureComponent<Props> {
   handleSubmitAddStorage = e => {
     e.preventDefault();
     this.props.fetchAddStorageIfNeeded(this.state);
+  };
+  handleClickImportLogs = () => {
+    this.clientSocket = getImportLogs();
+    if (this.clientSocket) {
+      this.clientSocket.onerror = () => this.onMessageFailure();
+      this.clientSocket.onmessage = evt => {
+        const resultString = JSON.parse(evt.data);
+        // console.log(resultString);
+        this.onMessageReceived(resultString);
+      };
+    } else {
+      this.clientSocket.onerror = () => this.onMessageFailure();
+    }
   };
 
   renderProfileSideBar = () => {
@@ -246,6 +288,83 @@ export class Settings extends PureComponent<Props> {
     }
 
     return <ProfileSidebar type="settings" />;
+  };
+  renderImportLogs = () => {
+    const { errorMessage, logs } = this.state;
+    return (
+      <div
+        style={{
+          marginBottom: 50,
+          borderBottom: '1px solid #f6f6f6'
+        }}
+      >
+        <div
+          className={globalStyles.blockItem}
+          style={{
+            marginBottom: 20
+          }}
+        >
+          <div className="row">
+            <div className="col-md-10">
+              <div
+                className={globalStyles.textLight}
+                style={{ fontSize: 20 }}
+                id="status"
+              >
+                Import resources to system
+              </div>
+              <div style={{ marginTop: 20 }}>
+                {!logs.length ? (
+                  <button
+                    className="btn btn-outline-primary"
+                    onClick={this.handleClickImportLogs}
+                  >
+                    Import
+                  </button>
+                ) : (
+                  <Scrollbars
+                    universal
+                    autoHide
+                    style={{ width: 840, height: 350 }}
+                    renderThumbVertical={({ style, ...props }) => (
+                      <div
+                        {...props}
+                        style={{
+                          ...style,
+                          backgroundColor: 'rgba(246, 246, 246, 0.3)',
+                          borderRadius: '4px'
+                        }}
+                      />
+                    )}
+                    renderThumbHorizontal={({ style, ...props }) => (
+                      <div
+                        {...props}
+                        style={{
+                          ...style,
+                          backgroundColor: 'rgba(246, 246, 246, 0.3)',
+                          borderRadius: '4px'
+                        }}
+                      />
+                    )}
+                    renderView={props => (
+                      <div {...props} className={podStyles.logData} />
+                    )}
+                  >
+                    <div>
+                      {errorMessage ? (
+                        <div>{errorMessage}</div>
+                      ) : (
+                        <JSONPretty id="json-pretty" json={logs} />
+                      )}
+                    </div>
+                  </Scrollbars>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
   renderStatus = () => {
     const { getStatusReducer } = this.props;
@@ -483,7 +602,7 @@ export class Settings extends PureComponent<Props> {
               type="submit"
               buttonText="Add IP"
               isFetching={addDomainReducer.isFetching}
-              baseClassButton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
+              baseClassbutton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
               disabled={addDomainReducer.isFetching}
               style={{
                 width: 235,
@@ -601,7 +720,7 @@ export class Settings extends PureComponent<Props> {
               type="submit"
               buttonText="Add Storage"
               isFetching={addStorageReducer.isFetching}
-              baseClassButton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
+              baseClassbutton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
               disabled={addStorageReducer.isFetching}
               style={{
                 width: 235,
@@ -696,6 +815,7 @@ export class Settings extends PureComponent<Props> {
               <div className="col-md-9 col-lg-9 col-xl-10">
                 <div className={globalStyles.contentBlock}>
                   <div className={`${containerClassName} container`}>
+                    {this.renderImportLogs()}
                     {this.renderStatus()}
                     {this.renderIP()}
                     {this.renderStorageClass()}
