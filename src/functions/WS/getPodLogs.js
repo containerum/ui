@@ -1,8 +1,8 @@
 import cookie from 'react-cookies';
 
-import { wsApi } from '../config';
+import { wsApi } from '../../config/index';
 
-const initSocket = (idName, idPod) => {
+const getPodLogs = (idName, idPod) => {
   const browser = cookie.load('browser');
   if (typeof window !== 'undefined' && window.WebSocket) {
     return new WebSocket(
@@ -17,4 +17,4 @@ const initSocket = (idName, idPod) => {
   return 'Your browser does not support WebSockets';
 };
 
-export default initSocket;
+export default getPodLogs;

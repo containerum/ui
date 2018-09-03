@@ -294,6 +294,7 @@
     "react-google-recaptcha": "^0.9.9",
     "react-helmet": "^5.2.0",
     "react-hot-loader": "4.0.0-beta.18",
+    "react-json-pretty": "^1.7.9",
     "react-markdown": "^3.3.0",
     "react-modal": "^3.1.12",
     "react-redux": "^5.0.6",

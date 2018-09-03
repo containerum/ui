@@ -25,7 +25,6 @@ const containerClassName = globalClass(
 
 const SettingsViewList = ({ getDomainsReducer, handleDeleteIP }: Props) => (
   <div className={globalStyles.blockItem} id="settings">
-    <div className={globalStyles.blockItemTitle}>Settings</div>
     <div className="row">
       <div className="col-md-10">
         <div className={globalStyles.textLight} style={{ fontSize: 20 }}>
@@ -96,7 +95,7 @@ const SettingsViewList = ({ getDomainsReducer, handleDeleteIP }: Props) => (
                     >
                       <button
                         onClick={() =>
-                          handleDeleteIP(domain._id, domain.ip.join())
+                          handleDeleteIP(domain.ip[0], domain.ip.join())
                         }
                         className={`dropdown-item text-danger ${
                           globalStyles.dropdownItem

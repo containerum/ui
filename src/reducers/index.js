@@ -106,6 +106,7 @@ import getSecretsReducer from './secretsReducers/getSecrets';
 import createSecretReducer from './secretReducers/createSecret';
 import deleteSecretReducer from './secretReducers/deleteSecret';
 import getSecretReducer from './secretReducers/getSecret';
+import getStatusReducer from './statusReducers/getStatus';
 
 const reducers = {
   loginReducer,
@@ -210,6 +211,7 @@ const reducers = {
   createSecretReducer,
   deleteSecretReducer,
   getSecretReducer,
+  getStatusReducer,
   router,
   loadingBar: loadingBarReducer
 };
