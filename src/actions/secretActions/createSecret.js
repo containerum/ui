@@ -78,7 +78,7 @@ export const fetchCreateSecret = (
   const { data, status, config } = response;
   switch (status) {
     case 201: {
-      dispatch(createSecretSuccess(data, 201, config.method, dataObj.name));
+      dispatch(createSecretSuccess(data, 201, config.method, dataObj.label));
       dispatch(push(routerLinks.getSecretsLink(idName)));
       break;
     }
