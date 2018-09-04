@@ -183,7 +183,7 @@ export class UpdateCustomVolume extends PureComponent<Props> {
         </div>
         <Notification
           status={updateCustomVolumeReducer.status}
-          name={updateCustomVolumeReducer.idDep}
+          name={updateCustomVolumeReducer.idVol}
           method={updateCustomVolumeReducer.method}
           errorMessage={updateCustomVolumeReducer.err}
         />

@@ -16,12 +16,13 @@ const updateCustomVolumeRequest = () => ({
   isFetching: true
 });
 
-const updateCustomVolumeSuccess = (data, status, method) => ({
+const updateCustomVolumeSuccess = (data, status, method, idVol) => ({
   type: UPDATE_CUSTOM_VOLUME_SUCCESS,
   isFetching: false,
   data,
   status,
-  method
+  method,
+  idVol
 });
 
 const updateCustomVolumeFailure = (err, status) => ({
@@ -63,7 +64,7 @@ export const fetchUpdateCustomVolume = (
   const { status, data, config } = response;
   switch (status) {
     case 200: {
-      dispatch(updateCustomVolumeSuccess(201, status, config.method));
+      dispatch(updateCustomVolumeSuccess(data, 202, config.method, label));
       dispatch(push(`${routerLinks.namespaceLink(idName)}/volumes`));
       break;
     }
