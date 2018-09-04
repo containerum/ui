@@ -37,7 +37,6 @@ import { ADD_GLOBAL_USER_SUCCESS } from '../../constants/globalMembershipConstan
 import { ADMIN_DELETE_USER_SUCCESS } from '../../constants/globalMembershipConstants/adminDeleteUser';
 
 const globalClass = className.bind(globalStyles);
-
 const containerClassName = globalClass(
   'contentBlockContainer',
   'contentBlockContainerMembership'
@@ -355,6 +354,7 @@ class GlobalMembership extends PureComponent<Props> {
           passwordResetView={this.state.passwordResetView}
           newPassword={this.state.newPassword}
           handleClickCopyPassword={() => this.handleClickCopyPassword()}
+          newUser
         />
         <div className={globalStyles.contentBlock}>
           <div className={`container ${globalStyles.containerNoBackground}`}>
