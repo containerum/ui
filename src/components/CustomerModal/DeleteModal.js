@@ -63,7 +63,7 @@ const DeleteModal = ({
   };
   const handleSubmitDeletingEssence = e => {
     e.preventDefault();
-    const minLength = minLengthName || 2;
+    const minLength = minLengthName || 1;
     if (name.length >= minLength) {
       handleOpenCloseModal();
 
