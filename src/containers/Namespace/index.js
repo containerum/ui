@@ -61,7 +61,7 @@ type Props = {
   getProfileReducer: Object,
   deleteNamespaceReducer: NamespaceType,
   fetchGetNamespacesIfNeeded: () => void,
-  fetchDeleteNamespaceIfNeeded: (idName: string) => void
+  fetchDeleteNamespaceIfNeeded: (idName: string, idLabel: string) => void
 };
 
 export class Namespace extends PureComponent<Props> {
@@ -100,7 +100,7 @@ export class Namespace extends PureComponent<Props> {
         nextProps.deleteNamespaceReducer.readyStatus &&
       nextProps.deleteNamespaceReducer.readyStatus === DELETE_NAMESPACE_SUCCESS
     ) {
-      this.props.history.push('/');
+      this.props.history.push(routerLinks.namespaces);
     }
   }
 
@@ -126,8 +126,14 @@ export class Namespace extends PureComponent<Props> {
     });
   };
   handleDelete = () => {
-    const { match, fetchDeleteNamespaceIfNeeded } = this.props;
-    fetchDeleteNamespaceIfNeeded(match.params.idName);
+    const { match, getNamespacesReducer } = this.props;
+    const currentNamespace = getNamespacesReducer.data.find(
+      namespace => namespace.id === match.params.idName
+    );
+    this.props.fetchDeleteNamespaceIfNeeded(
+      match.params.idName,
+      currentNamespace.label
+    );
   };
 
   renderNamespaceInfo = () => {
@@ -244,7 +250,7 @@ export class Namespace extends PureComponent<Props> {
     } else if (isSecretsPathname) {
       additionalPath = secretsPathname;
     }
-    const { status, idLabel, err } = deleteNamespaceReducer;
+    const { status, idLabel, err, method: methodDel } = deleteNamespaceReducer;
     const { inputName, isOpened, role } = this.state;
     let currentNamespace;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
@@ -258,7 +264,12 @@ export class Namespace extends PureComponent<Props> {
         {currentNamespace && (
           <Helmet title={`Project - ${currentNamespace.label}`} />
         )}
-        <Notification status={status} name={idLabel} errorMessage={err} />
+        <Notification
+          status={status}
+          name={idLabel}
+          errorMessage={err}
+          method={methodDel}
+        />
         {currentNamespace && (
           <DeleteModal
             type="Project"
