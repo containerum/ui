@@ -43,6 +43,7 @@ export class Account extends PureComponent<Props> {
       this.props.history.push(routerLinks.login);
     }
   }
+
   renderProfileInfo = () => {
     const { getProfileReducer } = this.props;
     const containerClassName = globalClass(
@@ -128,7 +129,7 @@ export class Account extends PureComponent<Props> {
       return <p>Oops, Failed to load data of Account!</p>;
     }
 
-    return <ProfileSidebar type="account" />;
+    return <ProfileSidebar type="account" role={getProfileReducer.data.role} />;
   };
 
   render() {
