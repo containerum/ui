@@ -154,7 +154,7 @@ export class UpdateCustomVolume extends PureComponent<Props> {
     }
 
     if (getVolumeReducer.readyStatus === GET_VOLUME_FAILURE) {
-      return <p>Oops, Failed to load data of Project!</p>;
+      return <p>Oops, Failed to load data of Volume!</p>;
     }
 
     const { label, currentStorage, storage } = this.state;
@@ -174,7 +174,7 @@ export class UpdateCustomVolume extends PureComponent<Props> {
     const { updateCustomVolumeReducer, match } = this.props;
     return (
       <div>
-        <Helmet title="Update Custom Project" />
+        <Helmet title="Update Custom Volume" />
         <div className="container-fluid breadcrumbNavigation">
           <NavigationHeaderItem
             idName={match.params.idName}
@@ -205,7 +205,7 @@ export class UpdateCustomVolume extends PureComponent<Props> {
                   </div>
                   <LoadButton
                     type="submit"
-                    buttonText="Update project"
+                    buttonText="Update volume"
                     isFetching={updateCustomVolumeReducer.isFetching}
                     baseClassButton="btnDeployment btnService"
                   />
