@@ -75,13 +75,23 @@ const CreateCustomNamespaceInfo = ({
         </div>
       )}
     </div>
-    <div className="row rowLine" id="parameters">
+    <div
+      className="row rowLine"
+      id="parameters"
+      style={{ borderBottom: 'none' }}
+    >
       <div className="col-md-12">
         <div className="containerTitle containerBlockTitle">
           <span>*</span> Parameters
         </div>
       </div>
       <div className="col-md-7" style={{ marginBottom: 20 }}>
+        <div
+          className={globalStyles.containerSubTitleCreate}
+          style={{ margin: '0 0 20px' }}
+        >
+          Storage
+        </div>
         {currentStorage ? (
           <div className={globalStyles.selectWrapper}>
             <div className={globalStyles.selectArrow} />
@@ -127,7 +137,9 @@ const CreateCustomNamespaceInfo = ({
           baseClassNameLabel={`form-group__label ${
             storage || storage === 0 ? 'form-group__label-always-onfocus' : ''
           }`}
-          labelText="Storage"
+          labelText="Size"
+          baseClassNameHelper={globalStyles.formGroupHelper}
+          textHelper="You can`t resize volume to lower capacity"
           handleChangeInput={e => {
             const storageValue = parseInt(e.target.value, 10);
             handleChangeInput(
