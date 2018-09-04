@@ -46,8 +46,8 @@ class CheckEmail extends PureComponent<Props> {
                   textTransform: 'initial'
                 }}
               >
-                Check your inbox {''}
-                <strong>{email}</strong> and follow the password reset link.
+                Check your inbox <strong>{email}</strong> and follow the
+                password reset link.
               </div>
               <div
                 style={{
