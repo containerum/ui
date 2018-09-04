@@ -24,6 +24,7 @@ type Props = {
   dataNamespace: Object,
   history: Object,
   idName: string,
+  role: string,
   handleDeleteSecret: ?(idDep: string) => void
 };
 
@@ -32,6 +33,7 @@ const SecretsList = ({
   dataNamespace,
   history,
   idName,
+  role,
   handleDeleteSecret
 }: Props) => {
   const handleClickGetDeployment = name => {
@@ -76,7 +78,11 @@ const SecretsList = ({
                     key={id}
                     className={globalStyles.tableHover}
                     id={id}
-                    onClick={() => handleClickGetDeployment(name)}
+                    onClick={() => {
+                      accessToNamespace === 'owner' || role === 'admin'
+                        ? handleClickGetDeployment(name)
+                        : null;
+                    }}
                   >
                     <td className={depStyles.td_1_Dep}>
                       <img src={deployPng} alt="deploy" />
@@ -92,19 +98,19 @@ const SecretsList = ({
                       role="presentation"
                     >
                       {handleDeleteSecret &&
-                        accessToNamespace !== 'read' && (
+                        (accessToNamespace === 'owner' || role === 'admin') && (
                           <i
                             className={`${globalStyles.contentBlockTableMore} ${
                               globalStyles.dropdownToggle
                             }
-                          ${globalStyles.ellipsisRoleMore} ion-more `}
+                          ${globalStyles.ellipsisRoleMore} ion-more`}
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
                           />
                         )}
                       {handleDeleteSecret &&
-                        accessToNamespace !== 'read' && (
+                        (accessToNamespace === 'owner' || role === 'admin') && (
                           <ul
                             className={` dropdown-menu dropdown-menu-right ${
                               globalStyles.dropdownMenu
