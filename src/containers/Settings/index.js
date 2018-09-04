@@ -602,7 +602,7 @@ export class Settings extends PureComponent<Props> {
               type="submit"
               buttonText="Add IP"
               isFetching={addDomainReducer.isFetching}
-              baseClassbutton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
+              baseClassButton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
               disabled={addDomainReducer.isFetching}
               style={{
                 width: 235,
@@ -720,7 +720,7 @@ export class Settings extends PureComponent<Props> {
               type="submit"
               buttonText="Add Storage"
               isFetching={addStorageReducer.isFetching}
-              baseClassbutton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
+              baseClassButton={`${buttonsStyles.buttonUIFeedbackSubmit} btn`}
               disabled={addStorageReducer.isFetching}
               style={{
                 width: 235,

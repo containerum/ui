@@ -17,7 +17,8 @@ import {
 import {
   GET_VOLUMES_BY_NS_INVALID,
   GET_VOLUMES_BY_NS_REQUESTING,
-  GET_VOLUMES_BY_NS_SUCCESS
+  GET_VOLUMES_BY_NS_SUCCESS,
+  GET_VOLUMES_BY_NS_FAILURE
 } from '../../constants/volumesConstants/getVolumesByNS';
 import { GET_NAMESPACE_SUCCESS } from '../../constants/namespaceConstants/getNamespace';
 import { CREATE_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/createDeployment';
@@ -30,14 +31,14 @@ import globalStyles from '../../theme/global.scss';
 import styles from '../CreateDeployment/index.scss';
 import buttonsStyles from '../../theme/buttons.scss';
 import { routerLinks } from '../../config';
-import {
-  GET_DEPLOYMENT_FAILURE,
-  GET_DEPLOYMENT_INVALID,
-  GET_DEPLOYMENT_REQUESTING,
-  GET_DEPLOYMENT_SUCCESS
-} from '../../constants/deploymentConstants/getDeployment';
+import { GET_DEPLOYMENT_SUCCESS } from '../../constants/deploymentConstants/getDeployment';
 import { CREATE_EXTERNAL_SERVICE_SUCCESS } from '../../constants/serviceConstants/createExternalService';
-import { GET_SECRETS_SUCCESS } from '../../constants/secretsConstants/getSecrets';
+import {
+  GET_SECRETS_SUCCESS,
+  GET_SECRETS_INVALID,
+  GET_SECRETS_FAILURE,
+  GET_SECRETS_REQUESTING
+} from '../../constants/secretsConstants/getSecrets';
 
 const stylesClass = className.bind(styles);
 const buttonsClass = className.bind(buttonsStyles);
@@ -94,6 +95,7 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
       getNamespaceReducer,
       match
     } = this.props;
+    fetchGetVolumesByNSIfNeeded(match.params.idName);
     fetchGetConfigMapsByNSIfNeeded(match.params.idName);
     fetchGetSecretsIfNeeded(match.params.idName);
     if (getNamespaceReducer.readyStatus !== GET_NAMESPACE_SUCCESS) {
@@ -102,7 +104,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     if (this.props.updateDeploymentReducer) {
       fetchGetDeploymentIfNeeded(match.params.idName, match.params.idDep);
     }
-    fetchGetVolumesByNSIfNeeded(match.params.idName);
   }
   componentWillUpdate(nextProps) {
     const serviceObject = this.state;
@@ -228,8 +229,8 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           ],
           command: commands || [],
           config_maps: [],
-          // config_maps: configMaps || []
           volume_mounts: volumes || []
+          // config_maps: configMaps || []
         };
       });
       if (containers.length === containersArr.length) {
@@ -1553,12 +1554,21 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     const {
       getConfigMapsByNSReducer,
       getDeploymentReducer,
+      getVolumesByNSReducer,
+      getSecretsReducer,
       match
     } = this.props;
     if (
+      !getVolumesByNSReducer.readyStatus ||
+      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_INVALID ||
+      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_REQUESTING ||
       !getConfigMapsByNSReducer.readyStatus ||
       getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_INVALID ||
-      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_REQUESTING
+      getConfigMapsByNSReducer.readyStatus ===
+        GET_CONFIG_MAPS_BY_NS_REQUESTING ||
+      !getSecretsReducer.readyStatus ||
+      getSecretsReducer.readyStatus === GET_SECRETS_INVALID ||
+      getSecretsReducer.readyStatus === GET_SECRETS_REQUESTING
     ) {
       return (
         <div>
@@ -1579,7 +1589,9 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
     }
 
     if (
-      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_FAILURE
+      getConfigMapsByNSReducer.readyStatus === GET_CONFIG_MAPS_BY_NS_FAILURE ||
+      getVolumesByNSReducer.readyStatus === GET_VOLUMES_BY_NS_FAILURE ||
+      getSecretsReducer.readyStatus === GET_SECRETS_FAILURE
     ) {
       return <p>Oops, Failed to load data of Deployment!</p>;
     }
@@ -1701,33 +1713,6 @@ export class CreateUpdateDeployment extends PureComponent<Props> {
           </div>
         </div>
       );
-    }
-
-    if (
-      !getDeploymentReducer.readyStatus ||
-      getDeploymentReducer.readyStatus === GET_DEPLOYMENT_INVALID ||
-      getDeploymentReducer.readyStatus === GET_DEPLOYMENT_REQUESTING
-    ) {
-      return (
-        <div>
-          {new Array(7).fill().map(() => (
-            <img
-              key={_.uniqueId()}
-              src={require('../../images/create-dep-serv.svg')}
-              style={{
-                marginTop: '-2px',
-                marginBottom: '30px',
-                width: '100%'
-              }}
-              alt="create service"
-            />
-          ))}
-        </div>
-      );
-    }
-
-    if (getDeploymentReducer.readyStatus === GET_DEPLOYMENT_FAILURE) {
-      return <p>Oops, Failed to load data of Deployment!</p>;
     }
 
     if (getDeploymentReducer.readyStatus === GET_DEPLOYMENT_SUCCESS) {
