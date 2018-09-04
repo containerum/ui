@@ -14,6 +14,7 @@ import {
   DELETE_SECRET_SUCCESS,
   DELETE_SECRET_REQUESTING
 } from '../../constants/secretConstants/deleteSecret';
+import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
 import SecretsList from '../../components/SecretsList';
 import Notification from '../Notification';
 
@@ -31,7 +32,6 @@ import {
 } from '../../constants/secretsConstants/getSecrets';
 
 const globalClass = className.bind(globalStyles);
-
 const contentClassName = globalClass(
   'contentBlockContent',
   'contentBlockContentFull'
@@ -40,6 +40,7 @@ const contentClassName = globalClass(
 type Props = {
   history: Object,
   match: Object,
+  getProfileReducer: Object,
   getSecretsReducer: Object,
   getNamespacesReducer: Object,
   deleteSecretReducer: Object,
@@ -51,6 +52,7 @@ export class Secrets extends PureComponent<Props> {
   constructor() {
     super();
     this.state = {
+      role: '',
       displayedSecrets: []
     };
   }
@@ -73,6 +75,16 @@ export class Secrets extends PureComponent<Props> {
       this.setState({
         ...this.state,
         displayedSecrets: nextProps.getSecretsReducer.data
+      });
+    }
+    if (
+      this.props.getProfileReducer.readyStatus !==
+        nextProps.getProfileReducer.readyStatus &&
+      nextProps.getProfileReducer.readyStatus === GET_PROFILE_SUCCESS
+    ) {
+      this.setState({
+        ...this.state,
+        role: nextProps.getProfileReducer.data.role
       });
     }
     if (
@@ -139,6 +151,7 @@ export class Secrets extends PureComponent<Props> {
         )}
         handleDeleteSecret={idSecret => this.onHandleDelete(idSecret)}
         history={this.props.history}
+        role={this.state.role}
         idName={match.params.idName}
       />
     );
@@ -163,11 +176,13 @@ const connector: Connector<{}, Props> = connect(
   ({
     getSecretsReducer,
     getNamespacesReducer,
-    deleteSecretReducer
+    deleteSecretReducer,
+    getProfileReducer
   }: ReduxState) => ({
     getSecretsReducer,
     getNamespacesReducer,
-    deleteSecretReducer
+    deleteSecretReducer,
+    getProfileReducer
   }),
   (dispatch: Dispatch) => ({
     fetchGetSecretsIfNeeded: (idName: string) =>

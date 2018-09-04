@@ -85,52 +85,52 @@ const VolumesList = ({
                     onKeyPress={e => handleClose(e)}
                     role="presentation"
                   >
-                    {((handleClickDeleteVolume && role === 'admin') ||
-                      accessToNamespace === 'owner') && (
-                      <i
-                        className={`${globalStyles.contentBlockTableMore} ${
-                          globalStyles.dropdownToggle
-                        }
+                    {handleClickDeleteVolume &&
+                      (role === 'admin' || accessToNamespace === 'owner') && (
+                        <i
+                          className={`${globalStyles.contentBlockTableMore} ${
+                            globalStyles.dropdownToggle
+                          }
                              ${globalStyles.ellipsisRoleMore} ion-more `}
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      />
-                    )}
-                    {((handleClickDeleteVolume && role === 'admin') ||
-                      accessToNamespace === 'owner') && (
-                      <ul
-                        className={` dropdown-menu dropdown-menu-right ${
-                          globalStyles.dropdownMenu
-                        }`}
-                        role="menu"
-                      >
-                        {role === 'admin' && (
-                          <NavLink
-                            activeClassName="active"
-                            className={`dropdown-item  ${
-                              globalStyles.dropdownItem
-                            }`}
-                            to={routerLinks.updateCustomVolumeLink(
-                              idName,
-                              name
-                            )}
-                          >
-                            Resize
-                          </NavLink>
-                        )}
-                        {role === 'admin' && (
-                          <button
-                            className={`dropdown-item text-danger ${
-                              globalStyles.dropdownItem
-                            }`}
-                            onClick={() => handleClickDeleteVolume(name)}
-                          >
-                            Delete
-                          </button>
-                        )}
-                      </ul>
-                    )}
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        />
+                      )}
+                    {handleClickDeleteVolume &&
+                      (role === 'admin' || accessToNamespace === 'owner') && (
+                        <ul
+                          className={` dropdown-menu dropdown-menu-right ${
+                            globalStyles.dropdownMenu
+                          }`}
+                          role="menu"
+                        >
+                          {role === 'admin' && (
+                            <NavLink
+                              activeClassName="active"
+                              className={`dropdown-item  ${
+                                globalStyles.dropdownItem
+                              }`}
+                              to={routerLinks.updateCustomVolumeLink(
+                                idName,
+                                name
+                              )}
+                            >
+                              Resize
+                            </NavLink>
+                          )}
+                          {role === 'admin' && (
+                            <button
+                              className={`dropdown-item text-danger ${
+                                globalStyles.dropdownItem
+                              }`}
+                              onClick={() => handleClickDeleteVolume(name)}
+                            >
+                              Delete
+                            </button>
+                          )}
+                        </ul>
+                      )}
                   </td>
                 </tr>
               );
