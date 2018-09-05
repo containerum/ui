@@ -53,7 +53,12 @@ import {
 } from '../../constants/statusConstants/getStatus';
 import { ADD_STORAGE_SUCCESS } from '../../constants/storageConstants/addStorage';
 import { DELETE_STORAGE_SUCCESS } from '../../constants/storageConstants/deleteStorage';
-import { GET_PROFILE_SUCCESS } from '../../constants/profileConstants/getProfile';
+import {
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_INVALID,
+  GET_PROFILE_REQUESTING,
+  GET_PROFILE_SUCCESS
+} from '../../constants/profileConstants/getProfile';
 import successImg from '../../images/success.svg';
 import warningImg from '../../images/warning.svg';
 
@@ -244,12 +249,15 @@ export class Settings extends PureComponent<Props> {
   };
 
   renderProfileSideBar = () => {
-    const { getDomainsReducer } = this.props;
+    const { getDomainsReducer, getProfileReducer } = this.props;
 
     if (
       !getDomainsReducer.readyStatus ||
       getDomainsReducer.readyStatus === GET_DOMAINS_INVALID ||
-      getDomainsReducer.readyStatus === GET_DOMAINS_REQUESTING
+      getDomainsReducer.readyStatus === GET_DOMAINS_REQUESTING ||
+      !getProfileReducer.readyStatus ||
+      getProfileReducer.readyStatus === GET_PROFILE_INVALID ||
+      getProfileReducer.readyStatus === GET_PROFILE_REQUESTING
     ) {
       return (
         <div>
@@ -287,7 +295,13 @@ export class Settings extends PureComponent<Props> {
       );
     }
 
-    return <ProfileSidebar type="settings" />;
+    if (getProfileReducer.readyStatus === GET_PROFILE_FAILURE) {
+      return <p>Oops, Failed to load data of Account!</p>;
+    }
+
+    return (
+      <ProfileSidebar type="settings" role={getProfileReducer.data.role} />
+    );
   };
   renderImportLogs = () => {
     const { errorMessage, logs } = this.state;
