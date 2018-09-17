@@ -49,6 +49,13 @@ Technologies used:
 
 * [node](https://nodejs.org/en/) >= 6.0
 * [npm](https://www.npmjs.com/) >= 3.0
+>Note: if you are using Ubuntu 17+ OS you will have some troubles with building.
+You will resolve them with this line (run the command in terminal):
+```bash
+wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb \
+  && sudo dpkg -i /tmp/libpng12.deb \
+  && rm /tmp/libpng12.deb
+```
 
 ## Getting Started
 
