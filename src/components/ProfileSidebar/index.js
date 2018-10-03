@@ -11,10 +11,11 @@ import scrollById from '../../functions/scrollById';
 import accountStyles from '../../containers/Account/index.scss';
 
 type Props = {
-  type: string
+  type: string,
+  role: string
 };
 
-const ProfileSidebar = ({ type }: Props) => (
+const ProfileSidebar = ({ type, role }: Props) => (
   <ul
     className={`${accountStyles.accountMenu} ${
       accountStyles.accountMenuNav
@@ -109,76 +110,78 @@ const ProfileSidebar = ({ type }: Props) => (
         </li>
       </Scrollspy>
     </li>
-    <li>
-      <div className={`${accountStyles.navRootItem} nav-root-item`}>
-        Settings
-      </div>
-      <Scrollspy
-        items={['status', 'ips', 'storages']}
-        style={{
-          padding: '20px 0 0 20px'
-        }}
-        currentClassName={accountStyles.accountMenuNavActive}
-      >
-        <li className={`${accountStyles.navItem} nav-item`}>
-          {type === 'settings' ? (
-            <div
-              className={`${accountStyles.navLink} nav-link`}
-              onClick={() => scrollById('status')}
-              onKeyPress={() => scrollById('status')}
-              role="presentation"
-            >
-              Status
-            </div>
-          ) : (
-            <HashLink
-              to={`${routerLinks.settings}#status`}
-              className={`${accountStyles.navLink} nav-link`}
-            >
-              Status
-            </HashLink>
-          )}
-        </li>
-        <li className={`${accountStyles.navItem} nav-item`}>
-          {type === 'settings' ? (
-            <div
-              className={`${accountStyles.navLink} nav-link`}
-              onClick={() => scrollById('ips')}
-              onKeyPress={() => scrollById('ips')}
-              role="presentation"
-            >
-              IP`s
-            </div>
-          ) : (
-            <HashLink
-              to={`${routerLinks.settings}#ips`}
-              className={`${accountStyles.navLink} nav-link`}
-            >
-              IP`s
-            </HashLink>
-          )}
-        </li>
-        <li className={`${accountStyles.navItem} nav-item`}>
-          {type === 'settings' ? (
-            <div
-              className={`${accountStyles.navLink} nav-link`}
-              onClick={() => scrollById('storages')}
-              onKeyPress={() => scrollById('storages')}
-              role="presentation"
-            >
-              Storages
-            </div>
-          ) : (
-            <HashLink
-              to={`${routerLinks.settings}#storages`}
-              className={`${accountStyles.navLink} nav-link`}
-            >
-              Storages
-            </HashLink>
-          )}
-        </li>
-      </Scrollspy>
-    </li>
+    {role === 'admin' && (
+      <li>
+        <div className={`${accountStyles.navRootItem} nav-root-item`}>
+          Settings
+        </div>
+        <Scrollspy
+          items={['status', 'ips', 'storages']}
+          style={{
+            padding: '20px 0 0 20px'
+          }}
+          currentClassName={accountStyles.accountMenuNavActive}
+        >
+          <li className={`${accountStyles.navItem} nav-item`}>
+            {type === 'settings' ? (
+              <div
+                className={`${accountStyles.navLink} nav-link`}
+                onClick={() => scrollById('status')}
+                onKeyPress={() => scrollById('status')}
+                role="presentation"
+              >
+                Status
+              </div>
+            ) : (
+              <HashLink
+                to={`${routerLinks.settings}#status`}
+                className={`${accountStyles.navLink} nav-link`}
+              >
+                Status
+              </HashLink>
+            )}
+          </li>
+          <li className={`${accountStyles.navItem} nav-item`}>
+            {type === 'settings' ? (
+              <div
+                className={`${accountStyles.navLink} nav-link`}
+                onClick={() => scrollById('ips')}
+                onKeyPress={() => scrollById('ips')}
+                role="presentation"
+              >
+                IP`s
+              </div>
+            ) : (
+              <HashLink
+                to={`${routerLinks.settings}#ips`}
+                className={`${accountStyles.navLink} nav-link`}
+              >
+                IP`s
+              </HashLink>
+            )}
+          </li>
+          <li className={`${accountStyles.navItem} nav-item`}>
+            {type === 'settings' ? (
+              <div
+                className={`${accountStyles.navLink} nav-link`}
+                onClick={() => scrollById('storages')}
+                onKeyPress={() => scrollById('storages')}
+                role="presentation"
+              >
+                Storages
+              </div>
+            ) : (
+              <HashLink
+                to={`${routerLinks.settings}#storages`}
+                className={`${accountStyles.navLink} nav-link`}
+              >
+                Storages
+              </HashLink>
+            )}
+          </li>
+        </Scrollspy>
+      </li>
+    )}
   </ul>
 );
 

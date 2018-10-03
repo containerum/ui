@@ -8,7 +8,14 @@
     "node": ">=6.0",
     "npm": ">=3.0"
   },
-  "homepage": "https://git.containerum.net/ch/ui",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/containerum/ui"
+  },
+  "bugs": {
+    "url": "https://github.com/containerum/ui/issues"
+  },
+  "homepage": "https://github.com/containerum/ui",
   "scripts": {
     "start": "better-npm-run start",
     "start:production": "yarn build && yarn start:prod",

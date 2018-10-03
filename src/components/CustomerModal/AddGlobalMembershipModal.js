@@ -46,7 +46,8 @@ type Props = {
   onHandleAdd: (idName: string) => void,
   handleOpenCloseModal: () => void,
   handleClickCopyPassword: () => void,
-  err: string
+  err: string,
+  newUser: boolean
 };
 
 const AddGlobalUserMembershipModal = ({
@@ -60,7 +61,8 @@ const AddGlobalUserMembershipModal = ({
   handleOpenCloseModal,
   handleClickCopyPassword,
   onHandleAdd,
-  err
+  err,
+  newUser
 }: Props) => {
   const handleCloseModal = () => {
     handleOpenCloseModal();
@@ -122,7 +124,7 @@ const AddGlobalUserMembershipModal = ({
                 marginTop: 20
               }}
             >
-              Reset password
+              {newUser ? 'New' : 'Reset'} password
             </h4>
             <span
               className={modalStyles.modalRedisText}

@@ -54,6 +54,7 @@ export class CreateSecret extends PureComponent<Props> {
       }
     }
   }
+
   handleSubmitCreateSecret = e => {
     e.preventDefault();
     const { match, fetchCreateSecretIfNeeded } = this.props;
@@ -151,7 +152,7 @@ export class CreateSecret extends PureComponent<Props> {
         </div>
         <Notification
           status={createSecretReducer.status}
-          name={createSecretReducer.idVol}
+          name={createSecretReducer.secretName}
           method={createSecretReducer.method}
           errorMessage={createSecretReducer.err}
         />

@@ -190,7 +190,7 @@ export class Volumes extends PureComponent<Props> {
           type="Volume"
           inputName={inputName}
           idName={match.params.idName}
-          name={currentIdVol}
+          name={inputName}
           typeName={currentIdVol}
           isOpened={isOpened}
           handleInputName={this.handleInputName}

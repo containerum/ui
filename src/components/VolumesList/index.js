@@ -86,7 +86,7 @@ const VolumesList = ({
                     role="presentation"
                   >
                     {handleClickDeleteVolume &&
-                      accessToNamespace !== 'read' && (
+                      (role === 'admin' || accessToNamespace === 'owner') && (
                         <i
                           className={`${globalStyles.contentBlockTableMore} ${
                             globalStyles.dropdownToggle
@@ -98,7 +98,7 @@ const VolumesList = ({
                         />
                       )}
                     {handleClickDeleteVolume &&
-                      accessToNamespace !== 'read' && (
+                      (role === 'admin' || accessToNamespace === 'owner') && (
                         <ul
                           className={` dropdown-menu dropdown-menu-right ${
                             globalStyles.dropdownMenu

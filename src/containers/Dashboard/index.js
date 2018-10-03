@@ -592,7 +592,11 @@ export class Dashboard extends PureComponent<Props> {
         ? 360
         : getStorageStatisticReducer.data.storage * 3.6;
     return (
-      <div>
+      <div
+        style={{
+          marginBottom: 50
+        }}
+      >
         <div
           style={{
             textAlign: 'center',
