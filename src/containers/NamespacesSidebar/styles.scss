@@ -1,0 +1,26 @@
+@import '../../theme/variables';
+
+.sidebarHeader{
+  height: 95px;
+  background-color: #fbfbfb;
+  border: solid 1px #eaeaea;
+  padding: 20px 32px;
+
+  .acivity{
+    font-size: 20px;
+    color: #333;
+  }
+
+  .today{
+    font-size: 13px;
+    color: #333;
+    font-weight: 300;
+    margin-top: -10px;
+
+
+  }
+}
+
+.sidebarBody{
+  height: auto;
+}
