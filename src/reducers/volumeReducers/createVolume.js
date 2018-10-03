@@ -7,7 +7,7 @@ import {
   CREATE_VOLUME_REQUESTING,
   CREATE_VOLUME_SUCCESS,
   CREATE_VOLUME_FAILURE
-} from '../../constants/volumeConstants/createVolume';
+} from '../../constants/volumeConstants/createCustomVolume';
 import type { Action } from '../../types';
 
 const initialState = {

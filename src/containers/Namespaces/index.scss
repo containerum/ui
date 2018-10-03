@@ -100,3 +100,19 @@
   transition: all 0.05s ease-in-out;
   -webkit-appearance: none;
 }
+
+.sidebar_btn{
+  background-color: $color-white;
+  color: #c7c7c7;
+  text-align: center;
+  position: absolute;
+  width: 35px;
+  height: 30px;
+  right: 0;
+  z-index: 1;
+}
+
+.sidebar_btn:hover,
+.sidebar_btn_open:hover{
+  cursor: pointer;
+}

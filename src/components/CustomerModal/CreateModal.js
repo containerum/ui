@@ -6,7 +6,9 @@ import className from 'classnames/bind';
 
 import globalStyles from '../../theme/global.scss';
 import modalStyles from './index.scss';
-import createNamespaceStyles from '../../containers/CreateNamespace/index.scss';
+import createNamespaceStyles from '../../containers/CreateCustomNamespace/index';
+// todo
+// возможно файл ведет не туда куда задумывалось
 
 import buttonsStyles from '../../theme/buttons.scss';
 
