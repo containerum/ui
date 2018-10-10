@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import styles from './styles.scss';
 import alertPng from '../../images/error-icon.svg';
-import infoPng from '../../images/info-icon.svg';
+import infoPng from '../../images/info.svg';
 
 const customStyles = {
   overlay: {
@@ -37,7 +37,7 @@ type Props = {
   isSidebarOpen: boolean,
   handleCloseSidebar: () => void,
   eventsArray: any,
-  namespacesArray: any
+  namespacesArray: Array
 };
 
 export class NamespacesSidebar extends PureComponent<Props> {
@@ -58,7 +58,6 @@ export class NamespacesSidebar extends PureComponent<Props> {
     });
     return count;
   };
-
   simplifyEventTime = eventObj => {
     const time = new Date(eventObj.event_time).toLocaleString().split(', ');
     if (time[0] === new Date().toLocaleString().split(', ')[0]) {
@@ -103,13 +102,21 @@ export class NamespacesSidebar extends PureComponent<Props> {
         return eventObj.message;
     }
   };
-  // simplifyEventSource = evenObj => {
-  //   const result = this.state.namespacesArray.find(
-  //     namespace => namespace.id === evenObj.resource_namespace
-  //   );
-  //   return result.label;
-  // };
-
+  simplifyEventSource = eventObj => {
+    let result;
+    if (eventObj.resource_namespace) {
+      result = this.props.namespacesArray.find(
+        namespace => namespace.id === eventObj.resource_namespace
+      );
+      return typeof result === 'undefined' ? (
+        <p className="col-5">Source: Unknown</p>
+      ) : (
+        <p className="col-5">Source: {result.label}</p>
+      );
+    }
+    result = 'Bad namespace';
+    return result;
+  };
   simplifyEventIcon = evenObj => {
     if (evenObj.event_kind === 'warning') {
       return (
@@ -117,7 +124,7 @@ export class NamespacesSidebar extends PureComponent<Props> {
           src={alertPng}
           className="col-2"
           alt="warning"
-          style={{ height: '50px' }}
+          style={{ height: '30px' }}
         />
       );
     }
@@ -126,39 +133,28 @@ export class NamespacesSidebar extends PureComponent<Props> {
         src={infoPng}
         className="col-2"
         alt="info"
-        style={{ height: '50px' }}
+        style={{ height: '30px' }}
       />
     );
   };
 
-  renderEventElement = eventObj => {
-    const underStyles = {
-      maxHeight: '100px',
-      borderBottom: '1px solid #eaeaea',
-      color: '#333333',
-      fontSize: '15px',
-      fontWeight: '300'
-    };
-    return (
-      <div style={underStyles} key={eventObj.id}>
-        <div className="row  pt-2">
-          {this.simplifyEventIcon(eventObj)}
-          <p className="col-10 text-left">
-            {this.simplifyEventMessage(eventObj)}
-          </p>
-        </div>
-        <div className="row">
-          <d className="col-2" />
-          {/* <p className="col-6">Source: {this.simplifyEventSource(eventObj)}</p> */}
-          <p className="col-6">Source: namespace</p>
-          <p className="col-4">{this.simplifyEventTime(eventObj)}</p>
-        </div>
+  renderEventElement = eventObj => (
+    <div className={styles.eventElement} key={eventObj.id}>
+      <div className="row  pt-2">
+        {this.simplifyEventIcon(eventObj)}
+        <p className="col-10 text-left">
+          {this.simplifyEventMessage(eventObj)}
+        </p>
       </div>
-    );
-  };
+      <div className="row">
+        <div className="col-2" />
+        {this.simplifyEventSource(eventObj)}
+        <p className="col-5">{this.simplifyEventTime(eventObj)}</p>
+      </div>
+    </div>
+  );
 
   render() {
-    console.log(this.props);
     return (
       <Modal
         isOpen={this.props.isSidebarOpen}

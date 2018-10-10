@@ -23,4 +23,20 @@
 
 .sidebarBody{
   height: auto;
+  overflow: hidden;
+
+  .eventElement{
+    max-height: 100px;
+    border-bottom: 1px solid #eaeaea;
+    color: #333;
+    font-size: 15px;
+    font-weight: 300;
+    overflow: hidden;
+    transition: max-height 1s ease-out;
+
+    &:hover{
+      max-height: 300px;
+      transition: max-height 1s ease-in;
+    }
+  }
 }
