@@ -9,7 +9,7 @@ const getEventList = () => {
     return new WebSocket(
       `${wsApi}/events/all?User-Token=${cookie.load(
         'accessToken'
-      )}&User-Client=${browser}&limit=10`
+      )}&User-Client=${browser}&limit=20`
     );
   }
   return 'Your browser does not support WebSockets';
