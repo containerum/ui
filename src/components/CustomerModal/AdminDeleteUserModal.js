@@ -61,7 +61,7 @@ const AdminDeleteUserModal = ({
   };
   const handleSubmitDeletingEssence = e => {
     e.preventDefault();
-    if (type === 'Delete User from Group') {
+    if (type === 'Deactivate User from Group') {
       handleOpenCloseModal();
       onHandleDelete(idGroup, name);
     }
@@ -69,7 +69,7 @@ const AdminDeleteUserModal = ({
       handleOpenCloseModal();
       onHandleDelete(idName, name);
     }
-    if (type === 'Delete User') {
+    if (type === 'Deactivate User') {
       handleOpenCloseModal();
       onHandleDelete(idName, name);
     }
@@ -123,12 +123,12 @@ const AdminDeleteUserModal = ({
               </strong>) below to confirm you want to permanently delete it:
             </span>
           )}
-          {type === 'Delete User' && (
+          {type === 'Deactivate User' && (
             <span className={modalStyles.modalRedisText}>
               Enter user’s Email (<strong style={{ color: '#29abe2' }}>
                 {typeName}
               </strong>) below to<br />
-              confirm you want to permanently delete it:
+              confirm you want to deactivate the account:
             </span>
           )}
           {type === 'Delete User from Group' && (
@@ -143,7 +143,7 @@ const AdminDeleteUserModal = ({
             type="text"
             className="form-control volume-form-input"
             placeholder={
-              type === 'Delete User' || type === 'Delete User from Group'
+              type === 'Deactivate User' || type === 'Delete User from Group'
                 ? 'Email'
                 : 'Group'
             }
@@ -164,7 +164,7 @@ const AdminDeleteUserModal = ({
             className={styleSubmit}
             disabled={isDisabledSubmit}
           >
-            Delete
+            {type === 'Deactivate User' ? 'Deactivate' : 'Delete'}
           </button>
         </div>
       </form>

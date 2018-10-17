@@ -177,7 +177,7 @@ export class CreateCustomVolume extends PureComponent<Props> {
   };
 
   render() {
-    const { createCustomVolumeReducer, getProfileReducer } = this.props;
+    const { createCustomVolumeReducer, getProfileReducer, match } = this.props;
     const { isVisibleMessage } = this.state;
     const role = getProfileReducer.data ? getProfileReducer.data.role : null;
     return (
@@ -187,7 +187,10 @@ export class CreateCustomVolume extends PureComponent<Props> {
           className="container-fluid breadcrumbNavigation"
           style={isVisibleMessage ? { marginBottom: 0 } : {}}
         >
-          <NavigationHeaderItem IdCreate="volume" idName="new" />
+          <NavigationHeaderItem
+            IdCreate="volume"
+            idName={match.params.idName}
+          />
         </div>
         {role &&
           isVisibleMessage && (

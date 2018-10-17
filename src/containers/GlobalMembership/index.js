@@ -332,7 +332,7 @@ class GlobalMembership extends PureComponent<Props> {
         />
 
         <AdminDeleteUserModal
-          type="Delete User"
+          type="Deactivate User"
           name={this.state.inputEmailDelete}
           isOpened={this.state.isOpen}
           typeName={this.state.idUser}

@@ -282,7 +282,6 @@ export class Namespaces extends PureComponent<Props> {
   };
 
   render() {
-    console.log(this.state);
     const {
       deleteNamespaceReducer,
       createExternalServiceReducer,

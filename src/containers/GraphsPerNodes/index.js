@@ -204,7 +204,9 @@ class GraphsPerNodes extends PureComponent<Props> {
             <div>
               <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li className="nav-item">
-                  <div className="nav-link">&nbsp;</div>
+                  <div className="nav-link" style={{ height: '35.5px' }}>
+                    &nbsp;
+                  </div>
                 </li>
               </ul>
               <AreaChart

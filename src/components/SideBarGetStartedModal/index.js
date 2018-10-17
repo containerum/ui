@@ -76,7 +76,11 @@ const SideBarGetStartedModal = ({
             />
             <span className={styles.BackWebPanel}>Back to Web Panel</span>
           </div>
-          <Link to={routerLinks.getStarted} className={styles.OpenNewWindow}>
+          <Link
+            to={routerLinks.getStarted}
+            className={styles.OpenNewWindow}
+            target="_blank"
+          >
             Open article in a new window{' '}
             <img src={icShare} style={{ marginLeft: 10 }} alt="icShare" />
           </Link>
