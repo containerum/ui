@@ -81,10 +81,10 @@ export class DeleteAccount extends PureComponent<Props> {
           onHandleDelete={() => this.onHandleDelete()}
         />
         <div className={globalStyles.blockItem} id="delete-account">
-          <div className={globalStyles.blockItemTitle}>Delete Account</div>
+          <div className={globalStyles.blockItemTitle}>Deactivate Account</div>
           <div className={globalStyles.textLight}>
-            This action will delete {type === 'local' ? 'user' : 'your'} Apps
-            and Data
+            This action will deactivate {type === 'local' ? 'user' : 'your'}{' '}
+            Apps and Data
           </div>
           <div className={globalStyles.blockItemButtons}>
             <button
@@ -93,7 +93,7 @@ export class DeleteAccount extends PureComponent<Props> {
               } btn btn-outline-primary`}
               onClick={() => this.handleClickDeleteAccount()}
             >
-              Delete
+              Deactivate
             </button>
           </div>
         </div>

@@ -117,7 +117,10 @@ const DeleteModal = ({
             Deleting {type} is irreversible.<br />
             Enter {type} name (<strong style={{ color: '#29abe2' }}>
               {typeName}
-            </strong>) below to confirm you want to permanently delete it:
+            </strong>) below to confirm you want to{' '}
+            {type === 'Project'
+              ? 'permanently delete it'
+              : 'deactivate the account:'}:
           </span>
           <input
             type="text"
@@ -140,7 +143,7 @@ const DeleteModal = ({
             className={styleSubmit}
             disabled={isDisabledSubmit}
           >
-            Delete
+            {type === 'Project' ? 'Delete' : 'Deactivate'}
           </button>
         </div>
       </form>
