@@ -142,12 +142,15 @@ export class CreateSecret extends PureComponent<Props> {
   };
 
   render() {
-    const { createSecretReducer } = this.props;
+    const { createSecretReducer, match } = this.props;
     return (
       <div>
         <Helmet title="Create Secret" />
         <div className="container-fluid breadcrumbNavigation">
-          <NavigationHeaderItem IdCreate="secret" idName="new" />
+          <NavigationHeaderItem
+            IdCreate="secret"
+            idName={match.params.idName}
+          />
         </div>
         <Notification
           status={createSecretReducer.status}

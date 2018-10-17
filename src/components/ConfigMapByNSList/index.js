@@ -84,8 +84,7 @@ const ConfigMapList = ({
                   <tr
                     className={containerClassName}
                     style={{
-                      margin: 0,
-                      boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
+                      margin: 0
                     }}
                     key={name}
                   >

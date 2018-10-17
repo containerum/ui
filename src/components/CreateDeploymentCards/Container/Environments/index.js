@@ -87,6 +87,7 @@ const Environments = ({
             <InputControl
               value={value}
               id={`envValue${id}`}
+              maxLength={150}
               type="text"
               baseClassName={`${formClassName} ${inputStyles.inputCustom}`}
               baseClassNameLabel={`${globalStyles.formGroupLabel} ${value &&

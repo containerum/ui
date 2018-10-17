@@ -100,7 +100,7 @@ const ResetPasswordModal = ({
               </span>
             ) : (
               <span>
-                Are you ready want to reset password for the{' '}
+                Are you sure you want to reset password for the{' '}
                 <strong style={{ color: '#29abe2' }}>{isUser}</strong>?
               </span>
             )}

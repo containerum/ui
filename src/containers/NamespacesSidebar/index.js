@@ -155,6 +155,7 @@ export class NamespacesSidebar extends PureComponent<Props> {
   );
 
   render() {
+    console.log(this.state);
     return (
       <Modal
         isOpen={this.props.isSidebarOpen}

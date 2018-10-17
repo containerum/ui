@@ -71,7 +71,11 @@ const CreateCustomNamespaceInfo = ({
         </div>
       )}
     </div>
-    <div className="row rowLine" id="parameters">
+    <div
+      className="row rowLine"
+      id="parameters"
+      style={{ borderBottom: 'none' }}
+    >
       <div className="col-md-12">
         <div className="containerTitle containerBlockTitle">
           <span>*</span> Parameters
