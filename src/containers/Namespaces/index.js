@@ -7,7 +7,6 @@ import type { Connector } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash/fp';
 import cookie from 'react-cookies';
-import cloneDeep from 'clone-deep';
 
 import { routerLinks } from '../../config';
 import globalStyles from '../../theme/global.scss';
@@ -41,8 +40,6 @@ import Notification from '../Notification';
 import DeleteModal from '../../components/CustomerModal/DeleteModal';
 import NamespacesList from '../../components/NamespacesList';
 import ns from '../../images/ns-1.svg';
-import EventsSidebar from '../NamespacesSidebar';
-import getEventList from '../../functions/WS/getEventList';
 
 type Props = {
   history: Object,
@@ -63,9 +60,7 @@ export class Namespaces extends PureComponent<Props> {
       inputName: '',
       idName: null,
       isOpened: false,
-      displayedNamespaces: [],
-      isSidebarOpen: false,
-      events: []
+      displayedNamespaces: []
     };
   }
   componentWillMount() {
@@ -74,18 +69,7 @@ export class Namespaces extends PureComponent<Props> {
       this.props.history.push(routerLinks.login);
     }
   }
-  componentDidMount() {
-    this.clientSocket = getEventList();
-    if (this.clientSocket) {
-      this.clientSocket.onerror = () => this.onMessageFailure();
-      this.clientSocket.onmessage = evt => {
-        const resultString = JSON.parse(evt.data);
-        this.onMessageReceived(resultString);
-      };
-    } else {
-      this.clientSocket.onerror = () => this.onMessageFailure();
-    }
-  }
+
   componentWillUpdate(nextProps) {
     if (
       this.props.getProfileReducer.readyStatus !==
@@ -120,25 +104,6 @@ export class Namespaces extends PureComponent<Props> {
       });
     }
   }
-  componentWillUnmount() {
-    if (this.clientSocket) {
-      console.log('close connection');
-      this.clientSocket.close();
-    }
-  }
-
-  onMessageReceived = data => {
-    const nextEvents = cloneDeep(this.state.events);
-    const result = data.concat(nextEvents);
-    this.setState({ ...this.state, events: result });
-  };
-  onMessageFailure = () => {
-    this.setState({
-      ...this.state,
-      errorMessage: 'Failed to connect to server'
-    });
-  };
-  clientSocket = socket => socket;
 
   handleOpenCloseModal = () => {
     this.setState({
@@ -187,27 +152,6 @@ export class Namespaces extends PureComponent<Props> {
       namespace => id === namespace.id
     );
     this.props.fetchDeleteNamespaceIfNeeded(id, currentNS.label);
-  };
-  handleCloseSidebar = () => {
-    this.setState({
-      isSidebarOpen: false
-    });
-  };
-
-  sidebarButton = () => {
-    const { isSidebarOpen } = this.state;
-    return (
-      <div
-        className={isSidebarOpen ? null : styles.sidebar_btn}
-        onClick={() => {
-          this.setState({ isSidebarOpen: !this.state.isSidebarOpen });
-        }}
-      >
-        {isSidebarOpen ? null : (
-          <i className="fa fa-angle-double-left fa-2x" aria-hidden="true" />
-        )}
-      </div>
-    );
   };
 
   renderNamespacesList = () => {
@@ -299,17 +243,7 @@ export class Namespaces extends PureComponent<Props> {
       idSrv: idSrvInt,
       err: errInt
     } = createInternalServiceReducer;
-    const {
-      inputName,
-      isOpened,
-      idName: currentIdName,
-      isSidebarOpen,
-      events
-    } = this.state;
-    const namespaceToProps = this.state.displayedNamespaces.map(namespace => {
-      const result = { id: namespace.id, label: namespace.label };
-      return result;
-    });
+    const { inputName, isOpened, idName: currentIdName } = this.state;
     let currentNamespace;
     if (getNamespacesReducer.readyStatus === GET_NAMESPACES_SUCCESS) {
       currentNamespace = getNamespacesReducer.data.find(
@@ -349,15 +283,6 @@ export class Namespaces extends PureComponent<Props> {
           />
         )}
         <div className={globalStyles.contentBlock}>
-          {this.sidebarButton()}
-          {isSidebarOpen && (
-            <EventsSidebar
-              handleCloseSidebar={this.handleCloseSidebar}
-              isSidebarOpen={isSidebarOpen}
-              eventsArray={events}
-              namespacesArray={namespaceToProps}
-            />
-          )}
           <div className={`container ${globalStyles.containerNoBackground}`}>
             {this.renderNamespacesList()}
           </div>
