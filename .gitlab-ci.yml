@@ -1,196 +1,201 @@
 stages:
   - test
-  - build
-  - release
-  - deploy
+  # - build
+  # - release
+  # - deploy
 
-variables:
-  CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}
-  NAMESPACE: hosting
-  SECRET: gitlab-registry
-  REPOSITORY: ${CI_REGISTRY}/${CI_PROJECT_PATH}
-  RECAPTCHA_SAND: 6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS
-
-.docker-login: &docker-login
-  before_script:
-    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-
-test lint:
-  services:
-  image: node:9.2.1
+test test:
   stage: test
-  tags:
-    - build
   script:
-    - npm install -g -s --no-progress yarn node-gyp
-    - yarn
-    - npm rebuild node-sass --force
-    - yarn lint
-  except:
-    - develop
-    - master
-    - tags
+    - echo "Hello!"
 
-test-build-online:
-  services:
-  image: docker:latest
-  stage: test
-  tags:
-    - build
-  script:
-    - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} .
-    - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-  except:
-    - develop
-    - master
-    - staging
-    - tags
+# variables:
+#   CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+#   NAMESPACE: hosting
+#   SECRET: gitlab-registry
+#   REPOSITORY: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+#   RECAPTCHA_SAND: 6LejdSMUAAAAADNv4yBEqxz4TAyXEIYCbwphVSDS
 
-test-build-offline:
-  services:
-  image: docker:latest
-  stage: test
-  tags:
-    - build
-  script:
-    - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} --build-arg SOURCE_TYPE=OFLINE .
-    - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-  except:
-    - develop
-    - master
-    - staging
-    - tags
+# .docker-login: &docker-login
+#   before_script:
+#     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
 
+# test lint:
+#   services:
+#   image: node:9.2.1
+#   stage: test
+#   tags:
+#     - build
+#   script:
+#     - npm install -g -s --no-progress yarn node-gyp
+#     - yarn
+#     - npm rebuild node-sass --force
+#     - yarn lint
+#   except:
+#     - develop
+#     - master
+#     - tags
 
-dev-release:
-  image: docker:latest
-  stage: release
-  tags:
-    - build
-  <<: *docker-login
-  script:
-    - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} .
-    - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-    - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-  only:
-    - develop
+# test-build-online:
+#   services:
+#   image: docker:latest
+#   stage: test
+#   tags:
+#     - build
+#   script:
+#     - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} .
+#     - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#   except:
+#     - develop
+#     - master
+#     - staging
+#     - tags
 
-dev-release-offline:
-  image: docker:latest
-  stage: release
-  tags:
-    - build
-  <<: *docker-login
-  script:
-    - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}-offline --build-arg SOURCE_TYPE=OFFLINE .
-    - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}-offline
-    - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}-offline
-  only:
-    - develop
+# test-build-offline:
+#   services:
+#   image: docker:latest
+#   stage: test
+#   tags:
+#     - build
+#   script:
+#     - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} --build-arg SOURCE_TYPE=OFLINE .
+#     - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#   except:
+#     - develop
+#     - master
+#     - staging
+#     - tags
 
 
-dev-deploy:
-  image: exon/helm
-  stage: deploy
-  tags:
-    - develop
-  before_script:
-    - mkdir -p /etc/deploy/
-    - echo ${SANDBOX_KUBE_CONFIG} | base64 -d > ${KUBECONFIG}
-    - helm init --client-only
-    - helm repo update
-  environment:
-    name: develop
-  script:
-    - cd charts/ui
-    - helm dep up
-    - helm upgrade --install --debug --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set tags.db=false --set image.tag=${CI_COMMIT_SHA:0:8} --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=192.168.88.210 --set env.global.SOURCE_TYPE=online --set env.global.API_PROTOCOL_TYPE=ssl --set env.local.RECAPTCHA=${RECAPTCHA_SAND} --set env.local.API_HOST=192.168.88.210 --values values.yaml .
-    - helm upgrade --install --debug --namespace=${NAMESPACE} ${CI_PROJECT_NAME}-offline --set tags.db=false --set image.tag=${CI_COMMIT_SHA:0:8}-offline --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=192.168.88.210 --set env.global.SOURCE_TYPE=OFFLINE --set env.global.API_PROTOCOL_TYPE=ssl --set env.local.RECAPTCHA=${RECAPTCHA_SAND} --set env.local.API_HOST=192.168.88.210 --set service.port=3002 --values values.yaml .
-  only:
-    - develop
+# dev-release:
+#   image: docker:latest
+#   stage: release
+#   tags:
+#     - build
+#   <<: *docker-login
+#   script:
+#     - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} .
+#     - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#     - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#   only:
+#     - develop
+
+# dev-release-offline:
+#   image: docker:latest
+#   stage: release
+#   tags:
+#     - build
+#   <<: *docker-login
+#   script:
+#     - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}-offline --build-arg SOURCE_TYPE=OFFLINE .
+#     - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}-offline
+#     - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}-offline
+#   only:
+#     - develop
 
 
-pub-github:
-  image: alpine
-  stage: release
-  tags:
-    - build
-  before_script:
-    - apk update
-    - apk upgrade
-    - apk add --no-cache bash git openssh
-    - git config --global user.email "info@containerum.io"
-    - git config --global user.name "Containerum Bot"
-    - mkdir -p ~/.ssh
-    - echo ${ID_RSA_GITHUB} | base64 -d > ~/.ssh/id_rsa
-    - echo ${ID_RSA_PUB_GITHUB} | base64 -d > ~/.ssh/id_rsa.pub
-    - chmod 600 ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa.pub
-    - eval `ssh-agent -s`
-    - ssh-add ~/.ssh/id_rsa
-    - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-  script:
-    - git remote show
-    - if [ $(git remote show | grep github) ]; then git remote rm github; fi
-    - if [ $(git branch --list | grep pub) ]; then git branch -d pub; fi
-    - git remote add github ${GITHUB_REMOTE}
-    - git pull origin develop
-    - git fetch github
-    - git checkout origin/develop
-    - git checkout -b pub
-    - git push -u github pub:develop --force
-    - git remote rm github
-  only:
-    - develop
+# dev-deploy:
+#   image: exon/helm
+#   stage: deploy
+#   tags:
+#     - develop
+#   before_script:
+#     - mkdir -p /etc/deploy/
+#     - echo ${SANDBOX_KUBE_CONFIG} | base64 -d > ${KUBECONFIG}
+#     - helm init --client-only
+#     - helm repo update
+#   environment:
+#     name: develop
+#   script:
+#     - cd charts/ui
+#     - helm dep up
+#     - helm upgrade --install --debug --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set tags.db=false --set image.tag=${CI_COMMIT_SHA:0:8} --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=192.168.88.210 --set env.global.SOURCE_TYPE=online --set env.global.API_PROTOCOL_TYPE=ssl --set env.local.RECAPTCHA=${RECAPTCHA_SAND} --set env.local.API_HOST=192.168.88.210 --values values.yaml .
+#     - helm upgrade --install --debug --namespace=${NAMESPACE} ${CI_PROJECT_NAME}-offline --set tags.db=false --set image.tag=${CI_COMMIT_SHA:0:8}-offline --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=192.168.88.210 --set env.global.SOURCE_TYPE=OFFLINE --set env.global.API_PROTOCOL_TYPE=ssl --set env.local.RECAPTCHA=${RECAPTCHA_SAND} --set env.local.API_HOST=192.168.88.210 --set service.port=3002 --values values.yaml .
+#   only:
+#     - develop
 
 
-stage-release:
-  image: docker:latest
-  stage: release
-  tags:
-    - build
-  <<: *docker-login
-  script:
-    - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} .
-    - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-    - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-  only:
-    - master
+# pub-github:
+#   image: alpine
+#   stage: release
+#   tags:
+#     - build
+#   before_script:
+#     - apk update
+#     - apk upgrade
+#     - apk add --no-cache bash git openssh
+#     - git config --global user.email "info@containerum.io"
+#     - git config --global user.name "Containerum Bot"
+#     - mkdir -p ~/.ssh
+#     - echo ${ID_RSA_GITHUB} | base64 -d > ~/.ssh/id_rsa
+#     - echo ${ID_RSA_PUB_GITHUB} | base64 -d > ~/.ssh/id_rsa.pub
+#     - chmod 600 ~/.ssh/id_rsa
+#     - chmod 600 ~/.ssh/id_rsa.pub
+#     - eval `ssh-agent -s`
+#     - ssh-add ~/.ssh/id_rsa
+#     - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+#   script:
+#     - git remote show
+#     - if [ $(git remote show | grep github) ]; then git remote rm github; fi
+#     - if [ $(git branch --list | grep pub) ]; then git branch -d pub; fi
+#     - git remote add github ${GITHUB_REMOTE}
+#     - git pull origin develop
+#     - git fetch github
+#     - git checkout origin/develop
+#     - git checkout -b pub
+#     - git push -u github pub:develop --force
+#     - git remote rm github
+#   only:
+#     - develop
 
 
-prod-release:
-  image: docker:latest
-  stage: release
-  tags:
-    - build
-  <<: *docker-login
-  script:
-    - docker pull ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-    - docker tag ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} ${CONTAINER_IMAGE}:latest
-    - docker tag ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} ${CONTAINER_IMAGE}:${CI_COMMIT_TAG}
-    - docker push ${CONTAINER_IMAGE}:latest
-    - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_TAG}
-    - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
-  only:
-    - tags
+# stage-release:
+#   image: docker:latest
+#   stage: release
+#   tags:
+#     - build
+#   <<: *docker-login
+#   script:
+#     - docker build -t ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} .
+#     - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#     - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#   only:
+#     - master
 
-prod-deploy:
-  image: exon/helm
-  stage: deploy
-  tags:
-    - production
-  before_script:
-    - mkdir -p /etc/deploy/
-    - echo ${PRODUCTION_KUBE_CONFIG_2} | base64 -d > ${KUBECONFIG}
-    - helm init --client-only
-    - helm repo update
-  environment:
-    name: production
-    url: https://web.containerum.io
-  script:
-    - cd charts/ui
-    - helm dep up
-    - helm upgrade --install --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set tags.db=false --set image.tag=${CI_COMMIT_TAG} --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=${PRODUCTION_IP} --values values.yaml .
-  only:
-    - tags
-  when: manual
+
+# prod-release:
+#   image: docker:latest
+#   stage: release
+#   tags:
+#     - build
+#   <<: *docker-login
+#   script:
+#     - docker pull ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#     - docker tag ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} ${CONTAINER_IMAGE}:latest
+#     - docker tag ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8} ${CONTAINER_IMAGE}:${CI_COMMIT_TAG}
+#     - docker push ${CONTAINER_IMAGE}:latest
+#     - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_TAG}
+#     - docker rmi --force ${CONTAINER_IMAGE}:${CI_COMMIT_SHA:0:8}
+#   only:
+#     - tags
+
+# prod-deploy:
+#   image: exon/helm
+#   stage: deploy
+#   tags:
+#     - production
+#   before_script:
+#     - mkdir -p /etc/deploy/
+#     - echo ${PRODUCTION_KUBE_CONFIG_2} | base64 -d > ${KUBECONFIG}
+#     - helm init --client-only
+#     - helm repo update
+#   environment:
+#     name: production
+#     url: https://web.containerum.io
+#   script:
+#     - cd charts/ui
+#     - helm dep up
+#     - helm upgrade --install --namespace=${NAMESPACE} ${CI_PROJECT_NAME} --set tags.db=false --set image.tag=${CI_COMMIT_TAG} --set image.secret=${SECRET} --set image.repository=${REPOSITORY} --set service.externalIP=${PRODUCTION_IP} --values values.yaml .
+#   only:
+#     - tags
+#   when: manual

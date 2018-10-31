@@ -109,9 +109,9 @@ export class NamespacesSidebar extends PureComponent<Props> {
         namespace => namespace.id === eventObj.resource_namespace
       );
       return typeof result === 'undefined' ? (
-        <p className="col-5">Source: Unknown</p>
+        <p className="col-5">Project: {eventObj.resource_namespace}</p>
       ) : (
-        <p className="col-5">Source: {result.label}</p>
+        <p className="col-5">Project: {result.label}</p>
       );
     }
     result = 'Bad namespace';
@@ -148,6 +148,10 @@ export class NamespacesSidebar extends PureComponent<Props> {
       </div>
       <div className="row">
         <div className="col-2" />
+        <div className="col-10">Kind: {eventObj.resource_type}</div>
+      </div>
+      <div className="row">
+        <div className="col-2" />
         {this.simplifyEventSource(eventObj)}
         <p className="col-5">{this.simplifyEventTime(eventObj)}</p>
       </div>
@@ -155,7 +159,6 @@ export class NamespacesSidebar extends PureComponent<Props> {
   );
 
   render() {
-    console.log(this.state);
     return (
       <Modal
         isOpen={this.props.isSidebarOpen}
