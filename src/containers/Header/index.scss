@@ -65,8 +65,10 @@
     }
 
     &Container {
-      padding: 15px 0 0 0;
+      padding: 15px 10px 0 10%;
       height: 100%;
+      max-width: 2500px;
+      margin: 0 auto;
 
       &::after {
         content: '';
@@ -122,6 +124,18 @@
         font-weight: bold;
         line-height: 1.33;
         font-size: 12px;
+      }
+    }
+
+    &EventButton {
+      height: 29px;
+      width: 29px;
+      position: absolute;
+      right: 16%;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 0.5;
       }
     }
   }
