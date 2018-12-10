@@ -1,5 +1,5 @@
 # Containerum UI
-Containerum UI project is Web User Interface for [Containerum](https://github.com/containerum/containerum).
+Containerum UI is a GUI for [Containerum](https://github.com/containerum/containerum).
 
 ## Prerequisites
 * Kubernetes
