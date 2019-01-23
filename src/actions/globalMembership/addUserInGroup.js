@@ -53,7 +53,7 @@ export const fetchAddGlobalUser = (
   dispatch(addGlobalUserRequest());
 
   const response = await axios.post(
-    `${URL}/groups/${idGroup}/members `,
+    `${URL}/groups/${labelGroup}/members `,
     {
       members
     },

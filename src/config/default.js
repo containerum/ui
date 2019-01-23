@@ -10,12 +10,17 @@ module.exports = {
   port: process.env.PORT,
   webApi: api,
   wsApi: apiWS,
-  // webApi: 'http://192.168.88.210:8082',
-  // wsApi: 'wss://192.168.88.210:8082',
+  // webApi: 'http://192.168.88.210:6443',
+  // wsApi: 'ws://192.168.88.210:6443',
   // webApi: 'http://88.99.247.59:8082',
-  // wsApi: 'wss://88.99.247.59:8082',
-  // webApi: 'https://api.containerum.io',
-  // wsApi: 'wss://api.containerum.io',
+  // wsApi: 'ws://88.99.247.59:8082',
+  // webApi: 'http://api.local.containerum.io',
+  // wsApi: 'ws://api.local.containerum.io',
+
+  // webApi: 'http://api.local.containerum.io',
+  // wsApi: 'ws://api.local.containerum.io',
+  // 104.248.102.5 local.containerum.io api.local.containerum.io
+
   appRecaptcha: process.env.RECAPTCHA || null,
   defaultCountry: process.env.COUNTRY || 'US',
   latestRelease: process.env.LATEST_RELEASE || null,

@@ -36,7 +36,8 @@ const containerClassName = globalClass(
 type Props = {
   match: Object,
   getStartedReducer: Object,
-  fetchGetStartedIfNeeded: () => void,
+  fetchGetStartedIfNeeded: (role: string) => void,
+  getProfileReducer: () => void,
   handleClickDontShow: () => void
 };
 
@@ -44,21 +45,37 @@ export class SideBarGetStarted extends PureComponent<Props> {
   constructor() {
     super();
     this.state = {
-      sideBar: [
-        { id: '1-registration', innerHTML: '1. Registration' },
-        { id: '2-billing', innerHTML: '2. Billing' },
-        { id: '3-create-a-project', innerHTML: '3. Create a Project' },
-        { id: '4-create-a-deployment', innerHTML: '4. Create a Deployment' },
-        { id: '5-create-a-service', innerHTML: '5. Create a Service' },
-        { id: '6-create-a-domain', innerHTML: '6. Create a Domain' },
-        { id: '7-go-to-the-domain-page', innerHTML: '7. Go to the domain page' }
+      sideBarAdmin: [
+        { id: '1-create-a-project', innerHTML: '1. Create a Project' },
+        { id: '2-create-a-deployment', innerHTML: '2. Create a Deployment' },
+        { id: '3-create-a-service', innerHTML: '3. Create a Service' },
+        {
+          id: '4-how-to-access-an-application-by-external-ip',
+          innerHTML: '4. How to access an application by External IP'
+        },
+        {
+          id: '5-how-to-add-a-new-user',
+          innerHTML: '5. How to add a new user'
+        },
+        {
+          id: '6-how-to-add-a-user-to-a-project',
+          innerHTML: '6. How to add a user to a project'
+        }
+      ],
+      sideBarUser: [
+        { id: '1-create-a-deployment', innerHTML: '1. Create a Deployment' },
+        { id: '2-create-a-service', innerHTML: '2. Create a Service' },
+        {
+          id: '3-how-to-access-an-application-by-external-ip',
+          innerHTML: '3. How to access an application by External IP'
+        }
       ]
     };
   }
   componentDidMount() {
     const { fetchGetStartedIfNeeded, getStartedReducer } = this.props;
     if (getStartedReducer.readyStatus !== GET_STARTED_SUCCESS) {
-      fetchGetStartedIfNeeded();
+      fetchGetStartedIfNeeded(this.props.getProfileReducer.data.role);
     }
   }
   componentWillUnmount() {
@@ -97,15 +114,26 @@ export class SideBarGetStarted extends PureComponent<Props> {
     }
 
     if (getStartedReducer.readyStatus === GET_STARTED_SUCCESS) {
-      let text = getStartedReducer.data.substring(225);
+      let text = getStartedReducer.data;
       const regexpAbsoluteWebPanelLink = /(\/web-panel\/)/gi;
       const regexpAbsoluteCliLink = /(\/cli\/)/gi;
-      const regexpImg = /<img src="\/img\/content\/getting-started\/online\//gi;
+      const regexpImgUser = /<img src="\/img\/content\/getting-started\/user\//gi;
+      const regexpImg = /<img src="\/img\/content\/getting-started\/admin\//gi;
+      const regexpImgAdmin = /<img src="\/img\/content\/objects\/Membership\//gi;
+
       const regexpImgWithOut = /" width="100%"\/>/gi;
       text = text
         .replace(
           regexpImg,
-          `![](https://raw.githubusercontent.com/containerum/containerum-docs/master/static_src/img/content/getting-started/online/`
+          `![](https://raw.githubusercontent.com/containerum/containerum-docs/master/static_src/img/content/getting-started/admin/`
+        )
+        .replace(
+          regexpImgUser,
+          `![](https://raw.githubusercontent.com/containerum/containerum-docs/master/static_src/img/content/getting-started/user/`
+        )
+        .replace(
+          regexpImgAdmin,
+          `![](https://raw.githubusercontent.com/containerum/containerum-docs/master/static_src/img/content/objects/Membership/`
         )
         .replace(regexpImgWithOut, ')')
         .replace(
@@ -119,7 +147,11 @@ export class SideBarGetStarted extends PureComponent<Props> {
   };
 
   render() {
-    const { sideBar } = this.state;
+    const { sideBarAdmin, sideBarUser } = this.state;
+    const sideBar =
+      this.props.getProfileReducer.data.role === 'admin'
+        ? sideBarAdmin
+        : sideBarUser;
     return (
       <div>
         {this.props.match && (
@@ -230,15 +262,17 @@ const connector: Connector<{}, Props> = connect(
   ({
     getProfileReducer,
     getStartedReducer,
+    getStartedAdminReducer,
     getNamespacesReducer
   }: ReduxState) => ({
     getProfileReducer,
     getStartedReducer,
+    getStartedAdminReducer,
     getNamespacesReducer
   }),
   (dispatch: Dispatch) => ({
-    fetchGetStartedIfNeeded: () =>
-      dispatch(actionGetStarted.fetchGetStartedIfNeeded())
+    fetchGetStartedIfNeeded: (role: string) =>
+      dispatch(actionGetStarted.fetchGetStartedIfNeeded(role))
   })
 );
 

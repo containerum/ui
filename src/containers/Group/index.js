@@ -425,7 +425,8 @@ class GlobalMembership extends PureComponent<Props> {
           name={this.state.inputEmailDelete}
           isOpened={this.state.isOpen}
           typeName={this.state.idUser}
-          idGroup={idGroup}
+          // idGroup={idGroup}
+          idGroup={label}
           handleInputEmailDelete={this.handleInputEmailDelete}
           handleOpenCloseModal={this.handleOpenCloseModal}
           onHandleDelete={fetchDeleteUserFromGroupIfNeeded}

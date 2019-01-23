@@ -70,7 +70,7 @@ const GlobalMembershipList = ({
                     boxShadow: '0 2px 0 0 rgba(0, 0, 0, 0.05)'
                   }}
                   key={_.uniqueId()}
-                  onClick={() => handleClickGetGroup(id)}
+                  onClick={() => handleClickGetGroup(label)}
                 >
                   <td className={groupshipStyles.td_2_GlobalMembership}>
                     {label}

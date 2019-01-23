@@ -27,9 +27,10 @@ const getStartedFailure = err => ({
   err
 });
 
-export const fetchGetStarted = (axios: any): ThunkAction => async (
-  dispatch: Dispatch
-) => {
+export const fetchGetStarted = (
+  axios: any,
+  role: string
+): ThunkAction => async (dispatch: Dispatch) => {
   dispatch(getStartedRequest());
 
   let dateNow = new Date();
@@ -48,7 +49,7 @@ export const fetchGetStarted = (axios: any): ThunkAction => async (
     dispatch(getStartedSuccess(JSON.parse(githubText).data));
   } else {
     const response = await axios.get(
-      `https://raw.githubusercontent.com/containerum/containerum-docs/master/content/getting-started/online.md`,
+      `https://raw.githubusercontent.com/containerum/containerum-docs/master/content/getting-started/${role}.md`,
       {
         validateStatus: status => status >= 200 && status <= 505
       }
@@ -86,8 +87,8 @@ export const fetchGetStarted = (axios: any): ThunkAction => async (
   }
 };
 
-export const fetchGetStartedIfNeeded = (): ThunkAction => (
+export const fetchGetStartedIfNeeded = (role: string): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState,
   axios: any
-) => dispatch(fetchGetStarted(axios));
+) => dispatch(fetchGetStarted(axios, role));

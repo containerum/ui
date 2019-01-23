@@ -44,7 +44,7 @@ export const fetchDeleteGroup = (
   const accessToken = cookie.load('accessToken');
   dispatch(deleteGroupRequest());
 
-  const response = await axios.delete(`${URL}/groups/${id}`, {
+  const response = await axios.delete(`${URL}/groups/${name}`, {
     headers: {
       'User-Client': browser,
       'User-Token': accessToken

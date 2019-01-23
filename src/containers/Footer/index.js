@@ -110,15 +110,15 @@ export class Footer extends PureComponent<Props> {
             >
               Docs
             </a>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={externalLinks.fastDeploy}
-              className={styles.footerHelp}
-              // onClick={() => this.handleClickAnaliticsHowToFooter()}
-            >
-              Get Started
-            </a>
+            {/* <a */}
+            {/* target="_blank" */}
+            {/* rel="noopener noreferrer" */}
+            {/* href={externalLinks.fastDeploy} */}
+            {/* className={styles.footerHelp} */}
+            {/* // onClick={() => this.handleClickAnaliticsHowToFooter()} */}
+            {/* > */}
+            {/* Get Started */}
+            {/* </a> */}
           </div>
         </div>
       </footer>
