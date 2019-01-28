@@ -61,7 +61,7 @@ const AdminDeleteUserModal = ({
   };
   const handleSubmitDeletingEssence = e => {
     e.preventDefault();
-    if (type === 'Deactivate User from Group') {
+    if (type === 'Delete User from Group') {
       handleOpenCloseModal();
       onHandleDelete(idGroup, name);
     }
